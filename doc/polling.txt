@@ -1,0 +1,36 @@
+title Polling
+
+Timer->+PollChecker: poll
+
+PollChecker->DataLayerFactory: create data layer
+DataLayerFactory->+DataLayer: <<create>>
+DataLayerFactory-->PollChecker: <<return data layer>>
+
+PollChecker->DataLayer: GetStoryIds
+note right of DataLayer: exclude removed and recently checked stories
+
+PollChecker->DataLayer: dispose
+DataLayer-->-PollChecker: done
+
+PollChecker->QueueStoryChecker: schedule stories
+
+PollChecker-->-Timer: done
+
+Timer->QueueStoryChecker: check next story
+QueueStoryChecker->ParserFactory: create parser
+ParserFactory->+Parser: <<create>>
+ParserFactory-->QueueStoryChecker: <<return parser>>
+
+QueueStoryChecker->Parser: parse story
+Parser-->QueueStoryChecker: return story
+Parser-->-QueueStoryChecker: done
+
+QueueStoryChecker->StoryPersisterFactory: create story persister
+StoryPersisterFactory->+StoryPersister: <<create>>
+StoryPersisterFactory-->QueueStoryChecker: <<return story persister>>
+
+QueueStoryChecker->StoryPersister: process story
+
+QueueStoryChecker->StoryPersister: dispose
+StoryPersister-->-QueueStoryChecker: done
+

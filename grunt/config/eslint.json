@@ -1,0 +1,12 @@
+{
+	"all": {
+		"files": {
+			"src": [
+				"*.js",
+				"grunt/**/*.js",
+				"integration_tests/**/*.js",
+				"src/BuzzStats.Web/js/app/*.js"
+			]
+		}
+	}
+}

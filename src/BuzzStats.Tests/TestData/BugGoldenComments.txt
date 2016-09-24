@@ -1,0 +1,3228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+		
+		
+		<meta name="description" content="Εξέγερση, να τελειώνουμε. Κι αν σπάσει και καμμιά βιτρίνα στο κέντρο, ας τη θρηνήσει η γνωστή δημοσιογραφική κ..." />
+		<meta name="Language" content="en-us" />
+	
+		
+
+		
+				<link rel="stylesheet" type="text/css" href="/templates/mollio-beat/css/main_1.2.css" media="screen" />
+			
+				<link rel="stylesheet" type="text/css" href="/templates/mollio-beat/css/catcolors.css" media="screen" />
+				
+				
+			
+		<script src="/js/jspath.php" type="text/javascript"></script>
+    
+				<script src="/modules/scriptaculous/js/prototype.js" type="text/javascript"></script><script src="/modules/scriptaculous/js/EditInPlace.js" type="text/javascript"></script><script src="/modules/scriptaculous/js/scriptaculous.js" type="text/javascript"></script><script src="/modules/scriptaculous/js/dragdrop.js" type="text/javascript"></script><script src="/modules/scriptaculous/js/effects.js" type="text/javascript"></script>
+		<style type="text/css" media="screen">@import "/templates/mollio-beat/css/live.css";</style>
+		<script language="JavaScript" type="Text/JavaScript" src="/templates/mollio-beat/js/toggle.js"></script> 
+		
+				
+		
+		
+		<script type="text/javascript">
+		<!--
+			function show_hide_user_links(thediv)
+			{
+				if(window.Effect){
+					if(thediv.style.display == 'none')
+					{Effect.Appear(thediv); return false;}
+					else
+					{Effect.Fade(thediv); return false;}
+				}else{
+					var replydisplay=thediv.style.display ? '' : 'none';
+					thediv.style.display = replydisplay;					
+				}
+			}
+		//-->
+		</script>
+		
+		
+		
+		<script type="text/javascript">
+
+			/***********************************************
+			* Bookmark site script-  Dynamic Drive DHTML code library (www.dynamicdrive.com)
+			* This notice MUST stay intact for legal use
+			* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
+			***********************************************/
+
+			function bookmarksite(title, url){
+			if (document.all)
+			window.external.AddFavorite(url, title);
+			else if (window.sidebar)
+			window.sidebar.addPanel(title, url, "")
+			}
+
+		</script>
+		
+		
+				
+		<title>Buzz - Οργή (Sraosha)</title>
+		<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://buzz.reality-tape.com/rss2.php"/>
+		<link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+		<script src="/js/xmlhttp.php" type="text/javascript"></script>
+
+
+
+		
+	</head>
+
+	<body >
+		<div id="wrap">
+		
+			<div id="header">
+				<!-- buzz is ©2008 Susuko Maka LLC -->
+<!-- Sweet buzz bee designed by Wati Larke (http://www.watiworks.com) -->
+<script type="text/javascript" src="http://www.google-analytics.com/urchin.js" >
+</script>
+<script type="text/javascript">
+_uacct = "UA-360813-2";
+urchinTracker();
+</script>
+
+
+	<div id="site-name"><a class="hedo" href="http://buzz.reality-tape.com">&nbsp;</a></div>
+		<div id="search">
+			<form action="http://buzz.reality-tape.com/search.php" method="get" name="thisform" id="thisform">			
+													<input type="text" size="20" name="search" id="searchsite" value="Αναζήτηση.." onfocus="if(this.value == 'Αναζήτηση..') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Αναζήτηση..';}" style="position:relative;top:-5px;"/>
+			<input type="image" src="templates/mollio-beat/images/search.png" class="submit"/>
+			<!-- <input type="submit" value="Go" class="submit" /> -->
+			</form>
+		</div>
+		<div id="headbar" style="padding-bottom:2px;">
+			<ul>
+									<a href='/login.php?return=/story.php?title=%CE%9F%CF%81%CE%B3%CE%AE-%28Sraosha%29'>Login</a> <span style="color:#B0B0B0">|</span>
+					<a href='http://buzz.reality-tape.com'>Κεντρική</a> <span style="color:#B0B0B0">|</span>
+					
+										<a href='/topusers.php'> Top χρήστες</a> <span style="color:#B0B0B0">|</span>
+					<a href="/cloud.php">Tags</a> <span style="color:#B0B0B0">|</span> 						<a href="http://buzz.reality-tape.com/blog"> BLOG</a> <span style="color:#B0B0B0">|</span> <a href="http://buzz.reality-tape.com/faq-en.php"> FAQ</a> <span style="color:#B0B0B0">|</span>
+					<a href="mailto:info@reality-tape.com"> Επικοινωνία</a>
+							</ul>
+		</div>
+	</div>
+	<div id="prels"></div>				</div><!-- header end -->
+			
+			<div id="content-wrap1">
+		  				<div id="sidebar">
+					
+
+
+
+ 
+			<div class="featurebox">
+	<h3>Τι είναι το buzz;</h3>
+Επιλογές από το διαδίκτυο, όπως διαμορφώνονται καθημερινά απ' τους ίδιους τους χρήστες του. <br />&nbsp;<br /><small><a href="/faq-en.php">περισσότερα</a>&nbsp;&nbsp;<span style="color:#B0B0B0">|</span>&nbsp;&nbsp;<a href = "http://buzz.reality-tape.com/register.php">γίνε μέλος!</a></small></div>
+
+
+
+		<div id="blocknav">
+		
+		
+		 			<span class="red awesome"><a href="/submit.php">+ Νέα Καταχώριση</a></span>
+			<!-- <span class="awesome"><a href="http://buzz.reality-tape.com/story.php?title=%CE%A3%CE%B1%CE%B2%CE%BF%CF%85%CE%AC%CF%81-%CE%9C%CF%80%CE%B1%CE%B6-2-0-1" alt="Σύμβαλε στη συζήτηση!">Savoir Buzz 2.0</a></span> -->
+			<!-- <a href="/submit.php"><img src="templates/mollio-beat/images/neakat.png" alt="πρότεινε νέο link"></a><br />&nbsp;<br />
+			<span style="position:relative; left:1px;"><a href="http://buzz.reality-tape.com/story.php?title=%CE%A3%CE%B1%CE%B2%CE%BF%CF%85%CE%AC%CF%81-%CE%9C%CF%80%CE%B1%CE%B6-2-0-1"><img style="border:0;" src="http://buzz.reality-tape.com/sb2.png" alt="Σύμβαλε στη συζήτηση!"/></a></span><br /> -->
+		<!--	<span style="position:relative; left:-1px;"><a href="http://www.athensbook.gr/"><img style="border:0;" src="http://buzz.reality-tape.com/images/abbutton.png" alt="AthensBook για το iPhone και το iPod touch!"/></a></span> -->
+		
+					
+
+
+		<br />
+		
+		
+	</div>
+	<br />
+
+
+
+
+		<div id="categories">
+	<img src="minus.gif" class="showstate" onClick="expandcontent(this, 'cats')" style="margin-right:18px; margin-top:10px;" /><strong>Κατηγορίες</strong>
+	<div id="cats" class="switchcontent">
+	<ul id="nav-secondary">
+								
+									<li class="cat0">
+									<a href="/index.php?category=Όλα">
+						Όλα
+					</a>
+				</li>
+
+											<ul style="padding-left:10px">
+									<li class="cat1">
+									<a href="/index.php?category=ΜΜΕ">
+						ΜΜΕ
+					</a>
+				</li>
+
+											
+									<li class="cat2">
+									<a href="/index.php?category=Διάφορα">
+						Διάφορα
+					</a>
+				</li>
+
+											
+									<li class="cat3">
+									<a href="/index.php?category=Blogs">
+						Blogs
+					</a>
+				</li>
+
+											
+									<li class="cat4">
+									<a href="/index.php?category=Αγγλικά">
+						Αγγλικά
+					</a>
+				</li>
+
+											
+									<li class="cat5">
+									<a href="/index.php?category=Tech">
+						Tech
+					</a>
+				</li>
+
+						</ul>
+
+</div>
+</div>
+<br />
+				<!-- 
+			
+			<span style="position:relative; left:-1px;"><a href="http://buzz.reality-tape.com/rss2.php?search=griots&tag=true"><img style="border:0;" src="http://buzz.reality-tape.com/images/griotpop.png" alt="RSS feed: όλες οι δημοφιλείς καταχωρίσεις με tag griots" title="Βάλε tag griots για προσθήκη στο ειδικό feed"/></a></span><br/>
+			<span style="position:relative; left:-1px;"><a href="http://buzz.reality-tape.com/rss2.php?search=griots&tag=true&status=all"><img style="border:0;" src="http://buzz.reality-tape.com/images/griotall.png" alt="RSS feed: όλες οι δημοφιλείς καταχωρίσεις με tag griots" title="Βάλε tag griots για προσθήκη στο ειδικό feed"/></a></span> 
+			
+			-->
+	
+	<h3>Ενεργές συζητήσεις [τελευταία σχόλια]</h3><ul style='list-style:none;'><li class='threado'><span style='font-size:90%;'><a class='sbcommentlink' href='/story.php?id=72102'>Οργή (Sraosha)</a><br/>[<a href='/story.php?id=72102#wholecomment83903'>derveniotis</a>, <a href='/story.php?id=72102#wholecomment83901'>cinto</a>, <a href='/story.php?id=72102#wholecomment83897'>cinto</a>]</span></li><li class='threado'><span style='font-size:90%;'><a class='sbcommentlink' href='/story.php?id=72129'>Όχι στην 6η δόση! | Tάκης Μίχας | Protagon</a> <span style='background:red;color:white;font-size:6px;padding:2px;'>ΝΕΟ</span><br/>[<a href='/story.php?id=72129#wholecomment83910'>BlondeElena</a>]</span></li><li class='threado'><span style='font-size:90%;'><a class='sbcommentlink' href='/story.php?id=72115'>Παραιτήθηκε ο Διομήδης Σπινέλλης</a><br/>[<a href='/story.php?id=72115#wholecomment83899'>cinto</a>, <a href='/story.php?id=72115#wholecomment83893'>talos</a>, <a href='/story.php?id=72115#wholecomment83890'>inlovewithlife</a>]</span></li><li class='threado'><span style='font-size:90%;'><a class='sbcommentlink' href='/story.php?id=72121'>Για τον Α984, μέρος γάμμα (τα) (Locandiera)</a><br/>[<a href='/story.php?id=72121#wholecomment83907'>derveniotis</a>, <a href='/story.php?id=72121#wholecomment83898'>cinto</a>, <a href='/story.php?id=72121#wholecomment83892'>zuqzuq</a>]</span></li><li class='threado'><span style='font-size:90%;'><a class='sbcommentlink' href='/story.php?id=72107'>Κϊνα: η δυστοπία είναι ήδη εδώ</a><br/>[<a href='/story.php?id=72107#wholecomment83909'>zoutiri</a>, <a href='/story.php?id=72107#wholecomment83891'>inlovewithlife</a>, <a href='/story.php?id=72107#wholecomment83875'>pidyo</a>]</span></li><li class='threado'><span style='font-size:90%;'><a class='sbcommentlink' href='/story.php?id=72104'>Και μετά ήρθε η ΕΣΗΕΑ | Protagon</a><br/>[<a href='/story.php?id=72104#wholecomment83906'>simiomatariokipon</a>, <a href='/story.php?id=72104#wholecomment83904'>derveniotis</a>, <a href='/story.php?id=72104#wholecomment83902'>MichaelCorvin</a>]</span></li><li class='threado'><span style='font-size:90%;'><a class='sbcommentlink' href='/story.php?id=72135'>Ένα κρίσιμο ερώτημα ενόψει της 23ης Οκτωβρίου </a> <span style='background:red;color:white;font-size:6px;padding:2px;'>ΝΕΟ</span><br/>[<a href='/story.php?id=72135#wholecomment83912'>oldboy</a>, <a href='/story.php?id=72135#wholecomment83911'>zuqzuq</a>, <a href='/story.php?id=72135#wholecomment83908'>oldboy</a>]</span></li><li class='threado'><span style='font-size:90%;'><a class='sbcommentlink' href='/story.php?id=72120'>Τα 14 Άρθρα του Συντάγματος που καταπατά η Κυβέρνηση</a><br/>[<a href='/story.php?id=72120#wholecomment83905'>zuqzuq</a>, <a href='/story.php?id=72120#wholecomment83883'>MichaelCorvin</a>, <a href='/story.php?id=72120#wholecomment83881'>ppetoumenos</a>]</span></li></ul><br/>  	
+
+	<div id="categories">
+	<strong>RSS feeds</strong>
+	<ul id="nav-rss">
+		<li><a href="/rss2.php" target="_blank">Δημοφιλή</a></li>
+		<li><a href="/rss2.php?status=queued" target="_blank">Νέα</a></li>
+		<li><a href="/rss2.php?status=all" target="_blank">Όλα</a></li>	
+  </ul>
+</div>
+<br />&nbsp;<br />
+<span style="position:relative; left:-5px; top:10px;"><a href="http://buzz.reality-tape.com/postroll.php"><img src="http://buzz.reality-tape.com/images/prom.png" alt="βάλε το postroll στο blog σου" title="βάλε το postroll στο blog σου"></a></span> 
+<br />&nbsp;<br /> 
+
+<span style="position:relative; left:10px; top:10px;"><img src="http://buzz.reality-tape.com/fireext.png" alt="προτιμήστε από ταμπάσκο εν ώρα πυρκαϊάς" title="προτιμήστε από ταμπάσκο εν ώρα πυρκαϊάς"></span>
+
+<!-- <span style="position:relative; left:-5px; top:10px;"><a href="http://buzz.reality-tape.com/postroll.php"><img src="http://buzz.reality-tape.com/images/megatroll.png" alt="βάλε ένα megatroll στο blog σου" title="βάλε ένα megatroll στο blog σου"></a></span> -->
+
+
+<!-- <span style="position:relative; left:-5px; top:10px;"><a href="http://buzz.reality-tape.com/postroll.php"><img src="http://buzz.reality-tape.com/images/enaelafaki.png" alt="βάλε το postroll στο blog σου" title="βάλε το postroll στο blog σου"></a></span> -->
+
+
+
+		      
+				</div><!-- sidebar end -->
+				<div id="contentbox">
+			
+		      
+			    <div id="inside">
+
+						
+		      	<div id="riseup">
+
+			
+    
+<div class="news-summary" id="news-0">
+			<ul class="news-upcoming"  id="cat3">
+			<li class="mnm-published"><a id="mnms-0" href="javascript:menealo(0,72102,0,'cb6bfcbc1e2e021c8fedb91811fb4c30',10)">24</a></li>
+			<li class="menealo" id="mnmlink-0">
+									<a href="javascript:menealo(0,72102,0,'cb6bfcbc1e2e021c8fedb91811fb4c30',10)">Vote</a>
+							</li>
+		</ul>
+	
+		
+		<div class="top" id="catcol3">
+		
+		<h4 id="ls_title-0">
+		    		      				  <a href="http://sraosha2.blogspot.com/2011/10/blog-post_17.html" >Οργή (Sraosha)</a>
+			                  </h4>
+
+    <div class="news-submitted">
+			<a href="javascript://" onclick="show_hide_user_links(document.getElementById('userlinks-0'));">		
+							</a>
+			
+			
+			
+			<a href="javascript://" onclick="show_hide_user_links(document.getElementById('userlinks-0'));">		
+				<span id="ls_link_submitter-0">thas</span></a><span style="color:#8A8A8A">,</span> πριν
+			<span id="ls_timeago-0"> 1 μέρα 1 ώρα 53 λεπτά 
+				(<span id="ls_story_link-0">
+											<a href="http://sraosha2.blogspot.com/2011/10/blog-post_17.html"  class="screen">http://sraosha2.blogspot.com</a>
+									</span>)
+</span>
+
+		  				
+			<span id="userlinks-0" style="display:none;">
+				<a href = "/user.php?login=thas"><span style="color:#A6271C;">Δες προφίλ</span></a>  
+							</span>
+			<span id="ls_adminlinks-0" style="display:none">
+															</span>
+    </div>
+
+  		    <span class="news-body-text">
+	  		<span id="ls_contents-0">
+	  					  				Εξέγερση, να τελειώνουμε. Κι αν σπάσει και καμμιά βιτρίνα στο κέντρο, ας τη θρηνήσει η γνωστή δημοσιογραφική κλίκα: άλλωστε το ένα τέταρτο των μαγαζιών έχει κλείσει.	  				<br /> 
+	  					  					  					  					  					  					  					  					  					  					  					  					  					  					  				  			
+	  			
+	  		</span>
+	    </span>
+  		
+    <div class="news-details">
+    	<span id="ls_comments_url-0">
+    		    		    		    			<a href="/story.php?title=%CE%9F%CF%81%CE%B3%CE%AE-%28Sraosha%29" class="comments">43 Σχόλια</a>
+    		    	</span> <span style="color:#B0B0B0">|</span>
+		
+						
+  		  			
+    	
+  											<span id="ls_recommend-0">
+							<img src="/templates/yget/images/email.gif" align="absmiddle"/> <a href="javascript://" onclick="show_recommend(0, 72102, 'http://buzz.reality-tape.com/');"> Στείλτο σε φίλους</a>
+						</span> 
+										
+																		<span id="emailto-0" style="display:none"></span>
+																
+					</span> <span style="color:#B0B0B0">|</span>
+				<a id="bury-0" href="javascript:report(0,72102,0,'cb6bfcbc1e2e021c8fedb91811fb4c30',10)"> Διπλοκαταχώριση / Παραβιάζει το SB</a>
+											
+							
+									<!-- <span style="color:#B0B0B0">|</span>
+
+											<a href="http://technorati.com/search/http%3A%2F%2Fsraosha2.blogspot.com%2F2011%2F10%2Fblog-post_17.html"> Αντιδράσεις στα blog</a>
+					 -->
+					
+								<span style="color:#B0B0B0">| </span><span id="twitter" style="background: url('http://buzz.reality-tape.com/images/twitter.png') 3px 3px no-repeat;padding: 2px 2px 10px 20px;">
+<a href="http://twitter.com/home/?status=Reading+'Οργή (Sraosha)'+http://buzz.reality-tape.com/s72102" target="_blank">Tweet!</a>
+</span>
+			
+			
+    </div>
+	</div>
+	
+	
+</div>
+
+    <div id="comments">
+        <h2>Σχόλια</h2>
+
+        <ul id="comments-list">
+
+	
+<li>
+	
+			<div class="user-cinto" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=cinto">cinto</a>  πριν  1 μέρα 1 ώρα 20 λεπτά <a href="#wholecomment83814" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83814" style='text-decoration: none;color:#36a00f;'><strong>16</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83814"> </span> <span id="ratebuttons-83814"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83814" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+        <div class="comment-body-featured" id="wholecomment83814"> 
+		<span id = "comment_content-83814"> <br />
+      Στη Σταδίου έχουν κλείσει πάνω από τα μισά καταστήματα και σας έχω νέα, επαναστάτες του λάπτοπ: δε φταίει μόνο η κρίση. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+<ul id="comments-list">
+
+	
+<li>
+	
+			<div class="user-contrabando" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=contrabando">contrabando</a>  πριν  22 ώρες <a href="#wholecomment83824" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83824" style='text-decoration: none;color:#36a00f;'><strong>5</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83824"> </span> <span id="ratebuttons-83824"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83824" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83824"> 
+		<span id = "comment_content-83824"> <br />
+      Αυτοί που μιλάνε για εξέγερση δεν είναι επαναστάτες του λάπτοπ. Ο Sraosha μιλάει για ειρηνική εξέγερση με πορείες και διαδηλώσεις και δίνει όλους τους λόγους που έχουμε για να το κάνουμε . Δε μας λέει να μπλαμπλαδιάζουμε στο λάπτοπ σαν τους εξυπνάκηδες και τους παπαγάλους που έχουνε λόγους να υπερασπίζονται αυτή τη θλιβερή κυβέρνηση. Αυτοί  μπορούνε να συνεχίζουνε τους εξυπνακισμούς τους και τα κηρύγματα τους να αφήσουμε ήσυχη  την κυβέρνηση να κάνει το έργο της και να την κρίνουμε μετά από 4 χρόνια......Αυτοί ζούνε στη μετεφηβική αφέλεια και νομίζουνε ότι απευθήνονται σε πιό μικρά παιδάκια για να τα πείσουνε να κάτσουνε φρόνιμα ....... </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-cinto" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=cinto">cinto</a>  πριν  22 ώρες <a href="#wholecomment83825" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83825" style='text-decoration: none;color:#36a00f;'><strong>2</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83825"> </span> <span id="ratebuttons-83825"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83825" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83825"> 
+		<span id = "comment_content-83825"> <br />
+      Από τα γραπτά του έχω σχηματίσει την εντύπωση ότι μένει στην Κύπρο, εξού και ο χαρακτηρισμός. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+</ul>
+
+
+	
+<li>
+	
+			<div class="user-chaca-khan" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=chaca-khan">chaca-khan</a>  πριν  1 μέρα 1 ώρα 2 λεπτά <a href="#wholecomment83815" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83815" style='text-decoration: none;color:#36a00f;'><strong>5</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83815"> </span> <span id="ratebuttons-83815"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83815" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83815"> 
+		<span id = "comment_content-83815"> <br />
+      cinto και σημαιοφόροι, το διαβάσατε το κείμενο; ποια μόνο η κρίση; </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+<ul id="comments-list">
+
+	
+<li>
+	
+			<div class="user-cinto" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=cinto">cinto</a>  πριν  1 μέρα 56 λεπτά <a href="#wholecomment83816" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83816" style='text-decoration: none;color:#36a00f;'><strong>12</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83816"> </span> <span id="ratebuttons-83816"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83816" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+        <div class="comment-body-featured" id="wholecomment83816"> 
+		<span id = "comment_content-83816"> <br />
+      Το διαβάσαμε. Απέναντι στο έμπλεο αγανάκτησης και μετεφηβικής αφέλειας κάλεσμα για εξέγερση αντιπαραθέτω το μόνο χειροπιαστό αποτέλεσμα (τι πτώσεις κυβερνήσεων και πίπες...) των πορειών των τελευταίων 2 χρόνων: τη νέκρωση του κέντρου. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+</ul>
+
+
+	
+<li>
+	
+			<div class="user-chaca-khan" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=chaca-khan">chaca-khan</a>  πριν  1 μέρα 52 λεπτά <a href="#wholecomment83817" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83817" style='text-decoration: none;color:#36a00f;'><strong>9</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83817"> </span> <span id="ratebuttons-83817"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83817" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83817"> 
+		<span id = "comment_content-83817"> <br />
+      Δηλαδή από όλη την προβληματική που εκθέτει εδώ ο συγγραφεύς και την ομολογημένη του "οργή" σαν τίτλο, εσύ κολλάς στο κακόμοιρο κέντρο που θα είναι κλειστό εκείνη την ημέρα γιατί άλλωστε για την υποβάθμισή του ευθύνονται κατά βάσιν οι πορείες. Πού να έμενες και στο κέντρο δηλαδή όπως εμείς! Πραγματικά cinto χαραμίζεσαι στο buzz </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+<ul id="comments-list">
+
+	
+<li>
+	
+			<div class="user-cinto" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=cinto">cinto</a>  πριν  1 μέρα 44 λεπτά <a href="#wholecomment83819" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83819" style='text-decoration: none;color:#36a00f;'><strong>8</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83819"> </span> <span id="ratebuttons-83819"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83819" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83819"> 
+		<span id = "comment_content-83819"> <br />
+      Δε θα με πείραζε αν γινόταν το κέντρο μπουρδέλο μια φορά στις τόσες. Αλλά έχει καταντήσει αηδία.<br />
+<br />
+Κι αν δεν μπορείς να καταλάβεις ότι ο συνεχής αναβρασμός νεκρώνει την οικονομία της περιοχής, ρώτα μεθαύριο κανέναν μαγαζάτορα πόσο πέφτει ο τζίρος του στις επαναστατικές ημέρες (σχεδόν όλες οι μέρες της εβδομάδας πλέον). </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+</ul>
+
+
+	
+<li>
+	
+			<div class="user-talos" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=talos">talos</a>  πριν  1 μέρα 21 λεπτά <a href="#wholecomment83820" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83820" style='text-decoration: none;color:#36a00f;'><strong>18</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83820"> </span> <span id="ratebuttons-83820"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83820" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+        <div class="comment-body-featured" id="wholecomment83820"> 
+		<span id = "comment_content-83820"> <br />
+      Αν ήταν έτσι ρε cinto, από τις απώλειες των μαγαζιών του κέντρου θα οφελούνταν τα μαγαζιά εκτός κέντρου: αλλά όλες σχεδόν οι περιφερειακές αγορές των Αθηνών είναι σε χειρότερη κατάσταση από το κέντρο, για να μη σου πω τι γίνεται στην επαρχία. Δεν φταίνε οι πορείες για την κατάρρευση της αγοράς (Ελλάδα δεν είναι μόνο το κέντρο της Αθήνας)... <br />
+<br />
+Η κοινή λογική πεθαίνει την στιγμή που αποφασίζει κανείς να υποστηρίξει το μνημόνιο βλέπω... </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+<ul id="comments-list">
+
+	
+<li>
+	
+			<div class="user-Epanechnikov" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=Epanechnikov">Epanechnikov</a>  πριν  1 μέρα <a href="#wholecomment83821" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83821" style='text-decoration: none;color:#36a00f;'><strong>7</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83821"> </span> <span id="ratebuttons-83821"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83821" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83821"> 
+		<span id = "comment_content-83821"> <br />
+      Για ποια κοινή λογική μιλάς ρε ταλέ όταν είναι οφθαλμοφανές πως οι καταστηματάρχες του κέντρου μαστίζονται από τους δύο παράγοντες (ενώ τα μαγαζιά εκτός κέντρου μόνο από τον έναν). Ξέρεις η ύπαρξη του ενός παράγοντα δεν αποκλείει την ύπαρξη και δεύτερου - στη συγκεκριμένη περίπτωση η κρίση είναι ο common factor για όλους. Αυτό δεν σημαίνει πως η χαριστική βολή δεν είναι εκείνη που πήρε τη ζωή από τον ασθενή που χαροπαλεύει (σε αντίθεση με τους λοιπούς νοσούντες που έχουν κάποιες ελπίδες επιβίωσης). <br />
+<br />
+Επιπλέον τα μαγαζιά του κέντρου βρίσκονται σε στρατηγική  (convenient) για το εμπόριο θέση. Αν κλείσουν όλα τα μαγαζιά μιας μεγάλης πόλης δεν συνεπάγεται πως η πελατεία θα ικανοποιήσει τις ίδιες ακριβώς ανάγκες στα μαγαζιά της άνω ραχούλας...<br />
+<br />
+<br />
++@cinto<br />
+<br />
+"Αλλά τι είναι μερικές παράπλευρες απώλειες μπροστά στην επανάσταση."<br />
+<br />
+Ευκαιρία ένταξης περισσοτέρων στα θύματα του κακούργου καπιταλιστικού/νεοφιλελέ συστήματος; <br />
+<br />
+<br />
+++ Κλαίμε και οδυρόμαστε για τα παιδιά του κέντρου που (υποτίθεται πως) μαστίζονται από ασιτία, λιμούς και επιδίδονται στη σκουπιδοφαγία ενώ ταυτόχρονα διαμορφώνουμε τις κατάλληλες συνθήκες για να κλείσουν τα μαγαζιά των γονιών τους. Αν δεν είναι αυτό παράνοια μεγίστου βαθμού ας μου πει κάποιος τι είναι;;;; </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-cinto" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=cinto">cinto</a>  πριν  1 μέρα <a href="#wholecomment83822" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83822" style='text-decoration: none;color:#36a00f;'><strong>14</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83822"> </span> <span id="ratebuttons-83822"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83822" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+        <div class="comment-body-featured" id="wholecomment83822"> 
+		<span id = "comment_content-83822"> <br />
+      Ενδεχομένως να είναι μικρό το στατιστικό μου δείγμα, αλλά βάσει μαρτυριών των γονιών μου που έχουν καταστήματα στο κέντρο, όποτε γίνονται πορείες/απεργίες ο τζίρος τους πέφτει περίπου στο ένα δέκατο. Τις κανονικές μέρες η μείωση λόγω κρίσης δεν είναι τόσο δραματική. Είναι εθελοτυφλία να μην παραδέχεσαι ότι η τόσο μεγάλη συχνότητα πορειών έχει προκαλέσει και μερικά λουκέτα καθώς και γενικότερη υποβάθμιση στο κέντρο της Αθήνας. Αλλά τι είναι μερικές παράπλευρες απώλειες μπροστά στην επανάσταση... </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-talos" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=talos">talos</a>  πριν  19 ώρες <a href="#wholecomment83841" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83841" style='text-decoration: none;color:#36a00f;'><strong>3</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83841"> </span> <span id="ratebuttons-83841"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83841" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83841"> 
+		<span id = "comment_content-83841"> <br />
+      @Epanechnikov Δεν υπάρχει τίποτα ουσιαστικά που μπορείς να βρεις στην Ερμού που να μη μπορείς να βρεις στο Χαλάνδρι π.χ.<br />
+<br />
+"η ύπαρξη του ενός παράγοντα δεν αποκλείει την ύπαρξη και δεύτερου"<br />
+<br />
+Πράγματι, αλλά εδώ πέρα από την ύπαρξη έχουμε την δυνατότητα να διαπιστώσουμε και την έκταση της επίδρασης των παραγόντων: έτσι από ότι έχω δει μόνο η οδός Σταδίου παρουσιάζει ποσοστό κλεισιμάτων που να είναι αισθητά μεγαλύτερο από το Χαλάνδρι π.χ. αλλά όχι τόσο από τη (χωρίς διαδηλώσεις) Τσακάλωφ. Έτσι με ασφάλεια μπορούμε να πούμε πως ο μείζων παράγοντας κλεισίματος των μαγαζιών είναι (όπως θα περίμενε κανείς) η βίαιη εσωτερική υποτίμηση και η πολιτική του μνημονίου η λεγόμενη... Προφανώς υπάρχει μείωση τις ημέρες πορειών, επεισοδίων κτλ (αν και αν έχεις φαστφουντάδικο κοντά στο Σύνταγμα πίνεις νερό στο όνομα των αγανακτισμένων). Αλλά είναι δεύτερης τάξης διόρθωση που χωρίς τα μέτρα δεν θα υπήρχε (και γιατί δεν θα έπεφτε η κίνηση τις άλλες μέρες και γιατί *δεν θα υπήρχε η αφορμή για να γίνουν οι κινητοποιήσεις*) </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+</ul>
+
+
+	
+<li>
+	
+			<div class="user-ermippos" id="comment-wrap">
+					<div id="comment-head-feat">
+					
+						
+			από <a href="/user.php?login=ermippos">ermippos</a>  πριν  22 ώρες <a href="#wholecomment83826" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83826" style='text-decoration: none;color:#36a00f;'><strong>23</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83826"> </span> <span id="ratebuttons-83826"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83826" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+        <div class="comment-body-featured" id="wholecomment83826"> 
+		<span id = "comment_content-83826"> <br />
+      Και εγώ οργισμένος είμαι και πολύ μάλιστα αλλά πριν βγω στους δρόμους θα ήθελα να συμφωνήσω ποιου ακριβώς κοινωνικού κράτους θα ζητήσω το σταμάτημα της αποδόμησης. Ένας από τους άριστους γνώστες της κατάστασης στον δήμο Θεσσαλονίκης μου έλεγε πριν λίγες μέρες ότι το 30% του προσωπικού είναι αργόμισθοι και ότι σε κάθε περίπτωση το προσωπικό θα μπορούσε να θεωρηθεί κατά 50% τουλάχιστον υπεράριθμο. Είναι πολύ σημαντικό λοιπόν να ξέρουμε αν η διατήρηση αυτής της κατάστασης θα συμπεριληφθεί στην προστασία του κοινωνικού κράτους που θα ζητήσουμε ή όχι. Οι δεκάδες χιλιάδες παράνομες αναπηρικές συντάξεις; Οι μισθοί των ΔΕΚΟ; Οι συντάξεις και τα εφάπαξ στα πενήντα; Και πολλά πολλά άλλα που δεν είναι της ώρας. Πριν αρχίσω να σπάω τις βιτρίνες του κόσμου λοιπόν θα ήθελα να ξέρω για ποιο πράγμα οργίστηκα. Οι Παπανδρέου οι Σαμαράδες και οι συμμορίες τους μπορεί να είναι πολύ κακοί αλλά το έλλειμμα είναι εκεί και δεν θα μας κάνει την χάρη να φύγει μαζί τους ακόμη και αν εκτός από τις βιτρίνες σπάσουμε και καμιά <br />
+χιλιάδα κεφάλια. Ομολογώ ότι αν ήταν να λυθεί το πρόβλημα προσωπικά δεν θα με ενοχλούσε να γίνει αυτό και με την βία. Αλλά να σπάω βιτρίνες για να εκτονώνομαι, δεν θα πάρω, λυπάμαι. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+<ul id="comments-list">
+
+	
+<li>
+	
+			<div class="user-oldboy" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=oldboy">oldboy</a>  πριν  20 ώρες <a href="#wholecomment83836" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83836" style='text-decoration: none;color:#36a00f;'><strong>13</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83836"> </span> <span id="ratebuttons-83836"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83836" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+        <div class="comment-body-featured" id="wholecomment83836"> 
+		<span id = "comment_content-83836"> <br />
+      Έρμιππε, να μην πάρεις το σπάσιμο βιτρινών για να εκτονώνεσαι. Ωστόσο αν είναι να λυπάσαι για κάτι, να λυπάσαι γιατί διαστρεβλώνεις αυτό που προτείνει ο Σραόσα. Μπορείς να διαφωνείς όσο θες μαζί του για το κοινωνικό κράτος, αλλά το να προτείνει με τον πιο απερίφραστο τρόπο κάτι ειρηνικό και να το γυρνάς στο σπάσιμο βιτρινών και να προσθέτεις και τη χιλιάδα των κεφαλιών για γαρνιτούρα, είναι άλλης τάξης ζήτημα. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-dkamen" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=dkamen">dkamen</a>  πριν  19 ώρες <a href="#wholecomment83839" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83839" style='text-decoration: none;color:#36a00f;'><strong>6</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83839"> </span> <span id="ratebuttons-83839"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83839" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83839"> 
+		<span id = "comment_content-83839"> <br />
+      Κι εσύ διαστρεβλώνεις αυτό που λέει ο Έρμιππος. "Δεν έχω πρόβλημα να βγω στους δρόμους" λέει, όμως παρατηρεί ότι δεν του είναι σαφές το αντικείμενο της διεκδίκησης και ειδικότερα δεν του είναι σαφές πώς μπορεί η διεκδίκηση να κάνει λεφτά να υλοποιηθούν από το πουθενά, "ακόμα κι αν εκτός από τις βιτρίνες σπάσουμε καμιά χιλιάδα κεφάλια". <br />
+<br />
+Το βασικό του πρόβλημα δεν είναι ότι ο Σραόσα προτείνει κάτι βίαιο (δε λέει ότι το προτείνει, εξάλλου όπως είπαμε σιγά τον Τζενγκίς Χαν), το βασικό του πρόβλημα είναι ότι ο Σραόσα προτείνει κάτι ηλίθιο.   </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+</ul>
+
+
+	
+<li>
+	
+			<div class="user-dkamen" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=dkamen">dkamen</a>  πριν  22 ώρες <a href="#wholecomment83827" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83827" style='text-decoration: none;color:#36a00f;'><strong>14</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83827"> </span> <span id="ratebuttons-83827"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83827" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+        <div class="comment-body-featured" id="wholecomment83827"> 
+		<span id = "comment_content-83827"> <br />
+      σιγά ρε σραόσα θα σκίσεις κανα χαλούμι.   </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-Vega" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=Vega">Vega</a>  πριν  21 ώρες <a href="#wholecomment83830" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83830" style='text-decoration: none;color:#36a00f;'><strong>6</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83830"> </span> <span id="ratebuttons-83830"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83830" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83830"> 
+		<span id = "comment_content-83830"> <br />
+      Αυτό που ο Sraosha ευαγγελίζεται δεν μπορεί ούτε να το γευτεί αν συμβεί, ούτε να το συν-προκαλέσει, ούτε καν να νιώσει τις όποιες συνέπειές του. Καλογραμμένο και ευθύ κείμενο, μα κινδυνεύει να ακούγεται κάπως σαν κηρύγματα χοντρών παπάδων να ελεούμε τους φτωχούς. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-contrabando" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=contrabando">contrabando</a>  πριν  21 ώρες <a href="#wholecomment83832" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83832" style='text-decoration: none;color:#36a00f;'><strong>3</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83832"> </span> <span id="ratebuttons-83832"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83832" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83832"> 
+		<span id = "comment_content-83832"> <br />
+      @Εrmippos<br />
+Είπε ο Sraosha να σπάσουμε βιτρίνες; Αυτό κατάλαβες; //Μιλάω για ένα εκατομμύριο κόσμο, όχι του Μπιρσίμ για τον Αντρέα, αλλά ένα εκατομμύριο μπρελόκ (σαν αυτά που "ξεκούφαιναν ενοχλητικά" τους κομμουνιστές στην Πράγα το 1989), μιλάω για ένα εκατομμύριο ροκάνες. Ούτε αμεσοδημοκρατικές συνελεύσεις, ούτε τσαντήρια, ούτε πάρλες, ούτε τίποτα.//<br />
+<br />
+Eίπε //ΑΝ σπάσει και καμιά βίτρίνα// για να δείξει από τί τρέφονται οι δημοσιογραφικές κλίκες που αντί να μιλάνε για τα αιτήματα του κόσμου μιλάνε για τα λίγα απροσάρμοστα μπάχαλα. Αυτές οι κλίκες δεν αναρωτιούνται ποτέ γιατί δε συλλαμβάνουνε τα μπάχαλα και τα αφήνουνε να κάνουνε τη δουλειά τους. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-ermippos" id="comment-wrap">
+					<div id="comment-head-feat">
+					
+						
+			από <a href="/user.php?login=ermippos">ermippos</a>  πριν  20 ώρες <a href="#wholecomment83837" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83837" style='text-decoration: none;color:#36a00f;'><strong>25</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83837"> </span> <span id="ratebuttons-83837"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83837" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+        <div class="comment-body-featured" id="wholecomment83837"> 
+		<span id = "comment_content-83837"> <br />
+      Oldboy και Contrabando<br />
+<br />
+Δεν κάνω τίποτε άλλο από το να αοριστολογώ και να συνθηματολογώ τουλάχιστον όσο και ο Σραόσα. Συμφωνώ και γω μαζί του ότι, από την στιγμή που όλα τα θεσμικά εργαλεία βρίσκονται στα χέρια του φαύλου συστήματος, (το έχω γράψει πολλές φορές άλλωστε) η μόνη λύση είναι η ειρηνική εξέγερση. Οι ειρηνικές εξεγέρσεις όμως δεν γίνονται από κοινωνίες στις οποίες η σύγχυση κοντεύει να χτυπήσει ταβάνι. Επειδή αν γίνουν έτσι παύουν σύντομα να είναι ειρηνικές και καταλήγουν σε λουτρά αίματος καταστροφές και διχασμούς. <br />
+<br />
+Στο πλαίσιο του συγκεκριμένου κειμένου, το πολύ ευχάριστο αίτημα για "ανατροπή του ξηλώματος του κοινωνικού κράτους" ισοδυναμεί ευθέως με το "λεφτά υπάρχουν" του Γιώργου και την ανάπτυξη που είναι στην γωνία και περιμένει να της σφυρίξουμε να έρθει του Αντώνη. Επειδή λεφτά πλέον δεν υπάρχουν και δεν πρόκειται να υπάρξουν όσο και αν καταραστούμε τις αγορές, όσο και αν ξεφορτωθούμε τους εγκληματιές που κυβερνούν. Θα προτιμούσα λοιπόν πριν βγούμε στον δρόμο, εάν ασφαλώς δεν θέλουμε να καταλήξουμε να σπάμε βιτρίνες και να ανοίγουμε κεφάλια, να κάτσουμε και να τα βάλουμε κάτω για να συμφωνήσουμε τι ακριβώς εννοούμε λέγοντας κοινωνικό κράτος. Αφού πρώτα ορίσουμε τι εννοούμε ως κοινωνία σε αυτήν την φαιδρή χώρα.<br />
+<br />
+Όσο για τις αγορές και την κακία τους. Συμφωνώ με τον Σραόσα ότι το παραξήλωσαν. Μπορεί και να το πιστεύω μάλιστα και περισσότερο. Αλλά ας παίξουμε λιγο χαμηλά την μπάλα γιατί γελάνε και οι απέξω που μας ακούνε. Να μιλήσουνε για τις αγορές οι γερμανοί εργαζόμενοι, που πηγαίνουν το πρωί στην δουλειά τους και βγαίνουν στην σύνταξη στα 67, να το καταλάβω. Να μιλήσουμε και μεις όμως, που τις παρακαλάμε ακόμη και σήμερα και οραματιζόμαστε την σύντομη επιστροφή μας σε αυτές, για να μπορέσουμε να συνεχίσουμε να εισάγουμε μαρούλια από την Ολλανδία, πάει κομματάκι πολύ. Δεν ξέρω πολλά αλλά τα λίγα που ξέρω τα ξερω καλά. Γιαυτό λοιπόν λέω ότι τα 30 δις που πετάξαμε στον ιατρικό τομέα την τελευταία δεκαετία δεν τα πετάξαμε κατ΄ εντολήν των αγορών. Και δεν συνεχίζουμε να τα πετάμε επειδή δεν μας αφήνουν αυτές να κάνουμε διαφορετικά.<br />
+<br />
+Και κάτι τελευταίο. Βαρέθηκα, μα την Παναγία, να μην τολμάω να διαφωνήσω σε κάτι με τον Σραόσα για να μην με πουν μνημονιακό. Βαρέθηκα να μην τολμάω να πω ότι οι δημόσιοι υπάλληλοι είναι υπεράριθμοι και εν τινι βαθμώ βαθιά αντιδραστικός μηχανισμός που καθηλώνει την χώρα στην υπανάπτυξη για να μην με πουν νεοφιλελεύθερο. Βαρέθηκα να μην τολμώ να πω ότι υπάρχει και άλλη λύση επειδή φοβάμαι ότι θα με πουν οπαδό του Σαμαρά. Βαρέθηκα να μην μπορώ να πω ότι τώρα περισσότερο από ποτέ χρειαζόμαστε την παρέμβαση ενός ισχυρού κράτους που θα προστατεύσει τούς αδύναμους ενάντια στην αρπακτικότητα αυτών που βρέθηκαν (με κάθε τρόπο) σε ευνοϊκή θέση επεiδή φοβάμα ότi θα με πουν αρiστερό. Λίγος ορθολογισμός, όμως, δεν θα μας έβλαπτε. Οι μεν θέλουν μνημόνιο, οι δε μάχες κατά των αγορών, οι τρίτοι κοινωνικό κράτος από άδεια ταμεία. Μόνο μαρούλια δεν σκέφθηκε να σπείρει κανείς.<br />
+<br />
+Α! ξέχασα. Αν πω ότι το χειρότερο που μπορούμε να κάνουμε είναι να δημιουργούμε με λογοτεχνίζοντα κείμενα στον κόσμο της αίσθηση ότι τα πράγματα είναι εύκολα και ότι μπορούμε να καθαρίσουμε χωρίς θυσίες και φτώχια (με λίγες κατάρες κατά των αγορών και μια άλλη. γενικώς και αορίστως, καλή κυβέρνηση) κινδυνεύω να με πουν παπαγαλάκι του Λοβέρδου. Αυτό πια! </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-talos" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=talos">talos</a>  πριν  19 ώρες <a href="#wholecomment83840" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83840" style='text-decoration: none;color:#36a00f;'><strong>17</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83840"> </span> <span id="ratebuttons-83840"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83840" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+        <div class="comment-body-featured" id="wholecomment83840"> 
+		<span id = "comment_content-83840"> <br />
+      Όχι! Όχι άλλο "καλός γερμανός εργάτης και τεμπέλης Έλληνας": Έρμιππε δεν ξέρω τι σχέση έχεις με τον Ελληνικό ιδιωτικό τομέα. Οι ώρες εργασίες και η ποιότητα εργασιακών συνθηκών των γερμανών είναι όνειρο άπιαστο εδώ. Ήταν πάντα. Ήμασταν και είμαστε όλο και περισσότερο χώρα απαξίωσης της εργασίας. Χώρα εξευτελισμού του νομίμως εργαζόμενου. Η πρόταση να *διαλύσουμε κάθε κοινωνική προστασία και υπηρεσία*, να καθηλώσουμε σε υποβαλκανικά επίπεδα τους μισθούς και να διολισθήσουμε σε τριτοκοσμικό εργασιακό καθεστώς, δεν μπορώ να καταλάβω πώς και πού και με τι που να μοιάζει με λογική, δεν οδηγούν σε ένα είδος τρίτου κόσμου που θα κάνει την διεφθαρμένη ολιγαρχία στην οποία ζούσαμε να μοιάζει με Νορβηγία και το οποίο δεν είναι μακριά. Η πλήρης κοινωνική εξαθλίωση σε ποια σαδομαζοχιστική χιλιαστική αίρεση αυτομαστίγωσης αποτελεί την πύλη του εξαγνισμού και πόσο πρέπει να πέσει το προσδόκιμο ζωής για να υπάρξει ικανοποίηση της λατρευτικής αυτής δίψας για το κοινωνικό αίμα; Πού, ΠΟΥ; έχει ποτέ δουλέψει αυτή η παράνοια που υποτίθεται πως θα μας βγάλει από την κρίση και θα μας οδηγήσει να βρεθούμε (μόνοι εμείς από όλον τον γεωγραφικό μας περίγυρο) σε μια κοινωνικά προτεσταντική, σκανδιναβική ευσέβεια, και κοσμιότητα; <br />
+<br />
+Είναι εύκολο να εγκαλείς τους άλλους για ασάφεια, αλλά η δική σου πρόταση καθόλου εύλογη δεν είναι ως προς το ποιες είναι οι λογικές της συνέπειες. Και εντέλει υπάρχουν αρκετοί που προτιμούν να ζήσουν φτωχότεροι σε μια έστω και ατελέστατη δημοκρατία παρά απλά φτωχοί σε μια τυραννία. Πέρα από τη μεταπολίτευση, στην κατεύθυνση που υποδεικνύεται υπάρχουν μόνο διάφορα είδη χούντας. Εκεί να πάμε;<br />
+<br />
+Για την εμμονή να θεωρείται η αργομισθία του βύσματος του Παπαγεωργόπουλου ως βασικός λόγος για την επικείμενη κατάρρευση της Ευρωζώνης και επαρκής για να δικαιολογήσει αυτήν εδώ την πολλάκις ιστορικά αποτυχημένη συνταγή αντιμετώπισης κρίσεων χρέους, έχω βαρεθεί κι εγώ μα τον Άγιο Σύλλα, να επαναλαμβάνω το άτοπό της. Θέλει ένα ιδιαίτερο είδος εθελοτυφλίας για να μην παρατηρεί κανείς ότι η Ελληνική κρίση δεν είναι παρά μια *αφορμή* ξεσπάσματος ενός σοβούντος και έντονου παγκόσμιου τελικά προβλήματος που ξεπερνά οποιοδήποτε πρόβλημα είχε η Ελλάδα *και θα συνέβαινε ούτως ή άλλως* όποια πολιτική κι αν ακολουθούσαμε. Κάνουμε σαν παιδάκια που ενώ βλέπουν τι γίνεται εκτός Ελλάδος στην περιφέρεια της ΕΕ κλείνουμε τα μάτια φωνάζοντας *ΔΕ ΒΛΕΠΩ ΔΕ ΒΛΕΠΩ*, μην τυχόν και διαψευσθεί η ιδεοληψία πως εμείς, μόνοι από όλες τις μικρές χώρες της οικουμένης, έχουμε τις τύχες μας στα χέρια μας και ότι και μας συμβαίνει καλό και κακό εξαρτάται από εμάς. <br />
+<br />
+Θα ήθελα να αντεπιχειρηματολογήσω για την αβασιμότητα του άλματος από την διαφθορά του συστήματος υγείας στην κρίση της ευρωζώνης, κι από την (έωλη και χωρίς βάση) διεκτραγώδηση του υπεράριθμου των πυροσβεστών, στην κατάλυση της συλλογικής διαπραγμάτευσης όπως στην Αφρική (ίσως), ή έστω ένα λογικό επιχείρημα για την πλήρη αποσύνδεση της Ελληνικής κρίσης και της χουβερικής της "θεραπείας" από γενικότερους ταξικούς σχεδιασμούς στην Ευρώπη, αλλά επιχειρηματολογία δεν υπάρχει, μόνο μια παράξενη επίκληση στο θυμικό. <br />
+<br />
+Ο ορθολογισμός οφείλει να τεκμηριώνεται όχι να δηλώνεται.    </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+<ul id="comments-list">
+
+	
+<li>
+	
+			<div class="user-neTpen" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=neTpen">neTpen</a>  πριν  18 ώρες <a href="#wholecomment83843" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83843" style='text-decoration: none;color:#36a00f;'><strong>6</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83843"> </span> <span id="ratebuttons-83843"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83843" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83843"> 
+		<span id = "comment_content-83843"> <br />
+      ~~Και εντέλει υπάρχουν αρκετοί που προτιμούν να ζήσουν φτωχότεροι σε μια έστω και ατελέστατη δημοκρατία παρά απλά φτωχοί σε μια τυραννία.~~<br />
+<br />
+Εσύ έτσι αισθάνεσαι ότι τίθεται το δίλημμα; Διότι, αν ήταν έτσι, κάθε απάντηση θα ήταν σεβαστή. <br />
+<br />
+Φοβάμαι ότι οι περισσότεροι νομίζουν ότι η ύφεση θα φύγει ως δια μαγείας μαζί με την Τρόικα. Ή ότι εν πάση περιπτώσει θα είμαστε το ίδιο, αλλά "πιο περήφανοι".  </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-talos" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=talos">talos</a>  πριν  18 ώρες <a href="#wholecomment83845" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83845" style='text-decoration: none;color:#36a00f;'><strong>4</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83845"> </span> <span id="ratebuttons-83845"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83845" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83845"> 
+		<span id = "comment_content-83845"> <br />
+      Ποτέ προσωπικά δεν έχω πει πως υπάρχει μια μαγική, ανώδυνη λύση. Τουναντίον το μέλλον έχει πολλή ξηρασία όπως και να εξελιχθεί. Υπάρχουν δικαιότερες λύσεις όμως πολλές, και με καλύτερη προοπτική, και όλες απαιτούν να φύγει η τρόικα. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-neTpen" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=neTpen">neTpen</a>  πριν  17 ώρες <a href="#wholecomment83849" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83849" style='text-decoration: none;color:#36a00f;'><strong>1</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83849"> </span> <span id="ratebuttons-83849"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83849" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83849"> 
+		<span id = "comment_content-83849"> <br />
+      ΟΚ, αλλά άλλο ρώτησα. :) Πόσο καθαρά τίθεται το δίλημμα δημοσίως, πόσο συνειδητά λέει ο κόσμος το "πάρτε το Μνημόνιο και φύγετε από δω" και τι εναλλακτική έχει κατά νου. Εάν το επιλέγει στη βάση που παραθέτεις, είναι απόλυτα κατανοητό και, εφόσον τούτο είναι ή γίνει πλειοψηφική στάση, θεμιτό ως δρόμος. Αλλά είναι έτσι; Αυτό αναρωτιέμαι.  </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+</ul>
+
+
+	
+<li>
+	
+			<div class="user-helion" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=helion">helion</a>  πριν  18 ώρες <a href="#wholecomment83844" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83844" style='text-decoration: none;color:#36a00f;'><strong>18</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83844"> </span> <span id="ratebuttons-83844"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83844" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+        <div class="comment-body-featured" id="wholecomment83844"> 
+		<span id = "comment_content-83844"> <br />
+      Αν ήξερα στα 17 μου πως θα έφτανα κάποτε να διαβάσω τόσες δίκαιες προτροπές για αντίδραση και παρ' όλα αυτά να μένω άπραγη, θα με έφτυνα. <br />
+Αλλά γέρασα, και ο κόσμος έχει πάνω από 16 χρώματα. Πάει να πει πως δίνω δίκιο στον Σραόσα, σέβομαι τις ενστάσεις του cinto, καταλαβαίνω τους δισταγμούς του έρμιππου - και ιδού το βραχυκύκλωμα. Φοβάμαι πως για κάποιους από μας δεν υπάρχει σήμερα αίτημα και καθολικό και λογικό ταυτόχρονα, μια πρόταση πραγματιστική και ανθρώπινη να ενώσει χωρίς ενδοιασμούς, έστω και ως απόπειρα διεξόδου - και αυτό το χρεώνω στην Αριστερά. Αδίκως ίσως, αλλά όπου συμπαθούμε προσβλέπουμε, και από κει απογοητευόμαστε.<br />
+Το διαίρει και βασίλευε ήδη διέβη θριαμβευτικά, και κυνικότατα ούτε καν αυτό δεν το χρεώνω σε μια σατανική κεντρική πολιτική βούληση. Είναι ο καθένας μας, που χαρακωμένος στην δική του, βαθιά προσωπική εμπειρία της κρίσης δεν μπορεί να χαραμίσει ούτε κατανόηση, ούτε αλληλεγγύη στον παραδίπλα. Και έχουμε μακρυ δρόμο ακόμα. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-ermippos" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=ermippos">ermippos</a>  πριν  17 ώρες <a href="#wholecomment83847" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83847" style='text-decoration: none;color:#36a00f;'><strong>17</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83847"> </span> <span id="ratebuttons-83847"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83847" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+        <div class="comment-body-featured" id="wholecomment83847"> 
+		<span id = "comment_content-83847"> <br />
+      Ταλος	<br />
+<br />
+Δεν είπα "εργάτης" αλλά "εργαζόμενος". Ας σταματήσουμε επιτέλους να χρησιμοποιούμε το συναισθηματικό φορτίο των λέξεων για να παραμυθιάζουμε τους εαυτούς μας. Εργαζόμενος είπα λοιπόν. Όπως θέλουν δακρύβρεκτα να ονομάζουν τους εαυτούς τους τα βύσματα του Παπαγεωργόπουλου, οι διεφθαρμένοι της εφορίας και των τελωνείων με τα 30 επιδόματα, οι αγύρτες των ΔΕΚΟ, οι δικαστές της αρνησιδικίας και των ειδικών μισθολογίων, οι υπάλληλοι της βουλής, οι χιλιάδες αργόμισθοι της ΕΡΤ, οι δημοσιογράφοι των υπουργείων, και τόσες άλλες ευγενείς κατηγορίες, που αριθμούν εκατοντάδες χιλιάδες και που ρουφούν το αίμα των πραγματικών εργατών πολύ περισσότερο από τις αγορές, τις τρόικες και τους ξένους τοκογλύφους. Ας σταματήσει επιτέλους αυτή η άθλια και δόλια ταύτιση των θυμάτων με τους θύτες τους. <br />
+<br />
+Αυτό που λέω δεν είναι να εξαθλιωθούμε από επιλογή. Είναι να μετρήσουμε το έχειν μας και να ζήσουμε σύμφωνα με τις δυνατότητες μας. Κάνοντας την μεγαλύτερη δυνατή προσπάθεια να το κάνουμε με δικαιοσύνη. Να δούμε τι είναι αυτό που παράγει ο μέσος τελωνειακός και δικαιούται να αμοίβεται με 3.000 ή 4.000 τον μήνα (συν τα τυχερά) και τι ο μέσος εργάτης που αγωνίζεται ΄χωρίς ρεπό και αναρρωτικές για τα 600 και να ξανακάνουμε την μοιρασιά. Ανέφερα την Γερμανία ακριβώς για αυτόν τον λόγο. Γιατί εκεί συνηθίζουν να μετράνε και να αποδίδουν τα ίσα. Να προσπαθούν τουλάχιστον με ειλικρίνεια να το κάνουν. Οι γερμανοί έχουν στιβαρό κοινωνικό συμβόλαιο και δεν τρώνε ο ένας τις σάρκες του άλλου. Γιαυτό είναι που δικαιούνται δια να ομιλούν. Σε αντίθεση με τους φαιδρούς τσικιρικιτζήδες και κλεφτοκοτάδες της Βαλκανικής. Σου φαίνονται ανορθολογικά όλα αυτά; Αν ναι λυπάμαι αλλά δεν θα μπορέσουμε να συνεχίσουμε την κουβέντα μας. <br />
+<br />
+Και ρωτάς αν έχω σχέση με τον ιδιωτικό τομέα. ΕΙΜΑΙ ο ιδιωτικός τομέας όσο δεν μπορείς να φανταστείς. Αυτός μάλιστα που δεν παράγει άυλα αλλά πράγματα που πιάνεις με τα χέρια σου. Και οι περισσότεροι εργάτες μου (το 30% που απέμεινε πλέον) είναι μαζί μου 23 χρόνια τώρα. Τόσα, όσα μετράει και η επιχείρηση. Και αν υπάρχει ένα δείγμα αυτού που ονομάζουμε ιδιωτικό τομέα που τσαλαπατήθηκε αλύπητα από κάθε έκφραση αυτού του ασύλληπτα διεφθαρμένου κράτους αυτό είμαι εγώ. Αν μπορεί να υπάρξει μια χαρακτηριστική ιστορία για το πως κυνηγήθηκε ανελέητα η ανάπτυξη, η καινοτομία και η επιχειρηματικότητα σε αυτή την θλιβερή χώρα αυτό είμαι εγώ. Πίστεψε με. Και το κακό που μπορώ να σου περιγράψω δεν το έκαναν ούτε οι αγορές, ούτε αυτό που θολά και αόριστα ονομάζουμε κράτος και το διαχωρίζουμε βολικά από τους ανθρώπους που το συγκροτούν, -αυτούς που αρέσκονται να αποκαλούν τον εαυτό τους "εργαζόμενους"-, ούτε οι νεφελίμ ούτε ο διάβολος ο ίδιος. Αυτοί οι "εργαζόμενοι" το έκαναν, ο καθένας τους ξεχωριστά, όσο δεν φαντάζεσαι συστηματικά και με πλήρη συνείδηση, τσαλαπατώντας τους άλλους, τους πραγματικούς εργάτες, αυτούς που γύρευαν μια δουλειά για να ζήσουν τα παιδιά τους, με τα μισά και τα μισά των μισών από αυτά που οι ίδιοι απολάμβαναν. Και σήμερα, μετά από όλα αυτά και πάλι δεν είναι οι εργάτες αυτοί που μιλάνε. Είναι ακόμη μια φορά οι "εργαζόμενοι" που μιξοκλαίνε και γυρεύουν την αλληλεγγύη των εταίρων μας και της βιασμένης και χειμάζουσας κοινωνίας. Αυτήν την αλληλεγγύη που τόσο πολύ στέρησαν στους διπλανούς τους και που ακόμη και σήμερα "παλεύουν" με νύχια και με δόντια να συνεχίσουν να την στερούν. Γιατί αυτοί λέει δεν διαπραγματεύονται τις κατακτήσεις και τα δικαιώματα τους. Είναι τουλάχιστον ντροπή.<br />
+<br />
+Λέω λοιπόν να ζήσουμε με αυτά που έχουμε. Αν αυτά αντιστοιχούν στα Βαλκάνια ας είναι και έτσι. Φτάνει να είναι με δικαιοσύνη.<br />
+<br />
+Αν μπορούσες να μου πεις που θα βρούμε αυτά που χρειάζονται για να μην γίνουμε βαλκάνια θα προσπαθούσα μαζί σου. Αλήθεια στο λέω.<br />
+ </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+<ul id="comments-list">
+
+	
+<li>
+	
+			<div class="user-tsimitakis" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=tsimitakis">tsimitakis</a>  πριν  15 ώρες <a href="#wholecomment83851" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83851" style='text-decoration: none;color:#36a00f;'><strong>7</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83851"> </span> <span id="ratebuttons-83851"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83851" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83851"> 
+		<span id = "comment_content-83851"> <br />
+      Ερμιπε αυτό που λες ισοδυναμεί με το ότι την Αθήνα την έκαναν έκτρωμα αυτοί που ήρθαν και έχτισαν αυθαίρετα, η οτι οι μετανάστες μας παίρνουν τις δουλειές. Οσο στενά και να βλέπει κανείς τα πράγματα δεν μπορεί να μην βλέπει την ιστορική συγκυρία, τη θέση στην οποία βρίσκεται η χώρα σε διαφορετικές στιγμές και να μην καταλαβαίνει οτι γίνονται στρατηγικές επιλογές από τα πάνω που καθοριζουν τις σχέσεις απο κάτω. Με σεβασμό στα 23 επιχειρηματικά σου χρόνια, γνωρίζεις πολύ καλά για ποιούς λογους δεν άνθησε η καινοτομία στη χώρα. Δεν φταίξανε οι δημόσιοι υπάλληλοι για αυτό. Παρακολούθησες τις βιομηχανίες και τις βιοτεχνιες να φεύγουν απο τα βόρεια σύνορα, θυμάσαι όταν ακόμα λέγαμε αν θα γίνουμε-δεν θα γίνουμε τα γκαρσόνια της Ευρώπης, παρακολούθησες το "κλείσιμο" της χώρας προς τους γείτονες της, την στροφή στον εθνικισμό. Και σήμερα βλέπεις την επίθεση στο υποτυπώδες και γιαλατζι κοινωνικό συμβόλαιο που είχαμε στην Ελλάδα αλλά και το πρότυπο του το Ευρωπαϊκό κοινωνικό συμβόλαιο, την περιθωριοποίηση της χώρας, τον χωρισμό της Ευρώπης σε ζώνες, την πρόσδεση της χώρας στον Αμερικανο-ισραηλινό άξονα και μια νέα απομόνωση να επιβάλλεται με βία. Θα είναι είτε αυτό ή θα είμαστε σκλάβοι των Γερμανών και των Σαουδαράβων. Είναι αδύνατο να μην βλέπεις τι παιχνίδια παίζονται αυτή τη στιγμή στο όνομα αυτών των δημοσίων υπαλλήλων οτι κι αν είναι αυτοί. Αλλάζει δραματικά η Ευρώπη σήμερα και μαζί η θέση της Ελλάδας. Θα συνεχίσουμε πολύ να ομφαλοσκοπούμε γκρινιάζοντας για τους δημόσιους υπάλληλους; </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-polyvotis" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=polyvotis">polyvotis</a>  πριν  14 ώρες <a href="#wholecomment83852" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83852" style='text-decoration: none;color:#36a00f;'><strong>14</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83852"> </span> <span id="ratebuttons-83852"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83852" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+        <div class="comment-body-featured" id="wholecomment83852"> 
+		<span id = "comment_content-83852"> <br />
+      @tsimitakis: Ξέχασες να αναφέρεις τον πόλεμο στο Αφγανιστάν και την άνοδο του Tea Party. Διότι πρέπει να βλέπουμε τη συνολική εικόνα. Και όχι να ασχολούμαστε με λεπτομέρειες όπως ο ελληνικός δημόσιος τομέας. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-dkamen" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=dkamen">dkamen</a>  πριν  7 ώρες <a href="#wholecomment83869" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83869" style='text-decoration: none;color:#36a00f;'><strong>2</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83869"> </span> <span id="ratebuttons-83869"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83869" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83869"> 
+		<span id = "comment_content-83869"> <br />
+      //την πρόσδεση της χώρας στον Αμερικανο-ισραηλινό άξονα//<br />
+<br />
+από τον μπινλαντενικό-ερυθροχμερικό που θα έπρεπε να ανήκει για ένα επιτυχημένο μέλλον... </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+</ul>
+
+
+	
+<li>
+	
+			<div class="user-tsimitakis" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=tsimitakis">tsimitakis</a>  πριν  12 ώρες <a href="#wholecomment83855" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83855" style='text-decoration: none;color:#36a00f;'><strong>4</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83855"> </span> <span id="ratebuttons-83855"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83855" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83855"> 
+		<span id = "comment_content-83855"> <br />
+      Σωστα, πως μου διέφυγε. Λίγο σούπα δε λέω, αλλά you get my point. Το τελευταίο από τα προβλήματα μας αυτή τη στιγμή είναι οι κακοί δημόσιοι υπάλληλοι στους οποίους περίπου επιχειρήθηκε να φορτωθεί η παγκόσμια οικονομική κρίση (δες σχετικά στο αρχείο της daily mail και φρίξε) και πάντως σίγουρα η ελληνική. Ας ξεχάσουμε για ποιο λόγο έγιναν όλα αυτά ως εδώ, ας αγνοήσουμε το γεγονός οτι αποδεδειγμένα δεν είναι οι δημόσιοι υπάλληλοι το πρόβλημα της οικονομίας μας και ας σταυρώσουμε μερικούς για παραδειγματισμό. Το πρόβλημα δεν θα εξαλειφθεί αλλά δε βαριέσαι, θα έχουμε βγάλει το απωθημένο μας και θα είμαστε και εντάξει απέναντι στους Γερμανούς που πιστεύουν ότι πρέπει να περάσουμε ιερά εξέταση γιατί δώσαμε ψεύτικα στατιστικά. Ε τώρα αν λιποθυμάνε και μερικά παιδάκια από την ασιτία, τι να κάνουμε. Δεν μπορούμε να τα έχουμε και όλα. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-tanevramou" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=tanevramou">tanevramou</a>  πριν  10 ώρες <a href="#wholecomment83857" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83857" style='text-decoration: none;color:#36a00f;'><strong>13</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83857"> </span> <span id="ratebuttons-83857"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83857" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+        <div class="comment-body-featured" id="wholecomment83857"> 
+		<span id = "comment_content-83857"> <br />
+      Μα συγνώμη αυτό που ζητάει ο Σραόσα δεν έχει ήδη γίνει; <br />
+Αυτό ακριβώς δεν ήταν οι Αγανακτισμένοι; Δεν μαζευτήκανε με ροκάνες και κρεμάλες και μούτζες; <br />
+Ναι, και; Και τι έγινε;<br />
+Α ναι, ξέχασα, κατάφεραν να αποδείξουν ότι ακόμα και 100.000 έλληνες, όσο αγανακτισμένοι και να είναι,  είναι αδύνατον να διατυπώσουν έστω και ένα πολιτικό αίτημα που να ξεφεύγει από τα όρια της τραγικής γελοιότητας.<br />
+Απέδειξαν ότι στην σημερινή ελλάδα οποιαδήποτε τέτοιου είδους εκδήλωση είναι αδύνατον να ξεφύγει από τον χειρισμό των αδίσταχτων αριστερίστικων γκρουπούσκουλων.<br />
+Απέδειξαν επίσης ότι οποιαδήποτε συγκέντρωση η οποία αδυνατεί να διατυπώσει στοιχειώδη πολιτικά αιτήματα και επικεντρώνεται στο να διατυπώσει την οργή, την αγανάκτηση και άλλα τέτοια ανθρώπινα, είναι καταδικασμένη αργά ή γρήγορα, αυθόρμητα ή (συνήθως) καθοδηγούμενα να καταλήξει σε ένα και μόνο σημείο: στην εκδήλωση χουντο-φασιστικών συμπεριφορών και επιδιώξεων.<br />
+Όπως ακριβώς συνέβη και με τους Αγανακτισμένους το καλοκαίρι. Γιατί δεν ξέρω πως ακριβώς την βλέπετε εσείς την πολιορκία ενός δημοκρατικά εκλεγμένου κοινοβουλίου και τον εκφοβισμό των βουλευτών όταν καλούνται να ψηφίσουν κατά συνείδηση, αλλά εγώ είμαι σίγουρος ότι την βλέπω όπως πραγματικά είναι: εκδήλωση καθαρού ΦΑΣΙΣΜΟΥ.<br />
+<br />
+Υπό αυτό το πρίσμα λοιπόν φίλτατε, ευχαριστώ, αλλά δεν θα πάρω. Για την ακρίβεια όχι μόνο δεν θα πάρω, αλλά θα κάτσω σπίτι μου και θα σας βλαστημάω που για ακόμα μια φορά θα με εμποδίζετε να πάω στην δουλειά μου - χωρίς απολύτως κανένα λόγο, παρά μόνο για να διαδηλώσετε την "οργή" σας.<br />
+<br />
+Εώς ότου διατυπωθεί έστω και ένα πολιτικό θεσμικό αίτημα (από τα δεκάδες ώριμα που υπάρχουν εδώ και πολλά χρόνια) που θα έχει ως στόχο να βελτιώσει την ΔΗΜΟΚΡΑΤΙΑ στην ελλάδα - ξέρεις, σαν αυτά που διατύπωνε η αριστερά στην δεκαετία του '60 και δημιούργησε τον μύθο της - οι ροκάνες και τα ουρλιαχτά των "οργισμένων" θα με αφήνουν παγερά αδιάφορο - ίσως και φοβισμένο.<br />
+<br />
+Και επειδή δεν το βλέπω αυτό να συμβαίνει σύντομα, καλή μας τύχη. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-cinto" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=cinto">cinto</a>  πριν  8 ώρες <a href="#wholecomment83864" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83864" style='text-decoration: none;color:#36a00f;'><strong>4</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83864"> </span> <span id="ratebuttons-83864"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83864" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83864"> 
+		<span id = "comment_content-83864"> <br />
+      Τελικά το ξανασκέφτηκα, δίκιο έχει ο Σραόσα. Θα γίνουν οι πορείες, θα πέσει η κυβέρνηση, θα έρθει ο Αντώνης και θα ξαναγίνουμε όλοι πλούσιοι. Γιούπι. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-dytistonniptiron" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=dytistonniptiron">dytistonniptiron</a>  πριν  8 ώρες <a href="#wholecomment83865" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83865" style='text-decoration: none;color:#36a00f;'><strong>7</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83865"> </span> <span id="ratebuttons-83865"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83865" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83865"> 
+		<span id = "comment_content-83865"> <br />
+      Πηγαίνετε επί τόπου, τα λέει όλα ο Τάλως, για όποιον καταλαβαίνει. Ως εξής:<br />
+----------------------------------------------------------<br />
+<br />
+"αν φωνάξουμε όλοι μαζί αρκετά δυνατά το λεφτόδεντρο θα καταλάβει το λάθος του και θα βρέξει δισεκατομμύρια".<br />
+<br />
+Ναι. Η πιθανότητα μιας γενικευμένης εξέγερσης αρκεί για να αναδείξει το πόσο υποτελής στην πολιτική είναι η οικονομία. Π.χ: οι βιομηχανίες στην Κίνα ορκίζονταν προ ετών σε όλους του νόμους της ευλογοφανούς λυσενκοϊκής σαχλαμάρας που περνιέται για κυρίαρχη σχολή οικονομικής θεωρίας τρομάρα της, και σε όλους τους διεθνείς οργανισμούς, πως δεν μπορούσε να ανεβάσει τα μεροκάματα πολύ, για λόγους ανταγωνιστικότητας, προσέλκυσης κεφαλαίων κτλ. 10.000 αιματηρές απεργιακές εξεγέρσεις έφτασαν για να αλλάξουν την οικονομική πραγματικότητα και να εξωθήσουν τα μεροκάματα μέχρι και 50% πάνω σε ένα χρόνο.<br />
+<br />
+Το χρηματόδεντρο έχει και άλλες περίεργες ιδιότητες: όταν είναι να διαγραφούν χρέη με πολιτικό βάρος (π.χ. της μεταπολεμικής Γερμανίας) απορροφά χρέη. Όταν είναι να ξελασπωθούν τεράστιες τράπεζες στις ΗΠΑ, ή να χρηματοδοτηθούν οι Ελληνικές σε περίοδο γενικευμένων περικοπών, παράγει με κάποιο θαύμα καρπούς. Το δημόσιο χρέος δεν είναι σαν το χρέος στο μπακάλη, είναι ένα πολιτικό μέγεθος. Μόνο πολιτικά μπορεί να αντιμετωπιστεί.<br />
+<br />
+Στην περίπτωσή μας θα αρκούσε να προηγηθεί με διαφορά σε μια δημοσκόπηση η Αλέκα. <br />
+<br />
+Αλλά κι αυτό να μη συμβεί: οι συλλογικότητες που κτίζουν τέτοιου είδους διαμαρτυρίες είναι εκείνες που δημιουργούν τις συνθήκες πολιτικής της επόμενης μέρας, να μη σου πω και της ίδιας μέρας. Η διαμαρτυρία, η συναίσθηση πως η πολιτική είναι μια καθημερινή προσωπική μάχη, είναι προϋπόθεση δημοκρατίας. Αν υπάρχει κοινωνικό πρόβλημα και πρέπει να λυθεί η λύση δεν είναι η μαζική ανάγνωση κειμένων του Χρήστου Γιανναρά, αλλά η κοινή πολιτική δράση, όσο πιο μαζικά και όσο πιο ορθολογικά γίνεται. Η πολιτική δράση παράγει ηθικοκοινωνικές μεταβολές. Όπως ανάλογες μεταβολές προς την αντίθετη κατεύθυνση παράγει η απαξίωση της εργασίας. Οπότε θέλουμε πολλή από την πρώτη για να αντισταθμίσει τον κατακλυσμό από την δεύτερη </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+<ul id="comments-list">
+
+	
+<li>
+	
+			<div class="user-dkamen" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=dkamen">dkamen</a>  πριν  8 ώρες <a href="#wholecomment83866" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83866" style='text-decoration: none;color:#36a00f;'><strong>8</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83866"> </span> <span id="ratebuttons-83866"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83866" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83866"> 
+		<span id = "comment_content-83866"> <br />
+      Δεν με αφήνει το Websense να ισοπεδώσω αυτό το ευχολόγιο. Θα περιοριστώ να παρατηρήσω ότι υπάρχει μια μικρή διαφορά ανάμεσα στον Κινέζο που δουλεύει 15 ώρες παράγοντας πράγματα αξίας Χ για τα οποία αμοίβεται 0.01Χ, και στο δημοσιοϋπαλληλάκια που παράγει -5Χ και αμοίβεται 10Χ. <br />
+<br />
+Αν περιμένετε τρελή συμπάθεια από τους όντως αδικημένους αγωνιζόμενους εργάτες αυτού του πλανήτη, μην κρατάτε την αναπνοή σας.  </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-cinto" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=cinto">cinto</a>  πριν  7 ώρες <a href="#wholecomment83867" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83867" style='text-decoration: none;color:#36a00f;'><strong>6</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83867"> </span> <span id="ratebuttons-83867"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83867" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83867"> 
+		<span id = "comment_content-83867"> <br />
+      Και ποιος είπε ότι "κοινή πολιτική δράση" σημαίνει μπαχαλοποίηση του κέντρου; Ο καλύτερος τρόπος να μην αλλάξει τίποτα είναι να κρώζεις και να τα σπας σαν καθυστερημένος βαλκάνιος. Τίποτα πιο σοφιστικέ και αποτελεσματικό δε σας βρίσκεται πέρα από την υστερία; </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-dytistonniptiron" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=dytistonniptiron">dytistonniptiron</a>  πριν  7 ώρες <a href="#wholecomment83868" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83868" style='text-decoration: none;color:#36a00f;'><strong>3</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83868"> </span> <span id="ratebuttons-83868"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83868" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83868"> 
+		<span id = "comment_content-83868"> <br />
+      Α, για τα μαγαζιά του κέντρου: στο (ακόμα, ναι!) τουριστικό Ρέθυμνο έχουν επίσης κλείσει καταστήματα με τρελό ρυθμό, ακόμα και στους κεντρικούς τουριστικούς δρόμους. Κάποιες πορείες γίνονται, αλλά δεν θα τις πεις και μπάχαλα, ούτε καν μαζικές. Λες να φταίνε οι ρίψεις αυγών; </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-cinto" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=cinto">cinto</a>  πριν  7 ώρες <a href="#wholecomment83871" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83871" style='text-decoration: none;color:#36a00f;'><strong>2</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83871"> </span> <span id="ratebuttons-83871"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83871" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83871"> 
+		<span id = "comment_content-83871"> <br />
+      Δε συγκρίνονται οι διαδηλώσεις του Ρεθύμνου με αυτές του κέντρου. Εκτός αν είχατε κι εκεί 3 νεκρούς σε τράπεζα. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-dytistonniptiron" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=dytistonniptiron">dytistonniptiron</a>  πριν  7 ώρες <a href="#wholecomment83873" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83873" style='text-decoration: none;color:#36a00f;'><strong>4</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83873"> </span> <span id="ratebuttons-83873"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83873" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83873"> 
+		<span id = "comment_content-83873"> <br />
+      Ε αυτό λέω κι εγώ, στο Ρέθυμνο γιατί κλείνουν τα μαγαζά; Τουρισμό έχει, ησυχία έχει, εργασιακή ειρήνη-πώς-το-λένε έχει, τι έχουνε τα έρμα και ψοφάνε; </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-cinto" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=cinto">cinto</a>  πριν  7 ώρες <a href="#wholecomment83874" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83874" style='text-decoration: none;color:#36a00f;'><strong>3</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83874"> </span> <span id="ratebuttons-83874"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83874" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83874"> 
+		<span id = "comment_content-83874"> <br />
+      Δες το σχόλιο του Επανέχνικοφ πιο πάνω που εξηγεί ωραία την ιδιαιτερότητα του κέντρου.<br />
+<br />
++για να το κάνω λιανά: ναι, υπάρχει κρίση που οδηγεί σε κλείσιμο καταστημάτων σε όλη τη χώρα. Στο κέντρο όμως, μαζί με αυτή την κρίση προστίθεται και ο επιβαρυντικός παράγοντας των διαδηλώσεων. Να χάνεις 5 εργάσιμες το μήνα λόγω πορειών δεν είναι λίγο πράγμα για ένα κατάστημα. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-dkamen" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=dkamen">dkamen</a>  πριν  5 ώρες <a href="#wholecomment83887" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83887" style='text-decoration: none;color:#36a00f;'><strong>4</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83887"> </span> <span id="ratebuttons-83887"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83887" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83887"> 
+		<span id = "comment_content-83887"> <br />
+      Για να το πούμε πάρα πολύ παιδικά, επειδή κάποιος χαροπαλεύει από καρκίνο του πνεύμονα στο στάδιο 4 δε σημαίνει ότι είναι ΟΚ να του σπάσεις τα κόκκαλα ένα-ένα με τη βαριοπούλα.  </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-tanevramou" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=tanevramou">tanevramou</a>  πριν  5 ώρες <a href="#wholecomment83889" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83889" style='text-decoration: none;color:#36a00f;'><strong>5</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83889"> </span> <span id="ratebuttons-83889"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83889" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83889"> 
+		<span id = "comment_content-83889"> <br />
+      //Το δημόσιο χρέος δεν είναι σαν το χρέος στο μπακάλη, είναι ένα πολιτικό μέγεθος. Μόνο πολιτικά μπορεί να αντιμετωπιστεί.//<br />
+<br />
+Ενίοτε ναι - όχι πάντα. Αναλόγως τις συνθήκες. Στην δικιά μας περίπτωση π.χ έγινε ακριβώς αυτό που ζητάς! Το χρέος μας αντιμετωπίστηκε ως πολιτικό μέγεθος από την ΕΕ και για αυτόν τον λόγο την γλιτώσαμε και δεν χρεοκοπήσαμε το 2010. Για αυτόν ακριβώς τον λόγο ακόμα και σήμερα έχουμε την πολυτέλεια να δανειζόμαστε λεφτά από τους εταίρους μας για να χρηματοδοτούμε τα τεράστια πρωτογενή μας ελλείμματα. <br />
+Αυτό που ζητάς έχει ήδη συμβεί - αλλά μην περιμένεις κάποιος να χρηματοδοτεί τα πρωτογενή μας ελλείμματα για πάντα και άνευ όρων. Αυτό δεν πρόκειται να συμβεί ποτέ.<br />
+<br />
+Για τις συλλογικότητες και την κοινή πολιτική δράση. <br />
+Ναι αμέ γιατί όχι.<br />
+Αλλά κοινή πολιτική δράση και συλλογικότητες, με ποιούς;<br />
+Με αυτούς που δεν αποδέχονται την δημοκρατία και σκοπεύουν στην εγκαθίδρυση κάποιου άλλου νεφελώδους πολιτεύματος;<br />
+Με αυτούς που αρνούνται το σύνταγμα;<br />
+Με αυτούς που προτιμάνε να σπάνε και να βανδαλίζουν από το συζητάνε;<br />
+Με αυτούς που περικυκλώνουν την βουλή και ξυλοκοπούν βουλευτές;<br />
+Με αυτούς που για το στενό προσωπικό τους συμφέρον, μας αφήνουν να σαπίζουμε ανάμεσα σε τόνους σκουπίδια; Που κλείνουν λιμάνια, δρόμους, καταλαμβάνουν δημόσια κτίρια, πανεπιστήμια, σχολεία ως άλλοι κοτζαμπάσηδες της δημόσιας περιουσίας;<br />
+Με αυτούς που η απάντηση τους για όλα τα προβλήματα είναι να κάνουν απεργία (την οποία θα την πληρωθούνε κιόλας) μετά πορείας σε ένα ήδη άθλιο και υποβαθμισμένο κέντρο;<br />
+<br />
+Μπα, δε νομίζω. Δε νομίζω καθόλου. Άσε καλύτερα. <br />
+Προτιμώ να κάνω μια συλλογικότητα με τον εαυτό μου και να πάω για ύπνο. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+</ul>
+
+
+	
+<li>
+	
+			<div class="user-psaranto" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=psaranto">psaranto</a>  πριν  7 ώρες <a href="#wholecomment83877" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83877" style='text-decoration: none;color:#36a00f;'><strong>8</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83877"> </span> <span id="ratebuttons-83877"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83877" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83877"> 
+		<span id = "comment_content-83877"> <br />
+      Τα πράματα είναι σχετικά απλά. Το μερίδιο της Ελλάδας περισσότερο και της Ευρώπης λιγότερο τον παγκόσμιο καταμερισμό πλούτου μειώνεται σταθερά από το 80 και μετά.<br />
+<br />
+Αν δεν έχεις παραγωγή που να έχει αγοραστές σε διεθνές επίπεδο δεν σε σώζει ούτε η δίκαιη κατανομή εισοδήματος στην χώρα (η αριστερή "λύση"), ούτε οι υπηρεσίες που ό καθένας μας βάζει το χέρι του στην τσέπη του δίπλα (με πρώτον στην αλυσίδα τον ΔΥ που τα παίρνει απο το κράτος που δανείζεται). Καλή είναι δηλαδή η ισοκατανομή, αλλά δεν αρκεί. <br />
+<br />
+Πρέπει το κράτος, ο ιδιώτης, ο συνεταιρισμός, η κολεχτίβα, το κολχόζ, το κιμπούτζ ότι σκατά τέλος πάντως θέλεις ανάλογα την ιδεοληψία σου (ή κι όλα αυτά μαζί), να ΦΤΙΑΞΟΥΝ κάτι που να θέλει να το αγοράσει κάποιος άλλος στον πλανήτη.<br />
+<br />
+Και καλό είναι να καταναλώνεις φαιά ουσία και ενέργεια για πως θα φτιάξεις κάτι και πως θα κάνεις τώρα επένδυση στον ανθρώπινο παράγοντα που να αποδώσει και να αυγατίσει μετά από 20 χρόνια που ίσως έχουμε ξεπεράσει την κρίση. Επένδυση κύρια στην παιδεία και την γνώση τόσο στο εκπαιδευτικό σύστημα, όσο και στους χώρους εργασίας. <br />
+<br />
+Όλα τα άλλα είναι αφέλειες και συναισθηματισμοί στις οποίες ειδικεύεται ιδιαίτερα η ελληνική αριστερά για απόκτηση ακροατηρίου και κρίσιμης μάζας. <br />
+Και όποιος νοιάζεται για τον άνεργο να δεχτεί να πληρώνει παραπάνω φόρους και να αφήσει τα ψόφια και τα κλαψουρίσματα για να δίνεται κανένα αξιοπρεπες επίδομα ανεργίας και διαβίωσης ή <br />
+και να διεκδικήσει να δουλεύουμε όλοι αλλά λιγότερο (π.χ 4 μέρες) και να παίρνουμε αναγκαστικά λιγότερα (γιατί λιγότερα θα βγαίνουν ακόμα και με την πιό δίκαια κατανομή και την μείωση της  ψαλίδας). <br />
+Για να μην γίνουμε ζούγκλα.<br />
+<br />
+Γελάω όταν ακούω την λέξη "κινεζοποίηση". Μου θυμίζει τις ίδιες βλακείες που άκουγα μικρός το 70-80 με τους Ιάπωνες που δούλευαν φασόν και φτιάχναν μαιμούδες προιόντα και  δουλεύαν σαν τα ζώα για ένα κομμάτι ψωμί και κάναν απεργίες με μία κορδέλλα.  Άντε πιάστους τώρα. Προχθές αυτοί, χθές οι Κορεάτες, σήμερα οι Κινέζοι, αύριο οι Ινδοί, μεθαύριο οι Νιγηριανοί, αντιμεθαύριο οι ΕΛ ξέρω γω. Έτσι δουλεύει η οικονομία - σε κρατικό, σε επιχειρησιακό και σε προσωπικό/οικογενειακό επίπεδο. <br />
+<br />
+Το θέμα είναι πως θα "τρουπώσεις" ως χώρα/επιχείρηση/εργαζόμενος στον παγκόσμιο καταμερισμό εργασίας. Καλό είναι να το πάρουμε χαμπάρι νωρίς - ειδικά οι νέοι -  αφήνοντας τις φιλολογίες, τα ιδεολογικά public relations και το management της απογοήτευσης όσων στρωμάτων ζορίζονται να προσαρμοστούν στις αναπόφευκτες αλλαγές σε παγκόσμιο επίπεδο. <br />
+  </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+<ul id="comments-list">
+
+	
+<li>
+	
+			<div class="user-cinto" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=cinto">cinto</a>  πριν  2 ώρες 48 λεπτά <a href="#wholecomment83897" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83897" style='text-decoration: none;color:#36a00f;'><strong>2</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83897"> </span> <span id="ratebuttons-83897"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83897" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83897"> 
+		<span id = "comment_content-83897"> <br />
+      "Αν δεν έχεις παραγωγή που να έχει αγοραστές σε διεθνές επίπεδο (...)"<br />
+<br />
+Εμείς πάντως έχουμε: παράγουμε τη διπλάσια γραφειοκρατία σε σχέση με τον ευρωπαϊκό μέσο όρο. Όλο και κάποιος εκκεντρικός εμίρης θα βρεθεί να θέλει να του την πακετάρουμε και να του την πουλήσουμε για να κάνει το κέφι του. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-derveniotis" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=derveniotis">derveniotis</a>  πριν  2 ώρες 4 λεπτά <a href="#wholecomment83903" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83903" style='text-decoration: none;color:#36a00f;'><strong></strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83903"> </span> <span id="ratebuttons-83903"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83903" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83903"> 
+		<span id = "comment_content-83903"> <br />
+      "Άντε πιάστους τώρα."<br />
+Δεν είναι και δύσκολο, μεχρι και στο σκοτάδι λάμπουν τελευταία χάρη στην αναπτυξιακή ραδιενέργεια. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+</ul>
+
+
+	
+<li>
+	
+			<div class="user-cinto" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=cinto">cinto</a>  πριν  2 ώρες 15 λεπτά <a href="#wholecomment83901" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83901" style='text-decoration: none;color:#36a00f;'><strong>4</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83901"> </span> <span id="ratebuttons-83901"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83901" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83901"> 
+		<span id = "comment_content-83901"> <br />
+      Τώρα είδα και το τέλειο σχόλιο του dkamen στο ποστ του Sraosha, επιτρέψτε μου να το αντιγράψω:<br />
+<br />
+<br />
+Αυτό που προσπαθώ να σου πω είναι ότι η κατάρρευση έχει έρθει, και όταν έχεις κατάρρευση έχεις και άνεργους και φτωχούς και αδικίες και ό,τι παρόμοιο βάλει ο νους σου και δεν ξορκίζεις τίποτα απ' όλα αυτά με διαμαρτυρίες, δε πα να συμμετέχουν και τα δέκα εκατομμύρια. <br />
+<br />
+Και ότι ωραία, να τους προσλάβουμε όλους και να τους δίνουμε από 1500 ευρώ (σαν νεοδιοριζόμενοι που θα είναι), μονο που σε αυτήν την περίπτωση θα πρέπει να βρούμε γύρω στα 25 δισεκατομμύρια το χρόνο παραπάνω. Αν δεν κάνω λάθος μας όμως έχει πάει το σκατό στην κάλτσα για μία τάξη μεγάθους χαμηλότερα ποσά, κι αυτό απλά για να βγουν τα οικονομικά του υπό συζήτηση ξεφτιλισμένου μπουρδέλου στοιχειωδώς ισορροπημένα σε πρωτογενές επίπεδο, δηλαδή χωρίς καν να βάλουμε τα χρέη του στο λογαριασμό. <br />
+<br />
+Δηλαδή τελικά η πρότασή σου ποια είναι; Να πούμε για το νεοδιοριζόμενο των 500 ευρώ στους Ρουμάνους των 200 ευρώ, τους Κινέζους των 100 ευρώ, τους Αφρικανούς των 20 ευρώ, να κάνουν έρανο;<br />
+<br />
+Δεν υπάρχει δικός μου και δικός σου κόσμος, υπάρχει ένας κόσμος, που δεν είναι ούτε δίκαιος ούτε άδικος, είναι πέρα και πάνω απ' όλα στον πούτσο του, για πολύ χειρότερα πράγματα από το νεοδιοριζόμενο των 500 ευρώ (και ο ίδιος άλλωστε ποσώς ενδιαφέρεται για τους αναφερθέντες στην προηγούμενη παράγραφο). <br />
+<br />
+Αρνούμαι να δω το πρόβλημα σαν "αν φωνάξουμε όλοι μαζί αρκετά δυνατά το λεφτόδεντρο θα καταλάβει το λάθος του και θα βρέξει δισεκατομμύρια". Γιατί τότε βλέπω τα πράγματα όπως θα τα ήθελα και όχι όπως είναι, και αυτό ούτε στο νεκροκρέββατό μου δεν πρόκειται να το κάνω. <br />
+<br />
+Δεν ισχύει το There Is No Alternative. Ισχύει και παραϊσχύει όμως το There Is No Money. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+</ul>
+
+                    <br/>
+            <div id="commentform" align="center" style="clear:both;margin-left:auto;font-weight:bold;margin-right:auto;border-color:#ccc; border-style:solid; border-width:1px;width:400px;text-align:center; padding-bottom: 8px;">
+                <a href="/login.php?return=/story.php?title=%CE%9F%CF%81%CE%B3%CE%AE-%28Sraosha%29">Log in για σχολιασμό</a> ή γίνε μέλος <a href="/register.php">εδώ</a>.
+            </div>
+        
+    </div>
+    <div id="comments">
+	<br />
+    <h3>Ποιά μέλη του buzz ψήφισαν αυτή την καταχώριση</h3>
+    <div class = "whovotedwrapper" id = "idwhovotedwrapper">
+        <ol
+                    ><li> <a href = "/user.php?login=chaca-khan">chaca-khan</a><br/></li
+                    ><li> <a href = "/user.php?login=alberich">alberich</a><br/></li
+                    ><li> <a href = "/user.php?login=talos">talos</a><br/></li
+                    ><li> <a href = "/user.php?login=thas">thas</a><br/></li
+                    ><li> <a href = "/user.php?login=xilaren">xilaren</a><br/></li
+                    ><li> <a href = "/user.php?login=helion">helion</a><br/></li
+                    ><li> <a href = "/user.php?login=oldboy">oldboy</a><br/></li
+                    ><li> <a href = "/user.php?login=plagal">plagal</a><br/></li
+                    ><li> <a href = "/user.php?login=tovytio">tovytio</a><br/></li
+                    ><li> <a href = "/user.php?login=zisaras">zisaras</a><br/></li
+                    ><li> <a href = "/user.php?login=renata">renata</a><br/></li
+                    ><li> <a href = "/user.php?login=Spinachvatican">Spinachvatican</a><br/></li
+                    ><li> <a href = "/user.php?login=pidyo">pidyo</a><br/></li
+                    ><li> <a href = "/user.php?login=arcades">arcades</a><br/></li
+                    ><li> <a href = "/user.php?login=oneinchman">oneinchman</a><br/></li
+                    ><li> <a href = "/user.php?login=contrabando">contrabando</a><br/></li
+                    ><li> <a href = "/user.php?login=rogerios">rogerios</a><br/></li
+                    ><li> <a href = "/user.php?login=BlondeElena">BlondeElena</a><br/></li
+                    ><li> <a href = "/user.php?login=visk">visk</a><br/></li
+                    ><li> <a href = "/user.php?login=Ignatius">Ignatius</a><br/></li
+                    ><li> <a href = "/user.php?login=KnowDame">KnowDame</a><br/></li
+                    ><li> <a href = "/user.php?login=dytistonniptiron">dytistonniptiron</a><br/></li
+                    ><li> <a href = "/user.php?login=MichaelCorvin">MichaelCorvin</a><br/></li
+                    ><li> <a href = "/user.php?login=zelig">zelig</a><br/></li
+                ></ol><br/>
+    </div>
+</div>
+
+<style type="text/css">
+  /* allow room for 3 columns */
+  div#idwhovotedwrapper ol
+  {
+    width: 35em;
+    list-style-type: none;
+  }
+
+div#idwhovotedwrapper a:link, div#idwhovotedwrapper a:visited {color:#6C93C9;text-decoration:none}
+div#idwhovotedwrapper a:hover, div#idwhovotedwrapper a:active {color:#6C93C9;text-decoration:underline}  
+
+
+  /* float & allow room for the widest item */
+  div#idwhovotedwrapper ol li
+  {
+    float: left;
+    width: 15em;
+  }
+
+  /* stop the float */
+  div#idwhovotedwrapper br
+  {
+    clear: left;
+  }
+
+  /* separate the list from subsequent markup */
+  div#idwhovotedwrapper div.whovotedwrapper
+  {
+    margin-bottom: 1em;
+  }
+</style>
+</div>
+		      	
+						
+				  </div><!-- inside end -->
+					  
+				</div><!-- contentbox end -->
+				
+			</div><!-- content-wrap end --> 
+			
+		
+		       	
+		</div><!-- wrap end -->
+		<div style="clear:both;"> </div>
+
+			<br clear="all" />
+
+<div class="footer">
+	Powered By <a href="http://www.pligg.com/">Pligg</a> | Buzzbee by <a href="http://www.watiworks.com/">Wati Larke</a> | Legal: <a href="http://www.affero.org/oagpl.html">License</a> and <a href="https://sourceforge.net/project/showfiles.php?group_id=176676">Source</a> | <a href="http://reality-tape.com/disclaimer.html" target="_blank">Το απαραίτητο disclaimer</a> του buzz.
+</div>
+
+			
+	</body>
+</html>

@@ -1,0 +1,707 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+		
+		
+		<meta name="description" content="14 επιπλέον λόγοι για τη τη δίκαιη οργή των Sraosha και Talos..." />
+		<meta name="Language" content="en-us" />
+	
+		
+
+		
+				<link rel="stylesheet" type="text/css" href="/templates/mollio-beat/css/main_1.2.css" media="screen" />
+			
+				<link rel="stylesheet" type="text/css" href="/templates/mollio-beat/css/catcolors.css" media="screen" />
+				
+				
+			
+		<script src="/js/jspath.php" type="text/javascript"></script>
+    
+				<script src="/modules/scriptaculous/js/prototype.js" type="text/javascript"></script><script src="/modules/scriptaculous/js/EditInPlace.js" type="text/javascript"></script><script src="/modules/scriptaculous/js/scriptaculous.js" type="text/javascript"></script><script src="/modules/scriptaculous/js/dragdrop.js" type="text/javascript"></script><script src="/modules/scriptaculous/js/effects.js" type="text/javascript"></script>
+		<style type="text/css" media="screen">@import "/templates/mollio-beat/css/live.css";</style>
+		<script language="JavaScript" type="Text/JavaScript" src="/templates/mollio-beat/js/toggle.js"></script> 
+		
+				
+		
+		
+		<script type="text/javascript">
+		<!--
+			function show_hide_user_links(thediv)
+			{
+				if(window.Effect){
+					if(thediv.style.display == 'none')
+					{Effect.Appear(thediv); return false;}
+					else
+					{Effect.Fade(thediv); return false;}
+				}else{
+					var replydisplay=thediv.style.display ? '' : 'none';
+					thediv.style.display = replydisplay;					
+				}
+			}
+		//-->
+		</script>
+		
+		
+		
+		<script type="text/javascript">
+
+			/***********************************************
+			* Bookmark site script-  Dynamic Drive DHTML code library (www.dynamicdrive.com)
+			* This notice MUST stay intact for legal use
+			* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
+			***********************************************/
+
+			function bookmarksite(title, url){
+			if (document.all)
+			window.external.AddFavorite(url, title);
+			else if (window.sidebar)
+			window.sidebar.addPanel(title, url, "")
+			}
+
+		</script>
+		
+		
+				
+		<title>Buzz - Τα 14 Άρθρα του Συντάγματος που καταπατά η Κυβέρνηση</title>
+		<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://buzz.reality-tape.com/rss2.php"/>
+		<link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+		<script src="/js/xmlhttp.php" type="text/javascript"></script>
+
+
+
+		
+	</head>
+
+	<body >
+		<div id="wrap">
+		
+			<div id="header">
+				<!-- buzz is ©2008 Susuko Maka LLC -->
+<!-- Sweet buzz bee designed by Wati Larke (http://www.watiworks.com) -->
+<script type="text/javascript" src="http://www.google-analytics.com/urchin.js" >
+</script>
+<script type="text/javascript">
+_uacct = "UA-360813-2";
+urchinTracker();
+</script>
+
+
+	<div id="site-name"><a class="hedo" href="http://buzz.reality-tape.com">&nbsp;</a></div>
+		<div id="search">
+			<form action="http://buzz.reality-tape.com/search.php" method="get" name="thisform" id="thisform">			
+													<input type="text" size="20" name="search" id="searchsite" value="Αναζήτηση.." onfocus="if(this.value == 'Αναζήτηση..') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Αναζήτηση..';}" style="position:relative;top:-5px;"/>
+			<input type="image" src="templates/mollio-beat/images/search.png" class="submit"/>
+			<!-- <input type="submit" value="Go" class="submit" /> -->
+			</form>
+		</div>
+		<div id="headbar" style="padding-bottom:2px;">
+			<ul>
+									<a href='/login.php?return=/story.php?title=%CE%A4%CE%B1-14-%CE%86%CF%81%CE%B8%CF%81%CE%B1-%CF%84%CE%BF%CF%85-%CE%A3%CF%85%CE%BD%CF%84%CE%AC%CE%B3%CE%BC%CE%B1%CF%84%CE%BF%CF%82-%CF%80%CE%BF%CF%85-%CE%BA%CE%B1%CF%84%CE%B1%CF%80%CE%B1%CF%84%CE%AC-%CE%B7-%CE%9A%CF%85%CE%B2%CE%AD%CF%81%CE%BD%CE%B7%CF%83%CE%B7'>Login</a> <span style="color:#B0B0B0">|</span>
+					<a href='http://buzz.reality-tape.com'>Κεντρική</a> <span style="color:#B0B0B0">|</span>
+					
+										<a href='/topusers.php'> Top χρήστες</a> <span style="color:#B0B0B0">|</span>
+					<a href="/cloud.php">Tags</a> <span style="color:#B0B0B0">|</span> 						<a href="http://buzz.reality-tape.com/blog"> BLOG</a> <span style="color:#B0B0B0">|</span> <a href="http://buzz.reality-tape.com/faq-en.php"> FAQ</a> <span style="color:#B0B0B0">|</span>
+					<a href="mailto:info@reality-tape.com"> Επικοινωνία</a>
+							</ul>
+		</div>
+	</div>
+	<div id="prels"></div>				</div><!-- header end -->
+			
+			<div id="content-wrap1">
+		  				<div id="sidebar">
+					
+
+
+
+ 
+			<div class="featurebox">
+	<h3>Τι είναι το buzz;</h3>
+Επιλογές από το διαδίκτυο, όπως διαμορφώνονται καθημερινά απ' τους ίδιους τους χρήστες του. <br />&nbsp;<br /><small><a href="/faq-en.php">περισσότερα</a>&nbsp;&nbsp;<span style="color:#B0B0B0">|</span>&nbsp;&nbsp;<a href = "http://buzz.reality-tape.com/register.php">γίνε μέλος!</a></small></div>
+
+
+
+		<div id="blocknav">
+		
+		
+		 			<span class="red awesome"><a href="/submit.php">+ Νέα Καταχώριση</a></span>
+			<!-- <span class="awesome"><a href="http://buzz.reality-tape.com/story.php?title=%CE%A3%CE%B1%CE%B2%CE%BF%CF%85%CE%AC%CF%81-%CE%9C%CF%80%CE%B1%CE%B6-2-0-1" alt="Σύμβαλε στη συζήτηση!">Savoir Buzz 2.0</a></span> -->
+			<!-- <a href="/submit.php"><img src="templates/mollio-beat/images/neakat.png" alt="πρότεινε νέο link"></a><br />&nbsp;<br />
+			<span style="position:relative; left:1px;"><a href="http://buzz.reality-tape.com/story.php?title=%CE%A3%CE%B1%CE%B2%CE%BF%CF%85%CE%AC%CF%81-%CE%9C%CF%80%CE%B1%CE%B6-2-0-1"><img style="border:0;" src="http://buzz.reality-tape.com/sb2.png" alt="Σύμβαλε στη συζήτηση!"/></a></span><br /> -->
+		<!--	<span style="position:relative; left:-1px;"><a href="http://www.athensbook.gr/"><img style="border:0;" src="http://buzz.reality-tape.com/images/abbutton.png" alt="AthensBook για το iPhone και το iPod touch!"/></a></span> -->
+		
+					
+
+
+		<br />
+		
+		
+	</div>
+	<br />
+
+
+
+
+		<div id="categories">
+	<img src="minus.gif" class="showstate" onClick="expandcontent(this, 'cats')" style="margin-right:18px; margin-top:10px;" /><strong>Κατηγορίες</strong>
+	<div id="cats" class="switchcontent">
+	<ul id="nav-secondary">
+								
+									<li class="cat0">
+									<a href="/index.php?category=Όλα">
+						Όλα
+					</a>
+				</li>
+
+											<ul style="padding-left:10px">
+									<li class="cat1">
+									<a href="/index.php?category=ΜΜΕ">
+						ΜΜΕ
+					</a>
+				</li>
+
+											
+									<li class="cat2">
+									<a href="/index.php?category=Διάφορα">
+						Διάφορα
+					</a>
+				</li>
+
+											
+									<li class="cat3">
+									<a href="/index.php?category=Blogs">
+						Blogs
+					</a>
+				</li>
+
+											
+									<li class="cat4">
+									<a href="/index.php?category=Αγγλικά">
+						Αγγλικά
+					</a>
+				</li>
+
+											
+									<li class="cat5">
+									<a href="/index.php?category=Tech">
+						Tech
+					</a>
+				</li>
+
+						</ul>
+
+</div>
+</div>
+<br />
+				<!-- 
+			
+			<span style="position:relative; left:-1px;"><a href="http://buzz.reality-tape.com/rss2.php?search=griots&tag=true"><img style="border:0;" src="http://buzz.reality-tape.com/images/griotpop.png" alt="RSS feed: όλες οι δημοφιλείς καταχωρίσεις με tag griots" title="Βάλε tag griots για προσθήκη στο ειδικό feed"/></a></span><br/>
+			<span style="position:relative; left:-1px;"><a href="http://buzz.reality-tape.com/rss2.php?search=griots&tag=true&status=all"><img style="border:0;" src="http://buzz.reality-tape.com/images/griotall.png" alt="RSS feed: όλες οι δημοφιλείς καταχωρίσεις με tag griots" title="Βάλε tag griots για προσθήκη στο ειδικό feed"/></a></span> 
+			
+			-->
+	
+	<h3>Ενεργές συζητήσεις [τελευταία σχόλια]</h3><ul style='list-style:none;'><li class='threado'><span style='font-size:90%;'><a class='sbcommentlink' href='/story.php?id=72102'>Οργή (Sraosha)</a><br/>[<a href='/story.php?id=72102#wholecomment83903'>derveniotis</a>, <a href='/story.php?id=72102#wholecomment83901'>cinto</a>, <a href='/story.php?id=72102#wholecomment83897'>cinto</a>]</span></li><li class='threado'><span style='font-size:90%;'><a class='sbcommentlink' href='/story.php?id=72135'>Ένα κρίσιμο ερώτημα ενόψει της 23ης Οκτωβρίου </a> <span style='background:red;color:white;font-size:6px;padding:2px;'>ΝΕΟ</span><br/>[<a href='/story.php?id=72135#wholecomment83908'>oldboy</a>]</span></li><li class='threado'><span style='font-size:90%;'><a class='sbcommentlink' href='/story.php?id=72115'>Παραιτήθηκε ο Διομήδης Σπινέλλης</a><br/>[<a href='/story.php?id=72115#wholecomment83899'>cinto</a>, <a href='/story.php?id=72115#wholecomment83893'>talos</a>, <a href='/story.php?id=72115#wholecomment83890'>inlovewithlife</a>]</span></li><li class='threado'><span style='font-size:90%;'><a class='sbcommentlink' href='/story.php?id=72121'>Για τον Α984, μέρος γάμμα (τα) (Locandiera)</a><br/>[<a href='/story.php?id=72121#wholecomment83907'>derveniotis</a>, <a href='/story.php?id=72121#wholecomment83898'>cinto</a>, <a href='/story.php?id=72121#wholecomment83892'>zuqzuq</a>]</span></li><li class='threado'><span style='font-size:90%;'><a class='sbcommentlink' href='/story.php?id=72107'>Κϊνα: η δυστοπία είναι ήδη εδώ</a><br/>[<a href='/story.php?id=72107#wholecomment83909'>zoutiri</a>, <a href='/story.php?id=72107#wholecomment83891'>inlovewithlife</a>, <a href='/story.php?id=72107#wholecomment83875'>pidyo</a>]</span></li><li class='threado'><span style='font-size:90%;'><a class='sbcommentlink' href='/story.php?id=72104'>Και μετά ήρθε η ΕΣΗΕΑ | Protagon</a><br/>[<a href='/story.php?id=72104#wholecomment83906'>simiomatariokipon</a>, <a href='/story.php?id=72104#wholecomment83904'>derveniotis</a>, <a href='/story.php?id=72104#wholecomment83902'>MichaelCorvin</a>]</span></li><li class='threado'><span style='font-size:90%;'><a class='sbcommentlink' href='/story.php?id=72129'>Όχι στην 6η δόση! | Tάκης Μίχας | Protagon</a> <span style='background:red;color:white;font-size:6px;padding:2px;'>ΝΕΟ</span><br/>[<a href='/story.php?id=72129#wholecomment83910'>BlondeElena</a>]</span></li><li class='threado'><span style='font-size:90%;'><a class='sbcommentlink' href='/story.php?id=72120'>Τα 14 Άρθρα του Συντάγματος που καταπατά η Κυβέρνηση</a><br/>[<a href='/story.php?id=72120#wholecomment83905'>zuqzuq</a>, <a href='/story.php?id=72120#wholecomment83883'>MichaelCorvin</a>, <a href='/story.php?id=72120#wholecomment83881'>ppetoumenos</a>]</span></li></ul><br/>  	
+
+	<div id="categories">
+	<strong>RSS feeds</strong>
+	<ul id="nav-rss">
+		<li><a href="/rss2.php" target="_blank">Δημοφιλή</a></li>
+		<li><a href="/rss2.php?status=queued" target="_blank">Νέα</a></li>
+		<li><a href="/rss2.php?status=all" target="_blank">Όλα</a></li>	
+  </ul>
+</div>
+<br />&nbsp;<br />
+<span style="position:relative; left:-5px; top:10px;"><a href="http://buzz.reality-tape.com/postroll.php"><img src="http://buzz.reality-tape.com/images/prom.png" alt="βάλε το postroll στο blog σου" title="βάλε το postroll στο blog σου"></a></span> 
+<br />&nbsp;<br /> 
+
+<span style="position:relative; left:10px; top:10px;"><img src="http://buzz.reality-tape.com/fireext.png" alt="προτιμήστε από ταμπάσκο εν ώρα πυρκαϊάς" title="προτιμήστε από ταμπάσκο εν ώρα πυρκαϊάς"></span>
+
+<!-- <span style="position:relative; left:-5px; top:10px;"><a href="http://buzz.reality-tape.com/postroll.php"><img src="http://buzz.reality-tape.com/images/megatroll.png" alt="βάλε ένα megatroll στο blog σου" title="βάλε ένα megatroll στο blog σου"></a></span> -->
+
+
+<!-- <span style="position:relative; left:-5px; top:10px;"><a href="http://buzz.reality-tape.com/postroll.php"><img src="http://buzz.reality-tape.com/images/enaelafaki.png" alt="βάλε το postroll στο blog σου" title="βάλε το postroll στο blog σου"></a></span> -->
+
+
+
+		      
+				</div><!-- sidebar end -->
+				<div id="contentbox">
+			
+		      
+			    <div id="inside">
+
+						
+		      	<div id="riseup">
+
+			
+    
+<div class="news-summary" id="news-0">
+			<ul class="news-upcoming"  id="cat1">
+			<li class="mnm-published"><a id="mnms-0" href="javascript:menealo(0,72120,0,'5eb4b6f603ee1a29346e2e935326a872',10)">1</a></li>
+			<li class="menealo" id="mnmlink-0">
+									<a href="javascript:menealo(0,72120,0,'5eb4b6f603ee1a29346e2e935326a872',10)">Vote</a>
+							</li>
+		</ul>
+	
+		
+		<div class="top" id="catcol1">
+		
+		<h4 id="ls_title-0">
+		    		      			  <a href="/story.php?title=%CE%A4%CE%B1-14-%CE%86%CF%81%CE%B8%CF%81%CE%B1-%CF%84%CE%BF%CF%85-%CE%A3%CF%85%CE%BD%CF%84%CE%AC%CE%B3%CE%BC%CE%B1%CF%84%CE%BF%CF%82-%CF%80%CE%BF%CF%85-%CE%BA%CE%B1%CF%84%CE%B1%CF%80%CE%B1%CF%84%CE%AC-%CE%B7-%CE%9A%CF%85%CE%B2%CE%AD%CF%81%CE%BD%CE%B7%CF%83%CE%B7">Τα 14 Άρθρα του Συντάγματος που καταπατά η Κυβέρνηση</a>
+			                  </h4>
+
+    <div class="news-submitted">
+			<a href="javascript://" onclick="show_hide_user_links(document.getElementById('userlinks-0'));">		
+							</a>
+			
+			
+			
+			<a href="javascript://" onclick="show_hide_user_links(document.getElementById('userlinks-0'));">		
+				<span id="ls_link_submitter-0">MichaelCorvin</span></a><span style="color:#8A8A8A">,</span> πριν
+			<span id="ls_timeago-0"> 7 ώρες 
+				(<span id="ls_story_link-0">
+											Editorial
+									</span>)
+</span>
+
+		  				
+			<span id="userlinks-0" style="display:none;">
+				<a href = "/user.php?login=MichaelCorvin"><span style="color:#A6271C;">Δες προφίλ</span></a>  
+							</span>
+			<span id="ls_adminlinks-0" style="display:none">
+															</span>
+    </div>
+
+  		    <span class="news-body-text">
+	  		<span id="ls_contents-0">
+	  					  				14 επιπλέον λόγοι για τη τη δίκαιη οργή των Sraosha και Talos...	  				<br /> 
+	  					  					  					  					  					  					  					  					  					  					  					  					  					  					  				  			
+	  			
+	  		</span>
+	    </span>
+  		
+    <div class="news-details">
+    	<span id="ls_comments_url-0">
+    		    		    		    			<a href="/story.php?title=%CE%A4%CE%B1-14-%CE%86%CF%81%CE%B8%CF%81%CE%B1-%CF%84%CE%BF%CF%85-%CE%A3%CF%85%CE%BD%CF%84%CE%AC%CE%B3%CE%BC%CE%B1%CF%84%CE%BF%CF%82-%CF%80%CE%BF%CF%85-%CE%BA%CE%B1%CF%84%CE%B1%CF%80%CE%B1%CF%84%CE%AC-%CE%B7-%CE%9A%CF%85%CE%B2%CE%AD%CF%81%CE%BD%CE%B7%CF%83%CE%B7" class="comments">5 Σχόλια</a>
+    		    	</span> <span style="color:#B0B0B0">|</span>
+		
+						
+  		  			
+    	
+  											<span id="ls_recommend-0">
+							<img src="/templates/yget/images/email.gif" align="absmiddle"/> <a href="javascript://" onclick="show_recommend(0, 72120, 'http://buzz.reality-tape.com/');"> Στείλτο σε φίλους</a>
+						</span> 
+										
+																		<span id="emailto-0" style="display:none"></span>
+																
+					</span> <span style="color:#B0B0B0">|</span>
+				<a id="bury-0" href="javascript:report(0,72120,0,'5eb4b6f603ee1a29346e2e935326a872',10)"> Διπλοκαταχώριση / Παραβιάζει το SB</a>
+											
+							
+									<!-- <span style="color:#B0B0B0">|</span>
+
+											<a href="http://technorati.com/search/tvxs.gr%2Fnode%2F72799"> Αντιδράσεις στα blog</a>
+					 -->
+					
+								<span style="color:#B0B0B0">| </span><span id="twitter" style="background: url('http://buzz.reality-tape.com/images/twitter.png') 3px 3px no-repeat;padding: 2px 2px 10px 20px;">
+<a href="http://twitter.com/home/?status=Reading+'Τα 14 Άρθρα του Συντάγματος που καταπατά η Κυβέρνηση'+http://buzz.reality-tape.com/s72120" target="_blank">Tweet!</a>
+</span>
+			
+			
+    </div>
+	</div>
+	
+	
+</div>
+
+    <div id="comments">
+        <h2>Σχόλια</h2>
+
+        <ul id="comments-list">
+
+	
+<li>
+	
+			<div class="user-BlondeElena" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=BlondeElena">BlondeElena</a>  πριν  6 ώρες <a href="#wholecomment83879" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83879" style='text-decoration: none;color:#36a00f;'><strong></strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83879"> </span> <span id="ratebuttons-83879"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83879" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83879"> 
+		<span id = "comment_content-83879"> <br />
+      Λείπει το link, Michael. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-MichaelCorvin" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=MichaelCorvin">MichaelCorvin</a>  πριν  6 ώρες <a href="#wholecomment83880" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83880" style='text-decoration: none;color:#36a00f;'><strong></strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83880"> </span> <span id="ratebuttons-83880"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83880" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83880"> 
+		<span id = "comment_content-83880"> <br />
+      Ουπς...<br />
+<br />
+tvxs.gr/node/72799 <br />
+<br />
+ </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-ppetoumenos" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=ppetoumenos">ppetoumenos</a>  πριν  6 ώρες <a href="#wholecomment83881" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83881" style='text-decoration: none;color:#36a00f;'><strong>1</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83881"> </span> <span id="ratebuttons-83881"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83881" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83881"> 
+		<span id = "comment_content-83881"> <br />
+      recursive μπαζαρισμα. Inception-φάση </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+<ul id="comments-list">
+
+	
+<li>
+	
+			<div class="user-MichaelCorvin" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=MichaelCorvin">MichaelCorvin</a>  πριν  6 ώρες <a href="#wholecomment83883" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83883" style='text-decoration: none;color:#36a00f;'><strong></strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83883"> </span> <span id="ratebuttons-83883"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83883" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83883"> 
+		<span id = "comment_content-83883"> <br />
+      Σόρι, αν έχει ξαναμπαζαριστεί δεν το γνώριζα - θάψτε το, παιδιά. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+</ul>
+
+
+	
+<li>
+	
+			<div class="user-zuqzuq" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=zuqzuq">zuqzuq</a>  πριν  1 ώρα 30 λεπτά <a href="#wholecomment83905" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     	
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-83905" style='text-decoration: none;color:#36a00f;'><strong></strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-83905"> </span> <span id="ratebuttons-83905"> 
+						
+				      	<a class="ratemeyflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δεν έχετε δυνατότητα αξιολόγησης σχολίων"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+										
+				 </span>
+				      	<a id="cvotedown-83905" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment83905"> 
+		<span id = "comment_content-83905"> <br />
+      Το ευχάριστο είναι ότι από το κείμενο συνάγεται, χρησιμοποιώντας "κοινό νου και απλή λογική", πως τις προηγούμενες δεκαετίες οι κυβερνήσεις τηρούσαν τα 14 άρθρα του Συντάγματος "τα οποία η [παρούσα] Κυβέρνηση είτε παραβαίνει ή αγνοεί επιδεικτικά". Ζούσα σε μια δημοκρατική χώρα... Ποιος θα το έλεγε... </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+</ul>
+
+                    <br/>
+            <div id="commentform" align="center" style="clear:both;margin-left:auto;font-weight:bold;margin-right:auto;border-color:#ccc; border-style:solid; border-width:1px;width:400px;text-align:center; padding-bottom: 8px;">
+                <a href="/login.php?return=/story.php?title=%CE%A4%CE%B1-14-%CE%86%CF%81%CE%B8%CF%81%CE%B1-%CF%84%CE%BF%CF%85-%CE%A3%CF%85%CE%BD%CF%84%CE%AC%CE%B3%CE%BC%CE%B1%CF%84%CE%BF%CF%82-%CF%80%CE%BF%CF%85-%CE%BA%CE%B1%CF%84%CE%B1%CF%80%CE%B1%CF%84%CE%AC-%CE%B7-%CE%9A%CF%85%CE%B2%CE%AD%CF%81%CE%BD%CE%B7%CF%83%CE%B7">Log in για σχολιασμό</a> ή γίνε μέλος <a href="/register.php">εδώ</a>.
+            </div>
+        
+    </div>
+    <div id="comments">
+	<br />
+    <h3>Ποιά μέλη του buzz ψήφισαν αυτή την καταχώριση</h3>
+    <div class = "whovotedwrapper" id = "idwhovotedwrapper">
+        <ol
+                    ><li> <a href = "/user.php?login=MichaelCorvin">MichaelCorvin</a><br/></li
+                ></ol><br/>
+    </div>
+</div>
+
+<style type="text/css">
+  /* allow room for 3 columns */
+  div#idwhovotedwrapper ol
+  {
+    width: 35em;
+    list-style-type: none;
+  }
+
+div#idwhovotedwrapper a:link, div#idwhovotedwrapper a:visited {color:#6C93C9;text-decoration:none}
+div#idwhovotedwrapper a:hover, div#idwhovotedwrapper a:active {color:#6C93C9;text-decoration:underline}  
+
+
+  /* float & allow room for the widest item */
+  div#idwhovotedwrapper ol li
+  {
+    float: left;
+    width: 15em;
+  }
+
+  /* stop the float */
+  div#idwhovotedwrapper br
+  {
+    clear: left;
+  }
+
+  /* separate the list from subsequent markup */
+  div#idwhovotedwrapper div.whovotedwrapper
+  {
+    margin-bottom: 1em;
+  }
+</style>
+</div>
+		      	
+						
+				  </div><!-- inside end -->
+					  
+				</div><!-- contentbox end -->
+				
+			</div><!-- content-wrap end --> 
+			
+		
+		       	
+		</div><!-- wrap end -->
+		<div style="clear:both;"> </div>
+
+			<br clear="all" />
+
+<div class="footer">
+	Powered By <a href="http://www.pligg.com/">Pligg</a> | Buzzbee by <a href="http://www.watiworks.com/">Wati Larke</a> | Legal: <a href="http://www.affero.org/oagpl.html">License</a> and <a href="https://sourceforge.net/project/showfiles.php?group_id=176676">Source</a> | <a href="http://reality-tape.com/disclaimer.html" target="_blank">Το απαραίτητο disclaimer</a> του buzz.
+</div>
+
+			
+	</body>
+</html>

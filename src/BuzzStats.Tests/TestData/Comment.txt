@@ -1,0 +1,69 @@
+<li>
+	
+			<div class="user-zoutiri" id="comment-wrap">
+			<div id="comment-head"> 
+	
+			
+						
+			από <a href="/user.php?login=zoutiri">zoutiri</a> πριν  13 ώρες <a href="#wholecomment55017" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-55017"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(0, 55017, 55017, '71650488d36045ace3c44a1a6b750478', -100,  'http://buzz.reality-tape.com/')" style="text-decoration: none;"><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-55017" style="text-decoration: none; color: rgb(54, 160, 15);"><strong>2</strong></a>
+			      &nbsp;&nbsp; <span id="ratetext-55017"> </span> <span id="ratebuttons-55017"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(0, 55017, 55017, '71650488d36045ace3c44a1a6b750478', 10, 'http://buzz.reality-tape.com/')" style="text-decoration: none;"><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(0, 55017, 55017, '71650488d36045ace3c44a1a6b750478', -10,  'http://buzz.reality-tape.com/')" style="text-decoration: none;"><span class="rateme">&nbsp;</span></a> </span>
+			      	<a id="cvotedown-55017" style="text-decoration: none; color: rgb(148, 20, 16);"><strong>1</strong></a>
+								     
+
+
+
+			 </span>
+
+			
+			</div>
+	  
+    
+    <div class="comment-body" id="wholecomment55017"> 
+	
+	<span id="comment_content-55017"> <br>
+      δεν κανω συγκριση, το μονο που λεω ειναι οτι απλα δεν ειναι αντιπροσωπευτικα, μια και εχω διαβασει αρκετα σχολια και των δυο σας. <br>
+<br>
+Ενταξει τωρα ειναι εκτος εαυτου και την πεφτει σε αρκετο κοσμο (και μενα αποσο καταλαβαινω). Ας κανουμε λιγη υπομονη να ξεθυμανουν τα πραγματα.<br>
+<br>
+Δυτη<br>
+δεν σου αρεσε το περι ποπ ευαισθησιας δηλαδη? :)<br>
+
+(ανωδυνη πλακα κανω, λεω να βαλω ντισκλεημερ στα σχολια μου. Αδμιν μηπως να μπορουσαμε να εχουμε υπογραφες οπως εχουν στα φορα? )<br>
+<br>
+Αντε αφηστε με να δουλεψω τωρα, εχω παρουσιαση σε 1:30 ωρα και discussion σε 3. </span> 
+	 </div>
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br>
+
+
+
+
+  </li>

@@ -1,0 +1,14 @@
+{
+	"ci": {
+		"options": {
+			"reporter": "xunit",
+			"captureFile": "./dist/grunt-mocha.xml"
+		},
+		"src": "./grunt/test/**/*.js"
+	},
+	"dev": {
+		"options": {
+		},
+		"src": "<%= mochaTest.ci.src %>"
+	}
+}

@@ -1,0 +1,11 @@
+{
+	"all": {
+		"files": [{
+			"expand": true,
+			"cwd": "<%= paths.webRoot %>/css",
+			"src": ["*.css", "!*.min.css"],
+			"dest": "<%= paths.webRoot %>/css",
+			"ext": ".min.css"
+		}]
+	}
+}

@@ -1,0 +1,9 @@
+{
+	"main": {
+		"src": ["src/BuzzStats.sln"],
+		"options": {
+			"projectConfiguration": "<%= projectConfiguration %>",
+			"targets": ["Rebuild"]
+		}
+	}
+}

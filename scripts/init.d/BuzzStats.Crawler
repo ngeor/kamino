@@ -1,0 +1,45 @@
+#!/bin/bash
+# /etc/init.d/BuzzStatsCrawler
+# debian-compatible BuzzStats.Crawler startup script.
+# Nikolaos Georgiou <ngeor@ngeor.net>
+#
+### BEGIN INIT INFO
+# Provides:          BuzzStats.Crawler
+# Required-Start:    $remote_fs $syslog $network
+# Required-Stop:     $remote_fs $syslog $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start BuzzStats.Crawler at boot time
+# Description:       Controls the BuzzStats.Crawler service.
+### END INIT INFO
+
+PATH=/bin:/usr/bin:/sbin:/usr/sbin
+
+DESC="BuzzStats.Crawler service"
+NAME=BuzzStats.Crawler
+SCRIPTNAME=/etc/init.d/$NAME
+
+SU=/bin/su
+SERVICEUSER=ngeor
+CMD=@APPROOT@/scripts/BuzzStats.Crawler-daemon.sh
+
+case "$1" in
+	start)
+		$SU -l $SERVICEUSER -c "$CMD start" || exit 2
+		;;
+	stop)
+		$SU -l $SERVICEUSER -c "$CMD stop" || exit 2
+		;;
+	restart)
+		$SU -l $SERVICEUSER -c "$CMD stop" || exit 2
+		$SU -l $SERVICEUSER -c "$CMD start" || exit 2
+		;;
+	*)
+		echo "Usage: $SCRIPTNAME {start|stop|restart}" >&2
+		exit 3
+		;;
+esac
+
+
+exit 0
+

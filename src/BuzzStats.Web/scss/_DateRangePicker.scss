@@ -1,0 +1,57 @@
+
+@import 'variables';
+
+.date-range-picker {
+    display: inline-block;
+}
+
+.date-range-picker-display {
+    border: 1px solid $gray;
+    cursor: pointer;
+    display: block;
+    font-size: 120%;
+    margin: 1em 0 0;
+    min-width: 350px;
+
+    span {
+        padding: 0.5em;
+    }
+
+    em {
+        display: block;
+        float: right;
+        height: 16px;
+        width: 16px;
+    }
+}
+
+.date-range-picker-dropdown {
+    background: $white;
+    border: 1px solid $darkergray;
+    padding: 0.5em;
+    position: fixed;
+    z-index: 1000;
+
+    ul {
+        margin: 0.5em 0;
+        padding: 0;
+    }
+
+    li {
+        border-left: 1px solid $gray;
+        display: inline-block;
+        margin: 0.25em 0;
+        padding: 0.15em 0.75em;
+
+        &:first-child {
+            border-left: 0;
+            padding: 0 0.75em 0 0;
+        }
+
+        &:last-child {
+            border-left: 0;
+            display: block;
+            padding: 0;
+        }
+    }
+}

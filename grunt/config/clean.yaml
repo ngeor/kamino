@@ -1,0 +1,7 @@
+dist:
+  - '<%= paths.dist %>'
+src:
+  - 'src/*/bin'
+  - 'src/*/obj'
+  - 'src/*/js/*.js'
+  - 'src/*/css/*.css'

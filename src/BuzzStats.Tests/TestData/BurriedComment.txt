@@ -1,0 +1,3370 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+		
+		
+		<meta name="description" content="Δεν έχει εφαρμοστεί τίποτα από τις συστάσεις της ευρωπαϊκής κοινότητας και το μέτωπο της ακινησίας λέει ότι �..." />
+		<meta name="Language" content="en-us" />
+	
+		
+
+		
+				<link rel="stylesheet" type="text/css" href="/templates/mollio-beat/css/main_1.2.css" media="screen" />
+			
+				<link rel="stylesheet" type="text/css" href="/templates/mollio-beat/css/catcolors.css" media="screen" />
+				
+				
+			
+		<script src="/js/jspath.php" type="text/javascript"></script>
+
+    
+				<script src="/modules/scriptaculous/js/prototype.js" type="text/javascript"></script><script src="/modules/scriptaculous/js/EditInPlace.js" type="text/javascript"></script><script src="/modules/scriptaculous/js/scriptaculous.js" type="text/javascript"></script><script src="/modules/scriptaculous/js/dragdrop.js" type="text/javascript"></script><script src="/modules/scriptaculous/js/effects.js" type="text/javascript"></script>
+		<style type="text/css" media="screen">@import "/templates/mollio-beat/css/live.css";</style>
+		<script language="JavaScript" type="Text/JavaScript" src="/templates/mollio-beat/js/toggle.js"></script> 
+		
+				
+		
+		
+		<script type="text/javascript">
+		<!--
+			function show_hide_user_links(thediv)
+			{
+				if(window.Effect){
+					if(thediv.style.display == 'none')
+					{Effect.Appear(thediv); return false;}
+					else
+					{Effect.Fade(thediv); return false;}
+				}else{
+					var replydisplay=thediv.style.display ? '' : 'none';
+					thediv.style.display = replydisplay;					
+				}
+			}
+		//-->
+		</script>
+		
+		
+		
+		<script type="text/javascript">
+
+			/***********************************************
+			* Bookmark site script-  Dynamic Drive DHTML code library (www.dynamicdrive.com)
+			* This notice MUST stay intact for legal use
+			* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
+			***********************************************/
+
+			function bookmarksite(title, url){
+			if (document.all)
+			window.external.AddFavorite(url, title);
+			else if (window.sidebar)
+			window.sidebar.addPanel(title, url, "")
+			}
+
+		</script>
+
+		
+		
+				
+		<title>Buzz - Edito 341</title>
+		<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://buzz.reality-tape.com/rss2.php"/>
+		<link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+		<script src="/js/xmlhttp.php" type="text/javascript"></script>
+
+
+
+		
+	</head>
+
+	<body >
+
+		<div id="wrap">
+		
+			<div id="header">
+				<!-- buzz is ©2008 Susuko Maka LLC -->
+<!-- Sweet buzz bee designed by Wati Larke (http://www.watiworks.com) -->
+<script type="text/javascript" src="http://www.google-analytics.com/urchin.js" >
+</script>
+<script type="text/javascript">
+_uacct = "UA-360813-2";
+urchinTracker();
+</script>
+
+
+	<div id="site-name"><a class="hedo" href="http://buzz.reality-tape.com">&nbsp;</a></div>
+		<div id="search">
+
+			<form action="http://buzz.reality-tape.com/search.php" method="get" name="thisform" id="thisform">			
+													<input type="text" size="20" name="search" id="searchsite" value="Αναζήτηση.." onfocus="if(this.value == 'Αναζήτηση..') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Αναζήτηση..';}" style="position:relative;top:-5px;"/>
+			<input type="image" src="templates/mollio-beat/images/search.png" class="submit"/>
+			<!-- <input type="submit" value="Go" class="submit" /> -->
+			</form>
+		</div>
+		<div id="headbar" style="padding-bottom:2px;">
+			<ul>
+											
+					<!-- ><a href='http://buzz.reality-tape.com'>Κεντρική</a> <span style="color:#B0B0B0">|</span> -->
+
+					<a href='http://buzz.reality-tape.com'>Κεντρική</a> <span style="color:#B0B0B0">|</span>
+					<a href="/user.php"> Προφίλ</a> <span style="color:#B0B0B0">|</span>
+					<a href="http://buzz.reality-tape.com/story.php?title=%CE%A3%CE%B1%CE%B2%CE%BF%CF%85%CE%AC%CF%81-%CE%9C%CF%80%CE%B1%CE%B6-2-0-1" class="highlight">Savoir Buzz</a> <span style="color:#B0B0B0">|</span> 
+					 
+										<a href='/topusers.php'> Top χρήστες</a> <span style="color:#B0B0B0">|</span>
+
+					<a href="http://ngeor.net/BuzzStats/"> BuzzStats!</a> <span style="color:#B0B0B0">|</span>
+					<a href="/cloud.php">Tags</a> <span style="color:#B0B0B0">|</span> 					<a href="http://buzz.reality-tape.com/blog"> BLOG</a> <span style="color:#B0B0B0">|</span> 
+					
+					<a href="http://buzz.reality-tape.com/faq-en.php"> FAQ</a> <span style="color:#B0B0B0">|</span>
+
+					<a href="mailto:info@reality-tape.com"> Επικοινωνία</a> <span style="color:#B0B0B0">|</span>
+					 <a href="/login.php?op=logout&amp;return=/story.php?title=Edito-341"> Logout</a>							</ul>
+		</div>
+	</div>
+	<div id="prels"></div>				</div><!-- header end -->
+
+			
+					  	<div id="content-wrap3">
+		  			  				<div id="sidebar">
+					
+
+
+
+
+		<div id="blocknav">
+		
+		
+		 			<span class="red awesome"><a href="/submit.php">+ Νέα Καταχώριση</a></span>
+			<!-- <span class="awesome"><a href="http://buzz.reality-tape.com/story.php?title=%CE%A3%CE%B1%CE%B2%CE%BF%CF%85%CE%AC%CF%81-%CE%9C%CF%80%CE%B1%CE%B6-2-0-1" alt="Σύμβαλε στη συζήτηση!">Savoir Buzz 2.0</a></span> -->
+			<!-- <a href="/submit.php"><img src="templates/mollio-beat/images/neakat.png" alt="πρότεινε νέο link"></a><br />&nbsp;<br />
+			<span style="position:relative; left:1px;"><a href="http://buzz.reality-tape.com/story.php?title=%CE%A3%CE%B1%CE%B2%CE%BF%CF%85%CE%AC%CF%81-%CE%9C%CF%80%CE%B1%CE%B6-2-0-1"><img style="border:0;" src="http://buzz.reality-tape.com/sb2.png" alt="Σύμβαλε στη συζήτηση!"/></a></span><br /> -->
+		<!--	<span style="position:relative; left:-1px;"><a href="http://www.athensbook.gr/"><img style="border:0;" src="http://buzz.reality-tape.com/images/abbutton.png" alt="AthensBook για το iPhone και το iPod touch!"/></a></span> -->
+		
+				<span style="position:relative; left:30px; top:30px;"><img style="border:0;" width="90" height="90" src="http://buzz.reality-tape.com/images/chrono.png" alt="Coming soon"/></span>
+
+					
+
+
+		<br />
+		
+		
+	</div>
+	<br />
+
+
+
+
+		<div id="categories">
+	<img src="minus.gif" class="showstate" onClick="expandcontent(this, 'cats')" style="margin-right:18px; margin-top:10px;" /><strong>Κατηγορίες</strong>
+	<div id="cats" class="switchcontent">
+
+	<ul id="nav-secondary">
+								
+									<li class="cat0">
+									<a href="/index.php?category=Όλα">
+						Όλα
+					</a>
+				</li>
+
+											<ul style="padding-left:10px">
+									<li class="cat1">
+									<a href="/index.php?category=ΜΜΕ">
+
+						ΜΜΕ
+					</a>
+				</li>
+
+											
+									<li class="cat2">
+									<a href="/index.php?category=Διάφορα">
+						Διάφορα
+					</a>
+				</li>
+
+											
+									<li class="cat3">
+
+									<a href="/index.php?category=Blogs">
+						Blogs
+					</a>
+				</li>
+
+											
+									<li class="cat4">
+									<a href="/index.php?category=Αγγλικά">
+						Αγγλικά
+					</a>
+				</li>
+
+											
+									<li class="cat5">
+									<a href="/index.php?category=Tech">
+						Tech
+					</a>
+				</li>
+
+						</ul>
+
+</div>
+</div>
+<br />
+
+				<!-- 
+			
+			<span style="position:relative; left:-1px;"><a href="http://buzz.reality-tape.com/rss2.php?search=griots&tag=true"><img style="border:0;" src="http://buzz.reality-tape.com/images/griotpop.png" alt="RSS feed: όλες οι δημοφιλείς καταχωρίσεις με tag griots" title="Βάλε tag griots για προσθήκη στο ειδικό feed"/></a></span><br/>
+			<span style="position:relative; left:-1px;"><a href="http://buzz.reality-tape.com/rss2.php?search=griots&tag=true&status=all"><img style="border:0;" src="http://buzz.reality-tape.com/images/griotall.png" alt="RSS feed: όλες οι δημοφιλείς καταχωρίσεις με tag griots" title="Βάλε tag griots για προσθήκη στο ειδικό feed"/></a></span> 
+			
+			-->
+	
+	<h3>Ενεργές συζητήσεις [τελευταία σχόλια]</h3><ul style='list-style:none;'><li class='threado'><span style='font-size:90%;'><a class='sbcommentlink' href='/story.php?id=65511'>Καταδίκη Παναγιώτη Ψωμιάδη</a><br/>[<a href='/story.php?id=65511#wholecomment68104'>giannisf</a>, <a href='/story.php?id=65511#wholecomment67992'>kensai</a>, <a href='/story.php?id=65511#wholecomment67978'>Elias</a>]</span></li><li class='threado'><span style='font-size:90%;'><a class='sbcommentlink' href='/story.php?id=65566'>Για τον Χρήστο Λαμπράκη και το Μέγαρο Μουσικής. (Μάνος Στεφανίδης)</a><br/>[<a href='/story.php?id=65566#wholecomment68094'>akindynos</a>, <a href='/story.php?id=65566#wholecomment68077'>pidyo</a>, <a href='/story.php?id=65566#wholecomment68073'>gerasimos</a>]</span></li><li class='threado'><span style='font-size:90%;'><a class='sbcommentlink' href='/story.php?id=65562'>Η απατηλή λάμψη της ψευδοεπιστήμης/ Αρ. Χατζής</a><br/>[<a href='/story.php?id=65562#wholecomment68122'>zoutiri</a>, <a href='/story.php?id=65562#wholecomment68114'>tanevramou</a>, <a href='/story.php?id=65562#wholecomment68106'>vasvas</a>]</span></li><li class='threado'><span style='font-size:90%;'><a class='sbcommentlink' href='/story.php?id=65483'>Edito 341</a><br/>[<a href='/story.php?id=65483#wholecomment68123'>ngeor</a>, <a href='/story.php?id=65483#wholecomment68116'>alberich</a>, <a href='/story.php?id=65483#wholecomment68113'>alberich</a>]</span></li><li class='threado'><span style='font-size:90%;'><a class='sbcommentlink' href='/story.php?id=65508'>Debtocracy: Ένα Review (Θ. Γεωργακόπουλος)</a><br/>[<a href='/story.php?id=65508#wholecomment68119'>BlondeElena</a>, <a href='/story.php?id=65508#wholecomment68118'>dkamen</a>, <a href='/story.php?id=65508#wholecomment68107'>contrabando</a>]</span></li><li class='threado'><span style='font-size:90%;'><a class='sbcommentlink' href='/story.php?id=65582'>Η Νου Δου στο πλευρό του περιφερειάρχη της καρδιάς μας</a><br/>[<a href='/story.php?id=65582#wholecomment68121'>ermippos</a>]</span></li><li class='threado'><span style='font-size:90%;'><a class='sbcommentlink' href='/story.php?id=65563'>I Just Made Love!</a><br/>[<a href='/story.php?id=65563#wholecomment68120'>oldboy</a>, <a href='/story.php?id=65563#wholecomment68115'>Vega</a>, <a href='/story.php?id=65563#wholecomment68111'>tsalapetinos</a>]</span></li></ul><br/>  	
+
+	<div id="categories">
+
+	<strong>RSS feeds</strong>
+	<ul id="nav-rss">
+		<li><a href="/rss2.php" target="_blank">Δημοφιλή</a></li>
+		<li><a href="/rss2.php?status=queued" target="_blank">Νέα</a></li>
+		<li><a href="/rss2.php?status=all" target="_blank">Όλα</a></li>	
+  </ul>
+</div>
+<br />&nbsp;<br />
+
+<span style="position:relative; left:-5px; top:10px;"><a href="http://buzz.reality-tape.com/postroll.php"><img src="http://buzz.reality-tape.com/images/prom.png" alt="βάλε το postroll στο blog σου" title="βάλε το postroll στο blog σου"></a></span> 
+<br />&nbsp;<br /> 
+
+<!-- <span style="position:relative; left:-5px; top:10px;"><a href="http://buzz.reality-tape.com/postroll.php"><img src="http://buzz.reality-tape.com/images/megatroll.png" alt="βάλε ένα megatroll στο blog σου" title="βάλε ένα megatroll στο blog σου"></a></span> -->
+
+
+<!-- <span style="position:relative; left:-5px; top:10px;"><a href="http://buzz.reality-tape.com/postroll.php"><img src="http://buzz.reality-tape.com/images/enaelafaki.png" alt="βάλε το postroll στο blog σου" title="βάλε το postroll στο blog σου"></a></span> -->
+
+
+
+		      
+				</div><!-- sidebar end -->
+				<div id="contentbox">
+			
+		      
+			    <div id="inside">
+
+						
+		      	<div id="riseup">
+
+			
+    <div class="news-summary" id="news-0">
+			<ul class="news-upcoming"  id="cat1">
+			<li class="mnm-published"><a id="mnms-0" href="javascript:menealo(68,65483,0,'224fce5d7909b9ee7a9dcde07a91a49a',10)">19</a></li>
+			<li class="menealo" id="mnmlink-0">
+									<span>Voted</span>
+							</li>
+		</ul>
+
+	
+		
+		<div class="top" id="catcol1">
+		
+		<h4 id="ls_title-0">
+		    		      				  <a href="http://www.athensvoice.gr/the-paper/article/341/edito-341" >Edito 341</a>
+			                  </h4>
+
+    <div class="news-submitted">
+			<a href="javascript://" onclick="show_hide_user_links(document.getElementById('userlinks-0'));">		
+							</a>
+			
+			
+			
+			<a href="javascript://" onclick="show_hide_user_links(document.getElementById('userlinks-0'));">		
+				<span id="ls_link_submitter-0">cinto</span></a><span style="color:#8A8A8A">,</span> πριν
+			<span id="ls_timeago-0"> 2 μέρες 
+				(<span id="ls_story_link-0">
+
+											<a href="http://www.athensvoice.gr/the-paper/article/341/edito-341"  class="screen">http://www.athensvoice.gr</a>
+									</span>)
+</span>
+
+		  				
+			<span id="userlinks-0" style="display:none;">
+				<a href = "/user.php?login=cinto"><span style="color:#A6271C;">Δες προφίλ</span></a>  
+									| <a href ="/user.php?login=cinto&amp;view=addfriend"><span style="color:#A6271C;">Πρόσθεσε στους φίλους σου</span></a>							</span>
+			<span id="ls_adminlinks-0" style="display:none">
+
+															</span>
+    </div>
+
+  		    <span class="news-body-text">
+	  		<span id="ls_contents-0">
+	  					  				Δεν έχει εφαρμοστεί τίποτα από τις συστάσεις της ευρωπαϊκής κοινότητας και το μέτωπο της ακινησίας λέει ότι η ευρωπαϊκή πολιτική απέτυχε.	  				<br /> 
+	  					  					  					  					  					  					  					  					  					  					  					  					  					  					  				  			
+	  			
+	  		</span>
+	    </span>
+  		
+    <div class="news-details">
+
+    	<span id="ls_comments_url-0">
+    		    		    		    			<a href="/story.php?title=Edito-341" class="comments">36 Σχόλια</a>
+    		    	</span> <span style="color:#B0B0B0">|</span>
+		
+						
+  		  			
+    	
+  											<span id="ls_recommend-0">
+							<img src="/templates/yget/images/email.gif" align="absmiddle"/> <a href="javascript://" onclick="show_recommend(0, 65483, 'http://buzz.reality-tape.com/');"> Στείλτο σε φίλους</a>
+						</span> 
+										
+																		<span id="emailto-0" style="display:none"></span>
+
+																
+													
+							
+									<!-- <span style="color:#B0B0B0">|</span>
+
+											<a href="http://technorati.com/search/http%3A%2F%2Fwww.athensvoice.gr%2Fthe-paper%2Farticle%2F341%2Fedito-341"> Αντιδράσεις στα blog</a>
+					 -->
+					
+								<span style="color:#B0B0B0">| </span><span id="twitter" style="background: url('http://buzz.reality-tape.com/images/twitter.png') 3px 3px no-repeat;padding: 2px 2px 10px 20px;">
+<a href="http://twitter.com/home/?status=Reading+'Edito 341'+http://buzz.reality-tape.com/s65483" target="_blank">Tweet!</a>
+</span>
+			
+			
+    </div>
+	</div>
+	
+	
+</div>
+
+    <div id="comments">
+
+        <h2>Σχόλια</h2>
+
+        <ul id="comments-list">
+
+	
+<li>
+	
+			<div class="user-talos" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=talos">talos</a> πριν  1 μέρα 16 ώρες <a href="#wholecomment67944" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     					<!--	<span id="flag-67944"><a class="ratemexflat" title="Έχετε ήδη αξιολογήσει αυτό το σχόλιο" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span> -->
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-67944" style='text-decoration: none;color:#36a00f;'><strong>10</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-67944"> </span> <span id="ratebuttons-67944"> 
+												
+						<a class="ratemeyflat" title="Έχετε ήδη αξιολογήσει αυτό το σχόλιο"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Έχετε ήδη αξιολογήσει αυτό το σχόλιο"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+						
+										
+				 </span>
+				      	<a id="cvotedown-67944" style='text-decoration: none;color:#a2a2a2;'><strong>13</strong></a>
+
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment67944"> 
+		<span id = "comment_content-67944"> <br />
+      Δεν έχω λόγια πάλι... Ερώτηση: ποια από τα τελευταία π.χ. 30 edito της AV *δεν* έχουν μπαζαριστεί; Γιατί;<br />
+<br />
+In other news: Λέω να κάνω μια προσπάθεια να ανεβάζω στο μπαζ *όλες* τις αναρτήσεις της Προλεταριακής Σημαίας (<a href="http://buzz.reality-tape.com/story.php?title=%CE%A0%CF%81%CE%BF%CE%BB%CE%B5%CF%84%CE%B1%CF%81%CE%B9%CE%B1%CE%BA%CE%AE-%CE%A3%CE%B7%CE%BC%CE%B1%CE%AF%CE%B1-%CE%A0%CF%81%CF%8E%CE%B7%CE%BD-%CE%91%CE%B5%CF%81%CE%BF%CE%B4%CF%81%CF%8C%CE%BC%CE%B9%CE%BF-%CE%95%CE%BB%CE%BB%CE%B7%CE%BD%CE%B9%CE%BA%CE%BF%CF%8D-%CE%95%CE%BB%CE%B5%CF%8D%CE%B8%CE%B5%CF%81%CE%BF%CF%82-%CF%87%CF%8E%CF%81%CE%BF%CF%82-%CF%80%CE%BF%CF%85-%CE%B1%CE%BD%CE%AE%CE%BA%CE%B5%CE%B9-%CF%83%CF%84%CE%BF-%CE%BB%CE%B1%CF%8C-1">αρχής γενομένης...</a>), και ελπίζω οι φίλοι στο μπαζ να βοηθήσουν στην ανάδειξή τους... </span> 
+	 </div>
+
+	
+	  
+
+	<div class="comment-info"> 
+	
+	 
+	<span class="medium lightgray awesome"><a href = "javascript://" onClick="var replydisplay=document.getElementById('reply-67944').style.display ? '' : 'none'; document.getElementById('reply-67944').style.display = replydisplay;">Απάντησε</a></span>&nbsp;
+	  <div id="reply-67944" style="display:none;"> 
+
+	  
+	    <div id="commentform" align="left">
+	      <form action="" method="POST" id="thisform" style="display:inline;">
+	        <fieldset>
+	        <legend>Απάντησε</legend>
+	        <div id="cformfieldset"> 
+
+			
+	          <label for="comment" accesskey="2" style="float:left">  </label>
+
+	 
+
+	          
+	          <textarea name="reply_comment_content-67944" id="reply_comment_content-67944" rows="6" cols="60"/></textarea>
+	          <br/>
+
+
+	          
+	          
+	          
+	          <input type="submit" class="sub-awesome" name="submit" value="Καταχώριση σχολίου" class="log2" />
+
+	          
+	          <input type="hidden" name="process" value="newcomment" />
+	          <input type="hidden" name="randkey" value="24436874" />
+	          <input type="hidden" name="link_id" value="65483" />
+	          <input type="hidden" name="comment_parent_id" value="67944" />
+
+	          <input type="hidden" name="user_id" value="68" />
+	        </div>
+	        </fieldset>
+	      </form>
+	    </div>
+	  </div>
+	  	
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+<ul id="comments-list">
+
+	
+<li>
+	
+			<div class="user-neTpen" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=neTpen">neTpen</a> πριν  1 μέρα 16 ώρες <a href="#wholecomment67946" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     					<!--	<span id="flag-67946"><a class="ratemexflat" title="Έχετε ήδη αξιολογήσει αυτό το σχόλιο" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span> -->
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-67946" style='text-decoration: none;color:#36a00f;'><strong>9</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-67946"> </span> <span id="ratebuttons-67946"> 
+												
+						<a class="ratemeyflat" title="Έχετε ήδη αξιολογήσει αυτό το σχόλιο"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Έχετε ήδη αξιολογήσει αυτό το σχόλιο"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+						
+										
+				 </span>
+				      	<a id="cvotedown-67946" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment67946"> 
+		<span id = "comment_content-67946"> <br />
+      Αν μας αρέσουν, γιατί όχι.  </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-talos" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=talos">talos</a> πριν  1 μέρα 14 ώρες <a href="#wholecomment67953" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-67953"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(68, 67953, 67953, '9784ddf0481723239726d511ad6b4d19', -100,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-67953" style='text-decoration: none;color:#36a00f;'><strong>5</strong></a>
+			      &nbsp;&nbsp; <span id="ratetext-67953"> </span> <span id="ratebuttons-67953"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(68, 67953, 67953, '9784ddf0481723239726d511ad6b4d19', 10, 'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(68, 67953, 67953, '9784ddf0481723239726d511ad6b4d19', -10,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> </span>
+			      	<a id="cvotedown-67953" style='text-decoration: none;color:#a2a2a2;'><strong>3</strong></a>
+								     
+
+
+
+			 </span>
+
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment67953"> 
+		<span id = "comment_content-67953"> <br />
+      @netpen Εγώ ρωτάω απλά γιατί υπάρχουν edito αμπαζάριστα... από την άλλη αν θέλει κανείς να μπαζάρει έναν αρθρογράφο που επαναλαμβάνει κάθε εβδομάδα τα ίδια πράγματα γενικά με άλλα λόγια, γούστο του καπέλο του. Ποιος είμαι εγώ να του το απαγορεύσω.<br />
+<br />
+@dkamen "όμως"; </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-kensai" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=kensai">kensai</a> πριν  1 μέρα 14 ώρες <a href="#wholecomment67962" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-67962"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(68, 67962, 67962, 'c20115b8a556c8fc9e9f95ddb242caea', -100,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-67962" style='text-decoration: none;color:#36a00f;'><strong>3</strong></a>
+			      &nbsp;&nbsp; <span id="ratetext-67962"> </span> <span id="ratebuttons-67962"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(68, 67962, 67962, 'c20115b8a556c8fc9e9f95ddb242caea', 10, 'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(68, 67962, 67962, 'c20115b8a556c8fc9e9f95ddb242caea', -10,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> </span>
+			      	<a id="cvotedown-67962" style='text-decoration: none;color:#a2a2a2;'><strong>5</strong></a>
+								     
+
+
+
+			 </span>
+
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment67962"> 
+		<span id = "comment_content-67962"> <br />
+      "Δεν έχω λόγια πάλι... Ερώτηση: ποια από τα τελευταία π.χ. 30 edito της AV *δεν* έχουν μπαζαριστεί; Γιατί;"<br />
+<br />
+Είσαι απαράδεκτος προβοκάτορας. Και μετά πορτρετάρεις εμένα για τον κακό της υπόθεσης. Καλά σου λέει ο neTpen, αν μας αρέσουν, ποιό το πρόβλημά σου;<br />
+<br />
+Τι είναι αυτό το πράγμα σώνει και καλά να μη μπορούμε (ή πρέπει) να ποστάρουμε αυτά που πραγματικά θέλουμε και μας αρέσουν. Και ξέρω ότι ενδόμυχα μέσα σου *δεν* κάνεις πλάκα για την Προλεταριακή Σημαία.. Keep trying! </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-cinto" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=cinto">cinto</a> πριν  1 μέρα 13 ώρες <a href="#wholecomment67966" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-67966"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(68, 67966, 67966, '5ed123715fa4836741a51f05b3799566', -100,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-67966" style='text-decoration: none;color:#36a00f;'><strong>8</strong></a>
+			      &nbsp;&nbsp; <span id="ratetext-67966"> </span> <span id="ratebuttons-67966"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(68, 67966, 67966, '5ed123715fa4836741a51f05b3799566', 10, 'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(68, 67966, 67966, '5ed123715fa4836741a51f05b3799566', -10,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> </span>
+			      	<a id="cvotedown-67966" style='text-decoration: none;color:#a2a2a2;'><strong>2</strong></a>
+								     
+
+
+
+			 </span>
+
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment67966"> 
+		<span id = "comment_content-67966"> <br />
+      Ποιο edito δεν μπαζαρίστηκε να το μπαζάρω ΤΩΡΑ!<br />
+<br />
++ Άλλωστε τα edito του Γεωργελέ είναι ολοκληρωμένη εμπειρία αν διαβαστούν μαζί με τα σχόλια των παλαβοαριστερών που πάντα τα συνοδεύουν. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-noir" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=noir">noir</a> πριν  1 μέρα 13 ώρες <a href="#wholecomment67974" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-67974"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(68, 67974, 67974, '02f17fc33c1f8b7976209c5648d64302', -100,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-67974" style='text-decoration: none;color:#36a00f;'><strong>7</strong></a>
+			      &nbsp;&nbsp; <span id="ratetext-67974"> </span> <span id="ratebuttons-67974"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(68, 67974, 67974, '02f17fc33c1f8b7976209c5648d64302', 10, 'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(68, 67974, 67974, '02f17fc33c1f8b7976209c5648d64302', -10,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> </span>
+			      	<a id="cvotedown-67974" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+								     
+
+
+
+			 </span>
+
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment67974"> 
+		<span id = "comment_content-67974"> <br />
+      Εγώ σου υπόσχομαι να ψηφίζω κάργα Προλεταριακή Σημαία!!! Και ελπίζω να με θυμηθούν μετά την επανάσταση και να έχω ευνοική αντιμετώπιση στο επαναστατικό δικαστήριο. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-talos" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=talos">talos</a> πριν  1 μέρα 11 ώρες <a href="#wholecomment67982" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-67982"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(68, 67982, 67982, 'ba38eac5e0f9fad3fe42b69a86caea19', -100,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-67982" style='text-decoration: none;color:#36a00f;'><strong>4</strong></a>
+			      &nbsp;&nbsp; <span id="ratetext-67982"> </span> <span id="ratebuttons-67982"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(68, 67982, 67982, 'ba38eac5e0f9fad3fe42b69a86caea19', 10, 'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(68, 67982, 67982, 'ba38eac5e0f9fad3fe42b69a86caea19', -10,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> </span>
+			      	<a id="cvotedown-67982" style='text-decoration: none;color:#a2a2a2;'><strong>1</strong></a>
+								     
+
+
+
+			 </span>
+
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment67982"> 
+		<span id = "comment_content-67982"> <br />
+      @noir ωραία! κι εγώ για αυτό το κάνω, φυλάμε τα νώτα μας<br />
+@kensai "Και ξέρω ότι ενδόμυχα μέσα σου *δεν* κάνεις πλάκα για την Προλεταριακή Σημαία.. " <br />
+Αλίμονο. Ποιος *μπορεί* να κάνει πλάκα με την Προλεταριακή Σημαία; Πόσο καλά με ξέρεις παππού! </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-contrabando" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=contrabando">contrabando</a> πριν  11 ώρες <a href="#wholecomment68098" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-68098"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(68, 68098, 68098, '45534515d3d303ef0dce21461b5ac60e', -100,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-68098" style='text-decoration: none;color:#36a00f;'><strong>1</strong></a>
+			      &nbsp;&nbsp; <span id="ratetext-68098"> </span> <span id="ratebuttons-68098"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(68, 68098, 68098, '45534515d3d303ef0dce21461b5ac60e', 10, 'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(68, 68098, 68098, '45534515d3d303ef0dce21461b5ac60e', -10,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> </span>
+			      	<a id="cvotedown-68098" style='text-decoration: none;color:#a2a2a2;'><strong>2</strong></a>
+								     
+
+
+
+			 </span>
+
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment68098"> 
+		<span id = "comment_content-68098"> <br />
+      @Cinto<br />
+Εγώ σπάω πλάκα με τα σχόλια των παλαβοδεξιών φιλελεύθερων και των παλαβοδεξιών πασόκων που θαυμάζουνε αυτά που γράφει ο Γιωργελές.   </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+
+  <br />
+
+
+
+
+  </li>
+</ul>
+
+
+	
+<li>
+	
+			<div class="user-dkamen" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=dkamen">dkamen</a> πριν  1 μέρα 15 ώρες <a href="#wholecomment67949" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-67949"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(68, 67949, 67949, 'c098ac58d38c74607276f817c159874c', -100,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-67949" style='text-decoration: none;color:#36a00f;'><strong>12</strong></a>
+			      &nbsp;&nbsp; <span id="ratetext-67949"> </span> <span id="ratebuttons-67949"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(68, 67949, 67949, 'c098ac58d38c74607276f817c159874c', 10, 'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(68, 67949, 67949, 'c098ac58d38c74607276f817c159874c', -10,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> </span>
+			      	<a id="cvotedown-67949" style='text-decoration: none;color:#a2a2a2;'><strong>5</strong></a>
+								     
+
+
+
+			 </span>
+
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment67949"> 
+		<span id = "comment_content-67949"> <br />
+      Η προλεταριακή σημαία όμως λέει όλο μαλακίες. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+	 
+	<span class="medium lightgray awesome"><a href = "javascript://" onClick="var replydisplay=document.getElementById('reply-67949').style.display ? '' : 'none'; document.getElementById('reply-67949').style.display = replydisplay;">Απάντησε</a></span>&nbsp;
+	  <div id="reply-67949" style="display:none;"> 
+
+	  
+	    <div id="commentform" align="left">
+
+	      <form action="" method="POST" id="thisform" style="display:inline;">
+	        <fieldset>
+	        <legend>Απάντησε</legend>
+	        <div id="cformfieldset"> 
+
+			
+	          <label for="comment" accesskey="2" style="float:left">  </label>
+	 
+
+	          
+	          <textarea name="reply_comment_content-67949" id="reply_comment_content-67949" rows="6" cols="60"/></textarea>
+	          <br/>
+
+	          
+	          
+	          
+	          <input type="submit" class="sub-awesome" name="submit" value="Καταχώριση σχολίου" class="log2" />
+
+	          
+	          <input type="hidden" name="process" value="newcomment" />
+	          <input type="hidden" name="randkey" value="7897548" />
+	          <input type="hidden" name="link_id" value="65483" />
+	          <input type="hidden" name="comment_parent_id" value="67949" />
+	          <input type="hidden" name="user_id" value="68" />
+	        </div>
+	        </fieldset>
+
+	      </form>
+	    </div>
+	  </div>
+	  	
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+<ul id="comments-list">
+
+	
+<li>
+	
+			<div class="user-BlondeElena" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=BlondeElena">BlondeElena</a> πριν  1 μέρα 14 ώρες <a href="#wholecomment67960" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-67960"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(68, 67960, 67960, '2bbf403297b9285c9c41ecbbff89dd80', -100,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-67960" style='text-decoration: none;color:#36a00f;'><strong>8</strong></a>
+
+			      &nbsp;&nbsp; <span id="ratetext-67960"> </span> <span id="ratebuttons-67960"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(68, 67960, 67960, '2bbf403297b9285c9c41ecbbff89dd80', 10, 'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(68, 67960, 67960, '2bbf403297b9285c9c41ecbbff89dd80', -10,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> </span>
+			      	<a id="cvotedown-67960" style='text-decoration: none;color:#a2a2a2;'><strong>3</strong></a>
+								     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment67960"> 
+		<span id = "comment_content-67960"> <br />
+
+      Ε καλά τώρα, και η AV δεν είναι η εγχώρια NYT. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-dkamen" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=dkamen">dkamen</a> πριν  1 μέρα 9 ώρες <a href="#wholecomment67996" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-67996"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(68, 67996, 67996, '6e9060cb3283c7c71e11ef206dca0870', -100,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-67996" style='text-decoration: none;color:#36a00f;'><strong>2</strong></a>
+
+			      &nbsp;&nbsp; <span id="ratetext-67996"> </span> <span id="ratebuttons-67996"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(68, 67996, 67996, '6e9060cb3283c7c71e11ef206dca0870', 10, 'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(68, 67996, 67996, '6e9060cb3283c7c71e11ef206dca0870', -10,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> </span>
+			      	<a id="cvotedown-67996" style='text-decoration: none;color:#a2a2a2;'><strong>1</strong></a>
+								     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment67996"> 
+		<span id = "comment_content-67996"> <br />
+
+      Διαβάζεται πιο ευχάριστα όπως και να το κάνουμε, για τζάμπα εφημερίδα μια χαρά. <br />
+<br />
+Βασικά οι βλάκες πρέπει να σκεφτούν να την κάνουνε Android App. <br />
+ <br />
+<br />
+ </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+
+  <br />
+
+
+
+
+  </li>
+</ul>
+
+
+	
+<li>
+	
+			<div class="user-seagazing" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=seagazing">seagazing</a> πριν  1 μέρα 15 ώρες <a href="#wholecomment67951" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-67951"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(68, 67951, 67951, '29d989dfa7ed960082fc8f099572643a', -100,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-67951" style='text-decoration: none;color:#36a00f;'><strong>6</strong></a>
+			      &nbsp;&nbsp; <span id="ratetext-67951"> </span> <span id="ratebuttons-67951"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(68, 67951, 67951, '29d989dfa7ed960082fc8f099572643a', 10, 'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(68, 67951, 67951, '29d989dfa7ed960082fc8f099572643a', -10,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> </span>
+			      	<a id="cvotedown-67951" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+								     
+
+
+
+			 </span>
+
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment67951"> 
+		<span id = "comment_content-67951"> <br />
+      Έπρεπε να μας αφήσουν χωρίς μνημόνιο 3-4 μήνες πέρσι και θα είχαμε τελειώσει με όλα αυτά.   </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+	 
+	<span class="medium lightgray awesome"><a href = "javascript://" onClick="var replydisplay=document.getElementById('reply-67951').style.display ? '' : 'none'; document.getElementById('reply-67951').style.display = replydisplay;">Απάντησε</a></span>&nbsp;
+	  <div id="reply-67951" style="display:none;"> 
+
+	  
+	    <div id="commentform" align="left">
+
+	      <form action="" method="POST" id="thisform" style="display:inline;">
+	        <fieldset>
+	        <legend>Απάντησε</legend>
+	        <div id="cformfieldset"> 
+
+			
+	          <label for="comment" accesskey="2" style="float:left">  </label>
+	 
+
+	          
+	          <textarea name="reply_comment_content-67951" id="reply_comment_content-67951" rows="6" cols="60"/></textarea>
+	          <br/>
+
+	          
+	          
+	          
+	          <input type="submit" class="sub-awesome" name="submit" value="Καταχώριση σχολίου" class="log2" />
+
+	          
+	          <input type="hidden" name="process" value="newcomment" />
+	          <input type="hidden" name="randkey" value="37229213" />
+	          <input type="hidden" name="link_id" value="65483" />
+	          <input type="hidden" name="comment_parent_id" value="67951" />
+	          <input type="hidden" name="user_id" value="68" />
+	        </div>
+	        </fieldset>
+
+	      </form>
+	    </div>
+	  </div>
+	  	
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+<ul id="comments-list">
+
+	
+<li>
+	
+			<div class="user-talos" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=talos">talos</a> πριν  1 μέρα 14 ώρες <a href="#wholecomment67954" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-67954"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(68, 67954, 67954, 'b3e14b325a49d925d105cf322d45dc07', -100,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-67954" style='text-decoration: none;color:#36a00f;'><strong>5</strong></a>
+
+			      &nbsp;&nbsp; <span id="ratetext-67954"> </span> <span id="ratebuttons-67954"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(68, 67954, 67954, 'b3e14b325a49d925d105cf322d45dc07', 10, 'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(68, 67954, 67954, 'b3e14b325a49d925d105cf322d45dc07', -10,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> </span>
+			      	<a id="cvotedown-67954" style='text-decoration: none;color:#a2a2a2;'><strong>3</strong></a>
+								     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment67954"> 
+		<span id = "comment_content-67954"> <br />
+
+      Ναι, *όλα* όμως: το Ευρώ, οι Γερμανικές Τράπεζες, το διεθνές χρηματοοικονομικό σύστημα... </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-kensai" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=kensai">kensai</a> πριν  1 μέρα 14 ώρες <a href="#wholecomment67963" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-67963"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(68, 67963, 67963, 'dbae61d63344c74715fbf75dae7f47e8', -100,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-67963" style='text-decoration: none;color:#36a00f;'><strong>3</strong></a>
+
+			      &nbsp;&nbsp; <span id="ratetext-67963"> </span> <span id="ratebuttons-67963"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(68, 67963, 67963, 'dbae61d63344c74715fbf75dae7f47e8', 10, 'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(68, 67963, 67963, 'dbae61d63344c74715fbf75dae7f47e8', -10,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> </span>
+			      	<a id="cvotedown-67963" style='text-decoration: none;color:#a2a2a2;'><strong>6</strong></a>
+								     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment67963"> 
+		<span id = "comment_content-67963"> <br />
+
+      Μούρλια!!<br />
+<br />
+Ώστε οι κρατικοδίαιτοι κηφήνες να συνεχίσουν να επιβιώνουν και όλοι οι υπόλοιποι (ιδιώτες, ελεύθεροι επαγγελματίες, επιχειρηματίες, βιομήχανοι) που έχουν πραγματική ανάγκη το τραπεζικό σύστημα και την κυκλοφορία του χρήματος να πάνε στον Καιάδα!<br />
+<br />
+Μα πως δεν το σκέφτηκα!! :-/ </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+</ul>
+
+
+	
+<li>
+	
+			<div class="user-alberich" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=alberich">alberich</a> πριν  1 μέρα 11 ώρες <a href="#wholecomment67985" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-67985"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(68, 67985, 67985, '4e47e4e8d9438b294f8e256e1bf21b0e', -100,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-67985" style='text-decoration: none;color:#36a00f;'><strong>8</strong></a>
+			      &nbsp;&nbsp; <span id="ratetext-67985"> </span> <span id="ratebuttons-67985"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(68, 67985, 67985, '4e47e4e8d9438b294f8e256e1bf21b0e', 10, 'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(68, 67985, 67985, '4e47e4e8d9438b294f8e256e1bf21b0e', -10,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> </span>
+			      	<a id="cvotedown-67985" style='text-decoration: none;color:#a2a2a2;'><strong>4</strong></a>
+								     
+
+
+
+			 </span>
+
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment67985"> 
+		<span id = "comment_content-67985"> <br />
+      Απέτυχε γιατί δεν εφαρμόστηκε σωστά.Κάτι μου θυμίαζει αυτό. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+	 
+	<span class="medium lightgray awesome"><a href = "javascript://" onClick="var replydisplay=document.getElementById('reply-67985').style.display ? '' : 'none'; document.getElementById('reply-67985').style.display = replydisplay;">Απάντησε</a></span>&nbsp;
+	  <div id="reply-67985" style="display:none;"> 
+
+	  
+	    <div id="commentform" align="left">
+
+	      <form action="" method="POST" id="thisform" style="display:inline;">
+	        <fieldset>
+	        <legend>Απάντησε</legend>
+	        <div id="cformfieldset"> 
+
+			
+	          <label for="comment" accesskey="2" style="float:left">  </label>
+	 
+
+	          
+	          <textarea name="reply_comment_content-67985" id="reply_comment_content-67985" rows="6" cols="60"/></textarea>
+	          <br/>
+
+	          
+	          
+	          
+	          <input type="submit" class="sub-awesome" name="submit" value="Καταχώριση σχολίου" class="log2" />
+
+	          
+	          <input type="hidden" name="process" value="newcomment" />
+	          <input type="hidden" name="randkey" value="43697165" />
+	          <input type="hidden" name="link_id" value="65483" />
+	          <input type="hidden" name="comment_parent_id" value="67985" />
+	          <input type="hidden" name="user_id" value="68" />
+	        </div>
+	        </fieldset>
+
+	      </form>
+	    </div>
+	  </div>
+	  	
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-kensai" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=kensai">kensai</a> πριν  1 μέρα 11 ώρες <a href="#wholecomment67987" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-67987"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(68, 67987, 67987, 'ccd52dfbe3e27ec748c1f38b29773f64', -100,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-67987" style='text-decoration: none;color:#36a00f;'><strong>2</strong></a>
+
+			      &nbsp;&nbsp; <span id="ratetext-67987"> </span> <span id="ratebuttons-67987"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(68, 67987, 67987, 'ccd52dfbe3e27ec748c1f38b29773f64', 10, 'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(68, 67987, 67987, 'ccd52dfbe3e27ec748c1f38b29773f64', -10,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> </span>
+			      	<a id="cvotedown-67987" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+								     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment67987"> 
+		<span id = "comment_content-67987"> <br />
+
+      Τελικά για τους Τιτάνες του Ούγγρους κανείς δε ξαναμίλησε.... Ξέρετε εκείνους που είπαν όχι στο ΔΝΤ και από τότε ζουν φορολογώντας τις αδίστακτες τράπεζες και τους πλούσιους μόνο...<br />
+<br />
+Τι να έγιναν αυτές οι ψυχές... μούμπλε μούμπλε... </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+	 
+	<span class="medium lightgray awesome"><a href = "javascript://" onClick="var replydisplay=document.getElementById('reply-67987').style.display ? '' : 'none'; document.getElementById('reply-67987').style.display = replydisplay;">Απάντησε</a></span>&nbsp;
+	  <div id="reply-67987" style="display:none;"> 
+
+	  
+	    <div id="commentform" align="left">
+	      <form action="" method="POST" id="thisform" style="display:inline;">
+	        <fieldset>
+
+	        <legend>Απάντησε</legend>
+	        <div id="cformfieldset"> 
+
+			
+	          <label for="comment" accesskey="2" style="float:left">  </label>
+	 
+
+	          
+	          <textarea name="reply_comment_content-67987" id="reply_comment_content-67987" rows="6" cols="60"/></textarea>
+	          <br/>
+
+
+	          
+	          
+	          
+	          <input type="submit" class="sub-awesome" name="submit" value="Καταχώριση σχολίου" class="log2" />
+
+	          
+	          <input type="hidden" name="process" value="newcomment" />
+	          <input type="hidden" name="randkey" value="76939938" />
+	          <input type="hidden" name="link_id" value="65483" />
+	          <input type="hidden" name="comment_parent_id" value="67987" />
+	          <input type="hidden" name="user_id" value="68" />
+	        </div>
+	        </fieldset>
+	      </form>
+	    </div>
+
+	  </div>
+	  	
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+<ul id="comments-list">
+
+	
+
+<li>
+	
+			<div class="user-talos" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=talos">talos</a> πριν  1 μέρα 10 ώρες <a href="#wholecomment67988" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-67988"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(68, 67988, 67988, 'f36ccf3b944d08c1853258db4cb93b80', -100,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-67988" style='text-decoration: none;color:#36a00f;'><strong>7</strong></a>
+			      &nbsp;&nbsp; <span id="ratetext-67988"> </span> <span id="ratebuttons-67988"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(68, 67988, 67988, 'f36ccf3b944d08c1853258db4cb93b80', 10, 'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(68, 67988, 67988, 'f36ccf3b944d08c1853258db4cb93b80', -10,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> </span>
+
+			      	<a id="cvotedown-67988" style='text-decoration: none;color:#a2a2a2;'><strong>1</strong></a>
+								     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment67988"> 
+		<span id = "comment_content-67988"> <br />
+      Funny you should ask. Οι (κατά τα άλλα υπό κυβέρνηση νεάταρνταλ, δίχως αμφιβολία για άλλους λόγους) Ούγγροι, έχουν σήμερα <a href="http://bbjonline.hu/economy/hungary-to-catch-up-with-the-eu-buda-cash-says_57091">spread στις 240 μονάδες</a> και <a href="http://www.realdeal.hu/20110314/gdp-growth-picks-up-to-annual-19-in-q4-2010">ανάκαμψη</a> - καμία σχέση βέβαια με τις θεαματικές επιδόσεις της Ελλάδας και της Ιρλ... ωπ, μια στιγμή, λάθος...<br />
+
+<br />
+Ομολογουμένως βέβαια η τρύπα στην οποία βρίσκονταν ήταν ρηχότερη... </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+</ul>
+
+
+	
+<li>
+	
+			<div class="user-kensai" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=kensai">kensai</a> πριν  1 μέρα 10 ώρες <a href="#wholecomment67989" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-67989"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(68, 67989, 67989, 'd18f2a38f539c8a8369531b7bf999bcf', -100,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-67989" style='text-decoration: none;color:#36a00f;'><strong></strong></a>
+
+			      &nbsp;&nbsp; <span id="ratetext-67989"> </span> <span id="ratebuttons-67989"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(68, 67989, 67989, 'd18f2a38f539c8a8369531b7bf999bcf', 10, 'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(68, 67989, 67989, 'd18f2a38f539c8a8369531b7bf999bcf', -10,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> </span>
+			      	<a id="cvotedown-67989" style='text-decoration: none;color:#a2a2a2;'><strong>5</strong></a>
+								     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment67989"> 
+		<span id = "comment_content-67989"> <br />
+
+      Μουαχαχαχ!!!<br />
+<br />
+Α ρε τάλωντα. Καλά που έβαλες την τελευταία αράδα "Ομολογουμένως βέβαια η τρύπα στην οποία βρίσκονταν ήταν ρηχότερη... " και το έσωσες γιατί αλλιώς... πολλά γέλια!<br />
+<br />
+Φυσικά και η τρύπα τους ήταν μικρότερη γι'αυτό και είχαν τα @@ να μπορούν να την καλύψουν χωρίς IMF/EU/ECB. Εμείς στα 110 δις, οι Ιρλανδοί στα 85, και οι Πορτογάλοι στα 80 τι να κάμουμε μπροστά τους οι δύσμοιροι;<br />
+<br />
+Το αστείο είναι πως ποτέ δεν θα μάθουμε αν *είχαν* IMF πόσο μεγαλύτερη θα ήταν η ανάκαμψή τους... :D </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+	 
+	<span class="medium lightgray awesome"><a href = "javascript://" onClick="var replydisplay=document.getElementById('reply-67989').style.display ? '' : 'none'; document.getElementById('reply-67989').style.display = replydisplay;">Απάντησε</a></span>&nbsp;
+
+	  <div id="reply-67989" style="display:none;"> 
+
+	  
+	    <div id="commentform" align="left">
+	      <form action="" method="POST" id="thisform" style="display:inline;">
+	        <fieldset>
+	        <legend>Απάντησε</legend>
+	        <div id="cformfieldset"> 
+
+			
+	          <label for="comment" accesskey="2" style="float:left">  </label>
+	 
+
+	          
+	          <textarea name="reply_comment_content-67989" id="reply_comment_content-67989" rows="6" cols="60"/></textarea>
+
+	          <br/>
+
+
+	          
+	          
+	          
+	          <input type="submit" class="sub-awesome" name="submit" value="Καταχώριση σχολίου" class="log2" />
+
+	          
+	          <input type="hidden" name="process" value="newcomment" />
+	          <input type="hidden" name="randkey" value="22189003" />
+	          <input type="hidden" name="link_id" value="65483" />
+	          <input type="hidden" name="comment_parent_id" value="67989" />
+	          <input type="hidden" name="user_id" value="68" />
+
+	        </div>
+	        </fieldset>
+	      </form>
+	    </div>
+	  </div>
+	  	
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+  </li>
+<ul id="comments-list">
+
+	
+<li>
+	
+			<div class="user-talos" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=talos">talos</a> πριν  1 μέρα 10 ώρες <a href="#wholecomment67991" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-67991"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(68, 67991, 67991, '22c9557b7fdd7d9b6f0af956a9d92755', -100,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-67991" style='text-decoration: none;color:#36a00f;'><strong>6</strong></a>
+			      &nbsp;&nbsp; <span id="ratetext-67991"> </span> <span id="ratebuttons-67991"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(68, 67991, 67991, '22c9557b7fdd7d9b6f0af956a9d92755', 10, 'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(68, 67991, 67991, '22c9557b7fdd7d9b6f0af956a9d92755', -10,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> </span>
+			      	<a id="cvotedown-67991" style='text-decoration: none;color:#a2a2a2;'><strong>2</strong></a>
+								     
+
+
+
+			 </span>
+
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment67991"> 
+		<span id = "comment_content-67991"> <br />
+      Ξέρουμε ότι όσο είχαν IMF βούλιαζαν και το IMF τους έλεγε ότι αν φύγουν θα πνιγούν. <br />
+<br />
+Αν δεν θεωρείς την Ουγγαρία ανάλογη μην την μνημονεύεις. Εσύ την έβαλες στη συζήτηση (ειρωνευόμενος την δήθεν αποτυχημένη έξοδό τους από το ΔΝΤ) και εγώ απλώς έκανα το στοιχειώδες google search που βαρέθηκες να κάνεις.  </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+		<div class="user-kensai" id="comment-wrap">
+	<div class="buried_comment">
+	
+	<span>Σχόλιο που έχει θαφτεί.</span>
+
+	
+		<span id = "show_hide_commento-67993" > <a href = "javascript://"  onclick="var replydisplay=document.getElementById('commento-67993').style.display ? '' : 'none'; document.getElementById('commento-67993').style.display = replydisplay;" style="decoration:none;font-size:85%;">[εμφάνισε/κρύψε]</a> </span> 
+		<div id = "commento-67993" style="display:none;">
+				<div id="commentο-head">
+				
+				από <a href="/user.php?login=kensai">kensai</a> 	πριν  1 μέρα 10 ώρες
+
+				</div>
+				
+			    <div class="comment-body-buried" id="wholecomment67993">
+			      Ταλούκο. Η Ουγγαρία απλά είχε την πολυτέλεια να μπορεί να βγει κάνοντας παράλληλα τις απαραίτητες μεταρρυθμίσεις της. Εμείς ΔΕ μπορούμε και να θέλουμε. <br />
+
+<br />
+Αν το κάνουμε εμείς ΟΝΤΩΣ θα πνιγούμε, δεν είμαστε στην ίδια φάση. Και φυσικά εσύ ως δημόσιος υπάλληλος ή συνδικαλιστής ή ό,τι άλλο είσαι μπορεί να είσαι καλά και να τη βγάλεις καθαρή. Μπαινάκης-βγαινάκης ο μήνας, ο μισθός σου μπορεί να πέφτει.<br />
+<br />
+Ξέρω όμως πάρα πολύ κόσμο που θα υποφέρει δίχως λόγο αν το χρήμα σταματήσει να κινείται εξαιτίας της πτώχευσης της χώρας μας. Η χώρα δεν αποτελείται μόνο από κρατικοδίαιτους κηφήνες u know.<br />
+<br />
+Έκανα μια χαρά το google search μου και <a href="http://www.realdeal.hu/20110204/imf-projects-28-gdp-growth-in-2011-well-under-govt-forecast">έβλεπα πως το IMF βγάζει τις προβλέψεις της ουγγρικής κυβέρνησης υπερεκτιμημένες</a>.<br />
+<br />
+ΥΓ. Και ποιός μου βάζει -1 δέκα δευτερόλεπτα μόλις ΑΦΟΤΟΥ γράψω; Καλά ρε Ρόδια δεν είπες ότι έφυγες γμτ;
+				</div>
+		</div>
+	</div>
+
+	</div>
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-dytistonniptiron" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=dytistonniptiron">dytistonniptiron</a> πριν  1 μέρα 10 ώρες <a href="#wholecomment67994" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     					<!--	<span id="flag-67994"><a class="ratemexflat" title="Έχετε ήδη αξιολογήσει αυτό το σχόλιο" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span> -->
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-67994" style='text-decoration: none;color:#36a00f;'><strong>8</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-67994"> </span> <span id="ratebuttons-67994"> 
+												
+						<a class="ratemeyflat" title="Έχετε ήδη αξιολογήσει αυτό το σχόλιο"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Έχετε ήδη αξιολογήσει αυτό το σχόλιο"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+						
+										
+				 </span>
+				      	<a id="cvotedown-67994" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment67994"> 
+		<span id = "comment_content-67994"> <br />
+      Κενσάι. Εγώ σου έβαλα τη φατσούλα 20΄΄ αφού έγραψες, μια και έτυχε να το διαβάσω εκείνη τη στιγμή. Το έχω πει κι αλλού ότι αποφεύγω να βάζω φατσούλες και κόκκινα χεράκια, και κάνω μεγάλη προσπάθεια να αποφεύγω τσακωμούς και κακίες, ελπίζω να το παρατήρησες, τελευταία μάλιστα έχεις πάρει και δυο-τρία πράσινα από μένα. <br />
+Για να τελειώνω και μια και ρώτησες, τη φατσούλα την έφαγες όχι για τις απόψεις σου αλλά για το "Ταλούκο". Αν δεν καταλαβαίνεις το γιατί, τι να πω. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+<li>
+	
+			<div class="user-alberich" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=alberich">alberich</a> πριν  23 ώρες <a href="#wholecomment68030" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-68030"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(68, 68030, 68030, '1ea93346d99dff7e23b96f0c47c5dd37', -100,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-68030" style='text-decoration: none;color:#36a00f;'><strong>5</strong></a>
+			      &nbsp;&nbsp; <span id="ratetext-68030"> </span> <span id="ratebuttons-68030"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(68, 68030, 68030, '1ea93346d99dff7e23b96f0c47c5dd37', 10, 'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(68, 68030, 68030, '1ea93346d99dff7e23b96f0c47c5dd37', -10,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> </span>
+			      	<a id="cvotedown-68030" style='text-decoration: none;color:#a2a2a2;'><strong>3</strong></a>
+								     
+
+
+
+			 </span>
+
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment68030"> 
+		<span id = "comment_content-68030"> <br />
+      >>Ξέρω όμως πάρα πολύ κόσμο που θα υποφέρει δίχως λόγο αν το χρήμα σταματήσει να κινείται εξαιτίας της πτώχευσης της χώρας μας<br />
+<br />
+Για προσδιόρισε μια κοινωνική ομάδα για την οποία δεν έχει ήδη συμβεί αυτό εξ αιτίας της ασκούμενης πολιτικής.Μήπως εννοείς μετόχους τραπεζών και κατόχους ομολόγων?<br />
+<br />
+>>έβλεπα πως το IMF βγάζει τις προβλέψεις της ουγγρικής κυβέρνησης υπερεκτιμημένες.<br />
+<br />
+Το ΔΝΤ διαψεύστηκε και στην περίπτωση της ουγγαρίας και στην περίπτωση της ελλάδας (όλες οι προβλέψεις του μνημονίου πήγαν κατά διαβόλου, εκεί δηλαδή που προέβλεπαν όλοι -και για τους λόγους που το προέβλεπαν-από την ψήφισή του).Αλλά βέβαια δεν πρόκειται περί λαθών.Περί σκοπιμότητας πρόκειται.Τις απειλές προς την ουγγαρία και τις "ανησυχίες των αγορών",τις εκτόξευαν-και μέσω έγκριτων εντύπων- πριν τους διώξει ο όρμπαν, ενώ και το τί θα συνέβαινε σε μας το ήξεραν.Το έχουν ξανακάνει πολλάκις στη λατινική αμερική, στη ν/α ασία κλπ. </span> 
+	 </div>
+
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+</ul>
+
+
+	
+
+<li>
+	
+			<div class="user-kensai" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=kensai">kensai</a> πριν  1 μέρα 7 ώρες <a href="#wholecomment68017" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     					<!--	<span id="flag-68017"><a class="ratemexflat" title="Έχετε ήδη αξιολογήσει αυτό το σχόλιο" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span> -->
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-68017" style='text-decoration: none;color:#36a00f;'><strong></strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-68017"> </span> <span id="ratebuttons-68017"> 
+												
+						<a class="ratemeyflat" title="Έχετε ήδη αξιολογήσει αυτό το σχόλιο"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Έχετε ήδη αξιολογήσει αυτό το σχόλιο"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+
+						
+										
+				 </span>
+				      	<a id="cvotedown-68017" style='text-decoration: none;color:#a2a2a2;'><strong>4</strong></a>
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment68017"> 
+		<span id = "comment_content-68017"> <br />
+      Δεν πειράζει, αδερφέ. Συνέχιζε να βάζεις φατσούλες για το ύφος και όχι για το νόημα. Εγώ βάζω ΠΑΝΤΑ για το νόημα. ;)<br />
+<br />
+
+Δηλαδή δε βρήκες χρήσιμο (δε συμφώνησες) με το Ταλούκο αλλά συμφώνησες με την πολιτική-οικονομική μου πρόχειρη ανάλυση. Αν σου έλεγα ότι είμαι ευχαριστημένος θα το πίστευες; </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+	 
+	<span class="medium lightgray awesome"><a href = "javascript://" onClick="var replydisplay=document.getElementById('reply-68017').style.display ? '' : 'none'; document.getElementById('reply-68017').style.display = replydisplay;">Απάντησε</a></span>&nbsp;
+	  <div id="reply-68017" style="display:none;"> 
+
+	  
+	    <div id="commentform" align="left">
+	      <form action="" method="POST" id="thisform" style="display:inline;">
+	        <fieldset>
+	        <legend>Απάντησε</legend>
+
+	        <div id="cformfieldset"> 
+
+			
+	          <label for="comment" accesskey="2" style="float:left">  </label>
+	 
+
+	          
+	          <textarea name="reply_comment_content-68017" id="reply_comment_content-68017" rows="6" cols="60"/></textarea>
+	          <br/>
+
+
+	          
+	          
+	          
+	          <input type="submit" class="sub-awesome" name="submit" value="Καταχώριση σχολίου" class="log2" />
+
+	          
+	          <input type="hidden" name="process" value="newcomment" />
+	          <input type="hidden" name="randkey" value="30418356" />
+
+	          <input type="hidden" name="link_id" value="65483" />
+	          <input type="hidden" name="comment_parent_id" value="68017" />
+	          <input type="hidden" name="user_id" value="68" />
+	        </div>
+	        </fieldset>
+	      </form>
+	    </div>
+	  </div>
+	  	
+
+
+	  
+	  
+
+	 	 	  	 </div>
+
+	</div>
+  <br />
+
+
+
+
+  </li>
+<ul id="comments-list">
+
+	
+<li>
+	
+			<div class="user-dytistonniptiron" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=dytistonniptiron">dytistonniptiron</a> πριν  1 μέρα 6 ώρες <a href="#wholecomment68021" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     					<!--	<span id="flag-68021"><a class="ratemexflat" title="Έχετε ήδη αξιολογήσει αυτό το σχόλιο" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span> -->
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-68021" style='text-decoration: none;color:#36a00f;'><strong>4</strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-68021"> </span> <span id="ratebuttons-68021"> 
+												
+						<a class="ratemeyflat" title="Έχετε ήδη αξιολογήσει αυτό το σχόλιο"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Έχετε ήδη αξιολογήσει αυτό το σχόλιο"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+						
+										
+				 </span>
+				      	<a id="cvotedown-68021" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+
+			      				     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment68021"> 
+		<span id = "comment_content-68021"> <br />
+      Φαντάζομαι *κάνεις* πως δεν καταλαβαίνεις. <br />
+(Όταν δεν συμφωνώ με το νόημα ή γράφω κάτι ή, αν δεν προλαβαίνω ή δεν έχω όρεξη, το αφήνω να περάσει. Ξανά η ίδια συζήτηση) </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+
+	</div>
+  <br />
+
+
+
+
+  </li>
+</ul>
+
+
+	
+<li>
+	
+			<div class="user-kensai" id="comment-wrap">
+
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=kensai">kensai</a> πριν  21 ώρες <a href="#wholecomment68037" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-68037"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(68, 68037, 68037, '0b14645f0e33200608403539cb8c73dc', -100,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-68037" style='text-decoration: none;color:#36a00f;'><strong>3</strong></a>
+			      &nbsp;&nbsp; <span id="ratetext-68037"> </span> <span id="ratebuttons-68037"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(68, 68037, 68037, '0b14645f0e33200608403539cb8c73dc', 10, 'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(68, 68037, 68037, '0b14645f0e33200608403539cb8c73dc', -10,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> </span>
+
+			      	<a id="cvotedown-68037" style='text-decoration: none;color:#a2a2a2;'><strong>4</strong></a>
+								     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment68037"> 
+		<span id = "comment_content-68037"> <br />
+      Καταλαβαίνω και σου απάντησα μια χαρά. Μάλλον εσύ [κάνεις πως] δεν καταλαβαίνεις. :)<br />
+<br />
+---------------<br />
+
+<br />
+"Για προσδιόρισε μια κοινωνική ομάδα για την οποία δεν έχει ήδη συμβεί αυτό εξ αιτίας της ασκούμενης πολιτικής.Μήπως εννοείς μετόχους τραπεζών και κατόχους ομολόγων?"<br />
+<br />
+Οποιοσδήποτε βρίσκεται στο στίβο της ζωής χωρίς να πληρώνεται από κάποιο οργανισμό που μπορεί να πληρώνει κι ας ζημιώνει/ζημιώνεται. Δηλαδή οποιοσδήποτε δε δουλεύει στο Δημόσιο ή κάποια ΔΕΚΟ.<br />
+<br />
+-------<br />
+<br />
+"Το ΔΝΤ διαψεύστηκε και στην περίπτωση της ουγγαρίας και στην περίπτωση της ελλάδας (όλες οι προβλέψεις του μνημονίου πήγαν κατά διαβόλου, εκεί δηλαδή που προέβλεπαν όλοι -και για τους λόγους που το προέβλεπαν-από την ψήφισή του)."<br />
+<br />
+Ούτε στην Ουγγαρία διαψεύστηκε ούτε στην Ελλάδα.<br />
+<br />
+Στη μεν Ουγγαρία απλά οι άνθρωποι εκεί πέρα κατάλαβαν πως μπορούν να κάνουν μεταρρυθμίσεις και περικοπές από μόνοι τους χωρίς νταντά (αν και με μικρότερες αποδόσεις όπως φαίνεται). Στη δε Ελλάδα εμείς είμαστε άχρηστοι να κάνουμε οτιδήποτε χωρίς μπαμπούλα ή ξέρω γω την απειλή πολέμου ή ολοκληρωτικής καταστροφής.<br />
+
+<br />
+Οι μεταρρυθμίσεις που έχουν γίνει μέχρι στιγμής είναι ΑΣΤΕΙΕΣ μπροστά σ'αυτό που θα μπορούσε ή έπρεπε να γίνει. Δες το παντού: μεταφορές, φαρμακοποιούς, απολύσεις στο Δημόσιο... ένα βήμα μπροστά και δύο πίσω.<br />
+<br />
+Αν ακούγαμε κατά γράμμα πχ το Μάνο δεν θα χρειαζόμασταν τώρα Μνημόνιο. Αλλά ποιός ακούει τον Μάνο όταν μπορεί να ακούσει τον Τσίπρα; </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+	 
+	<span class="medium lightgray awesome"><a href = "javascript://" onClick="var replydisplay=document.getElementById('reply-68037').style.display ? '' : 'none'; document.getElementById('reply-68037').style.display = replydisplay;">Απάντησε</a></span>&nbsp;
+	  <div id="reply-68037" style="display:none;"> 
+
+	  
+	    <div id="commentform" align="left">
+	      <form action="" method="POST" id="thisform" style="display:inline;">
+	        <fieldset>
+
+	        <legend>Απάντησε</legend>
+	        <div id="cformfieldset"> 
+
+			
+	          <label for="comment" accesskey="2" style="float:left">  </label>
+	 
+
+	          
+	          <textarea name="reply_comment_content-68037" id="reply_comment_content-68037" rows="6" cols="60"/></textarea>
+	          <br/>
+
+
+	          
+	          
+	          
+	          <input type="submit" class="sub-awesome" name="submit" value="Καταχώριση σχολίου" class="log2" />
+
+	          
+	          <input type="hidden" name="process" value="newcomment" />
+	          <input type="hidden" name="randkey" value="93838199" />
+	          <input type="hidden" name="link_id" value="65483" />
+	          <input type="hidden" name="comment_parent_id" value="68037" />
+	          <input type="hidden" name="user_id" value="68" />
+	        </div>
+	        </fieldset>
+	      </form>
+	    </div>
+
+	  </div>
+	  	
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+
+
+	
+
+<li>
+	
+			<div class="user-kensai" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=kensai">kensai</a> πριν  21 ώρες <a href="#wholecomment68038" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-68038"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(68, 68038, 68038, 'dad6e7ee24463b6c59bd600774f395bd', -100,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-68038" style='text-decoration: none;color:#36a00f;'><strong>1</strong></a>
+			      &nbsp;&nbsp; <span id="ratetext-68038"> </span> <span id="ratebuttons-68038"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(68, 68038, 68038, 'dad6e7ee24463b6c59bd600774f395bd', 10, 'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(68, 68038, 68038, 'dad6e7ee24463b6c59bd600774f395bd', -10,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> </span>
+
+			      	<a id="cvotedown-68038" style='text-decoration: none;color:#a2a2a2;'><strong>1</strong></a>
+								     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment68038"> 
+		<span id = "comment_content-68038"> <br />
+      Ας διαβάσουμε μια ανεξάρτητη αλλά αυστηρή πηγή πχ για την Πορτογαλία. <a href="http://www.dw-world.de/dw/article/0,,14973334,00.html">Deutsche Welle</a><br />
+<br />
+"The step, a blow to national pride and the credibility of the financial markets, comes too late. The EU had long urged Portugal to seek emergency loans from the European bailout fund. For every month and week that the indecisive Portuguese government let pass, the bailout became increasingly expensive. Additional debts and enormous interest rates accumulated in the market. Portugal will be repaying the costs of these mistakes for a long time."<br />
+
+<br />
+Αυτό είναι η ΚΑΝΟΝΙΚΗ course of action σε όλες τις περιπτώσεις. Οι υπόλοιποι σε πιέζουν να πάρεις το δάνειο γιατί έτσι σταθεροποιείται η οικονομία. Δεν είναι οι Ούγγροι «ήρωες» και καλά επειδή το απέφυγαν. Ρισκαδόροι ήταν. Φυσικά η οικονομία τους είναι μικρή οπότε δεν ανησύχησε πολύς κόσμος. Και στάθηκαν τυχεροί.<br />
+<br />
+Βέβαια, ξαναλέω, αν το έπαιρναν το δάνειο ίσως τώρα είχαν τους ρυθμούς ανάπτυξης που δηλώνουν και δεν πιάνουν..... :) </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+	 
+	<span class="medium lightgray awesome"><a href = "javascript://" onClick="var replydisplay=document.getElementById('reply-68038').style.display ? '' : 'none'; document.getElementById('reply-68038').style.display = replydisplay;">Απάντησε</a></span>&nbsp;
+	  <div id="reply-68038" style="display:none;"> 
+
+	  
+	    <div id="commentform" align="left">
+	      <form action="" method="POST" id="thisform" style="display:inline;">
+	        <fieldset>
+
+	        <legend>Απάντησε</legend>
+	        <div id="cformfieldset"> 
+
+			
+	          <label for="comment" accesskey="2" style="float:left">  </label>
+	 
+
+	          
+	          <textarea name="reply_comment_content-68038" id="reply_comment_content-68038" rows="6" cols="60"/></textarea>
+	          <br/>
+
+
+	          
+	          
+	          
+	          <input type="submit" class="sub-awesome" name="submit" value="Καταχώριση σχολίου" class="log2" />
+
+	          
+	          <input type="hidden" name="process" value="newcomment" />
+	          <input type="hidden" name="randkey" value="6055520" />
+	          <input type="hidden" name="link_id" value="65483" />
+	          <input type="hidden" name="comment_parent_id" value="68038" />
+	          <input type="hidden" name="user_id" value="68" />
+	        </div>
+	        </fieldset>
+	      </form>
+	    </div>
+
+	  </div>
+	  	
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+<ul id="comments-list">
+
+	
+
+<li>
+	
+			<div class="user-alberich" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=alberich">alberich</a> πριν  20 ώρες <a href="#wholecomment68042" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-68042"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(68, 68042, 68042, '0e9162d6054b5cb721c3032d2f2daf5a', -100,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-68042" style='text-decoration: none;color:#36a00f;'><strong>5</strong></a>
+			      &nbsp;&nbsp; <span id="ratetext-68042"> </span> <span id="ratebuttons-68042"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(68, 68042, 68042, '0e9162d6054b5cb721c3032d2f2daf5a', 10, 'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(68, 68042, 68042, '0e9162d6054b5cb721c3032d2f2daf5a', -10,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> </span>
+
+			      	<a id="cvotedown-68042" style='text-decoration: none;color:#a2a2a2;'><strong>4</strong></a>
+								     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment68042"> 
+		<span id = "comment_content-68042"> <br />
+      Τα δάνεια είναι με τοκογλυφικά επιτόκια, αυξάνουν το χρέος, πυροδοτούν τα ελλείματα και κάνουν "αναγκαίες" όλο και περισσότερες περικοπές, όλο και περισσότερες εκποιήσεις, όλο και μεγαλύτερη υποτέλεια.Ο όρμπαν έκανε το σωστό, τα πήρε από εκεί που έπρεπε, αδιαφόρησε τις ανησυχίες των "αγορών" και των ft, και διέσωσε τους πολίτες της χώρας του.Κρίμα που δεν ήταν μεγαλύτερο το χρέος να ανησυχήσουν σοβαρά οι "αγορές" και όχι εκ του ασφαλούς με τις πλάτες προειλημμένων πολιτικών αποφάσεων. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+
+	</div>
+  <br />
+
+
+
+
+  </li>
+</ul>
+
+
+	
+<li>
+	
+			<div class="user-kensai" id="comment-wrap">
+
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=kensai">kensai</a> πριν  12 ώρες <a href="#wholecomment68086" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-68086"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(68, 68086, 68086, 'a5cc19fd7864f2e61feb987efaf6bf96', -100,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-68086" style='text-decoration: none;color:#36a00f;'><strong>2</strong></a>
+			      &nbsp;&nbsp; <span id="ratetext-68086"> </span> <span id="ratebuttons-68086"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(68, 68086, 68086, 'a5cc19fd7864f2e61feb987efaf6bf96', 10, 'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(68, 68086, 68086, 'a5cc19fd7864f2e61feb987efaf6bf96', -10,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> </span>
+
+			      	<a id="cvotedown-68086" style='text-decoration: none;color:#a2a2a2;'><strong>4</strong></a>
+								     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment68086"> 
+		<span id = "comment_content-68086"> <br />
+      "Τα δάνεια είναι με τοκογλυφικά επιτόκια..."<br />
+<br />
+Άντε πάλι η αριστερή ρητορεία... Ρε δάσκαλε, τα επιτόκια κανονίζονται με βάση το ρίσκο του τρακαδόρου να μην τα δώσει πίσω. Χώρες φερέγγυες έχουν χαμηλά επιτόκια, χώρες που πολιτικοί και πολίτες πιστεύουν όπως εσύ ότι μπορούμε να αρμέγουμε τους κουτόφραγκους όποτε γουστάρουμε και μετά ζητάμε απλά «κούρεμα», έχουν τεράστια επιτόκια. Τόσο απλά.<br />
+
+<br />
+Δεν υπάρχει καμία τοκογλυφική συμπεριφορά. Ο Ορμπάν θα γλίτωνε είτε έπαιρνε τους παράδες είτε όχι. Η κρίση της Ουγγαρίας ήταν μικρή σε σχέση με των PIIGS. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+	 
+	<span class="medium lightgray awesome"><a href = "javascript://" onClick="var replydisplay=document.getElementById('reply-68086').style.display ? '' : 'none'; document.getElementById('reply-68086').style.display = replydisplay;">Απάντησε</a></span>&nbsp;
+	  <div id="reply-68086" style="display:none;"> 
+
+	  
+	    <div id="commentform" align="left">
+	      <form action="" method="POST" id="thisform" style="display:inline;">
+	        <fieldset>
+	        <legend>Απάντησε</legend>
+
+	        <div id="cformfieldset"> 
+
+			
+	          <label for="comment" accesskey="2" style="float:left">  </label>
+	 
+
+	          
+	          <textarea name="reply_comment_content-68086" id="reply_comment_content-68086" rows="6" cols="60"/></textarea>
+	          <br/>
+
+
+	          
+	          
+	          
+	          <input type="submit" class="sub-awesome" name="submit" value="Καταχώριση σχολίου" class="log2" />
+
+	          
+	          <input type="hidden" name="process" value="newcomment" />
+	          <input type="hidden" name="randkey" value="2676794" />
+
+	          <input type="hidden" name="link_id" value="65483" />
+	          <input type="hidden" name="comment_parent_id" value="68086" />
+	          <input type="hidden" name="user_id" value="68" />
+	        </div>
+	        </fieldset>
+	      </form>
+	    </div>
+	  </div>
+	  	
+
+
+	  
+	  
+
+	 	 	  	 </div>
+
+	</div>
+  <br />
+
+
+
+
+  </li>
+<ul id="comments-list">
+
+	
+<li>
+	
+			<div class="user-alberich" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=alberich">alberich</a> πριν  12 ώρες <a href="#wholecomment68092" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-68092"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(68, 68092, 68092, '7add92bfd93d40a89973da8a74b5f2fb', -100,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-68092" style='text-decoration: none;color:#36a00f;'><strong>4</strong></a>
+			      &nbsp;&nbsp; <span id="ratetext-68092"> </span> <span id="ratebuttons-68092"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(68, 68092, 68092, '7add92bfd93d40a89973da8a74b5f2fb', 10, 'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(68, 68092, 68092, '7add92bfd93d40a89973da8a74b5f2fb', -10,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> </span>
+			      	<a id="cvotedown-68092" style='text-decoration: none;color:#a2a2a2;'><strong>3</strong></a>
+								     
+
+
+
+			 </span>
+
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment68092"> 
+		<span id = "comment_content-68092"> <br />
+      Αυτά είναι ιστορίες με βασιλοπούλες και νεράιδες.Ότι δήθεν οι αγορές κάνουν αυτόματη εκτίμηση του ρίσκου και μόνο και ότι συγκινούνται από τις διαρθρωτικές αλλαγές.Το σκληρό ευρώ, η πλήρης αποπληρωμή των χρεών, ο μη δανεισμός κρατών από την ΕΚΤ ενώ δανείζει αθρόα τις τράπεζες με κρατικές εγγυήσεις, το bailout ιδιωτικών ρίσκων στην Ιρλανδία, ακόμα και τα τοκογλυφικά επιτόκια του μηχανισμού στήριξης είναι όλα πολιτικές αποφάσεις και υπηρετούν ένα συγκεκριμένο οικονομικό δόγμα.Αν ήταν αντιμέτωποι με πραγματικό κίνδυνο στάσης πληρωμών θα είχαν άλλη στάση. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+</ul>
+
+
+	
+<li>
+	
+			<div class="user-kensai" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=kensai">kensai</a> πριν  11 ώρες <a href="#wholecomment68096" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-68096"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(68, 68096, 68096, '2a2906f565656cc25e395bfd767bc1ca', -100,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-68096" style='text-decoration: none;color:#36a00f;'><strong>1</strong></a>
+			      &nbsp;&nbsp; <span id="ratetext-68096"> </span> <span id="ratebuttons-68096"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(68, 68096, 68096, '2a2906f565656cc25e395bfd767bc1ca', 10, 'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(68, 68096, 68096, '2a2906f565656cc25e395bfd767bc1ca', -10,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> </span>
+			      	<a id="cvotedown-68096" style='text-decoration: none;color:#a2a2a2;'><strong>3</strong></a>
+								     
+
+
+
+			 </span>
+
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment68096"> 
+		<span id = "comment_content-68096"> <br />
+      "Αυτά είναι ιστορίες με βασιλοπούλες και νεράιδες. Ότι δήθεν οι αγορές κάνουν αυτόματη εκτίμηση του ρίσκου και μόνο και ότι συγκινούνται από τις διαρθρωτικές αλλαγές."<br />
+<br />
+Όχι δεν είναι. Αν θες γερμανικά spreads, επένδυσε σε μια σίγουρη οικονομία όπως η γερμανική! ;)<br />
+<br />
+"Το σκληρό ευρώ, η πλήρης αποπληρωμή των χρεών, ο μη δανεισμός κρατών από την ΕΚΤ ενώ δανείζει αθρόα τις τράπεζες με κρατικές εγγυήσεις, το bailout ιδιωτικών ρίσκων στην Ιρλανδία, ακόμα και τα τοκογλυφικά επιτόκια του μηχανισμού στήριξης είναι όλα πολιτικές αποφάσεις και υπηρετούν ένα συγκεκριμένο οικονομικό δόγμα."<br />
+<br />
+Τελικά σ'όλη τη δημοκρατική Ευρώπη των 400 εκατομμυρίων ιθαγενών επικράτησε  το νεοφιλελεύθερο ανάλγητο δόγμα που τα παίρνει απ'τους πολλούς και τα δίνει στους λίγους. How so!!<br />
+
+<br />
+Όχι αγαπητέ, τα δάνεια είναι γι'αυτούς που μπορούν και ΞΕΡΟΥΝ πως να τα αξιοποιήσουν. Αν η Ελλάδα ήταν άνθρωπος, απλά θα θύμιζε χαρτόμουτρο που παίρνει στεγαστικό δάνειο κι αντί να το χρησιμοποιήσει να φτιάξει τα υδραυλικά του σπιτιού του που στάζουν, πάει και τα παίζει στο καζίνο παρ'ελπίδα να τα αυγατίσει. Ο κουλοχέρης της Αριστεράς όμως δε δουλεύει... πότε θα το κατανοήσουμε;<br />
+<br />
+"Αν ήταν αντιμέτωποι με πραγματικό κίνδυνο στάσης πληρωμών θα είχαν άλλη στάση."<br />
+<br />
+Αυτό φοβάμαι κι εγώ. Μήπως αλλάξουν «στάση» οι Ευρωπαίοι. Και μπορεί σε κάποιους Ελληναράδες να αρέσει ως νέα «στάση» το οθωμανικό, έμενα όμως όχι... (γιατί «οθωμανικό» θα είναι σε νεο-οικονομική ορολογία έτσι και πτωχεύσουμε!)<br />
+<br />
+-----------<br />
+<br />
+<a href="http://www.kathimerini.gr/4dcgi/_w_articles_kathpolitics_2_07/04/2011_1294896">Δες κι εδώ</a>, δάσκαλε.<br />
+(το έχω buzzάρει σε άλλο link, αλλά για να τα λέμε)<br />
+
+<br />
+"Η τιμή, ανά πάσα στιγμή, ενός τίτλου εξαρτάται από το ύψος και τη διάρκεια του δανείου, το επιτόκιο που προσφέρει για κάθε περίοδο (κουπόνι), την απόδοσή του στην αγορά σε σύγκριση με άλλους παρόμοιους τίτλους. Κυρίως όμως εξαρτάται από τη φερεγγυότητα της χώρας-εκδότη. Γι’ αυτό, στην απόφαση των Ευρωπαίων για τη λειτουργία του Ταμείου Σταθεροποίησης (ESM) σημειώνεται ότι «αν, αναπάντεχα, μια χώρα αποδειχθεί αφερέγγυα, το κράτος-μέλος πρέπει να διαπραγματευθεί συνεκτικό σχέδιο αναδιάρθρωσης με τους πιστωτές του από τον ιδιωτικό τομέα, προκειμένου να αποκατασταθεί η βιωσιμότητα του χρέους»."<br />
+<br />
+Αν σε ρωτήσουν τα παιδιά στην τάξη για το πως καθορίζονται τα spreads μην τους πεις αυτά που μου έγραψες προηγουμένως, να χαρείς! </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+	 
+	<span class="medium lightgray awesome"><a href = "javascript://" onClick="var replydisplay=document.getElementById('reply-68096').style.display ? '' : 'none'; document.getElementById('reply-68096').style.display = replydisplay;">Απάντησε</a></span>&nbsp;
+	  <div id="reply-68096" style="display:none;"> 
+
+	  
+	    <div id="commentform" align="left">
+	      <form action="" method="POST" id="thisform" style="display:inline;">
+	        <fieldset>
+
+	        <legend>Απάντησε</legend>
+	        <div id="cformfieldset"> 
+
+			
+	          <label for="comment" accesskey="2" style="float:left">  </label>
+	 
+
+	          
+	          <textarea name="reply_comment_content-68096" id="reply_comment_content-68096" rows="6" cols="60"/></textarea>
+	          <br/>
+
+
+	          
+	          
+	          
+	          <input type="submit" class="sub-awesome" name="submit" value="Καταχώριση σχολίου" class="log2" />
+
+	          
+	          <input type="hidden" name="process" value="newcomment" />
+	          <input type="hidden" name="randkey" value="42460664" />
+	          <input type="hidden" name="link_id" value="65483" />
+	          <input type="hidden" name="comment_parent_id" value="68096" />
+	          <input type="hidden" name="user_id" value="68" />
+	        </div>
+	        </fieldset>
+	      </form>
+	    </div>
+
+	  </div>
+	  	
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+<ul id="comments-list">
+
+	
+
+<li>
+	
+			<div class="user-alberich" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=alberich">alberich</a> πριν  10 ώρες <a href="#wholecomment68101" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-68101"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(68, 68101, 68101, '0c2fc73d1f51e84a5901679646a906e5', -100,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-68101" style='text-decoration: none;color:#36a00f;'><strong>4</strong></a>
+			      &nbsp;&nbsp; <span id="ratetext-68101"> </span> <span id="ratebuttons-68101"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(68, 68101, 68101, '0c2fc73d1f51e84a5901679646a906e5', 10, 'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(68, 68101, 68101, '0c2fc73d1f51e84a5901679646a906e5', -10,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> </span>
+
+			      	<a id="cvotedown-68101" style='text-decoration: none;color:#a2a2a2;'><strong>1</strong></a>
+								     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment68101"> 
+		<span id = "comment_content-68101"> <br />
+      Ο τοκογλύφος και για 10 ευρώ ληξιπρόθεσμα θα επιχειρήσει να σου βγάλει το σπίτι σε πλειστηριασμό παρά να σε δανείσει.Σε μια τέτοια κατάσταση στην περίπτωση των κρατών η στάση πληρωμών είναι όπλο που δεν το χαρίζεις.<br />
+>>How so!!<br />
+Γιατί υπάρχει καμμιά χώρα στην ευρώπη που να μην έχει κυβέρνηση μειοψηφίας?Μόνοι τους αποφασίζουν ότι τους υπαγορεύουν τ' αφεντικά τους και μέχρι να πέσουν θα κάνουν ότι προλάβουν.<br />
+
+<br />
+Βλέπω τώρα στην ΝΕΤ σε επανάληψη ένα του εξάντα για την Αργεντινή.Έδιωξε το ΔΝΤ και τότε οι δανειστές δέχθηκαν κούρεμα (75%) και παράταση πληρωμών.Αυτό έπρεπε να κάνει κι' ο Γιώργος.Οι επιλογές του ήταν ολέθριες.Δανείστηκε για να διασφαλίσει τους δανειστές με τοκογλυφικά επιτόκια.Όχι μόνο δεκάρα απ' αυτά δεν πάει στους περίφημους μισθούς και συντάξεις, αλλά και τα 50 δις εκποίηση δημόσιας περιουσίας φαθάνουν δεν φθάνουν για την πληρωμή των τόκων του δανείου της τρόϊκας  .Κατά τα άλλα τα έσοδα του προυπολογισμού φθάνουν.για να χρηματοδοτούμε αφειδώς τις ελληνικές τράπεζες -τοκογλύφους του ελληνικού δημοσίου επισης- για να κλείνουν τρύπες στις επενδύσεις/φούσκες που έκαναν εκτός ελλάδας, εξ ού και δεν πέφτει δεκάρα στην ελληνική οικονομία..Πέραν αυτών έχουμε βέβαια και την ολέθρια συνταγή της ύφεσης και της πολιτικής και οικονομικής κινεζοποίησης (Πινοσέτ κλπ φιλελεύθεροι), αλλά αυτό ήταν εξ αρχής το ζητούμενο σε όλη την ευρώπη, μόλις πέρασε το πρώτο σοκ από την κατάρρευση των καζινοεπενδύσεων .<br />
+ </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+
+  </li>
+</ul>
+
+
+	
+<li>
+	
+			<div class="user-kensai" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=kensai">kensai</a> πριν  10 ώρες <a href="#wholecomment68109" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-68109"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(68, 68109, 68109, '64ec8f2a448b8037bbbc7ac6724176b2', -100,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-68109" style='text-decoration: none;color:#36a00f;'><strong>2</strong></a>
+			      &nbsp;&nbsp; <span id="ratetext-68109"> </span> <span id="ratebuttons-68109"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(68, 68109, 68109, '64ec8f2a448b8037bbbc7ac6724176b2', 10, 'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(68, 68109, 68109, '64ec8f2a448b8037bbbc7ac6724176b2', -10,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> </span>
+			      	<a id="cvotedown-68109" style='text-decoration: none;color:#a2a2a2;'><strong>1</strong></a>
+								     
+
+
+
+			 </span>
+
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment68109"> 
+		<span id = "comment_content-68109"> <br />
+      "Βλέπω τώρα στην ΝΕΤ σε επανάληψη ένα του εξάντα για την Αργεντινή.Έδιωξε το ΔΝΤ και τότε οι δανειστές δέχθηκαν κούρεμα (75%) και παράταση πληρωμών."<br />
+<br />
+Ξέρεις ΠΟΣΑ ΧΡΟΝΙΑ πίσω πήγε η Αργεντινή μετά απ'αυτές τις μαγκιές; Δεν είναι τυχαίο που κάποτε ανταγωνιζόταν τη Βραζιλία στα ίσια και τώρα γελάει ο ντουνιάς... άσε, δεν θα πάρω. Τώρα οι μεν Αργεντινοί εξάγουν μπριζόλες και οι δε Βραζιλιάνοι... αεροπλάνα! Τι να λέμε τώρα...<br />
+<br />
+Αν πτωχεύσουμε θα γίνουμε απ'τη μια μέρα στην άλλη σαν τη γείτονα- που τόσο κοροϊδεύουμε- Βουλγαρία ή Αλβανία. Άντε λίγο καλύτερα. Αυτό θέλουμε; Από και που ήμασταν οι άρχοντες των Βαλκανίων, πάλι ουραγοί;<br />
+<br />
+Όχι φίλε, να σας τα κόψουμε από σας τους δημοσίους υπαλλήλους. Όπως λες πάντα κι εσύ: μαζί ΔΕΝ τα φάγαμε. Γι'αυτό και μαζί ΔΕΝ είναι ανάγκη να πεινάσουμε... <br />
+
+<br />
+ </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+	 
+	<span class="medium lightgray awesome"><a href = "javascript://" onClick="var replydisplay=document.getElementById('reply-68109').style.display ? '' : 'none'; document.getElementById('reply-68109').style.display = replydisplay;">Απάντησε</a></span>&nbsp;
+	  <div id="reply-68109" style="display:none;"> 
+
+	  
+	    <div id="commentform" align="left">
+	      <form action="" method="POST" id="thisform" style="display:inline;">
+	        <fieldset>
+	        <legend>Απάντησε</legend>
+
+	        <div id="cformfieldset"> 
+
+			
+	          <label for="comment" accesskey="2" style="float:left">  </label>
+	 
+
+	          
+	          <textarea name="reply_comment_content-68109" id="reply_comment_content-68109" rows="6" cols="60"/></textarea>
+	          <br/>
+
+
+	          
+	          
+	          
+	          <input type="submit" class="sub-awesome" name="submit" value="Καταχώριση σχολίου" class="log2" />
+
+	          
+	          <input type="hidden" name="process" value="newcomment" />
+	          <input type="hidden" name="randkey" value="67025258" />
+
+	          <input type="hidden" name="link_id" value="65483" />
+	          <input type="hidden" name="comment_parent_id" value="68109" />
+	          <input type="hidden" name="user_id" value="68" />
+	        </div>
+	        </fieldset>
+	      </form>
+	    </div>
+	  </div>
+	  	
+
+
+	  
+	  
+
+	 	 	  	 </div>
+
+	</div>
+  <br />
+
+
+
+
+  </li>
+<ul id="comments-list">
+
+	
+<li>
+	
+			<div class="user-alberich" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=alberich">alberich</a> πριν  8 ώρες <a href="#wholecomment68113" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-68113"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(68, 68113, 68113, 'e3d9cdb4f67ab3f565eb88277cc9c6f6', -100,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-68113" style='text-decoration: none;color:#36a00f;'><strong>1</strong></a>
+			      &nbsp;&nbsp; <span id="ratetext-68113"> </span> <span id="ratebuttons-68113"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(68, 68113, 68113, 'e3d9cdb4f67ab3f565eb88277cc9c6f6', 10, 'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(68, 68113, 68113, 'e3d9cdb4f67ab3f565eb88277cc9c6f6', -10,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> </span>
+			      	<a id="cvotedown-68113" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+								     
+
+
+
+			 </span>
+
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment68113"> 
+		<span id = "comment_content-68113"> <br />
+      Καλά, <a href="http://www.tradingeconomics.com/argentina/gdp-growth-annual-percent-wb-data.html">ότι θέλεις παρουσιάζεις</a>.Δεν κοιτάει ο ντουνιάς τα χάλια του καλύτερα.<br />
+Τί μας νοιάζουν εμάς, τα εκατομμύρια των δημοσίων υπαλλήλων οι φόβοι μια αμελητέας μειοψηφίας? </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+
+	</div>
+  <br />
+
+
+
+
+  </li>
+</ul>
+
+
+	
+<li>
+	
+			<div class="user-kensai" id="comment-wrap">
+
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=kensai">kensai</a> πριν  9 ώρες <a href="#wholecomment68112" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-68112"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(68, 68112, 68112, '6c0de12a8cbb2462b5274deb9339bbf9', -100,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-68112" style='text-decoration: none;color:#36a00f;'><strong></strong></a>
+			      &nbsp;&nbsp; <span id="ratetext-68112"> </span> <span id="ratebuttons-68112"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(68, 68112, 68112, '6c0de12a8cbb2462b5274deb9339bbf9', 10, 'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(68, 68112, 68112, '6c0de12a8cbb2462b5274deb9339bbf9', -10,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> </span>
+
+			      	<a id="cvotedown-68112" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+								     
+
+
+
+			 </span>
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment68112"> 
+		<span id = "comment_content-68112"> <br />
+      Έχω την εντύπωση πως <a href="http://www.economist.com/node/17732819?story_id=17732819">η μαγκιά της Ουγγαρίας έχει εν μέρει και ρωσικές πλάτες</a>..... ο θεός να τους βοηθήσει αν φλερτάρουν με τους Ρώσους νεοφιλελεύθερους... </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+	 
+	<span class="medium lightgray awesome"><a href = "javascript://" onClick="var replydisplay=document.getElementById('reply-68112').style.display ? '' : 'none'; document.getElementById('reply-68112').style.display = replydisplay;">Απάντησε</a></span>&nbsp;
+
+	  <div id="reply-68112" style="display:none;"> 
+
+	  
+	    <div id="commentform" align="left">
+	      <form action="" method="POST" id="thisform" style="display:inline;">
+	        <fieldset>
+	        <legend>Απάντησε</legend>
+	        <div id="cformfieldset"> 
+
+			
+	          <label for="comment" accesskey="2" style="float:left">  </label>
+	 
+
+	          
+	          <textarea name="reply_comment_content-68112" id="reply_comment_content-68112" rows="6" cols="60"/></textarea>
+
+	          <br/>
+
+
+	          
+	          
+	          
+	          <input type="submit" class="sub-awesome" name="submit" value="Καταχώριση σχολίου" class="log2" />
+
+	          
+	          <input type="hidden" name="process" value="newcomment" />
+	          <input type="hidden" name="randkey" value="95163022" />
+	          <input type="hidden" name="link_id" value="65483" />
+	          <input type="hidden" name="comment_parent_id" value="68112" />
+	          <input type="hidden" name="user_id" value="68" />
+
+	        </div>
+	        </fieldset>
+	      </form>
+	    </div>
+	  </div>
+	  	
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+  </li>
+<ul id="comments-list">
+
+	
+<li>
+	
+			<div class="user-alberich" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=alberich">alberich</a> πριν  8 ώρες <a href="#wholecomment68116" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     							<span id="flag-68116"><a class="ratemex" title="Παραβιάζει το σαβουάρ μπαζ" href="javascript:cvote(68, 68116, 68116, 'ef0e36d140d776b5f973631b8357a426', -100,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span>
+
+							<span id="comment-subhead"> 
+	
+				     	<a id="cvoteup-68116" style='text-decoration: none;color:#36a00f;'><strong></strong></a>
+			      &nbsp;&nbsp; <span id="ratetext-68116"> </span> <span id="ratebuttons-68116"> 
+
+			      	<a class="ratemey" title="Ωραίο / χρήσιμο" href="javascript:cvote(68, 68116, 68116, 'ef0e36d140d776b5f973631b8357a426', 10, 'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+			      	<a class="ratemedown" title="Όχι χρήσιμο / διαφωνώ" href="javascript:cvote(68, 68116, 68116, 'ef0e36d140d776b5f973631b8357a426', -10,  'http://buzz.reality-tape.com/')" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> </span>
+			      	<a id="cvotedown-68116" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+								     
+
+
+
+			 </span>
+			
+			</div>
+
+	  
+    
+    	<div class="comment-body" id="wholecomment68116"> 
+		<span id = "comment_content-68116"> <br />
+      "with scant regard for legality or democratic niceties" από τη μία "backed by a huge parliamentary majority" από την άλλη, και παρ' όλα αυτά ανησυχεί ο economist για το δεύτερο. </span> 
+	 </div>
+	
+	  
+
+	<div class="comment-info"> 
+	
+		
+
+
+	  
+	  
+
+	 	 	  	 </div>
+	</div>
+  <br />
+
+
+
+  </li>
+</ul>
+
+
+	
+<li>
+	
+			<div class="user-you" id="comment-wrap">
+					<div id="comment-head"> 
+					
+						
+			από <a href="/user.php?login=ngeor">you</a> πριν  17 λεπτά <a href="#wholecomment68123" class="permalink" title="Permalink"><span class="rateme">&nbsp;</span></a> 
+			
+			
+
+
+			  	
+			
+												
+				
+			     					<!--	<span id="flag-68123"><a class="ratemexflat" title="Έχετε ήδη αξιολογήσει αυτό το σχόλιο" style='text-decoration:none;'><span class="rateme">&nbsp;</span></a></span> -->
+
+						<span id="comment-subhead">
+							 	<a id="cvoteup-68123" style='text-decoration: none;color:#36a00f;'><strong></strong></a>
+					 &nbsp;&nbsp; <span id="ratetext-68123"> </span> <span id="ratebuttons-68123"> 
+												
+						<a class="ratemeyflat" title="Δυστυχώς δεν μπορείτε ακόμα να αξιολογήσετε τα δικά σας σχόλια =)"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a> 
+
+				      	<a class="ratemedownflat" title="Δυστυχώς δεν μπορείτε ακόμα να αξιολογήσετε τα δικά σας σχόλια =)"  style='text-decoration:none;'><span class="rateme">&nbsp;</span></a>
+						
+										
+				 </span>
+				      	<a id="cvotedown-68123" style='text-decoration: none;color:#a2a2a2;'><strong></strong></a>
+			      				     
+
+
+
+			 </span>
+
+			
+			</div>
+	  
+    
+    	<div class="comment-body" id="wholecomment68123"> 
+		<span id = "comment_content-68123"> <br />
+      Βρήκα κι εγώ χρόνο να το διαβάσω, μου άρεσε, όταν διαβάζεις τέτοιες συμπυκνωμένες περιλήψεις σε πιάνει απελπισία.<br />
+<br />
+Αυτό με τους υπαλλήλους της Ολυμπιακής που πληρώνονται χωρίς να έχουν βρει πού να τους διορίσουν ισχύει;<br />
+<br />
+Και μια παρατήρηση, επειδή σε μία πρόταση αναφέρει την Κερατέα: πιστεύει άραγε ότι ένα κράτος που κάνει όοοολα τα άλλα λάθη που γράφει στο κείμενο, πήγε και κάνει κάτι σωστό στην Κερατέα;<br />
+<br />
+Και μια πρόταση για την έξοδο από την κρίση: αύριο αναστολή όλων των κρατικών διαφημίσεων σε ΜΜΕ. </span> 
+	 </div>
+
+	
+	  
+
+	<div class="comment-info"> 
+	
+	 
+	<span class="medium lightgray awesome"><a href = "javascript://" onClick="var replydisplay=document.getElementById('reply-68123').style.display ? '' : 'none'; document.getElementById('reply-68123').style.display = replydisplay;">Απάντησε</a></span>&nbsp;
+	  <div id="reply-68123" style="display:none;"> 
+
+	  
+	    <div id="commentform" align="left">
+	      <form action="" method="POST" id="thisform" style="display:inline;">
+	        <fieldset>
+	        <legend>Απάντησε</legend>
+	        <div id="cformfieldset"> 
+
+			
+	          <label for="comment" accesskey="2" style="float:left">  </label>
+
+	 
+
+	          
+	          <textarea name="reply_comment_content-68123" id="reply_comment_content-68123" rows="6" cols="60"/></textarea>
+	          <br/>
+
+
+	          
+	          
+	          
+	          <input type="submit" class="sub-awesome" name="submit" value="Καταχώριση σχολίου" class="log2" />
+
+	          
+	          <input type="hidden" name="process" value="newcomment" />
+	          <input type="hidden" name="randkey" value="86450459" />
+	          <input type="hidden" name="link_id" value="65483" />
+	          <input type="hidden" name="comment_parent_id" value="68123" />
+
+	          <input type="hidden" name="user_id" value="68" />
+	        </div>
+	        </fieldset>
+	      </form>
+	    </div>
+	  </div>
+	  	
+
+
+	  
+	  
+
+	 	 	      <span class="medium awesome"><a href="/edit.php?id=65483&amp;commentid=68123" style="color:white;">Διόρθωσε</a> </span>
+				  	 </div>
+
+	</div>
+  <br />
+
+
+
+
+  </li>
+</ul>
+
+                    
+
+
+<div id="commentform" align="left">
+	<form action="" method="POST" id="thisform" style="display:inline;">
+		<fieldset><legend>Σχολίασε</legend>		
+			
+					
+					<label for="comment" accesskey="2" style="float:left; margin-bottom:-5px;">								 
+					</label>
+
+					
+					<textarea name="comment_content" id="comment" rows="6" cols="60"/></textarea><br />
+					
+					
+					
+					
+					<input type="submit" class="sub-awesome" name="submit" value="Καταχώριση σχολίου" class="log2" />
+
+					
+					<input type="hidden" name="process" value="newcomment" />
+					<input type="hidden" name="randkey" value="93049618" />
+					<input type="hidden" name="link_id" value="65483" />
+					<input type="hidden" name="user_id" value="68" />
+				
+		</fieldset>
+
+	</form>
+</div>        
+    </div>
+    <div id="comments">
+	<br />
+    <h3>Ποιά μέλη του buzz ψήφισαν αυτή την καταχώριση</h3>
+    <div class = "whovotedwrapper" id = "idwhovotedwrapper">
+        <ol
+                    ><li> <a href = "/user.php?login=kensai">kensai</a><br/></li
+                    ><li> <a href = "/user.php?login=neTpen">neTpen</a><br/></li
+                    ><li> <a href = "/user.php?login=ngeor">ngeor</a><br/></li
+                    ><li> <a href = "/user.php?login=tassos">tassos</a><br/></li
+                    ><li> <a href = "/user.php?login=dkamen">dkamen</a><br/></li
+                    ><li> <a href = "/user.php?login=aspa">aspa</a><br/></li
+                    ><li> <a href = "/user.php?login=Spyros.Dovas">Spyros.Dovas</a><br/></li
+                    ><li> <a href = "/user.php?login=vasvas">vasvas</a><br/></li
+                    ><li> <a href = "/user.php?login=harpap">harpap</a><br/></li
+                    ><li> <a href = "/user.php?login=xekaltsotos">xekaltsotos</a><br/></li
+                    ><li> <a href = "/user.php?login=zuqzuq">zuqzuq</a><br/></li
+                    ><li> <a href = "/user.php?login=seagazing">seagazing</a><br/></li
+                    ><li> <a href = "/user.php?login=ProkopisDoukas">ProkopisDoukas</a><br/></li
+                    ><li> <a href = "/user.php?login=cinto">cinto</a><br/></li
+                    ><li> <a href = "/user.php?login=idios">idios</a><br/></li
+                    ><li> <a href = "/user.php?login=noir">noir</a><br/></li
+                    ><li> <a href = "/user.php?login=Phevos.Fnevripos">Phevos.Fnevripos</a><br/></li
+                    ><li> <a href = "/user.php?login=tanevramou">tanevramou</a><br/></li
+                    ><li> <a href = "/user.php?login=MichaelCorvin">MichaelCorvin</a><br/></li
+                ></ol><br/>
+
+    </div>
+</div>
+
+<style type="text/css">
+  /* allow room for 3 columns */
+  div#idwhovotedwrapper ol
+  {
+    width: 35em;
+    list-style-type: none;
+  }
+
+div#idwhovotedwrapper a:link, div#idwhovotedwrapper a:visited {color:#6C93C9;text-decoration:none}
+div#idwhovotedwrapper a:hover, div#idwhovotedwrapper a:active {color:#6C93C9;text-decoration:underline}  
+
+
+  /* float & allow room for the widest item */
+  div#idwhovotedwrapper ol li
+  {
+    float: left;
+    width: 15em;
+  }
+
+  /* stop the float */
+  div#idwhovotedwrapper br
+  {
+    clear: left;
+  }
+
+  /* separate the list from subsequent markup */
+  div#idwhovotedwrapper div.whovotedwrapper
+  {
+    margin-bottom: 1em;
+  }
+</style>
+</div>
+		      	
+						
+				  </div><!-- inside end -->
+					  
+				</div><!-- contentbox end -->
+				
+			</div><!-- content-wrap end --> 
+			
+		
+		       	
+		</div><!-- wrap end -->
+		<div style="clear:both;"> </div>
+
+			<br clear="all" />
+
+<div class="footer">
+	Powered By <a href="http://www.pligg.com/">Pligg</a> | Buzzbee by <a href="http://www.watiworks.com/">Wati Larke</a> | Legal: <a href="http://www.affero.org/oagpl.html">License</a> and <a href="https://sourceforge.net/project/showfiles.php?group_id=176676">Source</a> | <a href="http://reality-tape.com/disclaimer.html" target="_blank">Το απαραίτητο disclaimer</a> του buzz.
+
+</div>
+
+			
+	</body>
+</html>

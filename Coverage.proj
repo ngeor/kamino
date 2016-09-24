@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildCommunityTasksPath>$(MSBuildProjectDirectory)\.build</MSBuildCommunityTasksPath>
+  </PropertyGroup>
+
+  <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets"/>
+  <Import Project="$(MSBuildProjectDirectory)\shared.targets"/>
+
+  <Target Name="Clean">
+  </Target>
+
+  <Target Name="MergedCodeCoverage" Condition="'$(DotCoverExe)' != ''">
+    <Message Text="Merging dotCover sources" />
+    <Exec Command="$(DotCoverExe) merge /Source:BuzzStats.Tests\bin\Debug\BuzzStats.Tests.cover;BuzzStats.Boot.Tests\bin\Debug\BuzzStats.Boot.Tests.cover;BuzzStats.NHibernate.Tests\bin\Debug\BuzzStats.NHibernate.Tests.cover /Output:BuzzStats.Tests\bin\Debug\merged.cover" />
+
+    <Message Text="Creating HTML report" />
+    <Exec Command="$(DotCoverExe) report /Source:BuzzStats.Tests\bin\Debug\merged.cover /Output:doc\dotCoverReport\index.html /ReportType:HTML" />
+  </Target>
+
+  <Target Name="Build">
+    <MSBuild Projects="BuzzStats.sln" Properties="FullTests=True" />
+    <CallTarget Targets="MergedCodeCoverage" />
+  </Target>
+
+</Project>

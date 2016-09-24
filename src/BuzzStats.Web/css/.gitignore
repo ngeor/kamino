@@ -1,0 +1,6 @@
+# generated css files
+*.css
+
+# theme images from jquery-ui
+images/
+

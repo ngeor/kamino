@@ -1,0 +1,13 @@
+{
+	"default": {
+		"options": {
+			"coverageFolder": "<%= paths.jsCoverage %>",
+			"check": {
+				"statements": 45,
+				"branches": 10,
+				"functions": 65,
+				"lines": 45
+			}
+		}
+	}
+}

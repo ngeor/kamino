@@ -1,0 +1,22 @@
+title Ingestion
+
+Timer->+Ingester: Check homepage(s)
+
+Ingester->+Parser: Parse homepage(s)
+Parser-->-Ingester: done
+
+Ingester->DataLayerFactory: acquire data layer
+DataLayerFactory->+DataLayer: <<create>>
+loop For each storyId
+    Ingester->DataLayer: story exists?
+    opt story is new
+        Ingester->DataLayer: store story
+        note right of DataLayer: story will not be parsed, only ID and Status=Unchecked
+
+    end
+end
+
+Ingester->DataLayer: dispose
+DataLayer-->-Ingester: <<dispose>>
+
+Ingester-->-Timer: done

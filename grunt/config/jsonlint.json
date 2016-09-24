@@ -1,0 +1,13 @@
+{
+	"all": {
+		"files": {
+			"src": [
+				".jscsrc",
+				".jshintrc",
+				"*.json",
+				"grunt/**/*.json",
+				"src/**/*.json"
+			]
+		}
+	}
+}

@@ -1,0 +1,12 @@
+{
+	"coverage": {
+		"src": "grunt/test",
+		"options": {
+			"coverageFolder": "<%= paths.jsCoverage %>",
+			"root": "grunt/",
+			"mask": "**/*.js",
+			"istanbulOptions": ["--include-all", "--no-default-excludes"],
+			"reportFormats": ["html", "cobertura"]
+		}
+	}
+}

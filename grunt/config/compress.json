@@ -1,0 +1,11 @@
+{
+    "dist": {
+        "options": {
+            "archive": "dist.zip"
+        },
+
+        "expand": true,
+        "cwd": "dist/",
+        "src": ["**/*"]
+    }
+}
