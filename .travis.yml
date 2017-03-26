@@ -1,0 +1,8 @@
+language: java
+jdk: oraclejdk8
+script:
+- mvn clean install
+- cd target
+- mvn archetype:generate -DgroupId=myapp -DartifactId=myapp -DarchetypeGroupId=ngeor.archetype-quickstart-jdk8 -DarchetypeArtifactId=archetype-quickstart-jdk8 -DarchetypeVersion=1.0.0 -DinteractiveMode=false -DarchetypeCatalog=local
+- cd myapp
+- mvn test

@@ -1,4 +1,7 @@
 # archetype-quickstart-jdk8
+
+[![Build Status](https://travis-ci.org/ngeor/archetype-quickstart-jdk8.svg?branch=master)](https://travis-ci.org/ngeor/archetype-quickstart-jdk8)
+
 A Maven archetype for a simple Java app, updated for Java 8.
 
 This is effectively the same as the maven-archetype-quickstart, with the following changes:
@@ -14,6 +17,7 @@ the following new features are implemented:
 
 - .gitignore file
 - checkstyle rules
+- travis support
 - checkstyle plugin
 - jacoco plugin
 - javadoc plugin

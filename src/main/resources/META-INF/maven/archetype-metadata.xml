@@ -21,6 +21,7 @@
             <directory></directory>
             <includes>
                 <include>.gitignore</include>
+                <include>.travis.yml</include>
                 <include>checkstyle.xml</include>
             </includes>
         </fileSet>
