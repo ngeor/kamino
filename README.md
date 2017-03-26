@@ -15,6 +15,7 @@ the following new features are implemented:
 - .gitignore file
 - checkstyle rules
 - checkstyle plugin
+- jacoco plugin
 - javadoc plugin
 
 ## Installation
