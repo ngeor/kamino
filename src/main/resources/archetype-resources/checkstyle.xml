@@ -91,6 +91,7 @@ This file is based on sun_checks.xml with customizations marked with ***
         <module name="JavadocMethod">
             <property name="allowedAnnotations"
                       value="Override,Before,Test"/> <!-- *** no comment needed for tests and override methods -->
+            <property name="scope" value="protected" /> <!-- *** don't document private methods -->
         </module>
         <module name="JavadocType"/>
         <module name="JavadocVariable">

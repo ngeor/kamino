@@ -8,6 +8,15 @@ This is effectively the same as the maven-archetype-quickstart, with the followi
 - fixed indentation and formatting (4 spaces)
 - removed typo "rigourous" from `AppTest.java` because it is annoying
 
+## Additional features
+In addition to the improvements mentioned above,
+the following new features are implemented:
+
+- .gitignore file
+- checkstyle rules
+- checkstyle plugin
+- javadoc plugin
+
 ## Installation
 
 - Clone the repository
@@ -27,6 +36,8 @@ mvn archetype:generate -DgroupId=com.mycompany.myapp \
     -DarchetypeVersion=1.0.0 \
     -DinteractiveMode=false
 ```
+
+Pro tip: You can also pass `-DarchetypeCatalog=local` to skip checking the network.
 
 ## Uninstall
 
