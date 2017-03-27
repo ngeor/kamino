@@ -4,9 +4,26 @@
     <groupId>com.github.ngeor</groupId>
     <artifactId>archetype-quickstart-jdk8</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>A Maven archetype for a simple Java app, updated for Java 8</name>
+    <name>archetype-quickstart-jdk8</name>
+    <description>A Maven archetype for a simple Java app, updated for Java 8</description>
     <url>https://github.com/ngeor/archetype-quickstart-jdk8</url>
-
+    <licenses>
+        <license>
+            <name>MIT</name>
+            <url>https://opensource.org/licenses/MIT</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>Nikolaos Georgiou</name>
+            <email>nikolaos.georgiou@gmail.com</email>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:https://github.com/ngeor/archetype-quickstart-jdk8.git</connection>
+        <developerConnection>scm:git:git@github.com:ngeor/archetype-quickstart-jdk8.git</developerConnection>
+        <url>https://github.com/ngeor/archetype-quickstart-jdk8</url>
+    </scm>
     <distributionManagement>
         <snapshotRepository>
             <id>ossrh</id>
