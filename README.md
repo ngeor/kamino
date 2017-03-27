@@ -4,7 +4,8 @@
 
 A Maven archetype for a simple Java app, updated for Java 8.
 
-This is effectively the same as the maven-archetype-quickstart, with the following changes:
+This is effectively the same as the maven-archetype-quickstart,
+with the following changes:
 
 - Java version set to 8
 - jUnit updated to latest (4.12)
@@ -29,25 +30,18 @@ the following new features are implemented:
 
 ## Usage
 
-The artifactId is `archetype-quickstart-jdk8` and the groupId is `ngeor.archetypes`.
+The artifactId is `archetype-quickstart-jdk8`
+and the groupId is `com.github.ngeor`.
 
 To create a new app based on it:
 
 ```
 mvn archetype:generate -DgroupId=com.mycompany.myapp \
     -DartifactId=myapp \
-    -DarchetypeGroupId=ngeor.archetypes \
+    -DarchetypeGroupId=com.github.ngeor \
     -DarchetypeArtifactId=archetype-quickstart-jdk8 \
     -DarchetypeVersion=1.0.0 \
     -DinteractiveMode=false
 ```
 
 Pro tip: You can also pass `-DarchetypeCatalog=local` to skip checking the network.
-
-## Uninstall
-
-Delete the folder `ngeor` from the `~/.m2` local repository, e.g.
-
-```
-rm -rf ~/.m2/repository/ngeor/
-```
