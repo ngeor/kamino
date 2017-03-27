@@ -6,7 +6,7 @@ CUSTOM_VERSION=1.0.${TRAVIS_BUILD_NUMBER}
 echo "Will use version ${CUSTOM_VERSION}"
 
 # replace version in pom
-sed -i -e 's/1.0-SNAPSHOT/${CUSTOM_VERSION}/g' pom.xml
+sed -i -e "s/1.0-SNAPSHOT/${CUSTOM_VERSION}/g" pom.xml
 
 # debugging purposes
 cat pom.xml
