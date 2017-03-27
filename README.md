@@ -40,7 +40,7 @@ mvn archetype:generate -DgroupId=com.mycompany.myapp \
     -DartifactId=myapp \
     -DarchetypeGroupId=com.github.ngeor \
     -DarchetypeArtifactId=archetype-quickstart-jdk8 \
-    -DarchetypeVersion=1.0.0 \
+    -DarchetypeVersion=1.0-SNAPSHOT \
     -DinteractiveMode=false
 ```
 
