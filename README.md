@@ -55,4 +55,4 @@ CI/CD is performed via a shell script (`travis/build.sh`).
 - The project is installed locally
 - To test the archetype, a small app is generated out of it and the app is tested
 - If we're on the master branch, we deploy to the central maven repository
-- GPG keys are deleted (additional variable: `GPG_FINGERPRINT`)
+- GPG keys are deleted
