@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Current branch: ${TRAVIS_BRANCH}"
+
 # Import GPG key
 gpg --passphrase=${GPG_PASSPHRASE} --no-use-agent --output - keys.asc | gpg --import
 
@@ -15,7 +17,7 @@ sed -i -e "s/1.0-SNAPSHOT/${CUSTOM_VERSION}/g" pom.xml
 cat pom.xml
 
 # install archetype locally
-mvn clean install
+mvn -V -B -s settings.xml -P gpg clean install
 
 # create a dummy app based on it
 cd target
@@ -30,3 +32,10 @@ mvn archetype:generate -DgroupId=myapp \
 # test the dummy app
 cd myapp
 mvn test
+
+# publish to nexus
+if [ "${TRAVIS_BRANCH}" -eq "master" ]; then
+    echo "publishing to maven"
+    cd ../..
+    mvn -V -B -s settings.xml -P gpg deploy
+fi
