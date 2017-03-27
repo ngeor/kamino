@@ -34,8 +34,11 @@ cd myapp
 mvn test
 
 # publish to nexus
-if [ "${TRAVIS_BRANCH}" -eq "master" ]; then
+if [ "${TRAVIS_BRANCH}" == "master" ]; then
     echo "publishing to maven"
     cd ../..
     mvn -V -B -s settings.xml -P gpg deploy
 fi
+
+gpg --batch --delete-secret-keys ${GPG_KEY}
+gpg --batch --delete-key ${GPG_KEY}
