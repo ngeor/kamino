@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Import GPG key
+gpg --passphrase=${GPG_PASSPHRASE} --no-use-agent --output - keys.asc | gpg --import
+
 # define a custom version for the pom
 CUSTOM_VERSION=1.0.${TRAVIS_BUILD_NUMBER}
 
