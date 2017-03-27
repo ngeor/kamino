@@ -24,11 +24,6 @@ the following new features are implemented:
 - jacoco plugin
 - javadoc plugin
 
-## Installation
-
-- Clone the repository
-- Use `mvn install` to have the archetype available locally
-
 ## Usage
 
 The artifactId is `archetype-quickstart-jdk8`
@@ -41,11 +36,24 @@ mvn archetype:generate -DgroupId=com.mycompany.myapp \
     -DartifactId=myapp \
     -DarchetypeGroupId=com.github.ngeor \
     -DarchetypeArtifactId=archetype-quickstart-jdk8 \
-    -DarchetypeVersion=1.0-SNAPSHOT \
+    -DarchetypeVersion=1.0.22 \
     -DinteractiveMode=false
 ```
 
-Pro tip: You can also pass `-DarchetypeCatalog=local` to skip checking the network.
+Tip: double check `1.0.22` is the latest version, in case this README is outdated
+(happens to the best of us).
+
+## Contributing
+
+If you want to make changes, you'll need to test the archetype locally.
+
+- Clone the repository
+- Use `mvn install` to have the archetype available locally
+
+To test it, generate a dummy app. The command is the same as above, but:
+
+- use `1.0-SNAPSHOT` as the archetype version
+- also pass `-DarchetypeCatalog=local` to make sure it's not using the internet
 
 ## Travis CD for archetype
 
