@@ -29,14 +29,14 @@ the following new features are implemented:
 
 ## Usage
 
-The artifactId is archetype-quickstart-jdk8 and the groupId is ngeor.archetype-quickstart-jdk8
+The artifactId is `archetype-quickstart-jdk8` and the groupId is `ngeor.archetypes`.
 
 To create a new app based on it:
 
 ```
 mvn archetype:generate -DgroupId=com.mycompany.myapp \
     -DartifactId=myapp \
-    -DarchetypeGroupId=ngeor.archetype-quickstart-jdk8 \
+    -DarchetypeGroupId=ngeor.archetypes \
     -DarchetypeArtifactId=archetype-quickstart-jdk8 \
     -DarchetypeVersion=1.0.0 \
     -DinteractiveMode=false
@@ -46,4 +46,8 @@ Pro tip: You can also pass `-DarchetypeCatalog=local` to skip checking the netwo
 
 ## Uninstall
 
-Delete the folder `ngeor` from the `~/.m2` local repository.
+Delete the folder `ngeor` from the `~/.m2` local repository, e.g.
+
+```
+rm -rf ~/.m2/repository/ngeor/
+```
