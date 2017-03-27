@@ -40,5 +40,5 @@ if [ "${TRAVIS_BRANCH}" == "master" ]; then
     mvn -V -B -s settings.xml -P gpg deploy
 fi
 
-gpg --batch --delete-secret-keys ${GPG_FINGERPRINT}
+gpg --batch --delete-secret-keys "${GPG_FINGERPRINT}"
 gpg --batch --yes --delete-key ${GPG_KEY}

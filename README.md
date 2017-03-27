@@ -45,3 +45,14 @@ mvn archetype:generate -DgroupId=com.mycompany.myapp \
 ```
 
 Pro tip: You can also pass `-DarchetypeCatalog=local` to skip checking the network.
+
+## Travis CD for archetype
+
+CI/CD is performed via a shell script (`travis/build.sh`).
+
+- GPG keys are decrypted and imported from `keys.asc`. This is needed for signing artifacts before publishing them to the central maven repository. Environment variables: `GPG_KEY` and `GPG_PASSPHRASE`.
+- The pom.xml's version is set to `1.0.TRAVIS_BUILD_NUMBER`
+- The project is installed locally
+- To test the archetype, a small app is generated out of it and the app is tested
+- If we're on the master branch, we deploy to the central maven repository
+- GPG keys are deleted (additional variable: `GPG_FINGERPRINT`)
