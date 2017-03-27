@@ -1,8 +1,4 @@
 language: java
 jdk: oraclejdk8
 script:
-- mvn clean install
-- cd target
-- mvn archetype:generate -DgroupId=myapp -DartifactId=myapp -DarchetypeGroupId=com.github.ngeor -DarchetypeArtifactId=archetype-quickstart-jdk8 -DarchetypeVersion=1.0-SNAPSHOT -DinteractiveMode=false -DarchetypeCatalog=local
-- cd myapp
-- mvn test
+- ./travis/build.sh
