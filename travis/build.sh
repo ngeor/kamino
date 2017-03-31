@@ -5,13 +5,15 @@ echo "Current branch: ${TRAVIS_BRANCH}"
 # Import GPG key
 gpg --passphrase=${GPG_PASSPHRASE} --no-use-agent --output - keys.asc | gpg --import
 
-# define a custom version for the pom
-CUSTOM_VERSION=1.0.${TRAVIS_BUILD_NUMBER}
+# get existing version from pom
+MAJOR_MINOR_VERSION=$(mvn help:evaluate -Dexpression=project.version | grep ^[0-9] | cut -d- -f1 | cut -d. -f1,2)
 
-echo "Will use version ${CUSTOM_VERSION}"
+# define a custom version for the pom
+NEW_VERSION=${MAJOR_MINOR_VERSION}.${TRAVIS_BUILD_NUMBER}
+echo "Will use version ${NEW_VERSION}"
 
 # replace version in pom
-sed -i -e "s/1.0-SNAPSHOT/${CUSTOM_VERSION}/g" pom.xml
+mvn versions:set -DnewVersion=${NEW_VERSION}
 
 # debugging purposes
 cat pom.xml
@@ -25,7 +27,7 @@ mvn archetype:generate -DgroupId=myapp \
     -DartifactId=myapp \
     -DarchetypeGroupId=com.github.ngeor \
     -DarchetypeArtifactId=archetype-quickstart-jdk8 \
-    -DarchetypeVersion=${CUSTOM_VERSION} \
+    -DarchetypeVersion=${NEW_VERSION} \
     -DinteractiveMode=false \
     -DarchetypeCatalog=local
 
