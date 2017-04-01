@@ -1,5 +1,5 @@
 #
-# Standard Maven .gitignore
+# Maven gitignore https://github.com/github/gitignore/blob/master/Maven.gitignore
 #
 target/
 pom.xml.tag
@@ -11,10 +11,12 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 
+# Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
+!/.mvn/wrapper/maven-wrapper.jar
+
 #
 # IntelliJ
 #
 *.iml
 .idea/*
 !.idea/runConfigurations/
-
