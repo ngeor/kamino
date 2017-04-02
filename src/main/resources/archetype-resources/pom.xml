@@ -28,7 +28,7 @@
                         <dependency>
                             <groupId>com.github.ngeor</groupId>
                             <artifactId>checkstyle-rules</artifactId>
-                            <version>1.0.2</version>
+                            <version>1.0.8</version>
                         </dependency>
                     </dependencies>
                     <configuration>
