@@ -85,11 +85,6 @@
     <Compile Include="Boot\Web\WebRegistry.cs" />
     <Compile Include="Common\DateTimeExtensions.cs" />
     <Compile Include="Common\IUrlProvider.cs" />
-    <Compile Include="Common\Resources.el.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.el.resx</DependentUpon>
-    </Compile>
     <Compile Include="Common\UrlProvider.cs" />
     <Compile Include="Configuration\CrawlerConfigurationElement.cs" />
     <Compile Include="Configuration\ListingPageConfigurationElement.cs" />
@@ -106,11 +101,7 @@
     <Compile Include="Crawl\ILeafSource.cs" />
     <Compile Include="Common\TimeSpanExtensions.cs" />
     <Compile Include="Boot\Web\Application.cs" />
-    <Compile Include="Common\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
+    <Compile Include="Common\Resources.cs" />
     <Compile Include="Crawl\CrawlApp.cs" />
     <Compile Include="Crawl\IQueueManager.cs" />
     <Compile Include="Crawl\IWarmCache.cs" />
@@ -223,16 +214,6 @@
     <Compile Include="Crawl\JsonSerializer.cs" />
     <Compile Include="Boot\StructureMapServiceLocator.cs" />
     <Compile Include="Boot\ResolverFactory.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Common\Resources.el.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.el.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Common\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
