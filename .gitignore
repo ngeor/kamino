@@ -3,3 +3,6 @@ node_modules/
 
 # .NET
 *.suo
+bin/
+obj/
+packages/

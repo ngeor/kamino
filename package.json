@@ -19,10 +19,8 @@
     "grunt-mocha-istanbul": "~5.0.2",
     "grunt-mocha-test": "^0.13.2",
     "grunt-msbuild": "^0.4.4",
-    "grunt-postcss": "^0.8.0",
     "grunt-shell": "~2.1.0",
     "grunt-text-replace": "~0.4.0",
-    "grunt-webdriver": "^2.0.3",
     "grunt-xmlpoke": "^0.10.0",
     "istanbul": "~0.4.5",
     "load-grunt-config": "^0.19.2",
@@ -30,12 +28,7 @@
     "proxyquire": "^1.8.0",
     "sinon": "^2.3.6",
     "time-grunt": "^1.4.0",
-    "underscore": "^1.8.3",
-    "wdio-mocha-framework": "^0.5.10",
-    "wdio-phantomjs-service": "^0.2.2",
-    "webdriverio": "^4.8.0",
-    "xmldom": "^0.1.27",
-    "xpath": "0.0.24"
+    "underscore": "^1.8.3"
   },
   "dependencies": {
     "bootstrap-datepicker": "^1.7.0",
