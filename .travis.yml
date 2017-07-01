@@ -1,2 +1,7 @@
 language: csharp
 solution: src/BuzzStats.sln
+sudo: required
+before_install:
+  - sudo apt-get -y install npm
+install:
+  - npm install
