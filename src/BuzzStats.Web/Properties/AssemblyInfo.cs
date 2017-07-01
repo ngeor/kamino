@@ -24,5 +24,5 @@ using System.Runtime.InteropServices;
 [assembly: Guid("d9ba3d4e-836e-49cf-8395-e1f71d9b5326")]
 [assembly: log4net.Config.XmlConfigurator]
 [assembly: AssemblyCopyright("Copyright © Nikolaos Georgiou 2010-2014")]
-[assembly: AssemblyVersion("1.6.0.0")]
-[assembly: AssemblyFileVersion("1.6.0.0")]
+[assembly: AssemblyVersion("2.0.0.0")]
+[assembly: AssemblyFileVersion("2.0.0.0")]
