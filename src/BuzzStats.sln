@@ -25,6 +25,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.Data.Dapper.Tests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.WebApi", "BuzzStats.WebApi\BuzzStats.WebApi.csproj", "{7B2E2D42-C462-405F-9505-E89F546E96C6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.ParserWebApi", "BuzzStats.ParserWebApi\BuzzStats.ParserWebApi.csproj", "{AC79F1D1-355C-483B-AD3F-D53658E5F33F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.CrawlerService", "BuzzStats.CrawlerService\BuzzStats.CrawlerService.csproj", "{E02AC7E7-7CEB-4F99-864A-327C890C6E40}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.StorageWebApi", "BuzzStats.StorageWebApi\BuzzStats.StorageWebApi.csproj", "{BB4F2568-8B52-44BD-9E25-B1249858DC3A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +81,18 @@ Global
 		{7B2E2D42-C462-405F-9505-E89F546E96C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B2E2D42-C462-405F-9505-E89F546E96C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B2E2D42-C462-405F-9505-E89F546E96C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC79F1D1-355C-483B-AD3F-D53658E5F33F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC79F1D1-355C-483B-AD3F-D53658E5F33F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC79F1D1-355C-483B-AD3F-D53658E5F33F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC79F1D1-355C-483B-AD3F-D53658E5F33F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E02AC7E7-7CEB-4F99-864A-327C890C6E40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E02AC7E7-7CEB-4F99-864A-327C890C6E40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E02AC7E7-7CEB-4F99-864A-327C890C6E40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E02AC7E7-7CEB-4F99-864A-327C890C6E40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB4F2568-8B52-44BD-9E25-B1249858DC3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB4F2568-8B52-44BD-9E25-B1249858DC3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB4F2568-8B52-44BD-9E25-B1249858DC3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB4F2568-8B52-44BD-9E25-B1249858DC3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
