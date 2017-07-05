@@ -51,9 +51,9 @@ namespace BuzzStats.Data
             unchecked
             {
                 int hashCode = RowIndex;
-                hashCode = (hashCode*397) ^ MaxRows;
+                hashCode = (hashCode * 397) ^ MaxRows;
                 hashCode = SortBy.Aggregate(hashCode,
-                    (current, sortExpression) => current*13 + sortExpression.GetHashCode());
+                    (current, sortExpression) => current * 13 + sortExpression.GetHashCode());
                 return hashCode;
             }
         }

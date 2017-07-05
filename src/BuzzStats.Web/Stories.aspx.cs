@@ -15,7 +15,7 @@ using BuzzStats.Web.UserControls;
 
 namespace BuzzStats.Web
 {
-    [Presenter(typeof (StoriesPagePresenter))]
+    [Presenter(typeof(StoriesPagePresenter))]
     public partial class Stories : MvpPage, IStoriesPageView
     {
         public void SetCommentCount(int commentCount)

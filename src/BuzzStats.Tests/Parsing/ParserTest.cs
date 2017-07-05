@@ -71,7 +71,8 @@ namespace BuzzStats.Tests.Parsing
             AssertParsedComment(story.Comments.ElementAt(0).Comments.ElementAt(6), "contrabando", 1, 2, false, "11:00");
 
             AssertParsedComment(story.Comments.ElementAt(1), "dkamen", 12, 5, false, "1.15:00", 2);
-            AssertParsedComment(story.Comments.ElementAt(1).Comments.ElementAt(0), "BlondeElena", 8, 3, false, "1.14:00");
+            AssertParsedComment(story.Comments.ElementAt(1).Comments.ElementAt(0), "BlondeElena", 8, 3, false,
+                "1.14:00");
             AssertParsedComment(story.Comments.ElementAt(1).Comments.ElementAt(1), "dkamen", 2, 1, false, "1.09:00");
 
             AssertParsedComment(story.Comments.ElementAt(2), "seagazing", 6, 0, false, "1.15:00", 2);
@@ -134,29 +135,29 @@ namespace BuzzStats.Tests.Parsing
             Assert.AreEqual(TimeSpan.FromMinutes(301), Parser.ToTimeSpan("πριν 5 ώρες 1 λεπτό"));
             Assert.AreEqual(TimeSpan.FromMinutes(359), Parser.ToTimeSpan("πριν 5 ώρες 59 λεπτά"));
 
-            Assert.AreEqual(TimeSpan.FromMinutes(24*60), Parser.ToTimeSpan("πριν 1 μέρα"));
-            Assert.AreEqual(TimeSpan.FromMinutes(24*60 + 1), Parser.ToTimeSpan("πριν 1 μέρα 1 λεπτό"));
-            Assert.AreEqual(TimeSpan.FromMinutes(24*60 + 42), Parser.ToTimeSpan("πριν 1 μέρα 42 λεπτά"));
-            Assert.AreEqual(TimeSpan.FromMinutes(24*60 + 61), Parser.ToTimeSpan("πριν 1 μέρα 1 ώρα 1 λεπτό"));
-            Assert.AreEqual(TimeSpan.FromMinutes(24*60 + 69), Parser.ToTimeSpan("πριν 1 μέρα 1 ώρα 9 λεπτά"));
+            Assert.AreEqual(TimeSpan.FromMinutes(24 * 60), Parser.ToTimeSpan("πριν 1 μέρα"));
+            Assert.AreEqual(TimeSpan.FromMinutes(24 * 60 + 1), Parser.ToTimeSpan("πριν 1 μέρα 1 λεπτό"));
+            Assert.AreEqual(TimeSpan.FromMinutes(24 * 60 + 42), Parser.ToTimeSpan("πριν 1 μέρα 42 λεπτά"));
+            Assert.AreEqual(TimeSpan.FromMinutes(24 * 60 + 61), Parser.ToTimeSpan("πριν 1 μέρα 1 ώρα 1 λεπτό"));
+            Assert.AreEqual(TimeSpan.FromMinutes(24 * 60 + 69), Parser.ToTimeSpan("πριν 1 μέρα 1 ώρα 9 λεπτά"));
 
-            Assert.AreEqual(TimeSpan.FromMinutes(24*60 + 300), Parser.ToTimeSpan("πριν 1 μέρα 5 ώρες"));
-            Assert.AreEqual(TimeSpan.FromMinutes(24*60 + 301), Parser.ToTimeSpan("πριν 1 μέρα 5 ώρες 1 λεπτό"));
-            Assert.AreEqual(TimeSpan.FromMinutes(24*60 + 342),
+            Assert.AreEqual(TimeSpan.FromMinutes(24 * 60 + 300), Parser.ToTimeSpan("πριν 1 μέρα 5 ώρες"));
+            Assert.AreEqual(TimeSpan.FromMinutes(24 * 60 + 301), Parser.ToTimeSpan("πριν 1 μέρα 5 ώρες 1 λεπτό"));
+            Assert.AreEqual(TimeSpan.FromMinutes(24 * 60 + 342),
                 Parser.ToTimeSpan("πριν 1 μέρα 5 ώρες 42 λεπτά"));
 
-            Assert.AreEqual(TimeSpan.FromMinutes(21*24*60), Parser.ToTimeSpan("πριν 21 μέρες"));
-            Assert.AreEqual(TimeSpan.FromMinutes(21*24*60 + 1), Parser.ToTimeSpan("πριν 21 μέρες 1 λεπτό"));
-            Assert.AreEqual(TimeSpan.FromMinutes(21*24*60 + 42), Parser.ToTimeSpan("πριν 21 μέρες 42 λεπτά"));
-            Assert.AreEqual(TimeSpan.FromMinutes(21*24*60 + 61),
+            Assert.AreEqual(TimeSpan.FromMinutes(21 * 24 * 60), Parser.ToTimeSpan("πριν 21 μέρες"));
+            Assert.AreEqual(TimeSpan.FromMinutes(21 * 24 * 60 + 1), Parser.ToTimeSpan("πριν 21 μέρες 1 λεπτό"));
+            Assert.AreEqual(TimeSpan.FromMinutes(21 * 24 * 60 + 42), Parser.ToTimeSpan("πριν 21 μέρες 42 λεπτά"));
+            Assert.AreEqual(TimeSpan.FromMinutes(21 * 24 * 60 + 61),
                 Parser.ToTimeSpan("πριν 21 μέρες 1 ώρα 1 λεπτό"));
-            Assert.AreEqual(TimeSpan.FromMinutes(21*24*60 + 69),
+            Assert.AreEqual(TimeSpan.FromMinutes(21 * 24 * 60 + 69),
                 Parser.ToTimeSpan("πριν 21 μέρες 1 ώρα 9 λεπτά"));
 
-            Assert.AreEqual(TimeSpan.FromMinutes(21*24*60 + 300), Parser.ToTimeSpan("πριν 21 μέρες 5 ώρες"));
-            Assert.AreEqual(TimeSpan.FromMinutes(21*24*60 + 301),
+            Assert.AreEqual(TimeSpan.FromMinutes(21 * 24 * 60 + 300), Parser.ToTimeSpan("πριν 21 μέρες 5 ώρες"));
+            Assert.AreEqual(TimeSpan.FromMinutes(21 * 24 * 60 + 301),
                 Parser.ToTimeSpan("πριν 21 μέρες 5 ώρες 1 λεπτό"));
-            Assert.AreEqual(TimeSpan.FromMinutes(21*24*60 + 342),
+            Assert.AreEqual(TimeSpan.FromMinutes(21 * 24 * 60 + 342),
                 Parser.ToTimeSpan("πριν 21 μέρες 5 ώρες 42 λεπτά"));
         }
 

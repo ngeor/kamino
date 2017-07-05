@@ -30,7 +30,7 @@ namespace BuzzStats.Data.NHibernate.Entities
         {
             return string.Format(
                 "[RecentActivityEntity: StoryId={0}, CommentId={1}, Title={2}, Username={3}, " +
-                    "CreatedAt={4}, DetectedAt={5}, What={6}]",
+                "CreatedAt={4}, DetectedAt={5}, What={6}]",
                 StoryId,
                 CommentId,
                 Title,

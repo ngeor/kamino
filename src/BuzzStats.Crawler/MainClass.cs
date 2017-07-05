@@ -15,7 +15,7 @@ namespace BuzzStats.Crawler
 {
     public class MainClass
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof (MainClass));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(MainClass));
 
         public static int Main(string[] args)
         {

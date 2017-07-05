@@ -37,13 +37,13 @@ namespace BuzzStats.Data
                 return false;
             if (ReferenceEquals(this, obj))
                 return true;
-            if (obj.GetType() != typeof (StoryPollHistoryData))
+            if (obj.GetType() != typeof(StoryPollHistoryData))
                 return false;
             StoryPollHistoryData other = (StoryPollHistoryData) obj;
             return Story == other.Story &&
-                SourceId == other.SourceId &&
-                CheckedAt == other.CheckedAt &&
-                HadChanges == other.HadChanges;
+                   SourceId == other.SourceId &&
+                   CheckedAt == other.CheckedAt &&
+                   HadChanges == other.HadChanges;
         }
 
 
@@ -52,7 +52,7 @@ namespace BuzzStats.Data
             unchecked
             {
                 return (Story != null ? Story.GetHashCode() : 0) ^ (SourceId != null ? SourceId.GetHashCode() : 0) ^
-                    CheckedAt.GetHashCode() ^ HadChanges.GetHashCode();
+                       CheckedAt.GetHashCode() ^ HadChanges.GetHashCode();
             }
         }
     }

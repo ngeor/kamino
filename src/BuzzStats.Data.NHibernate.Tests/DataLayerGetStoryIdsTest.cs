@@ -112,7 +112,7 @@ namespace BuzzStats.Data.NHibernate.Tests
 
             Assert.IsNotNull(result);
             CollectionAssert.AreEqual(
-                new int[] {},
+                new int[] { },
                 result);
         }
 

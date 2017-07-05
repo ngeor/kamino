@@ -23,7 +23,7 @@ namespace BuzzStats.Web
     [WebService(Namespace = "http://ngeor.net/BuzzStats/")]
     public class ConsoleService : WebService, IApiService
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof (ConsoleService));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(ConsoleService));
 
         public ConsoleService()
         {

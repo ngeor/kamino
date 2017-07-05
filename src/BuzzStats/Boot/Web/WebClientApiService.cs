@@ -7,7 +7,7 @@ namespace BuzzStats.Boot.Web
 {
     public class WebClientApiService : IApiService
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof (WebClientApiService));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(WebClientApiService));
         private readonly IApiService _backend;
         private readonly IRecentActivityService _recentActivityService;
 

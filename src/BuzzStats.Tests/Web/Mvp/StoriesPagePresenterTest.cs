@@ -65,7 +65,8 @@ namespace BuzzStats.Tests.Web.Mvp
                 .Returns(recentStories);
             mockApiService
                 .Setup(
-                    p => p.GetStorySummaries(new GetStorySummariesRequest(StorySortField.LastCommentedAt.Desc(), 0, 10)))
+                    p => p.GetStorySummaries(new GetStorySummariesRequest(StorySortField.LastCommentedAt.Desc(), 0,
+                        10)))
                 .Returns(lastCommentedStories);
 
             mockView.Setup(p => p.SetStories(StorySortField.LastModifiedAt, lastModifiedStories));

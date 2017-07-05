@@ -49,8 +49,8 @@ namespace BuzzStats.Data
             unchecked
             {
                 int hashCode = (int) Interval;
-                hashCode = (hashCode*397) ^ Start.GetHashCode();
-                hashCode = (hashCode*397) ^ Stop.GetHashCode();
+                hashCode = (hashCode * 397) ^ Start.GetHashCode();
+                hashCode = (hashCode * 397) ^ Stop.GetHashCode();
                 return hashCode;
             }
         }

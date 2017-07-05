@@ -21,10 +21,7 @@ namespace BuzzStats.Web.Mvp
 
         protected internal IView View
         {
-            get
-            {
-                return _view;
-            }
+            get { return _view; }
 
             set
             {
@@ -62,26 +59,20 @@ namespace BuzzStats.Web.Mvp
     {
         protected internal new TView View
         {
-            get
-            {
-                return (TView)base.View;
-            }
+            get { return (TView) base.View; }
 
-            set
-            {
-                base.View = value;
-            }
+            set { base.View = value; }
         }
 
         protected override void SubscribeToView(IView view)
         {
             base.SubscribeToView(view);
-            SubscribeToView((TView)view);
+            SubscribeToView((TView) view);
         }
 
         protected override void UnSubscribeFromView(IView view)
         {
-            UnSubscribeFromView((TView)view);
+            UnSubscribeFromView((TView) view);
             base.UnSubscribeFromView(view);
         }
 

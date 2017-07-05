@@ -2,7 +2,7 @@ using System.Web.UI;
 
 namespace BuzzStats.Web.Mvp
 {
-    [Presenter(typeof (StoryCountControlPresenter))]
+    [Presenter(typeof(StoryCountControlPresenter))]
     public class StoryCountControl : MvpControl, ICountControlView
     {
         public int Count { get; set; }

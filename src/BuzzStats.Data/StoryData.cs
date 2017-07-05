@@ -118,20 +118,20 @@ namespace BuzzStats.Data
             }
 
             return StoryId == other.StoryId
-                && string.Equals(Title, other.Title)
-                && string.Equals(Url, other.Url)
-                && string.Equals(Username, other.Username)
-                && CreatedAt == other.CreatedAt
-                && Category == other.Category
-                && RemovedAt == other.RemovedAt
-                && DetectedAt == other.DetectedAt
-                && LastCheckedAt == other.LastCheckedAt
-                && LastCommentedAt == other.LastCommentedAt
-                && LastModifiedAt == other.LastModifiedAt
-                && TotalChecks == other.TotalChecks
-                && TotalUpdates == other.TotalUpdates
-                && string.Equals(Host, other.Host)
-                && VoteCount == other.VoteCount;
+                   && string.Equals(Title, other.Title)
+                   && string.Equals(Url, other.Url)
+                   && string.Equals(Username, other.Username)
+                   && CreatedAt == other.CreatedAt
+                   && Category == other.Category
+                   && RemovedAt == other.RemovedAt
+                   && DetectedAt == other.DetectedAt
+                   && LastCheckedAt == other.LastCheckedAt
+                   && LastCommentedAt == other.LastCommentedAt
+                   && LastModifiedAt == other.LastModifiedAt
+                   && TotalChecks == other.TotalChecks
+                   && TotalUpdates == other.TotalUpdates
+                   && string.Equals(Host, other.Host)
+                   && VoteCount == other.VoteCount;
         }
 
         public override bool Equals(object obj)

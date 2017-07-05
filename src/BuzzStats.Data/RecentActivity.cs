@@ -65,13 +65,13 @@ namespace BuzzStats.Data
         public bool Equals(RecentActivity other)
         {
             return other != null
-                && string.Equals(Who, other.Who)
-                && What == other.What
-                && Age == other.Age
-                && DetectedAtAge == other.DetectedAtAge
-                && string.Equals(StoryTitle, other.StoryTitle)
-                && StoryId == other.StoryId
-                && CommentId == other.CommentId;
+                   && string.Equals(Who, other.Who)
+                   && What == other.What
+                   && Age == other.Age
+                   && DetectedAtAge == other.DetectedAtAge
+                   && string.Equals(StoryTitle, other.StoryTitle)
+                   && StoryId == other.StoryId
+                   && CommentId == other.CommentId;
         }
 
         #endregion
@@ -86,12 +86,12 @@ namespace BuzzStats.Data
             int result = 0;
 
             result += Who != null ? Who.GetHashCode() : 0;
-            result = result*7 + What.GetHashCode();
-            result = result*11 + Age.GetHashCode();
-            result = result*11 + DetectedAtAge.GetHashCode();
-            result = result*13 + (StoryTitle ?? string.Empty).GetHashCode();
-            result = result*17 + StoryId;
-            result = result*23 + CommentId;
+            result = result * 7 + What.GetHashCode();
+            result = result * 11 + Age.GetHashCode();
+            result = result * 11 + DetectedAtAge.GetHashCode();
+            result = result * 13 + (StoryTitle ?? string.Empty).GetHashCode();
+            result = result * 17 + StoryId;
+            result = result * 23 + CommentId;
             return result;
         }
 
@@ -99,7 +99,7 @@ namespace BuzzStats.Data
         {
             return string.Format(
                 "[RecentActivity: Who={0}, What={1}, Age={2}, StoryTitle={3}, StoryId={4}, " +
-                    "CommentId={5}, DetectedAtAge={6}]",
+                "CommentId={5}, DetectedAtAge={6}]",
                 Who,
                 What,
                 Age,

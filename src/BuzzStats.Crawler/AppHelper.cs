@@ -39,7 +39,7 @@ namespace BuzzStats.Crawler
 
             Type appType = GetApps().FirstOrDefault(
                 t => t.Name.Equals(appName + "App", StringComparison.InvariantCultureIgnoreCase)
-                    || t.Name.Equals(appName, StringComparison.InvariantCultureIgnoreCase));
+                     || t.Name.Equals(appName, StringComparison.InvariantCultureIgnoreCase));
 
             if (appType == null)
             {

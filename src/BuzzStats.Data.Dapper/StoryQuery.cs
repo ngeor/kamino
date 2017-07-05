@@ -70,12 +70,12 @@ namespace BuzzStats.Data.Dapper
                 return
                     _connection.ExecuteScalar<int>(
                         "SELECT COUNT(*) FROM Story WHERE RemovedAt IS NULL AND StoryId NOT IN " +
-                            _excludeIds.ToArrayString().Replace('[', '(').Replace(']', ')'));
+                        _excludeIds.ToArrayString().Replace('[', '(').Replace(']', ')'));
             }
 
             return _connection.Query<int>(
                 "SELECT COUNT(*) FROM Story " +
-                    "WHERE RemovedAt IS NULL").FirstOrDefault();
+                "WHERE RemovedAt IS NULL").FirstOrDefault();
         }
 
         public IStoryQuery ExcludeIds(IEnumerable<int> storyIds)

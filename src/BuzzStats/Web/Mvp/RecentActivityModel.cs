@@ -30,7 +30,7 @@ namespace BuzzStats.Web.Mvp
                 return false;
             if (ReferenceEquals(this, obj))
                 return true;
-            if (obj.GetType() != typeof (RecentActivityModel))
+            if (obj.GetType() != typeof(RecentActivityModel))
                 return false;
             RecentActivityModel other = (RecentActivityModel) obj;
             return base.Equals(other) && StoryUrl == other.StoryUrl;

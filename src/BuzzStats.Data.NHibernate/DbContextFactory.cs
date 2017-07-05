@@ -21,6 +21,7 @@ namespace BuzzStats.Data.NHibernate
     {
         private static readonly ILog Log = LogManager.GetLogger(
             MethodBase.GetCurrentMethod().DeclaringType);
+
         private readonly ConnectionStringSettings _connectionString;
 
         public DbContextFactory(ConnectionStringSettings connectionString)

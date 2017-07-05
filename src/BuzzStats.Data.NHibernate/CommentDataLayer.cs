@@ -148,8 +148,8 @@ namespace BuzzStats.Data.NHibernate
             CommentEntity parentCommentEntity = CoreData.SessionMap(parentComment, true);
             IOrderedQueryable<CommentEntity> query = from comment in Session.Query<CommentEntity>()
                 where
-                    comment.Story == storyEntity &&
-                        comment.ParentComment == parentCommentEntity
+                comment.Story == storyEntity &&
+                comment.ParentComment == parentCommentEntity
                 orderby comment.CreatedAt
                 select comment;
 

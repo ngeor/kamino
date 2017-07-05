@@ -13,7 +13,7 @@ namespace BuzzStats
     {
         public static string Get()
         {
-            var assembly = typeof (Version).Assembly;
+            var assembly = typeof(Version).Assembly;
             return assembly.GetName().Version.ToString();
         }
     }

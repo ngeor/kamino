@@ -19,7 +19,7 @@ namespace BuzzStats.Services
 {
     public sealed class CrawlerEventsForwarder
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof (CrawlerEventsForwarder));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(CrawlerEventsForwarder));
 
         public CrawlerEventsForwarder(
             IMessageBus messageBus)

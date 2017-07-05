@@ -26,7 +26,7 @@ namespace BuzzStats.Data
 
         public double VotesDiffByCommentCount
         {
-            get { return CommentCount > 0 ? VotesDiff/CommentCount : 0; }
+            get { return CommentCount > 0 ? VotesDiff / CommentCount : 0; }
         }
 
         public double VotesDown { get; set; }
@@ -37,13 +37,13 @@ namespace BuzzStats.Data
         public bool Equals(UserStats other)
         {
             return other != null
-                && string.Equals(Username, other.Username)
-                && StoryCount == other.StoryCount
-                && CommentCount == other.CommentCount
-                && VotesUp == other.VotesUp
-                && VotesDown == other.VotesDown
-                && BuriedCommentCount == other.BuriedCommentCount
-                && CommentedStoriesCount == other.CommentedStoriesCount;
+                   && string.Equals(Username, other.Username)
+                   && StoryCount == other.StoryCount
+                   && CommentCount == other.CommentCount
+                   && VotesUp == other.VotesUp
+                   && VotesDown == other.VotesDown
+                   && BuriedCommentCount == other.BuriedCommentCount
+                   && CommentedStoriesCount == other.CommentedStoriesCount;
         }
 
         #endregion
@@ -57,12 +57,12 @@ namespace BuzzStats.Data
         {
             double result = 0;
             result = (Username ?? string.Empty).GetHashCode();
-            result = result*7 + StoryCount;
-            result = result*11 + CommentCount;
-            result = result*13 + VotesUp;
-            result = result*17 + VotesDown;
-            result = result*19 + BuriedCommentCount;
-            result = result*23 + CommentedStoriesCount;
+            result = result * 7 + StoryCount;
+            result = result * 11 + CommentCount;
+            result = result * 13 + VotesUp;
+            result = result * 17 + VotesDown;
+            result = result * 19 + BuriedCommentCount;
+            result = result * 23 + CommentedStoriesCount;
             return (int) result;
         }
 
@@ -70,7 +70,7 @@ namespace BuzzStats.Data
         {
             return string.Format(
                 "[UserStats: Username={0}, StoryCount={1}, CommentCount={2}, " +
-                    "CommentVotesUpSum={3}, CommentVotesDownSum={4}, BuriedCommentsCount={5}, CommentedStoriesCount={6}]",
+                "CommentVotesUpSum={3}, CommentVotesDownSum={4}, BuriedCommentsCount={5}, CommentedStoriesCount={6}]",
                 Username, StoryCount, CommentCount, VotesUp, VotesDown, BuriedCommentCount, CommentedStoriesCount);
         }
     }

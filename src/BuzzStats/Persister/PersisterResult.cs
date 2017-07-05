@@ -22,9 +22,15 @@ namespace BuzzStats.Persister
             _changes = updateResult;
         }
 
-        public UpdateResult Changes { get { return _changes; } }
+        public UpdateResult Changes
+        {
+            get { return _changes; }
+        }
 
-        public StoryData Story { get { return _story; } }
+        public StoryData Story
+        {
+            get { return _story; }
+        }
 
         public override string ToString()
         {
@@ -36,7 +42,7 @@ namespace BuzzStats.Persister
             unchecked
             {
                 int result = Changes.GetHashCode();
-                result = result*11 + (Story != null ? Story.GetHashCode() : 0);
+                result = result * 11 + (Story != null ? Story.GetHashCode() : 0);
                 return result;
             }
         }
@@ -59,7 +65,7 @@ namespace BuzzStats.Persister
         public bool Equals(PersisterResult that)
         {
             return Changes == that.Changes
-                && Equals(Story, that.Story);
+                   && Equals(Story, that.Story);
         }
 
         public static bool operator ==(PersisterResult left, PersisterResult right)

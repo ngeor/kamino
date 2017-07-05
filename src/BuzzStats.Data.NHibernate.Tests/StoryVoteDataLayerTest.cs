@@ -30,7 +30,8 @@ namespace BuzzStats.Data.NHibernate.Tests
             SaveStoryVote(storyEntity1, "nikolaos 3", new DateTime(2012, 12, 9));
 
             // one more story
-            StoryEntity storyEntity2 = SaveStory(200, "second story", "another", new DateTime(2012, 2, 1), voteCount: 1);
+            StoryEntity storyEntity2 =
+                SaveStory(200, "second story", "another", new DateTime(2012, 2, 1), voteCount: 1);
 
             // cast one vote only
             SaveStoryVote(storyEntity2, "another", new DateTime(2012, 12, 10));

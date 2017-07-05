@@ -38,8 +38,8 @@ namespace BuzzStats.Data
             }
 
             return string.Equals(Username, other.Username)
-                && CreatedAt == other.CreatedAt
-                && StoryData.IdEquals(Story, other.Story);
+                   && CreatedAt == other.CreatedAt
+                   && StoryData.IdEquals(Story, other.Story);
         }
 
         public override bool Equals(object obj)
@@ -60,8 +60,8 @@ namespace BuzzStats.Data
         public override int GetHashCode()
         {
             int result = StoryId;
-            result = result*7 + CreatedAt.GetHashCode();
-            result = result*11 + (Username != null ? Username.GetHashCode() : 0);
+            result = result * 7 + CreatedAt.GetHashCode();
+            result = result * 11 + (Username != null ? Username.GetHashCode() : 0);
             return result;
         }
     }

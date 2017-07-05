@@ -13,7 +13,7 @@ namespace BuzzStats.Crawl
 {
     public class Listing : ILeafSource
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof (Listing));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(Listing));
         private readonly IDownloaderService _downloader;
         private readonly IUrlProvider _urlProvider;
         private readonly IDbContext _dbContext;
@@ -83,7 +83,7 @@ namespace BuzzStats.Crawl
                 return false;
             if (ReferenceEquals(this, obj))
                 return true;
-            if (obj.GetType() != typeof (Listing))
+            if (obj.GetType() != typeof(Listing))
                 return false;
             Listing other = (Listing) obj;
             return Url == other.Url;

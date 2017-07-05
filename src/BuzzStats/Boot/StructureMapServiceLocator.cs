@@ -15,10 +15,10 @@ using StructureMap;
 
 namespace BuzzStats.Boot
 {
-
     class StructureMapServiceLocator : ServiceLocatorImplBase
     {
         private readonly IContainer _container;
+
         public StructureMapServiceLocator(IContainer container)
         {
             _container = container;

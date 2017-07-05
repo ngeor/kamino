@@ -88,13 +88,13 @@ namespace BuzzStats.Data
             }
 
             return CommentId == other.CommentId
-                && CreatedAt == other.CreatedAt
-                && DetectedAt == other.DetectedAt
-                && IsBuried.Equals(other.IsBuried)
-                && string.Equals(Username, other.Username)
-                && VotesDown == other.VotesDown
-                && VotesUp == other.VotesUp
-                && StoryData.IdEquals(Story, other.Story) && IdEquals(ParentComment, other.ParentComment);
+                   && CreatedAt == other.CreatedAt
+                   && DetectedAt == other.DetectedAt
+                   && IsBuried.Equals(other.IsBuried)
+                   && string.Equals(Username, other.Username)
+                   && VotesDown == other.VotesDown
+                   && VotesUp == other.VotesUp
+                   && StoryData.IdEquals(Story, other.Story) && IdEquals(ParentComment, other.ParentComment);
         }
 
         public override bool Equals(object obj)
@@ -116,7 +116,7 @@ namespace BuzzStats.Data
         {
             return string.Format(
                 "CommentId: {0}, CreatedAt: {1}, DetectedAt: {2}, IsBuried: {3}, Username: {4}, VotesDown: {5}, "
-                    + "VotesUp: {6}, StoryId: {7}, ParentCommentId: {8}",
+                + "VotesUp: {6}, StoryId: {7}, ParentCommentId: {8}",
                 CommentId,
                 CreatedAt,
                 DetectedAt,

@@ -25,7 +25,10 @@ namespace BuzzStats.Data.NHibernate.Tests
             {
                 using (var dbSession = dbContext.OpenSession())
                 {
-                    Assert.Throws<NotSupportedException>(() => { var x = dbSession.RecentActivityRepository; });
+                    Assert.Throws<NotSupportedException>(() =>
+                    {
+                        var x = dbSession.RecentActivityRepository;
+                    });
                 }
             }
         }

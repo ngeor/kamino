@@ -17,7 +17,7 @@ namespace BuzzStats.Crawl
 {
     public class QueueManager : IQueueManager
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof (QueueManager));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(QueueManager));
         private readonly LeafProducer _leafProducer;
         private int _loopCount;
 

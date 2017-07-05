@@ -42,10 +42,10 @@ namespace BuzzStats.Data
             }
 
             return CreatedAt == other.CreatedAt
-                && IsBuried.Equals(other.IsBuried)
-                && VotesDown == other.VotesDown
-                && VotesUp == other.VotesUp
-                && CommentData.IdEquals(Comment, other.Comment);
+                   && IsBuried.Equals(other.IsBuried)
+                   && VotesDown == other.VotesDown
+                   && VotesUp == other.VotesUp
+                   && CommentData.IdEquals(Comment, other.Comment);
         }
 
         public override bool Equals(object obj)
@@ -56,10 +56,10 @@ namespace BuzzStats.Data
         public override int GetHashCode()
         {
             int result = CommentId;
-            result = result*7 + CreatedAt.GetHashCode();
-            result = result*11 + VotesUp;
-            result = result*13 + VotesDown;
-            result = result*17 + IsBuried.GetHashCode();
+            result = result * 7 + CreatedAt.GetHashCode();
+            result = result * 11 + VotesUp;
+            result = result * 13 + VotesDown;
+            result = result * 17 + IsBuried.GetHashCode();
             return result;
         }
 

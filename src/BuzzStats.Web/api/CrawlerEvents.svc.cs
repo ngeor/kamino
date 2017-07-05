@@ -10,7 +10,7 @@ namespace BuzzStats.Web.api
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class CrawlerEvents : ICrawlerEvents
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof (CrawlerEvents));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(CrawlerEvents));
 
         public void StoryChecked(StoryCheckedEventArgs arguments)
         {

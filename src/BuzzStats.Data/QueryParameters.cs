@@ -49,18 +49,18 @@ namespace BuzzStats.Data
 
             QueryParameters<T> that = obj as QueryParameters<T>;
             return that != null
-                && that.Skip == Skip
-                && that.Count == Count
-                && that.SortBy.SequenceEqual(SortBy);
+                   && that.Skip == Skip
+                   && that.Count == Count
+                   && that.SortBy.SequenceEqual(SortBy);
         }
 
         public override int GetHashCode()
         {
             int result = Skip;
-            result = result*7 + Count;
+            result = result * 7 + Count;
             foreach (EnumSortExpression<T> sort in SortBy)
             {
-                result = result*11 + sort.GetHashCode();
+                result = result * 11 + sort.GetHashCode();
             }
 
             return result;

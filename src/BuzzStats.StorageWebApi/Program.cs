@@ -13,14 +13,14 @@ namespace BuzzStats.StorageWebApi
             const string baseAddress = "http://localhost:9003/";
 
             // Start OWIN host 
-            using (WebApp.Start<Startup>(url: baseAddress)) 
+            using (WebApp.Start<Startup>(url: baseAddress))
             {
                 Console.WriteLine("Server listening at port 9003");
-                Console.ReadLine(); 
+                Console.ReadLine();
             }
         }
     }
-    
+
     public class Startup
     {
         // This code configures Web API. The Startup class is specified as a type
@@ -38,34 +38,34 @@ namespace BuzzStats.StorageWebApi
             appBuilder.UseWebApi(config);
         }
     }
-    
-    public class ValuesController : ApiController 
-    { 
+
+    public class ValuesController : ApiController
+    {
         // GET api/values 
-        public IEnumerable<string> Get() 
-        { 
-            return new[] { "value1", "value2" }; 
-        } 
+        public IEnumerable<string> Get()
+        {
+            return new[] {"value1", "value2"};
+        }
 
         // GET api/values/5 
-        public string Get(int id) 
-        { 
-            return "value"; 
-        } 
+        public string Get(int id)
+        {
+            return "value";
+        }
 
         // POST api/values 
-        public void Post([FromBody]string value) 
-        { 
-        } 
+        public void Post([FromBody] string value)
+        {
+        }
 
         // PUT api/values/5 
-        public void Put(int id, [FromBody]string value) 
-        { 
-        } 
+        public void Put(int id, [FromBody] string value)
+        {
+        }
 
         // DELETE api/values/5 
-        public void Delete(int id) 
-        { 
-        } 
+        public void Delete(int id)
+        {
+        }
     }
 }

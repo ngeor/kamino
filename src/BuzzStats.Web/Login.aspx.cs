@@ -3,7 +3,7 @@ using BuzzStats.Web.Mvp;
 
 namespace BuzzStats.Web
 {
-    [Presenter(typeof (LoginPagePresenter))]
+    [Presenter(typeof(LoginPagePresenter))]
     public partial class Login : MvpPage, ILoginPageView
     {
         public event EventHandler LoginRequested;

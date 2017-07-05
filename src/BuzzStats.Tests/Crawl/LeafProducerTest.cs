@@ -257,7 +257,7 @@ namespace BuzzStats.Tests.Crawl
             var source = new AggregateSource(
                 new Listing(downloader, storyUrlProvider, "http://test.com/", dbContext),
                 new Poller(messageBus, dbContext, storyUrlProvider, leafProducerMonitor)
-                );
+            );
             LeafProducer leafProducer = new LeafProducer(messageBus, source);
             leafProducer.Start();
 

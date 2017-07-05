@@ -9,7 +9,7 @@ namespace BuzzStats.Web.Mvp
 {
     public class HomePagePresenter : ApiServicePresenter<IHomePageView>
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof (HomePagePresenter));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(HomePagePresenter));
 
         public HomePagePresenter(
             IApiService apiService,

@@ -15,7 +15,7 @@ namespace BuzzStats.Web
         /// <summary>
         /// Our logger.
         /// </summary>
-        private static readonly ILog Log = LogManager.GetLogger(typeof (Global));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(Global));
 
         /// <summary>
         /// Initializes the application.

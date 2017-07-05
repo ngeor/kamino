@@ -21,11 +21,11 @@ namespace BuzzStats.Data.Dapper
             newStory.ValidatePreCreate();
             _connection.Execute(
                 "INSERT INTO Story (StoryId, Title, Url, Host, Category, VoteCount, Username, " +
-                    "CreatedAt, DetectedAt, LastCheckedAt, LastModifiedAt, TotalUpdates, " +
-                    "TotalChecks, LastCommentedAt, RemovedAt) VALUES " +
-                    "(@StoryId, @Title, @Url, @Host, @Category, @VoteCount, @Username, " +
-                    "@CreatedAt, @DetectedAt, @LastCheckedAt, @LastModifiedAt, @TotalUpdates, " +
-                    "@TotalChecks, @LastCommentedAt, @RemovedAt)", newStory);
+                "CreatedAt, DetectedAt, LastCheckedAt, LastModifiedAt, TotalUpdates, " +
+                "TotalChecks, LastCommentedAt, RemovedAt) VALUES " +
+                "(@StoryId, @Title, @Url, @Host, @Category, @VoteCount, @Username, " +
+                "@CreatedAt, @DetectedAt, @LastCheckedAt, @LastModifiedAt, @TotalUpdates, " +
+                "@TotalChecks, @LastCommentedAt, @RemovedAt)", newStory);
             return newStory;
         }
 
@@ -41,12 +41,12 @@ namespace BuzzStats.Data.Dapper
             existingStory.ValidatePreUpdate();
             int rowsUpdated = _connection.Execute(
                 "UPDATE Story SET Title=@Title, Url=@Url, Host=@Host, Category=@Category, " +
-                    "VoteCount=@VoteCount, Username=@Username, CreatedAt=@CreatedAt, " +
-                    "DetectedAt=@DetectedAt, LastCheckedAt=@LastCheckedAt, " +
-                    "LastModifiedAt=@LastModifiedAt, TotalUpdates=@TotalUpdates, " +
-                    "TotalChecks=@TotalChecks, LastCommentedAt=@LastCommentedAt, " +
-                    "RemovedAt=@RemovedAt " +
-                    "WHERE StoryId=@StoryId", existingStory);
+                "VoteCount=@VoteCount, Username=@Username, CreatedAt=@CreatedAt, " +
+                "DetectedAt=@DetectedAt, LastCheckedAt=@LastCheckedAt, " +
+                "LastModifiedAt=@LastModifiedAt, TotalUpdates=@TotalUpdates, " +
+                "TotalChecks=@TotalChecks, LastCommentedAt=@LastCommentedAt, " +
+                "RemovedAt=@RemovedAt " +
+                "WHERE StoryId=@StoryId", existingStory);
 
             if (rowsUpdated == 0)
             {
@@ -63,8 +63,8 @@ namespace BuzzStats.Data.Dapper
         {
             return _connection.Query<DateTime>(
                 "SELECT CreatedAt FROM Story " +
-                    "WHERE RemovedAt IS NULL " +
-                    "ORDER BY CreatedAt").FirstOrDefault();
+                "WHERE RemovedAt IS NULL " +
+                "ORDER BY CreatedAt").FirstOrDefault();
         }
 
         public Dictionary<string, int> GetStoryCountsPerHost(DateRange dateRange)
@@ -77,8 +77,8 @@ namespace BuzzStats.Data.Dapper
 
             var result = _connection.Query<dynamic>(
                 "SELECT COUNT(StoryId) StoryCount, Host FROM Story " +
-                    "WHERE CreatedAt>=@MinCreatedAt AND CreatedAt<@MaxCreatedAt AND RemovedAt IS NULL " +
-                    "GROUP BY Host", param);
+                "WHERE CreatedAt>=@MinCreatedAt AND CreatedAt<@MaxCreatedAt AND RemovedAt IS NULL " +
+                "GROUP BY Host", param);
             return result.ToDictionary(k => (string) k.Host, v => (int) v.StoryCount);
         }
 
@@ -92,8 +92,8 @@ namespace BuzzStats.Data.Dapper
 
             var result = _connection.Query<dynamic>(
                 "SELECT COUNT(StoryId) StoryCount, Username FROM Story " +
-                    "WHERE CreatedAt>=@MinCreatedAt AND CreatedAt<@MaxCreatedAt AND RemovedAt IS NULL " +
-                    "GROUP BY Username", param);
+                "WHERE CreatedAt>=@MinCreatedAt AND CreatedAt<@MaxCreatedAt AND RemovedAt IS NULL " +
+                "GROUP BY Username", param);
             return result.ToDictionary(k => (string) k.Username, v => (int) v.StoryCount);
         }
 
@@ -106,8 +106,8 @@ namespace BuzzStats.Data.Dapper
         {
             var result = _connection.Query<dynamic>(
                 "SELECT MIN(LastCheckedAt) MinLastCheckedAt, MAX(LastCheckedAt) MaxLastCheckedAt, " +
-                    "MIN(TotalChecks) MinTotalChecks, MAX(TotalChecks) MaxTotalChecks FROM Story " +
-                    "WHERE RemovedAt IS NULL").Single();
+                "MIN(TotalChecks) MinTotalChecks, MAX(TotalChecks) MaxTotalChecks FROM Story " +
+                "WHERE RemovedAt IS NULL").Single();
 
             // casting because it can be MySqlDateTime
             DateTime min = (DateTime) result.MinLastCheckedAt;

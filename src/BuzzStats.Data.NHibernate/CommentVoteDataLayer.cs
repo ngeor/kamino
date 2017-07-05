@@ -36,12 +36,12 @@ namespace BuzzStats.Data.NHibernate
             CommentEntity ownerCommentEntity = CoreData.SessionMap(ownerComment);
 
             return Session.Query<CommentVoteEntity>()
-                .Where(cv => cv.Comment == ownerCommentEntity
-                    && cv.VotesUp == votesUp
-                    && cv.VotesDown == votesDown
-                    && cv.IsBuried == isBuried)
-                .Select(cv => cv.Id)
-                .FirstOrDefault() > 0;
+                       .Where(cv => cv.Comment == ownerCommentEntity
+                                    && cv.VotesUp == votesUp
+                                    && cv.VotesDown == votesDown
+                                    && cv.IsBuried == isBuried)
+                       .Select(cv => cv.Id)
+                       .FirstOrDefault() > 0;
         }
 
         public CommentVoteData[] Query(CommentData comment)

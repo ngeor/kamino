@@ -37,11 +37,11 @@ namespace BuzzStats.Tests.ApiServices
             });
 
             MockCommentDataLayer.Setup(p => p.Query(new CommentDataQueryParameters
-            {
-                Count = 5,
-                StoryId = 100,
-                SortBy = new[] {CommentSortField.CreatedAt.Desc()}
-            }))
+                {
+                    Count = 5,
+                    StoryId = 100,
+                    SortBy = new[] {CommentSortField.CreatedAt.Desc()}
+                }))
                 .Returns(new[]
                 {
                     new CommentData
@@ -54,22 +54,22 @@ namespace BuzzStats.Tests.ApiServices
                 });
 
             MockCommentDataLayer.Setup(p => p.Query(new CommentDataQueryParameters
-            {
-                Count = 5,
-                StoryId = 200,
-                SortBy = new[] {CommentSortField.CreatedAt.Desc()}
-            }))
+                {
+                    Count = 5,
+                    StoryId = 200,
+                    SortBy = new[] {CommentSortField.CreatedAt.Desc()}
+                }))
                 .Returns(new[]
                 {
                     new CommentData {CommentId = 444}
                 });
 
             MockCommentDataLayer.Setup(p => p.Query(new CommentDataQueryParameters
-            {
-                Count = 5,
-                StoryId = 300,
-                SortBy = new[] {CommentSortField.CreatedAt.Desc()}
-            }))
+                {
+                    Count = 5,
+                    StoryId = 300,
+                    SortBy = new[] {CommentSortField.CreatedAt.Desc()}
+                }))
                 .Returns(new[]
                 {
                     new CommentData {CommentId = 555, CreatedAt = TestableDateTime.UtcNow},

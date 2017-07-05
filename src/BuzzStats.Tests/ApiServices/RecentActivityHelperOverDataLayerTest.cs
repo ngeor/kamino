@@ -55,10 +55,10 @@ namespace BuzzStats.Tests.ApiServices
                 });
 
             MockCommentDataLayer.Setup(p => p.Query(new CommentDataQueryParameters
-            {
-                Count = 10,
-                SortBy = new[] {CommentSortField.CreatedAt.Desc()}
-            }))
+                {
+                    Count = 10,
+                    SortBy = new[] {CommentSortField.CreatedAt.Desc()}
+                }))
                 .Returns(new[]
                 {
                     new CommentData

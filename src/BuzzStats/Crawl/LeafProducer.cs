@@ -17,7 +17,7 @@ namespace BuzzStats.Crawl
 {
     public class LeafProducer : ILeafProducer, ILeafProducerMonitor
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof (LeafProducer));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(LeafProducer));
         private readonly HashSet<ILeaf> _leafQueue = new HashSet<ILeaf>();
         private readonly IMessageBus _messageBus;
         private readonly ISource _seedSource;

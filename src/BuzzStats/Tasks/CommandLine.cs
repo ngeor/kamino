@@ -18,7 +18,7 @@ namespace BuzzStats.Tasks
             return new CommandLine(
                 args.Any() ? args[0] : string.Empty,
                 (args ?? Enumerable.Empty<string>()).Where(s => s.StartsWith("-")).Select(s => s.Substring(1))
-                );
+            );
         }
 
         public string Command { get; private set; }

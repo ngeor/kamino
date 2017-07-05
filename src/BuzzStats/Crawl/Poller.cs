@@ -24,7 +24,7 @@ namespace BuzzStats.Crawl
         const int DefaultStoryCount = 10;
         const int DefaultCycleCount = 20;
 
-        private static readonly ILog Log = LogManager.GetLogger(typeof (Poller));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(Poller));
         private readonly IDbContext _dbContext;
         private readonly IUrlProvider _urlProvider;
         private readonly ILeafProducerMonitor _leafProducerMonitor;
@@ -102,34 +102,22 @@ namespace BuzzStats.Crawl
 
         public string SourceId
         {
-            get
-            {
-                return string.Format("poller{0}", Count);
-            }
+            get { return string.Format("poller{0}", Count); }
         }
 
         private IEnumerable<int> ExcludedIdsFromLeafProducerMonitor
         {
-            get
-            {
-                return _leafProducerMonitor.GetCollectedLeaves().Select(l => l.StoryId);
-            }
+            get { return _leafProducerMonitor.GetCollectedLeaves().Select(l => l.StoryId); }
         }
 
         private IEnumerable<int> ExcludedIdsFromPersister
         {
-            get
-            {
-                return _excludedStoryIds;
-            }
+            get { return _excludedStoryIds; }
         }
 
         private IEnumerable<int> ExcludedIds
         {
-            get
-            {
-                return ExcludedIdsFromLeafProducerMonitor.Concat(ExcludedIdsFromPersister).Distinct();
-            }
+            get { return ExcludedIdsFromLeafProducerMonitor.Concat(ExcludedIdsFromPersister).Distinct(); }
         }
 
         public IEnumerable<ISource> GetChildren()
@@ -160,7 +148,7 @@ namespace BuzzStats.Crawl
                 return false;
             if (ReferenceEquals(this, obj))
                 return true;
-            if (obj.GetType() != typeof (Poller))
+            if (obj.GetType() != typeof(Poller))
                 return false;
             Poller other = (Poller) obj;
             return Count == other.Count;
@@ -187,7 +175,7 @@ namespace BuzzStats.Crawl
 
         private void OnLeafProducerStarting(LeafProducerStartingMessage message)
         {
-            _cycles = (_cycles + 1)%CycleCount;
+            _cycles = (_cycles + 1) % CycleCount;
             Log.DebugFormat("Cycles = {0}", _cycles);
             if (_cycles == 0)
             {

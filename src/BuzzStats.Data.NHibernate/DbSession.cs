@@ -60,7 +60,8 @@ namespace BuzzStats.Data.NHibernate
         {
             get
             {
-                return InitializeDataLayer(ref _storyPollHistoryDataLayer, () => new StoryPollHistoryDataLayer(Session));
+                return InitializeDataLayer(ref _storyPollHistoryDataLayer,
+                    () => new StoryPollHistoryDataLayer(Session));
             }
         }
 

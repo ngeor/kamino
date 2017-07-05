@@ -36,14 +36,14 @@ namespace BuzzStats.Tests.Boot.Web
         public void ShouldHaveDiagnosticsService()
         {
             var service = _resolver.GetService(typeof(IDiagnosticsService)) as IDiagnosticsService;
-            Assert.IsInstanceOf(typeof (DiagnosticsServiceClient), service);
+            Assert.IsInstanceOf(typeof(DiagnosticsServiceClient), service);
         }
 
         [Test]
         public void ShouldHaveRecentActivityService()
         {
             var service = _resolver.GetService(typeof(IRecentActivityService)) as IRecentActivityService;
-            Assert.IsInstanceOf(typeof (RecentActivityServiceClient), service);
+            Assert.IsInstanceOf(typeof(RecentActivityServiceClient), service);
         }
     }
 }

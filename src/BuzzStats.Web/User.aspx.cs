@@ -28,7 +28,8 @@ namespace BuzzStats.Web
 
             using (profiler.Step("GetRecentActivity"))
             {
-                repRecentActivity.DataSource = ApiService.GetRecentActivity(new RecentActivityRequest {Username = user});
+                repRecentActivity.DataSource =
+                    ApiService.GetRecentActivity(new RecentActivityRequest {Username = user});
                 repRecentActivity.DataBind();
             }
         }

@@ -20,8 +20,8 @@ namespace BuzzStats.Tests.Web.Mvp
             mockView.SetupSet(v => v.Count = 40);
 
             var presenter = new StoryCountControlPresenter(
-                                Mock.Of<IDbSession>(x => x.Stories == Mock.Of<IStoryDataLayer>(
-                                        y => y.Query() == mockStoryQuery.Object)))
+                Mock.Of<IDbSession>(x => x.Stories == Mock.Of<IStoryDataLayer>(
+                                             y => y.Query() == mockStoryQuery.Object)))
             {
                 View = mockView.Object
             };

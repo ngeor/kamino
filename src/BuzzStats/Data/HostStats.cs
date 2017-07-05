@@ -22,15 +22,15 @@ namespace BuzzStats.Data
 
         public double VoteStoryRatio
         {
-            get { return StoryCount <= 0 ? -1 : VoteCount/(double) StoryCount; }
+            get { return StoryCount <= 0 ? -1 : VoteCount / (double) StoryCount; }
         }
 
         public bool Equals(HostStats other)
         {
             return other != null
-                && string.Equals(Host, other.Host)
-                && StoryCount == other.StoryCount
-                && VoteCount == other.VoteCount;
+                   && string.Equals(Host, other.Host)
+                   && StoryCount == other.StoryCount
+                   && VoteCount == other.VoteCount;
         }
 
         public override bool Equals(object other)
@@ -41,8 +41,8 @@ namespace BuzzStats.Data
         public override int GetHashCode()
         {
             int result = Host != null ? Host.GetHashCode() : 0;
-            result = result*7 + StoryCount;
-            result = result*13 + VoteCount;
+            result = result * 7 + StoryCount;
+            result = result * 13 + VoteCount;
             return result;
         }
 

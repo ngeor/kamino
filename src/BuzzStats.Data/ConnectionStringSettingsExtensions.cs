@@ -34,7 +34,7 @@ namespace BuzzStats.Data
                 throw new NotSupportedException("Missing provider name");
             }
 
-            foreach (KnownDatabaseProvider kdb in Enum.GetValues(typeof (KnownDatabaseProvider)))
+            foreach (KnownDatabaseProvider kdb in Enum.GetValues(typeof(KnownDatabaseProvider)))
             {
                 if (providerName.IndexOf(kdb.ToString(), StringComparison.OrdinalIgnoreCase) >= 0)
                 {

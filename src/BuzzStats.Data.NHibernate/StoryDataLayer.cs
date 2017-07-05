@@ -124,8 +124,8 @@ namespace BuzzStats.Data.NHibernate
         {
             var sqlQuery = Session.CreateSQLQuery(
                 "SELECT MIN(LastCheckedAt) AS minLastCheckedAt, MAX(LastCheckedAt) AS maxLastCheckedAt, " +
-                    "MIN(TotalChecks) AS minTotalChecks, MAX(TotalChecks) AS maxTotalChecks " +
-                    "FROM Story WHERE RemovedAt IS NULL");
+                "MIN(TotalChecks) AS minTotalChecks, MAX(TotalChecks) AS maxTotalChecks " +
+                "FROM Story WHERE RemovedAt IS NULL");
 
             sqlQuery.AddScalar("minLastCheckedAt", NHibernateUtil.DateTime);
             sqlQuery.AddScalar("maxLastCheckedAt", NHibernateUtil.DateTime);

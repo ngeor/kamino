@@ -6,10 +6,7 @@ namespace BuzzStats.Data.Dapper
     {
         public IStoryDataLayer Stories
         {
-            get
-            {
-                return new StoryDataLayer(null);
-            }
+            get { return new StoryDataLayer(null); }
         }
 
         public IStoryVoteDataLayer StoryVotes

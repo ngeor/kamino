@@ -21,52 +21,52 @@ namespace BuzzStats.Parsing
         /// </summary>
         private static readonly Regex RegexRecentCommentsBlock = new Regex(
             @"<li class=['""]threado['""]>" +
-                @"\s*" +
-                @"<span [^>]+>" +
-                @"\s*" +
-                @"<a class=['""]sbcommentlink['""] href=['""]\/story\.php\?id=(?<storyId>\d+)", RegexOptions.Compiled);
+            @"\s*" +
+            @"<span [^>]+>" +
+            @"\s*" +
+            @"<a class=['""]sbcommentlink['""] href=['""]\/story\.php\?id=(?<storyId>\d+)", RegexOptions.Compiled);
 
         /// <summary>
         /// regex that matches a recent comment in the right side bar
         /// </summary>
         private static readonly Regex RegexRecentComments = new Regex(
             @"<a href=['""]\/story\.php\?id=(?<storyId>\d+)#wholecomment(?<commentId>\d+)['""]>" +
-                @"(?<username>[^<]+)<\/a>",
+            @"(?<username>[^<]+)<\/a>",
             RegexOptions.Compiled);
 
         private static readonly Regex RegexStoryComments = new Regex(
             @"<li>\s*" +
-                @"<div class=""user-[^""]+"" id=""comment-wrap"">\s*" +
-                "(" + // match normal comment or buried comment
-                "(" + // begin normal comment
-                @"<div id=""comment-head(-feat)?"">\s*" +
-                ")" + // end normal comment
-                "|" +
-                "(" + // begin buried comment
-                @"(?<isBuried><div class=""buried_comment"">)" +
-                @"[\s\S]+?" +
-                @"commento-(?<commentId>\d+)" +
-                @"[\s\S]+?" +
-                ")" + // end buried comment
-                ")" +
-                @"... <a href=""\/user\.php\?login=[^""]+"">(?<username>[^<]+)<\/a>\s*" +
-                @"(?<time>πριν [^<]+)" +
-                "(" + // match normal comment or buried comment
-                "(" + // begin normal comment
-                @"<a href=""#wholecomment(?<commentId>\d+)""" +
-                @"[\s\S]+?" +
-                @"<a id=""cvoteup[^>]+><strong>(?<votesUp>\d*)<\/strong><\/a>" +
-                @"[\s\S]+?" +
-                @"<a id=""cvotedown[^>]+><strong>(?<votesDown>\d*)<\/strong><\/a>" +
-                ")" + // end normal comment
-                "|" +
-                "(" + // begin buried comment
-                @"<\/div>\s*<div class=""comment-body-buried""" +
-                ")" + // end buried comment
-                ")" +
-                @"[\s\S]+?" +
-                @"<\/li>" +
-                @"(?<childComments>\s*<ul id=""comments-list"">[\s\S]+?<\/ul>)?",
+            @"<div class=""user-[^""]+"" id=""comment-wrap"">\s*" +
+            "(" + // match normal comment or buried comment
+            "(" + // begin normal comment
+            @"<div id=""comment-head(-feat)?"">\s*" +
+            ")" + // end normal comment
+            "|" +
+            "(" + // begin buried comment
+            @"(?<isBuried><div class=""buried_comment"">)" +
+            @"[\s\S]+?" +
+            @"commento-(?<commentId>\d+)" +
+            @"[\s\S]+?" +
+            ")" + // end buried comment
+            ")" +
+            @"... <a href=""\/user\.php\?login=[^""]+"">(?<username>[^<]+)<\/a>\s*" +
+            @"(?<time>πριν [^<]+)" +
+            "(" + // match normal comment or buried comment
+            "(" + // begin normal comment
+            @"<a href=""#wholecomment(?<commentId>\d+)""" +
+            @"[\s\S]+?" +
+            @"<a id=""cvoteup[^>]+><strong>(?<votesUp>\d*)<\/strong><\/a>" +
+            @"[\s\S]+?" +
+            @"<a id=""cvotedown[^>]+><strong>(?<votesDown>\d*)<\/strong><\/a>" +
+            ")" + // end normal comment
+            "|" +
+            "(" + // begin buried comment
+            @"<\/div>\s*<div class=""comment-body-buried""" +
+            ")" + // end buried comment
+            ")" +
+            @"[\s\S]+?" +
+            @"<\/li>" +
+            @"(?<childComments>\s*<ul id=""comments-list"">[\s\S]+?<\/ul>)?",
             RegexOptions.Compiled);
 
         private static readonly Regex RegexVoterUrl = new Regex(@"""\/user\.php\?login=(?<username>[^""]+)""",
@@ -74,42 +74,42 @@ namespace BuzzStats.Parsing
 
         private static readonly Regex RegexStories = new Regex(
             @"<ul[^>]+?id=""cat(?<storyCategory>\d)"">\s*" +
-                @"<li[^>]+?><a id=""[^""]+"" href=""" +
-                @"javascript:menealo\(\d+,(?<storyId>\d+),[^,]+,[^,]+,[^\)]+\)"">(?<storyVotes>\d+)<\/a><\/li>" +
-                @"[\s\S]+?" + @"<h4[^>]+>" + @"\s*" +
-                @"<a href=""(?<storyUrl>[^""]+)""\s*>(?<storyTitle>[^>]+)<\/a>\s*</h4>" +
-                @"[\s\S]+?" + @"<span id=""ls_link_submitter-\d+"">(?<storyUsername>[^<]+)</span>" +
-                @"[\s\S]+?" + @"<span id=""ls_timeago-\d+"">(?<storyCreatedAt>[^\(]+)\(", RegexOptions.Compiled);
+            @"<li[^>]+?><a id=""[^""]+"" href=""" +
+            @"javascript:menealo\(\d+,(?<storyId>\d+),[^,]+,[^,]+,[^\)]+\)"">(?<storyVotes>\d+)<\/a><\/li>" +
+            @"[\s\S]+?" + @"<h4[^>]+>" + @"\s*" +
+            @"<a href=""(?<storyUrl>[^""]+)""\s*>(?<storyTitle>[^>]+)<\/a>\s*</h4>" +
+            @"[\s\S]+?" + @"<span id=""ls_link_submitter-\d+"">(?<storyUsername>[^<]+)</span>" +
+            @"[\s\S]+?" + @"<span id=""ls_timeago-\d+"">(?<storyCreatedAt>[^\(]+)\(", RegexOptions.Compiled);
 
         private static readonly Regex RegexStory = new Regex(
             @"<ul[^>]+?id=""cat(?<storyCategory>\d)"">\s*"
-                + @"<li[^>]+?><a id=""[^""]+"" href="""
-                + @"javascript:menealo\(\d+,(?<storyId>\d+),[^,]+,[^,]+,[^\)]+\)"">(?<storyVotes>\d+)<\/a><\/li>"
-                + @"[\s\S]+?"
-                + @"<h4[^>]+>"
-                + @"\s*"
-                + @"<a href=""(?<storyUrl>[^""]+)""[^>]*>(?<storyTitle>[^>]+)<\/a>\s*</h4>"
-                + @"[\s\S]+?"
-                + @"<span id=""ls_link_submitter-\d+"">(?<storyUsername>[^<]+)</span>"
-                + @"[\s\S]+?"
-                + @"<span id=""ls_timeago-\d+"">(?<storyCreatedAt>[^\(]+)\("
-                + @"[\s\S]+?"
-                + @"<h2>Σχόλια<\/h2>(?<commentsHtml>[\s\S]+)<div id=""commentform"""
-                + @"[\s\S]+?"
-                +
-                @"<div class\s*=\s*""whovotedwrapper"" id\s*=\s*""idwhovotedwrapper"">(?<whoVotedList>[\s\S]+?)<\/div>",
+            + @"<li[^>]+?><a id=""[^""]+"" href="""
+            + @"javascript:menealo\(\d+,(?<storyId>\d+),[^,]+,[^,]+,[^\)]+\)"">(?<storyVotes>\d+)<\/a><\/li>"
+            + @"[\s\S]+?"
+            + @"<h4[^>]+>"
+            + @"\s*"
+            + @"<a href=""(?<storyUrl>[^""]+)""[^>]*>(?<storyTitle>[^>]+)<\/a>\s*</h4>"
+            + @"[\s\S]+?"
+            + @"<span id=""ls_link_submitter-\d+"">(?<storyUsername>[^<]+)</span>"
+            + @"[\s\S]+?"
+            + @"<span id=""ls_timeago-\d+"">(?<storyCreatedAt>[^\(]+)\("
+            + @"[\s\S]+?"
+            + @"<h2>Σχόλια<\/h2>(?<commentsHtml>[\s\S]+)<div id=""commentform"""
+            + @"[\s\S]+?"
+            +
+            @"<div class\s*=\s*""whovotedwrapper"" id\s*=\s*""idwhovotedwrapper"">(?<whoVotedList>[\s\S]+?)<\/div>",
             RegexOptions.Compiled);
 
         private static readonly Regex RegexRemovedStory = new Regex(
             @"<title>\s*Buzz\s*-\s*(?<storyTitle>[^<]+?)\s*</title>" +
-                @"[\s\S]+?" +
-                @"<p>Αυτή η καταχώριση δεν είναι πλέον διαθέσιμη</p>",
+            @"[\s\S]+?" +
+            @"<p>Αυτή η καταχώριση δεν είναι πλέον διαθέσιμη</p>",
             RegexOptions.Compiled);
 
         private static readonly Regex RegexTimeSpan =
             new Regex(
                 @"((?<days>\d+) (μέρες|μέρα))?\s*((?<hours>\d+) (ώρες|ώρα))?\s*" +
-                    @"((?<minutes>\d+) (λεπτά|λεπτό))?\s*(?<seconds>λίγα δευτερόλεπτα)?",
+                @"((?<minutes>\d+) (λεπτά|λεπτό))?\s*(?<seconds>λίγα δευτερόλεπτα)?",
                 RegexOptions.Compiled);
 
         public static TimeSpan? ToTimeSpan(string relativeTimespan)
@@ -127,7 +127,7 @@ namespace BuzzStats.Parsing
             {
                 if (m.Success &&
                     (m.Groups["days"].Success || m.Groups["hours"].Success || m.Groups["minutes"].Success ||
-                        m.Groups["seconds"].Success))
+                     m.Groups["seconds"].Success))
                 {
                     int days = m.Groups["days"].Success ? Convert.ToInt32(m.Groups["days"].Value) : 0;
                     int hours = m.Groups["hours"].Success ? Convert.ToInt32(m.Groups["hours"].Value) : 0;
@@ -147,8 +147,8 @@ namespace BuzzStats.Parsing
             }
 
             return ParseNonRemovedStoryPage(storyPageContents, requestedStoryId)
-                ?? ParseRemovedStoryPage(storyPageContents, requestedStoryId)
-                    ?? ParseFailed();
+                   ?? ParseRemovedStoryPage(storyPageContents, requestedStoryId)
+                   ?? ParseFailed();
         }
 
         private Story ParseFailed()

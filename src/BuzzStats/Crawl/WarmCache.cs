@@ -6,7 +6,7 @@ namespace BuzzStats.Crawl
 {
     class WarmCache : IWarmCache
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof (WarmCache));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(WarmCache));
         private RecentActivity[] _recentActivity;
 
         public WarmCache(IApiService apiService)

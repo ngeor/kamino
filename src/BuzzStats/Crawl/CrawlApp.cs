@@ -175,14 +175,8 @@ namespace BuzzStats.Crawl
 
             public bool HostRemoteControlService
             {
-                get
-                {
-                    return _hostRemoteControlService;
-                }
-                set
-                {
-                    _hostRemoteControlService = value;
-                }
+                get { return _hostRemoteControlService; }
+                set { _hostRemoteControlService = value; }
             }
 
             public bool SkipIngesters { get; set; }

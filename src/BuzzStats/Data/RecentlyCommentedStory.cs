@@ -35,10 +35,10 @@ namespace BuzzStats.Data
         public bool Equals(RecentlyCommentedStory other)
         {
             return other != null
-                && StoryId == other.StoryId
-                && string.Equals(Title, other.Title)
-                && ((Comments != null && other.Comments != null && Comments.SequenceEqual(other.Comments)) ||
-                    (Comments == null && other.Comments == null));
+                   && StoryId == other.StoryId
+                   && string.Equals(Title, other.Title)
+                   && ((Comments != null && other.Comments != null && Comments.SequenceEqual(other.Comments)) ||
+                       (Comments == null && other.Comments == null));
         }
 
         public override string ToString()
@@ -79,10 +79,10 @@ namespace BuzzStats.Data
             public bool Equals(Comment other)
             {
                 return other != null
-                    && CommentId == other.CommentId
-                    && VotesUp == other.VotesUp
-                    && string.Equals(Username, other.Username)
-                    && Age == other.Age;
+                       && CommentId == other.CommentId
+                       && VotesUp == other.VotesUp
+                       && string.Equals(Username, other.Username)
+                       && Age == other.Age;
             }
 
             public override string ToString()

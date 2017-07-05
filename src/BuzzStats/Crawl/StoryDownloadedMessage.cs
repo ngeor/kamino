@@ -40,7 +40,7 @@ namespace BuzzStats.Crawl
                 return false;
             if (ReferenceEquals(this, obj))
                 return true;
-            if (obj.GetType() != typeof (StoryDownloadedMessage))
+            if (obj.GetType() != typeof(StoryDownloadedMessage))
                 return false;
             StoryDownloadedMessage other = (StoryDownloadedMessage) obj;
             return Story.Equals(other.Story) && LeafSource.Equals(other.LeafSource);

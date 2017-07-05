@@ -33,9 +33,7 @@ namespace BuzzStats.Data.NHibernate
                 x = x.ExposeConfiguration(config => new SchemaExport(config).Create(false, true));
             }
 
-#if __MonoCS__
-
-    // otherwise Mono doesn't work
+#if __MonoCS__ // otherwise Mono doesn't work
             x = x.ExposeConfiguration(cfg => cfg.SetProperty("adonet.batch_size", "0"));
 
             #endif

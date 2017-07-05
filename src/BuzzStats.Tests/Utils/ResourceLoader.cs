@@ -12,7 +12,7 @@ namespace BuzzStats.Tests.Utils
     {
         public static string Load(string id)
         {
-            var assembly = typeof (ResourceLoader).Assembly;
+            var assembly = typeof(ResourceLoader).Assembly;
             string[] resourceNames = assembly.GetManifestResourceNames();
 
             try
@@ -33,7 +33,7 @@ namespace BuzzStats.Tests.Utils
 
         public static string LoadExact(string resourceId)
         {
-            Stream stream = typeof (ResourceLoader).Assembly.GetManifestResourceStream(resourceId);
+            Stream stream = typeof(ResourceLoader).Assembly.GetManifestResourceStream(resourceId);
             Assert.IsNotNull(stream, "Empty resource: " + resourceId);
             StreamReader sr = new StreamReader(stream);
             string result = sr.ReadToEnd();

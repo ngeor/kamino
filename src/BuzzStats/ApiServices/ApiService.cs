@@ -210,15 +210,15 @@ namespace BuzzStats.ApiServices
 
             var graphPoints =
                 from
-                    intervalDateRange
-                    in
-                    DateRange.Create(actualStartDate, actualStopDate).Split(interval)
+                intervalDateRange
+                in
+                DateRange.Create(actualStartDate, actualStopDate).Split(interval)
                 select
-                    new GraphPoint<DateTime, int>
-                    {
-                        X = intervalDateRange.StartDate.Value,
-                        Y = countRetriever(intervalDateRange)
-                    };
+                new GraphPoint<DateTime, int>
+                {
+                    X = intervalDateRange.StartDate.Value,
+                    Y = countRetriever(intervalDateRange)
+                };
 
             return new CountStatsResponse(request, graphPoints);
         }

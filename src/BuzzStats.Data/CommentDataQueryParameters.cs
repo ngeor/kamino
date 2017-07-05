@@ -15,6 +15,7 @@ namespace BuzzStats.Data
     {
         // TODO: migrate to NodaTime
         public DateRange CreatedAt { get; set; }
+
         public int? StoryId { get; set; }
         public string Username { get; set; }
 
@@ -27,18 +28,18 @@ namespace BuzzStats.Data
 
             CommentDataQueryParameters that = obj as CommentDataQueryParameters;
             return that != null
-                && that.StoryId == StoryId
-                && that.CreatedAt == CreatedAt
-                && string.Equals(that.Username, Username);
+                   && that.StoryId == StoryId
+                   && that.CreatedAt == CreatedAt
+                   && string.Equals(that.Username, Username);
         }
 
         public override int GetHashCode()
         {
             int result = base.GetHashCode();
 
-            result = result*13 + StoryId.GetValueOrDefault();
-            result = result*13 + (CreatedAt.IsEmpty ? 0 : CreatedAt.GetHashCode());
-            result = result*13 + (Username != null ? Username.GetHashCode() : 0);
+            result = result * 13 + StoryId.GetValueOrDefault();
+            result = result * 13 + (CreatedAt.IsEmpty ? 0 : CreatedAt.GetHashCode());
+            result = result * 13 + (Username != null ? Username.GetHashCode() : 0);
             return result;
         }
 

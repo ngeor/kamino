@@ -14,7 +14,7 @@ namespace BuzzStats.ApiServices
 {
     public class LoggingApiServiceDecorator : IApiService
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof (LoggingApiServiceDecorator));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(LoggingApiServiceDecorator));
 
         public LoggingApiServiceDecorator(IApiService backend)
         {

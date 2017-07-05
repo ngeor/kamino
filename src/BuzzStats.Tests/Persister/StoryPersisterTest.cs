@@ -36,9 +36,9 @@ namespace BuzzStats.Tests.Persister
             _mockCommentVoteDataLayer = new Mock<ICommentVoteDataLayer>(MockBehavior.Strict);
 
             _dbSession = Mock.Of<IDbSession>(s => s.Stories == _mockStoryDataLayer.Object
-                && s.Comments == _mockCommentDataLayer.Object
-                && s.StoryVotes == _mockStoryVoteDataLayer.Object
-                && s.CommentVotes == _mockCommentVoteDataLayer.Object);
+                                                  && s.Comments == _mockCommentDataLayer.Object
+                                                  && s.StoryVotes == _mockStoryVoteDataLayer.Object
+                                                  && s.CommentVotes == _mockCommentVoteDataLayer.Object);
         }
 
         [TearDown]

@@ -42,7 +42,7 @@ namespace BuzzStats.Data.NHibernate
             SortDirection direction,
             bool first)
         {
-            Type elementType = typeof (T);
+            Type elementType = typeof(T);
             var property = elementType.GetProperty(propertyName);
             if (property == null)
             {
@@ -71,7 +71,7 @@ namespace BuzzStats.Data.NHibernate
             var propertyAccess = Expression.MakeMemberAccess(parameter, property);
             var orderByExp = Expression.Lambda(propertyAccess, parameter);
             MethodCallExpression resultExp = Expression.Call(
-                typeof (Queryable),
+                typeof(Queryable),
                 methodName,
                 typeArgs,
                 query.Expression,

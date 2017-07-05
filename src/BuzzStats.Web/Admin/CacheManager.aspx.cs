@@ -52,7 +52,8 @@ namespace BuzzStats.Web.Admin
         private KeyValuePair<string, string> Convert(object cacheItem)
         {
             System.Collections.DictionaryEntry de = (System.Collections.DictionaryEntry) cacheItem;
-            return new KeyValuePair<string, string>((string) de.Key, de.Value == null ? "null" : de.Value.GetType().Name);
+            return new KeyValuePair<string, string>((string) de.Key,
+                de.Value == null ? "null" : de.Value.GetType().Name);
         }
 
         public KeyValuePair<string, string> Current

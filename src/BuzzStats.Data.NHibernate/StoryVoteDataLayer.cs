@@ -63,11 +63,11 @@ namespace BuzzStats.Data.NHibernate
             StoryEntity storyEntity = CoreData.SessionMap(story);
 
             return Session.Query<StoryVoteEntity>()
-                .Where(sv => sv.Story == storyEntity && sv.Username == voter)
+                       .Where(sv => sv.Story == storyEntity && sv.Username == voter)
 
-                // optimization, only fetch one column since we're only checking for existence
-                .Select(sv => sv.Username)
-                .FirstOrDefault() != null;
+                       // optimization, only fetch one column since we're only checking for existence
+                       .Select(sv => sv.Username)
+                       .FirstOrDefault() != null;
         }
 
         public Dictionary<string, int> SumPerHost(DateRange dateRange)

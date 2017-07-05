@@ -140,7 +140,8 @@ namespace BuzzStats.Tests.Crawl
             var resolver = Application.Boot(new string[0]);
             var messageBus = resolver.GetService(typeof(IMessageBus)) as IMessageBus;
             var collectedStoryIds = new HashSet<int>();
-            messageBus.Subscribe<StoryDownloadedMessage>(msg => {
+            messageBus.Subscribe<StoryDownloadedMessage>(msg =>
+            {
                 var storyId = msg.Story.StoryId;
                 Console.WriteLine("Downloaded story {0}", storyId);
                 if (!collectedStoryIds.Add(storyId))

@@ -16,14 +16,14 @@ namespace BuzzStats.MockServer
             const string baseAddress = "http://localhost:9900/";
 
             // Start OWIN host 
-            using (WebApp.Start<Startup>(url: baseAddress)) 
+            using (WebApp.Start<Startup>(url: baseAddress))
             {
                 Console.WriteLine("Server listening at port 9900");
-                Console.ReadLine(); 
+                Console.ReadLine();
             }
         }
     }
-    
+
     public class Startup
     {
         // This code configures Web API. The Startup class is specified as a type

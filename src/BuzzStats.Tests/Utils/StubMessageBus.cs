@@ -20,7 +20,7 @@ namespace BuzzStats.Tests.Utils
 
         public void Publish<T>(T message)
         {
-            Type t = typeof (T);
+            Type t = typeof(T);
             _messages.Ensure(t).Add(message);
             foreach (var handler in _handlers.Ensure(t))
             {
@@ -30,25 +30,25 @@ namespace BuzzStats.Tests.Utils
 
         public bool ContainsAny<T>()
         {
-            var list = _messages.Ensure(typeof (T));
+            var list = _messages.Ensure(typeof(T));
             return list.Count > 0;
         }
 
         public bool Contains<T>(T message)
         {
-            var list = _messages.Ensure(typeof (T));
+            var list = _messages.Ensure(typeof(T));
             return list.Contains(message);
         }
 
         public bool ContainsExclusively<T>(T message)
         {
-            var list = _messages.Ensure(typeof (T));
+            var list = _messages.Ensure(typeof(T));
             return list.Contains(message) && list.Count == 1;
         }
 
         public void Subscribe<T>(Action<T> handler)
         {
-            Type t = typeof (T);
+            Type t = typeof(T);
             _handlers.Ensure(t).Add(handler as Delegate);
         }
 

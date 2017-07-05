@@ -18,7 +18,7 @@ namespace BuzzStats.Web.Mvp
 {
     public class AboutPagePresenter : ApiServicePresenter<IAboutPageView>
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof (AboutPagePresenter));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(AboutPagePresenter));
         private readonly IDbSession _dbSession;
         private readonly IDiagnosticsService _diagnosticsService;
 

@@ -22,7 +22,7 @@ namespace BuzzStats.Data.NHibernate.SessionImpl
         private readonly IDbProfiler profiler;
 
         private DbCommandProxy(DbCommand instance)
-            : base(typeof (DbCommand))
+            : base(typeof(DbCommand))
         {
             this.instance = instance;
             profiler = MiniProfiler.Current as IDbProfiler;
@@ -53,7 +53,8 @@ namespace BuzzStats.Data.NHibernate.SessionImpl
             }
 
             IMessage returnMessage = new ReturnMessage(
-                returnValue, methodMessage.Args, methodMessage.ArgCount, methodMessage.LogicalCallContext, methodMessage);
+                returnValue, methodMessage.Args, methodMessage.ArgCount, methodMessage.LogicalCallContext,
+                methodMessage);
 
             if (executeType != SqlExecuteType.None)
             {

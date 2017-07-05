@@ -44,10 +44,10 @@ namespace BuzzStats.Data
         public override int GetHashCode()
         {
             int result = CommentId;
-            result = result*7 + (Username ?? string.Empty).GetHashCode();
-            result = result*11 + VotesUp;
-            result = result*13 + Age.GetHashCode();
-            result = result*17 + (Story != null ? Story.GetHashCode() : 0);
+            result = result * 7 + (Username ?? string.Empty).GetHashCode();
+            result = result * 11 + VotesUp;
+            result = result * 13 + Age.GetHashCode();
+            result = result * 17 + (Story != null ? Story.GetHashCode() : 0);
             return result;
         }
 
@@ -55,11 +55,11 @@ namespace BuzzStats.Data
         {
             CommentSummary that = obj as CommentSummary;
             return that != null
-                && CommentId == that.CommentId
-                && string.Equals(Username, that.Username)
-                && VotesUp == that.VotesUp
-                && Age == that.Age
-                && ((Story == null && that.Story == null) || (Story != null && Story.Equals(that.Story)));
+                   && CommentId == that.CommentId
+                   && string.Equals(Username, that.Username)
+                   && VotesUp == that.VotesUp
+                   && Age == that.Age
+                   && ((Story == null && that.Story == null) || (Story != null && Story.Equals(that.Story)));
         }
 
         public sealed class ParentStory

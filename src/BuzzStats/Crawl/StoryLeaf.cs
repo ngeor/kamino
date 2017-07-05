@@ -19,7 +19,7 @@ namespace BuzzStats.Crawl
 {
     public class StoryLeaf : ILeaf
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof (StoryLeaf));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(StoryLeaf));
 
         public StoryLeaf(string url, int storyId, ILeafSource leafSource)
         {
@@ -67,7 +67,7 @@ namespace BuzzStats.Crawl
                 return false;
             if (ReferenceEquals(this, obj))
                 return true;
-            if (obj.GetType() != typeof (StoryLeaf))
+            if (obj.GetType() != typeof(StoryLeaf))
                 return false;
             StoryLeaf other = (StoryLeaf) obj;
             return StoryId == other.StoryId && Url == other.Url;
@@ -78,7 +78,7 @@ namespace BuzzStats.Crawl
             unchecked
             {
                 int result = StoryId.GetHashCode();
-                result = result*11 + Url.GetHashCode();
+                result = result * 11 + Url.GetHashCode();
                 return result;
             }
         }

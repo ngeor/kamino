@@ -18,7 +18,7 @@ namespace BuzzStats.Downloader
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class DownloaderService : IDownloaderService
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof (DownloaderService));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(DownloaderService));
         private readonly IDownloader _downloader;
         private readonly IParser _parser;
 

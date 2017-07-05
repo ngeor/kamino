@@ -36,7 +36,7 @@ namespace BuzzStats.Tasks
                 return null;
             }
 
-            var attr = type.GetCustomAttributes(typeof (CommandLineAttribute), false);
+            var attr = type.GetCustomAttributes(typeof(CommandLineAttribute), false);
             return attr != null ? attr.FirstOrDefault() as CommandLineAttribute : null;
         }
     }

@@ -25,8 +25,8 @@ namespace BuzzStats.Tests.ApiServices
             MockCommentDataLayer = new Mock<ICommentDataLayer>(MockBehavior.Strict);
             MockStoryVoteDataLayer = new Mock<IStoryVoteDataLayer>(MockBehavior.Strict);
             DbSession = Mock.Of<IDbSession>(s => s.Stories == MockStoryDataLayer.Object
-                && s.Comments == MockCommentDataLayer.Object
-                && s.StoryVotes == MockStoryVoteDataLayer.Object);
+                                                 && s.Comments == MockCommentDataLayer.Object
+                                                 && s.StoryVotes == MockStoryVoteDataLayer.Object);
             ApiService = new ApiService(DbSession);
         }
 

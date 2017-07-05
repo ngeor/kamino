@@ -58,7 +58,7 @@ namespace BuzzStats.Data.NHibernate
             StoryEntity storyEntity = LoadStoryEntity(storyData.StoryId);
             if (storyEntity == null)
             {
-                throw new ObjectNotFoundException(storyData.StoryId, typeof (StoryEntity));
+                throw new ObjectNotFoundException(storyData.StoryId, typeof(StoryEntity));
             }
 
             storyEntity = storyData.ToEntity(storyEntity);
@@ -113,7 +113,7 @@ namespace BuzzStats.Data.NHibernate
             CommentEntity result = LoadCommentEntity(comment.CommentId);
             if (result == null)
             {
-                throw new ObjectNotFoundException(comment.CommentId, typeof (CommentEntity));
+                throw new ObjectNotFoundException(comment.CommentId, typeof(CommentEntity));
             }
 
             return comment.ToEntity(result);

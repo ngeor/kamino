@@ -25,11 +25,11 @@ namespace BuzzStats.Web.api
                 return false;
             if (ReferenceEquals(this, obj))
                 return true;
-            if (obj.GetType() != typeof (StoryCheckedEventArgs))
+            if (obj.GetType() != typeof(StoryCheckedEventArgs))
                 return false;
             StoryCheckedEventArgs other = (StoryCheckedEventArgs) obj;
             return StoryId == other.StoryId && HadChanges == other.HadChanges &&
-                string.Equals(SelectorName, other.SelectorName);
+                   string.Equals(SelectorName, other.SelectorName);
         }
 
         public override int GetHashCode()
@@ -37,8 +37,8 @@ namespace BuzzStats.Web.api
             unchecked
             {
                 int result = StoryId.GetHashCode();
-                result = result*11 + HadChanges.GetHashCode();
-                result = result*13 + (SelectorName != null ? SelectorName.GetHashCode() : 0);
+                result = result * 11 + HadChanges.GetHashCode();
+                result = result * 13 + (SelectorName != null ? SelectorName.GetHashCode() : 0);
                 return result;
             }
         }

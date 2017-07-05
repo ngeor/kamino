@@ -14,7 +14,7 @@ using BuzzStats.Web.Mvp;
 
 namespace BuzzStats.Web
 {
-    [Presenter(typeof (AboutPagePresenter))]
+    [Presenter(typeof(AboutPagePresenter))]
     public partial class About : MvpPage, IAboutPageView
     {
         public void SetEchoSucceeded(bool success)
