@@ -153,7 +153,6 @@
     <Compile Include="Web\Mvp\StoryCountControl.cs" />
     <Compile Include="Web\Mvp\StoryCountControlPresenter.cs" />
     <Compile Include="Parsing\Comment.cs" />
-    <Compile Include="Parsing\IParser.cs" />
     <Compile Include="Parsing\ParserFailedException.cs" />
     <Compile Include="Parsing\Story.cs" />
     <Compile Include="Parsing\StoryListingSummary.cs" />

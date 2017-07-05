@@ -12,14 +12,11 @@ using StructureMap;
 using NGSoftware.Common;
 using NGSoftware.Common.Configuration;
 using NGSoftware.Common.Factories;
-using NGSoftware.Common.Net;
 using NGSoftware.Common.Scheduling;
 using BuzzStats.Common;
-using BuzzStats.Configuration;
 using BuzzStats.Crawl;
 using BuzzStats.Data;
 using BuzzStats.Data.NHibernate;
-using BuzzStats.Parsing;
 
 namespace BuzzStats.Boot
 {
@@ -32,11 +29,6 @@ namespace BuzzStats.Boot
             For<IBackgroundScheduledItemManager>().Singleton().Use<BackgroundScheduledItemManager>();
 
             For<IServiceModelSettings>().Use<ServiceModelSettings>();
-
-            For<IDownloader>().Singleton().Use(ctx => new PerHostDelayedDownloader(
-                new WebClientDownloader(),
-                BuzzStatsConfigurationSection.Current.Crawler.NetRequestDelay,
-                ctx.GetInstance<IStoppable>()));
 
             For<IUrlProvider>().Use<UrlProvider>();
 
