@@ -12,9 +12,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace BuzzStats.Parsing
+namespace BuzzStats.ParserWebApi
 {
-    public sealed class Parser : IParser
+    public sealed class Parser
     {
         /// <summary>
         /// regex that matches a recent comments block specific to a story

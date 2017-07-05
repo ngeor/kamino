@@ -115,7 +115,6 @@
     <Compile Include="Crawl\StoryLeafTest.cs" />
     <Compile Include="Crawl\WarmCacheTest.cs" />
     <Compile Include="Database\ConnectivityTest.cs" />
-    <Compile Include="Parsing\ParserTest.cs" />
     <Compile Include="Persister\StoryPersisterTest.cs" />
     <Compile Include="Persister\TransactionalPersisterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -147,63 +146,8 @@
     <CallTarget Targets="UnitTests" />
     <CallTarget Targets="CodeCoverage" />
   </Target>
-  <ItemGroup />
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="TestData\81065.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="TestData\enupc.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="TestData\home.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="TestData\tech.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="TestData\upcoming.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="TestData\79444.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="TestData\bug59806.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="TestData\BugGoldenComments.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="TestData\BugRecursiveBuzz.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="TestData\BurriedComment.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="TestData\Comment.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="TestData\homepage_vodafone.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="TestData\RemovedStory.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="TestData\SingleStoryDownVoteDisabled.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="TestData\Story.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="TestData\Story7Votes5Comments.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="TestData\Story7Votes5Comments9Votes13Comments.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="TestData\Upcoming.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BuzzStats.Data\BuzzStats.Data.csproj">
@@ -214,9 +158,6 @@
       <Project>{70807780-11BE-4F50-8BC5-A727ACA2B35F}</Project>
       <Name>BuzzStats</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="TestData\82908.html" />
   </ItemGroup>
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.105.2\build\net46\System.Data.SQLite.Core.targets" />
 </Project>

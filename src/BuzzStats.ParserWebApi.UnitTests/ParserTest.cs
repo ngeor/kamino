@@ -1,19 +1,8 @@
-// --------------------------------------------------------------------------------
-// <copyright file="ParserTest.cs" company="Nikolaos Georgiou">
-//      Copyright (C) Nikolaos Georgiou 2010-2013
-// </copyright>
-// <author>Nikolaos Georgiou</author>
-// * Date: 2013/09/22
-// * Time: 5:56 μμ
-// --------------------------------------------------------------------------------
-
 using System;
 using System.Linq;
 using NUnit.Framework;
-using BuzzStats.Parsing;
-using BuzzStats.Tests.Utils;
 
-namespace BuzzStats.Tests.Parsing
+namespace BuzzStats.ParserWebApi.UnitTests
 {
     [TestFixture]
     public class ParserTest

@@ -38,7 +38,6 @@ namespace BuzzStats.Boot
                 BuzzStatsConfigurationSection.Current.Crawler.NetRequestDelay,
                 ctx.GetInstance<IStoppable>()));
 
-            For<IParser>().Use<Parser>();
             For<IUrlProvider>().Use<UrlProvider>();
 
             For<ConnectionStringSettings>().Use(ctx => ConfigurationManager.ConnectionStrings["BuzzStats"]);

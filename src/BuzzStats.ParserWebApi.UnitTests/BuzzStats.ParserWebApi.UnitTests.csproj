@@ -42,6 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ParserTest.cs" />
+    <Compile Include="ResourceLoader.cs" />
     <Compile Include="Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -53,6 +55,27 @@
       <Project>{ac79f1d1-355c-483b-ad3f-d53658e5f33f}</Project>
       <Name>BuzzStats.ParserWebApi</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestData\79444.txt" />
+    <EmbeddedResource Include="TestData\81065.html" />
+    <EmbeddedResource Include="TestData\82908.html" />
+    <EmbeddedResource Include="TestData\bug59806.txt" />
+    <EmbeddedResource Include="TestData\BugGoldenComments.txt" />
+    <EmbeddedResource Include="TestData\BugRecursiveBuzz.txt" />
+    <EmbeddedResource Include="TestData\BurriedComment.txt" />
+    <EmbeddedResource Include="TestData\Comment.txt" />
+    <EmbeddedResource Include="TestData\enupc.html" />
+    <EmbeddedResource Include="TestData\home.html" />
+    <EmbeddedResource Include="TestData\homepage_vodafone.txt" />
+    <EmbeddedResource Include="TestData\RemovedStory.txt" />
+    <EmbeddedResource Include="TestData\SingleStoryDownVoteDisabled.txt" />
+    <EmbeddedResource Include="TestData\Story.txt" />
+    <EmbeddedResource Include="TestData\Story7Votes5Comments.txt" />
+    <EmbeddedResource Include="TestData\Story7Votes5Comments9Votes13Comments.txt" />
+    <EmbeddedResource Include="TestData\tech.html" />
+    <EmbeddedResource Include="TestData\upcoming.html" />
+    <EmbeddedResource Include="TestData\Upcoming.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
