@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.StorageWebApi", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.MockServer", "BuzzStats.MockServer\BuzzStats.MockServer.csproj", "{B53DBA36-F7B8-4F1E-807F-519FFF9A69CD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.ParserWebApi.UnitTests", "BuzzStats.ParserWebApi.UnitTests\BuzzStats.ParserWebApi.UnitTests.csproj", "{4E93478D-D057-4317-9116-84F6451E25CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,10 @@ Global
 		{B53DBA36-F7B8-4F1E-807F-519FFF9A69CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B53DBA36-F7B8-4F1E-807F-519FFF9A69CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B53DBA36-F7B8-4F1E-807F-519FFF9A69CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E93478D-D057-4317-9116-84F6451E25CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E93478D-D057-4317-9116-84F6451E25CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E93478D-D057-4317-9116-84F6451E25CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E93478D-D057-4317-9116-84F6451E25CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
