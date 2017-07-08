@@ -100,6 +100,7 @@
     <Compile Include="SessionFactoryFactory.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="StoryController.cs" />
+    <Compile Include="StoryMapper.cs" />
     <Compile Include="StructureMapDependencyResolver.cs" />
   </ItemGroup>
   <ItemGroup>

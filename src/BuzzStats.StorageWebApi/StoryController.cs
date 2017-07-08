@@ -13,10 +13,12 @@ namespace BuzzStats.StorageWebApi
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(StoryController));
         private readonly ISessionFactory _sessionFactory;
+        private readonly StoryMapper _storyMapper;
 
-        public StoryController(ISessionFactory sessionFactory)
+        public StoryController(ISessionFactory sessionFactory, StoryMapper storyMapper)
         {
             _sessionFactory = sessionFactory;
+            _storyMapper = storyMapper;
         }
 
         // GET api/story 
@@ -39,14 +41,7 @@ namespace BuzzStats.StorageWebApi
             {
                 using (var session = _sessionFactory.OpenSession())
                 {
-                    StoryEntity storyEntity = new StoryEntity
-                    {
-                        Title = value.Title,
-                        StoryId = value.StoryId,
-                        Username = value.Username,
-                        Url = value.Url,
-                        Category = value.Category,
-                    };
+                    var storyEntity = _storyMapper.ToStoryEntity(value);
                     session.SaveOrUpdate(storyEntity);
                     session.Flush();
                 }
