@@ -63,6 +63,9 @@
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
+    <Reference Include="StructureMap, Version=4.5.1.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\StructureMap.4.5.1\lib\net45\StructureMap.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http" />
@@ -94,8 +97,10 @@
     <Compile Include="Entities\StoryVoteEntity.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SessionFactoryFactory.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="StoryController.cs" />
+    <Compile Include="StructureMapDependencyResolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

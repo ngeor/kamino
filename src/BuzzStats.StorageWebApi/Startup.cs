@@ -1,5 +1,7 @@
 using System.Web.Http;
+using NHibernate;
 using Owin;
+using StructureMap;
 
 namespace BuzzStats.StorageWebApi
 {
@@ -11,6 +13,7 @@ namespace BuzzStats.StorageWebApi
         {
             // Configure Web API for self-host. 
             HttpConfiguration config = new HttpConfiguration();
+            config.DependencyResolver = new StructureMapDependencyResolver(CreateContainer());
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
@@ -18,6 +21,17 @@ namespace BuzzStats.StorageWebApi
             );
 
             appBuilder.UseWebApi(config);
+        }
+
+        private IContainer CreateContainer()
+        {
+            Container container = new Container();
+            container.Configure(x =>
+            {
+                x.For<ISessionFactory>().Use(() => SessionFactoryFactory.Create()).Singleton();
+            });
+            
+            return container;
         }
     }
 }
