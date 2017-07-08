@@ -13,3 +13,7 @@ before_build:
 build:
   parallel: false
   project: src\BuzzStats.sln
+test:
+  assemblies:
+    only:
+      - **\*UnitTests.dll
