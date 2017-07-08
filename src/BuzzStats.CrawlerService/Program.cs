@@ -35,6 +35,44 @@ namespace BuzzStats.CrawlerService
         public int? VoteCount { get; set; }
     }
 
+    public class Story
+    {
+        public int StoryId { get; set; }
+
+        public string Title { get; set; }
+
+        public bool IsRemoved { get; set; }
+
+        public int Category { get; set; }
+
+        public string Url { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+
+        public string Username { get; set; }
+
+        public string[] Voters { get; set; }
+
+        public Comment[] Comments { get; set; }
+    }
+    
+    public class Comment
+    {
+        public int CommentId { get; set; }
+
+        public string Username { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+
+        public int VotesUp { get; set; }
+
+        public int VotesDown { get; set; }
+
+        public bool IsBuried { get; set; }
+
+        public Comment[] Comments { get; set; }
+    }
+    
     public class ListingTask
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(ListingTask));
@@ -49,13 +87,36 @@ namespace BuzzStats.CrawlerService
                 string result = await client.GetStringAsync(homeUrl);
                 var storyListingSummaries = JsonConvert.DeserializeObject<StoryListingSummary[]>(result);
                 Log.InfoFormat("Received {0} stories", storyListingSummaries.Length);
+
+                foreach (var storyListingSummary in storyListingSummaries)
+                {
+                    await ProcessStory(storyListingSummary);
+                }
+                
                 await Task.Delay(TimeSpan.FromSeconds(1));
             }
+        }
+
+        private async Task<Story> ProcessStory(StoryListingSummary storyListingSummary)
+        {
+            var storyId = storyListingSummary.StoryId;
+            var storyUrl = StoryUrl(storyId);
+            Log.InfoFormat("Getting url {0}", storyUrl);
+            HttpClient client = new HttpClient();
+            string result = await client.GetStringAsync(storyUrl);
+            var parsedStory = JsonConvert.DeserializeObject<Story>(result);
+            Log.InfoFormat("Parsed story {0}", parsedStory.Title);
+            return parsedStory;
         }
 
         private string HomeUrl()
         {
             return ConfigurationManager.AppSettings["ParserWebApiUrl"] + "/api/listing/home";
+        }
+
+        private string StoryUrl(int storyId)
+        {
+            return ConfigurationManager.AppSettings["ParserWebApiUrl"] + "/api/story/" + storyId;
         }
     }
 
