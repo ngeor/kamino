@@ -37,6 +37,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.ParserWebApi.Unit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.MockServer.UnitTests", "BuzzStats.MockServer.UnitTests\BuzzStats.MockServer.UnitTests.csproj", "{79718836-978B-4172-854B-FE29F0EAD8FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.CrawlerService.UnitTests", "BuzzStats.CrawlerService.UnitTests\BuzzStats.CrawlerService.UnitTests.csproj", "{662B0DA7-1333-45E7-8809-A0326A8C2E0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.StorageWebApi.UnitTests", "BuzzStats.StorageWebApi.UnitTests\BuzzStats.StorageWebApi.UnitTests.csproj", "{C39DD2B0-0996-4B4F-9353-945E8E6D9036}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +115,14 @@ Global
 		{79718836-978B-4172-854B-FE29F0EAD8FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79718836-978B-4172-854B-FE29F0EAD8FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79718836-978B-4172-854B-FE29F0EAD8FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{662B0DA7-1333-45E7-8809-A0326A8C2E0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{662B0DA7-1333-45E7-8809-A0326A8C2E0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{662B0DA7-1333-45E7-8809-A0326A8C2E0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{662B0DA7-1333-45E7-8809-A0326A8C2E0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C39DD2B0-0996-4B4F-9353-945E8E6D9036}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C39DD2B0-0996-4B4F-9353-945E8E6D9036}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C39DD2B0-0996-4B4F-9353-945E8E6D9036}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C39DD2B0-0996-4B4F-9353-945E8E6D9036}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
