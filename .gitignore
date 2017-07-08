@@ -9,3 +9,9 @@ packages/
 
 # IntelliJ / Rider
 .idea/
+
+# Coverage report
+results.xml
+
+# NUnit report
+TestResult.xml

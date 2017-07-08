@@ -18,5 +18,5 @@ test:
     only:
       - '**\*UnitTests.dll'
 after_test:
-  - .\src\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -filter:"+[*]* -[*.Tests]*" -target:.\src\packages\NUnit.ConsoleRunner.3.6.1\tools\nunit3-console.exe -targetargs:".\src\BuzzStats.MockServer.UnitTests\bin\Debug\BuzzStats.MockServer.UnitTests.dll .\src\BuzzStats.ParserWebApi.UnitTests\bin\Debug\BuzzStats.ParserWebApi.UnitTests.dll"
+  - .\src\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -filter:"+[*]* -[*.UnitTests]*" -target:.\src\packages\NUnit.ConsoleRunner.3.6.1\tools\nunit3-console.exe -targetargs:".\src\BuzzStats.MockServer.UnitTests\bin\Debug\BuzzStats.MockServer.UnitTests.dll .\src\BuzzStats.ParserWebApi.UnitTests\bin\Debug\BuzzStats.ParserWebApi.UnitTests.dll"
   - .\src\packages\coveralls.net.0.7.0\tools\csmacnz.Coveralls.exe --opencover -i .\results.xml
