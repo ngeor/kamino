@@ -1,0 +1,13 @@
+version: 2.0.0.{build}
+environment:
+  COVERALLS_REPO_TOKEN:
+    secure: kGjvvsi37IZdw7VuwblEoP1aydS4RyDMUtEJiXe1v2zUMoYkBM7isPNXqVlOA+Ii
+assembly_info:
+  patch: true
+  file: AssemblyInfo.*
+  assembly_version: "{version}"
+  assembly_file_version: "{version}"
+  assembly_informational_version: "{version}"
+build:
+  parallel: false
+  project: src\BuzzStats.sln

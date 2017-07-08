@@ -4,6 +4,8 @@ information.
 
 [![Build Status](https://travis-ci.org/ngeor/BuzzStats.svg?branch=master)](https://travis-ci.org/ngeor/BuzzStats)
 
+[![Coverage Status](https://coveralls.io/repos/github/ngeor/BuzzStats/badge.svg?branch=master)](https://coveralls.io/github/ngeor/BuzzStats?branch=master)
+
 ## System Setup
 
 The following software is required:
