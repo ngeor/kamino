@@ -106,6 +106,7 @@ namespace BuzzStats.CrawlerService
             string result = await client.GetStringAsync(storyUrl);
             var parsedStory = JsonConvert.DeserializeObject<Story>(result);
             Log.InfoFormat("Parsed story {0}", parsedStory.Title);
+            await StoreStory(parsedStory);
             return parsedStory;
         }
 
@@ -117,6 +118,12 @@ namespace BuzzStats.CrawlerService
         private string StoryUrl(int storyId)
         {
             return ConfigurationManager.AppSettings["ParserWebApiUrl"] + "/api/story/" + storyId;
+        }
+
+        private async Task StoreStory(Story story)
+        {
+            HttpClient client = new HttpClient();
+            await client.PostAsJsonAsync(ConfigurationManager.AppSettings["StorageWebApiUrl"] + "/api/story", story);
         }
     }
 
