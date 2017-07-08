@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.Owin.Hosting;
 using Owin;
@@ -11,12 +12,26 @@ namespace BuzzStats.CrawlerService
         public static void Main(string[] args)
         {
             const string baseAddress = "http://localhost:9001/";
+            ListingTask listingTask = new ListingTask();
 
             // Start OWIN host 
             using (WebApp.Start<Startup>(url: baseAddress))
             {
                 Console.WriteLine("Server listening at port 9001");
+                Task.Run(() => listingTask.DoIt());
                 Console.ReadLine();
+            }
+        }
+    }
+
+    public class ListingTask
+    {
+        public async Task DoIt()
+        {
+            while (true)
+            {
+                Console.WriteLine("hello from task");
+                await Task.Delay(TimeSpan.FromSeconds(1));
             }
         }
     }
