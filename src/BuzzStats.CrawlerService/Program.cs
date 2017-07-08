@@ -37,18 +37,25 @@ namespace BuzzStats.CrawlerService
             while (true)
             {
                 Log.Info("Begin task");
-                string homeUrl = HomeUrl();
-                HttpClient client = new HttpClient();
-                string result = await client.GetStringAsync(homeUrl);
-                var storyListingSummaries = JsonConvert.DeserializeObject<StoryListingSummary[]>(result);
-                Log.InfoFormat("Received {0} stories", storyListingSummaries.Length);
-
-                foreach (var storyListingSummary in storyListingSummaries)
+                try
                 {
-                    await ProcessStory(storyListingSummary);
+                    string homeUrl = HomeUrl();
+                    HttpClient client = new HttpClient();
+                    string result = await client.GetStringAsync(homeUrl);
+                    var storyListingSummaries = JsonConvert.DeserializeObject<StoryListingSummary[]>(result);
+                    Log.InfoFormat("Received {0} stories", storyListingSummaries.Length);
+
+                    foreach (var storyListingSummary in storyListingSummaries)
+                    {
+                        await ProcessStory(storyListingSummary);
+                    }
+
+                    await Task.Delay(TimeSpan.FromSeconds(1));
                 }
-                
-                await Task.Delay(TimeSpan.FromSeconds(1));
+                catch (Exception ex)
+                {
+                    Log.Error(ex.Message, ex);
+                }
             }
         }
 
