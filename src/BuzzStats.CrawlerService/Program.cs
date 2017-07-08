@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using log4net;
 using Microsoft.Owin.Hosting;
+using Newtonsoft.Json;
 using Owin;
 
 namespace BuzzStats.CrawlerService
@@ -24,15 +28,34 @@ namespace BuzzStats.CrawlerService
         }
     }
 
+    class StoryListingSummary
+    {
+        public int StoryId { get; set; }
+
+        public int? VoteCount { get; set; }
+    }
+
     public class ListingTask
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(ListingTask));
+        
         public async Task DoIt()
         {
             while (true)
             {
-                Console.WriteLine("hello from task");
+                Log.Info("Begin task");
+                string homeUrl = HomeUrl();
+                HttpClient client = new HttpClient();
+                string result = await client.GetStringAsync(homeUrl);
+                var storyListingSummaries = JsonConvert.DeserializeObject<StoryListingSummary[]>(result);
+                Log.InfoFormat("Received {0} stories", storyListingSummaries.Length);
                 await Task.Delay(TimeSpan.FromSeconds(1));
             }
+        }
+
+        private string HomeUrl()
+        {
+            return ConfigurationManager.AppSettings["ParserWebApiUrl"] + "/api/listing/home";
         }
     }
 

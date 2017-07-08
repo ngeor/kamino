@@ -3,14 +3,18 @@ using System.Configuration;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using log4net;
 
 namespace BuzzStats.ParserWebApi
 {
     public class ListingController : ApiController
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(ListingController));
+        
         // GET api/listing/home 
         public async Task<IEnumerable<StoryListingSummary>> Get(StoryListing id)
         {
+            Log.InfoFormat("/api/listing/{0}", id);
             Parser parser = new Parser();
             HttpClient client = new HttpClient();
             string path;
