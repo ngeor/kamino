@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Web.Http;
+using BuzzStats.StorageWebApi.DTOs;
 using log4net;
 
 namespace BuzzStats.StorageWebApi
@@ -37,44 +37,4 @@ namespace BuzzStats.StorageWebApi
         {
         }
     }
-    
-    
-    public class Story
-    {
-        public int StoryId { get; set; }
-
-        public string Title { get; set; }
-
-        public bool IsRemoved { get; set; }
-
-        public int Category { get; set; }
-
-        public string Url { get; set; }
-
-        public DateTime CreatedAt { get; set; }
-
-        public string Username { get; set; }
-
-        public string[] Voters { get; set; }
-
-        public Comment[] Comments { get; set; }
-    }
-    
-    public class Comment
-    {
-        public int CommentId { get; set; }
-
-        public string Username { get; set; }
-
-        public DateTime CreatedAt { get; set; }
-
-        public int VotesUp { get; set; }
-
-        public int VotesDown { get; set; }
-
-        public bool IsBuried { get; set; }
-
-        public Comment[] Comments { get; set; }
-    }
-    
 }

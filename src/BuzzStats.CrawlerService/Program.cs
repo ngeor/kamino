@@ -4,10 +4,10 @@ using System.Configuration;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using BuzzStats.CrawlerService.DTOs;
 using log4net;
 using Microsoft.Owin.Hosting;
 using Newtonsoft.Json;
-using Owin;
 
 namespace BuzzStats.CrawlerService
 {
@@ -28,51 +28,6 @@ namespace BuzzStats.CrawlerService
         }
     }
 
-    class StoryListingSummary
-    {
-        public int StoryId { get; set; }
-
-        public int? VoteCount { get; set; }
-    }
-
-    public class Story
-    {
-        public int StoryId { get; set; }
-
-        public string Title { get; set; }
-
-        public bool IsRemoved { get; set; }
-
-        public int Category { get; set; }
-
-        public string Url { get; set; }
-
-        public DateTime CreatedAt { get; set; }
-
-        public string Username { get; set; }
-
-        public string[] Voters { get; set; }
-
-        public Comment[] Comments { get; set; }
-    }
-    
-    public class Comment
-    {
-        public int CommentId { get; set; }
-
-        public string Username { get; set; }
-
-        public DateTime CreatedAt { get; set; }
-
-        public int VotesUp { get; set; }
-
-        public int VotesDown { get; set; }
-
-        public bool IsBuried { get; set; }
-
-        public Comment[] Comments { get; set; }
-    }
-    
     public class ListingTask
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(ListingTask));
@@ -124,24 +79,6 @@ namespace BuzzStats.CrawlerService
         {
             HttpClient client = new HttpClient();
             await client.PostAsJsonAsync(ConfigurationManager.AppSettings["StorageWebApiUrl"] + "/api/story", story);
-        }
-    }
-
-    public class Startup
-    {
-        // This code configures Web API. The Startup class is specified as a type
-        // parameter in the WebApp.Start method.
-        public void Configuration(IAppBuilder appBuilder)
-        {
-            // Configure Web API for self-host. 
-            HttpConfiguration config = new HttpConfiguration();
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new {id = RouteParameter.Optional}
-            );
-
-            appBuilder.UseWebApi(config);
         }
     }
 

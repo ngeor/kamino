@@ -1,6 +1,6 @@
 using System;
 
-namespace BuzzStats.ParserWebApi
+namespace BuzzStats.ParserWebApi.DTOs
 {
     /// <summary>
     /// A parsed comment.

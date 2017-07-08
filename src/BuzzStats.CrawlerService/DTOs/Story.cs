@@ -1,10 +1,7 @@
 using System;
 
-namespace BuzzStats.ParserWebApi
+namespace BuzzStats.CrawlerService.DTOs
 {
-    /// <summary>
-    /// A parsed story.
-    /// </summary>
     public class Story
     {
         public int StoryId { get; set; }
