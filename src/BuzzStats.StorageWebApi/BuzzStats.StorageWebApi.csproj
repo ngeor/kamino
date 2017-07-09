@@ -97,6 +97,7 @@
     <Compile Include="Entities\StoryVoteEntity.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\StoryRepository.cs" />
     <Compile Include="SessionFactoryFactory.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="StoryController.cs" />
