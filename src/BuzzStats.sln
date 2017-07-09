@@ -19,10 +19,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.Data.NHibernate",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.Data.NHibernate.Tests", "BuzzStats.Data.NHibernate.Tests\BuzzStats.Data.NHibernate.Tests.csproj", "{7BE30EE6-E9E5-4302-8966-84B822814F33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.Data.Dapper", "BuzzStats.Data.Dapper\BuzzStats.Data.Dapper.csproj", "{4AF11DAA-A608-4335-B8EB-A6E5FD198F56}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.Data.Dapper.Tests", "BuzzStats.Data.Dapper.Tests\BuzzStats.Data.Dapper.Tests.csproj", "{DA3EFBC0-A2DF-4DF4-A7EC-B475A1B1C224}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.WebApi", "BuzzStats.WebApi\BuzzStats.WebApi.csproj", "{7B2E2D42-C462-405F-9505-E89F546E96C6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.ParserWebApi", "BuzzStats.ParserWebApi\BuzzStats.ParserWebApi.csproj", "{AC79F1D1-355C-483B-AD3F-D53658E5F33F}"
@@ -79,14 +75,6 @@ Global
 		{7BE30EE6-E9E5-4302-8966-84B822814F33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7BE30EE6-E9E5-4302-8966-84B822814F33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7BE30EE6-E9E5-4302-8966-84B822814F33}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4AF11DAA-A608-4335-B8EB-A6E5FD198F56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4AF11DAA-A608-4335-B8EB-A6E5FD198F56}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4AF11DAA-A608-4335-B8EB-A6E5FD198F56}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4AF11DAA-A608-4335-B8EB-A6E5FD198F56}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DA3EFBC0-A2DF-4DF4-A7EC-B475A1B1C224}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DA3EFBC0-A2DF-4DF4-A7EC-B475A1B1C224}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DA3EFBC0-A2DF-4DF4-A7EC-B475A1B1C224}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DA3EFBC0-A2DF-4DF4-A7EC-B475A1B1C224}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7B2E2D42-C462-405F-9505-E89F546E96C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7B2E2D42-C462-405F-9505-E89F546E96C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B2E2D42-C462-405F-9505-E89F546E96C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
