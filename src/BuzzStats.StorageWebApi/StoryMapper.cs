@@ -8,7 +8,7 @@ namespace BuzzStats.StorageWebApi
     /// </summary>
     public class StoryMapper
     {
-        public StoryEntity ToStoryEntity(Story story)
+        public virtual StoryEntity ToStoryEntity(Story story)
         {
             var storyEntity = new StoryEntity
             {

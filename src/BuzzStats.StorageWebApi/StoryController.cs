@@ -13,37 +13,29 @@ namespace BuzzStats.StorageWebApi
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(StoryController));
         private readonly ISessionFactory _sessionFactory;
-        private readonly StoryMapper _storyMapper;
+        private readonly Updater _updater;
 
-        public StoryController(ISessionFactory sessionFactory, StoryMapper storyMapper)
+        public StoryController(ISessionFactory sessionFactory, Updater updater)
         {
             _sessionFactory = sessionFactory;
-            _storyMapper = storyMapper;
-        }
-
-        // GET api/story 
-        public IEnumerable<string> Get()
-        {
-            return new[] {"value1", "value2"};
+            _updater = updater;
         }
 
         // GET api/story/5 
-        public string Get(int id)
+        public Story Get(int id)
         {
-            return "value";
+            throw new NotImplementedException();
         }
 
         // POST api/story 
-        public void Post([FromBody] Story value)
+        public void Post([FromBody] Story story)
         {
-            Log.InfoFormat("Received story {0} title {1}", value.StoryId, value.Title);
+            Log.InfoFormat("Received story {0} title {1}", story.StoryId, story.Title);
             try
             {
                 using (var session = _sessionFactory.OpenSession())
                 {
-                    var storyEntity = _storyMapper.ToStoryEntity(value);
-                    session.SaveOrUpdate(storyEntity);
-                    session.Flush();
+                    _updater.Save(session, story);
                 }
             }
             catch (Exception ex)
@@ -51,16 +43,6 @@ namespace BuzzStats.StorageWebApi
                 Log.Error(ex.Message, ex);
                 throw new HttpResponseException(HttpStatusCode.InternalServerError);
             }
-        }
-
-        // PUT api/story/5 
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/story/5 
-        public void Delete(int id)
-        {
         }
     }
 }

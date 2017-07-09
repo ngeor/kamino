@@ -102,6 +102,7 @@
     <Compile Include="StoryController.cs" />
     <Compile Include="StoryMapper.cs" />
     <Compile Include="StructureMapDependencyResolver.cs" />
+    <Compile Include="Updater.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

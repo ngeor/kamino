@@ -1,5 +1,4 @@
-﻿using System;
-using BuzzStats.StorageWebApi.DTOs;
+﻿using BuzzStats.StorageWebApi.DTOs;
 using NUnit.Framework;
 
 namespace BuzzStats.StorageWebApi.UnitTests
