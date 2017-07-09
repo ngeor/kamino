@@ -74,9 +74,13 @@
     <Compile Include="DTOs\Comment.cs" />
     <Compile Include="DTOs\Story.cs" />
     <Compile Include="DTOs\StoryListingSummary.cs" />
+    <Compile Include="ListingTask.cs" />
+    <Compile Include="ParserClient.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="StorageClient.cs" />
+    <Compile Include="TaskLoop.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

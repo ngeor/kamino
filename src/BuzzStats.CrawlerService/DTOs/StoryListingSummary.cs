@@ -1,6 +1,6 @@
 namespace BuzzStats.CrawlerService.DTOs
 {
-    class StoryListingSummary
+    public class StoryListingSummary
     {
         public int StoryId { get; set; }
 
