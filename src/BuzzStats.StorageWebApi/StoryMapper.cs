@@ -14,8 +14,9 @@ namespace BuzzStats.StorageWebApi
             {
                 Title = story.Title,
                 StoryId = story.StoryId,
-                Username = story.Username,
                 Url = story.Url,
+                Username = story.Username,
+                CreatedAt = story.CreatedAt,
                 Category = story.Category,
             };
 

@@ -2,7 +2,7 @@ using System;
 
 namespace BuzzStats.StorageWebApi.Entities
 {
-    public class StoryVoteEntity : IEntity
+    public class StoryVoteEntity
     {
         public virtual int Id { get; set; }
 

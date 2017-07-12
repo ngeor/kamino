@@ -85,14 +85,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClassMaps\CommentMap.cs" />
-    <Compile Include="ClassMaps\CommentVoteMap.cs" />
     <Compile Include="ClassMaps\StoryMap.cs" />
     <Compile Include="ClassMaps\StoryVoteMap.cs" />
     <Compile Include="DTOs\Comment.cs" />
     <Compile Include="DTOs\Story.cs" />
     <Compile Include="Entities\CommentEntity.cs" />
-    <Compile Include="Entities\CommentVoteEntity.cs" />
-    <Compile Include="Entities\IEntity.cs" />
     <Compile Include="Entities\StoryEntity.cs" />
     <Compile Include="Entities\StoryVoteEntity.cs" />
     <Compile Include="Program.cs" />

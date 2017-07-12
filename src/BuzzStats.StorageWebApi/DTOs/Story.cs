@@ -8,18 +8,18 @@ namespace BuzzStats.StorageWebApi.DTOs
 
         public string Title { get; set; }
 
-        public bool IsRemoved { get; set; }
-
-        public int Category { get; set; }
-
         public string Url { get; set; }
-
-        public DateTime CreatedAt { get; set; }
 
         public string Username { get; set; }
 
+        public DateTime CreatedAt { get; set; }
+
+        public int Category { get; set; }
+        
         public string[] Voters { get; set; }
 
         public Comment[] Comments { get; set; }
+
+        public bool IsRemoved { get; set; }
     }
 }

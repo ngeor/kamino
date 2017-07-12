@@ -18,7 +18,6 @@ namespace BuzzStats.StorageWebApi.ClassMaps
             Map(comment => comment.IsBuried).Not.Nullable();
 
             Map(comment => comment.CreatedAt).Not.Nullable();
-            Map(comment => comment.DetectedAt).Not.Update().Not.Nullable();
         }
     }
 }

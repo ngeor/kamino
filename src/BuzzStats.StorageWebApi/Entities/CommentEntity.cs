@@ -2,7 +2,7 @@ using System;
 
 namespace BuzzStats.StorageWebApi.Entities
 {
-    public class CommentEntity : IEntity
+    public class CommentEntity
     {
         public virtual int Id { get; set; }
 
@@ -21,7 +21,5 @@ namespace BuzzStats.StorageWebApi.Entities
         public virtual int VotesDown { get; set; }
 
         public virtual bool IsBuried { get; set; }
-
-        public virtual DateTime DetectedAt { get; set; }
     }
 }
