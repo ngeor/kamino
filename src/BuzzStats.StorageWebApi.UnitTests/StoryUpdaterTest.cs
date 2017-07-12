@@ -8,12 +8,12 @@ using Moq;
 namespace BuzzStats.StorageWebApi.UnitTests
 {
     [TestFixture]
-    public class UpdaterTest
+    public class StoryUpdaterTest
     {
         private Mock<ISession> _mockSession;
         private Mock<StoryMapper> _mockStoryMapper;
         private Mock<StoryRepository> _mockStoryRepository;
-        private Updater _updater;
+        private StoryUpdater _storyUpdater;
 
         [SetUp]
         public void SetUp()
@@ -21,7 +21,7 @@ namespace BuzzStats.StorageWebApi.UnitTests
             _mockSession = new Mock<ISession>();
             _mockStoryMapper = new Mock<StoryMapper>();
             _mockStoryRepository = new Mock<StoryRepository>();
-            _updater = new Updater(_mockStoryMapper.Object, _mockStoryRepository.Object);
+            _storyUpdater = new StoryUpdater(_mockStoryMapper.Object, _mockStoryRepository.Object);
         }
 
         [Test]
@@ -42,10 +42,11 @@ namespace BuzzStats.StorageWebApi.UnitTests
             _mockStoryRepository.Setup(r => r.GetByStoryId(_mockSession.Object, 42)).Returns((StoryEntity)null);
 
             // act
-            _updater.Save(_mockSession.Object, story);
+            var result = _storyUpdater.Save(_mockSession.Object, story);
 
             // assert
-            _mockSession.Verify(s => s.Save(storyEntity));
+            _mockSession.Verify(s => s.SaveOrUpdate(storyEntity));
+            Assert.AreEqual(storyEntity, result);
         }
         
         [Test]
@@ -71,10 +72,11 @@ namespace BuzzStats.StorageWebApi.UnitTests
             _mockStoryRepository.Setup(r => r.GetByStoryId(_mockSession.Object, 42)).Returns(existingStory);
 
             // act
-            _updater.Save(_mockSession.Object, story);
+            var result = _storyUpdater.Save(_mockSession.Object, story);
 
             // assert
-            _mockSession.Verify(s => s.SaveOrUpdate(storyEntity));
+            _mockSession.Verify(s => s.SaveOrUpdate(storyEntity), Times.Never);
+            Assert.AreEqual(existingStory, result);
         }
     }
 }

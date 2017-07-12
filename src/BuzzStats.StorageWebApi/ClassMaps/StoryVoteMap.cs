@@ -11,7 +11,6 @@ namespace BuzzStats.StorageWebApi.ClassMaps
             Id(x => x.Id);
             References(x => x.Story).UniqueKey("uniqueVoter").Not.Nullable();
             Map(x => x.Username).UniqueKey("uniqueVoter").Not.Nullable();
-            Map(x => x.CreatedAt).Not.Update().Not.Nullable();
         }
     }
 }

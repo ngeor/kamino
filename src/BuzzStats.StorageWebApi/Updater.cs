@@ -1,5 +1,5 @@
 ﻿using BuzzStats.StorageWebApi.DTOs;
-using BuzzStats.StorageWebApi.Repositories;
+using BuzzStats.StorageWebApi.Entities;
 using NHibernate;
 
 namespace BuzzStats.StorageWebApi
@@ -7,29 +7,29 @@ namespace BuzzStats.StorageWebApi
     public class Updater
     {
         private readonly StoryMapper _storyMapper;
-        private readonly StoryRepository _storyRepository;
+        private readonly StoryUpdater _storyUpdater;
 
-        public Updater(StoryMapper storyMapper, StoryRepository storyRepository)
+        public Updater(StoryMapper storyMapper, StoryUpdater storyUpdater)
         {
             _storyMapper = storyMapper;
-            _storyRepository = storyRepository;
+            _storyUpdater = storyUpdater;
         }
 
         public virtual void Save(ISession session, Story story)
         {
-            var storyEntity = _storyMapper.ToStoryEntity(story);
-            var existingStoryEntity = _storyRepository.GetByStoryId(session, story.StoryId);
+            var storyEntity = _storyUpdater.Save(session, story);
 
-            if (existingStoryEntity == null)
-            {
-                session.Save(storyEntity);
-            }
-            else
-            {
-                session.SaveOrUpdate(storyEntity);
-            }
+            SaveStoryVotes(session, story, storyEntity);
 
             session.Flush();
+        }
+
+        private void SaveStoryVotes(ISession session, Story story, StoryEntity storyEntity)
+        {
+            foreach (var storyVoteEntity in _storyMapper.ToStoryVoteEntities(story, storyEntity))
+            {
+                session.Save(storyVoteEntity);
+            }
         }
     }
 }

@@ -99,6 +99,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="StoryController.cs" />
     <Compile Include="StoryMapper.cs" />
+    <Compile Include="StoryUpdater.cs" />
     <Compile Include="StructureMapDependencyResolver.cs" />
     <Compile Include="Updater.cs" />
   </ItemGroup>
