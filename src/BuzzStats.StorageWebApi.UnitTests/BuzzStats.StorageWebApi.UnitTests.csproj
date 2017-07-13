@@ -52,9 +52,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Repositories\StoryRepositoryTest.cs" />
+    <Compile Include="Repositories\StoryVoteRepositoryTest.cs" />
     <Compile Include="StoryMapperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StoryUpdaterTest.cs" />
+    <Compile Include="StoryVoteUpdaterTest.cs" />
     <Compile Include="UpdaterTest.cs" />
   </ItemGroup>
   <ItemGroup>

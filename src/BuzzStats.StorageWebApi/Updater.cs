@@ -6,30 +6,20 @@ namespace BuzzStats.StorageWebApi
 {
     public class Updater
     {
-        private readonly StoryMapper _storyMapper;
         private readonly IStoryUpdater _storyUpdater;
+        private readonly IStoryVoteUpdater _storyVoteUpdater;
 
-        public Updater(StoryMapper storyMapper, IStoryUpdater storyUpdater)
+        public Updater(IStoryUpdater storyUpdater, IStoryVoteUpdater storyVoteUpdater)
         {
-            _storyMapper = storyMapper;
             _storyUpdater = storyUpdater;
+            _storyVoteUpdater = storyVoteUpdater;
         }
 
         public virtual void Save(ISession session, Story story)
         {
             var storyEntity = _storyUpdater.Save(session, story);
-
-            SaveStoryVotes(session, story, storyEntity);
-
+            _storyVoteUpdater.SaveStoryVotes(session, story, storyEntity);
             session.Flush();
-        }
-
-        private void SaveStoryVotes(ISession session, Story story, StoryEntity storyEntity)
-        {
-            foreach (var storyVoteEntity in _storyMapper.ToStoryVoteEntities(story, storyEntity))
-            {
-                session.Save(storyVoteEntity);
-            }
         }
     }
 }

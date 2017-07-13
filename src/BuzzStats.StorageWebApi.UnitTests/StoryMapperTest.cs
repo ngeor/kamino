@@ -121,9 +121,7 @@ namespace BuzzStats.StorageWebApi.UnitTests
                 StoryId = 42
             };
 
-            var storyEntity = new StoryEntity
-            {
-            };
+            var storyEntity = new StoryEntity();
 
             // act
             var storyVoteEntities = _storyMapper.ToStoryVoteEntities(story, storyEntity);
@@ -142,9 +140,7 @@ namespace BuzzStats.StorageWebApi.UnitTests
                 Voters = Array.Empty<string>()
             };
 
-            var storyEntity = new StoryEntity
-            {
-            };
+            var storyEntity = new StoryEntity();
 
             // act
             var storyVoteEntities = _storyMapper.ToStoryVoteEntities(story, storyEntity);
@@ -163,9 +159,7 @@ namespace BuzzStats.StorageWebApi.UnitTests
                 Voters = new[] {"user"}
             };
 
-            var storyEntity = new StoryEntity
-            {
-            };
+            var storyEntity = new StoryEntity();
 
             // act
             var storyVoteEntities = _storyMapper.ToStoryVoteEntities(story, storyEntity);
