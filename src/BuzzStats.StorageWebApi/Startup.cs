@@ -28,6 +28,7 @@ namespace BuzzStats.StorageWebApi
             Container container = new Container();
             container.Configure(x =>
             {
+                x.For<IStoryUpdater>().Use<StoryUpdater>();
                 x.For<ISessionFactory>().Use(() => SessionFactoryFactory.Create()).Singleton();
             });
             

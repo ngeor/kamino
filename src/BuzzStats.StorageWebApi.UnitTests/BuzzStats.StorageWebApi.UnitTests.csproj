@@ -55,6 +55,7 @@
     <Compile Include="StoryMapperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StoryUpdaterTest.cs" />
+    <Compile Include="UpdaterTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -5,7 +5,7 @@ using NHibernate;
 
 namespace BuzzStats.StorageWebApi
 {
-    public class StoryUpdater
+    public class StoryUpdater : IStoryUpdater
     {
         private readonly StoryMapper _storyMapper;
         private readonly StoryRepository _storyRepository;

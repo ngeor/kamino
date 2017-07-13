@@ -7,9 +7,9 @@ namespace BuzzStats.StorageWebApi
     public class Updater
     {
         private readonly StoryMapper _storyMapper;
-        private readonly StoryUpdater _storyUpdater;
+        private readonly IStoryUpdater _storyUpdater;
 
-        public Updater(StoryMapper storyMapper, StoryUpdater storyUpdater)
+        public Updater(StoryMapper storyMapper, IStoryUpdater storyUpdater)
         {
             _storyMapper = storyMapper;
             _storyUpdater = storyUpdater;

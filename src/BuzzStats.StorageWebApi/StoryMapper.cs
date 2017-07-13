@@ -19,10 +19,11 @@ namespace BuzzStats.StorageWebApi
             Category = story.Category,
         };
 
-        public virtual StoryVoteEntity[] ToStoryVoteEntities(Story story, StoryEntity storyEntity) => story.Voters.Select(v => new StoryVoteEntity
-        {
-            Story = storyEntity,
-            Username = v
-        }).ToArray();
+        public virtual StoryVoteEntity[] ToStoryVoteEntities(Story story, StoryEntity storyEntity) =>
+            (story.Voters ?? Enumerable.Empty<string>()).Select(v => new StoryVoteEntity
+            {
+                Story = storyEntity,
+                Username = v
+            }).ToArray();
     }
 }
