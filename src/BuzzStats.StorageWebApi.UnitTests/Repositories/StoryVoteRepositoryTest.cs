@@ -1,4 +1,5 @@
-﻿using BuzzStats.StorageWebApi.Entities;
+﻿using System.Collections.Generic;
+using BuzzStats.StorageWebApi.Entities;
 using BuzzStats.StorageWebApi.Repositories;
 using Moq;
 using NHibernate;
@@ -32,20 +33,18 @@ namespace BuzzStats.StorageWebApi.UnitTests.Repositories
                 StoryId = 42
             };
             
-            var storyVoteEntity = new StoryVoteEntity();
+            var storyVoteEntities = new List<StoryVoteEntity>();
 
             // TODO make a friendlier DSL for setting up Restrictions in unit tests
             _mockStoryVoteCriteria.Setup(c => c.Add(It.Is<ICriterion>(crit => crit.ToString() == Restrictions.Eq("Story", storyEntity).ToString())))
                 .Returns(_mockStoryVoteCriteria.Object);
-            _mockStoryVoteCriteria.Setup(c => c.Add(It.Is<ICriterion>(crit => crit.ToString() == Restrictions.Eq("Username", "voter").ToString())))
-                .Returns(_mockStoryVoteCriteria.Object);
-            _mockStoryVoteCriteria.Setup(c => c.UniqueResult<StoryVoteEntity>()).Returns(storyVoteEntity);
+            _mockStoryVoteCriteria.Setup(c => c.List<StoryVoteEntity>()).Returns(storyVoteEntities);
             
             // act
-            StoryVoteEntity actualStoryVoteEntity = _storyVoteRepository.Get(_mockSession.Object, storyEntity, "voter");
+            IList<StoryVoteEntity> actualStoryVoteEntities = _storyVoteRepository.Get(_mockSession.Object, storyEntity);
             
             // assert
-            Assert.AreEqual(storyVoteEntity, actualStoryVoteEntity);
+            Assert.AreEqual(storyVoteEntities, actualStoryVoteEntities);
         }
     }
 }

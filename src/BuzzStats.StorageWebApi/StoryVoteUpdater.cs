@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using BuzzStats.StorageWebApi.DTOs;
 using BuzzStats.StorageWebApi.Entities;
 using BuzzStats.StorageWebApi.Repositories;
@@ -18,9 +20,22 @@ namespace BuzzStats.StorageWebApi
 
         public void SaveStoryVotes(ISession session, Story story, StoryEntity storyEntity)
         {
-            foreach (var storyVoteEntity in _storyMapper.ToStoryVoteEntities(story, storyEntity))
+            IList<StoryVoteEntity> existingStoryVotes = _storyVoteRepository.Get(session, storyEntity);
+            IList<StoryVoteEntity> newStoryVotes = _storyMapper.ToStoryVoteEntities(story, storyEntity);
+            foreach (var storyVoteEntity in newStoryVotes)
             {
-                session.SaveOrUpdate(storyVoteEntity);
+                if (existingStoryVotes.All(e => e.Username != storyVoteEntity.Username))
+                {
+                    session.SaveOrUpdate(storyVoteEntity);
+                }
+            }
+
+            foreach (var existingStoryVote in existingStoryVotes)
+            {
+                if (newStoryVotes.All(e => e.Username != existingStoryVote.Username))
+                {
+                    session.Delete(existingStoryVote);
+                }
             }
         }
     }
