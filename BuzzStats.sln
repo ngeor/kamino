@@ -1,0 +1,202 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.Crawler", "BuzzStats.Crawler\BuzzStats.Crawler.csproj", "{E5E0A82D-5BAF-45B2-810B-DAD0A3837396}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.Web", "BuzzStats.Web\BuzzStats.Web.csproj", "{B53D59CC-9CB6-40B8-AA9A-2D9554A1AB87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.Tests", "BuzzStats.Tests\BuzzStats.Tests.csproj", "{9145302A-4E4E-4B67-83EA-6C9DDD5665F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats", "BuzzStats\BuzzStats.csproj", "{70807780-11BE-4F50-8BC5-A727ACA2B35F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.Data", "BuzzStats.Data\BuzzStats.Data.csproj", "{3AD2CE4B-561B-447C-9A52-D5F96B228462}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.Data.TestsBase", "BuzzStats.Data.TestsBase\BuzzStats.Data.TestsBase.csproj", "{BD882700-8B9F-45C7-97FF-FC803BE4CF37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.Data.NHibernate", "BuzzStats.Data.NHibernate\BuzzStats.Data.NHibernate.csproj", "{32864D56-1190-49E5-92DA-B4043102FA3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.Data.NHibernate.Tests", "BuzzStats.Data.NHibernate.Tests\BuzzStats.Data.NHibernate.Tests.csproj", "{7BE30EE6-E9E5-4302-8966-84B822814F33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.WebApi", "BuzzStats.WebApi\BuzzStats.WebApi.csproj", "{7B2E2D42-C462-405F-9505-E89F546E96C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.ParserWebApi", "BuzzStats.ParserWebApi\BuzzStats.ParserWebApi.csproj", "{AC79F1D1-355C-483B-AD3F-D53658E5F33F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.CrawlerService", "BuzzStats.CrawlerService\BuzzStats.CrawlerService.csproj", "{E02AC7E7-7CEB-4F99-864A-327C890C6E40}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.StorageWebApi", "BuzzStats.StorageWebApi\BuzzStats.StorageWebApi.csproj", "{BB4F2568-8B52-44BD-9E25-B1249858DC3A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.MockServer", "BuzzStats.MockServer\BuzzStats.MockServer.csproj", "{B53DBA36-F7B8-4F1E-807F-519FFF9A69CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.ParserWebApi.UnitTests", "BuzzStats.ParserWebApi.UnitTests\BuzzStats.ParserWebApi.UnitTests.csproj", "{4E93478D-D057-4317-9116-84F6451E25CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.MockServer.UnitTests", "BuzzStats.MockServer.UnitTests\BuzzStats.MockServer.UnitTests.csproj", "{79718836-978B-4172-854B-FE29F0EAD8FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.CrawlerService.UnitTests", "BuzzStats.CrawlerService.UnitTests\BuzzStats.CrawlerService.UnitTests.csproj", "{662B0DA7-1333-45E7-8809-A0326A8C2E0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.StorageWebApi.UnitTests", "BuzzStats.StorageWebApi.UnitTests\BuzzStats.StorageWebApi.UnitTests.csproj", "{C39DD2B0-0996-4B4F-9353-945E8E6D9036}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.StorageWebApi.IntegrationTests", "BuzzStats.StorageWebApi.IntegrationTests\BuzzStats.StorageWebApi.IntegrationTests.csproj", "{710AD1AE-E64B-4E15-94A8-7CDE7F224CBF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E5E0A82D-5BAF-45B2-810B-DAD0A3837396}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5E0A82D-5BAF-45B2-810B-DAD0A3837396}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5E0A82D-5BAF-45B2-810B-DAD0A3837396}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5E0A82D-5BAF-45B2-810B-DAD0A3837396}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B53D59CC-9CB6-40B8-AA9A-2D9554A1AB87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B53D59CC-9CB6-40B8-AA9A-2D9554A1AB87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B53D59CC-9CB6-40B8-AA9A-2D9554A1AB87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B53D59CC-9CB6-40B8-AA9A-2D9554A1AB87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9145302A-4E4E-4B67-83EA-6C9DDD5665F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9145302A-4E4E-4B67-83EA-6C9DDD5665F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9145302A-4E4E-4B67-83EA-6C9DDD5665F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9145302A-4E4E-4B67-83EA-6C9DDD5665F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70807780-11BE-4F50-8BC5-A727ACA2B35F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70807780-11BE-4F50-8BC5-A727ACA2B35F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70807780-11BE-4F50-8BC5-A727ACA2B35F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70807780-11BE-4F50-8BC5-A727ACA2B35F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AD2CE4B-561B-447C-9A52-D5F96B228462}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AD2CE4B-561B-447C-9A52-D5F96B228462}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AD2CE4B-561B-447C-9A52-D5F96B228462}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AD2CE4B-561B-447C-9A52-D5F96B228462}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD882700-8B9F-45C7-97FF-FC803BE4CF37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD882700-8B9F-45C7-97FF-FC803BE4CF37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD882700-8B9F-45C7-97FF-FC803BE4CF37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD882700-8B9F-45C7-97FF-FC803BE4CF37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32864D56-1190-49E5-92DA-B4043102FA3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32864D56-1190-49E5-92DA-B4043102FA3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32864D56-1190-49E5-92DA-B4043102FA3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32864D56-1190-49E5-92DA-B4043102FA3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BE30EE6-E9E5-4302-8966-84B822814F33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BE30EE6-E9E5-4302-8966-84B822814F33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BE30EE6-E9E5-4302-8966-84B822814F33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BE30EE6-E9E5-4302-8966-84B822814F33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B2E2D42-C462-405F-9505-E89F546E96C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B2E2D42-C462-405F-9505-E89F546E96C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B2E2D42-C462-405F-9505-E89F546E96C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B2E2D42-C462-405F-9505-E89F546E96C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC79F1D1-355C-483B-AD3F-D53658E5F33F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC79F1D1-355C-483B-AD3F-D53658E5F33F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC79F1D1-355C-483B-AD3F-D53658E5F33F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC79F1D1-355C-483B-AD3F-D53658E5F33F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E02AC7E7-7CEB-4F99-864A-327C890C6E40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E02AC7E7-7CEB-4F99-864A-327C890C6E40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E02AC7E7-7CEB-4F99-864A-327C890C6E40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E02AC7E7-7CEB-4F99-864A-327C890C6E40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB4F2568-8B52-44BD-9E25-B1249858DC3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB4F2568-8B52-44BD-9E25-B1249858DC3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB4F2568-8B52-44BD-9E25-B1249858DC3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB4F2568-8B52-44BD-9E25-B1249858DC3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B53DBA36-F7B8-4F1E-807F-519FFF9A69CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B53DBA36-F7B8-4F1E-807F-519FFF9A69CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B53DBA36-F7B8-4F1E-807F-519FFF9A69CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B53DBA36-F7B8-4F1E-807F-519FFF9A69CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E93478D-D057-4317-9116-84F6451E25CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E93478D-D057-4317-9116-84F6451E25CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E93478D-D057-4317-9116-84F6451E25CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E93478D-D057-4317-9116-84F6451E25CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79718836-978B-4172-854B-FE29F0EAD8FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79718836-978B-4172-854B-FE29F0EAD8FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79718836-978B-4172-854B-FE29F0EAD8FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79718836-978B-4172-854B-FE29F0EAD8FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{662B0DA7-1333-45E7-8809-A0326A8C2E0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{662B0DA7-1333-45E7-8809-A0326A8C2E0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{662B0DA7-1333-45E7-8809-A0326A8C2E0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{662B0DA7-1333-45E7-8809-A0326A8C2E0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C39DD2B0-0996-4B4F-9353-945E8E6D9036}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C39DD2B0-0996-4B4F-9353-945E8E6D9036}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C39DD2B0-0996-4B4F-9353-945E8E6D9036}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C39DD2B0-0996-4B4F-9353-945E8E6D9036}.Release|Any CPU.Build.0 = Release|Any CPU
+		{710AD1AE-E64B-4E15-94A8-7CDE7F224CBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{710AD1AE-E64B-4E15-94A8-7CDE7F224CBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{710AD1AE-E64B-4E15-94A8-7CDE7F224CBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{710AD1AE-E64B-4E15-94A8-7CDE7F224CBF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.StandardHeader = $1
+		$1.Text = @--------------------------------------------------------------------------------\n<copyright file="${FileName}" company="Nikolaos Georgiou">\n  Copyright (C) Nikolaos Georgiou 2010-${Year}\n</copyright>\n<author>Nikolaos Georgiou</author>\n* Date: ${Date:yyyy/MM/dd}\n* Time: ${Time:HH:mm:ss}\n--------------------------------------------------------------------------------
+		$1.IncludeInNewFiles = True
+		$0.TextStylePolicy = $20
+		$2.inheritsSet = null
+		$2.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $3
+		$3.IndentSwitchBody = True
+		$3.IndentBlocksInsideExpressions = True
+		$3.AnonymousMethodBraceStyle = NextLine
+		$3.PropertyBraceStyle = NextLine
+		$3.PropertyGetBraceStyle = NextLine
+		$3.PropertySetBraceStyle = NextLine
+		$3.EventBraceStyle = NextLine
+		$3.EventAddBraceStyle = NextLine
+		$3.EventRemoveBraceStyle = NextLine
+		$3.StatementBraceStyle = NextLine
+		$3.ElseNewLinePlacement = NewLine
+		$3.CatchNewLinePlacement = NewLine
+		$3.FinallyNewLinePlacement = NewLine
+		$3.WhileNewLinePlacement = DoNotCare
+		$3.ArrayInitializerWrapping = DoNotChange
+		$3.ArrayInitializerBraceStyle = NextLine
+		$3.BeforeMethodDeclarationParentheses = False
+		$3.BeforeMethodCallParentheses = False
+		$3.BeforeConstructorDeclarationParentheses = False
+		$3.NewLineBeforeConstructorInitializerColon = NewLine
+		$3.NewLineAfterConstructorInitializerColon = SameLine
+		$3.BeforeDelegateDeclarationParentheses = False
+		$3.NewParentheses = False
+		$3.SpacesBeforeBrackets = False
+		$3.inheritsSet = Mono
+		$3.inheritsScope = text/x-csharp
+		$3.scope = text/x-csharp
+		$4.FileWidth = 120
+		$4.TabWidth = 2
+		$4.IndentWidth = 2
+		$4.inheritsSet = VisualStudio
+		$4.inheritsScope = text/plain
+		$4.scope = application/xml
+		$0.XmlFormattingPolicy = $18
+		$5.inheritsSet = Mono
+		$5.inheritsScope = application/xml
+		$5.scope = application/xml
+		$6.inheritsSet = VisualStudio
+		$6.inheritsScope = text/plain
+		$6.scope = text/plain
+		$7.inheritsSet = null
+		$7.scope = application/config+xml
+		$8.inheritsSet = null
+		$8.scope = application/config+xml
+		$9.inheritsSet = null
+		$9.scope = application/x-aspx
+		$10.inheritsSet = null
+		$10.scope = text/css
+		$11.inheritsSet = null
+		$11.scope = application/x-asax
+		$12.inheritsSet = null
+		$12.scope = application/javascript
+		$13.inheritsSet = null
+		$13.scope = application/x-ashx
+		$14.inheritsSet = null
+		$14.scope = application/x-ascx
+		$15.inheritsSet = null
+		$15.scope = application/x-master-page
+		$16.inheritsSet = null
+		$16.scope = application/x-asmx
+		$17.inheritsSet = null
+		$17.scope = text/microsoft-resx
+		$18.inheritsSet = null
+		$18.scope = text/microsoft-resx
+		$19.inheritsSet = null
+		$19.scope = text/html
+		$20.inheritsSet = null
+		$20.scope = application/sql
+	EndGlobalSection
+EndGlobal

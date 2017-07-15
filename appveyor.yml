@@ -9,14 +9,14 @@ assembly_info:
   assembly_file_version: "{version}"
   assembly_informational_version: "{version}"
 before_build:
-  - nuget restore src\BuzzStats.sln
+  - nuget restore BuzzStats.sln
 build:
   parallel: false
-  project: src\BuzzStats.sln
+  project: BuzzStats.sln
 test:
   assemblies:
     only:
       - '**\*UnitTests.dll'
 after_test:
-  - .\src\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -filter:"+[*]* -[*.UnitTests]*" -target:.\src\packages\NUnit.ConsoleRunner.3.6.1\tools\nunit3-console.exe -targetargs:".\src\BuzzStats.MockServer.UnitTests\bin\Debug\BuzzStats.MockServer.UnitTests.dll .\src\BuzzStats.ParserWebApi.UnitTests\bin\Debug\BuzzStats.ParserWebApi.UnitTests.dll .\src\BuzzStats.CrawlerService.UnitTests\bin\Debug\BuzzStats.CrawlerService.UnitTests.dll .\src\BuzzStats.StorageWebApi.UnitTests\bin\Debug\BuzzStats.StorageWebApi.UnitTests.dll"
-  - .\src\packages\coveralls.net.0.7.0\tools\csmacnz.Coveralls.exe --opencover -i .\results.xml
+  - .\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -filter:"+[*]* -[*.UnitTests]*" -target:.\packages\NUnit.ConsoleRunner.3.6.1\tools\nunit3-console.exe -targetargs:".\BuzzStats.MockServer.UnitTests\bin\Debug\BuzzStats.MockServer.UnitTests.dll .\BuzzStats.ParserWebApi.UnitTests\bin\Debug\BuzzStats.ParserWebApi.UnitTests.dll .\BuzzStats.CrawlerService.UnitTests\bin\Debug\BuzzStats.CrawlerService.UnitTests.dll .\BuzzStats.StorageWebApi.UnitTests\bin\Debug\BuzzStats.StorageWebApi.UnitTests.dll"
+  - .\packages\coveralls.net.0.7.0\tools\csmacnz.Coveralls.exe --opencover -i .\results.xml

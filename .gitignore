@@ -9,8 +9,8 @@ packages/
 
 # IntelliJ / Rider
 *.iml
-src/.idea/.idea.BuzzStats/.idea/*
-!src/.idea/.idea.BuzzStats/.idea/runConfigurations/
+.idea/.idea.BuzzStats/.idea/*
+!.idea/.idea.BuzzStats/.idea/runConfigurations/
 
 # Coverage report
 results.xml
