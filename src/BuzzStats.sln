@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.CrawlerService.Un
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.StorageWebApi.UnitTests", "BuzzStats.StorageWebApi.UnitTests\BuzzStats.StorageWebApi.UnitTests.csproj", "{C39DD2B0-0996-4B4F-9353-945E8E6D9036}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.StorageWebApi.IntegrationTests", "BuzzStats.StorageWebApi.IntegrationTests\BuzzStats.StorageWebApi.IntegrationTests.csproj", "{710AD1AE-E64B-4E15-94A8-7CDE7F224CBF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,10 @@ Global
 		{C39DD2B0-0996-4B4F-9353-945E8E6D9036}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C39DD2B0-0996-4B4F-9353-945E8E6D9036}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C39DD2B0-0996-4B4F-9353-945E8E6D9036}.Release|Any CPU.Build.0 = Release|Any CPU
+		{710AD1AE-E64B-4E15-94A8-7CDE7F224CBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{710AD1AE-E64B-4E15-94A8-7CDE7F224CBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{710AD1AE-E64B-4E15-94A8-7CDE7F224CBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{710AD1AE-E64B-4E15-94A8-7CDE7F224CBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

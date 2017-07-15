@@ -3,14 +3,18 @@ using Microsoft.Owin.Hosting;
 
 namespace BuzzStats.StorageWebApi
 {
-    internal class Program
+    public sealed class Program
     {
-        public static void Main(string[] args)
+        public static IDisposable Start()
         {
             const string baseAddress = "http://localhost:9003/";
-
+            return WebApp.Start<Startup>(baseAddress);
+        }
+        
+        public static void Main(string[] args)
+        {
             // Start OWIN host 
-            using (WebApp.Start<Startup>(url: baseAddress))
+            using (Start())
             {
                 Console.WriteLine("Server listening at port 9003");
                 Console.ReadLine();

@@ -1,4 +1,5 @@
-﻿using FluentNHibernate.Cfg;
+﻿using System;
+using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using log4net;
 using NHibernate;
@@ -14,12 +15,21 @@ namespace BuzzStats.StorageWebApi
         internal static ISessionFactory Create()
         {
             Log.Info("Creating session factory");
-            var sessionFactory = Fluently.Configure()
-                .Database(MySQLConfiguration.Standard.ConnectionString(c => c.FromConnectionStringWithKey("BuzzStats")))
-                .Mappings(m => m.FluentMappings.AddFromAssemblyOf<StoryController>())
-                .ExposeConfiguration(BuildSchema)
-                .BuildSessionFactory();
-            return sessionFactory;
+            try
+            {
+                var sessionFactory = Fluently.Configure()
+                    .Database(MySQLConfiguration.Standard.ConnectionString(c =>
+                        c.FromConnectionStringWithKey("BuzzStats")))
+                    .Mappings(m => m.FluentMappings.AddFromAssemblyOf<StoryController>())
+                    .ExposeConfiguration(BuildSchema)
+                    .BuildSessionFactory();
+                return sessionFactory;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message, ex);
+                throw;
+            }
         }
 
         private static void BuildSchema(Configuration cfg)

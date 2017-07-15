@@ -30,7 +30,18 @@ namespace BuzzStats.StorageWebApi
         // POST api/story 
         public void Post([FromBody] Story story)
         {
+            if (story == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+
             Log.InfoFormat("Received story {0} title {1}", story.StoryId, story.Title);
+
+            if (string.IsNullOrWhiteSpace(story.Title))
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+
             try
             {
                 using (var session = _sessionFactory.OpenSession())

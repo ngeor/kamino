@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http.Dependencies;
+using log4net;
 using StructureMap;
 
 namespace BuzzStats.StorageWebApi
 {
     sealed class StructureMapDependencyResolver : IDependencyResolver
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(StructureMapDependencyResolver));
         private readonly IContainer _container;
 
         public StructureMapDependencyResolver(IContainer container)
@@ -22,13 +24,21 @@ namespace BuzzStats.StorageWebApi
 
         public object GetService(Type serviceType)
         {
-            if (serviceType.IsAbstract || serviceType.IsInterface)
+            try
             {
-                return _container.TryGetInstance(serviceType);
+                if (serviceType.IsAbstract || serviceType.IsInterface)
+                {
+                    return _container.TryGetInstance(serviceType);
+                }
+                else
+                {
+                    return _container.GetInstance(serviceType);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return _container.GetInstance(serviceType);
+                Log.Error(ex.Message, ex);
+                throw;
             }
         }
 
