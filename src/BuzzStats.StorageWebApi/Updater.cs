@@ -18,10 +18,13 @@ namespace BuzzStats.StorageWebApi
 
         public virtual void Save(ISession session, Story story)
         {
-            var storyEntity = _storyUpdater.Save(session, story);
-            _storyVoteUpdater.SaveStoryVotes(session, story, storyEntity);
-            _commentUpdater.SaveComments(session, story, storyEntity);
-            session.Flush();
+            using (var transaction = session.BeginTransaction())
+            {
+                var storyEntity = _storyUpdater.Save(session, story);
+                _storyVoteUpdater.SaveStoryVotes(session, story, storyEntity);
+                _commentUpdater.SaveComments(session, story, storyEntity);
+                transaction.Commit();
+            }
         }
     }
 }

@@ -11,7 +11,7 @@ namespace BuzzStats.StorageWebApi.IntegrationTests
     public class Tests
     {
         private IDisposable _webhost;
-        
+
         [SetUp]
         public void SetUp()
         {
@@ -23,7 +23,7 @@ namespace BuzzStats.StorageWebApi.IntegrationTests
         {
             _webhost.Dispose();
         }
-        
+
         [Test]
         public async Task CreateStory_WithNoTitle_IsBadRequest()
         {
@@ -34,7 +34,7 @@ namespace BuzzStats.StorageWebApi.IntegrationTests
             Assert.AreEqual(false, httpResponseMessage.IsSuccessStatusCode);
             Assert.AreEqual(HttpStatusCode.BadRequest, httpResponseMessage.StatusCode);
         }
-        
+
         [Test]
         public async Task CreateStory_WithCorrectData_IsSuccessful()
         {
@@ -43,9 +43,26 @@ namespace BuzzStats.StorageWebApi.IntegrationTests
             {
                 Title = "test title",
                 Username = "test user",
-                Url = "http://localhost/"
+                Url = "http://localhost/",
+                Voters = new[] {"test user", "test user 2"},
+                Comments = new[]
+                {
+                    new Comment
+                    {
+                        CommentId = 42,
+                        Username = "test user 2",
+                        Comments = new[]
+                        {
+                            new Comment
+                            {
+                                CommentId = 43,
+                                Username = "test user"
+                            }
+                        }
+                    }
+                }
             };
-            
+
             HttpClient httpClient = new HttpClient();
             var httpResponseMessage = await httpClient.PostAsJsonAsync("http://localhost:9003/api/story", story);
             Assert.NotNull(httpResponseMessage);

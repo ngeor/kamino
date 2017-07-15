@@ -10,6 +10,7 @@ namespace BuzzStats.StorageWebApi.UnitTests
     public class UpdaterTest
     {
         private Mock<ISession> _mockSession;
+        private Mock<ITransaction> _mockTransaction;
         private Mock<IStoryUpdater> _mockStoryUpdater;
         private Mock<IStoryVoteUpdater> _mockStoryVoteUpdater;
         private Mock<ICommentUpdater> _mockCommentUpdater;
@@ -18,7 +19,11 @@ namespace BuzzStats.StorageWebApi.UnitTests
         [SetUp]
         public void SetUp()
         {
-            _mockSession = new Mock<ISession>();
+            _mockTransaction = new Mock<ITransaction>(MockBehavior.Strict);
+            _mockTransaction.Setup(t => t.Dispose());
+            _mockTransaction.Setup(t => t.Commit());
+            _mockSession = new Mock<ISession>(MockBehavior.Strict);
+            _mockSession.Setup(s => s.BeginTransaction()).Returns(_mockTransaction.Object);
             _mockStoryUpdater = new Mock<IStoryUpdater>();
             _mockStoryVoteUpdater = new Mock<IStoryVoteUpdater>();
             _mockCommentUpdater = new Mock<ICommentUpdater>();
@@ -60,7 +65,7 @@ namespace BuzzStats.StorageWebApi.UnitTests
             // assert
             _mockStoryVoteUpdater.Verify(u => u.SaveStoryVotes(_mockSession.Object, story, storyEntity));
         }
-        
+
         [Test]
         public void Save_UsesCommentUpdater()
         {
@@ -81,5 +86,24 @@ namespace BuzzStats.StorageWebApi.UnitTests
             _mockCommentUpdater.Verify(u => u.SaveComments(_mockSession.Object, story, storyEntity));
         }
 
+        [Test]
+        public void Save_UsesTransaction()
+        {
+            var story = new Story
+            {
+                StoryId = 42
+            };
+
+            var storyEntity = new StoryEntity();
+
+            _mockStoryUpdater.Setup(u => u.Save(_mockSession.Object, story)).Returns(storyEntity);
+
+            // act
+            _updater.Save(_mockSession.Object, story);
+
+            // assert
+            _mockSession.VerifyAll();
+            _mockTransaction.VerifyAll();
+        }
     }
 }
