@@ -51,6 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommentUpdaterTest.cs" />
+    <Compile Include="Repositories\CommentRepositoryTest.cs" />
     <Compile Include="Repositories\StoryRepositoryTest.cs" />
     <Compile Include="Repositories\StoryVoteRepositoryTest.cs" />
     <Compile Include="StoryMapperTest.cs" />
