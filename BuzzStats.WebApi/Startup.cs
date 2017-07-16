@@ -18,6 +18,7 @@ namespace BuzzStats.WebApi
             );
 
             appBuilder.UseWebApi(config);
+            appBuilder.UseFileServer();
         }
     }
 }
