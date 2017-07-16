@@ -1,0 +1,16 @@
+{
+  "name": "buzzstats.webapi",
+  "version": "2.0.0",
+  "description": "BuzzStats Web API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nikolaos Georgiou",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-pug": "^3.3.0"
+  }
+}
