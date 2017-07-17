@@ -3,6 +3,23 @@ html(lang="en")
     head
         title BuzzStats
         link(rel="stylesheet" href="css/app.css")
+        // <script src="js/app.js?v=<%= BuzzStats.Version.Get() %>" type="text/javascript"></script>
     body
-        h1 BuzzStats
+        header
+            a(href='#') ngeor.net | BuzzStats
+            span Proudly under construction since 2010
+
+        nav
+            ul
+                li: a(href='#') Αρχική
+                li: a(href='#') Άρθρα
+                li: a(href='#') Χρήστες
+                li: a(href='#') Ιστότοποι
+                li: a(href='#') Γραφήματα
+                li: a(href='#') Για το BuzzStats
+
         block content
+
+        footer.
+            &copy; 2010-#{(new Date()).getFullYear()}
+            #[a(href="/") ngeor.net] / Nikolaos Georgiou | BuzzStats version: #{version}
