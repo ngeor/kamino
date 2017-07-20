@@ -31,6 +31,7 @@ namespace BuzzStats.StorageWebApi
                 x.For<IStoryUpdater>().Use<StoryUpdater>();
                 x.For<IStoryVoteUpdater>().Use<StoryVoteUpdater>();
                 x.For<ICommentUpdater>().Use<CommentUpdater>();
+                x.For<IUpdater>().Use<Updater>();
                 x.For<ISessionFactory>().Use(() => SessionFactoryFactory.Create()).Singleton();
             });
             

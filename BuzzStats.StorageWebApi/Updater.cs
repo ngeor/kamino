@@ -3,7 +3,7 @@ using NHibernate;
 
 namespace BuzzStats.StorageWebApi
 {
-    public class Updater
+    public class Updater : IUpdater
     {
         private readonly IStoryUpdater _storyUpdater;
         private readonly IStoryVoteUpdater _storyVoteUpdater;

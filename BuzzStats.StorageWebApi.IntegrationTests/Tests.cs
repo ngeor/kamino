@@ -27,9 +27,49 @@ namespace BuzzStats.StorageWebApi.IntegrationTests
         [Test]
         public async Task CreateStory_WithNoTitle_IsBadRequest()
         {
-            Story story = new Story();
+            // arrange
+            Story story = CreateValidStory();
+            story.Title = null;
             HttpClient httpClient = new HttpClient();
+            
+            // act
             var httpResponseMessage = await httpClient.PostAsJsonAsync("http://localhost:9003/api/story", story);
+            
+            // assert
+            Assert.NotNull(httpResponseMessage);
+            Assert.AreEqual(false, httpResponseMessage.IsSuccessStatusCode);
+            Assert.AreEqual(HttpStatusCode.BadRequest, httpResponseMessage.StatusCode);
+        }
+        
+        [Test]
+        public async Task CreateStory_WithNoStoryId_IsBadRequest()
+        {
+            // arrange
+            Story story = CreateValidStory();
+            story.StoryId = 0;
+            HttpClient httpClient = new HttpClient();
+            
+            // act
+            var httpResponseMessage = await httpClient.PostAsJsonAsync("http://localhost:9003/api/story", story);
+            
+            // assert
+            Assert.NotNull(httpResponseMessage);
+            Assert.AreEqual(false, httpResponseMessage.IsSuccessStatusCode);
+            Assert.AreEqual(HttpStatusCode.BadRequest, httpResponseMessage.StatusCode);
+        }
+
+        [Test]
+        public async Task CreateStory_WithNoCreationDate_IsBadRequest()
+        {
+            // arrange
+            Story story = CreateValidStory();
+            story.CreatedAt = default(DateTime);
+            HttpClient httpClient = new HttpClient();
+            
+            // act
+            var httpResponseMessage = await httpClient.PostAsJsonAsync("http://localhost:9003/api/story", story);
+            
+            // assert
             Assert.NotNull(httpResponseMessage);
             Assert.AreEqual(false, httpResponseMessage.IsSuccessStatusCode);
             Assert.AreEqual(HttpStatusCode.BadRequest, httpResponseMessage.StatusCode);
@@ -39,34 +79,47 @@ namespace BuzzStats.StorageWebApi.IntegrationTests
         public async Task CreateStory_WithCorrectData_IsSuccessful()
         {
             // TODO StoryId = 0 and CreatedAt = 0000 should also fail with 400
-            Story story = new Story
+            // arrange
+            Story story = CreateValidStory();
+            HttpClient httpClient = new HttpClient();
+            
+            // act
+            var httpResponseMessage = await httpClient.PostAsJsonAsync("http://localhost:9003/api/story", story);
+            
+            // assert
+            Assert.NotNull(httpResponseMessage);
+            Assert.AreEqual(true, httpResponseMessage.IsSuccessStatusCode);
+        }
+
+        private Story CreateValidStory()
+        {
+            return new Story
             {
+                StoryId = 42,
                 Title = "test title",
                 Username = "test user",
                 Url = "http://localhost/",
                 Voters = new[] {"test user", "test user 2"},
+                CreatedAt = new DateTime(2017, 7, 20),
                 Comments = new[]
                 {
                     new Comment
                     {
                         CommentId = 42,
                         Username = "test user 2",
+                        CreatedAt = new DateTime(2017, 7, 20),
                         Comments = new[]
                         {
                             new Comment
                             {
                                 CommentId = 43,
-                                Username = "test user"
+                                Username = "test user",
+                                CreatedAt = new DateTime(2017, 7, 20)
                             }
                         }
                     }
                 }
             };
-
-            HttpClient httpClient = new HttpClient();
-            var httpResponseMessage = await httpClient.PostAsJsonAsync("http://localhost:9003/api/story", story);
-            Assert.NotNull(httpResponseMessage);
-            Assert.AreEqual(true, httpResponseMessage.IsSuccessStatusCode);
         }
     }
 }

@@ -13,9 +13,9 @@ namespace BuzzStats.StorageWebApi
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(StoryController));
         private readonly ISessionFactory _sessionFactory;
-        private readonly Updater _updater;
+        private readonly IUpdater _updater;
 
-        public StoryController(ISessionFactory sessionFactory, Updater updater)
+        public StoryController(ISessionFactory sessionFactory, IUpdater updater)
         {
             _sessionFactory = sessionFactory;
             _updater = updater;
@@ -37,7 +37,7 @@ namespace BuzzStats.StorageWebApi
 
             Log.InfoFormat("Received story {0} title {1}", story.StoryId, story.Title);
 
-            if (string.IsNullOrWhiteSpace(story.Title))
+            if (!IsInputValid(story))
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
@@ -54,6 +54,12 @@ namespace BuzzStats.StorageWebApi
                 Log.Error(ex.Message, ex);
                 throw new HttpResponseException(HttpStatusCode.InternalServerError);
             }
+        }
+
+        private static bool IsInputValid(Story story)
+        {
+            // TODO 1. add unit tests 2. limit dates to SQL Server Limitations 
+            return !string.IsNullOrWhiteSpace(story.Title) && story.StoryId > 0 && story.CreatedAt != default(DateTime);
         }
     }
 }
