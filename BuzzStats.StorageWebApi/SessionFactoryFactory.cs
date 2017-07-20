@@ -18,7 +18,7 @@ namespace BuzzStats.StorageWebApi
             try
             {
                 var sessionFactory = Fluently.Configure()
-                    .Database(MySQLConfiguration.Standard.ConnectionString(c =>
+                    .Database(MsSqlConfiguration.MsSql2012.ConnectionString(c =>
                         c.FromConnectionStringWithKey("BuzzStats")))
                     .Mappings(m => m.FluentMappings.AddFromAssemblyOf<StoryController>())
                     .ExposeConfiguration(BuildSchema)

@@ -1,9 +1,9 @@
 var gulp = require('gulp');
 var pug = require('gulp-pug');
 var less = require('gulp-less');
-
-// TODO read version from package.json
-var version = '2.0.0';
+var fs = require('fs');
+var packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+var version = packageJson.version;
 
 gulp.task('html', function() {
     return gulp.src('templates/*.pug')
