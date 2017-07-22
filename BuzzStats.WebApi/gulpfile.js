@@ -3,6 +3,9 @@ var pug = require('gulp-pug');
 var less = require('gulp-less');
 var clean = require('gulp-clean');
 var data = require('gulp-data');
+var webpack = require('webpack');
+var webpackStream = require('webpack-stream');
+var webpackConfig = require('./webpack.config.js');
 
 var fs = require('fs');
 var path = require('path');
@@ -37,9 +40,15 @@ gulp.task('css', function() {
         .pipe(gulp.dest('bin/Debug/css'));
 });
 
+gulp.task('webpack', function() {
+   return gulp.src('scripts/index.js')
+       .pipe(webpackStream(webpackConfig, webpack))
+       .pipe(gulp.dest('bin/Debug'));
+});
+
 gulp.task('watch', function() {
     gulp.watch('templates/*.pug', ['html']);
     gulp.watch('styles/*.less', ['css']);
 });
 
-gulp.task('default', ['html', 'css']);
+gulp.task('default', ['html', 'css', 'webpack']);

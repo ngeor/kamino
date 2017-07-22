@@ -118,6 +118,7 @@
     </Content>
     <Content Include="package-lock.json" />
     <Content Include="package.json" />
+    <Content Include="scripts\index.js" />
     <Content Include="styles\app.less" />
     <Content Include="templates\about.pug" />
     <Content Include="templates\graphs.pug" />
@@ -127,6 +128,7 @@
     <Content Include="templates\sites.pug" />
     <Content Include="templates\stories.pug" />
     <Content Include="templates\users.pug" />
+    <Content Include="webpack.config.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
