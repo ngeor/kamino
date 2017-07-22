@@ -91,7 +91,6 @@
     <Compile Include="ClassMaps\CommentMap.cs" />
     <Compile Include="ClassMaps\StoryMap.cs" />
     <Compile Include="ClassMaps\StoryVoteMap.cs" />
-    <Compile Include="CommentEntityHolder.cs" />
     <Compile Include="CommentUpdater.cs" />
     <Compile Include="DTOs\Comment.cs" />
     <Compile Include="DTOs\Story.cs" />

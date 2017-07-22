@@ -28,20 +28,25 @@ namespace BuzzStats.StorageWebApi.UnitTests
         public void SaveComments()
         {
             // arrange
-            var story = new Story();
-            var storyEntity = new StoryEntity();
-            var commentEntities = new[]
+            var story = new Story
             {
-                new CommentEntityHolder
+                Comments = new[]
                 {
-                    Entity = new CommentEntity
+                    new Comment
                     {
                         CommentId = 42
                     }
                 }
             };
+            
+            var storyEntity = new StoryEntity();
+            var commentEntities = new[]
+            {
+                new CommentEntity()
+            };
 
-            _mockStoryMapper.Setup(p => p.ToCommentEntities(story, storyEntity)).Returns(commentEntities);
+            _mockStoryMapper.Setup(p => p.ToCommentEntity(story.Comments[0], null, storyEntity))
+                .Returns(commentEntities[0]);
             _mockCommentRepository.Setup(p => p.GetByCommentId(_mockSession.Object, 42))
                 .Returns((CommentEntity)null);
 
@@ -49,7 +54,7 @@ namespace BuzzStats.StorageWebApi.UnitTests
             _commentUpdater.SaveComments(_mockSession.Object, story, storyEntity);
 
             // assert
-            _mockSession.Verify(s => s.Save(commentEntities[0].Entity));
+            _mockSession.Verify(s => s.Save(commentEntities[0]));
         }
     }
 }

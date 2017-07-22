@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using BuzzStats.StorageWebApi.DTOs;
 using BuzzStats.StorageWebApi.Entities;
-using FluentNHibernate.Data;
 
 namespace BuzzStats.StorageWebApi
 {
@@ -35,21 +33,9 @@ namespace BuzzStats.StorageWebApi
                 Username = v
             }).ToArray();
 
-        /// <summary>
-        /// Returns all comments.
-        /// </summary>
-        public virtual CommentEntityHolder[] ToCommentEntities(Story story, StoryEntity storyEntity)
-            => ToCommentEntities(story.Comments, new CommentEntityHolder(), storyEntity).ToArray();
-
-        private IEnumerable<CommentEntityHolder> ToCommentEntities(
-            IEnumerable<Comment> comments,
-            CommentEntityHolder parentCommentEntity,
-            StoryEntity storyEntity)
-            => (comments ?? Enumerable.Empty<Comment>()).Select(c => ToCommentEntity(c, parentCommentEntity, storyEntity));
-
-        private CommentEntityHolder ToCommentEntity(
+        public virtual CommentEntity ToCommentEntity(
             Comment comment,
-            CommentEntityHolder parentCommentEntity,
+            CommentEntity parentCommentEntity,
             StoryEntity storyEntity)
         {
             var result = new CommentEntity
@@ -58,20 +44,13 @@ namespace BuzzStats.StorageWebApi
                 CommentId = comment.CommentId,
                 CreatedAt = comment.CreatedAt,
                 IsBuried = comment.IsBuried,
-                ParentComment = parentCommentEntity.Entity,
+                ParentComment = parentCommentEntity,
                 Username = comment.Username,
                 VotesDown = comment.VotesDown,
                 VotesUp = comment.VotesUp
             };
 
-            var entityHolder = new CommentEntityHolder
-            {
-                Entity = result
-            };
-
-            entityHolder.Children = ToCommentEntities(comment.Comments, entityHolder, storyEntity).ToList();
-
-            return entityHolder;
+            return result;
         }
     }
 }
