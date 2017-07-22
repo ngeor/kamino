@@ -1,23 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Web.Http;
+using log4net;
 using Microsoft.Owin.Hosting;
 
 namespace BuzzStats.CrawlerService
 {
     internal class Program
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(Program));
+        
         public static void Main(string[] args)
         {
+            ManualResetEventSlim done = new ManualResetEventSlim(false);
             const string baseAddress = "http://localhost:9001/";
             ListingTask listingTask = new ListingTask(new ParserClient(), new StorageClient());
 
+            Console.CancelKeyPress += (sender, eventArgs) => done.Set();
+            
             // Start OWIN host 
             using (WebApp.Start<Startup>(url: baseAddress))
             {
-                Console.WriteLine("Server listening at port 9001");
+                Log.Info("Server listening at port 9001");
                 TaskLoop.RunForEver(() => listingTask.RunOnce());
-                Console.ReadLine();
+                if (!Console.IsInputRedirected)
+                {
+                    Console.ReadLine();
+                    done.Set();
+                }
+                
+                done.Wait();
+                Log.Info("Server exiting");
             }
         }
     }

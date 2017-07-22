@@ -1,3 +1,4 @@
+using System;
 using System.Configuration;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -10,7 +11,12 @@ namespace BuzzStats.CrawlerService
         public virtual async Task Save(Story story)
         {
             HttpClient client = new HttpClient();
-            await client.PostAsJsonAsync(ConfigurationManager.AppSettings["StorageWebApiUrl"] + "/api/story", story);
+            await client.PostAsJsonAsync(StorageWebApiUrl() + "/api/story", story);
         }
+        
+        private static string StorageWebApiUrl() =>
+            Environment.GetEnvironmentVariable("STORAGE_WEB_API_URL") ??
+            ConfigurationManager.AppSettings["StorageWebApiUrl"];
+
     }
 }

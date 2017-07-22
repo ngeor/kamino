@@ -1,0 +1,36 @@
+version: '3'
+services:
+  mssql:
+    image: microsoft/mssql-server-linux
+    ports:
+      - 1433:1433
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=yourStrongPassword1_
+  parser:
+    build: BuzzStats.ParserWebApi
+    ports:
+      - 9002:9002
+  storage:
+    build: BuzzStats.StorageWebApi
+    ports:
+      - 9003:9003
+    depends_on:
+      - mssql
+  crawler:
+    build: BuzzStats.CrawlerService
+    ports:
+      - 9001:9001
+    depends_on:
+      - parser
+      - storage
+    environment:
+      - PARSER_WEB_API_URL=http://parser:9002/
+      - STORAGE_WEB_API_URL=http://storage:9003/
+  web:
+    build: BuzzStats.WebApi
+    ports:
+      - 9000:9000
+    depends_on:
+      - storage
+      - crawler
