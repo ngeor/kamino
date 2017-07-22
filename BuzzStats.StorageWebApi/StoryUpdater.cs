@@ -26,11 +26,10 @@ namespace BuzzStats.StorageWebApi
                 session.Save(storyEntity);
                 return storyEntity;
             }
-            
-            // TODO Update changed fields
-            existingStoryEntity.Title = story.Title;
-            session.Update(existingStoryEntity);
-            return existingStoryEntity;
+
+            var updatedStoryEntity = _storyMapper.UpdateStoryEntity(existingStoryEntity, storyEntity);
+            session.Update(updatedStoryEntity);
+            return updatedStoryEntity;
         }
     }
 }

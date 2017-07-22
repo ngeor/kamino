@@ -26,7 +26,7 @@ namespace BuzzStats.StorageWebApi
             {
                 if (existingStoryVotes.All(e => e.Username != storyVoteEntity.Username))
                 {
-                    session.SaveOrUpdate(storyVoteEntity);
+                    session.Save(storyVoteEntity);
                 }
             }
 

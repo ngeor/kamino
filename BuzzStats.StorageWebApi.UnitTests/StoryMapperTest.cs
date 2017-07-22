@@ -178,16 +178,16 @@ namespace BuzzStats.StorageWebApi.UnitTests
             {
                 Comments = null
             };
-            
+
             var storyEntity = new StoryEntity();
-            
+
             // act
             var comments = _storyMapper.ToCommentEntities(story, storyEntity);
-            
+
             // assert
             Assert.AreEqual(0, comments.Length);
         }
-        
+
         [Test]
         public void ToComments_WithNoChildComments_MapsAllFields()
         {
@@ -208,24 +208,25 @@ namespace BuzzStats.StorageWebApi.UnitTests
                     }
                 }
             };
-            
+
             var storyEntity = new StoryEntity();
-            
+
             // act
             var comments = _storyMapper.ToCommentEntities(story, storyEntity);
-            
+
             // assert
             Assert.AreEqual(1, comments.Length);
-            Assert.AreEqual(42, comments[0].CommentId);
-            Assert.AreEqual(null, comments[0].ParentComment);
-            Assert.AreEqual(new DateTime(2017, 7, 15), comments[0].CreatedAt);
-            Assert.AreEqual(false, comments[0].IsBuried);
-            Assert.AreEqual("user", comments[0].Username);
-            Assert.AreEqual(1, comments[0].VotesDown);
-            Assert.AreEqual(2, comments[0].VotesUp);
-            Assert.AreEqual(storyEntity, comments[0].Story);
+            CommentEntity firstComment = comments[0].Entity;
+            Assert.AreEqual(42, firstComment.CommentId);
+            Assert.AreEqual(null, firstComment.ParentComment);
+            Assert.AreEqual(new DateTime(2017, 7, 15), firstComment.CreatedAt);
+            Assert.AreEqual(false, firstComment.IsBuried);
+            Assert.AreEqual("user", firstComment.Username);
+            Assert.AreEqual(1, firstComment.VotesDown);
+            Assert.AreEqual(2, firstComment.VotesUp);
+            Assert.AreEqual(storyEntity, firstComment.Story);
         }
-        
+
         [Test]
         public void ToComments_MapsBuriedComments()
         {
@@ -240,16 +241,17 @@ namespace BuzzStats.StorageWebApi.UnitTests
                     }
                 }
             };
-            
+
             var storyEntity = new StoryEntity();
-            
+
             // act
             var comments = _storyMapper.ToCommentEntities(story, storyEntity);
-            
+
             // assert
-            Assert.AreEqual(true, comments[0].IsBuried);
+            CommentEntity firstComment = comments[0].Entity;
+            Assert.AreEqual(true, firstComment.IsBuried);
         }
-        
+
         [Test]
         public void ToComments_WithChildComments_MapsAllFields()
         {
@@ -261,7 +263,7 @@ namespace BuzzStats.StorageWebApi.UnitTests
                     new Comment
                     {
                         CommentId = 42,
-                        Comments = new []
+                        Comments = new[]
                         {
                             new Comment
                             {
@@ -276,19 +278,61 @@ namespace BuzzStats.StorageWebApi.UnitTests
                     }
                 }
             };
-            
+
             var storyEntity = new StoryEntity();
-            
+
             // act
             var comments = _storyMapper.ToCommentEntities(story, storyEntity);
-            
+
             // assert
-            Assert.AreEqual(2, comments.Length);
-            Assert.AreEqual(42, comments[0].CommentId);
-            Assert.AreEqual(100, comments[1].CommentId);
-            Assert.AreEqual(null, comments[0].ParentComment);
-            Assert.AreEqual(comments[0], comments[1].ParentComment);
-            Assert.AreEqual(storyEntity, comments[1].Story);
+            Assert.AreEqual(1, comments.Length);
+            Assert.AreEqual(42, comments[0].Entity.CommentId);
+            Assert.AreEqual(100, comments[0].Children[0].Entity.CommentId);
+            Assert.AreEqual(null, comments[0].Entity.ParentComment);
+            Assert.AreEqual(comments[0].Entity, comments[0].Children[0].Entity.ParentComment);
+            Assert.AreEqual(storyEntity, comments[0].Children[0].Entity.Story);
+        }
+
+        [Test]
+        public void UpdateStoryEntity_ReturnsExistingObjectInstance()
+        {
+            // arrange
+            var existing = new StoryEntity
+            {
+                Title = "abc"
+            };
+
+            var updated = new StoryEntity
+            {
+                Title = "def"
+            };
+
+            // act
+            var result = _storyMapper.UpdateStoryEntity(existing, updated);
+
+            // assert
+            Assert.AreSame(result, existing);
+        }
+
+        [Test]
+        public void UpdateStoryEntity_SetsTitle()
+        {
+            // arrange
+            var existing = new StoryEntity
+            {
+                Title = "abc"
+            };
+
+            var updated = new StoryEntity
+            {
+                Title = "def"
+            };
+
+            // act
+            var result = _storyMapper.UpdateStoryEntity(existing, updated);
+
+            // assert
+            Assert.AreEqual("def", result.Title);
         }
     }
 }

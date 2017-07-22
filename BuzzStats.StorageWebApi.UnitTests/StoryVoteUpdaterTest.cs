@@ -45,7 +45,7 @@ namespace BuzzStats.StorageWebApi.UnitTests
             _storyVoteUpdater.SaveStoryVotes(_mockSession.Object, story, storyEntity);
 
             // assert
-            _mockSession.Verify(s => s.SaveOrUpdate(storyVoteEntities[0]));
+            _mockSession.Verify(s => s.Save(storyVoteEntities[0]));
         }
 
         [Test]

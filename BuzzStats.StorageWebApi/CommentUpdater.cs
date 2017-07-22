@@ -18,11 +18,21 @@ namespace BuzzStats.StorageWebApi
 
         public void SaveComments(ISession session, Story story, StoryEntity storyEntity)
         {
-            var commentEntities = _storyMapper.ToCommentEntities(story, storyEntity);
+            CommentEntityHolder[] commentEntities = _storyMapper.ToCommentEntities(story, storyEntity);
             foreach (var commentEntity in commentEntities)
             {
-                // TODO: know when to use save and when to use update
-                session.SaveOrUpdate(commentEntity);
+                var existingComment = _commentRepository.GetByCommentId(session, commentEntity.Entity.CommentId);
+                if (existingComment == null)
+                {
+                    session.Save(commentEntity.Entity);
+                }
+                else
+                {
+                    // TODO update if there are vote differences
+                    // and/or raise event for other service
+                    // and/or add event in db instead of updating records
+                    commentEntity.Entity = existingComment; // this updates child comments
+                }
             }
         }
     }

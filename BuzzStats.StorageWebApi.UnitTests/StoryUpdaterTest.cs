@@ -45,7 +45,7 @@ namespace BuzzStats.StorageWebApi.UnitTests
             var result = _storyUpdater.Save(_mockSession.Object, story);
 
             // assert
-            _mockSession.Verify(s => s.SaveOrUpdate(storyEntity));
+            _mockSession.Verify(s => s.Save(storyEntity));
             Assert.AreEqual(storyEntity, result);
         }
         
@@ -58,25 +58,27 @@ namespace BuzzStats.StorageWebApi.UnitTests
                 StoryId = 42
             };
 
-            var existingStory = new StoryEntity
-            {
-
-            };
+            var existingStory = new StoryEntity();
                 
             var storyEntity = new StoryEntity
             {
                 StoryId = 42
             };
+            
+            var updatedStoryEntity = new StoryEntity();
 
             _mockStoryMapper.Setup(m => m.ToStoryEntity(story)).Returns(storyEntity);
+            _mockStoryMapper.Setup(m => m.UpdateStoryEntity(existingStory, storyEntity))
+                .Returns(updatedStoryEntity);
+            
             _mockStoryRepository.Setup(r => r.GetByStoryId(_mockSession.Object, 42)).Returns(existingStory);
 
             // act
             var result = _storyUpdater.Save(_mockSession.Object, story);
 
             // assert
-            _mockSession.Verify(s => s.SaveOrUpdate(storyEntity), Times.Never);
-            Assert.AreEqual(existingStory, result);
+            _mockSession.Verify(s => s.Update(updatedStoryEntity));
+            Assert.AreEqual(updatedStoryEntity, result);
         }
     }
 }

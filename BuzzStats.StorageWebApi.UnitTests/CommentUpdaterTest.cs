@@ -32,16 +32,24 @@ namespace BuzzStats.StorageWebApi.UnitTests
             var storyEntity = new StoryEntity();
             var commentEntities = new[]
             {
-                new CommentEntity()
+                new CommentEntityHolder
+                {
+                    Entity = new CommentEntity
+                    {
+                        CommentId = 42
+                    }
+                }
             };
 
             _mockStoryMapper.Setup(p => p.ToCommentEntities(story, storyEntity)).Returns(commentEntities);
+            _mockCommentRepository.Setup(p => p.GetByCommentId(_mockSession.Object, 42))
+                .Returns((CommentEntity)null);
 
             // act
             _commentUpdater.SaveComments(_mockSession.Object, story, storyEntity);
 
             // assert
-            _mockSession.Verify(s => s.SaveOrUpdate(commentEntities[0]));
+            _mockSession.Verify(s => s.Save(commentEntities[0].Entity));
         }
     }
 }
