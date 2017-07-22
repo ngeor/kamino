@@ -36,6 +36,8 @@ namespace BuzzStats.StorageWebApi
             foreach (var comment in comments)
             {
                 CommentEntity commentEntity = SaveComment(session, storyEntity, comment, parentCommentEntity);
+                
+                // TODO test child comments
                 SaveComments(session, storyEntity, comment.Comments, commentEntity);
             }
         }
