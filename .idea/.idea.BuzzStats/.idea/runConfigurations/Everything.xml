@@ -3,6 +3,7 @@
     <toRun type="DotNetProject" name="BuzzStats.CrawlerService" />
     <toRun type="DotNetProject" name="BuzzStats.ParserWebApi" />
     <toRun type="DotNetProject" name="BuzzStats.StorageWebApi" />
+    <toRun type="DotNetProject" name="BuzzStats.WebApi" />
     <method />
   </configuration>
 </component>
