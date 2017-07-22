@@ -3,6 +3,7 @@ var pug = require('gulp-pug');
 var less = require('gulp-less');
 var clean = require('gulp-clean');
 var data = require('gulp-data');
+var eslint = require('gulp-eslint');
 var webpack = require('webpack');
 var webpackStream = require('webpack-stream');
 var webpackConfig = require('./webpack.config.js');
@@ -41,9 +42,16 @@ gulp.task('css', function() {
 });
 
 gulp.task('webpack', function() {
-   return gulp.src('scripts/index.js')
-       .pipe(webpackStream(webpackConfig, webpack))
-       .pipe(gulp.dest('bin/Debug'));
+    return gulp.src('scripts/index.js')
+        .pipe(webpackStream(webpackConfig, webpack))
+        .pipe(gulp.dest('bin/Debug'));
+});
+
+gulp.task('eslint', function() {
+    return gulp.src(['**/*.js', '!node_modules/**', '!bin/Debug/**'])
+        .pipe(eslint())
+        .pipe(eslint.format())
+        .pipe(eslint.failAfterError());
 });
 
 gulp.task('watch', function() {
@@ -51,4 +59,4 @@ gulp.task('watch', function() {
     gulp.watch('styles/*.less', ['css']);
 });
 
-gulp.task('default', ['html', 'css', 'webpack']);
+gulp.task('default', ['html', 'css', 'eslint', 'webpack']);

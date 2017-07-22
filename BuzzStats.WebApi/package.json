@@ -10,9 +10,12 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
+    "eslint": "^4.3.0",
+    "eslint-config-bestseller": "^1.1.15",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
     "gulp-data": "^1.2.1",
+    "gulp-eslint": "^4.0.0",
     "gulp-less": "^3.3.2",
     "gulp-pug": "^3.3.0",
     "webpack": "^3.3.0",
