@@ -1,12 +1,27 @@
 var gulp = require('gulp');
 var pug = require('gulp-pug');
 var less = require('gulp-less');
+var clean = require('gulp-clean');
+var data = require('gulp-data');
+
 var fs = require('fs');
+var path = require('path');
+
 var packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
 var version = packageJson.version;
 
+gulp.task('clean', function() {
+    return gulp.src('bin/Debug', { read: false })
+        .pipe(clean());
+});
+
 gulp.task('html', function() {
-    return gulp.src('templates/*.pug')
+    return gulp.src(['templates/*.pug', '!templates/layout.pug'])
+        .pipe(data(function(file) {
+            return {
+                basename: path.basename(file.path, '.pug')
+            };
+        }))
         .pipe(pug({
             pretty: true,
             data: {

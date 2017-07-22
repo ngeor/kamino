@@ -119,8 +119,14 @@
     <Content Include="package-lock.json" />
     <Content Include="package.json" />
     <Content Include="styles\app.less" />
+    <Content Include="templates\about.pug" />
+    <Content Include="templates\graphs.pug" />
     <Content Include="templates\index.pug" />
+    <Content Include="templates\last-checked.pug" />
     <Content Include="templates\layout.pug" />
+    <Content Include="templates\sites.pug" />
+    <Content Include="templates\stories.pug" />
+    <Content Include="templates\users.pug" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

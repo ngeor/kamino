@@ -1,7 +1,11 @@
+mixin menuItem(filename, title)
+    li: a(href=filename, class=(basename + '.html').endsWith(filename) ? 'active' : '')= title
+
 doctype html
 html(lang="en")
     head
-        title BuzzStats
+        block title
+            title BuzzStats
         link(rel="stylesheet" href="css/app.css")
         // <script src="js/app.js?v=<%= BuzzStats.Version.Get() %>" type="text/javascript"></script>
     body
@@ -11,12 +15,13 @@ html(lang="en")
 
         nav
             ul
-                li: a(href='#') Αρχική
-                li: a(href='#') Άρθρα
-                li: a(href='#') Χρήστες
-                li: a(href='#') Ιστότοποι
-                li: a(href='#') Γραφήματα
-                li: a(href='#') Για το BuzzStats
+                +menuItem('index.html', 'Αρχική')
+                +menuItem('stories.html', 'Άρθρα')
+                +menuItem('last-checked.html', 'Έλεγχος')
+                +menuItem('users.html', 'Χρήστες')
+                +menuItem('sites.html', 'Ιστότοποι')
+                +menuItem('graphs.html', 'Γραφήματα')
+                +menuItem('about.html', 'Για το BuzzStats')
 
         block content
 
