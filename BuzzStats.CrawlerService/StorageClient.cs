@@ -1,22 +1,30 @@
-using System;
-using System.Configuration;
 using System.Net.Http;
 using System.Threading.Tasks;
 using BuzzStats.CrawlerService.DTOs;
+using log4net;
+using NGSoftware.Common.Configuration;
 
 namespace BuzzStats.CrawlerService
 {
     public class StorageClient
     {
-        public virtual async Task Save(Story story)
+        private static readonly ILog Log = LogManager.GetLogger(typeof(StorageClient));
+        
+        private readonly IAppSettings _appSettings;
+
+        public StorageClient(IAppSettings appSettings)
         {
-            HttpClient client = new HttpClient();
-            await client.PostAsJsonAsync(StorageWebApiUrl() + "/api/story", story);
+            _appSettings = appSettings;
         }
         
-        private static string StorageWebApiUrl() =>
-            Environment.GetEnvironmentVariable("STORAGE_WEB_API_URL") ??
-            ConfigurationManager.AppSettings["StorageWebApiUrl"];
+        public virtual async Task Save(Story story)
+        {
+            var requestUri = StorageWebApiUrl() + "/api/story";
+            Log.InfoFormat("Calling {0}", requestUri);
+            HttpClient client = new HttpClient();
+            await client.PostAsJsonAsync(requestUri, story);
+        }
 
+        private string StorageWebApiUrl() => _appSettings["StorageWebApiUrl"];
     }
 }

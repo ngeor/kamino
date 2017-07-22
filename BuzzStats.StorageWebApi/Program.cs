@@ -2,6 +2,7 @@
 using System.Threading;
 using log4net;
 using Microsoft.Owin.Hosting;
+using NGSoftware.Common.Configuration;
 
 namespace BuzzStats.StorageWebApi
 {
@@ -9,10 +10,15 @@ namespace BuzzStats.StorageWebApi
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(Program));
 
+        private static string BaseAddress()
+        {
+            IAppSettings appSettings = AppSettingsFactory.DefaultWithEnvironmentOverride();
+            return appSettings["StorageWebApiUrl"];
+        }
+
         public static IDisposable Start()
         {
-            const string baseAddress = "http://localhost:9003/";
-            return WebApp.Start<Startup>(baseAddress);
+            return WebApp.Start<Startup>(BaseAddress());
         }
         
         public static void Main(string[] args)
@@ -24,7 +30,7 @@ namespace BuzzStats.StorageWebApi
             // Start OWIN host 
             using (Start())
             {
-                Log.Info("Server listening at port 9003");
+                Log.InfoFormat("Server listening at {0}", BaseAddress());
                 if (!Console.IsInputRedirected)
                 {
                     Console.ReadLine();

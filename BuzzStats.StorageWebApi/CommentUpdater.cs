@@ -21,6 +21,7 @@ namespace BuzzStats.StorageWebApi
             var commentEntities = _storyMapper.ToCommentEntities(story, storyEntity);
             foreach (var commentEntity in commentEntities)
             {
+                // TODO: know when to use save and when to use update
                 session.SaveOrUpdate(commentEntity);
             }
         }

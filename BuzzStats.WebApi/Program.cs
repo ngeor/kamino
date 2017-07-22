@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 using log4net;
 using Microsoft.Owin.Hosting;
+using NGSoftware.Common.Configuration;
 
 namespace BuzzStats.WebApi
 {
@@ -13,14 +13,15 @@ namespace BuzzStats.WebApi
         public static void Main(string[] args)
         {
             ManualResetEventSlim done = new ManualResetEventSlim(false);
-            const string baseAddress = "http://localhost:9000/";
+            IAppSettings appSettings = AppSettingsFactory.DefaultWithEnvironmentOverride();
+            string baseAddress = appSettings["WebApiUrl"];
 
             Console.CancelKeyPress += (sender, eventArgs) => done.Set();
             
             // Start OWIN host 
             using (WebApp.Start<Startup>(url: baseAddress))
             {
-                Log.Info("Server listening at port 9000");
+                Log.InfoFormat("Server listening at {0}", baseAddress);
                 if (!Console.IsInputRedirected)
                 {
                     Console.ReadLine();

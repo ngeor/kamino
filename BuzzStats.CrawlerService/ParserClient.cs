@@ -1,16 +1,22 @@
-using System;
-using System.Configuration;
 using System.Net.Http;
 using System.Threading.Tasks;
 using BuzzStats.CrawlerService.DTOs;
 using log4net;
 using Newtonsoft.Json;
+using NGSoftware.Common.Configuration;
 
 namespace BuzzStats.CrawlerService
 {
     public class ParserClient
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(ParserClient));
+        private readonly IAppSettings _appSettings;
+
+        public ParserClient(IAppSettings appSettings)
+        {
+            _appSettings = appSettings;
+        }
+
         public virtual async Task<StoryListingSummary[]> Home()
         {
             string homeUrl = HomeUrl();
@@ -40,8 +46,6 @@ namespace BuzzStats.CrawlerService
             return ParserWebApiUrl() + "/api/story/" + storyId;
         }
 
-        private static string ParserWebApiUrl() =>
-            Environment.GetEnvironmentVariable("PARSER_WEB_API_URL") ??
-            ConfigurationManager.AppSettings["ParserWebApiUrl"];
+        private string ParserWebApiUrl() => _appSettings["ParserWebApiUrl"];
     }
 }

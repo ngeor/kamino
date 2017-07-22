@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Net.Http;
@@ -32,9 +33,18 @@ namespace BuzzStats.ParserWebApi
                     break;
             }
 
-            string htmlContents =
-                await client.GetStringAsync(ConfigurationManager.AppSettings["BuzzServerUrl"] + path);
-            return parser.ParseListingPage(htmlContents);
+            var requestUri = ConfigurationManager.AppSettings["BuzzServerUrl"] + path;
+            Log.InfoFormat("Calling {0}", requestUri);
+            try
+            {
+                string htmlContents = await client.GetStringAsync(requestUri);
+                return parser.ParseListingPage(htmlContents);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message, ex);
+                throw;
+            }
         }
     }
 }

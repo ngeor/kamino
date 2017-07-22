@@ -1,36 +1,51 @@
 version: '3'
 services:
-  mssql:
-    image: microsoft/mssql-server-linux
+  mysql:
+    image: mysql
     ports:
-      - 1433:1433
+      - 3306:3306
     environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=yourStrongPassword1_
+      - MYSQL_ROOT_PASSWORD=yourStrongPassword1_
+      - MYSQL_DATABASE=BuzzStats
+      - MYSQL_USER=buzzstats
+      - MYSQL_PASSWORD=#buzzstats#
+    volumes:
+      - ./doker/mysql/conf.d:/etc/mysql/conf.d
   parser:
     build: BuzzStats.ParserWebApi
+    environment:
+      - PARSER_WEB_API_URL=http://*:9002/
     ports:
       - 9002:9002
   storage:
     build: BuzzStats.StorageWebApi
+    depends_on:
+      - mysql
+    environment:
+      - STORAGE_WEB_API_URL=http://*:9003/
+      - DB_SERVER=mysql
+      - DB_DATABASE=BuzzStats
+      - DB_USER=buzzstats
+      - DB_PASSWORD=#buzzstats#
     ports:
       - 9003:9003
-    depends_on:
-      - mssql
   crawler:
     build: BuzzStats.CrawlerService
-    ports:
-      - 9001:9001
     depends_on:
       - parser
       - storage
     environment:
+      - CRAWLER_SERVICE_URL=http://*:9001/
       - PARSER_WEB_API_URL=http://parser:9002/
       - STORAGE_WEB_API_URL=http://storage:9003/
+    ports:
+      - 9001:9001
   web:
     build: BuzzStats.WebApi
-    ports:
-      - 9000:9000
     depends_on:
       - storage
       - crawler
+    environment:
+      - WEB_API_URL=http://*:9000/
+    ports:
+      - 9000:9000

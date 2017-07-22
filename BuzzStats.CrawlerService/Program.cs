@@ -4,6 +4,7 @@ using System.Threading;
 using System.Web.Http;
 using log4net;
 using Microsoft.Owin.Hosting;
+using NGSoftware.Common.Configuration;
 
 namespace BuzzStats.CrawlerService
 {
@@ -14,15 +15,18 @@ namespace BuzzStats.CrawlerService
         public static void Main(string[] args)
         {
             ManualResetEventSlim done = new ManualResetEventSlim(false);
-            const string baseAddress = "http://localhost:9001/";
-            ListingTask listingTask = new ListingTask(new ParserClient(), new StorageClient());
+            IAppSettings appSettings = AppSettingsFactory.DefaultWithEnvironmentOverride();
+            string baseAddress = appSettings["CrawlerServiceUrl"];
+            ListingTask listingTask = new ListingTask(
+                new ParserClient(appSettings),
+                new StorageClient(appSettings));
 
             Console.CancelKeyPress += (sender, eventArgs) => done.Set();
             
             // Start OWIN host 
             using (WebApp.Start<Startup>(url: baseAddress))
             {
-                Log.Info("Server listening at port 9001");
+                Log.InfoFormat("Server listening at {0}", baseAddress);
                 TaskLoop.RunForEver(() => listingTask.RunOnce());
                 if (!Console.IsInputRedirected)
                 {

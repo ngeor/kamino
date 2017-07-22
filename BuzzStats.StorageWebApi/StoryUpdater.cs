@@ -23,11 +23,13 @@ namespace BuzzStats.StorageWebApi
 
             if (existingStoryEntity == null)
             {
-                session.SaveOrUpdate(storyEntity);
+                session.Save(storyEntity);
                 return storyEntity;
             }
             
             // TODO Update changed fields
+            existingStoryEntity.Title = story.Title;
+            session.Update(existingStoryEntity);
             return existingStoryEntity;
         }
     }
