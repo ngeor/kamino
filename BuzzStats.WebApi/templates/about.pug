@@ -1,3 +1,30 @@
 extends layout.pug
+block title
+    title BuzzStats - Για το BuzzStats
 block content
-    p Welcome to BuzzStats
+    h1 Για το BuzzStats
+    p.
+        Το BuzzStats είναι μία εφαρμογή που συλλέγει δεδομένα από το
+        #[a(href='http://buzz.reality-tape.com', target='_blank') Buzz]
+        με σκοπό την εξαγωγή και παρουσίαση στατιστικών στοιχείων.
+    
+    h2 Μέθοδος
+    p.
+        Τα δεδομένα συλλέγονται από την δημόσια διαθέσιμη html του Buzz. Οι πληροφορίες
+        που περιέχονται στον html κώδικα των σελίδων του Buzz αναλύονται και τα στοιχεία
+        αποθηκεύονται για την εξαγωγή στατιστικών στοιχείων. Η εύστοχη επιλογή των σελίδων
+        που αναλύονται κάθε φορά καθορίζει και το πόσο γρήγορα αντιλαμβάνεται το BuzzStats
+        τις δραστηριότητες των χρηστών του Buzz.
+    
+    h2 Τεχνολογίες
+    p.
+        Η τρέχουσα υλοποίηση είναι σε .NET WebAPI / microservices,
+        ενώ για το frontend χρησιμοποιείται gulp, knockoutJS, pug, less.
+    p.
+        Η προηγούμενη υλοποίηση είναι σε Java / Spring Boot,
+        ενώ για το frontend χρησιμοποιείται grunt, knockoutJS, pug, sass.
+    p.
+        Η προηγούμενη υλοποίηση ήταν με ASP.NET 4.0, HTML 5, Fluent NHibernate
+        και SQL Server Express.
+    p.
+        Στο παρελθόν έχει χρησιμοποιηθεί SQLite, ASP.NET 3.5/Mono, SilverLight.
