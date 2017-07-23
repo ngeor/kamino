@@ -21,6 +21,13 @@ function loadJson(url, callback) {
     request.send();
 }
 
+import React from 'react';
+import ReactDOM from 'react-dom';
+
 document.addEventListener('DOMContentLoaded', function() {
     hello();
+    ReactDOM.render(
+        <p>hello,  world!</p>,
+        document.getElementById('root')
+    );
 });
