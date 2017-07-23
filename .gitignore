@@ -17,3 +17,6 @@ results.xml
 
 # NUnit report
 TestResult.xml
+
+# MySQL datbase files
+docker/mysql/data/

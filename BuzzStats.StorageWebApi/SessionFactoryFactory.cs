@@ -34,6 +34,7 @@ namespace BuzzStats.StorageWebApi
 
         private static void BuildSchema(Configuration cfg)
         {
+            // TODO don't drop schema on prod
             new SchemaExport(cfg).Create(true, true);
         }
 
