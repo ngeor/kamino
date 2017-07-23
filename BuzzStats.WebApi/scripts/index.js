@@ -1,6 +1,3 @@
-/**
- * Created by ngeor on 22/7/2017.
- */
 function hello() {
     console.log('hello, world!');
 }
@@ -16,11 +13,11 @@ function loadJson(url, callback) {
             callback(new Error(request.status));
         }
     };
-    
+
     request.onerror = function() {
         callback(new Error(request.responseText));
     };
-        
+
     request.send();
 }
 

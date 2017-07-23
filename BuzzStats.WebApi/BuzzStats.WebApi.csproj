@@ -87,6 +87,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".babelrc" />
     <Content Include=".eslintrc.json" />
     <Content Include="app.config" />
     <Content Include="Dockerfile" />
