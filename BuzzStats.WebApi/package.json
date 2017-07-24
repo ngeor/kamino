@@ -16,6 +16,7 @@
     "babel-preset-react": "^6.24.1",
     "eslint": "^4.3.0",
     "eslint-config-bestseller": "^1.1.15",
+    "eslint-plugin-react": "^7.1.0",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
     "gulp-data": "^1.2.1",

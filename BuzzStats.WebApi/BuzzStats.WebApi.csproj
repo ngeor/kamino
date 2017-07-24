@@ -127,7 +127,11 @@
     </Content>
     <Content Include="package-lock.json" />
     <Content Include="package.json" />
+    <Content Include="scripts\ajax.js" />
+    <Content Include="scripts\Comment.js" />
     <Content Include="scripts\index.js" />
+    <Content Include="scripts\RecentComments.js" />
+    <Content Include="scripts\StoryBlock.js" />
     <Content Include="styles\app.less" />
     <Content Include="templates\about.pug" />
     <Content Include="templates\graphs.pug" />

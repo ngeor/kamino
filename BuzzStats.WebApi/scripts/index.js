@@ -1,25 +1,7 @@
-function hello() {
-    console.log('hello, world!');
-}
-
-function loadJson(url, callback) {
-    var request = new XMLHttpRequest();
-    request.open('GET', url, true);
-    request.onload = function() {
-        if (request.status >= 200 && request.status < 400) {
-            var data = JSON.parse(request.responseText);
-            callback(null, data);
-        } else {
-            callback(new Error(request.status));
-        }
-    };
-
-    request.onerror = function() {
-        callback(new Error(request.responseText));
-    };
-
-    request.send();
-}
+import React from 'react';
+import ReactDOM from 'react-dom';
+import RecentComments from './RecentComments';
+import {loadJson} from './ajax';
 
 const sampleData = [
     {
@@ -48,40 +30,24 @@ const sampleData = [
     }
 ];
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-
-class Comment extends React.Component {
-    render() {
-        return <div>{this.props.comment.user}</div>;
-    }
-}
-class StoryBlock extends React.Component {
-    render() {
-        return <div className="block">
-            {this.props.story.title}
-            {this.props.story.comments.map((c) =>
-                <Comment key={c.commentId} comment={c} />
-            )}
-        </div>;
-    }
+function useStaticData() {
+    return location.protocol === 'file:';
 }
 
-class RecentComments extends React.Component {
-    render() {
-        return <div className="comments">
-            Recent Comments
-            {this.props.data.map((d) =>
-                <StoryBlock key={d.storyId} story={d}/>
-            )}
-        </div>;
+function loadRecentComments(callback) {
+    if (useStaticData()) {
+        callback(sampleData);
+        return;
     }
+
+    loadJson('/api/recent-comments', callback);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    hello();
-    ReactDOM.render(
-        <RecentComments data={sampleData}/>,
-        document.getElementById('root')
-    );
+    loadRecentComments(function(data) {
+        ReactDOM.render(
+            <RecentComments data={data}/>,
+            document.getElementById('root')
+        );
+    });
 });
