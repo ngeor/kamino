@@ -3,17 +3,24 @@ using System.Configuration;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using log4net;
+using NGSoftware.Common.Configuration;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
 using Configuration = NHibernate.Cfg.Configuration;
 
 namespace BuzzStats.StorageWebApi
 {
-    static class SessionFactoryFactory
+    class SessionFactoryFactory : ISessionFactoryFactory
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(SessionFactoryFactory));
+        private readonly IAppSettings _appSettings;
+
+        public SessionFactoryFactory(IAppSettings appSettings)
+        {
+            _appSettings = appSettings;
+        }
         
-        internal static ISessionFactory Create()
+        public ISessionFactory Create()
         {
             Log.Info("Creating session factory");
             try
@@ -32,23 +39,23 @@ namespace BuzzStats.StorageWebApi
             }
         }
 
-        private static void BuildSchema(Configuration cfg)
+        private void BuildSchema(Configuration cfg)
         {
-            // TODO don't drop schema on prod
-            new SchemaExport(cfg).Create(true, true);
+            bool exportSchema = !string.IsNullOrWhiteSpace(_appSettings["ExportSchema"]);
+            new SchemaExport(cfg).Create(true, exportSchema);
         }
 
-        private static string ConnectionString()
+        private string ConnectionString()
         {
             return ConnectionStringFromEnvironment() ?? ConnectionStringFromAppConfig();
         }
 
-        private static string ConnectionStringFromAppConfig()
+        private string ConnectionStringFromAppConfig()
         {
             return ConfigurationManager.ConnectionStrings["BuzzStats"].ConnectionString;
         }
 
-        private static string ConnectionStringFromEnvironment()
+        private string ConnectionStringFromEnvironment()
         {
             string server = Environment.GetEnvironmentVariable("DB_SERVER");
             string database = Environment.GetEnvironmentVariable("DB_DATABASE");

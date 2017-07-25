@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
 using BuzzStats.StorageWebApi.DTOs;
-using BuzzStats.StorageWebApi.Entities;
 using log4net;
 using NHibernate;
 

@@ -1,4 +1,5 @@
 using System.Web.Http;
+using NGSoftware.Common.Configuration;
 using NHibernate;
 using Owin;
 using StructureMap;
@@ -32,7 +33,11 @@ namespace BuzzStats.StorageWebApi
                 x.For<IStoryVoteUpdater>().Use<StoryVoteUpdater>();
                 x.For<ICommentUpdater>().Use<CommentUpdater>();
                 x.For<IUpdater>().Use<Updater>();
-                x.For<ISessionFactory>().Use(() => SessionFactoryFactory.Create()).Singleton();
+                x.For<ISessionFactoryFactory>().Use<SessionFactoryFactory>().Singleton();
+                x.For<ISessionFactory>()
+                    .Use(ctx => ctx.GetInstance<ISessionFactoryFactory>().Create())
+                    .Singleton();
+                x.For<IAppSettings>().Use(() => AppSettingsFactory.DefaultWithEnvironmentOverride());
             });
             
             return container;

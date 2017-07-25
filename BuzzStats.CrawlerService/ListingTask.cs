@@ -22,6 +22,8 @@ namespace BuzzStats.CrawlerService
             Log.Info("Begin task");
             try
             {
+                // TODO crawl other pages too
+                // TODO crawl stories to see if they have changed (perhaps on a separate microservice)
                 var storyListingSummaries = await _parserClient.Home();
                 Log.InfoFormat("Received {0} stories", storyListingSummaries.Length);
 

@@ -91,13 +91,16 @@
     <Compile Include="ClassMaps\CommentMap.cs" />
     <Compile Include="ClassMaps\StoryMap.cs" />
     <Compile Include="ClassMaps\StoryVoteMap.cs" />
+    <Compile Include="CommentController.cs" />
     <Compile Include="CommentUpdater.cs" />
     <Compile Include="DTOs\Comment.cs" />
+    <Compile Include="DTOs\CommentWithStory.cs" />
     <Compile Include="DTOs\Story.cs" />
     <Compile Include="Entities\CommentEntity.cs" />
     <Compile Include="Entities\StoryEntity.cs" />
     <Compile Include="Entities\StoryVoteEntity.cs" />
     <Compile Include="ICommentUpdater.cs" />
+    <Compile Include="ISessionFactoryFactory.cs" />
     <Compile Include="IStoryUpdater.cs" />
     <Compile Include="IStoryVoteUpdater.cs" />
     <Compile Include="IUpdater.cs" />
