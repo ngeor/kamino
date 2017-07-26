@@ -1,5 +1,6 @@
 ﻿using BuzzStats.StorageWebApi.Entities;
 using BuzzStats.StorageWebApi.Repositories;
+using BuzzStats.StorageWebApi.UnitTests.TestHelpers;
 using Moq;
 using NHibernate;
 using NHibernate.Criterion;
@@ -18,7 +19,7 @@ namespace BuzzStats.StorageWebApi.UnitTests.Repositories
         public void SetUp()
         {
             _mockSession = new Mock<ISession>();
-            _mockCommentCriteria = new Mock<ICriteria>();
+            _mockCommentCriteria = new Mock<ICriteria>(MockBehavior.Strict);
             _mockSession.Setup(s => s.CreateCriteria<CommentEntity>()).Returns(_mockCommentCriteria.Object);
             _commentRepository = new CommentRepository();
         }
@@ -32,8 +33,7 @@ namespace BuzzStats.StorageWebApi.UnitTests.Repositories
                 CommentId = 42
             };
 
-            _mockCommentCriteria.Setup(c => c.Add(It.Is<ICriterion>(crit => crit.ToString() == Restrictions.Eq("CommentId", 42).ToString())))
-                .Returns(_mockCommentCriteria.Object);
+            _mockCommentCriteria.SetupEq("CommentId", 42);
             _mockCommentCriteria.Setup(c => c.UniqueResult<CommentEntity>()).Returns(commentEntity);
             
             // act

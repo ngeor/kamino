@@ -1,5 +1,6 @@
 ﻿using BuzzStats.StorageWebApi.Entities;
 using BuzzStats.StorageWebApi.Repositories;
+using BuzzStats.StorageWebApi.UnitTests.TestHelpers;
 using Moq;
 using NHibernate;
 using NHibernate.Criterion;
@@ -18,7 +19,7 @@ namespace BuzzStats.StorageWebApi.UnitTests.Repositories
         public void SetUp()
         {
             _mockSession = new Mock<ISession>();
-            _mockStoryCriteria = new Mock<ICriteria>();
+            _mockStoryCriteria = new Mock<ICriteria>(MockBehavior.Strict);
             _mockSession.Setup(s => s.CreateCriteria<StoryEntity>()).Returns(_mockStoryCriteria.Object);
             _storyRepository = new StoryRepository();
         }
@@ -32,8 +33,7 @@ namespace BuzzStats.StorageWebApi.UnitTests.Repositories
                 StoryId = 42
             };
 
-            _mockStoryCriteria.Setup(c => c.Add(It.Is<ICriterion>(crit => crit.ToString() == Restrictions.Eq("StoryId", 42).ToString())))
-                .Returns(_mockStoryCriteria.Object);
+            _mockStoryCriteria.SetupEq("StoryId", 42);
             _mockStoryCriteria.Setup(c => c.UniqueResult<StoryEntity>()).Returns(storyEntity);
             
             // act
