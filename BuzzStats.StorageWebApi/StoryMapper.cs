@@ -9,23 +9,6 @@ namespace BuzzStats.StorageWebApi
     /// </summary>
     public class StoryMapper
     {
-        public virtual StoryEntity ToStoryEntity(Story story) => new StoryEntity
-        {
-            Title = story.Title,
-            StoryId = story.StoryId,
-            Url = story.Url,
-            Username = story.Username,
-            CreatedAt = story.CreatedAt,
-            Category = story.Category,
-        };
-
-        public virtual StoryEntity UpdateStoryEntity(StoryEntity existing, StoryEntity updated)
-        {
-            // TODO Update changed fields
-            existing.Title = updated.Title;
-            return existing;
-        }
-
         public virtual StoryVoteEntity[] ToStoryVoteEntities(Story story, StoryEntity storyEntity) =>
             (story.Voters ?? Enumerable.Empty<string>()).Select(v => new StoryVoteEntity
             {

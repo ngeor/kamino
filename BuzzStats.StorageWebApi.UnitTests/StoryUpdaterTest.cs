@@ -1,4 +1,5 @@
-﻿using BuzzStats.StorageWebApi.DTOs;
+﻿using AutoMapper;
+using BuzzStats.StorageWebApi.DTOs;
 using BuzzStats.StorageWebApi.Entities;
 using BuzzStats.StorageWebApi.Repositories;
 using NHibernate;
@@ -11,7 +12,7 @@ namespace BuzzStats.StorageWebApi.UnitTests
     public class StoryUpdaterTest
     {
         private Mock<ISession> _mockSession;
-        private Mock<StoryMapper> _mockStoryMapper;
+        private Mock<IMapper> _mockStoryMapper;
         private Mock<StoryRepository> _mockStoryRepository;
         private StoryUpdater _storyUpdater;
 
@@ -19,7 +20,7 @@ namespace BuzzStats.StorageWebApi.UnitTests
         public void SetUp()
         {
             _mockSession = new Mock<ISession>();
-            _mockStoryMapper = new Mock<StoryMapper>();
+            _mockStoryMapper = new Mock<IMapper>();
             _mockStoryRepository = new Mock<StoryRepository>();
             _storyUpdater = new StoryUpdater(_mockStoryMapper.Object, _mockStoryRepository.Object);
         }
@@ -38,7 +39,7 @@ namespace BuzzStats.StorageWebApi.UnitTests
                 StoryId = 42
             };
 
-            _mockStoryMapper.Setup(m => m.ToStoryEntity(story)).Returns(storyEntity);
+            _mockStoryMapper.Setup(m => m.Map<StoryEntity>(story)).Returns(storyEntity);
             _mockStoryRepository.Setup(r => r.GetByStoryId(_mockSession.Object, 42)).Returns((StoryEntity)null);
 
             // act
@@ -58,17 +59,14 @@ namespace BuzzStats.StorageWebApi.UnitTests
                 StoryId = 42
             };
 
-            var existingStory = new StoryEntity();
-                
-            var storyEntity = new StoryEntity
+            var existingStory = new StoryEntity
             {
                 StoryId = 42
             };
             
             var updatedStoryEntity = new StoryEntity();
 
-            _mockStoryMapper.Setup(m => m.ToStoryEntity(story)).Returns(storyEntity);
-            _mockStoryMapper.Setup(m => m.UpdateStoryEntity(existingStory, storyEntity))
+            _mockStoryMapper.Setup(m => m.Map(story, existingStory))
                 .Returns(updatedStoryEntity);
             
             _mockStoryRepository.Setup(r => r.GetByStoryId(_mockSession.Object, 42)).Returns(existingStory);

@@ -8,8 +8,11 @@ namespace BuzzStats.StorageWebApi
     {
         public AutoMapperProfile()
         {
-            var map = CreateMap<CommentEntity, CommentWithStory>();
-            map.ForMember(d => d.StoryId, opt => opt.MapFrom(s => s.Story.StoryId));
+            CreateMap<CommentEntity, CommentWithStory>()
+                .ForMember(d => d.StoryId, opt => opt.MapFrom(s => s.Story.StoryId));
+
+            CreateMap<Story, StoryEntity>()
+                .ForMember(d => d.Id, opt => opt.Ignore());
         }
     }
 }
