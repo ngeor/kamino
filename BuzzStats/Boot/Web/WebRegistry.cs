@@ -8,7 +8,6 @@
 // --------------------------------------------------------------------------------
 
 using StructureMap;
-using StructureMap.Web;
 using NGSoftware.Common.Cache;
 using NGSoftware.Common.Factories;
 using BuzzStats.ApiServices;
@@ -52,7 +51,7 @@ namespace BuzzStats.Boot.Web
                 .Use<LoggingApiServiceDecorator>()
                 .Ctor<IApiService>().Is(ctx => ctx.GetInstance<IApiService>("cached"));
 
-            For<IDbSession>().HybridHttpOrThreadLocalScoped().Use(ctx => ctx.GetInstance<IDbContext>().OpenSession());
+            For<IDbSession>().Use(ctx => ctx.GetInstance<IDbContext>().OpenSession());
             For<IFormsAuthentication>().Singleton().Use<FormsAuthenticationWrapper>();
 
             For<IDiagnosticsService>().Use<DiagnosticsServiceClient>();
