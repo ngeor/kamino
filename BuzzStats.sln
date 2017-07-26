@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.Crawler", "BuzzSt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.Web", "BuzzStats.Web\BuzzStats.Web.csproj", "{B53D59CC-9CB6-40B8-AA9A-2D9554A1AB87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.Tests", "BuzzStats.Tests\BuzzStats.Tests.csproj", "{9145302A-4E4E-4B67-83EA-6C9DDD5665F2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.UnitTests", "BuzzStats.UnitTests\BuzzStats.UnitTests.csproj", "{9145302A-4E4E-4B67-83EA-6C9DDD5665F2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats", "BuzzStats\BuzzStats.csproj", "{70807780-11BE-4F50-8BC5-A727ACA2B35F}"
 EndProject
