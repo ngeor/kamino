@@ -1,6 +1,4 @@
 using System.Web.Http;
-using NGSoftware.Common.Configuration;
-using NHibernate;
 using Owin;
 using StructureMap;
 
@@ -14,7 +12,11 @@ namespace BuzzStats.StorageWebApi
         {
             // Configure Web API for self-host. 
             HttpConfiguration config = new HttpConfiguration();
+            
+            // Add StructureMap dependency injection
             config.DependencyResolver = new StructureMapDependencyResolver(CreateContainer());
+            
+            // Add routes
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
@@ -24,23 +26,6 @@ namespace BuzzStats.StorageWebApi
             appBuilder.UseWebApi(config);
         }
 
-        private IContainer CreateContainer()
-        {
-            Container container = new Container();
-            container.Configure(x =>
-            {
-                x.For<IStoryUpdater>().Use<StoryUpdater>();
-                x.For<IStoryVoteUpdater>().Use<StoryVoteUpdater>();
-                x.For<ICommentUpdater>().Use<CommentUpdater>();
-                x.For<IUpdater>().Use<Updater>();
-                x.For<ISessionFactoryFactory>().Use<SessionFactoryFactory>().Singleton();
-                x.For<ISessionFactory>()
-                    .Use(ctx => ctx.GetInstance<ISessionFactoryFactory>().Create())
-                    .Singleton();
-                x.For<IAppSettings>().Use(() => AppSettingsFactory.DefaultWithEnvironmentOverride());
-            });
-            
-            return container;
-        }
+        private IContainer CreateContainer() => new StructureMapContainerBuilder().Create();
     }
 }

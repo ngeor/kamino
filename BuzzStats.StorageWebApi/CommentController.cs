@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using AutoMapper;
 using BuzzStats.StorageWebApi.DTOs;
 using BuzzStats.StorageWebApi.Entities;
 using log4net;
@@ -14,10 +15,12 @@ namespace BuzzStats.StorageWebApi
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(CommentController));
         private readonly ISessionFactory _sessionFactory;
+        private readonly IMapper _mapper;
 
-        public CommentController(ISessionFactory sessionFactory)
+        public CommentController(ISessionFactory sessionFactory, IMapper mapper)
         {
             _sessionFactory = sessionFactory;
+            _mapper = mapper;
         }
         
         // GET api/comment
@@ -30,7 +33,7 @@ namespace BuzzStats.StorageWebApi
                     var criteria = session.CreateCriteria<CommentEntity>();
                     criteria = criteria.SetMaxResults(20);
                     criteria = criteria.AddOrder(Order.Desc("CreatedAt"));
-                    return criteria.List<CommentEntity>().Select(c => new CommentWithStory(c)).ToList();
+                    return criteria.List<CommentEntity>().Select(c => _mapper.Map<CommentWithStory>(c)).ToList();
                 }
             }
             catch (Exception ex)

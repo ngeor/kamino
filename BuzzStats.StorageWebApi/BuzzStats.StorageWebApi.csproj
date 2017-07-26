@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005">
+      <HintPath>..\packages\AutoMapper.6.1.1\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="FluentNHibernate, Version=2.0.3.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\FluentNHibernate.2.0.3.0\lib\net40\FluentNHibernate.dll</HintPath>
     </Reference>
@@ -88,6 +91,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoMapperProfile.cs" />
     <Compile Include="ClassMaps\CommentMap.cs" />
     <Compile Include="ClassMaps\StoryMap.cs" />
     <Compile Include="ClassMaps\StoryVoteMap.cs" />
@@ -115,6 +119,7 @@
     <Compile Include="StoryMapper.cs" />
     <Compile Include="StoryUpdater.cs" />
     <Compile Include="StoryVoteUpdater.cs" />
+    <Compile Include="StructureMapContainerBuilder.cs" />
     <Compile Include="StructureMapDependencyResolver.cs" />
     <Compile Include="Updater.cs" />
   </ItemGroup>
