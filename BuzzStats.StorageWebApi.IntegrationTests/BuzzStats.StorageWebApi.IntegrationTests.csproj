@@ -81,10 +81,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BuzzStats.StorageWebApi\BuzzStats.StorageWebApi.csproj">
-      <Project>{bb4f2568-8b52-44bd-9e25-b1249858dc3a}</Project>
-      <Name>BuzzStats.StorageWebApi</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BuzzStats.WebApi\BuzzStats.WebApi.csproj">
       <Project>{7b2e2d42-c462-405f-9505-e89f546e96c6}</Project>
       <Name>BuzzStats.WebApi</Name>

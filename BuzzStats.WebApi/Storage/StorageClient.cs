@@ -4,7 +4,7 @@ using BuzzStats.WebApi.DTOs;
 using log4net;
 using NGSoftware.Common.Configuration;
 
-namespace BuzzStats.WebApi.Crawl
+namespace BuzzStats.WebApi.Storage
 {
     public class StorageClient : IStorageClient
     {

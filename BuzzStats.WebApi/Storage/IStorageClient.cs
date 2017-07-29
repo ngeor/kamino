@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using BuzzStats.WebApi.DTOs;
 
-namespace BuzzStats.WebApi
+namespace BuzzStats.WebApi.Storage
 {
     public interface IStorageClient
     {

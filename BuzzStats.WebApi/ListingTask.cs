@@ -1,6 +1,9 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using BuzzStats.WebApi.DTOs;
+using BuzzStats.WebApi.Parsing;
+using BuzzStats.WebApi.Storage;
 using log4net;
 
 namespace BuzzStats.WebApi
@@ -24,7 +27,7 @@ namespace BuzzStats.WebApi
             {
                 // TODO crawl other pages too
                 // TODO crawl stories to see if they have changed (perhaps on a separate microservice)
-                var storyListingSummaries = await _parserClient.Home();
+                var storyListingSummaries = (await _parserClient.Home()).ToArray();
                 Log.InfoFormat("Received {0} stories", storyListingSummaries.Length);
 
                 foreach (var storyListingSummary in storyListingSummaries)

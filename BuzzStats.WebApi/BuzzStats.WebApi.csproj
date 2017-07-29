@@ -94,9 +94,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Crawl\ParserClient.cs" />
     <Compile Include="Crawl\Startup.cs" />
-    <Compile Include="Crawl\StorageClient.cs" />
     <Compile Include="Crawl\TaskLoop.cs" />
     <Compile Include="DTOs\Comment.cs" />
     <Compile Include="DTOs\CommentWithStory.cs" />
@@ -104,19 +102,16 @@
     <Compile Include="DTOs\Story.cs" />
     <Compile Include="DTOs\StoryListingSummary.cs" />
     <Compile Include="DTOs\StoryWithRecentComments.cs" />
-    <Compile Include="IParserClient.cs" />
-    <Compile Include="IStorageClient.cs" />
     <Compile Include="ListingTask.cs" />
-    <Compile Include="Parsing\ListingController.cs" />
+    <Compile Include="Parsing\IParserClient.cs" />
     <Compile Include="Parsing\Parser.cs" />
+    <Compile Include="Parsing\ParserClient.cs" />
     <Compile Include="Parsing\ParserFailedException.cs" />
     <Compile Include="Parsing\Startup.cs" />
-    <Compile Include="Parsing\StoryController.cs" />
     <Compile Include="Parsing\StoryListing.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="StorageClient.cs" />
     <Compile Include="RecentCommentsController.cs" />
     <Compile Include="Storage\AutoMapperProfile.cs" />
     <Compile Include="Storage\ClassMaps\CommentMap.cs" />
@@ -129,6 +124,7 @@
     <Compile Include="Storage\Entities\StoryVoteEntity.cs" />
     <Compile Include="Storage\ICommentUpdater.cs" />
     <Compile Include="Storage\ISessionFactoryFactory.cs" />
+    <Compile Include="Storage\IStorageClient.cs" />
     <Compile Include="Storage\IStoryUpdater.cs" />
     <Compile Include="Storage\IStoryVoteUpdater.cs" />
     <Compile Include="Storage\IUpdater.cs" />
@@ -137,6 +133,7 @@
     <Compile Include="Storage\Repositories\StoryVoteRepository.cs" />
     <Compile Include="Storage\SessionFactoryFactory.cs" />
     <Compile Include="Storage\Startup.cs" />
+    <Compile Include="Storage\StorageClient.cs" />
     <Compile Include="Storage\StoryController.cs" />
     <Compile Include="Storage\StoryMapper.cs" />
     <Compile Include="Storage\StoryUpdater.cs" />

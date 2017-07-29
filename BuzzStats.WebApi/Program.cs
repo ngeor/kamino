@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading;
 using BuzzStats.WebApi.Crawl;
+using BuzzStats.WebApi.Parsing;
+using BuzzStats.WebApi.Storage;
 using log4net;
 using Microsoft.Owin.Hosting;
 using NGSoftware.Common.Configuration;
@@ -19,7 +21,7 @@ namespace BuzzStats.WebApi
 
             ListingTask listingTask = new ListingTask(
                 new ParserClient(appSettings),
-                new Crawl.StorageClient(appSettings));
+                new StorageClient(appSettings));
 
             Console.CancelKeyPress += (sender, eventArgs) => done.Set();
             
