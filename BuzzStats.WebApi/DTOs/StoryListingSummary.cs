@@ -1,4 +1,4 @@
-namespace BuzzStats.CrawlerService.DTOs
+namespace BuzzStats.WebApi.DTOs
 {
     public class StoryListingSummary
     {

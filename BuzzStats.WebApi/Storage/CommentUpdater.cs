@@ -1,10 +1,10 @@
-﻿using BuzzStats.CrawlerService.DTOs;
-using BuzzStats.StorageWebApi.Entities;
-using BuzzStats.StorageWebApi.Repositories;
+﻿using BuzzStats.WebApi.DTOs;
+using BuzzStats.WebApi.Storage.Entities;
+using BuzzStats.WebApi.Storage.Repositories;
 using log4net;
 using NHibernate;
 
-namespace BuzzStats.StorageWebApi
+namespace BuzzStats.WebApi.Storage
 {
     public class CommentUpdater : ICommentUpdater
     {

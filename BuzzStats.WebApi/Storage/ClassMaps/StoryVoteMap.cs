@@ -1,7 +1,7 @@
-using BuzzStats.StorageWebApi.Entities;
+using BuzzStats.WebApi.Storage.Entities;
 using FluentNHibernate.Mapping;
 
-namespace BuzzStats.StorageWebApi.ClassMaps
+namespace BuzzStats.WebApi.Storage.ClassMaps
 {
     public class StoryVoteMap : ClassMap<StoryVoteEntity>
     {

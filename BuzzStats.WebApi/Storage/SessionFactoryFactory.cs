@@ -8,7 +8,7 @@ using NHibernate;
 using NHibernate.Tool.hbm2ddl;
 using Configuration = NHibernate.Cfg.Configuration;
 
-namespace BuzzStats.StorageWebApi
+namespace BuzzStats.WebApi.Storage
 {
     class SessionFactoryFactory : ISessionFactoryFactory
     {

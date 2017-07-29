@@ -3,7 +3,7 @@ using NGSoftware.Common.Configuration;
 using NHibernate;
 using StructureMap;
 
-namespace BuzzStats.StorageWebApi
+namespace BuzzStats.WebApi.Storage
 {
     public class StructureMapContainerBuilder
     {

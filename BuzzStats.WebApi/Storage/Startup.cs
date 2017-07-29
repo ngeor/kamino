@@ -2,7 +2,7 @@ using System.Web.Http;
 using Owin;
 using StructureMap;
 
-namespace BuzzStats.StorageWebApi
+namespace BuzzStats.WebApi.Storage
 {
     public class Startup
     {

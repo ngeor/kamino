@@ -1,11 +1,11 @@
 using System.Net.Http;
 using System.Threading.Tasks;
-using BuzzStats.CrawlerService.DTOs;
+using BuzzStats.WebApi.DTOs;
 using log4net;
 using Newtonsoft.Json;
 using NGSoftware.Common.Configuration;
 
-namespace BuzzStats.CrawlerService
+namespace BuzzStats.WebApi.Crawl
 {
     public class ParserClient : IParserClient
     {

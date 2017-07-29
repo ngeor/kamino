@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 
-namespace BuzzStats.ParserWebApi.UnitTests
+namespace BuzzStats.WebApi.UnitTests.Parsing
 {
     static class ResourceLoader
     {

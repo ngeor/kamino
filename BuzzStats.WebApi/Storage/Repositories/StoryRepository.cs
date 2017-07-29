@@ -1,8 +1,8 @@
-﻿using BuzzStats.StorageWebApi.Entities;
+﻿using BuzzStats.WebApi.Storage.Entities;
 using NHibernate;
 using NHibernate.Criterion;
 
-namespace BuzzStats.StorageWebApi.Repositories
+namespace BuzzStats.WebApi.Storage.Repositories
 {
     public class StoryRepository
     {

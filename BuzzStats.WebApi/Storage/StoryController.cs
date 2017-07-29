@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Net;
 using System.Web.Http;
-using BuzzStats.CrawlerService.DTOs;
+using BuzzStats.WebApi.DTOs;
 using log4net;
 using NHibernate;
 
-namespace BuzzStats.StorageWebApi
+namespace BuzzStats.WebApi.Storage
 {
     public class StoryController : ApiController
     {

@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using BuzzStats.CrawlerService.DTOs;
+using BuzzStats.WebApi.DTOs;
 using Moq;
 using NUnit.Framework;
 
-namespace BuzzStats.CrawlerService.UnitTests
+namespace BuzzStats.WebApi.UnitTests
 {
     [TestFixture]
     public class ListingTaskTest

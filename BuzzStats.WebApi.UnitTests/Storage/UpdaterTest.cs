@@ -1,10 +1,11 @@
-using BuzzStats.CrawlerService.DTOs;
-using BuzzStats.StorageWebApi.Entities;
+using BuzzStats.WebApi.DTOs;
+using BuzzStats.WebApi.Storage;
+using BuzzStats.WebApi.Storage.Entities;
 using Moq;
 using NHibernate;
 using NUnit.Framework;
 
-namespace BuzzStats.StorageWebApi.UnitTests
+namespace BuzzStats.WebApi.UnitTests.Storage
 {
     [TestFixture]
     public class UpdaterTest

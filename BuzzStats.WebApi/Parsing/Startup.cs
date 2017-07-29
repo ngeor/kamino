@@ -1,7 +1,7 @@
 using System.Web.Http;
 using Owin;
 
-namespace BuzzStats.ParserWebApi
+namespace BuzzStats.WebApi.Parsing
 {
     public class Startup
     {

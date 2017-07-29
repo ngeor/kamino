@@ -1,9 +1,8 @@
 using AutoMapper;
-using BuzzStats.CrawlerService.DTOs;
-using BuzzStats.StorageWebApi.Entities;
 using BuzzStats.WebApi.DTOs;
+using BuzzStats.WebApi.Storage.Entities;
 
-namespace BuzzStats.StorageWebApi
+namespace BuzzStats.WebApi.Storage
 {
     public class AutoMapperProfile : Profile
     {

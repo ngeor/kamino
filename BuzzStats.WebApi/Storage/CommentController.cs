@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using AutoMapper;
-using BuzzStats.StorageWebApi.Entities;
 using BuzzStats.WebApi.DTOs;
+using BuzzStats.WebApi.Storage.Entities;
 using log4net;
 using NHibernate;
 using NHibernate.Criterion;
 
-namespace BuzzStats.StorageWebApi
+namespace BuzzStats.WebApi.Storage
 {
     public class CommentController : ApiController
     {

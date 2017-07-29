@@ -1,6 +1,6 @@
 using System;
 
-namespace BuzzStats.StorageWebApi.Entities
+namespace BuzzStats.WebApi.Storage.Entities
 {
     public class StoryEntity
     {

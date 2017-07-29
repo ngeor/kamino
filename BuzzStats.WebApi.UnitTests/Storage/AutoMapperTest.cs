@@ -1,12 +1,12 @@
 ﻿using System;
 using AutoMapper;
-using BuzzStats.CrawlerService.DTOs;
-using BuzzStats.StorageWebApi.Entities;
 using BuzzStats.WebApi.DTOs;
+using BuzzStats.WebApi.Storage;
+using BuzzStats.WebApi.Storage.Entities;
 using NUnit.Framework;
 using StructureMap;
 
-namespace BuzzStats.StorageWebApi.UnitTests
+namespace BuzzStats.WebApi.UnitTests.Storage
 {
     [TestFixture]
     public class AutoMapperTest

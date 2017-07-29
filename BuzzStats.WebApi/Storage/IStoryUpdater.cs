@@ -1,8 +1,8 @@
-using BuzzStats.CrawlerService.DTOs;
-using BuzzStats.StorageWebApi.Entities;
+using BuzzStats.WebApi.DTOs;
+using BuzzStats.WebApi.Storage.Entities;
 using NHibernate;
 
-namespace BuzzStats.StorageWebApi
+namespace BuzzStats.WebApi.Storage
 {
     public interface IStoryUpdater
     {

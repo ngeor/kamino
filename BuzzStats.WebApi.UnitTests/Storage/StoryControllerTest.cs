@@ -1,9 +1,10 @@
 ﻿using System.Web.Http;
+using BuzzStats.WebApi.Storage;
 using Moq;
 using NHibernate;
 using NUnit.Framework;
 
-namespace BuzzStats.StorageWebApi.UnitTests
+namespace BuzzStats.WebApi.UnitTests.Storage
 {
     [TestFixture]
     public class StoryControllerTest

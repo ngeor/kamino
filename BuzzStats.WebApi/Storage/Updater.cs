@@ -1,7 +1,7 @@
-﻿using BuzzStats.CrawlerService.DTOs;
+﻿using BuzzStats.WebApi.DTOs;
 using NHibernate;
 
-namespace BuzzStats.StorageWebApi
+namespace BuzzStats.WebApi.Storage
 {
     public class Updater : IUpdater
     {

@@ -1,6 +1,6 @@
 using NHibernate;
 
-namespace BuzzStats.StorageWebApi
+namespace BuzzStats.WebApi.Storage
 {
     internal interface ISessionFactoryFactory
     {

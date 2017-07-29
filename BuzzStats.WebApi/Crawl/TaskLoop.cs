@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace BuzzStats.CrawlerService
+namespace BuzzStats.WebApi.Crawl
 {
     public class TaskLoop
     {

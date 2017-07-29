@@ -1,9 +1,8 @@
-﻿using System;
-using Moq;
+﻿using Moq;
 using NHibernate;
 using NHibernate.Criterion;
 
-namespace BuzzStats.StorageWebApi.UnitTests.TestHelpers
+namespace BuzzStats.WebApi.UnitTests.Storage.TestHelpers
 {
     public static class CriteriaHelpers
     {

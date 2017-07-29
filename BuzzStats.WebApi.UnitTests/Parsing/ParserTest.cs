@@ -1,9 +1,10 @@
 using System;
 using System.Linq;
-using BuzzStats.CrawlerService.DTOs;
+using BuzzStats.WebApi.DTOs;
+using BuzzStats.WebApi.Parsing;
 using NUnit.Framework;
 
-namespace BuzzStats.ParserWebApi.UnitTests
+namespace BuzzStats.WebApi.UnitTests.Parsing
 {
     [TestFixture]
     public class ParserTest

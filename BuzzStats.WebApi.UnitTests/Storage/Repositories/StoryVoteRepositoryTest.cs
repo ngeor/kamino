@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
-using BuzzStats.StorageWebApi.Entities;
-using BuzzStats.StorageWebApi.Repositories;
-using BuzzStats.StorageWebApi.UnitTests.TestHelpers;
+using BuzzStats.WebApi.Storage.Entities;
+using BuzzStats.WebApi.Storage.Repositories;
+using BuzzStats.WebApi.UnitTests.Storage.TestHelpers;
 using Moq;
 using NHibernate;
-using NHibernate.Criterion;
 using NUnit.Framework;
 
-namespace BuzzStats.StorageWebApi.UnitTests.Repositories
+namespace BuzzStats.WebApi.UnitTests.Storage.Repositories
 {
     [TestFixture]
     public class StoryVoteRepositoryTest

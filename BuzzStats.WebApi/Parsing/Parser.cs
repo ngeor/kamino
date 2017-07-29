@@ -11,9 +11,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using BuzzStats.CrawlerService.DTOs;
+using BuzzStats.WebApi.DTOs;
 
-namespace BuzzStats.ParserWebApi
+namespace BuzzStats.WebApi.Parsing
 {
     public sealed class Parser
     {

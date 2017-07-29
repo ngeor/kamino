@@ -1,7 +1,7 @@
 using System.Web.Http;
 using Owin;
 
-namespace BuzzStats.CrawlerService
+namespace BuzzStats.WebApi.Crawl
 {
     public class Startup
     {

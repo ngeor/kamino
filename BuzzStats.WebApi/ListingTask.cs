@@ -1,9 +1,9 @@
 using System;
 using System.Threading.Tasks;
-using BuzzStats.CrawlerService.DTOs;
+using BuzzStats.WebApi.DTOs;
 using log4net;
 
-namespace BuzzStats.CrawlerService
+namespace BuzzStats.WebApi
 {
     public class ListingTask
     {

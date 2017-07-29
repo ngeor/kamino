@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using BuzzStats.CrawlerService.DTOs;
+using BuzzStats.WebApi.DTOs;
 
-namespace BuzzStats.CrawlerService
+namespace BuzzStats.WebApi
 {
     public interface IParserClient
     {

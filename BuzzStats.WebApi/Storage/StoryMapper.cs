@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using BuzzStats.CrawlerService.DTOs;
-using BuzzStats.StorageWebApi.Entities;
+using BuzzStats.WebApi.DTOs;
+using BuzzStats.WebApi.Storage.Entities;
 
-namespace BuzzStats.StorageWebApi
+namespace BuzzStats.WebApi.Storage
 {
     /// <summary>
     /// Maps story DTOs to story entities.

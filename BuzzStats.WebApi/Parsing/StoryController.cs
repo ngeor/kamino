@@ -2,10 +2,10 @@ using System.Configuration;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using BuzzStats.CrawlerService.DTOs;
+using BuzzStats.WebApi.DTOs;
 using log4net;
 
-namespace BuzzStats.ParserWebApi
+namespace BuzzStats.WebApi.Parsing
 {
     public class StoryController : ApiController
     {
