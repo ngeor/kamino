@@ -7,9 +7,9 @@ using NUnit.Framework;
 namespace BuzzStats.WebApi.UnitTests.Storage
 {
     [TestFixture]
-    public class StoryControllerTest
+    public class StorageClientTest
     {
-        private StoryController _storyController;
+        private StorageClient _storageClient;
         private Mock<ISessionFactory> _mockSessionFactory;
         private Mock<IUpdater> _mockUpdater;
 
@@ -18,7 +18,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
         {
             _mockSessionFactory = new Mock<ISessionFactory>();
             _mockUpdater = new Mock<IUpdater>();
-            _storyController = new StoryController(_mockSessionFactory.Object, _mockUpdater.Object);    
+            _storageClient = new StorageClient(_mockSessionFactory.Object, _mockUpdater.Object);    
         }
         
         [Test]
@@ -26,7 +26,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
         {
             Assert.Throws<HttpResponseException>(() =>
             {
-                _storyController.Post(null);
+                _storageClient.Save(null);
             });
         }
     }

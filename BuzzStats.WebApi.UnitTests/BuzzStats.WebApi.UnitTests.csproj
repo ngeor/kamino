@@ -74,7 +74,7 @@
     <Compile Include="Storage\Repositories\CommentRepositoryTest.cs" />
     <Compile Include="Storage\Repositories\StoryRepositoryTest.cs" />
     <Compile Include="Storage\Repositories\StoryVoteRepositoryTest.cs" />
-    <Compile Include="Storage\StoryControllerTest.cs" />
+    <Compile Include="Storage\StorageClientTest.cs" />
     <Compile Include="Storage\StoryMapperTest.cs" />
     <Compile Include="Storage\StoryUpdaterTest.cs" />
     <Compile Include="Storage\StoryVoteUpdaterTest.cs" />

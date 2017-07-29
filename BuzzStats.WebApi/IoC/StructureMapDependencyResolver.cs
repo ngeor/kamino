@@ -5,7 +5,7 @@ using System.Web.Http.Dependencies;
 using log4net;
 using StructureMap;
 
-namespace BuzzStats.WebApi.Storage
+namespace BuzzStats.WebApi.IoC
 {
     sealed class StructureMapDependencyResolver : IDependencyResolver
     {

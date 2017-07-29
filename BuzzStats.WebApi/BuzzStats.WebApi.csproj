@@ -60,6 +60,9 @@
     <Reference Include="Microsoft.Owin.StaticFiles, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <HintPath>..\packages\Microsoft.Owin.StaticFiles.3.1.0\lib\net45\Microsoft.Owin.StaticFiles.dll</HintPath>
     </Reference>
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d">
+      <HintPath>..\packages\MySql.Data.6.9.9\lib\net45\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -102,6 +105,9 @@
     <Compile Include="DTOs\Story.cs" />
     <Compile Include="DTOs\StoryListingSummary.cs" />
     <Compile Include="DTOs\StoryWithRecentComments.cs" />
+    <Compile Include="IoC\ContainerHolder.cs" />
+    <Compile Include="IoC\StructureMapContainerBuilder.cs" />
+    <Compile Include="IoC\StructureMapDependencyResolver.cs" />
     <Compile Include="Parsing\IParserClient.cs" />
     <Compile Include="Parsing\Parser.cs" />
     <Compile Include="Parsing\ParserClient.cs" />
@@ -131,15 +137,13 @@
     <Compile Include="Storage\Repositories\StoryVoteRepository.cs" />
     <Compile Include="Storage\SessionFactoryFactory.cs" />
     <Compile Include="Storage\StorageClient.cs" />
-    <Compile Include="Storage\StoryController.cs" />
     <Compile Include="Storage\StoryMapper.cs" />
     <Compile Include="Storage\StoryUpdater.cs" />
     <Compile Include="Storage\StoryVoteUpdater.cs" />
-    <Compile Include="Storage\StructureMapContainerBuilder.cs" />
-    <Compile Include="Storage\StructureMapDependencyResolver.cs" />
     <Compile Include="Storage\Updater.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

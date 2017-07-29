@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using BuzzStats.WebApi.IoC;
 using BuzzStats.WebApi.Storage;
 using Newtonsoft.Json.Serialization;
 using Owin;
@@ -14,7 +15,7 @@ namespace BuzzStats.WebApi
         {
             // Configure Web API for self-host. 
             HttpConfiguration config = new HttpConfiguration();
-            config.DependencyResolver = new StructureMapDependencyResolver(CreateContainer());
+            config.DependencyResolver = new StructureMapDependencyResolver(ContainerHolder.Container);
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

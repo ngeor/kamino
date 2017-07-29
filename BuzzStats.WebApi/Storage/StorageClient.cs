@@ -1,8 +1,9 @@
-using System.Net.Http;
-using System.Threading.Tasks;
+using System;
+using System.Net;
+using System.Web.Http;
 using BuzzStats.WebApi.DTOs;
 using log4net;
-using NGSoftware.Common.Configuration;
+using NHibernate;
 
 namespace BuzzStats.WebApi.Storage
 {
@@ -10,21 +11,47 @@ namespace BuzzStats.WebApi.Storage
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(StorageClient));
         
-        private readonly IAppSettings _appSettings;
+        private readonly ISessionFactory _sessionFactory;
+        private readonly IUpdater _updater;
 
-        public StorageClient(IAppSettings appSettings)
+        public StorageClient(ISessionFactory sessionFactory, IUpdater updater)
         {
-            _appSettings = appSettings;
+            _sessionFactory = sessionFactory;
+            _updater = updater;
         }
         
-        public virtual async Task Save(Story story)
+        public virtual void Save(Story story)
         {
-            var requestUri = StorageWebApiUrl() + "/api/story";
-            Log.InfoFormat("Calling {0}", requestUri);
-            HttpClient client = new HttpClient();
-            await client.PostAsJsonAsync(requestUri, story);
+            if (story == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+
+            Log.InfoFormat("Received story {0} title {1}", story.StoryId, story.Title);
+
+            if (!IsInputValid(story))
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+
+            try
+            {
+                using (var session = _sessionFactory.OpenSession())
+                {
+                    _updater.Save(session, story);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message, ex);
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
         }
 
-        private string StorageWebApiUrl() => _appSettings["StorageWebApiUrl"];
+        private static bool IsInputValid(Story story)
+        {
+            // TODO 1. add unit tests 2. limit dates to SQL Server Limitations 
+            return !string.IsNullOrWhiteSpace(story.Title) && story.StoryId > 0 && story.CreatedAt != default(DateTime);
+        }
     }
 }

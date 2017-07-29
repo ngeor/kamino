@@ -1,9 +1,11 @@
 using AutoMapper;
+using BuzzStats.WebApi.Parsing;
+using BuzzStats.WebApi.Storage;
 using NGSoftware.Common.Configuration;
 using NHibernate;
 using StructureMap;
 
-namespace BuzzStats.WebApi.Storage
+namespace BuzzStats.WebApi.IoC
 {
     public class StructureMapContainerBuilder
     {
@@ -12,11 +14,18 @@ namespace BuzzStats.WebApi.Storage
             Container container = new Container();
             container.Configure(x =>
             {
+                // storage
                 x.For<IStoryUpdater>().Use<StoryUpdater>();
                 x.For<IStoryVoteUpdater>().Use<StoryVoteUpdater>();
                 x.For<ICommentUpdater>().Use<CommentUpdater>();
                 x.For<IUpdater>().Use<Updater>();
+                
+                // settings
                 x.For<IAppSettings>().Use(() => AppSettingsFactory.DefaultWithEnvironmentOverride());
+                
+                // clients
+                x.For<IParserClient>().Use<ParserClient>();
+                x.For<IStorageClient>().Use<StorageClient>();
 
                 // NHibernate
                 x.For<ISessionFactoryFactory>().Use<SessionFactoryFactory>().Singleton();

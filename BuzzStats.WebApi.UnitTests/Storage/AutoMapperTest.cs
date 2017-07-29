@@ -1,6 +1,7 @@
 ﻿using System;
 using AutoMapper;
 using BuzzStats.WebApi.DTOs;
+using BuzzStats.WebApi.IoC;
 using BuzzStats.WebApi.Storage;
 using BuzzStats.WebApi.Storage.Entities;
 using NUnit.Framework;

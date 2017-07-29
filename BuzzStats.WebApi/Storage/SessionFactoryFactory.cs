@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using BuzzStats.WebApi.Storage.ClassMaps;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using log4net;
@@ -27,7 +28,7 @@ namespace BuzzStats.WebApi.Storage
             {
                 var sessionFactory = Fluently.Configure()
                     .Database(MySQLConfiguration.Standard.ConnectionString(ConnectionString()))
-                    .Mappings(m => m.FluentMappings.AddFromAssemblyOf<StoryController>())
+                    .Mappings(m => m.FluentMappings.AddFromAssemblyOf<StoryMap>())
                     .ExposeConfiguration(BuildSchema)
                     .BuildSessionFactory();
                 return sessionFactory;

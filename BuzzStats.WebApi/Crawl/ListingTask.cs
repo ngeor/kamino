@@ -47,7 +47,7 @@ namespace BuzzStats.WebApi.Crawl
             Log.InfoFormat("Getting story id {0}", storyId);
             var parsedStory = await _parserClient.Story(storyId);
             Log.InfoFormat("Parsed story {0}", parsedStory.Title);
-            await _storageClient.Save(parsedStory);
+            _storageClient.Save(parsedStory);
             return parsedStory;
         }
     }

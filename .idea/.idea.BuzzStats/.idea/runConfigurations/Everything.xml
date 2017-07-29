@@ -1,8 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Everything" type="CompoundRunConfigurationType" factoryName="Compound Run Configuration">
-    <toRun type="DotNetProject" name="BuzzStats.ParserWebApi" />
-    <toRun type="DotNetProject" name="BuzzStats.StorageWebApi" />
-    <toRun type="DotNetProject" name="BuzzStats.WebApi" />
-    <method />
-  </configuration>
-</component>
