@@ -1,7 +1,6 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using NGSoftware.Common.WebServices;
 using BuzzStats.Tasks;
 
 [assembly: AssemblyTitle("BuzzStats")]
@@ -38,4 +37,3 @@ using BuzzStats.Tasks;
 [assembly: AssemblyFileVersion("2.0.0.0")]
 [assembly: InternalsVisibleTo("BuzzStats.UnitTests")]
 [assembly: AppContainer]
-[assembly: WebServiceContainer]

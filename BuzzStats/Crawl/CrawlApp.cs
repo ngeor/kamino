@@ -13,10 +13,8 @@ using System.Reflection;
 using System.Threading;
 using log4net;
 using Microsoft.Practices.ServiceLocation;
-using Newtonsoft.Json;
 using NGSoftware.Common;
 using NGSoftware.Common.Messaging;
-using NGSoftware.Common.WebServices;
 using BuzzStats.Configuration;
 using BuzzStats.Data;
 using BuzzStats.Persister;
@@ -136,37 +134,6 @@ namespace BuzzStats.Crawl
 
         private void HostRemoteControlService()
         {
-            Log.Debug("Opening web services host");
-            var webServicesHost = new WebServicesHost(
-                ServiceLocator.Current,
-                new JsonSerializer(),
-                BuzzStatsConfigurationSection.Current.Crawler.WebServicesPrefix);
-            webServicesHost.DiscoverHandlers();
-            webServicesHost.Start();
-            Log.Debug("Web services host open");
-
-//
-//			_stoppable.Register(() =>
-//			{
-//				Log.Debug("Shuting down hosts due to closing time");
-//				try
-//				{
-//					crawlerService.Close();
-//				}
-//				catch (Exception ex)
-//				{
-//					Log.Error("Error closing Crawler Service", ex);
-//				}
-//
-//				try
-//				{
-//					webApiService.Close();
-//				}
-//				catch (Exception ex)
-//				{
-//					Log.Error("Error closing Web API Service", ex);
-//				}
-//			});
         }
 
         public class Options

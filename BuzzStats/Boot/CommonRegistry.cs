@@ -28,8 +28,6 @@ namespace BuzzStats.Boot
             For<IStoppable>().Singleton().Use<Stoppable>();
             For<IBackgroundScheduledItemManager>().Singleton().Use<BackgroundScheduledItemManager>();
 
-            For<IServiceModelSettings>().Use<ServiceModelSettings>();
-
             For<IUrlProvider>().Use<UrlProvider>();
 
             For<ConnectionStringSettings>().Use(ctx => ConfigurationManager.ConnectionStrings["BuzzStats"]);

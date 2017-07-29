@@ -1,12 +1,10 @@
 using System.Reflection;
 using log4net;
-using NGSoftware.Common.WebServices;
 using BuzzStats.Crawl;
 using BuzzStats.Data;
 
 namespace BuzzStats.Services
 {
-    [WebService]
     public class RecentActivityService : IRecentActivityService
     {
         private static readonly ILog Log = LogManager.GetLogger(
@@ -22,7 +20,6 @@ namespace BuzzStats.Services
 
         #region IRecentActivityService implementation
 
-        [DefaultRoute]
         public RecentActivity[] GetRecentActivity()
         {
             return WarmCache.GetRecentActivity();
