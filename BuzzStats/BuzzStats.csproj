@@ -172,7 +172,6 @@
     </Compile>
     <Compile Include="Services\CrawlerEventsForwarder.cs" />
     <Compile Include="Services\ICrawlerService.cs" />
-    <Compile Include="Tasks\CommandLine.cs" />
     <Compile Include="Tasks\CommandLineAttribute.cs" />
     <Compile Include="Tasks\IApp.cs" />
     <Compile Include="Crawl\StoryDownloadedMessage.cs" />

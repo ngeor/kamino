@@ -115,7 +115,6 @@
     <Compile Include="Persister\StoryPersisterTest.cs" />
     <Compile Include="Persister\TransactionalPersisterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tasks\CommandLineTest.cs" />
     <Compile Include="Utils\StubStoryQuery.cs" />
     <Compile Include="Web\Mvp\AboutPagePresenterTest.cs" />
     <Compile Include="Web\Mvp\HomePagePresenterTest.cs" />
@@ -155,6 +154,9 @@
       <Project>{70807780-11BE-4F50-8BC5-A727ACA2B35F}</Project>
       <Name>BuzzStats</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tasks" />
   </ItemGroup>
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.105.2\build\net46\System.Data.SQLite.Core.targets" />
 </Project>

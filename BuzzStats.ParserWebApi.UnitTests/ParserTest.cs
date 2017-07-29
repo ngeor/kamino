@@ -389,7 +389,7 @@ namespace BuzzStats.ParserWebApi.UnitTests
         [Test]
         public void TestCanParseRecursiveBuzz()
         {
-            // test if it can parse a buzz that points to itself (bug on buzz)
+            // test if it can parse a buzz that points to itself
             string html = LoadTestData("BugRecursiveBuzz");
             var story = parser.ParseStoryPage(html, 72120);
             Assert.IsNotNull(story);

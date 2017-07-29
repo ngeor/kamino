@@ -56,8 +56,6 @@ namespace BuzzStats.Data.NHibernate.Tests
 
             Assert.IsNotNull(stories);
             Assert.AreEqual(5, stories.Length);
-
-            // TODO: More testing here
         }
 
         [Test]
