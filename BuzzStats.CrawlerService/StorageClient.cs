@@ -6,7 +6,7 @@ using NGSoftware.Common.Configuration;
 
 namespace BuzzStats.CrawlerService
 {
-    public class StorageClient
+    public class StorageClient : IStorageClient
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(StorageClient));
         

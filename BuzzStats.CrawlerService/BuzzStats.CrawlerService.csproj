@@ -77,6 +77,8 @@
     <Compile Include="DTOs\Comment.cs" />
     <Compile Include="DTOs\Story.cs" />
     <Compile Include="DTOs\StoryListingSummary.cs" />
+    <Compile Include="IParserClient.cs" />
+    <Compile Include="IStorageClient.cs" />
     <Compile Include="ListingTask.cs" />
     <Compile Include="ParserClient.cs" />
     <Compile Include="Program.cs" />

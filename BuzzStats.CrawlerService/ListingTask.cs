@@ -8,10 +8,10 @@ namespace BuzzStats.CrawlerService
     public class ListingTask
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(ListingTask));
-        private readonly ParserClient _parserClient;
-        private readonly StorageClient _storageClient;
+        private readonly IParserClient _parserClient;
+        private readonly IStorageClient _storageClient;
 
-        public ListingTask(ParserClient parserClient, StorageClient storageClient)
+        public ListingTask(IParserClient parserClient, IStorageClient storageClient)
         {
             _parserClient = parserClient;
             _storageClient = storageClient;

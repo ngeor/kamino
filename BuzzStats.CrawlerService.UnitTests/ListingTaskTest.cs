@@ -8,15 +8,15 @@ namespace BuzzStats.CrawlerService.UnitTests
     [TestFixture]
     public class ListingTaskTest
     {
-        private Mock<ParserClient> _mockParserClient;
-        private Mock<StorageClient> _mockStorageClient;
+        private Mock<IParserClient> _mockParserClient;
+        private Mock<IStorageClient> _mockStorageClient;
         private ListingTask _listingTask;
 
         [SetUp]
         public void SetUp()
         {
-            _mockParserClient = new Mock<ParserClient>();
-            _mockStorageClient = new Mock<StorageClient>();
+            _mockParserClient = new Mock<IParserClient>();
+            _mockStorageClient = new Mock<IStorageClient>();
             _listingTask = new ListingTask(_mockParserClient.Object, _mockStorageClient.Object);
         }
 

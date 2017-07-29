@@ -7,7 +7,7 @@ using NGSoftware.Common.Configuration;
 
 namespace BuzzStats.CrawlerService
 {
-    public class ParserClient
+    public class ParserClient : IParserClient
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(ParserClient));
         private readonly IAppSettings _appSettings;
