@@ -94,7 +94,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Crawl\Startup.cs" />
+    <Compile Include="Crawl\ListingTask.cs" />
     <Compile Include="Crawl\TaskLoop.cs" />
     <Compile Include="DTOs\Comment.cs" />
     <Compile Include="DTOs\CommentWithStory.cs" />
@@ -102,12 +102,10 @@
     <Compile Include="DTOs\Story.cs" />
     <Compile Include="DTOs\StoryListingSummary.cs" />
     <Compile Include="DTOs\StoryWithRecentComments.cs" />
-    <Compile Include="ListingTask.cs" />
     <Compile Include="Parsing\IParserClient.cs" />
     <Compile Include="Parsing\Parser.cs" />
     <Compile Include="Parsing\ParserClient.cs" />
     <Compile Include="Parsing\ParserFailedException.cs" />
-    <Compile Include="Parsing\Startup.cs" />
     <Compile Include="Parsing\StoryListing.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -132,7 +130,6 @@
     <Compile Include="Storage\Repositories\StoryRepository.cs" />
     <Compile Include="Storage\Repositories\StoryVoteRepository.cs" />
     <Compile Include="Storage\SessionFactoryFactory.cs" />
-    <Compile Include="Storage\Startup.cs" />
     <Compile Include="Storage\StorageClient.cs" />
     <Compile Include="Storage\StoryController.cs" />
     <Compile Include="Storage\StoryMapper.cs" />

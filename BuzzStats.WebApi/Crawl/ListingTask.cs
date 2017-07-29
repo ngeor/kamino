@@ -6,7 +6,7 @@ using BuzzStats.WebApi.Parsing;
 using BuzzStats.WebApi.Storage;
 using log4net;
 
-namespace BuzzStats.WebApi
+namespace BuzzStats.WebApi.Crawl
 {
     public class ListingTask
     {

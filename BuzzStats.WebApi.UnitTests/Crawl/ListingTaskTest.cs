@@ -1,11 +1,12 @@
 ﻿using System.Threading.Tasks;
+using BuzzStats.WebApi.Crawl;
 using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.Parsing;
 using BuzzStats.WebApi.Storage;
 using Moq;
 using NUnit.Framework;
 
-namespace BuzzStats.WebApi.UnitTests
+namespace BuzzStats.WebApi.UnitTests.Crawl
 {
     [TestFixture]
     public class ListingTaskTest

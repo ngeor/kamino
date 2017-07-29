@@ -1,6 +1,8 @@
 ﻿using System.Web.Http;
+using BuzzStats.WebApi.Storage;
 using Newtonsoft.Json.Serialization;
 using Owin;
+using StructureMap;
 
 namespace BuzzStats.WebApi
 {
@@ -12,6 +14,8 @@ namespace BuzzStats.WebApi
         {
             // Configure Web API for self-host. 
             HttpConfiguration config = new HttpConfiguration();
+            config.DependencyResolver = new StructureMapDependencyResolver(CreateContainer());
+
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
@@ -25,5 +29,7 @@ namespace BuzzStats.WebApi
             appBuilder.UseWebApi(config);
             appBuilder.UseFileServer();
         }
+
+        private IContainer CreateContainer() => new StructureMapContainerBuilder().Create();
     }
 }

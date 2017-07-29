@@ -66,7 +66,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ListingTaskTest.cs" />
+    <Compile Include="Crawl\ListingTaskTest.cs" />
     <Compile Include="Parsing\ParserTest.cs" />
     <Compile Include="Parsing\ResourceLoader.cs" />
     <Compile Include="Storage\AutoMapperTest.cs" />

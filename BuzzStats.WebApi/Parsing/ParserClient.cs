@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Net.Http;
 using System.Threading.Tasks;
 using BuzzStats.WebApi.DTOs;
@@ -38,7 +37,7 @@ namespace BuzzStats.WebApi.Parsing
                     break;
             }
 
-            var requestUri = ConfigurationManager.AppSettings["BuzzServerUrl"] + path;
+            var requestUri = _appSettings["BuzzServerUrl"] + path;
             Log.InfoFormat("Calling {0}", requestUri);
             try
             {
@@ -50,15 +49,16 @@ namespace BuzzStats.WebApi.Parsing
                 Log.Error(ex.Message, ex);
                 throw;
             }
-
         }
 
         public virtual async Task<Story> Story(int storyId)
         {
             Parser parser = new Parser();
             HttpClient client = new HttpClient();
+            var requestUri = _appSettings["BuzzServerUrl"] + "story.php?id=" + storyId;
+            Log.InfoFormat("Calling {0}", requestUri);
             string storyPageContents =
-                await client.GetStringAsync(_appSettings["BuzzServerUrl"] + "story.php?id=" + storyId);
+                await client.GetStringAsync(requestUri);
             return parser.ParseStoryPage(storyPageContents, storyId);
         }
     }
