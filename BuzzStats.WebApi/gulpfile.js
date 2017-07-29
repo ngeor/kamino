@@ -57,6 +57,7 @@ gulp.task('eslint', function() {
 gulp.task('watch', function() {
     gulp.watch('templates/*.pug', ['html']);
     gulp.watch('styles/*.less', ['css']);
+    gulp.watch('scripts/*.js', ['eslint', 'webpack']);
 });
 
 gulp.task('default', ['html', 'css', 'eslint', 'webpack']);

@@ -79,6 +79,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTOs\CommentWithStory.cs" />
+    <Compile Include="DTOs\RecentComment.cs" />
+    <Compile Include="DTOs\StoryWithRecentComments.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

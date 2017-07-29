@@ -10,7 +10,8 @@ const sampleData = [
         comments: [
             {
                 commentId: 10,
-                user: 'user 1'
+                user: 'user 1',
+                votesUp: 1
             }
         ]
     },
@@ -20,11 +21,13 @@ const sampleData = [
         comments: [
             {
                 commentId: 20,
-                user: 'user 2'
+                user: 'user 2',
+                votesUp: 2
             },
             {
                 commentId: 21,
-                user: 'user 3'
+                user: 'user 3',
+                votesUp: 1
             }
         ]
     }
@@ -36,15 +39,15 @@ function useStaticData() {
 
 function loadRecentComments(callback) {
     if (useStaticData()) {
-        callback(sampleData);
+        callback(null, sampleData);
         return;
     }
 
-    loadJson('/api/recent-comments', callback);
+    loadJson('/api/recentcomments', callback);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    loadRecentComments(function(data) {
+    loadRecentComments(function(err, data) {
         ReactDOM.render(
             <RecentComments data={data}/>,
             document.getElementById('root')

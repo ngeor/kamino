@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using Newtonsoft.Json.Serialization;
 using Owin;
 
 namespace BuzzStats.WebApi
@@ -16,6 +17,10 @@ namespace BuzzStats.WebApi
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new {id = RouteParameter.Optional}
             );
+
+            var jsonFormatter = config.Formatters.JsonFormatter;
+            var serializerSettings = jsonFormatter.SerializerSettings;
+            serializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
             appBuilder.UseWebApi(config);
             appBuilder.UseFileServer();

@@ -1,0 +1,33 @@
+@import 'common';
+
+.comments {
+    .clearfix;
+}
+
+.block {
+    display: block;
+    float: left;
+    padding: 10px;
+    margin-right: 10px;
+    background: @lightgray;
+
+    table {
+        border-spacing: 0;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th {
+        font-weight: bold;
+        text-align: left;
+    }
+
+    div {
+        font-weight: bold;
+        font-size: 125%;
+    }
+
+    td:last-child {
+        text-align: right;
+    }
+}
