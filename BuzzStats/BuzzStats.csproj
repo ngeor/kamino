@@ -97,7 +97,6 @@
     <Compile Include="Boot\Web\Application.cs" />
     <Compile Include="Common\Resources.cs" />
     <Compile Include="Crawl\CrawlApp.cs" />
-    <Compile Include="Crawl\IQueueManager.cs" />
     <Compile Include="Crawl\IWarmCache.cs" />
     <Compile Include="Crawl\IWebPageHandler.cs" />
     <Compile Include="Crawl\LeafProducerFoundLeafMessage.cs" />
@@ -178,7 +177,6 @@
     <Compile Include="Crawl\Poller.cs" />
     <Compile Include="Crawl\ISource.cs" />
     <Compile Include="Crawl\StoryHandler.cs" />
-    <Compile Include="Crawl\QueueManager.cs" />
     <Compile Include="Crawl\IConfiguration.cs" />
     <Compile Include="Crawl\Configuration.cs" />
     <Compile Include="Crawl\ILeaf.cs" />

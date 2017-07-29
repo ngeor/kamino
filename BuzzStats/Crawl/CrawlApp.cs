@@ -32,7 +32,6 @@ namespace BuzzStats.Crawl
 
         private readonly IMessageBus _messageBus;
         private readonly IDbContext _dbContext;
-        private readonly IQueueManager _queueManager;
         private readonly IWarmCache _warmCache;
 
         /// <summary>
@@ -47,13 +46,11 @@ namespace BuzzStats.Crawl
         public CrawlApp(
             IMessageBus messageBus,
             IDbContext dbContext,
-            IQueueManager queueManager,
             IWarmCache warmCache)
         {
             Log.Debug("CrawlApp constructor");
             _messageBus = messageBus;
             _dbContext = dbContext;
-            _queueManager = queueManager;
             _warmCache = warmCache;
             _creationTime = TestableDateTime.UtcNow;
             _crawlThread = new Thread(CrawlThreadStart);
@@ -62,7 +59,6 @@ namespace BuzzStats.Crawl
         void CrawlThreadStart(object parameter)
         {
             new StoryPollHistoryLogger(_messageBus, _dbContext);
-            _queueManager.Start();
         }
 
         public string Echo(string msg)
@@ -122,8 +118,6 @@ namespace BuzzStats.Crawl
             // in a separate thread because of MySql complaining
             // about nested transactions due to interference
             // with WCF service host.
-            _queueManager.InfiniteLoop = true;
-            //CrawlThreadStart(null);
             _crawlThread.Start();
             Console.WriteLine("Crawl started. Press Ctrl+C to exit...");
         }

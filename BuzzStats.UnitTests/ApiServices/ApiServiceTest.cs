@@ -37,12 +37,6 @@ namespace BuzzStats.UnitTests.ApiServices
         }
 
         [Test]
-        public void TestToAgoString()
-        {
-            Assert.False(string.IsNullOrWhiteSpace(TimeSpan.Zero.ToAgoString()));
-        }
-
-        [Test]
         public void TestGetRecentPopular()
         {
             var queryParameters = new CommentDataQueryParameters

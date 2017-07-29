@@ -53,9 +53,6 @@ namespace BuzzStats.Boot.Crawler
             For<IWarmCache>().Singleton().Use<WarmCache>()
                 .Ctor<IApiService>().Is<DbContextApiService>();
 
-            For<QueueManager>().Singleton();
-            Forward<QueueManager, IQueueManager>();
-
             For<ILeafProducerMonitor>().Use<LeafProducerMonitor>();
 
             For<ICrawlerService>().Singleton().Use<CrawlApp>();

@@ -9,7 +9,6 @@
 
 using System;
 using BuzzStats.Boot.Crawler;
-using BuzzStats.Crawl;
 using BuzzStats.Services;
 using NGSoftware.Common.Messaging;
 using NUnit.Framework;
@@ -55,15 +54,6 @@ namespace BuzzStats.UnitTests.Boot.Crawler
         {
             Assert.Catch(
                 () => { _resolver.GetService(typeof(IRecentActivityService)); });
-        }
-
-        [Test]
-        [Category("Integration")]
-        public void ShouldUseSameInstanceForIQueueManagerAndQueueManager()
-        {
-            Assert.IsTrue(object.ReferenceEquals(
-                _resolver.GetService(typeof(IQueueManager)),
-                _resolver.GetService(typeof(QueueManager))), "should be the same instance");
         }
     }
 }

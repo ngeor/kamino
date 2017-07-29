@@ -99,7 +99,6 @@
     <Compile Include="Crawl\LeafProducerTest.cs" />
     <Compile Include="Crawl\ListingTest.cs" />
     <Compile Include="Crawl\PollerTest.cs" />
-    <Compile Include="Crawl\QueueManagerTest.cs" />
     <Compile Include="Crawl\StoryDownloadedMessageTest.cs" />
     <Compile Include="Crawl\StoryHandlerTest.cs" />
     <Compile Include="Crawl\StoryLeafTest.cs" />
