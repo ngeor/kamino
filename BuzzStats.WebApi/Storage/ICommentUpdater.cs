@@ -1,4 +1,4 @@
-﻿using BuzzStats.StorageWebApi.DTOs;
+﻿using BuzzStats.CrawlerService.DTOs;
 using BuzzStats.StorageWebApi.Entities;
 using NHibernate;
 

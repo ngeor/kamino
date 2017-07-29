@@ -21,13 +21,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.Data.NHibernate.T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.WebApi", "BuzzStats.WebApi\BuzzStats.WebApi.csproj", "{7B2E2D42-C462-405F-9505-E89F546E96C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.StorageWebApi", "BuzzStats.StorageWebApi\BuzzStats.StorageWebApi.csproj", "{BB4F2568-8B52-44BD-9E25-B1249858DC3A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.MockServer", "BuzzStats.MockServer\BuzzStats.MockServer.csproj", "{B53DBA36-F7B8-4F1E-807F-519FFF9A69CD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.MockServer.UnitTests", "BuzzStats.MockServer.UnitTests\BuzzStats.MockServer.UnitTests.csproj", "{79718836-978B-4172-854B-FE29F0EAD8FA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.StorageWebApi.UnitTests", "BuzzStats.StorageWebApi.UnitTests\BuzzStats.StorageWebApi.UnitTests.csproj", "{C39DD2B0-0996-4B4F-9353-945E8E6D9036}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.StorageWebApi.IntegrationTests", "BuzzStats.StorageWebApi.IntegrationTests\BuzzStats.StorageWebApi.IntegrationTests.csproj", "{710AD1AE-E64B-4E15-94A8-7CDE7F224CBF}"
 EndProject
@@ -75,10 +71,6 @@ Global
 		{7B2E2D42-C462-405F-9505-E89F546E96C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B2E2D42-C462-405F-9505-E89F546E96C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B2E2D42-C462-405F-9505-E89F546E96C6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BB4F2568-8B52-44BD-9E25-B1249858DC3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BB4F2568-8B52-44BD-9E25-B1249858DC3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BB4F2568-8B52-44BD-9E25-B1249858DC3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BB4F2568-8B52-44BD-9E25-B1249858DC3A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B53DBA36-F7B8-4F1E-807F-519FFF9A69CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B53DBA36-F7B8-4F1E-807F-519FFF9A69CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B53DBA36-F7B8-4F1E-807F-519FFF9A69CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -87,10 +79,6 @@ Global
 		{79718836-978B-4172-854B-FE29F0EAD8FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79718836-978B-4172-854B-FE29F0EAD8FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79718836-978B-4172-854B-FE29F0EAD8FA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C39DD2B0-0996-4B4F-9353-945E8E6D9036}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C39DD2B0-0996-4B4F-9353-945E8E6D9036}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C39DD2B0-0996-4B4F-9353-945E8E6D9036}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C39DD2B0-0996-4B4F-9353-945E8E6D9036}.Release|Any CPU.Build.0 = Release|Any CPU
 		{710AD1AE-E64B-4E15-94A8-7CDE7F224CBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{710AD1AE-E64B-4E15-94A8-7CDE7F224CBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{710AD1AE-E64B-4E15-94A8-7CDE7F224CBF}.Release|Any CPU.ActiveCfg = Release|Any CPU

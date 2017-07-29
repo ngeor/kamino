@@ -7,7 +7,7 @@ using NGSoftware.Common.Configuration;
 
 namespace BuzzStats.WebApi
 {
-    internal class Program
+    public class Program
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(Program));
         

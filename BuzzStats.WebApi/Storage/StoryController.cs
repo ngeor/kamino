@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Web.Http;
-using BuzzStats.StorageWebApi.DTOs;
+using BuzzStats.CrawlerService.DTOs;
 using log4net;
 using NHibernate;
 

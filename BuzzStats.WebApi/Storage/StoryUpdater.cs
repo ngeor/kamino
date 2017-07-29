@@ -1,5 +1,5 @@
 using AutoMapper;
-using BuzzStats.StorageWebApi.DTOs;
+using BuzzStats.CrawlerService.DTOs;
 using BuzzStats.StorageWebApi.Entities;
 using BuzzStats.StorageWebApi.Repositories;
 using log4net;

@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using BuzzStats.StorageWebApi.DTOs;
+using BuzzStats.CrawlerService.DTOs;
 using NUnit.Framework;
 
 namespace BuzzStats.StorageWebApi.IntegrationTests
@@ -15,7 +15,7 @@ namespace BuzzStats.StorageWebApi.IntegrationTests
         [SetUp]
         public void SetUp()
         {
-            _webhost = Program.Start();
+            //_webhost = Program.Start();
         }
 
         [TearDown]

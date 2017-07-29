@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using BuzzStats.StorageWebApi.DTOs;
+using BuzzStats.CrawlerService.DTOs;
 using BuzzStats.StorageWebApi.Entities;
 
 namespace BuzzStats.StorageWebApi

@@ -33,6 +33,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005">
+      <HintPath>..\packages\AutoMapper.6.1.1\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentNHibernate, Version=2.0.3.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\FluentNHibernate.2.0.3.0\lib\net40\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections, Version=4.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4">
+      <HintPath>..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
@@ -57,8 +66,14 @@
     <Reference Include="NGSoftware.Common, Version=5.1.0.21, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\NGSoftware.Common.5.1.0\lib\net462\NGSoftware.Common.dll</HintPath>
     </Reference>
+    <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4">
+      <HintPath>..\packages\NHibernate.4.0.0.4000\lib\net40\NHibernate.dll</HintPath>
+    </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap, Version=4.5.1.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\StructureMap.4.5.1\lib\net45\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -103,6 +118,32 @@
     <Compile Include="Startup.cs" />
     <Compile Include="StorageClient.cs" />
     <Compile Include="RecentCommentsController.cs" />
+    <Compile Include="Storage\AutoMapperProfile.cs" />
+    <Compile Include="Storage\ClassMaps\CommentMap.cs" />
+    <Compile Include="Storage\ClassMaps\StoryMap.cs" />
+    <Compile Include="Storage\ClassMaps\StoryVoteMap.cs" />
+    <Compile Include="Storage\CommentController.cs" />
+    <Compile Include="Storage\CommentUpdater.cs" />
+    <Compile Include="Storage\Entities\CommentEntity.cs" />
+    <Compile Include="Storage\Entities\StoryEntity.cs" />
+    <Compile Include="Storage\Entities\StoryVoteEntity.cs" />
+    <Compile Include="Storage\ICommentUpdater.cs" />
+    <Compile Include="Storage\ISessionFactoryFactory.cs" />
+    <Compile Include="Storage\IStoryUpdater.cs" />
+    <Compile Include="Storage\IStoryVoteUpdater.cs" />
+    <Compile Include="Storage\IUpdater.cs" />
+    <Compile Include="Storage\Repositories\CommentRepository.cs" />
+    <Compile Include="Storage\Repositories\StoryRepository.cs" />
+    <Compile Include="Storage\Repositories\StoryVoteRepository.cs" />
+    <Compile Include="Storage\SessionFactoryFactory.cs" />
+    <Compile Include="Storage\Startup.cs" />
+    <Compile Include="Storage\StoryController.cs" />
+    <Compile Include="Storage\StoryMapper.cs" />
+    <Compile Include="Storage\StoryUpdater.cs" />
+    <Compile Include="Storage\StoryVoteUpdater.cs" />
+    <Compile Include="Storage\StructureMapContainerBuilder.cs" />
+    <Compile Include="Storage\StructureMapDependencyResolver.cs" />
+    <Compile Include="Storage\Updater.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
