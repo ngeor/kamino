@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using BuzzStats.CrawlerService;
 using log4net;
 using Microsoft.Owin.Hosting;
 using NGSoftware.Common.Configuration;
@@ -16,12 +17,18 @@ namespace BuzzStats.WebApi
             IAppSettings appSettings = AppSettingsFactory.DefaultWithEnvironmentOverride();
             string baseAddress = appSettings["WebApiUrl"];
 
+            ListingTask listingTask = new ListingTask(
+                new ParserClient(appSettings),
+                new CrawlerService.StorageClient(appSettings));
+
             Console.CancelKeyPress += (sender, eventArgs) => done.Set();
             
             // Start OWIN host 
             using (WebApp.Start<Startup>(url: baseAddress))
             {
                 Log.InfoFormat("Server listening at {0}", baseAddress);
+                TaskLoop.RunForEver(() => listingTask.RunOnce());
+
                 if (!Console.IsInputRedirected)
                 {
                     Console.ReadLine();
