@@ -122,8 +122,6 @@
     <Compile Include="DSL\StoryUrlProviderDSL.cs" />
     <Compile Include="DSL\MessageBusDSL.cs" />
     <Compile Include="Crawl\StoryPollHistoryLoggerTest.cs" />
-    <Compile Include="Services\DiagnosticsServiceClientTest.cs" />
-    <Compile Include="Services\RecentActivityServiceClientTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -148,6 +146,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Services" />
     <Folder Include="Tasks" />
   </ItemGroup>
 </Project>
