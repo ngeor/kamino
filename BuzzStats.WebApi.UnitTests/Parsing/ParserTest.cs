@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using BuzzStats.ParserWebApi.DTOs;
+using BuzzStats.CrawlerService.DTOs;
 using NUnit.Framework;
 
 namespace BuzzStats.ParserWebApi.UnitTests

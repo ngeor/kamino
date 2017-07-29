@@ -2,7 +2,7 @@ using System.Configuration;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using BuzzStats.ParserWebApi.DTOs;
+using BuzzStats.CrawlerService.DTOs;
 using log4net;
 
 namespace BuzzStats.ParserWebApi
