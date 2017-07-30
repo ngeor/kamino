@@ -11,22 +11,23 @@ namespace BuzzStats.WebApi.Parsing
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(ParserClient));
         private readonly IUrlProvider _urlProvider;
-
-        public ParserClient(IUrlProvider urlProvider)
+        private readonly IParser _parser;
+        
+        public ParserClient(IUrlProvider urlProvider, IParser parser)
         {
             _urlProvider = urlProvider;
+            _parser = parser;
         }
 
         public virtual async Task<IEnumerable<StoryListingSummary>> Listing(StoryListing storyListing, int page)
         {
-            Parser parser = new Parser();
             HttpClient client = new HttpClient();
             var requestUri = _urlProvider.ListingUrl(storyListing, page);
             Log.InfoFormat("Calling {0}", requestUri);
             try
             {
                 string htmlContents = await client.GetStringAsync(requestUri);
-                return parser.ParseListingPage(htmlContents);
+                return _parser.ParseListingPage(htmlContents);
             }
             catch (Exception ex)
             {
@@ -37,12 +38,11 @@ namespace BuzzStats.WebApi.Parsing
 
         public virtual async Task<Story> Story(int storyId)
         {
-            Parser parser = new Parser();
             HttpClient client = new HttpClient();
             var requestUri = _urlProvider.StoryUrl(storyId);
             Log.InfoFormat("Calling {0}", requestUri);
             string storyPageContents = await client.GetStringAsync(requestUri);
-            return parser.ParseStoryPage(storyPageContents, storyId);
+            return _parser.ParseStoryPage(storyPageContents, storyId);
         }
     }
 }

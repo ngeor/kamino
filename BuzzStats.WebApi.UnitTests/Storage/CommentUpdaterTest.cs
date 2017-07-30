@@ -1,3 +1,4 @@
+using System;
 using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.Storage;
 using BuzzStats.WebApi.Storage.Entities;
@@ -6,6 +7,8 @@ using BuzzStats.WebApi.UnitTests.TestHelpers;
 using Moq;
 using NGSoftware.Common.Messaging;
 using NHibernate;
+using NodaTime;
+using NodaTime.Testing;
 using NUnit.Framework;
 
 namespace BuzzStats.WebApi.UnitTests.Storage
@@ -13,16 +16,20 @@ namespace BuzzStats.WebApi.UnitTests.Storage
     [TestFixture]
     public class CommentUpdaterTest
     {
+#pragma warning disable 0649
         private Mock<ISession> _mockSession;
         private Mock<StoryMapper> _mockStoryMapper;
         private Mock<CommentRepository> _mockCommentRepository;
         private Mock<IMessageBus> _mockMessageBus;
+        private IClock _clock;
         private CommentUpdater _commentUpdater;
-
+#pragma warning restore 0649
+        
         [SetUp]
         public void SetUp()
         {
             MockHelper.InjectMocks(this);
+            _clock = new FakeClock(Instant.FromUtc(2017, 7, 30, 19, 15));
             _commentUpdater = MockHelper.Create<CommentUpdater>(this);
         }
 
@@ -40,7 +47,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
                     }
                 }
             };
-            
+
             var storyEntity = new StoryEntity();
             var commentEntities = new[]
             {
@@ -50,13 +57,19 @@ namespace BuzzStats.WebApi.UnitTests.Storage
             _mockStoryMapper.Setup(p => p.ToCommentEntity(story.Comments[0], null, storyEntity))
                 .Returns(commentEntities[0]);
             _mockCommentRepository.Setup(p => p.GetByCommentId(_mockSession.Object, 42))
-                .Returns((CommentEntity)null);
+                .Returns((CommentEntity) null);
 
             // act
             _commentUpdater.SaveComments(_mockSession.Object, story, storyEntity);
 
             // assert
             _mockSession.Verify(s => s.Save(commentEntities[0]));
+            
+            _mockSession.Verify(s => s.Save(It.Is<RecentActivityEntity>(
+                r => r.Comment == commentEntities[0] && r.Story == storyEntity
+                     && r.StoryVote == null && r.CreatedAt == new DateTime(2017, 7, 30, 19, 15, 0)
+                     )));
+            
             _mockMessageBus.Verify(m => m.Publish(commentEntities[0]));
         }
     }

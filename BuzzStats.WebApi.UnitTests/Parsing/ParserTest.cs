@@ -2,6 +2,8 @@ using System;
 using System.Linq;
 using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.Parsing;
+using NodaTime;
+using NodaTime.Testing;
 using NUnit.Framework;
 
 namespace BuzzStats.WebApi.UnitTests.Parsing
@@ -19,12 +21,12 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
             Tech
         }
 
-        private Parser parser;
+        private Parser _parser;
 
         [SetUp]
         public void SetUp()
         {
-            parser = new Parser();
+            _parser = new Parser(new FakeClock(Instant.FromUtc(2017, 7, 30, 19, 31)));
         }
 
         [Test]
@@ -32,7 +34,7 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
         {
             string storyHtml = LoadTestData("bug59806");
 
-            var story = parser.ParseStoryPage(storyHtml, 59806);
+            var story = _parser.ParseStoryPage(storyHtml, 59806);
             Assert.IsNotNull(story);
             Assert.AreEqual(59806, story.StoryId);
             Assert.AreEqual("Λίγη ακόμα αυτορρύθμιση", story.Title);
@@ -45,7 +47,7 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
         public void ParseBurriedComment()
         {
             string html = LoadTestData("BurriedComment");
-            var story = parser.ParseStoryPage(html, 65483);
+            var story = _parser.ParseStoryPage(html, 65483);
 
             Assert.IsNotNull(story);
             Assert.IsNotNull(story.Comments);
@@ -157,15 +159,14 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
         {
             string html = LoadTestData("homepage_vodafone");
             Assert.IsNotNull(html);
-            var p = new Parser();
-            var ids = p.ParseListingPage(html).ToArray();
+            var ids = _parser.ParseListingPage(html).ToArray();
             Assert.Greater(ids.Length, 0);
         }
 
         [Test]
         public void ParseRemovedStory()
         {
-            var story = parser.ParseStoryPage(LoadTestData("RemovedStory"), 42);
+            var story = _parser.ParseStoryPage(LoadTestData("RemovedStory"), 42);
             Assert.IsNotNull(story);
             Assert.AreEqual(42, story.StoryId);
             Assert.AreEqual("Άντε ρε …αχάριστοι Έλληνες…", story.Title);
@@ -177,7 +178,7 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
         {
             string storyHtml = LoadTestData("Story");
 
-            var story = parser.ParseStoryPage(storyHtml, 60906);
+            var story = _parser.ParseStoryPage(storyHtml, 60906);
             Assert.IsNotNull(story);
             Assert.AreEqual(60906, story.StoryId);
             Assert.AreEqual("Η μύτη του Χατζηδάκη (We are not alone - Argos)", story.Title);
@@ -224,7 +225,7 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
         {
             string html = LoadTestData("79444");
             Assert.IsNotNull(html);
-            var story = parser.ParseStoryPage(html, 79444);
+            var story = _parser.ParseStoryPage(html, 79444);
             Assert.IsNotNull(story);
             Assert.IsNotNull(story.Voters);
             Assert.AreEqual(5, story.Voters.Count());
@@ -243,7 +244,7 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
         {
             string storyHtml = LoadTestData("Story7Votes5Comments");
 
-            var story = parser.ParseStoryPage(storyHtml, 59685);
+            var story = _parser.ParseStoryPage(storyHtml, 59685);
             Assert.IsNotNull(story);
             Assert.AreEqual(59685, story.StoryId);
             Assert.AreEqual("Η έλλειψη προσωπικού καταλύει κάθε κανόνα υγιεινής στα νοσοκομεία", story.Title);
@@ -280,7 +281,7 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
         {
             string storyHtml = LoadTestData("Story7Votes5Comments9Votes13Comments");
 
-            var story = parser.ParseStoryPage(storyHtml, 59685);
+            var story = _parser.ParseStoryPage(storyHtml, 59685);
             Assert.IsNotNull(story);
             Assert.AreEqual(59685, story.StoryId);
             Assert.AreEqual("Η έλλειψη προσωπικού καταλύει κάθε κανόνα υγιεινής στα νοσοκομεία", story.Title);
@@ -319,8 +320,7 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
         public void ParseUpcomingPage_StoryIds()
         {
             string html = LoadTestData("Upcoming");
-            var parser = new Parser();
-            int[] storyIds = parser.ParseListingPage(html).Select(s => s.StoryId).ToArray();
+            int[] storyIds = _parser.ParseListingPage(html).Select(s => s.StoryId).ToArray();
             CollectionAssert.AreEquivalent(new[]
             {
                 65492,
@@ -352,7 +352,7 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
         public void TestCanParseCommentVotes()
         {
             string html = LoadTestData("SingleStoryDownVoteDisabled");
-            var story = parser.ParseStoryPage(html, 72024);
+            var story = _parser.ParseStoryPage(html, 72024);
             Assert.IsNotNull(story);
             Assert.IsNotNull(story.Comments);
             Assert.AreEqual(2, story.Comments.Count());
@@ -367,7 +367,7 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
         {
             // it seems that child comments of gold comments ( > 20 votes ) are not parsed correctly
             string html = LoadTestData("BugGoldenComments");
-            var story = parser.ParseStoryPage(html, 72102);
+            var story = _parser.ParseStoryPage(html, 72102);
             Assert.IsNotNull(story);
             Assert.IsNotNull(story.Comments);
 
@@ -392,7 +392,7 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
         {
             // test if it can parse a buzz that points to itself
             string html = LoadTestData("BugRecursiveBuzz");
-            var story = parser.ParseStoryPage(html, 72120);
+            var story = _parser.ParseStoryPage(html, 72120);
             Assert.IsNotNull(story);
         }
 

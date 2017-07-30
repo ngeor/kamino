@@ -51,7 +51,7 @@ namespace BuzzStats.WebApi.UnitTests.TestHelpers
 
             var constructor = constructors[0];
             var parameterInfos = constructor.GetParameters();
-            return (T)constructor.Invoke(parameterInfos.Select(p => ResolveParameter(testFixture, p)).ToArray());
+            return (T) constructor.Invoke(parameterInfos.Select(p => ResolveParameter(testFixture, p)).ToArray());
         }
 
         private static object ResolveParameter(object testFixture, ParameterInfo parameterInfo)
@@ -59,16 +59,24 @@ namespace BuzzStats.WebApi.UnitTests.TestHelpers
             var parameterType = parameterInfo.ParameterType;
             var fieldInfos = testFixture.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
             var mockFieldInfos = fieldInfos
-                .Where(f => f.FieldType.IsGenericType && f.FieldType.BaseType == typeof(Mock)
-                            && f.FieldType.GenericTypeArguments[0] == parameterType)
+                .Where(f => (f.FieldType.IsGenericType && f.FieldType.BaseType == typeof(Mock)
+                             && f.FieldType.GenericTypeArguments[0] == parameterType) || (f.FieldType == parameterType))
                 .ToArray();
 
             if (mockFieldInfos.Length != 1)
             {
-                throw new NotSupportedException($"Parameter {parameterInfo.Name} did not have exactly one matching field");
+                throw new NotSupportedException(
+                    $"Parameter {parameterInfo.Name} did not have exactly one matching field");
             }
 
-            var mockInstance = (Mock)mockFieldInfos[0].GetValue(testFixture);
+            var mockFieldInfo = mockFieldInfos[0];
+            var mockValue = mockFieldInfo.GetValue(testFixture);
+            if (mockFieldInfo.FieldType == parameterType)
+            {
+                return mockValue;
+            }
+
+            var mockInstance = (Mock) mockValue;
             return mockInstance?.Object;
         }
     }

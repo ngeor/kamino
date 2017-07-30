@@ -12,11 +12,13 @@ namespace BuzzStats.WebApi.UnitTests.Crawl
     [TestFixture]
     public class StoryProcessTaskTest
     {
+#pragma warning disable 0649
         private Mock<IParserClient> _mockParserClient;
         private Mock<IStorageClient> _mockStorageClient;
         private Mock<IAsyncQueue<StoryListingSummary>> _mockQueue;
         private StoryProcessTask _storyProcessTask;
-
+#pragma warning restore 0649
+        
         [SetUp]
         public void SetUp()
         {

@@ -7,6 +7,7 @@ using BuzzStats.WebApi.Storage;
 using NGSoftware.Common.Configuration;
 using NGSoftware.Common.Messaging;
 using NHibernate;
+using NodaTime;
 using StructureMap;
 
 namespace BuzzStats.WebApi.IoC
@@ -54,6 +55,7 @@ namespace BuzzStats.WebApi.IoC
                 
                 // other
                 x.For<IMessageBus>().Use<MessageBus>().Singleton();
+                x.For<IClock>().Use(() => SystemClock.Instance).Singleton();
             });
 
             return container;

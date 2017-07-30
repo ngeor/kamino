@@ -5,6 +5,7 @@ using BuzzStats.WebApi.Storage.Repositories;
 using log4net;
 using NGSoftware.Common.Messaging;
 using NHibernate;
+using NodaTime;
 
 namespace BuzzStats.WebApi.Storage
 {
@@ -14,12 +15,14 @@ namespace BuzzStats.WebApi.Storage
         private readonly IMapper _mapper;
         private readonly StoryRepository _storyRepository;
         private readonly IMessageBus _messageBus;
+        private readonly IClock _clock;
 
-        public StoryUpdater(IMapper mapper, StoryRepository storyRepository, IMessageBus messageBus)
+        public StoryUpdater(IMapper mapper, StoryRepository storyRepository, IMessageBus messageBus, IClock clock)
         {
             _mapper = mapper;
             _storyRepository = storyRepository;
             _messageBus = messageBus;
+            _clock = clock;
         }
         
         public virtual StoryEntity Save(ISession session, Story story)
@@ -32,6 +35,12 @@ namespace BuzzStats.WebApi.Storage
                 var storyEntity = _mapper.Map<StoryEntity>(story);
                 session.Save(storyEntity);
                 Log.InfoFormat("Saved new story, db id: {0}", storyEntity.Id);
+                session.Save(new RecentActivityEntity
+                {
+                    CreatedAt = _clock.GetCurrentInstant().ToDateTimeUtc(),
+                    Story = storyEntity
+                });
+                
                 _messageBus.Publish(storyEntity);
                 return storyEntity;
             }

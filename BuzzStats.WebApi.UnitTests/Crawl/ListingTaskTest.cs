@@ -11,9 +11,11 @@ namespace BuzzStats.WebApi.UnitTests.Crawl
     [TestFixture]
     public class ListingTaskTest
     {
+#pragma warning disable 0649
         private Mock<IParserClient> _mockParserClient;
         private Mock<IStoryProcessTopic> _mockStoryProcessTopic;
         private ListingTask _listingTask;
+#pragma warning restore 0649
 
         [SetUp]
         public void SetUp()
@@ -31,7 +33,7 @@ namespace BuzzStats.WebApi.UnitTests.Crawl
                 StoryId = 42,
                 VoteCount = 1
             };
-            
+
             _mockParserClient.Setup(c => c.Listing(StoryListing.Home, 2)).ReturnsAsync(new[]
             {
                 storyListingSummary

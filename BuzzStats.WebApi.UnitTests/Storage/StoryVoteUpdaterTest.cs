@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.Storage;
 using BuzzStats.WebApi.Storage.Entities;
@@ -7,6 +8,8 @@ using BuzzStats.WebApi.UnitTests.TestHelpers;
 using Moq;
 using NGSoftware.Common.Messaging;
 using NHibernate;
+using NodaTime;
+using NodaTime.Testing;
 using NUnit.Framework;
 
 namespace BuzzStats.WebApi.UnitTests.Storage
@@ -14,19 +17,21 @@ namespace BuzzStats.WebApi.UnitTests.Storage
     [TestFixture]
     public class StoryVoteUpdaterTest
     {
+#pragma warning disable 0649
         private Mock<ISession> _mockSession;
         private Mock<StoryMapper> _mockStoryMapper;
         private Mock<IMessageBus> _mockMessageBus;
-        
-        [MockBehavior(MockBehavior.Strict)]
-        private Mock<StoryVoteRepository> _mockStoryVoteRepository;
-        
+
+        [MockBehavior(MockBehavior.Strict)] private Mock<StoryVoteRepository> _mockStoryVoteRepository;
+#pragma warning restore 0649
+        private IClock _clock;
         private StoryVoteUpdater _storyVoteUpdater;
 
         [SetUp]
         public void SetUp()
         {
             MockHelper.InjectMocks(this);
+            _clock = new FakeClock(Instant.FromUtc(2017, 7, 30, 19, 15));
             _storyVoteUpdater = MockHelper.Create<StoryVoteUpdater>(this);
         }
 
@@ -51,6 +56,10 @@ namespace BuzzStats.WebApi.UnitTests.Storage
 
             // assert
             _mockSession.Verify(s => s.Save(storyVoteEntities[0]));
+            _mockSession.Verify(s => s.Save(It.Is<RecentActivityEntity>(r =>
+                r.Story == storyEntity && r.StoryVote == storyVoteEntities[0] && r.Comment == null
+                && r.CreatedAt == new DateTime(2017, 7, 30, 19, 15, 0)
+            )));
             _mockMessageBus.Verify(m => m.Publish(storyVoteEntities[0]));
         }
 

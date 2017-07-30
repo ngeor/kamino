@@ -6,6 +6,7 @@ using BuzzStats.WebApi.Storage.Repositories;
 using log4net;
 using NGSoftware.Common.Messaging;
 using NHibernate;
+using NodaTime;
 
 namespace BuzzStats.WebApi.Storage
 {
@@ -15,12 +16,14 @@ namespace BuzzStats.WebApi.Storage
         private readonly StoryMapper _storyMapper;
         private readonly StoryVoteRepository _storyVoteRepository;
         private readonly IMessageBus _messageBus;
+        private readonly IClock _clock;
 
-        public StoryVoteUpdater(StoryMapper storyMapper, StoryVoteRepository storyVoteRepository, IMessageBus messageBus)
+        public StoryVoteUpdater(StoryMapper storyMapper, StoryVoteRepository storyVoteRepository, IMessageBus messageBus, IClock clock)
         {
             _storyMapper = storyMapper;
             _storyVoteRepository = storyVoteRepository;
             _messageBus = messageBus;
+            _clock = clock;
         }
 
         public void SaveStoryVotes(ISession session, Story story, StoryEntity storyEntity)
@@ -34,6 +37,12 @@ namespace BuzzStats.WebApi.Storage
                 {
                     session.Save(storyVoteEntity);
                     _messageBus.Publish(storyVoteEntity);
+                    session.Save(new RecentActivityEntity
+                    {
+                        CreatedAt = _clock.GetCurrentInstant().ToDateTimeUtc(),
+                        StoryVote = storyVoteEntity,
+                        Story = storyEntity
+                    });
                     Log.InfoFormat("Saved new vote, db id {0}", storyVoteEntity.Id);
                 }
                 else

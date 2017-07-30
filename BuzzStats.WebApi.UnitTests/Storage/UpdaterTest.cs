@@ -11,6 +11,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
     [TestFixture]
     public class UpdaterTest
     {
+#pragma warning disable 0649
         [MockBehavior(MockBehavior.Strict)]
         private Mock<ISession> _mockSession;
 
@@ -20,7 +21,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
         private Mock<IStoryUpdater> _mockStoryUpdater;
         private Mock<IStoryVoteUpdater> _mockStoryVoteUpdater;
         private Mock<ICommentUpdater> _mockCommentUpdater;
-        
+#pragma warning restore 0649
         private Updater _updater;
 
         [SetUp]

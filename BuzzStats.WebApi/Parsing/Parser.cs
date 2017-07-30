@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------
 // <copyright file="Parser.cs" company="Nikolaos Georgiou">
-//      Copyright (C) Nikolaos Georgiou 2010-2013
+//      Copyright (C) Nikolaos Georgiou 2010-2017
 // </copyright>
 // <author>Nikolaos Georgiou</author>
 // * Date: 2013/09/22
@@ -12,10 +12,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using BuzzStats.WebApi.DTOs;
+using NodaTime;
 
 namespace BuzzStats.WebApi.Parsing
 {
-    public sealed class Parser
+    public sealed class Parser : IParser
     {
         /// <summary>
         /// regex that matches a recent comments block specific to a story
@@ -26,14 +27,6 @@ namespace BuzzStats.WebApi.Parsing
             @"<span [^>]+>" +
             @"\s*" +
             @"<a class=['""]sbcommentlink['""] href=['""]\/story\.php\?id=(?<storyId>\d+)", RegexOptions.Compiled);
-
-        /// <summary>
-        /// regex that matches a recent comment in the right side bar
-        /// </summary>
-        private static readonly Regex RegexRecentComments = new Regex(
-            @"<a href=['""]\/story\.php\?id=(?<storyId>\d+)#wholecomment(?<commentId>\d+)['""]>" +
-            @"(?<username>[^<]+)<\/a>",
-            RegexOptions.Compiled);
 
         private static readonly Regex RegexStoryComments = new Regex(
             @"<li>\s*" +
@@ -113,6 +106,13 @@ namespace BuzzStats.WebApi.Parsing
                 @"((?<minutes>\d+) (λεπτά|λεπτό))?\s*(?<seconds>λίγα δευτερόλεπτα)?",
                 RegexOptions.Compiled);
 
+        private readonly IClock _clock;
+
+        public Parser(IClock clock)
+        {
+            _clock = clock;
+        }
+
         public static TimeSpan? ToTimeSpan(string relativeTimespan)
         {
             if (string.IsNullOrEmpty(relativeTimespan))
@@ -144,10 +144,10 @@ namespace BuzzStats.WebApi.Parsing
         {
             if (string.IsNullOrEmpty(storyPageContents))
             {
-                throw new ArgumentNullException("storyPageContents");
+                throw new ArgumentNullException(nameof(storyPageContents));
             }
 
-            return ParseNonRemovedStoryPage(storyPageContents, requestedStoryId)
+            return ParseNonRemovedStoryPage(storyPageContents)
                    ?? ParseRemovedStoryPage(storyPageContents, requestedStoryId)
                    ?? ParseFailed();
         }
@@ -202,10 +202,11 @@ namespace BuzzStats.WebApi.Parsing
             //string storyUsername = match.Groups["storyUsername"].Value;
         }
 
-        private static DateTime ToDateTime(string relativeTimespan)
+        private DateTime ToDateTime(string relativeTimespan)
         {
             TimeSpan? timeSpan = ToTimeSpan(relativeTimespan);
-            return timeSpan.HasValue ? DateTime.UtcNow.Subtract(timeSpan.Value) : DateTime.MinValue;
+            DateTime now = _clock.GetCurrentInstant().ToDateTimeUtc();
+            return timeSpan.HasValue ? now.Subtract(timeSpan.Value) : DateTime.MinValue;
         }
 
         private static int ToVoteCount(string s)
@@ -250,7 +251,7 @@ namespace BuzzStats.WebApi.Parsing
             return commentMatches.Select(MatchToComment).ToArray();
         }
 
-        private Story ParseNonRemovedStoryPage(string storyPageContents, int requestedStoryId)
+        private Story ParseNonRemovedStoryPage(string storyPageContents)
         {
             MatchCollection mc = RegexStory.Matches(storyPageContents);
             Match match = FirstMatch(mc);

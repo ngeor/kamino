@@ -16,13 +16,15 @@ namespace BuzzStats.WebApi.UnitTests.Storage
     [TestFixture]
     public class StorageClientTest
     {
+#pragma warning disable 0649
         private StorageClient _storageClient;
         private Mock<ISessionFactory> _mockSessionFactory;
         private Mock<ISession> _mockSession;
         private Mock<IUpdater> _mockUpdater;
         private Mock<CommentRepository> _mockCommentRepository;
         private Mock<IMapper> _mockMapper;
-
+#pragma warning restore 0649
+        
         [SetUp]
         public void SetUp()
         {
@@ -39,6 +41,20 @@ namespace BuzzStats.WebApi.UnitTests.Storage
                 _storageClient.Save(null);
             });
         }
+
+        [Test]
+        public void Save_ValidStory_UpdatesStory()
+        {
+            // arrange
+            var story = CreateValidStory();
+            
+            // act
+            _storageClient.Save(story);
+            
+            // assert
+            _mockUpdater.Verify(u=>u.Save(_mockSession.Object, story));
+        }
+        
 
         [Test]
         public void GetRecentComments()
@@ -72,6 +88,37 @@ namespace BuzzStats.WebApi.UnitTests.Storage
             
             // assert
             CollectionAssert.AreEqual(new[] { commentWithStory }, commentWithStories);
+        }
+        
+        private Story CreateValidStory()
+        {
+            return new Story
+            {
+                StoryId = 42,
+                Title = "test title",
+                Username = "test user",
+                Url = "http://localhost/",
+                Voters = new[] {"test user", "test user 2"},
+                CreatedAt = new DateTime(2017, 7, 20),
+                Comments = new[]
+                {
+                    new Comment
+                    {
+                        CommentId = 42,
+                        Username = "test user 2",
+                        CreatedAt = new DateTime(2017, 7, 20),
+                        Comments = new[]
+                        {
+                            new Comment
+                            {
+                                CommentId = 43,
+                                Username = "test user",
+                                CreatedAt = new DateTime(2017, 7, 20)
+                            }
+                        }
+                    }
+                }
+            };
         }
     }
 }

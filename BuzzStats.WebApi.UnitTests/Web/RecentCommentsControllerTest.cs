@@ -13,8 +13,10 @@ namespace BuzzStats.WebApi.UnitTests.Web
     [TestFixture]
     public class RecentCommentsControllerTest
     {
+#pragma warning disable 0649
         private Mock<IStorageClient> _mockStorageClient;
         private Mock<IMapper> _mockMapper;
+#pragma warning restore 0649
         private RecentCommentsController _recentCommentsController;
 
         [SetUp]
