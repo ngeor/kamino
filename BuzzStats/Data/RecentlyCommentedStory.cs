@@ -71,11 +71,6 @@ namespace BuzzStats.Data
 
             internal int StoryId { get; set; }
 
-            public string StoryUrl
-            {
-                get { return UrlProvider.StoryUrl(StoryId, CommentId); }
-            }
-
             public bool Equals(Comment other)
             {
                 return other != null

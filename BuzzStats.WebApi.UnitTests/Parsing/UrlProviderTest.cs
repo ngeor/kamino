@@ -69,5 +69,12 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
             var storyUrl = _urlProvider.StoryUrl(42);
             Assert.AreEqual("http://test.com/story.php?id=42", storyUrl);
         }
+        
+        [Test]
+        public void StoryUrl_WithComment()
+        {
+            var storyUrl = _urlProvider.StoryUrl(42, 100);
+            Assert.AreEqual("http://test.com/story.php?id=42#wholecomment100", storyUrl);
+        }
     }
 }

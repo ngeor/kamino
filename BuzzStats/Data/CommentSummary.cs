@@ -19,11 +19,6 @@ namespace BuzzStats.Data
         public string Username { get; set; }
         public int VotesUp { get; set; }
 
-        public string StoryUrl
-        {
-            get { return UrlProvider.StoryUrl(Story.StoryId, CommentId); }
-        }
-
         /// <summary>
         /// Gets or sets the Story.
         /// </summary>

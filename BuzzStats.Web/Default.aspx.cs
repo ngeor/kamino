@@ -4,7 +4,6 @@ using BuzzStats.Web.Mvp;
 
 namespace BuzzStats.Web
 {
-    [Presenter(typeof(HomePagePresenter))]
     public partial class Default : MvpPage, IHomePageView
     {
         protected void repRecentComments_ItemDataBound(object sender, RepeaterItemEventArgs e)

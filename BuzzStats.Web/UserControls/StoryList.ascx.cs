@@ -8,7 +8,6 @@
 // --------------------------------------------------------------------------------
 
 using System.Web.UI;
-using BuzzStats.Common;
 
 namespace BuzzStats.Web.UserControls
 {
@@ -24,11 +23,6 @@ namespace BuzzStats.Web.UserControls
         {
             get { return repStories.DataSourceID; }
             set { repStories.DataSourceID = value; }
-        }
-
-        protected string StoryUrl(int storyId)
-        {
-            return UrlProvider.StoryUrl(storyId);
         }
     }
 }

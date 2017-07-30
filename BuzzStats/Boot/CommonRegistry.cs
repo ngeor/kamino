@@ -24,11 +24,8 @@ namespace BuzzStats.Boot
     {
         public CommonRegistry(string[] args)
         {
-            For<IConfiguration>().Singleton().Use(ctx => new Crawl.Configuration(args));
             For<IStoppable>().Singleton().Use<Stoppable>();
             For<IBackgroundScheduledItemManager>().Singleton().Use<BackgroundScheduledItemManager>();
-
-            For<IUrlProvider>().Use<UrlProvider>();
 
             For<ConnectionStringSettings>().Use(ctx => ConfigurationManager.ConnectionStrings["BuzzStats"]);
             For<IFactory<IDbContext>>().Singleton().Use<DbContextFactory>();

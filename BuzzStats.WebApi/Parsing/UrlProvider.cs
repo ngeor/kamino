@@ -41,10 +41,15 @@ namespace BuzzStats.WebApi.Parsing
             return _appSettings["BuzzServerUrl"] + path;
         }
 
-        public string StoryUrl(int storyId)
+        public string StoryUrl(int storyId, int? commentId)
         {
-            return _appSettings["BuzzServerUrl"] + "story.php?id=" + storyId;
-            ;
+            var result = _appSettings["BuzzServerUrl"] + "story.php?id=" + storyId;
+            if (commentId.HasValue)
+            {
+                result += "#wholecomment" + commentId.Value;
+            }
+
+            return result;
         }
     }
 }

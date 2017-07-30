@@ -19,7 +19,6 @@ namespace BuzzStats.Web.Mvp
 
         protected virtual void CreatePresenter()
         {
-            new PresenterStrategy(this).CreatePresenter();
         }
     }
 }

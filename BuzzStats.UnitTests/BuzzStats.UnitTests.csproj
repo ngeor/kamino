@@ -84,23 +84,6 @@
     <Compile Include="ApiServices\RecentActivityHelperOverDataLayerTest.cs" />
     <Compile Include="ApiServices\RecentCommentHelperOverDataLayerTest.cs" />
     <Compile Include="ApiServices\UserStatsHelperTest.cs" />
-    <Compile Include="Boot\Crawler\ApplicationTest.cs" />
-    <Compile Include="Boot\Web\ApplicationTest.cs" />
-    <Compile Include="Common\UrlProviderTest.cs" />
-    <Compile Include="Configuration\CacheFactoryTest.cs" />
-    <Compile Include="Crawl\AggregateSourceTest.cs" />
-    <Compile Include="Crawl\ConfigurationTest.cs" />
-    <Compile Include="Crawl\ConfiguredListingsTest.cs" />
-    <Compile Include="Crawl\ConfiguredPollersTest.cs" />
-    <Compile Include="Crawl\DecoratorSourceProviderTest.cs" />
-    <Compile Include="Crawl\LeafConsumerTest.cs" />
-    <Compile Include="Crawl\LeafProducerMonitorTest.cs" />
-    <Compile Include="Crawl\LeafProducerTest.cs" />
-    <Compile Include="Crawl\ListingTest.cs" />
-    <Compile Include="Crawl\PollerTest.cs" />
-    <Compile Include="Crawl\StoryDownloadedMessageTest.cs" />
-    <Compile Include="Crawl\StoryHandlerTest.cs" />
-    <Compile Include="Crawl\StoryLeafTest.cs" />
     <Compile Include="Crawl\WarmCacheTest.cs" />
     <Compile Include="Database\ConnectivityTest.cs" />
     <Compile Include="Persister\StoryPersisterTest.cs" />
@@ -108,7 +91,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\StubStoryQuery.cs" />
     <Compile Include="Web\Mvp\AboutPagePresenterTest.cs" />
-    <Compile Include="Web\Mvp\HomePagePresenterTest.cs" />
     <Compile Include="Web\Mvp\LoginPagePresenterTest.cs" />
     <Compile Include="Web\Mvp\PresenterTestBase.cs" />
     <Compile Include="Web\Mvp\StoriesPagePresenterTest.cs" />
@@ -118,7 +100,6 @@
     <Compile Include="Utils\DictionaryExtensions.cs" />
     <Compile Include="DSL\StoryQueryDSL.cs" />
     <Compile Include="DSL\DownloaderServiceDSL.cs" />
-    <Compile Include="DSL\StoryUrlProviderDSL.cs" />
     <Compile Include="DSL\MessageBusDSL.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -144,6 +125,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Boot\Crawler" />
+    <Folder Include="Boot\Web" />
+    <Folder Include="Common" />
+    <Folder Include="Configuration" />
     <Folder Include="Services" />
     <Folder Include="Tasks" />
   </ItemGroup>

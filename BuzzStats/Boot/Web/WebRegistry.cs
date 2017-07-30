@@ -9,12 +9,8 @@
 
 using StructureMap;
 using NGSoftware.Common.Cache;
-using NGSoftware.Common.Factories;
 using BuzzStats.ApiServices;
-using BuzzStats.Configuration;
 using BuzzStats.Data;
-using BuzzStats.Services;
-using BuzzStats.Web.Mvp;
 
 namespace BuzzStats.Boot.Web
 {
@@ -23,28 +19,12 @@ namespace BuzzStats.Boot.Web
         public WebRegistry()
         {
             // use singletons for classes that don't really have state
-            if (BuzzStatsConfigurationSection.Current.Web.DisableCache)
-            {
-                For<ICache>().Singleton().Use<NullCache>();
-            }
-            else
-            {
-                For<ICache>().Singleton().Use<HttpRuntimeCache>();
-            }
+            For<ICache>().Singleton().Use<NullCache>();
 
             For<IApiService>()
-                .Add<ApiService>()
-                .Named("uncached");
-
-            For<IApiService>()
-                .Use<WebClientApiService>()
-                .Ctor<IApiService>().Is(ctx => ctx.GetInstance<IApiService>("uncached"));
+                .Use<ApiService>();
 
             For<IDbSession>().Use(ctx => ctx.GetInstance<IDbContext>().OpenSession());
-            For<IFormsAuthentication>().Singleton().Use<FormsAuthenticationWrapper>();
-
-            For<IDiagnosticsService>().Use<DiagnosticsServiceClient>();
-            For<IRecentActivityService>().Use<RecentActivityServiceClient>();
         }
     }
 }

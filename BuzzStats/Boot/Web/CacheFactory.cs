@@ -9,22 +9,14 @@
 
 using NGSoftware.Common.Cache;
 using NGSoftware.Common.Factories;
-using BuzzStats.Configuration;
 
 namespace BuzzStats.Boot.Web
 {
     public class CacheFactory : IFactory<ICache>
     {
-        public static bool ForceNullCache = false;
-
         public ICache Create()
         {
-            if (BuzzStatsConfigurationSection.Current.Web.DisableCache || ForceNullCache)
-            {
-                return new NullCache();
-            }
-
-            return new HttpRuntimeCache();
+            return new NullCache();
         }
     }
 }

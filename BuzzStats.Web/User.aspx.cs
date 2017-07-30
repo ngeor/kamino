@@ -1,7 +1,6 @@
 using System;
 using System.Web.UI;
 using StackExchange.Profiling;
-using BuzzStats.Common;
 using BuzzStats.Data;
 
 namespace BuzzStats.Web
@@ -35,32 +34,5 @@ namespace BuzzStats.Web
         }
 
         public IApiService ApiService { get; set; }
-
-        private string StoryUrl(int storyId, int commentId)
-        {
-            string result = UrlProvider.StoryUrl(storyId);
-            if (commentId > 0)
-            {
-                result += "#wholecomment" + commentId;
-            }
-
-            return result;
-        }
-
-        public string StoryUrl(dynamic comment)
-        {
-            if (comment is RecentActivity)
-            {
-                RecentActivity recentActivity = (RecentActivity) comment;
-                return StoryUrl(recentActivity.StoryId, recentActivity.CommentId);
-            }
-
-            return StoryUrl(comment.Story.StoryId, comment.CommentId);
-        }
-
-        public string StoryUrl(dynamic story, dynamic comment)
-        {
-            return StoryUrl(story.StoryId, comment.CommentId);
-        }
     }
 }

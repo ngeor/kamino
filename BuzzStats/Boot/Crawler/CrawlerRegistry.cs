@@ -10,7 +10,6 @@
 using StructureMap;
 using NGSoftware.Common.Cache;
 using NGSoftware.Common.Messaging;
-using BuzzStats.ApiServices;
 using BuzzStats.Crawl;
 using BuzzStats.Data;
 using BuzzStats.Downloader;
@@ -26,22 +25,6 @@ namespace BuzzStats.Boot.Crawler
             For<IPersister>().Use<TransactionalPersister>();
             For<IDbPersister>().Use<BasicPersister>();
 
-            For<ISource>()
-                .Add<ConfiguredListings>()
-                .Named("ConfiguredListings");
-
-            For<ISource>()
-                .Add<ConfiguredPollers>()
-                .Named("ConfiguredPollers");
-
-            For<ISource>()
-                .Use<AggregateSource>()
-                .Ctor<ISource[]>().Is(ctx => new ISource[]
-                {
-                    ctx.GetInstance<ISource>("ConfiguredListings"),
-                    ctx.GetInstance<ISource>("ConfiguredPollers")
-                });
-
             For<IDownloaderService>().Use<DownloaderService>();
 
             // use singletons for classes that don't really have state
@@ -51,9 +34,7 @@ namespace BuzzStats.Boot.Crawler
             For<IMessageBus>().Singleton().Use<MessageBus>();
 
             For<IWarmCache>().Singleton().Use<WarmCache>()
-                .Ctor<IApiService>().Is<DbContextApiService>();
-
-            For<ILeafProducerMonitor>().Use<LeafProducerMonitor>();
+                .Ctor<IApiService>().Is<IApiService>();
 
             For<ICrawlerService>().Singleton().Use<CrawlApp>();
         }
