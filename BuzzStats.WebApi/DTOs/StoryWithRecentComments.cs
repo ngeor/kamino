@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using NGSoftware.Common;
 using NGSoftware.Common.Collections;
 
 namespace BuzzStats.WebApi.DTOs
@@ -33,7 +34,7 @@ namespace BuzzStats.WebApi.DTOs
             unchecked
             {
                 int result = StoryId;
-                result = result * 7 + (Title != null ? Title.GetHashCode() : 0);
+                result = result * 7 + Title.SafeHashCode();
                 if (Comments != null)
                 {
                     foreach (var c in Comments)

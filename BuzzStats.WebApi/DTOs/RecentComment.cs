@@ -1,3 +1,5 @@
+using NGSoftware.Common;
+
 namespace BuzzStats.WebApi.DTOs
 {
     public class RecentComment
@@ -29,7 +31,7 @@ namespace BuzzStats.WebApi.DTOs
             {
                 int result = CommentId;
                 result = result * 7 + VotesUp;
-                result = result * 13 + (Username != null ? Username.GetHashCode() : 0);
+                result = result * 13 + Username.SafeHashCode();
                 return result;
             }
         }
