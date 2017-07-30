@@ -9,7 +9,7 @@
 
 using System;
 using System.Collections.Generic;
-using NGSoftware.Common;
+using NodaTime;
 
 namespace BuzzStats.Data
 {
@@ -37,9 +37,9 @@ namespace BuzzStats.Data
         /// <returns>The creation date of the oldest story.</returns>
         DateTime OldestStoryDate();
 
-        Dictionary<string, int> GetStoryCountsPerHost(DateRange dateRange = default(DateRange));
-        Dictionary<string, int> GetStoryCountsPerUser(DateRange dateRange = default(DateRange));
-        Dictionary<string, int> GetCommentedStoryCountsPerUser(DateRange dateRange = default(DateRange));
+        Dictionary<string, int> GetStoryCountsPerHost(DateInterval dateInterval = default(DateInterval));
+        Dictionary<string, int> GetStoryCountsPerUser(DateInterval dateInterval = default(DateInterval));
+        Dictionary<string, int> GetCommentedStoryCountsPerUser(DateInterval dateInterval = default(DateInterval));
         MinMaxStats GetMinMaxStats();
 
         #endregion

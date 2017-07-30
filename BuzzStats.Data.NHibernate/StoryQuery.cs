@@ -192,13 +192,13 @@ namespace BuzzStats.Data.NHibernate
 
         private void ApplyCreatedAt()
         {
-            if (_createdAt.DateRange.IsEmpty)
+            if (_createdAt.DateInterval == null)
             {
                 return;
             }
 
-            DateTime? startDate = _createdAt.DateRange.StartDate;
-            DateTime? stopDate = _createdAt.DateRange.StopDate;
+            DateTime? startDate = _createdAt.DateInterval.Start.ToDateTimeUnspecified();
+            DateTime? stopDate = _createdAt.DateInterval.End.ToDateTimeUnspecified();
             if (startDate.HasValue)
             {
                 if (stopDate.HasValue)
@@ -221,13 +221,13 @@ namespace BuzzStats.Data.NHibernate
 
         private void ApplyLastCheckedAt()
         {
-            if (_lastCheckedAt.DateRange.IsEmpty)
+            if (_lastCheckedAt.DateInterval == null)
             {
                 return;
             }
 
-            DateTime? startDate = _lastCheckedAt.DateRange.StartDate;
-            DateTime? stopDate = _lastCheckedAt.DateRange.StopDate;
+            DateTime? startDate = _lastCheckedAt.DateInterval.Start.ToDateTimeUnspecified();
+            DateTime? stopDate = _lastCheckedAt.DateInterval.End.ToDateTimeUnspecified();
             if (startDate.HasValue)
             {
                 if (stopDate.HasValue)
@@ -250,13 +250,13 @@ namespace BuzzStats.Data.NHibernate
 
         private void ApplyLastModifiedAt()
         {
-            if (_lastModifiedAt.DateRange.IsEmpty)
+            if (_lastModifiedAt.DateInterval == null)
             {
                 return;
             }
 
-            DateTime? startDate = _lastModifiedAt.DateRange.StartDate;
-            DateTime? stopDate = _lastModifiedAt.DateRange.StopDate;
+            DateTime? startDate = _lastModifiedAt.DateInterval.Start.ToDateTimeUnspecified();
+            DateTime? stopDate = _lastModifiedAt.DateInterval.End.ToDateTimeUnspecified();
             if (startDate.HasValue)
             {
                 if (stopDate.HasValue)

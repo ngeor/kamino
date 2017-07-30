@@ -4,6 +4,7 @@ using System.Data.Common;
 using System.Linq;
 using NUnit.Framework;
 using NGSoftware.Common;
+using NodaTime;
 
 namespace BuzzStats.Data.TestsBase
 {
@@ -281,7 +282,7 @@ namespace BuzzStats.Data.TestsBase
         public void TestGetStoryCountsPerHostOnDateRange()
         {
             var storyCountsPerHost = _storyDataLayer.GetStoryCountsPerHost(
-                DateRange.Create(null, new DateTime(2015, 6, 6)));
+                new DateInterval(LocalDate.MinIsoValue, new LocalDate(2015, 6, 6)));
             Assert.IsNotNull(storyCountsPerHost);
             Assert.AreEqual(1, storyCountsPerHost["ngeor.net"]);
             Assert.AreEqual(1, storyCountsPerHost.Count);
@@ -300,7 +301,7 @@ namespace BuzzStats.Data.TestsBase
         public void TestGetStoryCountsPerUserOnDateRange()
         {
             var storyCountsPerUser = _storyDataLayer.GetStoryCountsPerUser(
-                DateRange.Create(new DateTime(2015, 6, 6), null));
+                new DateInterval(new LocalDate(2015, 6, 6), LocalDate.MaxIsoValue));
             Assert.IsNotNull(storyCountsPerUser);
             Assert.AreEqual(1, storyCountsPerUser["ngeor"]);
             Assert.AreEqual(1, storyCountsPerUser["nikolaos"]);

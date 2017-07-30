@@ -10,15 +10,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using NGSoftware.Common;
 using NGSoftware.Common.Collections;
 using BuzzStats.Data;
+using NodaTime;
+using NodaTime.Extensions;
 
 namespace BuzzStats.ApiServices
 {
     public class ApiService : IApiService
     {
-        public ApiService(IDbSession dbSession)
+        private IClock _clock;
+
+        public ApiService(IDbSession dbSession, IClock clock)
         {
             if (dbSession == null)
             {
@@ -26,6 +31,7 @@ namespace BuzzStats.ApiServices
             }
 
             DbSession = dbSession;
+            _clock = clock;
         }
 
         private IDbSession DbSession { get; set; }
@@ -51,8 +57,8 @@ namespace BuzzStats.ApiServices
 
             int maxResults = request.MaxResults == 0 ? DefaultMaxResults : request.MaxResults;
 
-            Dictionary<string, int> h1 = DbSession.Stories.GetStoryCountsPerHost(request.DateRange);
-            Dictionary<string, int> h2 = DbSession.StoryVotes.SumPerHost(request.DateRange);
+            Dictionary<string, int> h1 = DbSession.Stories.GetStoryCountsPerHost(request.DateInterval);
+            Dictionary<string, int> h2 = DbSession.StoryVotes.SumPerHost(request.DateInterval);
 
             Dictionary<string, HostStats> result = new Dictionary<string, HostStats>();
             IEnumerable<HostStats> values = result.StartMerge((hs, host) => hs.Host = host)
@@ -106,7 +112,8 @@ namespace BuzzStats.ApiServices
         {
             return DbSession.Comments.Query(new CommentDataQueryParameters
             {
-                CreatedAt = DateRange.After(14.Days().Ago()),
+                CreatedAt = new DateInterval(_clock.GetCurrentInstant().InUtc().Date.PlusDays(-14),
+                    LocalDate.MaxIsoValue),
                 SortBy = new[]
                 {
                     CommentSortField.VotesUp.Desc(), CommentSortField.CreatedAt.Desc()
@@ -140,15 +147,15 @@ namespace BuzzStats.ApiServices
         public UserStats[] GetUserStats(UserStatsRequest request)
         {
             string sortExpression = request.SortExpression;
-            DateRange dateRange = request.DateRange;
-            Dictionary<string, int> storyCountStats = DbSession.Stories.GetStoryCountsPerUser(dateRange);
+            DateInterval dateInterval = request.DateInterval;
+            Dictionary<string, int> storyCountStats = DbSession.Stories.GetStoryCountsPerUser(dateInterval);
             Dictionary<string, int> commentedGetStoryCountStats =
-                DbSession.Stories.GetCommentedStoryCountsPerUser(dateRange);
+                DbSession.Stories.GetCommentedStoryCountsPerUser(dateInterval);
 
-            var buriedStats = DbSession.Comments.CountBuriedPerUser(dateRange);
-            var commentStats = DbSession.Comments.CountPerUser(dateRange);
-            var voteUpStats = DbSession.Comments.SumVotesUpPerUser(dateRange);
-            var voteDownStats = DbSession.Comments.SumVotesDownPerUser(dateRange);
+            var buriedStats = DbSession.Comments.CountBuriedPerUser(dateInterval);
+            var commentStats = DbSession.Comments.CountPerUser(dateInterval);
+            var voteUpStats = DbSession.Comments.SumVotesUpPerUser(dateInterval);
+            var voteDownStats = DbSession.Comments.SumVotesDownPerUser(dateInterval);
 
             Dictionary<string, UserStats> result = new Dictionary<string, UserStats>();
 
@@ -180,53 +187,77 @@ namespace BuzzStats.ApiServices
 
         #region Graph Helper
 
-        private CountStatsResponse CountStats(CountStatsRequest request, Func<DateRange, int> countRetriever)
+        private CountStatsResponse CountStats(CountStatsRequest request, Func<DateInterval, int> countRetriever)
         {
-            var dateRange = request.DateRange;
+            var dateInterval = request.DateInterval;
             var interval = request.Interval;
 
-            if (interval == DateTimeUnit.Unknown)
+            if (interval == PeriodUnits.None)
             {
                 throw new ArgumentOutOfRangeException("interval", "Cannot be unspecified");
             }
 
-            if (interval == DateTimeUnit.Second || interval == DateTimeUnit.Minute || interval == DateTimeUnit.Hour)
+            if (interval == PeriodUnits.Seconds || interval == PeriodUnits.Minutes || interval == PeriodUnits.Hours)
             {
                 throw new ArgumentOutOfRangeException("interval", "Interval range too short");
             }
 
-            DateTime actualStartDate = GetStartDate(dateRange);
-            DateTime actualStopDate = GetStopDate(dateRange);
+            var actualStartDate = GetStartDate(dateInterval);
+            var actualStopDate = GetStopDate(dateInterval);
             if (actualStartDate > actualStopDate)
             {
-                throw new ArgumentOutOfRangeException("dateRange", "End date was before start date");
+                throw new ArgumentOutOfRangeException("dateInterval", "End date was before start date");
             }
 
-            TimeSpan period = actualStopDate.Subtract(actualStartDate);
-            if (interval == DateTimeUnit.Day && period.TotalDays >= 366)
+            var period = actualStopDate.Minus(actualStartDate);
+            if (interval == PeriodUnits.Days && period.Days >= 366)
             {
                 throw new NotSupportedException("Date range cannot exceed a year when showing results per day");
             }
 
             var graphPoints =
-                from
-                intervalDateRange
-                in
-                DateRange.Create(actualStartDate, actualStopDate).Split(interval)
+                from intervalDateInterval
+                    in Split(new DateInterval(actualStartDate, actualStopDate), interval)
                 select
-                new GraphPoint<DateTime, int>
-                {
-                    X = intervalDateRange.StartDate.Value,
-                    Y = countRetriever(intervalDateRange)
-                };
+                    new GraphPoint<DateTime, int>
+                    {
+                        X = intervalDateInterval.Start.ToDateTimeUnspecified(),
+                        Y = countRetriever(intervalDateInterval)
+                    };
 
             return new CountStatsResponse(request, graphPoints);
         }
 
-        private DateTime GetStartDate(DateRange dateRange)
+        private static IEnumerable<DateInterval> Split(DateInterval dateInterval, PeriodUnits periodUnits)
         {
-            DateTime startDate = dateRange.GetStartDate(DateTime.MinValue);
-            DateTime oldestStoryDate = DbSession.Stories.OldestStoryDate();
+            LocalDate start = dateInterval.Start;
+            LocalDate end;
+
+            Period period;
+            switch (periodUnits)
+            {
+                case PeriodUnits.Days:
+                    period = Period.FromDays(1);
+                    break;
+                case PeriodUnits.Weeks:
+                    period = Period.FromWeeks(1);
+                    break;
+                default:
+                    throw new NotSupportedException();
+            }
+
+            while (start < dateInterval.End)
+            {
+                end = start.Plus(period);
+                yield return new DateInterval(start, end);
+                start = end;
+            }
+        }
+
+        private LocalDate GetStartDate(DateInterval dateInterval)
+        {
+            LocalDate startDate = dateInterval.Start;
+            var oldestStoryDate = DbSession.Stories.OldestStoryDate().ToLocalDateTime().Date;
 
             if (startDate < oldestStoryDate)
             {
@@ -235,18 +266,18 @@ namespace BuzzStats.ApiServices
 
             if (startDate.Year <= 42)
             {
-                startDate = TestableDateTime.UtcNow;
+                startDate = _clock.GetCurrentInstant().InUtc().Date;
             }
 
             return startDate;
         }
 
-        private DateTime GetStopDate(DateRange dateRange)
+        private LocalDate GetStopDate(DateInterval dateInterval)
         {
-            DateTime stopDate = dateRange.GetStopDate(TestableDateTime.UtcNow);
-            if (stopDate > TestableDateTime.UtcNow)
+            LocalDate stopDate = dateInterval.End;
+            if (stopDate > _clock.GetCurrentInstant().InUtc().Date)
             {
-                stopDate = TestableDateTime.UtcNow;
+                stopDate = _clock.GetCurrentInstant().InUtc().Date;
             }
 
             return stopDate;
@@ -314,8 +345,8 @@ namespace BuzzStats.ApiServices
             });
             return comments.Select(c => new RecentActivity
             {
-                Age = c.CreatedAt.Age(),
-                DetectedAtAge = c.DetectedAt.Age(),
+                Age = _clock.GetCurrentInstant().ToDateTimeUtc() - c.CreatedAt,
+                DetectedAtAge = _clock.GetCurrentInstant().ToDateTimeUtc() - c.DetectedAt,
                 What = RecentActivityKind.NewComment,
                 Who = c.Username,
                 StoryTitle = c.Story.Title,
@@ -333,8 +364,8 @@ namespace BuzzStats.ApiServices
 
             return stories.Select(s => new RecentActivity
             {
-                Age = s.CreatedAt.Age(),
-                DetectedAtAge = s.DetectedAt.Age(),
+                Age = _clock.GetCurrentInstant().ToDateTimeUtc() - s.CreatedAt,
+                DetectedAtAge = _clock.GetCurrentInstant().ToDateTimeOffset() - s.DetectedAt,
                 What = RecentActivityKind.NewStory,
                 Who = s.Username,
                 StoryTitle = s.Title,
@@ -347,8 +378,8 @@ namespace BuzzStats.ApiServices
             StoryVoteData[] storyVotes = DbSession.StoryVotes.Query(request.MaxCount, request.Username);
             return storyVotes.Select(sv => new RecentActivity
             {
-                Age = sv.CreatedAt.Age(),
-                DetectedAtAge = sv.CreatedAt.Age(),
+                Age = _clock.GetCurrentInstant().ToDateTimeUtc() - sv.CreatedAt,
+                DetectedAtAge = _clock.GetCurrentInstant().ToDateTimeUtc() - sv.CreatedAt,
                 What = RecentActivityKind.NewStoryVote,
                 Who = sv.Username,
                 StoryTitle = sv.Story.Title,

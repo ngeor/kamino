@@ -8,7 +8,7 @@
 // --------------------------------------------------------------------------------
 
 using System.Collections.Generic;
-using NGSoftware.Common;
+using NodaTime;
 
 namespace BuzzStats.Data
 {
@@ -37,7 +37,7 @@ namespace BuzzStats.Data
 
         #region Stats
 
-        Dictionary<string, int> SumPerHost(DateRange dateRange = default(DateRange));
+        Dictionary<string, int> SumPerHost(DateInterval dateInterval = default(DateInterval));
 
         #endregion
     }

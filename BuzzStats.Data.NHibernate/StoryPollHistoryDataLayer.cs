@@ -3,6 +3,7 @@ using NHibernate;
 using NHibernate.Linq;
 using NGSoftware.Common;
 using BuzzStats.Data.NHibernate.Entities;
+using NodaTime;
 
 namespace BuzzStats.Data.NHibernate
 {
@@ -26,11 +27,12 @@ namespace BuzzStats.Data.NHibernate
             return entity.ToData();
         }
 
-        public int Count(DateRange dateRange)
+        public int Count(DateInterval dateInterval)
         {
             StoryEntity storyAlias = null;
             var q = from e in Session.Query<StoryPollHistoryEntity>()
-                where e.CheckedAt >= dateRange.StartDate.Value && e.CheckedAt < dateRange.StopDate.Value
+                where e.CheckedAt >= dateInterval.Start.AtMidnight().InUtc().ToDateTimeUtc()
+                      && e.CheckedAt < dateInterval.End.AtMidnight().InUtc().ToDateTimeUtc()
                 select e;
             return q.Count();
         }

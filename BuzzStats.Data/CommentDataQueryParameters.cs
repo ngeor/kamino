@@ -8,13 +8,13 @@
 // --------------------------------------------------------------------------------
 
 using NGSoftware.Common;
+using NodaTime;
 
 namespace BuzzStats.Data
 {
     public class CommentDataQueryParameters : QueryParameters<CommentSortField>
     {
-        // TODO: migrate to NodaTime
-        public DateRange CreatedAt { get; set; }
+        public DateInterval CreatedAt { get; set; }
 
         public int? StoryId { get; set; }
         public string Username { get; set; }
@@ -38,8 +38,8 @@ namespace BuzzStats.Data
             int result = base.GetHashCode();
 
             result = result * 13 + StoryId.GetValueOrDefault();
-            result = result * 13 + (CreatedAt.IsEmpty ? 0 : CreatedAt.GetHashCode());
-            result = result * 13 + (Username != null ? Username.GetHashCode() : 0);
+            result = result * 13 + (CreatedAt == null ? 0 : CreatedAt.GetHashCode());
+            result = result * 13 + Username.SafeHashCode();
             return result;
         }
 

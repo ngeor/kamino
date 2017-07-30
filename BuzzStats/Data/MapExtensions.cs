@@ -1,4 +1,4 @@
-using NGSoftware.Common;
+using System;
 
 namespace BuzzStats.Data
 {
@@ -21,7 +21,7 @@ namespace BuzzStats.Data
                 ? null
                 : new RecentlyCommentedStory.Comment
                 {
-                    Age = comment.CreatedAt.Age(),
+                    Age = DateTime.UtcNow - comment.CreatedAt,
                     CommentId = comment.CommentId,
                     StoryId = comment.StoryId,
                     Username = comment.Username,
@@ -35,7 +35,7 @@ namespace BuzzStats.Data
                 ? null
                 : new CommentSummary
                 {
-                    Age = comment.CreatedAt.Age(),
+                    Age = DateTime.UtcNow - comment.CreatedAt,
                     CommentId = comment.CommentId,
                     Story = comment.Story.ToCommentSummaryParentStory(),
                     Username = comment.Username,

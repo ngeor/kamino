@@ -40,8 +40,11 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NGSoftware.Common, Version=5.2.0.24, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\NGSoftware.Common.5.2.0\lib\net462\NGSoftware.Common.dll</HintPath>
+    <Reference Include="NGSoftware.Common, Version=6.0.0.28, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\NGSoftware.Common.6.0.0\lib\net462\NGSoftware.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="NodaTime, Version=2.2.0.0, Culture=neutral, PublicKeyToken=4226afe0d9b296d1">
+      <HintPath>..\packages\NodaTime.2.2.0\lib\net45\NodaTime.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap, Version=4.5.1.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\StructureMap.4.5.1\lib\net45\StructureMap.dll</HintPath>
@@ -72,13 +75,11 @@
     <Compile Include="Boot\Crawler\Application.cs" />
     <Compile Include="Boot\Crawler\CrawlerRegistry.cs" />
     <Compile Include="Boot\ObjectFactory.cs" />
-    <Compile Include="Boot\Web\CacheFactory.cs" />
     <Compile Include="Boot\Web\WebRegistry.cs" />
     <Compile Include="Common\DateTimeExtensions.cs" />
     <Compile Include="Common\TimeSpanExtensions.cs" />
     <Compile Include="Boot\Web\Application.cs" />
     <Compile Include="Common\Resources.cs" />
-    <Compile Include="Crawl\CrawlApp.cs" />
     <Compile Include="Crawl\IWarmCache.cs" />
     <Compile Include="Crawl\WarmCache.cs" />
     <Compile Include="Data\CommentSummary.cs" />
@@ -98,7 +99,6 @@
     <Compile Include="Common\Version.cs" />
     <Compile Include="Downloader\DownloaderService.cs" />
     <Compile Include="Downloader\IDownloaderService.cs" />
-    <Compile Include="Services\DiagnosticsService.cs" />
     <Compile Include="Services\RecentActivityService.cs" />
     <Compile Include="Web\Mvp\AboutPagePresenter.cs" />
     <Compile Include="Web\Mvp\ApiServicePresenter.cs" />
@@ -127,7 +127,6 @@
     <Compile Include="Parsing\StoryListingSummary.cs" />
     <Compile Include="Persister\BasicPersister.cs" />
     <Compile Include="Persister\ExistingStoryStrategy.cs" />
-    <Compile Include="Persister\GetStoryIdsRequest.cs" />
     <Compile Include="Persister\HostUtils.cs" />
     <Compile Include="Persister\IDbPersister.cs" />
     <Compile Include="Persister\IPersister.cs" />
@@ -137,12 +136,10 @@
     <Compile Include="Persister\TransactionalPersister.cs" />
     <Compile Include="Persister\UpdateResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\ICrawlerService.cs" />
     <Compile Include="Tasks\CommandLineAttribute.cs" />
     <Compile Include="Tasks\IApp.cs" />
     <Compile Include="Web\Mvp\RecentActivityModel.cs" />
     <Compile Include="Parsing\ParsingExtensions.cs" />
-    <Compile Include="Services\IDiagnosticsService.cs" />
     <Compile Include="Services\IRecentActivityService.cs" />
     <Compile Include="Boot\StructureMapServiceLocator.cs" />
     <Compile Include="Boot\ResolverFactory.cs" />

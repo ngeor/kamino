@@ -9,9 +9,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NGSoftware.Common;
 using BuzzStats.Data;
 using BuzzStats.Parsing;
+using NodaTime;
 
 namespace BuzzStats.Persister
 {
@@ -23,13 +23,15 @@ namespace BuzzStats.Persister
 
         public IDbSession DbSession { get; set; }
 
+        public IClock Clock { get; }
+
         public PersisterResult MarkAsUnmodified(int storyId)
         {
             Story = DbSession.Stories.Read(storyId);
             if (Story != null)
             {
                 Story.TotalChecks++;
-                Story.LastCheckedAt = TestableDateTime.UtcNow;
+                Story.LastCheckedAt = Clock.GetCurrentInstant().ToDateTimeUtc();
                 DbSession.Stories.Update(Story);
             }
 
@@ -57,10 +59,10 @@ namespace BuzzStats.Persister
             if (Story != null)
             {
                 Story.TotalChecks++;
-                Story.LastCheckedAt = TestableDateTime.UtcNow;
+                Story.LastCheckedAt = Clock.GetCurrentInstant().ToDateTimeUtc();
                 Story.TotalUpdates++;
-                Story.LastModifiedAt = TestableDateTime.UtcNow;
-                Story.RemovedAt = TestableDateTime.UtcNow;
+                Story.LastModifiedAt = Clock.GetCurrentInstant().ToDateTimeUtc();
+                Story.RemovedAt = Clock.GetCurrentInstant().ToDateTimeUtc();
                 DbSession.Stories.Update(Story);
             }
 
@@ -75,8 +77,8 @@ namespace BuzzStats.Persister
             }
 
             StoryStrategy = Story == null
-                ? (IStoryStrategy) new NewStoryStrategy(DbSession)
-                : new ExistingStoryStrategy(DbSession);
+                ? (IStoryStrategy) new NewStoryStrategy(DbSession, Clock)
+                : new ExistingStoryStrategy(DbSession, Clock);
 
             Story = StoryStrategy.Initialize(Story, parsedStory);
             StoryVoteData[] existingStoryVotes = StoryStrategy.GetExistingStoryVotes(Story);
@@ -110,7 +112,7 @@ namespace BuzzStats.Persister
                 {
                     CommentId = c.CommentId,
                     CreatedAt = c.CreatedAt,
-                    DetectedAt = TestableDateTime.UtcNow,
+                    DetectedAt = Clock.GetCurrentInstant().ToDateTimeUtc(),
                     IsBuried = c.IsBuried,
                     ParentComment = parentComment,
                     Story = Story,
@@ -144,7 +146,7 @@ namespace BuzzStats.Persister
             var commentVote = new CommentVoteData
             {
                 Comment = comment,
-                CreatedAt = TestableDateTime.UtcNow,
+                CreatedAt = Clock.GetCurrentInstant().ToDateTimeUtc(),
                 IsBuried = isBuried,
                 VotesDown = votesDown,
                 VotesUp = votesUp
@@ -175,7 +177,7 @@ namespace BuzzStats.Persister
             DbSession.StoryVotes.Create(new StoryVoteData
             {
                 Username = voter,
-                CreatedAt = TestableDateTime.UtcNow,
+                CreatedAt = Clock.GetCurrentInstant().ToDateTimeUtc(),
                 Story = Story
             });
 

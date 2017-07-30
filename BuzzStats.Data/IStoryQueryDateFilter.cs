@@ -6,13 +6,13 @@
 //
 //  Copyright (c) 2014 ngeor
 
-using NGSoftware.Common;
+using NodaTime;
 
 namespace BuzzStats.Data
 {
     public interface IStoryQueryDateFilter
     {
         IStoryQuery StoryQuery { get; }
-        IStoryQuery InRange(DateRange dateRange);
+        IStoryQuery InRange(DateInterval dateInterval);
     }
 }

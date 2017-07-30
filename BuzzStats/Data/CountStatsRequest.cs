@@ -9,6 +9,8 @@
 
 using System;
 using NGSoftware.Common;
+using NodaTime;
+using NodaTime.Extensions;
 
 namespace BuzzStats.Data
 {
@@ -18,15 +20,15 @@ namespace BuzzStats.Data
         {
         }
 
-        public DateTimeUnit Interval { get; set; }
+        public PeriodUnits Interval { get; set; }
 
         public DateTime? Start { get; set; }
 
         public DateTime? Stop { get; set; }
 
-        public DateRange DateRange
+        public DateInterval DateInterval
         {
-            get { return DateRange.Create(Start, Stop); }
+            get { return new DateInterval(Start.Value.ToLocalDateTime().Date, Stop.Value.ToLocalDateTime().Date); }
         }
 
         public bool Equals(CountStatsRequest other)

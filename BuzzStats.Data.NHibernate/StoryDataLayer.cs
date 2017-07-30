@@ -15,6 +15,7 @@ using NHibernate;
 using NHibernate.Linq;
 using NGSoftware.Common;
 using BuzzStats.Data.NHibernate.Entities;
+using NodaTime;
 
 namespace BuzzStats.Data.NHibernate
 {
@@ -45,10 +46,10 @@ namespace BuzzStats.Data.NHibernate
             return storyEntity.ToData();
         }
 
-        public Dictionary<string, int> GetCommentedStoryCountsPerUser(DateRange dateRange)
+        public Dictionary<string, int> GetCommentedStoryCountsPerUser(DateInterval dateInterval)
         {
             return Session.Query<CommentEntity>()
-                .FilterOnCreatedAt(dateRange)
+                .FilterOnCreatedAt(dateInterval)
                 .Where(c => c.Story.RemovedAt == null)
                 .GroupBy(c => c.Username)
                 .Select(g => new
@@ -58,10 +59,10 @@ namespace BuzzStats.Data.NHibernate
                 }).ToDictionary(k => k.Key, v => v.Count);
         }
 
-        public Dictionary<string, int> GetStoryCountsPerHost(DateRange dateRange)
+        public Dictionary<string, int> GetStoryCountsPerHost(DateInterval dateInterval)
         {
             return Session.Query<StoryEntity>()
-                .FilterOnCreatedAt(dateRange)
+                .FilterOnCreatedAt(dateInterval)
                 .Where(s => s.Host != null && s.RemovedAt == null)
                 .GroupBy(s => s.Host)
                 .Select(g => new
@@ -71,10 +72,10 @@ namespace BuzzStats.Data.NHibernate
                 }).ToDictionary(k => k.Key, v => v.Count);
         }
 
-        public Dictionary<string, int> GetStoryCountsPerUser(DateRange dateRange)
+        public Dictionary<string, int> GetStoryCountsPerUser(DateInterval dateInterval)
         {
             return Session.Query<StoryEntity>()
-                .FilterOnCreatedAt(dateRange)
+                .FilterOnCreatedAt(dateInterval)
                 .Where(s => s.RemovedAt == null)
                 .GroupBy(s => s.Username)
                 .Select(g => new

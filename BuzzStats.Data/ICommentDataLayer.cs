@@ -8,7 +8,7 @@
 // --------------------------------------------------------------------------------
 
 using System.Collections.Generic;
-using NGSoftware.Common;
+using NodaTime;
 
 namespace BuzzStats.Data
 {
@@ -31,13 +31,13 @@ namespace BuzzStats.Data
 
         #region Stats
 
-        int Count(DateRange dateRange = default(DateRange));
+        int Count(DateInterval dateInterval = default(DateInterval));
 
-        Dictionary<string, int> CountPerUser(DateRange dateRange = default(DateRange));
-        Dictionary<string, int> CountBuriedPerUser(DateRange dateRange = default(DateRange));
+        Dictionary<string, int> CountPerUser(DateInterval dateInterval = default(DateInterval));
+        Dictionary<string, int> CountBuriedPerUser(DateInterval dateInterval = default(DateInterval));
 
-        Dictionary<string, int> SumVotesDownPerUser(DateRange dateRange = default(DateRange));
-        Dictionary<string, int> SumVotesUpPerUser(DateRange dateRange = default(DateRange));
+        Dictionary<string, int> SumVotesDownPerUser(DateInterval dateInterval = default(DateInterval));
+        Dictionary<string, int> SumVotesUpPerUser(DateInterval dateInterval = default(DateInterval));
 
         #endregion
     }

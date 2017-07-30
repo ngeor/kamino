@@ -11,8 +11,6 @@ namespace BuzzStats.Web
             if (!IsPostBack)
             {
                 // initialize from-to datetime textboxes with default values
-                dateRangePicker.Value =
-                    DateRange.Create(DateTime.UtcNow.Subtract(TimeSpan.FromDays(7)), DateTime.UtcNow);
             }
         }
     }

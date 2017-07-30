@@ -15,6 +15,7 @@ using NHibernate.Linq;
 using StackExchange.Profiling;
 using NGSoftware.Common;
 using BuzzStats.Data.NHibernate.Entities;
+using NodaTime;
 
 namespace BuzzStats.Data.NHibernate
 {
@@ -27,9 +28,9 @@ namespace BuzzStats.Data.NHibernate
         {
         }
 
-        public int Count(DateRange dateRange)
+        public int Count(DateInterval dateInterval)
         {
-            return Session.Query<CommentEntity>().FilterOnCreatedAt(dateRange).Count();
+            return Session.Query<CommentEntity>().FilterOnCreatedAt(dateInterval).Count();
         }
 
         public CommentData Create(CommentData newComment)
@@ -76,16 +77,16 @@ namespace BuzzStats.Data.NHibernate
                     q = q.Where(c => storyAlias.StoryId == storyId.Value);
                 }
 
-                if (!queryParameters.CreatedAt.IsEmpty)
+                if (queryParameters.CreatedAt != null)
                 {
-                    if (queryParameters.CreatedAt.StartDate.HasValue)
+                    if (queryParameters.CreatedAt.Start > LocalDate.MinIsoValue)
                     {
-                        q = q.Where(c => c.CreatedAt >= queryParameters.CreatedAt.StartDate.Value);
+                        q = q.Where(c => c.CreatedAt >= queryParameters.CreatedAt.Start.ToDateTimeUnspecified());
                     }
 
-                    if (queryParameters.CreatedAt.StopDate.HasValue)
+                    if (queryParameters.CreatedAt.End < LocalDate.MaxIsoValue)
                     {
-                        q = q.Where(c => c.CreatedAt < queryParameters.CreatedAt.StopDate.Value);
+                        q = q.Where(c => c.CreatedAt < queryParameters.CreatedAt.End.ToDateTimeUnspecified());
                     }
                 }
 
@@ -169,9 +170,9 @@ namespace BuzzStats.Data.NHibernate
             Session.SaveOrUpdate(commentEntity);
         }
 
-        public Dictionary<string, int> CountBuriedPerUser(DateRange dateRange)
+        public Dictionary<string, int> CountBuriedPerUser(DateInterval dateInterval)
         {
-            return Session.Query<CommentEntity>().FilterOnCreatedAt(dateRange)
+            return Session.Query<CommentEntity>().FilterOnCreatedAt(dateInterval)
                 .Where(c => c.IsBuried && c.Story.RemovedAt == null)
                 .GroupBy(s => s.Username)
                 .Select(g => new
@@ -184,16 +185,16 @@ namespace BuzzStats.Data.NHibernate
         /// <summary>
         /// Gets the total number of comments a user has made in the given time period, per user.
         /// </summary>
-        /// <param name="dateRange">
+        /// <param name="dateInterval">
         /// The date Range.
         /// </param>
         /// <returns>
         /// A dictionary where the keys are user names and the matching values are
         /// the corresponding comment counts.
         /// </returns>
-        public Dictionary<string, int> CountPerUser(DateRange dateRange)
+        public Dictionary<string, int> CountPerUser(DateInterval dateInterval)
         {
-            return Session.Query<CommentEntity>().FilterOnCreatedAt(dateRange)
+            return Session.Query<CommentEntity>().FilterOnCreatedAt(dateInterval)
                 .Where(c => c.Story.RemovedAt == null)
                 .GroupBy(c => c.Username)
                 .Select(g => new
@@ -203,10 +204,10 @@ namespace BuzzStats.Data.NHibernate
                 }).ToDictionary(k => k.Key, v => v.Count);
         }
 
-        public Dictionary<string, int> SumVotesDownPerUser(DateRange dateRange)
+        public Dictionary<string, int> SumVotesDownPerUser(DateInterval dateInterval)
         {
             return Session
-                .Query<CommentEntity>().FilterOnCreatedAt(dateRange)
+                .Query<CommentEntity>().FilterOnCreatedAt(dateInterval)
                 .Where(c => c.Story.RemovedAt == null)
                 .GroupBy(c => c.Username)
                 .Select(g => new
@@ -216,10 +217,10 @@ namespace BuzzStats.Data.NHibernate
                 }).ToDictionary(k => k.Key, v => v.Count);
         }
 
-        public Dictionary<string, int> SumVotesUpPerUser(DateRange dateRange)
+        public Dictionary<string, int> SumVotesUpPerUser(DateInterval dateInterval)
         {
             return Session
-                .Query<CommentEntity>().FilterOnCreatedAt(dateRange)
+                .Query<CommentEntity>().FilterOnCreatedAt(dateInterval)
                 .Where(c => c.Story.RemovedAt == null)
                 .GroupBy(c => c.Username)
                 .Select(g => new

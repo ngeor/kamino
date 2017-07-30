@@ -51,8 +51,8 @@
     <Reference Include="Moq, Version=4.7.99.0, Culture=neutral, PublicKeyToken=69f491c39445e920">
       <HintPath>..\packages\Moq.4.7.99\lib\net45\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="NGSoftware.Common, Version=5.2.0.24, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\NGSoftware.Common.5.2.0\lib\net462\NGSoftware.Common.dll</HintPath>
+    <Reference Include="NGSoftware.Common, Version=6.0.0.28, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\NGSoftware.Common.6.0.0\lib\net462\NGSoftware.Common.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4">
       <HintPath>..\packages\NHibernate.4.0.0.4000\lib\net40\NHibernate.dll</HintPath>

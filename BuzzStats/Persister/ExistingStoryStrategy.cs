@@ -9,22 +9,26 @@
 using NGSoftware.Common;
 using BuzzStats.Data;
 using BuzzStats.Parsing;
+using NodaTime;
 
 namespace BuzzStats.Persister
 {
     class ExistingStoryStrategy : IStoryStrategy
     {
-        public ExistingStoryStrategy(IDbSession dbSession)
+        public ExistingStoryStrategy(IDbSession dbSession, IClock clock)
         {
             DbSession = dbSession;
+            Clock = clock;
         }
+
+        public IClock Clock { get; set; }
 
         public IDbSession DbSession { get; set; }
 
         public StoryData Initialize(StoryData story, Story parsedStory)
         {
             story.TotalChecks++;
-            story.LastCheckedAt = TestableDateTime.UtcNow;
+            story.LastCheckedAt = Clock.GetCurrentInstant().ToDateTimeUtc();
             story.LastCommentedAt = parsedStory.LastCommentedAt();
             story.VoteCount = parsedStory.Voters.Length;
             return story;
@@ -45,7 +49,7 @@ namespace BuzzStats.Persister
             if (Changes != UpdateResult.NoChanges)
             {
                 story.TotalUpdates++;
-                story.LastModifiedAt = TestableDateTime.UtcNow;
+                story.LastModifiedAt = Clock.GetCurrentInstant().ToDateTimeUtc();
             }
 
             DbSession.Stories.Update(story);

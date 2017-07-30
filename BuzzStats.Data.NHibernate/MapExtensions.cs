@@ -7,6 +7,7 @@
 // * Time: 3:08 μμ
 // --------------------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using NGSoftware.Common;
@@ -243,9 +244,9 @@ namespace BuzzStats.Data.NHibernate
         {
             return new RecentActivity
             {
-                Age = recentActivityEntity.CreatedAt.Age(),
+                Age = DateTime.UtcNow - recentActivityEntity.CreatedAt,
                 CommentId = recentActivityEntity.CommentId.GetValueOrDefault(),
-                DetectedAtAge = recentActivityEntity.DetectedAt.Age(),
+                DetectedAtAge = DateTime.UtcNow - recentActivityEntity.DetectedAt,
                 StoryId = recentActivityEntity.StoryId,
                 StoryTitle = recentActivityEntity.Title,
                 What = (RecentActivityKind) recentActivityEntity.What,

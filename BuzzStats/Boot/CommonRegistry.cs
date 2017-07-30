@@ -9,12 +9,7 @@
 
 using System.Configuration;
 using StructureMap;
-using NGSoftware.Common;
-using NGSoftware.Common.Configuration;
 using NGSoftware.Common.Factories;
-using NGSoftware.Common.Scheduling;
-using BuzzStats.Common;
-using BuzzStats.Crawl;
 using BuzzStats.Data;
 using BuzzStats.Data.NHibernate;
 
@@ -24,9 +19,6 @@ namespace BuzzStats.Boot
     {
         public CommonRegistry(string[] args)
         {
-            For<IStoppable>().Singleton().Use<Stoppable>();
-            For<IBackgroundScheduledItemManager>().Singleton().Use<BackgroundScheduledItemManager>();
-
             For<ConnectionStringSettings>().Use(ctx => ConfigurationManager.ConnectionStrings["BuzzStats"]);
             For<IFactory<IDbContext>>().Singleton().Use<DbContextFactory>();
 

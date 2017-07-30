@@ -15,8 +15,6 @@ namespace BuzzStats.Web
             if (!IsPostBack)
             {
                 // initialize from-to datetime textboxes with default values
-                dateRangePicker.Value =
-                    DateRange.Create(DateTime.UtcNow.Subtract(TimeSpan.FromDays(7)), DateTime.UtcNow);
             }
         }
 
@@ -39,16 +37,6 @@ namespace BuzzStats.Web
 
         protected void odsUserStats_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
         {
-            try
-            {
-                DateRange dateRange = dateRangePicker.Value;
-                e.InputParameters["startDate"] = dateRange.StartDate;
-                e.InputParameters["endDate"] = dateRange.StopDate;
-            }
-            catch (FormatException)
-            {
-                e.Cancel = true;
-            }
         }
 
         protected void dateRangePicker_Changed(object sender, EventArgs e)

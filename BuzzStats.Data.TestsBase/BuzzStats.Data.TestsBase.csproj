@@ -41,8 +41,11 @@
     <Reference Include="Moq, Version=4.7.63.0, Culture=neutral, PublicKeyToken=69f491c39445e920">
       <HintPath>..\packages\Moq.4.7.63\lib\net45\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="NGSoftware.Common, Version=4.0.0.15, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\NGSoftware.Common.4.0.0\lib\net462\NGSoftware.Common.dll</HintPath>
+    <Reference Include="NGSoftware.Common, Version=6.0.0.28, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\NGSoftware.Common.6.0.0\lib\net462\NGSoftware.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="NodaTime, Version=2.2.0.0, Culture=neutral, PublicKeyToken=4226afe0d9b296d1">
+      <HintPath>..\packages\NodaTime.2.2.0\lib\net45\NodaTime.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=3.7.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb">
       <HintPath>..\packages\NUnit.3.7.1\lib\net45\nunit.framework.dll</HintPath>

@@ -13,8 +13,8 @@ using System.Linq;
 using NHibernate;
 using NHibernate.Linq;
 using StackExchange.Profiling;
-using NGSoftware.Common;
 using BuzzStats.Data.NHibernate.Entities;
+using NodaTime;
 
 namespace BuzzStats.Data.NHibernate
 {
@@ -70,10 +70,10 @@ namespace BuzzStats.Data.NHibernate
                        .FirstOrDefault() != null;
         }
 
-        public Dictionary<string, int> SumPerHost(DateRange dateRange)
+        public Dictionary<string, int> SumPerHost(DateInterval dateInterval)
         {
             return Session.Query<StoryEntity>()
-                .FilterOnCreatedAt(dateRange)
+                .FilterOnCreatedAt(dateInterval)
                 .Where(s => s.Host != null && s.RemovedAt == null)
                 .GroupBy(s => s.Host)
                 .Select(g => new

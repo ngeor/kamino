@@ -3,6 +3,7 @@ using System.Linq;
 using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.Parsing;
 using NodaTime;
+using NodaTime.Extensions;
 using NodaTime.Testing;
 using NUnit.Framework;
 
@@ -22,11 +23,13 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
         }
 
         private Parser _parser;
+        private IClock _clock;
 
         [SetUp]
         public void SetUp()
         {
-            _parser = new Parser(new FakeClock(Instant.FromUtc(2017, 7, 30, 19, 31)));
+            _clock = new FakeClock(Instant.FromUtc(2017, 7, 30, 19, 31));
+            _parser = new Parser(_clock);
         }
 
         [Test]
@@ -264,7 +267,7 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
             };
 
             Assert.That(expectedVoters.All(expectedVoter => story.Voters.Any(v => v == expectedVoter)), "Voter");
-            Assert.AreEqual(114, (int) DateTime.UtcNow.Subtract(story.CreatedAt).TotalMinutes);
+            Assert.AreEqual(114, _clock.GetCurrentInstant().Minus(story.CreatedAt.ToInstant()).TotalMinutes);
 
             Assert.IsNotNull(story.Comments);
             Assert.AreEqual(2, story.Comments.Count());
@@ -296,7 +299,7 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
             };
 
             Assert.That(expectedVoters.All(expectedVoter => story.Voters.Any(v => v == expectedVoter)), "Voter");
-            Assert.AreEqual(180, (int) DateTime.UtcNow.Subtract(story.CreatedAt).TotalMinutes);
+            Assert.AreEqual(180, _clock.GetCurrentInstant().Minus(story.CreatedAt.ToInstant()).TotalMinutes);
 
             Assert.IsNotNull(story.Comments);
             Assert.AreEqual(4, story.Comments.Count());
@@ -420,7 +423,10 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
             Assert.AreEqual(childrenCommentCount, comment.Comments.Count());
             Assert.AreEqual(votesUp, comment.VotesUp);
             Assert.AreEqual(votesDown, comment.VotesDown);
-            Assert.AreEqual(minutes, (int) DateTime.UtcNow.Subtract(comment.CreatedAt).TotalMinutes);
+            Assert.AreEqual(
+                minutes,
+                _clock.GetCurrentInstant().Minus(comment.CreatedAt.ToInstant()).TotalMinutes,
+                $"Minutes of comment {comment.CommentId}");
             Assert.AreEqual(isBuried, comment.IsBuried,
                 "Comment " + comment.CommentId + " expected to be burried: " + isBuried);
         }

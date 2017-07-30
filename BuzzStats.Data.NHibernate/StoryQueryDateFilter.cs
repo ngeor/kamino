@@ -7,6 +7,7 @@
 //  Copyright (c) 2014 ngeor
 
 using NGSoftware.Common;
+using NodaTime;
 
 namespace BuzzStats.Data.NHibernate
 {
@@ -24,11 +25,11 @@ namespace BuzzStats.Data.NHibernate
             get { return _storyQuery; }
         }
 
-        internal DateRange DateRange { get; private set; }
+        internal DateInterval DateInterval { get; private set; }
 
-        public IStoryQuery InRange(DateRange dateRange)
+        public IStoryQuery InRange(DateInterval dateInterval)
         {
-            DateRange = dateRange;
+            DateInterval = dateInterval;
             return _storyQuery;
         }
     }

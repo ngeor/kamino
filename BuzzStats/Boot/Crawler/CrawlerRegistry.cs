@@ -8,13 +8,11 @@
 // --------------------------------------------------------------------------------
 
 using StructureMap;
-using NGSoftware.Common.Cache;
 using NGSoftware.Common.Messaging;
 using BuzzStats.Crawl;
 using BuzzStats.Data;
 using BuzzStats.Downloader;
 using BuzzStats.Persister;
-using BuzzStats.Services;
 
 namespace BuzzStats.Boot.Crawler
 {
@@ -27,16 +25,11 @@ namespace BuzzStats.Boot.Crawler
 
             For<IDownloaderService>().Use<DownloaderService>();
 
-            // use singletons for classes that don't really have state
-            For<ICache>().Singleton().Use<NullCache>();
-
             // only one messageBus
             For<IMessageBus>().Singleton().Use<MessageBus>();
 
             For<IWarmCache>().Singleton().Use<WarmCache>()
                 .Ctor<IApiService>().Is<IApiService>();
-
-            For<ICrawlerService>().Singleton().Use<CrawlApp>();
         }
     }
 }

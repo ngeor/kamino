@@ -12,6 +12,7 @@ using System.Linq;
 using System.Web;
 using NGSoftware.Common;
 using BuzzStats.Data;
+using NodaTime;
 
 namespace BuzzStats.Web.Mvp
 {
@@ -27,7 +28,7 @@ namespace BuzzStats.Web.Mvp
             base.OnViewLoaded(sender, e);
             View.SetCommentCount(ApiService.GetCommentCountStats(new CountStatsRequest
             {
-                Interval = DateTimeUnit.Year
+                Interval = PeriodUnits.Years
             }).Data.Sum());
 
             foreach (StorySortField storySortField in

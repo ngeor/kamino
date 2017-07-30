@@ -8,7 +8,6 @@
 // --------------------------------------------------------------------------------
 
 using StructureMap;
-using NGSoftware.Common.Cache;
 using BuzzStats.ApiServices;
 using BuzzStats.Data;
 
@@ -18,9 +17,6 @@ namespace BuzzStats.Boot.Web
     {
         public WebRegistry()
         {
-            // use singletons for classes that don't really have state
-            For<ICache>().Singleton().Use<NullCache>();
-
             For<IApiService>()
                 .Use<ApiService>();
 

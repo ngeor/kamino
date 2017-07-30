@@ -12,16 +12,17 @@ using System.Linq;
 using System.Linq.Expressions;
 using NGSoftware.Common;
 using BuzzStats.Data.NHibernate.Entities;
+using NodaTime;
 
 namespace BuzzStats.Data.NHibernate
 {
     public static class QueryableExtensions
     {
-        public static IQueryable<T> FilterOnCreatedAt<T>(this IQueryable<T> query, DateRange dateRange)
+        public static IQueryable<T> FilterOnCreatedAt<T>(this IQueryable<T> query, DateInterval dateInterval)
             where T : class, IEntity
         {
-            DateTime? startDate = dateRange.StartDate;
-            DateTime? stopDate = dateRange.StopDate;
+            DateTime? startDate = dateInterval.Start.ToDateTimeUnspecified();
+            DateTime? stopDate = dateInterval.End.ToDateTimeUnspecified();
 
             if (startDate.HasValue)
             {

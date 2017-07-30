@@ -17,12 +17,10 @@ namespace BuzzStats.Crawler
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(MainClass));
 
-        public static int Main(string[] args)
+        public static void Main(string[] args)
         {
             Log.Debug("MainClass.Main");
             Application.Boot(args);
-            AppHelper appHelper = new AppHelper();
-            return appHelper.Run(ServiceLocator.Current, args);
         }
     }
 }

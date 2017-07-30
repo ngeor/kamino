@@ -6,18 +6,21 @@
 //
 //  Copyright (c) 2014 ngeor
 
-using NGSoftware.Common;
 using BuzzStats.Data;
 using BuzzStats.Parsing;
+using NodaTime;
 
 namespace BuzzStats.Persister
 {
     class NewStoryStrategy : IStoryStrategy
     {
-        public NewStoryStrategy(IDbSession dbSession)
+        public NewStoryStrategy(IDbSession dbSession, IClock clock)
         {
             DbSession = dbSession;
+            Clock = clock;
         }
+
+        public IClock Clock { get; set; }
 
         public IDbSession DbSession { get; private set; }
 
@@ -32,15 +35,15 @@ namespace BuzzStats.Persister
                 Url = parsedStory.Url,
                 Title = parsedStory.Title,
                 CreatedAt = parsedStory.CreatedAt,
-                DetectedAt = TestableDateTime.UtcNow,
+                DetectedAt = Clock.GetCurrentInstant().ToDateTimeUtc(),
                 Host = HostUtils.GetHost(parsedStory.Url, parsedStory.StoryId),
                 Username = parsedStory.Username,
                 VoteCount = parsedStory.Voters.Length,
                 TotalChecks = 1,
                 TotalUpdates = 1,
-                LastCheckedAt = TestableDateTime.UtcNow,
+                LastCheckedAt = Clock.GetCurrentInstant().ToDateTimeUtc(),
                 LastCommentedAt = parsedStory.LastCommentedAt(),
-                LastModifiedAt = TestableDateTime.UtcNow
+                LastModifiedAt = Clock.GetCurrentInstant().ToDateTimeUtc()
             };
 
             Changes |= UpdateResult.Created;

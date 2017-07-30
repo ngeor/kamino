@@ -15,16 +15,6 @@ namespace BuzzStats.Web.UserControls
             set { container.CssClass = value; }
         }
 
-        public DateRange Value
-        {
-            get { return DateRange.Create(Parse(txtFrom.Text), Parse(txtTo.Text)); }
-            set
-            {
-                txtFrom.Text = Format(value.StartDate);
-                txtTo.Text = Format(value.StopDate);
-            }
-        }
-
         private static DateTime? Parse(string text)
         {
             return string.IsNullOrWhiteSpace(text)

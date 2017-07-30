@@ -1,4 +1,4 @@
-using NGSoftware.Common;
+using NodaTime;
 
 namespace BuzzStats.Data
 {
@@ -9,6 +9,6 @@ namespace BuzzStats.Data
     {
         StoryPollHistoryData Create(StoryPollHistoryData storyPollHistory);
 
-        int Count(DateRange dateRange);
+        int Count(DateInterval dateInterval);
     }
 }
