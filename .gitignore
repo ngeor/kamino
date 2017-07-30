@@ -18,5 +18,8 @@ results.xml
 # NUnit report
 TestResult.xml
 
+# ReportGenerator
+coveragereport/
+
 # MySQL datbase files
 docker/mysql/data/
