@@ -25,13 +25,6 @@ namespace BuzzStats.UnitTests.Boot.Web
         }
 
         [Test]
-        public void ShouldHaveIApiService()
-        {
-            var apiService = _resolver.GetService(typeof(IApiService)) as IApiService;
-            Assert.IsNotNull(apiService);
-        }
-
-        [Test]
         public void ShouldHaveDiagnosticsService()
         {
             var service = _resolver.GetService(typeof(IDiagnosticsService)) as IDiagnosticsService;

@@ -92,7 +92,6 @@
     <Compile Include="Crawl\ConfigurationTest.cs" />
     <Compile Include="Crawl\ConfiguredListingsTest.cs" />
     <Compile Include="Crawl\ConfiguredPollersTest.cs" />
-    <Compile Include="Crawl\CrawlAppTest.cs" />
     <Compile Include="Crawl\DecoratorSourceProviderTest.cs" />
     <Compile Include="Crawl\LeafConsumerTest.cs" />
     <Compile Include="Crawl\LeafProducerMonitorTest.cs" />
@@ -121,7 +120,6 @@
     <Compile Include="DSL\DownloaderServiceDSL.cs" />
     <Compile Include="DSL\StoryUrlProviderDSL.cs" />
     <Compile Include="DSL\MessageBusDSL.cs" />
-    <Compile Include="Crawl\StoryPollHistoryLoggerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

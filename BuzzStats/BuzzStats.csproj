@@ -96,7 +96,6 @@
     <Compile Include="Common\Resources.cs" />
     <Compile Include="Crawl\CrawlApp.cs" />
     <Compile Include="Crawl\IWarmCache.cs" />
-    <Compile Include="Crawl\IWebPageHandler.cs" />
     <Compile Include="Crawl\LeafProducerFoundLeafMessage.cs" />
     <Compile Include="Crawl\LeafProducerMonitor.cs" />
     <Compile Include="Crawl\StoryCheckedMessage.cs" />
@@ -190,7 +189,6 @@
     <Compile Include="Crawl\LeafConsumerStartingMessage.cs" />
     <Compile Include="Crawl\LeafConsumerFinishedMessage.cs" />
     <Compile Include="Crawl\ConfiguredPollers.cs" />
-    <Compile Include="Crawl\StoryPollHistoryLogger.cs" />
     <Compile Include="Web\Mvp\RecentActivityModel.cs" />
     <Compile Include="ApiServices\DbContextApiService.cs" />
     <Compile Include="Parsing\ParsingExtensions.cs" />

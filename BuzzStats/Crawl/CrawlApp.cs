@@ -23,16 +23,14 @@ using BuzzStats.Tasks;
 
 namespace BuzzStats.Crawl
 {
-    [CommandLine("-nohost -skipIngesters -skipPollers -useBackgroundThreads -skipCrawlerEventsForwarder",
-        "Starts crawling. Add -nohost to avoid hosting the remote control service.")]
+    [CommandLine("-skipIngesters -skipPollers -useBackgroundThreads -skipCrawlerEventsForwarder",
+        "Starts crawling.")]
     public class CrawlApp : ICrawlerService, IApp
     {
         private static readonly ILog Log = LogManager.GetLogger(
             MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly IMessageBus _messageBus;
-        private readonly IDbContext _dbContext;
-        private readonly IWarmCache _warmCache;
 
         /// <summary>
         /// Holds the date when this instance was created.
@@ -40,25 +38,12 @@ namespace BuzzStats.Crawl
         /// </summary>
         private readonly DateTime _creationTime;
 
-        // runs the crawler due to MySql-WCF issues
-        private readonly Thread _crawlThread;
-
         public CrawlApp(
-            IMessageBus messageBus,
-            IDbContext dbContext,
-            IWarmCache warmCache)
+            IMessageBus messageBus)
         {
             Log.Debug("CrawlApp constructor");
             _messageBus = messageBus;
-            _dbContext = dbContext;
-            _warmCache = warmCache;
             _creationTime = TestableDateTime.UtcNow;
-            _crawlThread = new Thread(CrawlThreadStart);
-        }
-
-        void CrawlThreadStart(object parameter)
-        {
-            new StoryPollHistoryLogger(_messageBus, _dbContext);
         }
 
         public string Echo(string msg)
@@ -75,7 +60,6 @@ namespace BuzzStats.Crawl
         {
             Run(new Options
             {
-                HostRemoteControlService = !args.Contains("-nohost"),
                 SkipIngesters = args.Contains("-skipIngesters"),
                 SkipPollers = args.Contains("-skipPollers"),
                 UseBackgroundThreads = args.Contains("-useBackgroundThreads"),
@@ -95,51 +79,15 @@ namespace BuzzStats.Crawl
                 new CrawlerEventsForwarder(_messageBus);
             }
 
-            Log.Debug("Updating recent activity");
-            _warmCache.UpdateRecentActivity();
-            _messageBus.Subscribe<StoryCheckedMessage>(message =>
-            {
-                if (message.Changes != UpdateResult.NoChanges)
-                {
-                    _warmCache.UpdateRecentActivity();
-                }
-            });
-
-            // host the service
-            if (options.HostRemoteControlService)
-            {
-                HostRemoteControlService();
-            }
-
-            // install Ctrl+C handler
-            Console.CancelKeyPress += OnCancelKeyPress;
-
             // main polling loop
             // in a separate thread because of MySql complaining
             // about nested transactions due to interference
             // with WCF service host.
-            _crawlThread.Start();
             Console.WriteLine("Crawl started. Press Ctrl+C to exit...");
-        }
-
-        private void OnCancelKeyPress(object sender, ConsoleCancelEventArgs e)
-        {
-        }
-
-        private void HostRemoteControlService()
-        {
         }
 
         public class Options
         {
-            private bool _hostRemoteControlService = true;
-
-            public bool HostRemoteControlService
-            {
-                get { return _hostRemoteControlService; }
-                set { _hostRemoteControlService = value; }
-            }
-
             public bool SkipIngesters { get; set; }
 
             public bool SkipPollers { get; set; }
