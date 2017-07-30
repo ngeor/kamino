@@ -48,8 +48,6 @@
     <Content Include="Admin\CacheManager.aspx" />
     <Content Include="Admin\Default.aspx" />
     <Content Include="Admin\PollHistory.aspx" />
-    <Content Include="Admin\TestPage.aspx" />
-    <Content Include="api\CrawlerEvents.svc" />
     <Content Include="App_Data\BuzzStats.sdf" />
     <Content Include="Charts.aspx" />
     <Content Include="css\app.css" />
@@ -64,7 +62,6 @@
     <Content Include="js\app\ReadService.js" />
     <Content Include="js\app\Users.js" />
     <Content Include="js\app\jquery.ui.datepicker-el.js" />
-    <Content Include="api\CrawlerEventsJs.ashx" />
     <Content Include="App_Data\BuzzStats.sqlite" />
     <Content Include="Login.aspx" />
     <Content Include="User.aspx" />
@@ -83,7 +80,6 @@
     </Content>
     <Content Include="Default.aspx" />
     <Content Include="MasterPage.master" />
-    <Content Include="api\ConsoleService.asmx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="About.aspx.cs">
@@ -121,21 +117,6 @@
     <Compile Include="Admin\PollHistory.aspx.designer.cs">
       <DependentUpon>PollHistory.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Admin\TestPage.aspx.cs">
-      <DependentUpon>TestPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Admin\TestPage.aspx.designer.cs">
-      <DependentUpon>TestPage.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="api\CrawlerEvents.svc.cs">
-      <DependentUpon>CrawlerEvents.svc</DependentUpon>
-    </Compile>
-    <Compile Include="api\CrawlerEventsJs.ashx.cs">
-      <DependentUpon>CrawlerEventsJs.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="api\ICrawlerEvents.cs" />
-    <Compile Include="api\StoryCheckedEventArgs.cs" />
     <Compile Include="App_GlobalResources\GlobalStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -153,7 +134,6 @@
     <Compile Include="Charts.aspx.designer.cs">
       <DependentUpon>Charts.aspx</DependentUpon>
     </Compile>
-    <Compile Include="DataSources\UserStatsDataSource.cs" />
     <Compile Include="Error404.aspx.cs">
       <DependentUpon>Error404.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -240,10 +220,6 @@
     </Compile>
     <Compile Include="Users.aspx.designer.cs">
       <DependentUpon>Users.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="api\ConsoleService.asmx.cs">
-      <DependentUpon>ConsoleService.asmx</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
   <PropertyGroup>

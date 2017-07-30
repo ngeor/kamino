@@ -68,8 +68,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiServices\ApiService.cs" />
-    <Compile Include="ApiServices\CachedApiService.cs" />
-    <Compile Include="ApiServices\LoggingApiServiceDecorator.cs" />
     <Compile Include="Boot\CommonRegistry.cs" />
     <Compile Include="Boot\Crawler\Application.cs" />
     <Compile Include="Boot\Crawler\CrawlerRegistry.cs" />

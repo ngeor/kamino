@@ -34,11 +34,6 @@ namespace BuzzStats.Web
             }
         }
 
-        public User()
-        {
-            ApiService = new ConsoleService();
-        }
-
         public IApiService ApiService { get; set; }
 
         private string StoryUrl(int storyId, int commentId)

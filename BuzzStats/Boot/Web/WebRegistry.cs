@@ -37,19 +37,8 @@ namespace BuzzStats.Boot.Web
                 .Named("uncached");
 
             For<IApiService>()
-                .Add<WebClientApiService>()
-                .Ctor<IApiService>().Is(ctx => ctx.GetInstance<IApiService>("uncached"))
-                .Named("webapi-uncached");
-
-            For<IApiService>()
-                .Add<CachedApiService>()
-                .Ctor<IFactory<IApiService>>().Is(
-                    ctx => new ResolverFactory<IApiService>("webapi-uncached"))
-                .Named("cached");
-
-            For<IApiService>()
-                .Use<LoggingApiServiceDecorator>()
-                .Ctor<IApiService>().Is(ctx => ctx.GetInstance<IApiService>("cached"));
+                .Use<WebClientApiService>()
+                .Ctor<IApiService>().Is(ctx => ctx.GetInstance<IApiService>("uncached"));
 
             For<IDbSession>().Use(ctx => ctx.GetInstance<IDbContext>().OpenSession());
             For<IFormsAuthentication>().Singleton().Use<FormsAuthenticationWrapper>();
