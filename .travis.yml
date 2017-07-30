@@ -5,7 +5,7 @@ install:
 - nvm use node
 - npm install -g gulp-cli
 - nuget restore BuzzStats.sln
-- cd BuzzStats.WebApi && npm install
+- cd BuzzStats.WebApi && npm install && cd ..
 script:
 - xbuild /p:Configuration=Debug BuzzStats.sln
-- cd BuzzStats.WebApi && gulp
+- cd BuzzStats.WebApi && gulp && cd ..
