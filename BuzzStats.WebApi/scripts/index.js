@@ -10,7 +10,7 @@ const sampleData = [
         comments: [
             {
                 commentId: 10,
-                user: 'user 1',
+                username: 'user 1',
                 votesUp: 1
             }
         ]
@@ -21,12 +21,12 @@ const sampleData = [
         comments: [
             {
                 commentId: 20,
-                user: 'user 2',
+                username: 'user 2',
                 votesUp: 2
             },
             {
                 commentId: 21,
-                user: 'user 3',
+                username: 'user 3',
                 votesUp: 1
             }
         ]

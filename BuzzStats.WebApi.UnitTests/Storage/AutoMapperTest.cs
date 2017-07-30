@@ -28,9 +28,12 @@ namespace BuzzStats.WebApi.UnitTests.Storage
             CommentEntity commentEntity = new CommentEntity
             {
                 CommentId = 42,
+                Username = "user",
+                VotesUp = 1,
                 Story = new StoryEntity
                 {
-                    StoryId = 10
+                    StoryId = 10,
+                    Title = "story title"
                 }
             };
 
@@ -38,6 +41,9 @@ namespace BuzzStats.WebApi.UnitTests.Storage
             Assert.IsNotNull(commentWithStory);
             Assert.AreEqual(42, commentWithStory.CommentId);
             Assert.AreEqual(10, commentWithStory.StoryId);
+            Assert.AreEqual("user", commentWithStory.Username);
+            Assert.AreEqual("story title", commentWithStory.Title);
+            Assert.AreEqual(1, commentWithStory.VotesUp);
         }
 
         [Test]

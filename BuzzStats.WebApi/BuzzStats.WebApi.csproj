@@ -116,7 +116,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="RecentCommentsController.cs" />
     <Compile Include="Storage\AutoMapperProfile.cs" />
     <Compile Include="Storage\ClassMaps\CommentMap.cs" />
     <Compile Include="Storage\ClassMaps\StoryMap.cs" />
@@ -141,6 +140,7 @@
     <Compile Include="Storage\StoryUpdater.cs" />
     <Compile Include="Storage\StoryVoteUpdater.cs" />
     <Compile Include="Storage\Updater.cs" />
+    <Compile Include="Web\RecentCommentsController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -193,6 +193,8 @@
     <Content Include="scripts\RecentComments.js" />
     <Content Include="scripts\StoryBlock.js" />
     <Content Include="styles\app.less" />
+    <Content Include="styles\common.less" />
+    <Content Include="styles\recent-comments.less" />
     <Content Include="templates\about.pug" />
     <Content Include="templates\graphs.pug" />
     <Content Include="templates\index.pug" />

@@ -1,4 +1,5 @@
-﻿using BuzzStats.WebApi.Storage.Entities;
+﻿using System.Collections.Generic;
+using BuzzStats.WebApi.Storage.Entities;
 using BuzzStats.WebApi.Storage.Repositories;
 using BuzzStats.WebApi.UnitTests.Storage.TestHelpers;
 using Moq;
@@ -40,6 +41,22 @@ namespace BuzzStats.WebApi.UnitTests.Storage.Repositories
             
             // assert
             Assert.AreEqual(commentEntity, actualCommentEntity);
+        }
+
+        [Test]
+        public void GetRecent()
+        {
+            // arrange
+            var comments = new List<CommentEntity>();
+            _mockCommentCriteria.SetupOrderDesc("CreatedAt");
+            _mockCommentCriteria.Setup(c => c.SetMaxResults(20)).Returns(_mockCommentCriteria.Object);
+            _mockCommentCriteria.Setup(c => c.List<CommentEntity>()).Returns(comments);
+            
+            // act
+            var result = _commentRepository.GetRecent(_mockSession.Object);
+            
+            // assert
+            Assert.AreEqual(comments, result);
         }
     }
 }

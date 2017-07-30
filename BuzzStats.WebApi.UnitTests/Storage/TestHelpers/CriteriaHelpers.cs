@@ -16,5 +16,11 @@ namespace BuzzStats.WebApi.UnitTests.Storage.TestHelpers
             mockCriteria.Setup(c => c.Add(It.Is<ICriterion>(crit => crit.ToString() == Restrictions.Eq(fieldName, value).ToString())))
                 .Returns(mockCriteria.Object);
         }
+
+        public static void SetupOrderDesc(this Mock<ICriteria> mockCriteria, string fieldName)
+        {
+            mockCriteria.Setup(c => c.AddOrder(It.Is<Order>(o => o.ToString() == Order.Desc(fieldName).ToString())))
+                .Returns(mockCriteria.Object);
+        }
     }
 }

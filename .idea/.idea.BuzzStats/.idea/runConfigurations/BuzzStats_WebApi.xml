@@ -9,6 +9,17 @@
     <option name="USE_MONO" value="0" />
     <option name="USE_EXTERNAL_CONSOLE" value="0" />
     <envs />
-    <method />
+    <method>
+      <option name="GulpBeforeRunTask" enabled="true">
+        <node-interpreter>project</node-interpreter>
+        <node-options />
+        <gulpfile>$PROJECT_DIR$/BuzzStats.WebApi/gulpfile.js</gulpfile>
+        <tasks>
+          <task>default</task>
+        </tasks>
+        <arguments />
+        <envs />
+      </option>
+    </method>
   </configuration>
 </component>
