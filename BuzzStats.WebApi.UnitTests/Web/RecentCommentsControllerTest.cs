@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using AutoMapper;
 using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.Storage;
 using BuzzStats.WebApi.Web;
@@ -10,14 +12,16 @@ namespace BuzzStats.WebApi.UnitTests.Web
     [TestFixture]
     public class RecentCommentsControllerTest
     {
-        private RecentCommentsController _recentCommentsController;
         private Mock<IStorageClient> _mockStorageClient;
+        private Mock<IMapper> _mockMapper;
+        private RecentCommentsController _recentCommentsController;
 
         [SetUp]
         public void SetUp()
         {
             _mockStorageClient = new Mock<IStorageClient>();
-            _recentCommentsController = new RecentCommentsController(_mockStorageClient.Object);
+            _mockMapper = new Mock<IMapper>();
+            _recentCommentsController = new RecentCommentsController(_mockStorageClient.Object, _mockMapper.Object);
         }
 
         [Test]
@@ -33,7 +37,8 @@ namespace BuzzStats.WebApi.UnitTests.Web
                         StoryId = 1,
                         Title = "first story",
                         Username = "first user",
-                        VotesUp = 5
+                        VotesUp = 5,
+                        CreatedAt = new DateTime(2017, 7, 30)
                     },
                     new CommentWithStory
                     {
@@ -51,10 +56,17 @@ namespace BuzzStats.WebApi.UnitTests.Web
                         StoryId = 1
                     }
                 });
-            
+
+            _mockMapper.Setup(m => m.Map<RecentComment>(It.IsAny<CommentWithStory>()))
+                .Returns<CommentWithStory>(c => new RecentComment
+                {
+                    CommentId = c.CommentId,
+                    Username = "user " + c.CommentId
+                });
+
             // act
             var storyWithRecentComments = _recentCommentsController.Get();
-            
+
             // assert
             var expected = new[]
             {
@@ -67,16 +79,17 @@ namespace BuzzStats.WebApi.UnitTests.Web
                         new RecentComment
                         {
                             CommentId = 12,
-                            Username = "first user",
-                            VotesUp = 5
+                            Username = "user 12"
                         },
                         new RecentComment
                         {
-                            CommentId = 13
+                            CommentId = 13,
+                            Username = "user 13"
                         },
                         new RecentComment
                         {
-                            CommentId = 15
+                            CommentId = 15,
+                            Username = "user 15"
                         }
                     }
                 },
@@ -87,12 +100,13 @@ namespace BuzzStats.WebApi.UnitTests.Web
                     {
                         new RecentComment
                         {
-                            CommentId = 24
+                            CommentId = 24,
+                            Username = "user 24"
                         }
                     }
                 }
             };
-            
+
             CollectionAssert.AreEqual(expected, storyWithRecentComments);
         }
     }

@@ -7,6 +7,7 @@ var eslint = require('gulp-eslint');
 var webpack = require('webpack');
 var webpackStream = require('webpack-stream');
 var webpackConfig = require('./webpack.config.js');
+var mocha = require('gulp-mocha');
 
 var fs = require('fs');
 var path = require('path');
@@ -15,7 +16,7 @@ var packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
 var version = packageJson.version;
 
 gulp.task('clean', function() {
-    return gulp.src('bin/Debug', { read: false })
+    return gulp.src('bin/Debug', {read: false})
         .pipe(clean());
 });
 
@@ -54,10 +55,18 @@ gulp.task('eslint', function() {
         .pipe(eslint.failAfterError());
 });
 
+gulp.task('mocha', function() {
+    return gulp.src('scripts/*test.js', {read: false})
+        .pipe(mocha({
+            reporter: 'min',
+            compilers: 'js:babel-core/register'
+        }));
+});
+
 gulp.task('watch', function() {
     gulp.watch('templates/*.pug', ['html']);
     gulp.watch('styles/*.less', ['css']);
-    gulp.watch('scripts/*.js', ['eslint', 'webpack']);
+    gulp.watch('scripts/*.js', ['eslint', 'webpack', 'mocha']);
 });
 
-gulp.task('default', ['html', 'css', 'eslint', 'webpack']);
+gulp.task('default', ['html', 'css', 'eslint', 'webpack', 'mocha']);

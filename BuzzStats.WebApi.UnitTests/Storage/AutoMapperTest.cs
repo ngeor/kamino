@@ -25,11 +25,13 @@ namespace BuzzStats.WebApi.UnitTests.Storage
         [Test]
         public void MapCommentEntityToCommentWithStory()
         {
+            // arrange
             CommentEntity commentEntity = new CommentEntity
             {
                 CommentId = 42,
                 Username = "user",
                 VotesUp = 1,
+                CreatedAt = new DateTime(2017, 7, 30),
                 Story = new StoryEntity
                 {
                     StoryId = 10,
@@ -37,29 +39,62 @@ namespace BuzzStats.WebApi.UnitTests.Storage
                 }
             };
 
+            // act
             CommentWithStory commentWithStory = _mapper.Map<CommentWithStory>(commentEntity);
+            
+            // assert
             Assert.IsNotNull(commentWithStory);
             Assert.AreEqual(42, commentWithStory.CommentId);
             Assert.AreEqual(10, commentWithStory.StoryId);
             Assert.AreEqual("user", commentWithStory.Username);
             Assert.AreEqual("story title", commentWithStory.Title);
             Assert.AreEqual(1, commentWithStory.VotesUp);
+            Assert.AreEqual(new DateTime(2017, 7, 30), commentWithStory.CreatedAt);
         }
 
         [Test]
         public void MapCommentEntityToCommentWithStory_WithNullStory()
         {
+            // arrange
             CommentEntity commentEntity = new CommentEntity
             {
                 CommentId = 42
             };
 
+            // act
             CommentWithStory commentWithStory = _mapper.Map<CommentWithStory>(commentEntity);
+            
+            // assert
             Assert.IsNotNull(commentWithStory);
             Assert.AreEqual(42, commentWithStory.CommentId);
             Assert.AreEqual(0, commentWithStory.StoryId);
         }
 
+        [Test]
+        public void MapCommentWithStoryToRecentComment()
+        {
+            // arrange
+            CommentWithStory commentWithStory = new CommentWithStory
+            {
+                CommentId = 42,
+                CreatedAt = new DateTime(2017, 7, 30),
+                StoryId = 1,
+                Title = "Story title",
+                Username = "username",
+                VotesUp = 1
+            };
+
+            // act
+            RecentComment recentComment = _mapper.Map<RecentComment>(commentWithStory);
+ 
+            // assert
+            Assert.IsNotNull(recentComment);
+            Assert.AreEqual(42, recentComment.CommentId);
+            Assert.AreEqual(new DateTime(2017, 7, 30), recentComment.CreatedAt);
+            Assert.AreEqual("username", recentComment.Username);
+            Assert.AreEqual(1, recentComment.VotesUp);
+        }
+        
         [Test]
         public void MapStoryToStoryEntity()
         {

@@ -189,6 +189,8 @@
     <Content Include="package.json" />
     <Content Include="scripts\ajax.js" />
     <Content Include="scripts\Comment.js" />
+    <Content Include="scripts\date.js" />
+    <Content Include="scripts\date_test.js" />
     <Content Include="scripts\index.js" />
     <Content Include="scripts\RecentComments.js" />
     <Content Include="scripts\StoryBlock.js" />

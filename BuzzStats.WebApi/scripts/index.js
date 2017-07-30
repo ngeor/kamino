@@ -11,7 +11,8 @@ const sampleData = [
             {
                 commentId: 10,
                 username: 'user 1',
-                votesUp: 1
+                votesUp: 1,
+                createdAt: '2017-04-21T18:29:56'
             }
         ]
     },
@@ -22,12 +23,14 @@ const sampleData = [
             {
                 commentId: 20,
                 username: 'user 2',
-                votesUp: 2
+                votesUp: 2,
+                createdAt: '2017-04-20T08:19:26'
             },
             {
                 commentId: 21,
                 username: 'user 3',
-                votesUp: 1
+                votesUp: 1,
+                createdAt: '2017-03-10T12:00:01'
             }
         ]
     }

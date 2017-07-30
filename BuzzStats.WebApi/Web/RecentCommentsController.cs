@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using AutoMapper;
 using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.Storage;
 
@@ -9,10 +10,12 @@ namespace BuzzStats.WebApi.Web
     public class RecentCommentsController : ApiController
     {
         private readonly IStorageClient _storageClient;
+        private readonly IMapper _mapper;
 
-        public RecentCommentsController(IStorageClient storageClient)
+        public RecentCommentsController(IStorageClient storageClient, IMapper mapper)
         {
             _storageClient = storageClient;
+            _mapper = mapper;
         }
 
         // GET api/recentcomments 
@@ -24,12 +27,7 @@ namespace BuzzStats.WebApi.Web
             {
                 StoryId = g.Key,
                 Title = g.First().Title,
-                Comments = g.Select(c => new RecentComment
-                {
-                    CommentId = c.CommentId,
-                    Username = c.Username,
-                    VotesUp = c.VotesUp
-                }).ToArray()
+                Comments = g.Select(c => _mapper.Map<RecentComment>(c)).ToArray()
             });
         }
     }

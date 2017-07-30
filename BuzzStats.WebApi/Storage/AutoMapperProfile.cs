@@ -14,6 +14,8 @@ namespace BuzzStats.WebApi.Storage
 
             CreateMap<Story, StoryEntity>()
                 .ForMember(d => d.Id, opt => opt.Ignore());
+
+            CreateMap<CommentWithStory, RecentComment>();
         }
     }
 }

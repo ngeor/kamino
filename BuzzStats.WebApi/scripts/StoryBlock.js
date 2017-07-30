@@ -9,6 +9,7 @@ export default class extends React.Component {
                 <thead>
                     <tr>
                         <th>User</th>
+                        <th>Created At</th>
                         <th>Votes</th>
                     </tr>
                 </thead>

@@ -1,4 +1,6 @@
-﻿namespace BuzzStats.WebApi.DTOs
+﻿using System;
+
+namespace BuzzStats.WebApi.DTOs
 {
     public class CommentWithStory
     {
@@ -7,5 +9,6 @@
         public string Title { get; set; }
         public string Username { get; set; }
         public int VotesUp { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }
