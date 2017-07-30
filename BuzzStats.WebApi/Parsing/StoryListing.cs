@@ -3,6 +3,8 @@
     public enum StoryListing
     {
         Home,
-        Upcoming
+        Upcoming,
+        EnglishUpcoming,
+        Tech
     }
 }

@@ -18,8 +18,8 @@ namespace BuzzStats.WebApi.UnitTests.Crawl
         [SetUp]
         public void SetUp()
         {
-            _mockParserClient = new Mock<IParserClient>();
-            _mockStorageClient = new Mock<IStorageClient>();
+            _mockParserClient = new Mock<IParserClient>(MockBehavior.Strict);
+            _mockStorageClient = new Mock<IStorageClient>(MockBehavior.Strict);
             _listingTask = new ListingTask(_mockParserClient.Object, _mockStorageClient.Object);
         }
 
@@ -27,7 +27,7 @@ namespace BuzzStats.WebApi.UnitTests.Crawl
         public async Task RunOnce_DownloadsHomeStoriesAndPersistsThem()
         {
             // arrange
-            _mockParserClient.Setup(c => c.Home()).ReturnsAsync(new[]
+            _mockParserClient.Setup(c => c.Listing(StoryListing.Home, 2)).ReturnsAsync(new[]
             {
                 new StoryListingSummary
                 {
@@ -43,7 +43,7 @@ namespace BuzzStats.WebApi.UnitTests.Crawl
             });
 
             // act
-            await _listingTask.RunOnce();
+            await _listingTask.RunOnce(StoryListing.Home, 2);
 
             // assert
             _mockStorageClient.Verify(c => c.Save(It.Is<Story>(s => s.StoryId == 42)));

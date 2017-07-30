@@ -26,7 +26,7 @@ namespace BuzzStats.WebApi.Storage
             IList<StoryVoteEntity> newStoryVotes = _storyMapper.ToStoryVoteEntities(story, storyEntity);
             foreach (var storyVoteEntity in newStoryVotes)
             {
-                Log.InfoFormat("Saving vote {0} on story {1}", storyVoteEntity.Username, story.StoryId);
+                Log.DebugFormat("Saving vote {0} on story {1}", storyVoteEntity.Username, story.StoryId);
                 if (existingStoryVotes.All(e => e.Username != storyVoteEntity.Username))
                 {
                     session.Save(storyVoteEntity);
@@ -34,13 +34,13 @@ namespace BuzzStats.WebApi.Storage
                 }
                 else
                 {
-                    Log.InfoFormat("Already existed");
+                    Log.DebugFormat("Already existed");
                 }
             }
 
             foreach (var existingStoryVote in existingStoryVotes)
             {
-                Log.InfoFormat("Examining existing vote {0} on story {1}", existingStoryVote.Username, story.StoryId);
+                Log.DebugFormat("Examining existing vote {0} on story {1}", existingStoryVote.Username, story.StoryId);
                 if (newStoryVotes.All(e => e.Username != existingStoryVote.Username))
                 {
                     session.Delete(existingStoryVote);
@@ -48,7 +48,7 @@ namespace BuzzStats.WebApi.Storage
                 }
                 else
                 {
-                    Log.InfoFormat("Vote still exists");
+                    Log.DebugFormat("Vote still exists");
                 }
             }
         }

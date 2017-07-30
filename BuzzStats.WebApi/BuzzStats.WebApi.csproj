@@ -109,10 +109,12 @@
     <Compile Include="IoC\StructureMapContainerBuilder.cs" />
     <Compile Include="IoC\StructureMapDependencyResolver.cs" />
     <Compile Include="Parsing\IParserClient.cs" />
+    <Compile Include="Parsing\IUrlProvider.cs" />
     <Compile Include="Parsing\Parser.cs" />
     <Compile Include="Parsing\ParserClient.cs" />
     <Compile Include="Parsing\ParserFailedException.cs" />
     <Compile Include="Parsing\StoryListing.cs" />
+    <Compile Include="Parsing\UrlProvider.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

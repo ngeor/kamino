@@ -23,6 +23,9 @@ namespace BuzzStats.WebApi.IoC
                 // settings
                 x.For<IAppSettings>().Use(() => AppSettingsFactory.DefaultWithEnvironmentOverride());
                 
+                // parsing
+                x.For<IUrlProvider>().Use<UrlProvider>();
+                
                 // clients
                 x.For<IParserClient>().Use<ParserClient>();
                 x.For<IStorageClient>().Use<StorageClient>();

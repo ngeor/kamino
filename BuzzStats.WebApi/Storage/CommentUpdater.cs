@@ -20,7 +20,7 @@ namespace BuzzStats.WebApi.Storage
 
         public void SaveComments(ISession session, Story story, StoryEntity storyEntity)
         {
-            Log.InfoFormat("SaveComments of story {0}", story.StoryId);
+            Log.DebugFormat("SaveComments of story {0}", story.StoryId);
             SaveComments(session, storyEntity, story.Comments, null);
         }
 

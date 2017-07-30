@@ -2,6 +2,7 @@
 using System.Threading;
 using BuzzStats.WebApi.Crawl;
 using BuzzStats.WebApi.IoC;
+using BuzzStats.WebApi.Parsing;
 using log4net;
 using Microsoft.Owin.Hosting;
 using NGSoftware.Common.Configuration;
@@ -25,8 +26,17 @@ namespace BuzzStats.WebApi
             // Start OWIN host 
             using (WebApp.Start<Startup>(url: baseAddress))
             {
+                int page = 0;
                 Log.InfoFormat("Server listening at {0}", baseAddress);
-                TaskLoop.RunForEver(() => listingTask.RunOnce());
+                TaskLoop.RunForEver(async () =>
+                {
+                    foreach (StoryListing storyListing in Enum.GetValues(typeof(StoryListing)))
+                    {
+                        await listingTask.RunOnce(storyListing, page);
+                    }
+
+                    page++;
+                });
 
                 if (!Console.IsInputRedirected)
                 {

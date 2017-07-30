@@ -20,18 +20,19 @@ namespace BuzzStats.WebApi.Crawl
             _storageClient = storageClient;
         }
 
-        public async Task RunOnce()
+        public async Task RunOnce(StoryListing storyListing, int page)
         {
-            Log.Info("Begin task");
+            Log.InfoFormat("Begin task for story listing {0}, page {1}", storyListing, page);
             try
             {
-                // TODO crawl other pages too
                 // TODO crawl stories to see if they have changed (perhaps on a separate microservice)
-                var storyListingSummaries = (await _parserClient.Home()).ToArray();
+                var storyListingSummaries = (await _parserClient.Listing(storyListing, page)).ToArray();
                 Log.InfoFormat("Received {0} stories", storyListingSummaries.Length);
 
                 foreach (var storyListingSummary in storyListingSummaries)
                 {
+                    // TODO instead of direct processing, message that these stories
+                    // need to be processed. That receiving queue should de-dupe stories.
                     await ProcessStory(storyListingSummary);
                 }
             }

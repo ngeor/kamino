@@ -4,40 +4,24 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using BuzzStats.WebApi.DTOs;
 using log4net;
-using NGSoftware.Common.Configuration;
 
 namespace BuzzStats.WebApi.Parsing
 {
     public class ParserClient : IParserClient
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(ParserClient));
-        private readonly IAppSettings _appSettings;
+        private readonly IUrlProvider _urlProvider;
 
-        public ParserClient(IAppSettings appSettings)
+        public ParserClient(IUrlProvider urlProvider)
         {
-            _appSettings = appSettings;
+            _urlProvider = urlProvider;
         }
 
-        public virtual async Task<IEnumerable<StoryListingSummary>> Home()
+        public virtual async Task<IEnumerable<StoryListingSummary>> Listing(StoryListing storyListing, int page)
         {
             Parser parser = new Parser();
             HttpClient client = new HttpClient();
-            string path;
-            var id = StoryListing.Home;
-            switch (id)
-            {
-                case StoryListing.Home:
-                    path = "";
-                    break;
-                case StoryListing.Upcoming:
-                    path = "upcoming.php";
-                    break;
-                default:
-                    path = "";
-                    break;
-            }
-
-            var requestUri = _appSettings["BuzzServerUrl"] + path;
+            var requestUri = _urlProvider.ListingUrl(storyListing, page);
             Log.InfoFormat("Calling {0}", requestUri);
             try
             {
@@ -55,10 +39,9 @@ namespace BuzzStats.WebApi.Parsing
         {
             Parser parser = new Parser();
             HttpClient client = new HttpClient();
-            var requestUri = _appSettings["BuzzServerUrl"] + "story.php?id=" + storyId;
+            var requestUri = _urlProvider.StoryUrl(storyId);
             Log.InfoFormat("Calling {0}", requestUri);
-            string storyPageContents =
-                await client.GetStringAsync(requestUri);
+            string storyPageContents = await client.GetStringAsync(requestUri);
             return parser.ParseStoryPage(storyPageContents, storyId);
         }
     }
