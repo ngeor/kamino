@@ -72,7 +72,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Crawl\AsyncQueueTest.cs" />
     <Compile Include="Crawl\ListingTaskTest.cs" />
+    <Compile Include="Crawl\StoryProcessTaskTest.cs" />
+    <Compile Include="Crawl\StoryProcessTopicTest.cs" />
     <Compile Include="Parsing\ParserTest.cs" />
     <Compile Include="Parsing\ResourceLoader.cs" />
     <Compile Include="Parsing\UrlProviderTest.cs" />

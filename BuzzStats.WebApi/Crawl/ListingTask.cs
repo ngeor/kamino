@@ -1,9 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.Parsing;
-using BuzzStats.WebApi.Storage;
 using log4net;
 
 namespace BuzzStats.WebApi.Crawl
@@ -12,12 +10,12 @@ namespace BuzzStats.WebApi.Crawl
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(ListingTask));
         private readonly IParserClient _parserClient;
-        private readonly IStorageClient _storageClient;
+        private readonly IStoryProcessTopic _storyProcessTopic;
 
-        public ListingTask(IParserClient parserClient, IStorageClient storageClient)
+        public ListingTask(IParserClient parserClient, IStoryProcessTopic storyProcessTopic)
         {
             _parserClient = parserClient;
-            _storageClient = storageClient;
+            _storyProcessTopic = storyProcessTopic;
         }
 
         public async Task RunOnce(StoryListing storyListing, int page)
@@ -31,25 +29,14 @@ namespace BuzzStats.WebApi.Crawl
 
                 foreach (var storyListingSummary in storyListingSummaries)
                 {
-                    // TODO instead of direct processing, message that these stories
-                    // need to be processed. That receiving queue should de-dupe stories.
-                    await ProcessStory(storyListingSummary);
+                    // TODO The receiving queue should de-dupe stories.
+                    _storyProcessTopic.Post(storyListingSummary);
                 }
             }
             catch (Exception ex)
             {
                 Log.Error(ex.Message, ex);
             }
-        }
-
-        private async Task<Story> ProcessStory(StoryListingSummary storyListingSummary)
-        {
-            var storyId = storyListingSummary.StoryId;
-            Log.InfoFormat("Getting story id {0}", storyId);
-            var parsedStory = await _parserClient.Story(storyId);
-            Log.InfoFormat("Parsed story {0}", parsedStory.Title);
-            _storageClient.Save(parsedStory);
-            return parsedStory;
         }
     }
 }

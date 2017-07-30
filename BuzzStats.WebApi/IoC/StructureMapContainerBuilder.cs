@@ -1,4 +1,7 @@
+using System;
 using AutoMapper;
+using BuzzStats.WebApi.Crawl;
+using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.Parsing;
 using BuzzStats.WebApi.Storage;
 using NGSoftware.Common.Configuration;
@@ -25,6 +28,13 @@ namespace BuzzStats.WebApi.IoC
                 
                 // parsing
                 x.For<IUrlProvider>().Use<UrlProvider>();
+                
+                // crawl
+                x.For<IAsyncQueue<StoryListingSummary>>()
+                    .Use(() => new AsyncQueue<StoryListingSummary>(TimeSpan.FromMinutes(1)))
+                    .Singleton();
+
+                x.For<IStoryProcessTopic>().Use<StoryProcessTopic>();
                 
                 // clients
                 x.For<IParserClient>().Use<ParserClient>();

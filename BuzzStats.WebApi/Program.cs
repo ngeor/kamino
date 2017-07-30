@@ -19,24 +19,15 @@ namespace BuzzStats.WebApi
             IAppSettings appSettings = AppSettingsFactory.DefaultWithEnvironmentOverride();
             string baseAddress = appSettings["WebApiUrl"];
 
-            ListingTask listingTask = ContainerHolder.Container.GetInstance<ListingTask>();
-
             Console.CancelKeyPress += (sender, eventArgs) => done.Set();
             
             // Start OWIN host 
             using (WebApp.Start<Startup>(url: baseAddress))
             {
-                int page = 0;
                 Log.InfoFormat("Server listening at {0}", baseAddress);
-                TaskLoop.RunForEver(async () =>
-                {
-                    foreach (StoryListing storyListing in Enum.GetValues(typeof(StoryListing)))
-                    {
-                        await listingTask.RunOnce(storyListing, page);
-                    }
 
-                    page++;
-                });
+                RunListingTasks();
+                RunStoryProcessTask();
 
                 if (!Console.IsInputRedirected)
                 {
@@ -47,6 +38,32 @@ namespace BuzzStats.WebApi
                 done.Wait();
                 Log.Info("Server exiting");
             }
+        }
+
+        private static void RunListingTasks()
+        {
+            ListingTask listingTask = ContainerHolder.Container.GetInstance<ListingTask>();
+            int page = 0;
+            TaskLoop.RunForEver(async () =>
+            {
+                // TODO: when the story processor queue is full, stop
+                // TODO: when the story processor reports updates, start over from page 0
+                foreach (StoryListing storyListing in Enum.GetValues(typeof(StoryListing)))
+                {
+                    await listingTask.RunOnce(storyListing, page);
+                }
+
+                page++;
+            });
+        }
+
+        private static void RunStoryProcessTask()
+        {
+            StoryProcessTask storyProcessTask = ContainerHolder.Container.GetInstance<StoryProcessTask>();
+            TaskLoop.RunForEver(async () =>
+            {
+                await storyProcessTask.RunOnce();
+            });
         }
     }
 }

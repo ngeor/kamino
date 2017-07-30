@@ -97,7 +97,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Crawl\AsyncQueue.cs" />
+    <Compile Include="Crawl\IAsyncQueue.cs" />
+    <Compile Include="Crawl\IStoryProcessTopic.cs" />
     <Compile Include="Crawl\ListingTask.cs" />
+    <Compile Include="Crawl\StoryProcessTask.cs" />
+    <Compile Include="Crawl\StoryProcessTopic.cs" />
     <Compile Include="Crawl\TaskLoop.cs" />
     <Compile Include="DTOs\Comment.cs" />
     <Compile Include="DTOs\CommentWithStory.cs" />
