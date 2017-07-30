@@ -1,7 +1,10 @@
 language: csharp
 solution: BuzzStats.sln
 install:
-  - nvm install node
-  - nvm use node
-  - npm install -g gulp-cli
-  - nuget restore BuzzStats.sln
+- nvm install node
+- nvm use node
+- npm install -g gulp-cli
+- nuget restore BuzzStats.sln
+script:
+- xbuild /p:Configuration=Release BuzzStats.sln
+- cd BuzzStats.WebApi && gulp
