@@ -1,9 +1,7 @@
 ﻿using System.Web.Http;
 using BuzzStats.WebApi.IoC;
-using BuzzStats.WebApi.Storage;
 using Newtonsoft.Json.Serialization;
 using Owin;
-using StructureMap;
 
 namespace BuzzStats.WebApi
 {
@@ -30,7 +28,5 @@ namespace BuzzStats.WebApi
             appBuilder.UseWebApi(config);
             appBuilder.UseFileServer();
         }
-
-        private IContainer CreateContainer() => new StructureMapContainerBuilder().Create();
     }
 }

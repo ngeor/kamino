@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Web.Http;
 using AutoMapper;
 using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.Storage.Repositories;
@@ -39,7 +37,7 @@ namespace BuzzStats.WebApi.Storage
 
             if (!IsInputValid(story))
             {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                throw new ArgumentException();
             }
 
             try
@@ -52,7 +50,7 @@ namespace BuzzStats.WebApi.Storage
             catch (Exception ex)
             {
                 Log.Error(ex.Message, ex);
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                throw;
             }
         }
 
