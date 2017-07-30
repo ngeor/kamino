@@ -1,6 +1,7 @@
 using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.Storage;
 using BuzzStats.WebApi.Storage.Entities;
+using BuzzStats.WebApi.UnitTests.TestHelpers;
 using Moq;
 using NHibernate;
 using NUnit.Framework;
@@ -10,25 +11,26 @@ namespace BuzzStats.WebApi.UnitTests.Storage
     [TestFixture]
     public class UpdaterTest
     {
+        [MockBehavior(MockBehavior.Strict)]
         private Mock<ISession> _mockSession;
+
+        [MockBehavior(MockBehavior.Strict)]
         private Mock<ITransaction> _mockTransaction;
+        
         private Mock<IStoryUpdater> _mockStoryUpdater;
         private Mock<IStoryVoteUpdater> _mockStoryVoteUpdater;
         private Mock<ICommentUpdater> _mockCommentUpdater;
+        
         private Updater _updater;
 
         [SetUp]
         public void SetUp()
         {
-            _mockTransaction = new Mock<ITransaction>(MockBehavior.Strict);
+            MockHelper.InjectMocks(this);
             _mockTransaction.Setup(t => t.Dispose());
             _mockTransaction.Setup(t => t.Commit());
-            _mockSession = new Mock<ISession>(MockBehavior.Strict);
             _mockSession.Setup(s => s.BeginTransaction()).Returns(_mockTransaction.Object);
-            _mockStoryUpdater = new Mock<IStoryUpdater>();
-            _mockStoryVoteUpdater = new Mock<IStoryVoteUpdater>();
-            _mockCommentUpdater = new Mock<ICommentUpdater>();
-            _updater = new Updater(_mockStoryUpdater.Object, _mockStoryVoteUpdater.Object, _mockCommentUpdater.Object);
+            _updater = MockHelper.Create<Updater>(this);
         }
 
         [Test]

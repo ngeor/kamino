@@ -5,6 +5,7 @@ using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.Parsing;
 using BuzzStats.WebApi.Storage;
 using NGSoftware.Common.Configuration;
+using NGSoftware.Common.Messaging;
 using NHibernate;
 using StructureMap;
 
@@ -50,6 +51,9 @@ namespace BuzzStats.WebApi.IoC
                 x.For<IMapper>().Use(ctx =>
                     new Mapper(ctx.GetInstance<MapperConfiguration>(), ctx.TryGetInstance)).Singleton();
                 x.For<MapperConfiguration>().Use(() => CreateMapperConfiguration()).Singleton();
+                
+                // other
+                x.For<IMessageBus>().Use<MessageBus>().Singleton();
             });
 
             return container;

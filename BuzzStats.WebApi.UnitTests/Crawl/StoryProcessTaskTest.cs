@@ -3,6 +3,7 @@ using BuzzStats.WebApi.Crawl;
 using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.Parsing;
 using BuzzStats.WebApi.Storage;
+using BuzzStats.WebApi.UnitTests.TestHelpers;
 using Moq;
 using NUnit.Framework;
 
@@ -19,10 +20,8 @@ namespace BuzzStats.WebApi.UnitTests.Crawl
         [SetUp]
         public void SetUp()
         {
-            _mockParserClient = new Mock<IParserClient>(MockBehavior.Strict);
-            _mockStorageClient = new Mock<IStorageClient>();
-            _mockQueue = new Mock<IAsyncQueue<StoryListingSummary>>();
-            _storyProcessTask = new StoryProcessTask(_mockParserClient.Object, _mockStorageClient.Object, _mockQueue.Object);
+            MockHelper.InjectMocks(this);
+            _storyProcessTask = MockHelper.Create<StoryProcessTask>(this);
         }
 
         [Test]

@@ -2,6 +2,7 @@
 using BuzzStats.WebApi.Crawl;
 using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.Parsing;
+using BuzzStats.WebApi.UnitTests.TestHelpers;
 using Moq;
 using NUnit.Framework;
 
@@ -17,9 +18,8 @@ namespace BuzzStats.WebApi.UnitTests.Crawl
         [SetUp]
         public void SetUp()
         {
-            _mockParserClient = new Mock<IParserClient>(MockBehavior.Strict);
-            _mockStoryProcessTopic = new Mock<IStoryProcessTopic>(MockBehavior.Strict);
-            _listingTask = new ListingTask(_mockParserClient.Object, _mockStoryProcessTopic.Object);
+            MockHelper.InjectMocks(this);
+            _listingTask = MockHelper.Create<ListingTask>(this);
         }
 
         [Test]

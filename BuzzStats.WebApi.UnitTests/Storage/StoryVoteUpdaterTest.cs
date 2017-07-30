@@ -3,7 +3,9 @@ using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.Storage;
 using BuzzStats.WebApi.Storage.Entities;
 using BuzzStats.WebApi.Storage.Repositories;
+using BuzzStats.WebApi.UnitTests.TestHelpers;
 using Moq;
+using NGSoftware.Common.Messaging;
 using NHibernate;
 using NUnit.Framework;
 
@@ -14,16 +16,18 @@ namespace BuzzStats.WebApi.UnitTests.Storage
     {
         private Mock<ISession> _mockSession;
         private Mock<StoryMapper> _mockStoryMapper;
+        private Mock<IMessageBus> _mockMessageBus;
+        
+        [MockBehavior(MockBehavior.Strict)]
         private Mock<StoryVoteRepository> _mockStoryVoteRepository;
+        
         private StoryVoteUpdater _storyVoteUpdater;
 
         [SetUp]
         public void SetUp()
         {
-            _mockSession = new Mock<ISession>();
-            _mockStoryMapper = new Mock<StoryMapper>();
-            _mockStoryVoteRepository = new Mock<StoryVoteRepository>(MockBehavior.Strict);
-            _storyVoteUpdater = new StoryVoteUpdater(_mockStoryMapper.Object, _mockStoryVoteRepository.Object);
+            MockHelper.InjectMocks(this);
+            _storyVoteUpdater = MockHelper.Create<StoryVoteUpdater>(this);
         }
 
         [Test]
@@ -47,6 +51,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
 
             // assert
             _mockSession.Verify(s => s.Save(storyVoteEntities[0]));
+            _mockMessageBus.Verify(m => m.Publish(storyVoteEntities[0]));
         }
 
         [Test]
@@ -79,6 +84,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
 
             // assert
             _mockSession.Verify(s => s.SaveOrUpdate(It.IsAny<StoryVoteEntity>()), Times.Never);
+            _mockMessageBus.Verify(m => m.Publish(It.IsAny<StoryVoteEntity>()), Times.Never);
         }
 
         [Test]
@@ -105,6 +111,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
 
             // assert
             _mockSession.Verify(s => s.Delete(existingStoryVoteEntity));
+            _mockMessageBus.Verify(m => m.Publish(It.IsAny<StoryVoteEntity>()), Times.Never);
         }
     }
 }

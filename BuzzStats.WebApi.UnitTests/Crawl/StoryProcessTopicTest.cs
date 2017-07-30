@@ -1,5 +1,6 @@
 ﻿using BuzzStats.WebApi.Crawl;
 using BuzzStats.WebApi.DTOs;
+using BuzzStats.WebApi.UnitTests.TestHelpers;
 using Moq;
 using NUnit.Framework;
 
@@ -14,8 +15,8 @@ namespace BuzzStats.WebApi.UnitTests.Crawl
         [SetUp]
         public void SetUp()
         {
-            _mockQueue = new Mock<IAsyncQueue<StoryListingSummary>>();
-            _storyProcessTopic = new StoryProcessTopic(_mockQueue.Object);
+            MockHelper.InjectMocks(this);
+            _storyProcessTopic = MockHelper.Create<StoryProcessTopic>(this);
         }
 
         [Test]

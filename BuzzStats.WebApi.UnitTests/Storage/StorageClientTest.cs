@@ -6,6 +6,7 @@ using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.Storage;
 using BuzzStats.WebApi.Storage.Entities;
 using BuzzStats.WebApi.Storage.Repositories;
+using BuzzStats.WebApi.UnitTests.TestHelpers;
 using Moq;
 using NHibernate;
 using NUnit.Framework;
@@ -25,19 +26,9 @@ namespace BuzzStats.WebApi.UnitTests.Storage
         [SetUp]
         public void SetUp()
         {
-            _mockSessionFactory = new Mock<ISessionFactory>();
-            _mockSession = new Mock<ISession>();
+            MockHelper.InjectMocks(this);
             _mockSessionFactory.Setup(f => f.OpenSession()).Returns(_mockSession.Object);
-            
-            _mockUpdater = new Mock<IUpdater>();
-            _mockCommentRepository = new Mock<CommentRepository>();
-            _mockMapper = new Mock<IMapper>();
-            
-            _storageClient = new StorageClient(
-                _mockSessionFactory.Object,
-                _mockUpdater.Object,
-                _mockCommentRepository.Object,
-                _mockMapper.Object);    
+            _storageClient = MockHelper.Create<StorageClient>(this);
         }
         
         [Test]

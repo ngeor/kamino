@@ -4,6 +4,7 @@ using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.Storage.Entities;
 using BuzzStats.WebApi.Storage.Repositories;
 using log4net;
+using NGSoftware.Common.Messaging;
 using NHibernate;
 
 namespace BuzzStats.WebApi.Storage
@@ -13,11 +14,13 @@ namespace BuzzStats.WebApi.Storage
         private static readonly ILog Log = LogManager.GetLogger(typeof(StoryVoteUpdater));
         private readonly StoryMapper _storyMapper;
         private readonly StoryVoteRepository _storyVoteRepository;
+        private readonly IMessageBus _messageBus;
 
-        public StoryVoteUpdater(StoryMapper storyMapper, StoryVoteRepository storyVoteRepository)
+        public StoryVoteUpdater(StoryMapper storyMapper, StoryVoteRepository storyVoteRepository, IMessageBus messageBus)
         {
             _storyMapper = storyMapper;
             _storyVoteRepository = storyVoteRepository;
+            _messageBus = messageBus;
         }
 
         public void SaveStoryVotes(ISession session, Story story, StoryEntity storyEntity)
@@ -30,6 +33,7 @@ namespace BuzzStats.WebApi.Storage
                 if (existingStoryVotes.All(e => e.Username != storyVoteEntity.Username))
                 {
                     session.Save(storyVoteEntity);
+                    _messageBus.Publish(storyVoteEntity);
                     Log.InfoFormat("Saved new vote, db id {0}", storyVoteEntity.Id);
                 }
                 else

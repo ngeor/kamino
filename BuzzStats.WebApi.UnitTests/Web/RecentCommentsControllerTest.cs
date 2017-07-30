@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using AutoMapper;
 using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.Storage;
+using BuzzStats.WebApi.UnitTests.TestHelpers;
 using BuzzStats.WebApi.Web;
 using Moq;
 using NUnit.Framework;
@@ -19,9 +20,8 @@ namespace BuzzStats.WebApi.UnitTests.Web
         [SetUp]
         public void SetUp()
         {
-            _mockStorageClient = new Mock<IStorageClient>();
-            _mockMapper = new Mock<IMapper>();
-            _recentCommentsController = new RecentCommentsController(_mockStorageClient.Object, _mockMapper.Object);
+            MockHelper.InjectMocks(this);
+            _recentCommentsController = MockHelper.Create<RecentCommentsController>(this);
         }
 
         [Test]

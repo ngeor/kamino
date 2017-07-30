@@ -90,6 +90,8 @@
     <Compile Include="Storage\StoryVoteUpdaterTest.cs" />
     <Compile Include="Storage\TestHelpers\CriteriaHelpers.cs" />
     <Compile Include="Storage\UpdaterTest.cs" />
+    <Compile Include="TestHelpers\MockBehaviorAttribute.cs" />
+    <Compile Include="TestHelpers\MockHelper.cs" />
     <Compile Include="Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Web\RecentCommentsControllerTest.cs" />

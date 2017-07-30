@@ -2,7 +2,9 @@ using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.Storage;
 using BuzzStats.WebApi.Storage.Entities;
 using BuzzStats.WebApi.Storage.Repositories;
+using BuzzStats.WebApi.UnitTests.TestHelpers;
 using Moq;
+using NGSoftware.Common.Messaging;
 using NHibernate;
 using NUnit.Framework;
 
@@ -14,15 +16,14 @@ namespace BuzzStats.WebApi.UnitTests.Storage
         private Mock<ISession> _mockSession;
         private Mock<StoryMapper> _mockStoryMapper;
         private Mock<CommentRepository> _mockCommentRepository;
+        private Mock<IMessageBus> _mockMessageBus;
         private CommentUpdater _commentUpdater;
 
         [SetUp]
         public void SetUp()
         {
-            _mockSession = new Mock<ISession>();
-            _mockStoryMapper = new Mock<StoryMapper>();
-            _mockCommentRepository = new Mock<CommentRepository>(MockBehavior.Strict);
-            _commentUpdater = new CommentUpdater(_mockStoryMapper.Object, _mockCommentRepository.Object);
+            MockHelper.InjectMocks(this);
+            _commentUpdater = MockHelper.Create<CommentUpdater>(this);
         }
 
         [Test]
@@ -56,6 +57,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
 
             // assert
             _mockSession.Verify(s => s.Save(commentEntities[0]));
+            _mockMessageBus.Verify(m => m.Publish(commentEntities[0]));
         }
     }
 }

@@ -3,7 +3,9 @@ using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.Storage;
 using BuzzStats.WebApi.Storage.Entities;
 using BuzzStats.WebApi.Storage.Repositories;
+using BuzzStats.WebApi.UnitTests.TestHelpers;
 using Moq;
+using NGSoftware.Common.Messaging;
 using NHibernate;
 using NUnit.Framework;
 
@@ -15,15 +17,15 @@ namespace BuzzStats.WebApi.UnitTests.Storage
         private Mock<ISession> _mockSession;
         private Mock<IMapper> _mockStoryMapper;
         private Mock<StoryRepository> _mockStoryRepository;
+        private Mock<IMessageBus> _mockMessageBus;
+        
         private StoryUpdater _storyUpdater;
 
         [SetUp]
         public void SetUp()
         {
-            _mockSession = new Mock<ISession>();
-            _mockStoryMapper = new Mock<IMapper>();
-            _mockStoryRepository = new Mock<StoryRepository>();
-            _storyUpdater = new StoryUpdater(_mockStoryMapper.Object, _mockStoryRepository.Object);
+            MockHelper.InjectMocks(this);
+            _storyUpdater = MockHelper.Create<StoryUpdater>(this);
         }
 
         [Test]
@@ -48,6 +50,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
 
             // assert
             _mockSession.Verify(s => s.Save(storyEntity));
+            _mockMessageBus.Verify(m => m.Publish(storyEntity));
             Assert.AreEqual(storyEntity, result);
         }
         
@@ -77,6 +80,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
 
             // assert
             _mockSession.Verify(s => s.Update(updatedStoryEntity));
+            _mockMessageBus.Verify(m => m.Publish(updatedStoryEntity), Times.Never);
             Assert.AreEqual(updatedStoryEntity, result);
         }
     }

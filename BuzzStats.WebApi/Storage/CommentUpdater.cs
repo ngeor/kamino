@@ -2,6 +2,7 @@
 using BuzzStats.WebApi.Storage.Entities;
 using BuzzStats.WebApi.Storage.Repositories;
 using log4net;
+using NGSoftware.Common.Messaging;
 using NHibernate;
 
 namespace BuzzStats.WebApi.Storage
@@ -11,11 +12,13 @@ namespace BuzzStats.WebApi.Storage
         private static readonly ILog Log = LogManager.GetLogger(typeof(CommentUpdater));
         private readonly StoryMapper _storyMapper;
         private readonly CommentRepository _commentRepository;
+        private readonly IMessageBus _messageBus;
 
-        public CommentUpdater(StoryMapper storyMapper, CommentRepository commentRepository)
+        public CommentUpdater(StoryMapper storyMapper, CommentRepository commentRepository, IMessageBus messageBus)
         {
             _storyMapper = storyMapper;
             _commentRepository = commentRepository;
+            _messageBus = messageBus;
         }
 
         public void SaveComments(ISession session, Story story, StoryEntity storyEntity)
@@ -50,6 +53,7 @@ namespace BuzzStats.WebApi.Storage
                 CommentEntity commentEntity = _storyMapper.ToCommentEntity(comment, parentcoCommentEntity, storyEntity);
                 session.Save(commentEntity);
                 Log.InfoFormat("Saved new comment, db id {0}", commentEntity.Id);
+                _messageBus.Publish(commentEntity);
                 return commentEntity;
             }
 
