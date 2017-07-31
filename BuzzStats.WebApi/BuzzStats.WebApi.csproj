@@ -36,6 +36,9 @@
     <Reference Include="AutoMapper, Version=6.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005">
       <HintPath>..\packages\AutoMapper.6.1.1\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="Castle.Core, Version=4.1.1.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc">
+      <HintPath>..\packages\Castle.Core.4.1.1\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="FluentNHibernate, Version=2.0.3.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\FluentNHibernate.2.0.3.0\lib\net40\FluentNHibernate.dll</HintPath>
     </Reference>
@@ -103,6 +106,7 @@
     <Compile Include="Crawl\AsyncQueue.cs" />
     <Compile Include="Crawl\IAsyncQueue.cs" />
     <Compile Include="Crawl\IStoryProcessTopic.cs" />
+    <Compile Include="Crawl\IStorySelector.cs" />
     <Compile Include="Crawl\ListingTask.cs" />
     <Compile Include="Crawl\StoryProcessTask.cs" />
     <Compile Include="Crawl\StoryProcessTopic.cs" />
@@ -140,7 +144,6 @@
     <Compile Include="Storage\Entities\StoryEntity.cs" />
     <Compile Include="Storage\Entities\StoryVoteEntity.cs" />
     <Compile Include="Storage\ICommentUpdater.cs" />
-    <Compile Include="Storage\ISessionFactoryFactory.cs" />
     <Compile Include="Storage\IStorageClient.cs" />
     <Compile Include="Storage\IStoryUpdater.cs" />
     <Compile Include="Storage\IStoryVoteUpdater.cs" />
@@ -149,7 +152,8 @@
     <Compile Include="Storage\Repositories\RecentActivityRepository.cs" />
     <Compile Include="Storage\Repositories\StoryRepository.cs" />
     <Compile Include="Storage\Repositories\StoryVoteRepository.cs" />
-    <Compile Include="Storage\SessionFactoryFactory.cs" />
+    <Compile Include="Storage\Session\SessionFactory.cs" />
+    <Compile Include="Storage\Session\SessionFactoryFactory.cs" />
     <Compile Include="Storage\StorageClient.cs" />
     <Compile Include="Storage\StoryMapper.cs" />
     <Compile Include="Storage\StoryUpdater.cs" />

@@ -8,6 +8,7 @@ using BuzzStats.WebApi.Storage.Entities;
 using BuzzStats.WebApi.Storage.Repositories;
 using BuzzStats.WebApi.UnitTests.TestHelpers;
 using Moq;
+using NGSoftware.Common.Factories;
 using NHibernate;
 using NUnit.Framework;
 
@@ -17,7 +18,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
     public class StorageClientTest
     {
 #pragma warning disable 0649
-        private Mock<ISessionFactory> _mockSessionFactory;
+        private Mock<IFactory<ISession>> _mockSessionFactory;
         private Mock<ISession> _mockSession;
         private Mock<IMapper> _mockMapper;
         private Mock<IUpdater> _mockUpdater;
@@ -30,7 +31,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
         public void SetUp()
         {
             MockHelper.InjectMocks(this);
-            _mockSessionFactory.Setup(f => f.OpenSession()).Returns(_mockSession.Object);
+            _mockSessionFactory.Setup(f => f.Create()).Returns(_mockSession.Object);
             _storageClient = MockHelper.Create<StorageClient>(this);
         }
 

@@ -4,7 +4,9 @@ using BuzzStats.WebApi.Crawl;
 using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.Parsing;
 using BuzzStats.WebApi.Storage;
+using BuzzStats.WebApi.Storage.Session;
 using NGSoftware.Common.Configuration;
+using NGSoftware.Common.Factories;
 using NGSoftware.Common.Messaging;
 using NHibernate;
 using NodaTime;
@@ -44,10 +46,11 @@ namespace BuzzStats.WebApi.IoC
                 x.For<IStorageClient>().Use<StorageClient>();
 
                 // NHibernate
-                x.For<ISessionFactoryFactory>().Use<SessionFactoryFactory>().Singleton();
+                x.For<IFactory<ISessionFactory>>().Use<SessionFactoryFactory>().Singleton();
                 x.For<ISessionFactory>()
-                    .Use(ctx => ctx.GetInstance<ISessionFactoryFactory>().Create())
+                    .Use(ctx => ctx.GetInstance<IFactory<ISessionFactory>>().Create())
                     .Singleton();
+                x.For<IFactory<ISession>>().Use<SessionFactory>().Singleton();
 
                 // AutoMapper
                 x.For<IMapper>().Use(ctx =>

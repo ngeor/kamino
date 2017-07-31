@@ -5,13 +5,17 @@ using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using log4net;
 using NGSoftware.Common.Configuration;
+using NGSoftware.Common.Factories;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
 using Configuration = NHibernate.Cfg.Configuration;
 
-namespace BuzzStats.WebApi.Storage
+namespace BuzzStats.WebApi.Storage.Session
 {
-    class SessionFactoryFactory : ISessionFactoryFactory
+    /// <summary>
+    /// This class is able to create NHibernate's ISessionFactory.
+    /// </summary>
+    class SessionFactoryFactory : IFactory<ISessionFactory>
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(SessionFactoryFactory));
         private readonly IAppSettings _appSettings;
@@ -20,7 +24,7 @@ namespace BuzzStats.WebApi.Storage
         {
             _appSettings = appSettings;
         }
-        
+
         public ISessionFactory Create()
         {
             Log.Info("Creating session factory");

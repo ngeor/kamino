@@ -5,6 +5,7 @@ using AutoMapper;
 using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.Storage.Repositories;
 using log4net;
+using NGSoftware.Common.Factories;
 using NHibernate;
 
 namespace BuzzStats.WebApi.Storage
@@ -17,13 +18,13 @@ namespace BuzzStats.WebApi.Storage
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(StorageClient));
 
-        private readonly ISessionFactory _sessionFactory;
+        private readonly IFactory<ISession> _sessionFactory;
         private readonly IMapper _mapper;
         private readonly IUpdater _updater;
         private readonly CommentRepository _commentRepository;
         private readonly RecentActivityRepository _recentActivityRepository;
 
-        public StorageClient(ISessionFactory sessionFactory, IMapper mapper, IUpdater updater, CommentRepository commentRepository, RecentActivityRepository recentActivityRepository)
+        public StorageClient(IFactory<ISession> sessionFactory, IMapper mapper, IUpdater updater, CommentRepository commentRepository, RecentActivityRepository recentActivityRepository)
         {
             _sessionFactory = sessionFactory;
             _mapper = mapper;
@@ -48,7 +49,7 @@ namespace BuzzStats.WebApi.Storage
 
             try
             {
-                using (var session = _sessionFactory.OpenSession())
+                using (var session = _sessionFactory.Create())
                 {
                     _updater.Save(session, story);
                 }
@@ -62,7 +63,7 @@ namespace BuzzStats.WebApi.Storage
 
         public IList<CommentWithStory> GetRecentComments()
         {
-            using (var session = _sessionFactory.OpenSession())
+            using (var session = _sessionFactory.Create())
             {
                 var commentEntities = _commentRepository.GetRecent(session);
                 return commentEntities.Select(e => _mapper.Map<CommentWithStory>(e)).ToList();
@@ -71,7 +72,7 @@ namespace BuzzStats.WebApi.Storage
 
         public IList<RecentActivity> GetRecentActivity()
         {
-            using (var session = _sessionFactory.OpenSession())
+            using (var session = _sessionFactory.Create())
             {
                 var recentActivityEntities = _recentActivityRepository.Get(session);
                 return recentActivityEntities.Select(e => _mapper.Map<RecentActivity>(e)).ToList();
