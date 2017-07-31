@@ -91,6 +91,10 @@
     <Compile Include="Storage\Repositories\RecentActivityRepositoryTest.cs" />
     <Compile Include="Storage\Repositories\StoryRepositoryTest.cs" />
     <Compile Include="Storage\Repositories\StoryVoteRepositoryTest.cs" />
+    <Compile Include="Storage\Session\DisposeInterceptorTest.cs" />
+    <Compile Include="Storage\Session\LazySessionTest.cs" />
+    <Compile Include="Storage\Session\RepositoryInterceptorTest.cs" />
+    <Compile Include="Storage\Session\SessionManagerTest.cs" />
     <Compile Include="Storage\StorageClientTest.cs" />
     <Compile Include="Storage\StoryMapperTest.cs" />
     <Compile Include="Storage\StoryUpdaterTest.cs" />

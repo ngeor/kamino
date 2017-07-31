@@ -149,11 +149,16 @@
     <Compile Include="Storage\IStoryVoteUpdater.cs" />
     <Compile Include="Storage\IUpdater.cs" />
     <Compile Include="Storage\Repositories\CommentRepository.cs" />
+    <Compile Include="Storage\Repositories\IStoryRepository.cs" />
     <Compile Include="Storage\Repositories\RecentActivityRepository.cs" />
     <Compile Include="Storage\Repositories\StoryRepository.cs" />
     <Compile Include="Storage\Repositories\StoryVoteRepository.cs" />
-    <Compile Include="Storage\Session\SessionFactory.cs" />
+    <Compile Include="Storage\Session\DisposeInterceptor.cs" />
+    <Compile Include="Storage\Session\ISessionManager.cs" />
+    <Compile Include="Storage\Session\LazySession.cs" />
+    <Compile Include="Storage\Session\RepositoryInterceptor.cs" />
     <Compile Include="Storage\Session\SessionFactoryFactory.cs" />
+    <Compile Include="Storage\Session\SessionManager.cs" />
     <Compile Include="Storage\StorageClient.cs" />
     <Compile Include="Storage\StoryMapper.cs" />
     <Compile Include="Storage\StoryUpdater.cs" />

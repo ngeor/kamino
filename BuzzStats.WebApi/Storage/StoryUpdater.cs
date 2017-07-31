@@ -12,10 +12,10 @@ namespace BuzzStats.WebApi.Storage
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(StoryUpdater));
         private readonly IMapper _mapper;
-        private readonly StoryRepository _storyRepository;
+        private readonly IStoryRepository _storyRepository;
         private readonly IMessageBus _messageBus;
 
-        public StoryUpdater(IMapper mapper, StoryRepository storyRepository, IMessageBus messageBus)
+        public StoryUpdater(IMapper mapper, IStoryRepository storyRepository, IMessageBus messageBus)
         {
             _mapper = mapper;
             _storyRepository = storyRepository;
@@ -25,7 +25,7 @@ namespace BuzzStats.WebApi.Storage
         public virtual StoryEntity Save(ISession session, Story story)
         {
             Log.InfoFormat("Saving story {0}", story.StoryId);
-            var existingStoryEntity = _storyRepository.GetByStoryId(session, story.StoryId);
+            var existingStoryEntity = _storyRepository.GetByStoryId(story.StoryId);
 
             if (existingStoryEntity == null)
             {

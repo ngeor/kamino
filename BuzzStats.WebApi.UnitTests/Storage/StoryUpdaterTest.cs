@@ -18,7 +18,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
 #pragma warning disable 0649
         private Mock<ISession> _mockSession;
         private Mock<IMapper> _mockStoryMapper;
-        private Mock<StoryRepository> _mockStoryRepository;
+        private Mock<IStoryRepository> _mockStoryRepository;
         private Mock<IMessageBus> _mockMessageBus;
 #pragma warning restore 0649
         private StoryUpdater _storyUpdater;
@@ -46,7 +46,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
             };
 
             _mockStoryMapper.Setup(m => m.Map<StoryEntity>(story)).Returns(storyEntity);
-            _mockStoryRepository.Setup(r => r.GetByStoryId(_mockSession.Object, 42)).Returns((StoryEntity) null);
+            _mockStoryRepository.Setup(r => r.GetByStoryId(42)).Returns((StoryEntity) null);
 
             // act
             var result = _storyUpdater.Save(_mockSession.Object, story);
@@ -81,7 +81,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
             _mockStoryMapper.Setup(m => m.Map(story, existingStory))
                 .Returns(updatedStoryEntity);
 
-            _mockStoryRepository.Setup(r => r.GetByStoryId(_mockSession.Object, 42)).Returns(existingStory);
+            _mockStoryRepository.Setup(r => r.GetByStoryId(42)).Returns(existingStory);
 
             // act
             var result = _storyUpdater.Save(_mockSession.Object, story);

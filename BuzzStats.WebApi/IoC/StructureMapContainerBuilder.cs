@@ -4,7 +4,9 @@ using BuzzStats.WebApi.Crawl;
 using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.Parsing;
 using BuzzStats.WebApi.Storage;
+using BuzzStats.WebApi.Storage.Repositories;
 using BuzzStats.WebApi.Storage.Session;
+using Castle.DynamicProxy;
 using NGSoftware.Common.Configuration;
 using NGSoftware.Common.Factories;
 using NGSoftware.Common.Messaging;
@@ -45,12 +47,20 @@ namespace BuzzStats.WebApi.IoC
                 x.For<IParserClient>().Use<ParserClient>();
                 x.For<IStorageClient>().Use<StorageClient>();
 
-                // NHibernate
+                // NHibernate and session
                 x.For<IFactory<ISessionFactory>>().Use<SessionFactoryFactory>().Singleton();
                 x.For<ISessionFactory>()
                     .Use(ctx => ctx.GetInstance<IFactory<ISessionFactory>>().Create())
                     .Singleton();
-                x.For<IFactory<ISession>>().Use<SessionFactory>().Singleton();
+                x.For<ISessionManager>().Use<SessionManager>().Singleton();
+
+                // repositories
+                x.For<StoryRepository>().Use<StoryRepository>().Ctor<ISession>().Is<LazySession>();
+
+                x.For<IStoryRepository>()
+                    .Use(ctx => RepositoryInterceptor.Decorate<IStoryRepository>(
+                        ctx.GetInstance<StoryRepository>(),
+                        ctx.GetInstance<ISessionManager>()));
 
                 // AutoMapper
                 x.For<IMapper>().Use(ctx =>
