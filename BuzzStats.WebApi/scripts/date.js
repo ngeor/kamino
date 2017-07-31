@@ -50,3 +50,13 @@ export function agoString(milliseconds) {
 
     return pluralizeAgo(months, 'month', 'months');
 }
+
+/**
+ * Utility function that converts a serialized datetime into a
+ *     human friendly string that specifies how old ago that datetime is.
+ * @param {string} dateString - The datetime string to parse.
+ * @returns {string} A human friendly expression of how old ago the given date is.
+ */
+export function toAgo(dateString) {
+    return agoString(new Date().getTime() - parseDate(dateString));
+}

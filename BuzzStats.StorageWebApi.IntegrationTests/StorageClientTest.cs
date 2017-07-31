@@ -37,21 +37,21 @@ namespace BuzzStats.StorageWebApi.IntegrationTests
             // arrange
             Story story = CreateValidStory();
             story.Title = null;
-            
+
             // act & assert
             Assert.Throws<ArgumentException>(() =>
             {
                 _storageClient.Save(story);
             });
         }
-        
+
         [Test]
         public void Save_WithNoStoryId_ThrowsArgumentException()
         {
             // arrange
             Story story = CreateValidStory();
             story.StoryId = 0;
-            
+
             // act & assert
             Assert.Throws<ArgumentException>(() =>
             {
@@ -65,7 +65,7 @@ namespace BuzzStats.StorageWebApi.IntegrationTests
             // arrange
             Story story = CreateValidStory();
             story.CreatedAt = default(DateTime);
-            
+
             // act & assert
             Assert.Throws<ArgumentException>(() =>
             {
@@ -74,14 +74,28 @@ namespace BuzzStats.StorageWebApi.IntegrationTests
         }
 
         [Test]
+        public void GetRecentActivity_WithNoData_IsEmpty()
+        {
+            // act
+            var recentActivities = _storageClient.GetRecentActivity();
+
+            // assert
+            Assert.AreEqual(0, recentActivities.Count);
+        }
+
+        [Test]
         public void Save_WithCorrectData_IsSuccessful()
         {
             // TODO StoryId = 0 and CreatedAt = 0000 should also fail with 400
             // arrange
             Story story = CreateValidStory();
-            
+
             // act
             _storageClient.Save(story);
+
+            // assert
+            var recentActivities = _storageClient.GetRecentActivity();
+            Assert.AreEqual(5, recentActivities.Count);
         }
 
         private Story CreateValidStory()

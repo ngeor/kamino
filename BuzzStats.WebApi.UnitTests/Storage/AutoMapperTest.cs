@@ -41,7 +41,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
 
             // act
             CommentWithStory commentWithStory = _mapper.Map<CommentWithStory>(commentEntity);
-            
+
             // assert
             Assert.IsNotNull(commentWithStory);
             Assert.AreEqual(42, commentWithStory.CommentId);
@@ -63,7 +63,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
 
             // act
             CommentWithStory commentWithStory = _mapper.Map<CommentWithStory>(commentEntity);
-            
+
             // assert
             Assert.IsNotNull(commentWithStory);
             Assert.AreEqual(42, commentWithStory.CommentId);
@@ -86,7 +86,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
 
             // act
             RecentComment recentComment = _mapper.Map<RecentComment>(commentWithStory);
- 
+
             // assert
             Assert.IsNotNull(recentComment);
             Assert.AreEqual(42, recentComment.CommentId);
@@ -94,7 +94,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
             Assert.AreEqual("username", recentComment.Username);
             Assert.AreEqual(1, recentComment.VotesUp);
         }
-        
+
         [Test]
         public void MapStoryToStoryEntity()
         {
@@ -120,6 +120,100 @@ namespace BuzzStats.WebApi.UnitTests.Storage
             Assert.AreEqual("title", storyEntity.Title);
             Assert.AreEqual("url", storyEntity.Url);
             Assert.AreEqual("username", storyEntity.Username);
+        }
+
+        [Test]
+        public void MapRecentActivityEntityToRecentActivity_OnlyStory()
+        {
+            // arrange
+            RecentActivityEntity recentActivityEntity = new RecentActivityEntity
+            {
+                CreatedAt = new DateTime(2017, 7, 31),
+                Story = new StoryEntity
+                {
+                    StoryId = 42,
+                    Title = "my story",
+                    Username = "username",
+                    CreatedAt = new DateTime(2017, 7, 30)
+                }
+            };
+
+            // act
+            RecentActivity recentActivity = _mapper.Map<RecentActivity>(recentActivityEntity);
+
+            // assert
+            Assert.AreEqual(42, recentActivity.StoryId);
+            Assert.AreEqual(0, recentActivity.CommentId);
+            Assert.AreEqual(new DateTime(2017, 7, 31), recentActivity.CreatedAt);
+            Assert.AreEqual("username", recentActivity.StoryUsername);
+            Assert.AreEqual(null, recentActivity.StoryVoteUsername);
+            Assert.AreEqual(null, recentActivity.CommentUsername);
+            Assert.AreEqual(new DateTime(2017, 7, 30), recentActivity.StoryCreatedAt);
+        }
+
+        [Test]
+        public void MapRecentActivityEntityToRecentActivity_WithStoryVote()
+        {
+            // arrange
+            RecentActivityEntity recentActivityEntity = new RecentActivityEntity
+            {
+                CreatedAt = new DateTime(2017, 7, 31),
+                Story = new StoryEntity
+                {
+                    StoryId = 42,
+                    Title = "my story",
+                    Username = "username"
+                },
+                StoryVote = new StoryVoteEntity
+                {
+                    Username = "voter"
+                }
+            };
+
+            // act
+            RecentActivity recentActivity = _mapper.Map<RecentActivity>(recentActivityEntity);
+
+            // assert
+            Assert.AreEqual(42, recentActivity.StoryId);
+            Assert.AreEqual(0, recentActivity.CommentId);
+            Assert.AreEqual(new DateTime(2017, 7, 31), recentActivity.CreatedAt);
+            Assert.AreEqual("username", recentActivity.StoryUsername);
+            Assert.AreEqual("voter", recentActivity.StoryVoteUsername);
+            Assert.AreEqual(null, recentActivity.CommentUsername);
+        }
+
+        [Test]
+        public void MapRecentActivityEntityToRecentActivity_WithComment()
+        {
+            // arrange
+            RecentActivityEntity recentActivityEntity = new RecentActivityEntity
+            {
+                CreatedAt = new DateTime(2017, 7, 31),
+                Story = new StoryEntity
+                {
+                    StoryId = 42,
+                    Title = "my story",
+                    Username = "username"
+                },
+                Comment = new CommentEntity
+                {
+                    Username = "commentor",
+                    VotesUp = 2,
+                    CreatedAt = new DateTime(2017, 7, 29)
+                }
+            };
+
+            // act
+            RecentActivity recentActivity = _mapper.Map<RecentActivity>(recentActivityEntity);
+
+            // assert
+            Assert.AreEqual(42, recentActivity.StoryId);
+            Assert.AreEqual(0, recentActivity.CommentId);
+            Assert.AreEqual(new DateTime(2017, 7, 31), recentActivity.CreatedAt);
+            Assert.AreEqual("username", recentActivity.StoryUsername);
+            Assert.AreEqual(null, recentActivity.StoryVoteUsername);
+            Assert.AreEqual("commentor", recentActivity.CommentUsername);
+            Assert.AreEqual(new DateTime(2017, 7, 29), recentActivity.CommentCreatedAt);
         }
     }
 }

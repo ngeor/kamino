@@ -9,23 +9,29 @@ using NHibernate;
 
 namespace BuzzStats.WebApi.Storage
 {
+    /// <summary>
+    /// The single point of entry for accessing persisted data.
+    /// This class is responsible for opening a new session for each requested operation.
+    /// </summary>
     public class StorageClient : IStorageClient
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(StorageClient));
-        
+
         private readonly ISessionFactory _sessionFactory;
+        private readonly IMapper _mapper;
         private readonly IUpdater _updater;
         private readonly CommentRepository _commentRepository;
-        private readonly IMapper _mapper;
+        private readonly RecentActivityRepository _recentActivityRepository;
 
-        public StorageClient(ISessionFactory sessionFactory, IUpdater updater, CommentRepository commentRepository, IMapper mapper)
+        public StorageClient(ISessionFactory sessionFactory, IMapper mapper, IUpdater updater, CommentRepository commentRepository, RecentActivityRepository recentActivityRepository)
         {
             _sessionFactory = sessionFactory;
+            _mapper = mapper;
             _updater = updater;
             _commentRepository = commentRepository;
-            _mapper = mapper;
+            _recentActivityRepository = recentActivityRepository;
         }
-        
+
         public void Save(Story story)
         {
             if (story == null)
@@ -63,9 +69,18 @@ namespace BuzzStats.WebApi.Storage
             }
         }
 
+        public IList<RecentActivity> GetRecentActivity()
+        {
+            using (var session = _sessionFactory.OpenSession())
+            {
+                var recentActivityEntities = _recentActivityRepository.Get(session);
+                return recentActivityEntities.Select(e => _mapper.Map<RecentActivity>(e)).ToList();
+            }
+        }
+
         private static bool IsInputValid(Story story)
         {
-            // TODO 1. add unit tests 2. limit dates to SQL Server Limitations 
+            // TODO 1. add unit tests 2. limit dates to SQL Server Limitations
             return !string.IsNullOrWhiteSpace(story.Title) && story.StoryId > 0 && story.CreatedAt != default(DateTime);
         }
     }

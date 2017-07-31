@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import RecentComments from './RecentComments';
+import RecentActivity from './RecentActivity';
 import {loadJson} from './ajax';
 
 const sampleData = [
@@ -49,11 +50,31 @@ function loadRecentComments(callback) {
     loadJson('/api/recentcomments', callback);
 }
 
+function loadRecentActivity(callback) {
+    if (useStaticData()) {
+        callback(null, [{
+            storyId: 42,
+            title: 'my story',
+            storyUsername: 'user1'
+        }]);
+        return;
+    }
+
+    loadJson('/api/recentactivity', callback);
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     loadRecentComments(function(err, data) {
         ReactDOM.render(
             <RecentComments data={data}/>,
-            document.getElementById('root')
+            document.getElementById('recentcomments')
+        );
+    });
+
+    loadRecentActivity(function(err, data) {
+        ReactDOM.render(
+            <RecentActivity data={data}/>,
+            document.getElementById('recentactivity')
         );
     });
 });

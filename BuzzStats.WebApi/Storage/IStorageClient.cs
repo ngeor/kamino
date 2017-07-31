@@ -7,5 +7,6 @@ namespace BuzzStats.WebApi.Storage
     {
         void Save(Story story);
         IList<CommentWithStory> GetRecentComments();
+        IList<RecentActivity> GetRecentActivity();
     }
 }

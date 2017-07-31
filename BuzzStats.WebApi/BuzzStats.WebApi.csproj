@@ -109,6 +109,7 @@
     <Compile Include="Crawl\TaskLoop.cs" />
     <Compile Include="DTOs\Comment.cs" />
     <Compile Include="DTOs\CommentWithStory.cs" />
+    <Compile Include="DTOs\RecentActivity.cs" />
     <Compile Include="DTOs\RecentComment.cs" />
     <Compile Include="DTOs\Story.cs" />
     <Compile Include="DTOs\StoryListingSummary.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="Storage\IStoryVoteUpdater.cs" />
     <Compile Include="Storage\IUpdater.cs" />
     <Compile Include="Storage\Repositories\CommentRepository.cs" />
+    <Compile Include="Storage\Repositories\RecentActivityRepository.cs" />
     <Compile Include="Storage\Repositories\StoryRepository.cs" />
     <Compile Include="Storage\Repositories\StoryVoteRepository.cs" />
     <Compile Include="Storage\SessionFactoryFactory.cs" />
@@ -153,6 +155,7 @@
     <Compile Include="Storage\StoryUpdater.cs" />
     <Compile Include="Storage\StoryVoteUpdater.cs" />
     <Compile Include="Storage\Updater.cs" />
+    <Compile Include="Web\RecentActivityController.cs" />
     <Compile Include="Web\RecentCommentsController.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -205,11 +208,13 @@
     <Content Include="scripts\date.js" />
     <Content Include="scripts\date_test.js" />
     <Content Include="scripts\index.js" />
+    <Content Include="scripts\RecentActivity.js" />
     <Content Include="scripts\RecentComments.js" />
     <Content Include="scripts\StoryBlock.js" />
     <Content Include="styles\app.less" />
     <Content Include="styles\common.less" />
-    <Content Include="styles\recent-comments.less" />
+    <Content Include="styles\RecentComments.less" />
+    <Content Include="styles\RecentActivity.less" />
     <Content Include="templates\about.pug" />
     <Content Include="templates\graphs.pug" />
     <Content Include="templates\index.pug" />

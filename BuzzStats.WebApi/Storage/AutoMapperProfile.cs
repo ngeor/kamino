@@ -16,6 +16,10 @@ namespace BuzzStats.WebApi.Storage
                 .ForMember(d => d.Id, opt => opt.Ignore());
 
             CreateMap<CommentWithStory, RecentComment>();
+
+            CreateMap<RecentActivityEntity, RecentActivity>()
+                .ForMember(d => d.StoryId, opt => opt.MapFrom(s => s.Story.StoryId))
+                .ForMember(d => d.Title, opt => opt.MapFrom(s => s.Story.Title));
         }
     }
 }

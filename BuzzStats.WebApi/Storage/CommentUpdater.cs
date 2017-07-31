@@ -4,7 +4,6 @@ using BuzzStats.WebApi.Storage.Repositories;
 using log4net;
 using NGSoftware.Common.Messaging;
 using NHibernate;
-using NodaTime;
 
 namespace BuzzStats.WebApi.Storage
 {
@@ -14,14 +13,12 @@ namespace BuzzStats.WebApi.Storage
         private readonly StoryMapper _storyMapper;
         private readonly CommentRepository _commentRepository;
         private readonly IMessageBus _messageBus;
-        private readonly IClock _clock;
 
-        public CommentUpdater(StoryMapper storyMapper, CommentRepository commentRepository, IMessageBus messageBus, IClock clock)
+        public CommentUpdater(StoryMapper storyMapper, CommentRepository commentRepository, IMessageBus messageBus)
         {
             _storyMapper = storyMapper;
             _commentRepository = commentRepository;
             _messageBus = messageBus;
-            _clock = clock;
         }
 
         public void SaveComments(ISession session, Story story, StoryEntity storyEntity)
@@ -42,7 +39,7 @@ namespace BuzzStats.WebApi.Storage
             foreach (var comment in comments)
             {
                 CommentEntity commentEntity = SaveComment(session, storyEntity, comment, parentCommentEntity);
-                
+
                 // TODO test child comments
                 SaveComments(session, storyEntity, comment.Comments, commentEntity);
             }
@@ -59,7 +56,7 @@ namespace BuzzStats.WebApi.Storage
                 _messageBus.Publish(commentEntity);
                 session.Save(new RecentActivityEntity
                 {
-                    CreatedAt = _clock.GetCurrentInstant().ToDateTimeUtc(),
+                    CreatedAt = commentEntity.CreatedAt,
                     Story = storyEntity,
                     Comment = commentEntity
                 });

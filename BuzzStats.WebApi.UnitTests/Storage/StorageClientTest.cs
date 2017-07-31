@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web.Http;
+using System.Linq;
 using AutoMapper;
 using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.Storage;
@@ -17,14 +17,15 @@ namespace BuzzStats.WebApi.UnitTests.Storage
     public class StorageClientTest
     {
 #pragma warning disable 0649
-        private StorageClient _storageClient;
         private Mock<ISessionFactory> _mockSessionFactory;
         private Mock<ISession> _mockSession;
+        private Mock<IMapper> _mockMapper;
         private Mock<IUpdater> _mockUpdater;
         private Mock<CommentRepository> _mockCommentRepository;
-        private Mock<IMapper> _mockMapper;
+        private Mock<RecentActivityRepository> _mockRecentActivityRepository;
 #pragma warning restore 0649
-        
+        private StorageClient _storageClient;
+
         [SetUp]
         public void SetUp()
         {
@@ -32,7 +33,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
             _mockSessionFactory.Setup(f => f.OpenSession()).Returns(_mockSession.Object);
             _storageClient = MockHelper.Create<StorageClient>(this);
         }
-        
+
         [Test]
         public void Save_NullStory_ThrowsException()
         {
@@ -47,14 +48,13 @@ namespace BuzzStats.WebApi.UnitTests.Storage
         {
             // arrange
             var story = CreateValidStory();
-            
+
             // act
             _storageClient.Save(story);
-            
+
             // assert
             _mockUpdater.Verify(u=>u.Save(_mockSession.Object, story));
         }
-        
 
         [Test]
         public void GetRecentComments()
@@ -68,7 +68,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
                     StoryId = 1
                 }
             };
-            
+
             _mockCommentRepository.Setup(r => r.GetRecent(_mockSession.Object))
                 .Returns(new List<CommentEntity>
                 {
@@ -82,14 +82,32 @@ namespace BuzzStats.WebApi.UnitTests.Storage
             };
             _mockMapper.Setup(m => m.Map<CommentWithStory>(commentEntity))
                 .Returns(commentWithStory);
-            
+
             // act
             var commentWithStories = _storageClient.GetRecentComments();
-            
+
             // assert
             CollectionAssert.AreEqual(new[] { commentWithStory }, commentWithStories);
         }
-        
+
+        [Test]
+        public void GetRecentActivity()
+        {
+            // arrange
+            var recentActivityEntity = new RecentActivityEntity();
+            var recentActivity = new RecentActivity();
+            _mockMapper.Setup(m => m.Map<RecentActivity>(recentActivityEntity))
+                .Returns(recentActivity);
+            _mockRecentActivityRepository.Setup(r => r.Get(_mockSession.Object))
+                .Returns(Enumerable.Repeat(recentActivityEntity, 1).ToList());
+
+            // act
+            var result = _storageClient.GetRecentActivity();
+
+            // assert
+            CollectionAssert.AreEqual(new[] { recentActivity }, result);
+        }
+
         private Story CreateValidStory()
         {
             return new Story
