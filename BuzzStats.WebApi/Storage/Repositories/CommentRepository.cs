@@ -5,18 +5,25 @@ using NHibernate.Criterion;
 
 namespace BuzzStats.WebApi.Storage.Repositories
 {
-    public class CommentRepository
+    public class CommentRepository : ICommentRepository
     {
-        public virtual CommentEntity GetByCommentId(ISession session, int commentId)
+        private readonly ISession _session;
+
+        public CommentRepository(ISession session)
         {
-            var criteria = session.CreateCriteria<CommentEntity>();
+            _session = session;
+        }
+
+        public virtual CommentEntity GetByCommentId(int commentId)
+        {
+            var criteria = _session.CreateCriteria<CommentEntity>();
             criteria = criteria.Add(Restrictions.Eq("CommentId", commentId));
             return criteria.UniqueResult<CommentEntity>();
         }
 
-        public virtual IList<CommentEntity> GetRecent(ISession session)
+        public virtual IList<CommentEntity> GetRecent()
         {
-            var criteria = session.CreateCriteria<CommentEntity>();
+            var criteria = _session.CreateCriteria<CommentEntity>();
             criteria = criteria.AddOrder(Order.Desc("CreatedAt"));
             criteria = criteria.SetMaxResults(20);
             return criteria.List<CommentEntity>();

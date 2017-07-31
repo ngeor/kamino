@@ -18,7 +18,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage.Repositories
         private Mock<ICriteria> _mockCommentCriteria;
         private CommentRepository _commentRepository;
 #pragma warning restore 0649
-        
+
         [SetUp]
         public void SetUp()
         {
@@ -26,7 +26,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage.Repositories
             _mockSession.Setup(s => s.CreateCriteria<CommentEntity>()).Returns(_mockCommentCriteria.Object);
             _commentRepository = MockHelper.Create<CommentRepository>(this);
         }
-        
+
         [Test]
         public void GetByCommentId()
         {
@@ -38,10 +38,10 @@ namespace BuzzStats.WebApi.UnitTests.Storage.Repositories
 
             _mockCommentCriteria.SetupEq("CommentId", 42);
             _mockCommentCriteria.Setup(c => c.UniqueResult<CommentEntity>()).Returns(commentEntity);
-            
+
             // act
-            CommentEntity actualCommentEntity = _commentRepository.GetByCommentId(_mockSession.Object, 42);
-            
+            CommentEntity actualCommentEntity = _commentRepository.GetByCommentId(42);
+
             // assert
             Assert.AreEqual(commentEntity, actualCommentEntity);
         }
@@ -54,10 +54,10 @@ namespace BuzzStats.WebApi.UnitTests.Storage.Repositories
             _mockCommentCriteria.SetupOrderDesc("CreatedAt");
             _mockCommentCriteria.Setup(c => c.SetMaxResults(20)).Returns(_mockCommentCriteria.Object);
             _mockCommentCriteria.Setup(c => c.List<CommentEntity>()).Returns(comments);
-            
+
             // act
-            var result = _commentRepository.GetRecent(_mockSession.Object);
-            
+            var result = _commentRepository.GetRecent();
+
             // assert
             Assert.AreEqual(comments, result);
         }

@@ -14,11 +14,11 @@ namespace BuzzStats.WebApi.Storage
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(StoryVoteUpdater));
         private readonly StoryMapper _storyMapper;
-        private readonly StoryVoteRepository _storyVoteRepository;
+        private readonly IStoryVoteRepository _storyVoteRepository;
         private readonly IMessageBus _messageBus;
         private readonly IClock _clock;
 
-        public StoryVoteUpdater(StoryMapper storyMapper, StoryVoteRepository storyVoteRepository, IMessageBus messageBus, IClock clock)
+        public StoryVoteUpdater(StoryMapper storyMapper, IStoryVoteRepository storyVoteRepository, IMessageBus messageBus, IClock clock)
         {
             _storyMapper = storyMapper;
             _storyVoteRepository = storyVoteRepository;
@@ -28,7 +28,7 @@ namespace BuzzStats.WebApi.Storage
 
         public void SaveStoryVotes(ISession session, Story story, StoryEntity storyEntity)
         {
-            IList<StoryVoteEntity> existingStoryVotes = _storyVoteRepository.Get(session, storyEntity);
+            IList<StoryVoteEntity> existingStoryVotes = _storyVoteRepository.Get(storyEntity);
             IList<StoryVoteEntity> newStoryVotes = _storyMapper.ToStoryVoteEntities(story, storyEntity);
             foreach (var storyVoteEntity in newStoryVotes)
             {

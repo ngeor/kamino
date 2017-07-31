@@ -20,10 +20,11 @@ namespace BuzzStats.WebApi.Storage
         private readonly ISessionManager _sessionManager;
         private readonly IMapper _mapper;
         private readonly IUpdater _updater;
-        private readonly CommentRepository _commentRepository;
-        private readonly RecentActivityRepository _recentActivityRepository;
+        private readonly ICommentRepository _commentRepository;
+        private readonly IRecentActivityRepository _recentActivityRepository;
 
-        public StorageClient(ISessionManager sessionManager, IMapper mapper, IUpdater updater, CommentRepository commentRepository, RecentActivityRepository recentActivityRepository)
+        public StorageClient(ISessionManager sessionManager, IMapper mapper, IUpdater updater,
+            ICommentRepository commentRepository, IRecentActivityRepository recentActivityRepository)
         {
             _sessionManager = sessionManager;
             _mapper = mapper;
@@ -64,7 +65,7 @@ namespace BuzzStats.WebApi.Storage
         {
             using (var session = _sessionManager.Create())
             {
-                var commentEntities = _commentRepository.GetRecent(session);
+                var commentEntities = _commentRepository.GetRecent();
                 return commentEntities.Select(e => _mapper.Map<CommentWithStory>(e)).ToList();
             }
         }
@@ -73,7 +74,7 @@ namespace BuzzStats.WebApi.Storage
         {
             using (var session = _sessionManager.Create())
             {
-                var recentActivityEntities = _recentActivityRepository.Get(session);
+                var recentActivityEntities = _recentActivityRepository.Get();
                 return recentActivityEntities.Select(e => _mapper.Map<RecentActivity>(e)).ToList();
             }
         }

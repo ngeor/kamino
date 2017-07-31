@@ -149,7 +149,10 @@
     <Compile Include="Storage\IStoryVoteUpdater.cs" />
     <Compile Include="Storage\IUpdater.cs" />
     <Compile Include="Storage\Repositories\CommentRepository.cs" />
+    <Compile Include="Storage\Repositories\ICommentRepository.cs" />
+    <Compile Include="Storage\Repositories\IRecentActivityRepository.cs" />
     <Compile Include="Storage\Repositories\IStoryRepository.cs" />
+    <Compile Include="Storage\Repositories\IStoryVoteRepository.cs" />
     <Compile Include="Storage\Repositories\RecentActivityRepository.cs" />
     <Compile Include="Storage\Repositories\StoryRepository.cs" />
     <Compile Include="Storage\Repositories\StoryVoteRepository.cs" />

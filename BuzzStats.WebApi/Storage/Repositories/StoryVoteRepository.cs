@@ -5,11 +5,18 @@ using NHibernate.Criterion;
 
 namespace BuzzStats.WebApi.Storage.Repositories
 {
-    public class StoryVoteRepository
+    public class StoryVoteRepository : IStoryVoteRepository
     {
-        public virtual IList<StoryVoteEntity> Get(ISession session, StoryEntity story)
+        private readonly ISession _session;
+
+        public StoryVoteRepository(ISession session)
         {
-            var criteria = session.CreateCriteria<StoryVoteEntity>();
+            _session = session;
+        }
+
+        public virtual IList<StoryVoteEntity> Get(StoryEntity story)
+        {
+            var criteria = _session.CreateCriteria<StoryVoteEntity>();
             criteria = criteria.Add(Restrictions.Eq("Story", story));
             return criteria.List<StoryVoteEntity>();
         }

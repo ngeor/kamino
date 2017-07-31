@@ -8,11 +8,18 @@ namespace BuzzStats.WebApi.Storage.Repositories
     /// <summary>
     /// Repository for <see cref="RecentActivityEntity"/>.
     /// </summary>
-    public class RecentActivityRepository
+    public class RecentActivityRepository : IRecentActivityRepository
     {
-        public virtual IList<RecentActivityEntity> Get(ISession session)
+        private readonly ISession _session;
+
+        public RecentActivityRepository(ISession session)
         {
-            var criteria = session.CreateCriteria<RecentActivityEntity>();
+            _session = session;
+        }
+
+        public virtual IList<RecentActivityEntity> Get()
+        {
+            var criteria = _session.CreateCriteria<RecentActivityEntity>();
             criteria = criteria.AddOrder(Order.Desc("CreatedAt"));
             criteria = criteria.AddOrder(Order.Desc("Id"));
             criteria = criteria.SetMaxResults(20);

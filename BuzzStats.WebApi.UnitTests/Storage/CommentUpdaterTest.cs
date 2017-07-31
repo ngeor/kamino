@@ -17,7 +17,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
 #pragma warning disable 0649
         private Mock<ISession> _mockSession;
         private Mock<StoryMapper> _mockStoryMapper;
-        private Mock<CommentRepository> _mockCommentRepository;
+        private Mock<ICommentRepository> _mockCommentRepository;
         private Mock<IMessageBus> _mockMessageBus;
         private CommentUpdater _commentUpdater;
 #pragma warning restore 0649
@@ -55,7 +55,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
 
             _mockStoryMapper.Setup(p => p.ToCommentEntity(story.Comments[0], null, storyEntity))
                 .Returns(commentEntities[0]);
-            _mockCommentRepository.Setup(p => p.GetByCommentId(_mockSession.Object, 42))
+            _mockCommentRepository.Setup(p => p.GetByCommentId(42))
                 .Returns((CommentEntity) null);
 
             // act

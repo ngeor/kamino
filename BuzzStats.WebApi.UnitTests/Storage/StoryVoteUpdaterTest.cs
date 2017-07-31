@@ -22,7 +22,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
         private Mock<StoryMapper> _mockStoryMapper;
         private Mock<IMessageBus> _mockMessageBus;
 
-        [MockBehavior(MockBehavior.Strict)] private Mock<StoryVoteRepository> _mockStoryVoteRepository;
+        [MockBehavior(MockBehavior.Strict)] private Mock<IStoryVoteRepository> _mockStoryVoteRepository;
 #pragma warning restore 0649
         private IClock _clock;
         private StoryVoteUpdater _storyVoteUpdater;
@@ -48,7 +48,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
 
             _mockStoryMapper.Setup(m => m.ToStoryVoteEntities(story, storyEntity))
                 .Returns(storyVoteEntities);
-            _mockStoryVoteRepository.Setup(r => r.Get(_mockSession.Object, storyEntity))
+            _mockStoryVoteRepository.Setup(r => r.Get(storyEntity))
                 .Returns(new List<StoryVoteEntity>());
 
             // act
@@ -79,7 +79,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
 
             _mockStoryMapper.Setup(m => m.ToStoryVoteEntities(story, storyEntity))
                 .Returns(storyVoteEntities);
-            _mockStoryVoteRepository.Setup(r => r.Get(_mockSession.Object, storyEntity)).Returns(
+            _mockStoryVoteRepository.Setup(r => r.Get(storyEntity)).Returns(
                 new List<StoryVoteEntity>
                 {
                     new StoryVoteEntity
@@ -109,7 +109,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
 
             _mockStoryMapper.Setup(m => m.ToStoryVoteEntities(story, storyEntity))
                 .Returns(new StoryVoteEntity[0]);
-            _mockStoryVoteRepository.Setup(r => r.Get(_mockSession.Object, storyEntity)).Returns(
+            _mockStoryVoteRepository.Setup(r => r.Get(storyEntity)).Returns(
                 new List<StoryVoteEntity>
                 {
                     existingStoryVoteEntity

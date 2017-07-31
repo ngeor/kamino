@@ -11,10 +11,10 @@ namespace BuzzStats.WebApi.Storage
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(CommentUpdater));
         private readonly StoryMapper _storyMapper;
-        private readonly CommentRepository _commentRepository;
+        private readonly ICommentRepository _commentRepository;
         private readonly IMessageBus _messageBus;
 
-        public CommentUpdater(StoryMapper storyMapper, CommentRepository commentRepository, IMessageBus messageBus)
+        public CommentUpdater(StoryMapper storyMapper, ICommentRepository commentRepository, IMessageBus messageBus)
         {
             _storyMapper = storyMapper;
             _commentRepository = commentRepository;
@@ -47,7 +47,7 @@ namespace BuzzStats.WebApi.Storage
 
         private CommentEntity SaveComment(ISession session, StoryEntity storyEntity, Comment comment, CommentEntity parentcoCommentEntity)
         {
-            var existingComment = _commentRepository.GetByCommentId(session, comment.CommentId);
+            var existingComment = _commentRepository.GetByCommentId(comment.CommentId);
             if (existingComment == null)
             {
                 CommentEntity commentEntity = _storyMapper.ToCommentEntity(comment, parentcoCommentEntity, storyEntity);

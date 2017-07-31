@@ -39,7 +39,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage.Repositories
             _mockRecentActivityCriteria.Setup(c => c.List<RecentActivityEntity>()).Returns(expected);
 
             // act
-            var result = _recentActivityRepository.Get(_mockSession.Object);
+            var result = _recentActivityRepository.Get();
 
             // assert
             Assert.AreEqual(expected, result);

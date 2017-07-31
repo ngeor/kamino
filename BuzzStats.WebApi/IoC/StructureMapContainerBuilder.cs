@@ -55,12 +55,10 @@ namespace BuzzStats.WebApi.IoC
                 x.For<ISessionManager>().Use<SessionManager>().Singleton();
 
                 // repositories
-                x.For<StoryRepository>().Use<StoryRepository>().Ctor<ISession>().Is<LazySession>();
-
-                x.For<IStoryRepository>()
-                    .Use(ctx => RepositoryInterceptor.Decorate<IStoryRepository>(
-                        ctx.GetInstance<StoryRepository>(),
-                        ctx.GetInstance<ISessionManager>()));
+                ConfigureRepository<IStoryRepository, StoryRepository>(x);
+                ConfigureRepository<ICommentRepository, CommentRepository>(x);
+                ConfigureRepository<IStoryVoteRepository, StoryVoteRepository>(x);
+                ConfigureRepository<IRecentActivityRepository, RecentActivityRepository>(x);
 
                 // AutoMapper
                 x.For<IMapper>().Use(ctx =>
@@ -73,6 +71,18 @@ namespace BuzzStats.WebApi.IoC
             });
 
             return container;
+        }
+
+        private void ConfigureRepository<TInterface, TClass>(ConfigurationExpression x)
+            where TInterface : class
+            where TClass : TInterface
+        {
+            x.For<TClass>().Use<TClass>().Ctor<ISession>().Is<LazySession>();
+            x.For<TInterface>()
+                .Use(ctx => RepositoryInterceptor.Decorate<TInterface>(
+                    ctx.GetInstance<TClass>(),
+                    ctx.GetInstance<ISessionManager>()
+                ));
         }
 
         private MapperConfiguration CreateMapperConfiguration() =>

@@ -23,8 +23,8 @@ namespace BuzzStats.WebApi.UnitTests.Storage
         private Mock<ISession> _mockSession;
         private Mock<IMapper> _mockMapper;
         private Mock<IUpdater> _mockUpdater;
-        private Mock<CommentRepository> _mockCommentRepository;
-        private Mock<RecentActivityRepository> _mockRecentActivityRepository;
+        private Mock<ICommentRepository> _mockCommentRepository;
+        private Mock<IRecentActivityRepository> _mockRecentActivityRepository;
 #pragma warning restore 0649
         private StorageClient _storageClient;
 
@@ -71,7 +71,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
                 }
             };
 
-            _mockCommentRepository.Setup(r => r.GetRecent(_mockSession.Object))
+            _mockCommentRepository.Setup(r => r.GetRecent())
                 .Returns(new List<CommentEntity>
                 {
                     commentEntity
@@ -100,7 +100,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage
             var recentActivity = new RecentActivity();
             _mockMapper.Setup(m => m.Map<RecentActivity>(recentActivityEntity))
                 .Returns(recentActivity);
-            _mockRecentActivityRepository.Setup(r => r.Get(_mockSession.Object))
+            _mockRecentActivityRepository.Setup(r => r.Get())
                 .Returns(Enumerable.Repeat(recentActivityEntity, 1).ToList());
 
             // act
