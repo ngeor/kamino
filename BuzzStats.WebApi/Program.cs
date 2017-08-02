@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using BuzzStats.WebApi.Crawl;
 using BuzzStats.WebApi.IoC;

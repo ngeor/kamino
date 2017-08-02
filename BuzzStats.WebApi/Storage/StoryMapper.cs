@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.Storage.Entities;
 

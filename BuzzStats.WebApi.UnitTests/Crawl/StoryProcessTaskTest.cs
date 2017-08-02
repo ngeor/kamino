@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using BuzzStats.WebApi.Crawl;
 using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.Parsing;

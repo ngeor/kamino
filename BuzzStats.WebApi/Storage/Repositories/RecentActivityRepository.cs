@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using BuzzStats.WebApi.Storage.Entities;
 using NHibernate;
 using NHibernate.Criterion;

@@ -1,4 +1,4 @@
-﻿using Castle.DynamicProxy;
+using Castle.DynamicProxy;
 using NGSoftware.Common;
 using NHibernate;
 using IInterceptor = Castle.DynamicProxy.IInterceptor;

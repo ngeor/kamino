@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using AutoMapper;
 using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.IoC;

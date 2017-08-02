@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.Storage;

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using BuzzStats.WebApi.Storage.Session;
 using BuzzStats.WebApi.UnitTests.TestHelpers;
 using Castle.DynamicProxy;

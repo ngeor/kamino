@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.IoC;
 using BuzzStats.WebApi.Storage;

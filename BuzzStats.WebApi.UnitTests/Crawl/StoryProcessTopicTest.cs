@@ -1,4 +1,4 @@
-﻿using BuzzStats.WebApi.Crawl;
+using BuzzStats.WebApi.Crawl;
 using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.UnitTests.TestHelpers;
 using Moq;

@@ -1,4 +1,4 @@
-﻿using BuzzStats.WebApi.Storage.Entities;
+using BuzzStats.WebApi.Storage.Entities;
 using BuzzStats.WebApi.Storage.Repositories;
 using BuzzStats.WebApi.UnitTests.Storage.TestHelpers;
 using BuzzStats.WebApi.UnitTests.TestHelpers;

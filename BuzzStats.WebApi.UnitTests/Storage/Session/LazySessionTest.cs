@@ -1,4 +1,4 @@
-﻿using BuzzStats.WebApi.Storage.Session;
+using BuzzStats.WebApi.Storage.Session;
 using BuzzStats.WebApi.UnitTests.TestHelpers;
 using Moq;
 using NHibernate;

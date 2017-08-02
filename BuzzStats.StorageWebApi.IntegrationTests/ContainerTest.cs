@@ -1,4 +1,4 @@
-﻿using BuzzStats.WebApi.IoC;
+using BuzzStats.WebApi.IoC;
 using NUnit.Framework;
 using StructureMap;
 

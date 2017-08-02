@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using BuzzStats.WebApi.Parsing;
 using Moq;
 using NGSoftware.Common.Configuration;

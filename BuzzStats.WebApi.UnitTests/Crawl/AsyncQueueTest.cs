@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using BuzzStats.WebApi.Crawl;
 using NUnit.Framework;
 

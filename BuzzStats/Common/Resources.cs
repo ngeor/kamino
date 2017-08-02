@@ -1,4 +1,4 @@
-﻿namespace BuzzStats.Common
+namespace BuzzStats.Common
 {
     using System;
 
