@@ -3,9 +3,12 @@ node_modules/
 
 # .NET
 *.suo
+*.user
 bin/
 obj/
 packages/
+.vs/
+UpgradeLog.htm
 
 # IntelliJ / Rider
 *.iml

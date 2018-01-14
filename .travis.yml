@@ -7,5 +7,5 @@ install:
 - nuget restore BuzzStats.sln
 - cd BuzzStats.WebApi && npm install && cd ..
 script:
-- xbuild /p:Configuration=Debug BuzzStats.sln
+- msbuild /p:Configuration=Debug BuzzStats.sln
 - cd BuzzStats.WebApi && gulp && cd ..
