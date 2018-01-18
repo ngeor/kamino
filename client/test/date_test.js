@@ -1,10 +1,10 @@
-import {parseDate, agoString} from './date';
-import {expect} from 'chai';
+import { parseDate, agoString } from '../src/date';
+import { expect } from 'chai';
 
 describe('date', () => {
     describe('parseDate', () => {
         it('should parse date', () => {
-            var date = parseDate('2017-06-07T18:29:38');
+            let date = parseDate('2017-06-07T18:29:38');
             expect(date).to.eql(new Date(2017, 5, 7, 18, 29, 38).getTime());
         });
     });
