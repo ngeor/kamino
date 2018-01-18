@@ -1,12 +1,22 @@
 language: csharp
 install:
+# we need nodeJS
 - nvm install node
 - nvm use node
-- cd server && nuget restore BuzzStats.sln && cd ..
-- cd client && npm install && cd ..
-script:
+# backend
 - cd server
-- msbuild /p:Configuration=Debug BuzzStats.sln
+- nuget restore BuzzStats.sln
+- nuget install NUnit.ConsoleRunner -Version 3.7.0
+# client
+- cd ../client
+- npm install
+- cd ..
+script:
+# build server
+- cd server
+- msbuild /p:Configuration=Release BuzzStats.sln
+- ./packages/NUnit.ConsoleRunner.3.7.0/tools/nunit-console.exe ./BuzzStats.WebApi.UnitTests/bin/Release/BuzzStats.WebApi.UnitTests.dll
+# build client
 - cd ../client
 - npm test
 - cd ..
