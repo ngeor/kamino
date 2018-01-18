@@ -1,5 +1,0 @@
-CREATE  TABLE `WebPage` (
-  `Url` VARCHAR(255) NOT NULL ,
-  `Plugin` VARCHAR(255) NOT NULL ,
-  PRIMARY KEY (`Url`) );
-
