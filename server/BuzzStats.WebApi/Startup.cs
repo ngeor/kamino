@@ -14,7 +14,7 @@ namespace BuzzStats.WebApi
             // Configure Web API for self-host. 
             HttpConfiguration config = new HttpConfiguration();
             config.DependencyResolver = new StructureMapDependencyResolver(ContainerHolder.Container);
-
+            config.EnableCors();
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
