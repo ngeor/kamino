@@ -6,10 +6,11 @@
   "scripts": {
     "watchify": "watchify -vd -p browserify-hmr -e src/main.js -o dist/build.js",
     "serve": "http-server -o -s -c 1 -a localhost",
-    "dev": "npm-run-all --parallel watchify serve",
-    "build": "cross-env NODE_ENV=production browserify -g envify src/main.js | uglifyjs -c warnings=false -m > dist/build.js",
+    "dev": "npm-run-all --parallel less watchify serve",
+    "build": "cross-env NODE_ENV=production npm run less && browserify -g envify src/main.js | uglifyjs -c warnings=false -m > dist/build.js",
     "test": "eslint --ext js,vue .",
-    "eslint-fix": "eslint --fix --ext js,vue ."
+    "eslint-fix": "eslint --fix --ext js,vue .",
+    "less": "lessc styles/app.less dist/app.css"
   },
   "dependencies": {
     "vue": "^2.5.13"
@@ -25,6 +26,7 @@
     "eslint": "^4.15.0",
     "eslint-plugin-vue": "^4.2.0",
     "http-server": "^0.11.1",
+    "less": "^2.7.3",
     "npm-run-all": "^4.1.2",
     "uglify-js": "^3.3.7",
     "vueify": "^9.4.1",
