@@ -15,7 +15,7 @@ script:
 # build server
 - cd server
 - msbuild /p:Configuration=Release BuzzStats.sln
-- ./testrunner/NUnit.ConsoleRunner.3.7.0/tools/nunit3-console.exe ./BuzzStats.WebApi.UnitTests/bin/Release/BuzzStats.WebApi.UnitTests.dll
+- mono ./testrunner/NUnit.ConsoleRunner.3.7.0/tools/nunit3-console.exe ./BuzzStats.WebApi.UnitTests/bin/Release/BuzzStats.WebApi.UnitTests.dll
 # build client
 - cd ../client
 - npm test
