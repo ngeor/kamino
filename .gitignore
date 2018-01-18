@@ -1,28 +1,4 @@
-# nodeJS
-node_modules/
-
-# .NET
-*.suo
-*.user
-bin/
-obj/
-packages/
-.vs/
-UpgradeLog.htm
-
-# IntelliJ / Rider
-*.iml
-.idea/.idea.BuzzStats/.idea/*
-!.idea/.idea.BuzzStats/.idea/runConfigurations/
-
-# Coverage report
-results.xml
-
-# NUnit report
-TestResult.xml
-
-# ReportGenerator
-coveragereport/
+.DS_Store
 
 # MySQL datbase files
 docker/mysql/data/
