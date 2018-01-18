@@ -3,6 +3,7 @@
   "description": "BuzzStats client",
   "author": "Nikolaos Georgiou <Nikolaos.Georgiou@gmail.com>",
   "private": true,
+  "version": "2.0.0-alpha",
   "scripts": {
     "watchify": "watchify -vd -p browserify-hmr -e src/main.js -o dist/build.js",
     "serve": "http-server -o -s -c 1 -a localhost",

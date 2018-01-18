@@ -7,10 +7,24 @@ export function parseDate(s) {
     return Date.parse(s);
 }
 
+/**
+ * Converts a numeric quantity into a string, taking into account singular and plural words.
+ * @param {number} value - The value to pluralize.
+ * @param {string} singular - The value to use for single quantities.
+ * @param {string} plural - The value to use when more than one quantity is used.
+ * @returns {string} The text representation.
+ */
 function pluralize(value, singular, plural) {
     return value === 1 ? singular : plural;
 }
 
+/**
+ * Converts a numeric age into a string, taking into account singular and plural words.
+ * @param {number} value - The value to pluralize.
+ * @param {string} singular - The value to use for single quantities.
+ * @param {string} plural - The value to use when more than one quantity is used.
+ * @returns {string} The text representation.
+ */
 function pluralizeAgo(value, singular, plural) {
     const truncatedValue = parseInt(value, 10);
     return truncatedValue + ' ' + pluralize(truncatedValue, singular, plural) + ' ago';

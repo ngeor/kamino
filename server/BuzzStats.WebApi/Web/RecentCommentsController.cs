@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using AutoMapper;
 using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.Storage;
 
 namespace BuzzStats.WebApi.Web
 {
+    [EnableCors("*", "*", "*")]
     public class RecentCommentsController : ApiController
     {
         private readonly IStorageClient _storageClient;
