@@ -47,7 +47,7 @@ namespace BuzzStats.WebApi.Storage.Session
         private void BuildSchema(Configuration cfg)
         {
             bool exportSchema = !string.IsNullOrWhiteSpace(_appSettings["ExportSchema"]);
-            new SchemaExport(cfg).Create(true, exportSchema);
+            new SchemaExport(cfg).Create(useStdOut: true, execute: exportSchema);
         }
 
         private string ConnectionString()

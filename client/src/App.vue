@@ -1,13 +1,19 @@
 <template>
     <div id="app">
-        <img src="http://vuejs.org/images/logo.png">
         <h1>{{ msg }}</h1>
+        <RecentActivity />
+        <footer>
+            Copyright 2010-{{ 1900 + new Date().getYear() }} Nikolaos Georgiou
+        </footer>
     </div>
 </template>
 
 <script>
+import RecentActivity from './RecentActivity.vue';
+
 export default {
     name: 'App',
+    components: { RecentActivity },
 
     /**
      * Returns the initial data.
@@ -20,35 +26,5 @@ export default {
 </script>
 
 <style scoped>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 
-img {
-  width: 200px;
-  height: 200px;
-}
-
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
 </style>
