@@ -6,7 +6,7 @@ install:
 # backend
 - cd server
 - nuget restore BuzzStats.sln
-- nuget install NUnit.ConsoleRunner -Version 3.7.0
+- nuget install NUnit.ConsoleRunner -Version 3.7.0 -OutputDirectory testrunner
 # client
 - cd ../client
 - npm install
@@ -15,7 +15,7 @@ script:
 # build server
 - cd server
 - msbuild /p:Configuration=Release BuzzStats.sln
-- ./packages/NUnit.ConsoleRunner.3.7.0/tools/nunit-console.exe ./BuzzStats.WebApi.UnitTests/bin/Release/BuzzStats.WebApi.UnitTests.dll
+- ./testrunner/NUnit.ConsoleRunner.3.7.0/tools/nunit-console.exe ./BuzzStats.WebApi.UnitTests/bin/Release/BuzzStats.WebApi.UnitTests.dll
 # build client
 - cd ../client
 - npm test

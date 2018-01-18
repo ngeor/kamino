@@ -3,7 +3,6 @@ BuzzStats collects data from Buzz in order to extract and present statistical
 information.
 
 [![Build Status](https://travis-ci.org/ngeor/BuzzStats.svg?branch=master)](https://travis-ci.org/ngeor/BuzzStats)
-[![Coverage Status](https://coveralls.io/repos/github/ngeor/BuzzStats/badge.svg?branch=master)](https://coveralls.io/github/ngeor/BuzzStats?branch=master)
 
 ## Development
 
