@@ -45,7 +45,9 @@ export default {
      * @returns {object} The initial data.
      */
     data() {
-        return { recentActivities: [] };
+        return {
+            recentActivities: []
+        };
     },
 
     /**
@@ -57,7 +59,9 @@ export default {
         }).catch(reason => alert(reason));
     },
 
-    methods: { recentActivityToText }
+    methods: {
+        recentActivityToText
+    }
 };
 </script>
 

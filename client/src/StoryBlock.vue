@@ -10,7 +10,9 @@
                 </tr>
             </thead>
             <tbody>
-                <Comment v-for="comment in story.comments"
+                <Comment
+                    v-for="comment in story.comments"
+                    :key="comment.id"
                     :comment="comment" />
             </tbody>
         </table>
@@ -21,19 +23,21 @@
 
 import Comment from './Comment.vue';
 
-const storyProp = {
-    type: Object,
-    default: function() {
-        return {
-            title: 'title'
-        }
-    }
-};
-
 export default {
     name: 'StoryBlock',
-    components: { Comment },
-    props: { story: storyProp }
+    components: {
+        Comment
+    },
+    props: {
+        story: {
+            type: Object,
+            default: () => {
+                return {
+                    title: 'title'
+                };
+            }
+        }
+    }
 };
 </script>
 

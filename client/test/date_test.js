@@ -4,7 +4,7 @@ import { expect } from 'chai';
 describe('date', () => {
     describe('parseDate', () => {
         it('should parse date', () => {
-            let date = parseDate('2017-06-07T18:29:38');
+            const date = parseDate('2017-06-07T18:29:38');
             expect(date).to.eql(new Date(2017, 5, 7, 18, 29, 38).getTime());
         });
     });

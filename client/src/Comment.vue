@@ -9,19 +9,21 @@
 <script>
 import { toAgo } from './date';
 
-const commentProp = {
-    type: Object,
-    default: function() {
-        return {
-            username: 'user'
-        };
-    }
-};
-
 export default {
     name: 'Comment',
-    props: { comment: commentProp },
-    methods: { toAgo }
+    props: {
+        comment: {
+            type: Object,
+            default: () => {
+                return {
+                    username: 'user'
+                };
+            }
+        }
+    },
+    methods: {
+        toAgo
+    }
 };
 </script>
 

@@ -31,38 +31,64 @@ function pluralizeAgo(value, singular, plural) {
 }
 
 /**
+ * Formats a number of days as text.
+ * @param {number} days - The number of days.
+ * @returns {string} The text representation.
+ * @private
+ */
+function agoDays(days) {
+    const daysInWeek = 7;
+    const daysInMonth = 30;
+
+    const weeks = days / daysInWeek;
+    if (weeks < 1) {
+        return pluralizeAgo(days, 'day', 'days');
+    }
+
+    const months = days / daysInMonth;
+    if (months < 1) {
+        return pluralizeAgo(weeks, 'week', 'weeks');
+    }
+
+    return pluralizeAgo(months, 'month', 'months');
+}
+
+/**
+ * Formats a number of hours as text.
+ * @param {number} hours - The number of hours.
+ * @returns {string} The text representation.
+ * @private
+ */
+function agoHours(hours) {
+    const hoursInDay = 24;
+    const days = hours / hoursInDay;
+    if (days < 1) {
+        return pluralizeAgo(hours, 'hour', 'hours');
+    }
+
+    return agoDays(days);
+}
+
+/**
  * Converts the given amount of milliseconds to a string that states
  *     how much time has passed since that date.
  * @param {number} milliseconds - The amount of milliseconds.
  * @returns {string} A human friendly string.
  */
 export function agoString(milliseconds) {
-    const minutes = milliseconds / 1000 / 60;
+    const millisInMinute = 60000;
+    const minutes = milliseconds / millisInMinute;
     if (minutes < 1) {
         return 'a few seconds ago';
     }
 
-    const hours = minutes / 60;
+    const minutesInHours = 60;
+    const hours = minutes / minutesInHours;
     if (hours < 1) {
         return pluralizeAgo(minutes, 'minute', 'minutes');
     }
 
-    const days = hours / 24;
-    if (days < 1) {
-        return pluralizeAgo(hours, 'hour', 'hours');
-    }
-
-    const weeks = days / 7;
-    if (weeks < 1) {
-        return pluralizeAgo(days, 'day', 'days');
-    }
-
-    const months = days / 30;
-    if (months < 1) {
-        return pluralizeAgo(weeks, 'week', 'weeks');
-    }
-
-    return pluralizeAgo(months, 'month', 'months');
+    return agoHours(hours);
 }
 
 /**

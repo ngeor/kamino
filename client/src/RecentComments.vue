@@ -13,14 +13,18 @@ import StoryBlock from './StoryBlock.vue';
 
 export default {
     name: 'RecentComments',
-    components: { StoryBlock },
+    components: {
+        StoryBlock
+    },
 
     /**
      * Returns the initial data.
      * @returns {object} The initial data.
      */
     data() {
-        return { recentComments: [] };
+        return {
+            recentComments: []
+        };
     },
 
     /**

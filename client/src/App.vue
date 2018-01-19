@@ -49,7 +49,9 @@ export default {
      * @returns {object} The initial data.
      */
     data() {
-        return { version: require('../package.json').version };
+        return {
+            version: require('../package.json').version
+        };
     }
 };
 </script>

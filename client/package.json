@@ -13,7 +13,8 @@
     "eslint-fix": "eslint --fix --ext js,vue .",
     "less": "lessc styles/app.less dist/app.css",
     "mocha": "mocha --require babel-core/register",
-    "test": "npm-run-all --parallel eslint mocha"
+    "test": "npm-run-all --parallel eslint mocha",
+    "eslint-watch": "nodemon -e js,vue,yml node_modules/.bin/eslint -- --ext js,vue ."
   },
   "dependencies": {
     "vue": "^2.5.13"
@@ -32,6 +33,7 @@
     "http-server": "^0.11.1",
     "less": "^2.7.3",
     "mocha": "^5.0.0",
+    "nodemon": "^1.14.11",
     "npm-run-all": "^4.1.2",
     "uglify-js": "^3.3.7",
     "vueify": "^9.4.1",
