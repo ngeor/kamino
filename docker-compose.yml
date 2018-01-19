@@ -1,7 +1,7 @@
 version: '3'
 services:
   mysql:
-    build: docker/mysql
+    image: mysql
     ports:
       - 3306:3306
     environment:
@@ -11,3 +11,4 @@ services:
       - MYSQL_PASSWORD=#buzzstats#
     volumes:
       - ./docker/mysql/data:/var/lib/mysql
+      - ./docker/mysql/conf.d:/etc/mysql/conf.d
