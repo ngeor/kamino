@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  buzzstats.listingester:
+    image: buzzstats.listingester
+    build:
+      context: .
+      dockerfile: BuzzStats.ListIngester/Dockerfile
