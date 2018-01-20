@@ -8,8 +8,12 @@ install:
 - cd server
 - nuget restore BuzzStats.sln
 - nuget install NUnit.ConsoleRunner -Version 3.7.0 -OutputDirectory testrunner
+- cd BuzzStats.ListIngester
+- dotnet restore
+- cd ..
+- cd ..
 # client
-- cd ../client
+- cd client
 - npm install
 - cd ..
 script:
