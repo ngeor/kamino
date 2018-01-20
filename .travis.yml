@@ -7,16 +7,8 @@ install:
 # backend
 - cd server
 - nuget restore BuzzStats.sln
+- dotnet restore BuzzStats.sln
 - nuget install NUnit.ConsoleRunner -Version 3.7.0 -OutputDirectory testrunner
-- cd BuzzStats.ListIngester
-- dotnet restore
-- cd ..
-- cd BuzzStats.ListIngester.UnitTests
-- dotnet restore
-- cd ..
-- cd BuzzStats.Parsing.UnitTests
-- dotnet restore
-- cd ..
 - cd ..
 # client
 - cd client
@@ -27,10 +19,16 @@ script:
 - cd server
 - msbuild /p:Configuration=Release BuzzStats.sln
 - mono ./testrunner/NUnit.ConsoleRunner.3.7.0/tools/nunit3-console.exe ./BuzzStats.WebApi.UnitTests/bin/Release/BuzzStats.WebApi.UnitTests.dll
+- cd BuzzStats.ChangeTracker.UnitTests
+- dotnet test
+- cd ..
 - cd BuzzStats.ListIngester.UnitTests
 - dotnet test
 - cd ..
 - cd BuzzStats.Parsing.UnitTests
+- dotnet test
+- cd ..
+- cd BuzzStats.StoryIngester.UnitTests
 - dotnet test
 - cd ..
 # build client
