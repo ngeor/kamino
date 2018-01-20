@@ -19,21 +19,21 @@ namespace BuzzStats.WebApi.Crawl
         {
             _queue.Push(storyListingSummary);
 
-            var config = new Dictionary<string, object>
-            {
-                { "bootstrap.servers", "192.168.99.100" }
-            };
+            //var config = new Dictionary<string, object>
+            //{
+            //    { "bootstrap.servers", "192.168.99.100" }
+            //};
 
-            using (var producer = new Producer<Null, string>(
-                config,
-                null,
-                new StringSerializer(Encoding.UTF8)
-                ))
-            {
-                // Blocking call!
-                var result = producer.ProduceAsync("StoryFound", null, "Story " + storyListingSummary.StoryId + " found").Result;
+            //using (var producer = new Producer<Null, string>(
+            //    config,
+            //    null,
+            //    new StringSerializer(Encoding.UTF8)
+            //    ))
+            //{
+            //    // Blocking call!
+            //    var result = producer.ProduceAsync("StoryFound", null, "Story " + storyListingSummary.StoryId + " found").Result;
 
-            }
+            //}
         }
     }
 }
