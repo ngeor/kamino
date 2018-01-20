@@ -9,6 +9,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.WebApi.UnitTests"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.ListIngester", "BuzzStats.ListIngester\BuzzStats.ListIngester.csproj", "{C2042414-B5C8-4EAC-B3A9-A6F5337E4D3F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{89C6EED6-83CB-4B20-89FF-3CB2EC704205}"
+	ProjectSection(SolutionItems) = preProject
+		..\.travis.yml = ..\.travis.yml
+		..\CHANGELOG.md = ..\CHANGELOG.md
+		..\coverage.ps1 = ..\coverage.ps1
+		..\DatabaseChanges.txt = ..\DatabaseChanges.txt
+		..\docker-compose.yml = ..\docker-compose.yml
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.ListIngester.UnitTests", "BuzzStats.ListIngester.UnitTests\BuzzStats.ListIngester.UnitTests.csproj", "{528E23EA-E6C9-4720-855D-6130FAE6BB6A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +39,10 @@ Global
 		{C2042414-B5C8-4EAC-B3A9-A6F5337E4D3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2042414-B5C8-4EAC-B3A9-A6F5337E4D3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2042414-B5C8-4EAC-B3A9-A6F5337E4D3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{528E23EA-E6C9-4720-855D-6130FAE6BB6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{528E23EA-E6C9-4720-855D-6130FAE6BB6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{528E23EA-E6C9-4720-855D-6130FAE6BB6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{528E23EA-E6C9-4720-855D-6130FAE6BB6A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

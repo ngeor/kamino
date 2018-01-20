@@ -11,6 +11,9 @@ install:
 - cd BuzzStats.ListIngester
 - dotnet restore
 - cd ..
+- cd BuzzStats.ListIngester.UnitTests
+- dotnet restore
+- cd ..
 - cd ..
 # client
 - cd client
@@ -21,6 +24,9 @@ script:
 - cd server
 - msbuild /p:Configuration=Release BuzzStats.sln
 - mono ./testrunner/NUnit.ConsoleRunner.3.7.0/tools/nunit3-console.exe ./BuzzStats.WebApi.UnitTests/bin/Release/BuzzStats.WebApi.UnitTests.dll
+- cd BuzzStats.ListIngester.UnitTests
+- dotnet test
+- cd ..
 # build client
 - cd ../client
 - npm test
