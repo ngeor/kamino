@@ -11,10 +11,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using BuzzStats.WebApi.DTOs;
+using BuzzStats.Parsing.DTOs;
 using NodaTime;
 
-namespace BuzzStats.WebApi.Parsing
+namespace BuzzStats.Parsing
 {
     public sealed class Parser : IParser
     {

@@ -1,7 +1,8 @@
 using System.Threading.Tasks;
+using BuzzStats.Parsing;
+using BuzzStats.Parsing.DTOs;
 using BuzzStats.WebApi.Crawl;
 using BuzzStats.WebApi.DTOs;
-using BuzzStats.WebApi.Parsing;
 using BuzzStats.WebApi.Storage;
 using BuzzStats.WebApi.UnitTests.TestHelpers;
 using Moq;

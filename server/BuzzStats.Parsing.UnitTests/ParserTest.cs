@@ -1,15 +1,15 @@
 using System;
 using System.Linq;
-using BuzzStats.WebApi.DTOs;
-using BuzzStats.WebApi.Parsing;
+using BuzzStats.Parsing;
+using BuzzStats.Parsing.DTOs;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NodaTime;
 using NodaTime.Extensions;
 using NodaTime.Testing;
-using NUnit.Framework;
 
-namespace BuzzStats.WebApi.UnitTests.Parsing
+namespace BuzzStats.Parsing.UnitTests
 {
-    [TestFixture]
+    [TestClass]
     public class ParserTest
     {
         public enum KnownStoryCategory
@@ -25,14 +25,14 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
         private Parser _parser;
         private IClock _clock;
 
-        [SetUp]
+        [TestInitialize]
         public void SetUp()
         {
             _clock = new FakeClock(Instant.FromUtc(2017, 7, 30, 19, 31));
             _parser = new Parser(_clock);
         }
 
-        [Test]
+        [TestMethod]
         public void Bug_Story59806()
         {
             string storyHtml = LoadTestData("bug59806");
@@ -46,7 +46,7 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
             Assert.AreEqual((int) KnownStoryCategory.Misc, story.Category);
         }
 
-        [Test]
+        [TestMethod]
         public void ParseBurriedComment()
         {
             string html = LoadTestData("BurriedComment");
@@ -111,7 +111,7 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
             AssertParsedComment(story.Comments.ElementAt(13), "you", 0, 0, false, "00:17");
         }
 
-        [Test]
+        [TestMethod]
         public void ParseDateTime()
         {
             Assert.AreEqual(null, Parser.ToTimeSpan("πριν abc"));
@@ -157,16 +157,16 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
                 Parser.ToTimeSpan("πριν 21 μέρες 5 ώρες 42 λεπτά"));
         }
 
-        [Test]
+        [TestMethod]
         public void ParseHomepageThroughVodafone()
         {
             string html = LoadTestData("homepage_vodafone");
             Assert.IsNotNull(html);
             var ids = _parser.ParseListingPage(html).ToArray();
-            Assert.Greater(ids.Length, 0);
+            Assert.IsTrue(ids.Length > 0);
         }
 
-        [Test]
+        [TestMethod]
         public void ParseRemovedStory()
         {
             var story = _parser.ParseStoryPage(LoadTestData("RemovedStory"), 42);
@@ -176,7 +176,7 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
             Assert.IsTrue(story.IsRemoved);
         }
 
-        [Test]
+        [TestMethod]
         public void ParseStory()
         {
             string storyHtml = LoadTestData("Story");
@@ -216,14 +216,14 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
                 "SLY",
                 "dytistonniptiron"
             };
-            Assert.That(expectedVoters.All(expectedVoter => story.Voters.Any(v => v == expectedVoter)), "Voter");
+            Assert.IsTrue(expectedVoters.All(expectedVoter => story.Voters.Any(v => v == expectedVoter)), "Voter");
 
             Assert.AreEqual((int) KnownStoryCategory.Blogs, story.Category);
 
-            Assert.Greater(story.Comments.Count(), 0);
+            Assert.IsTrue(story.Comments.Count() > 0);
         }
 
-        [Test]
+        [TestMethod]
         public void ParseStory79444ThroughVodafone()
         {
             string html = LoadTestData("79444");
@@ -242,7 +242,7 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
             return 1 + c.Comments.Select(TotalCommentCount).Sum();
         }
 
-        [Test]
+        [TestMethod]
         public void ParseStory_7Votes_5Comments()
         {
             string storyHtml = LoadTestData("Story7Votes5Comments");
@@ -266,7 +266,7 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
                 "dytistonniptiron"
             };
 
-            Assert.That(expectedVoters.All(expectedVoter => story.Voters.Any(v => v == expectedVoter)), "Voter");
+            Assert.IsTrue(expectedVoters.All(expectedVoter => story.Voters.Any(v => v == expectedVoter)), "Voter");
             Assert.AreEqual(114, _clock.GetCurrentInstant().Minus(story.CreatedAt.ToInstant()).TotalMinutes);
 
             Assert.IsNotNull(story.Comments);
@@ -279,7 +279,7 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
             AssertParsedComment(story.Comments.ElementAt(1).Comments.ElementAt(0), "dkamen", 2, 0, false, 37, 0);
         }
 
-        [Test]
+        [TestMethod]
         public void ParseStory_7Votes_5Comments_9Votes_13Comments()
         {
             string storyHtml = LoadTestData("Story7Votes5Comments9Votes13Comments");
@@ -298,7 +298,7 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
                 "SLY", "tanevramou"
             };
 
-            Assert.That(expectedVoters.All(expectedVoter => story.Voters.Any(v => v == expectedVoter)), "Voter");
+            Assert.IsTrue(expectedVoters.All(expectedVoter => story.Voters.Any(v => v == expectedVoter)), "Voter");
             Assert.AreEqual(180, _clock.GetCurrentInstant().Minus(story.CreatedAt.ToInstant()).TotalMinutes);
 
             Assert.IsNotNull(story.Comments);
@@ -319,7 +319,7 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
             AssertParsedComment(story.Comments.ElementAt(3), "tanevramou", 0, 0, false, 7, 0);
         }
 
-        [Test]
+        [TestMethod]
         public void ParseUpcomingPage_StoryIds()
         {
             string html = LoadTestData("Upcoming");
@@ -351,7 +351,7 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
             }, storyIds);
         }
 
-        [Test]
+        [TestMethod]
         public void TestCanParseCommentVotes()
         {
             string html = LoadTestData("SingleStoryDownVoteDisabled");
@@ -365,7 +365,7 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
             Assert.AreEqual(0, story.Comments.ElementAt(1).VotesDown);
         }
 
-        [Test]
+        [TestMethod]
         public void TestCanParseGoldenComments()
         {
             // it seems that child comments of gold comments ( > 20 votes ) are not parsed correctly
@@ -390,7 +390,7 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
             AssertCommentators(story, commentators);
         }
 
-        [Test]
+        [TestMethod]
         public void TestCanParseRecursiveBuzz()
         {
             // test if it can parse a buzz that points to itself
@@ -418,7 +418,7 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
             int minutes, int childrenCommentCount)
         {
             Assert.IsNotNull(comment);
-            Assert.Greater(comment.CommentId, 0);
+            Assert.IsTrue(comment.CommentId > 0);
             Assert.AreEqual(username, comment.Username);
             Assert.AreEqual(childrenCommentCount, comment.Comments.Count());
             Assert.AreEqual(votesUp, comment.VotesUp);

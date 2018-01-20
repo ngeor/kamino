@@ -57,11 +57,11 @@
     <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4">
       <HintPath>..\packages\NHibernate.4.0.0.4000\lib\net40\NHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="NodaTime, Version=2.2.0.0, Culture=neutral, PublicKeyToken=4226afe0d9b296d1">
-      <HintPath>..\packages\NodaTime.2.2.0\lib\net45\NodaTime.dll</HintPath>
+    <Reference Include="NodaTime, Version=2.2.3.0, Culture=neutral, PublicKeyToken=4226afe0d9b296d1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NodaTime.2.2.3\lib\net45\NodaTime.dll</HintPath>
     </Reference>
-    <Reference Include="NodaTime.Testing, Version=2.2.0.0, Culture=neutral, PublicKeyToken=4226afe0d9b296d1">
-      <HintPath>..\packages\NodaTime.Testing.2.2.0\lib\net45\NodaTime.Testing.dll</HintPath>
+    <Reference Include="NodaTime.Testing, Version=2.2.3.0, Culture=neutral, PublicKeyToken=4226afe0d9b296d1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NodaTime.Testing.2.2.3\lib\net45\NodaTime.Testing.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=3.7.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb">
       <HintPath>..\packages\NUnit.3.7.1\lib\net45\nunit.framework.dll</HintPath>
@@ -82,9 +82,6 @@
     <Compile Include="Crawl\ListingTaskTest.cs" />
     <Compile Include="Crawl\StoryProcessTaskTest.cs" />
     <Compile Include="Crawl\StoryProcessTopicTest.cs" />
-    <Compile Include="Parsing\ParserTest.cs" />
-    <Compile Include="Parsing\ResourceLoader.cs" />
-    <Compile Include="Parsing\UrlProviderTest.cs" />
     <Compile Include="Storage\AutoMapperTest.cs" />
     <Compile Include="Storage\CommentUpdaterTest.cs" />
     <Compile Include="Storage\Repositories\CommentRepositoryTest.cs" />
@@ -112,31 +109,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BuzzStats.Parsing\BuzzStats.Parsing.csproj">
+      <Project>{db5b7f3e-f135-4a27-962c-c0aabcfdd966}</Project>
+      <Name>BuzzStats.Parsing</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BuzzStats.WebApi\BuzzStats.WebApi.csproj">
       <Project>{7b2e2d42-c462-405f-9505-e89f546e96c6}</Project>
       <Name>BuzzStats.WebApi</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="TestData\79444.txt" />
-    <EmbeddedResource Include="TestData\81065.html" />
-    <EmbeddedResource Include="TestData\82908.html" />
-    <EmbeddedResource Include="TestData\bug59806.txt" />
-    <EmbeddedResource Include="TestData\BugGoldenComments.txt" />
-    <EmbeddedResource Include="TestData\BugRecursiveBuzz.txt" />
-    <EmbeddedResource Include="TestData\BurriedComment.txt" />
-    <EmbeddedResource Include="TestData\Comment.txt" />
-    <EmbeddedResource Include="TestData\enupc.html" />
-    <EmbeddedResource Include="TestData\home.html" />
-    <EmbeddedResource Include="TestData\homepage_vodafone.txt" />
-    <EmbeddedResource Include="TestData\RemovedStory.txt" />
-    <EmbeddedResource Include="TestData\SingleStoryDownVoteDisabled.txt" />
-    <EmbeddedResource Include="TestData\Story.txt" />
-    <EmbeddedResource Include="TestData\Story7Votes5Comments.txt" />
-    <EmbeddedResource Include="TestData\Story7Votes5Comments9Votes13Comments.txt" />
-    <EmbeddedResource Include="TestData\tech.html" />
-    <EmbeddedResource Include="TestData\upcoming.html" />
-    <EmbeddedResource Include="TestData\Upcoming.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

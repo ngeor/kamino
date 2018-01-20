@@ -81,8 +81,8 @@
     <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4">
       <HintPath>..\packages\NHibernate.4.0.0.4000\lib\net40\NHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="NodaTime, Version=2.2.0.0, Culture=neutral, PublicKeyToken=4226afe0d9b296d1">
-      <HintPath>..\packages\NodaTime.2.2.0\lib\net45\NodaTime.dll</HintPath>
+    <Reference Include="NodaTime, Version=2.2.3.0, Culture=neutral, PublicKeyToken=4226afe0d9b296d1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NodaTime.2.2.3\lib\net45\NodaTime.dll</HintPath>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -123,24 +123,13 @@
     <Compile Include="Crawl\StoryProcessTask.cs" />
     <Compile Include="Crawl\StoryProcessTopic.cs" />
     <Compile Include="Crawl\TaskLoop.cs" />
-    <Compile Include="DTOs\Comment.cs" />
     <Compile Include="DTOs\CommentWithStory.cs" />
     <Compile Include="DTOs\RecentActivity.cs" />
     <Compile Include="DTOs\RecentComment.cs" />
-    <Compile Include="DTOs\Story.cs" />
-    <Compile Include="DTOs\StoryListingSummary.cs" />
     <Compile Include="DTOs\StoryWithRecentComments.cs" />
     <Compile Include="IoC\ContainerHolder.cs" />
     <Compile Include="IoC\StructureMapContainerBuilder.cs" />
     <Compile Include="IoC\StructureMapDependencyResolver.cs" />
-    <Compile Include="Parsing\IParser.cs" />
-    <Compile Include="Parsing\IParserClient.cs" />
-    <Compile Include="Parsing\IUrlProvider.cs" />
-    <Compile Include="Parsing\Parser.cs" />
-    <Compile Include="Parsing\ParserClient.cs" />
-    <Compile Include="Parsing\ParserFailedException.cs" />
-    <Compile Include="Parsing\StoryListing.cs" />
-    <Compile Include="Parsing\UrlProvider.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -188,6 +177,12 @@
     </None>
     <None Include="Dockerfile" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BuzzStats.Parsing\BuzzStats.Parsing.csproj">
+      <Project>{db5b7f3e-f135-4a27-962c-c0aabcfdd966}</Project>
+      <Name>BuzzStats.Parsing</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

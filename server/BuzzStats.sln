@@ -1,10 +1,31 @@
-﻿Microsoft Visual Studio Solution File, Format Version 12.00
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2020
+VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.WebApi", "BuzzStats.WebApi\BuzzStats.WebApi.csproj", "{7B2E2D42-C462-405F-9505-E89F546E96C6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.WebApi.UnitTests", "BuzzStats.WebApi.UnitTests\BuzzStats.WebApi.UnitTests.csproj", "{4AB4FD69-6600-4641-A6A4-EB844F1C530D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuzzStats.ListIngester", "BuzzStats.ListIngester\BuzzStats.ListIngester.csproj", "{C2042414-B5C8-4EAC-B3A9-A6F5337E4D3F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{89C6EED6-83CB-4B20-89FF-3CB2EC704205}"
+	ProjectSection(SolutionItems) = preProject
+		..\.travis.yml = ..\.travis.yml
+		..\CHANGELOG.md = ..\CHANGELOG.md
+		..\coverage.ps1 = ..\coverage.ps1
+		..\DatabaseChanges.txt = ..\DatabaseChanges.txt
+		..\docker-compose.yml = ..\docker-compose.yml
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuzzStats.ListIngester.UnitTests", "BuzzStats.ListIngester.UnitTests\BuzzStats.ListIngester.UnitTests.csproj", "{528E23EA-E6C9-4720-855D-6130FAE6BB6A}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{F813D7CD-4B2D-4A00-A071-661BFA990B2B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuzzStats.Parsing", "BuzzStats.Parsing\BuzzStats.Parsing.csproj", "{DB5B7F3E-F135-4A27-962C-C0AABCFDD966}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.Parsing.UnitTests", "BuzzStats.Parsing.UnitTests\BuzzStats.Parsing.UnitTests.csproj", "{EDCF700C-C3B2-46FC-8A9B-84B1647E8C1B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +41,26 @@ Global
 		{4AB4FD69-6600-4641-A6A4-EB844F1C530D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4AB4FD69-6600-4641-A6A4-EB844F1C530D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4AB4FD69-6600-4641-A6A4-EB844F1C530D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2042414-B5C8-4EAC-B3A9-A6F5337E4D3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2042414-B5C8-4EAC-B3A9-A6F5337E4D3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2042414-B5C8-4EAC-B3A9-A6F5337E4D3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2042414-B5C8-4EAC-B3A9-A6F5337E4D3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{528E23EA-E6C9-4720-855D-6130FAE6BB6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{528E23EA-E6C9-4720-855D-6130FAE6BB6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{528E23EA-E6C9-4720-855D-6130FAE6BB6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{528E23EA-E6C9-4720-855D-6130FAE6BB6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F813D7CD-4B2D-4A00-A071-661BFA990B2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F813D7CD-4B2D-4A00-A071-661BFA990B2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F813D7CD-4B2D-4A00-A071-661BFA990B2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F813D7CD-4B2D-4A00-A071-661BFA990B2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB5B7F3E-F135-4A27-962C-C0AABCFDD966}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB5B7F3E-F135-4A27-962C-C0AABCFDD966}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB5B7F3E-F135-4A27-962C-C0AABCFDD966}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB5B7F3E-F135-4A27-962C-C0AABCFDD966}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDCF700C-C3B2-46FC-8A9B-84B1647E8C1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDCF700C-C3B2-46FC-8A9B-84B1647E8C1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDCF700C-C3B2-46FC-8A9B-84B1647E8C1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDCF700C-C3B2-46FC-8A9B-84B1647E8C1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

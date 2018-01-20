@@ -1,8 +1,8 @@
+using BuzzStats.Parsing.DTOs;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BuzzStats.WebApi.DTOs;
 
-namespace BuzzStats.WebApi.Parsing
+namespace BuzzStats.Parsing
 {
     public interface IParserClient
     {

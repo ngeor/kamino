@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using BuzzStats.WebApi.Parsing;
+using BuzzStats.Parsing;
 using log4net;
 
 namespace BuzzStats.WebApi.Crawl

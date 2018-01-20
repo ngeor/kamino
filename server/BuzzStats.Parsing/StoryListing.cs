@@ -1,4 +1,4 @@
-namespace BuzzStats.WebApi.Parsing
+namespace BuzzStats.Parsing
 {
     public enum StoryListing
     {

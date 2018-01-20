@@ -1,4 +1,5 @@
 language: csharp
+dotnet: 2.0.0
 install:
 # we need nodeJS
 - nvm install node
@@ -7,8 +8,18 @@ install:
 - cd server
 - nuget restore BuzzStats.sln
 - nuget install NUnit.ConsoleRunner -Version 3.7.0 -OutputDirectory testrunner
+- cd BuzzStats.ListIngester
+- dotnet restore
+- cd ..
+- cd BuzzStats.ListIngester.UnitTests
+- dotnet restore
+- cd ..
+- cd BuzzStats.Parsing.UnitTests
+- dotnet restore
+- cd ..
+- cd ..
 # client
-- cd ../client
+- cd client
 - npm install
 - cd ..
 script:
@@ -16,6 +27,12 @@ script:
 - cd server
 - msbuild /p:Configuration=Release BuzzStats.sln
 - mono ./testrunner/NUnit.ConsoleRunner.3.7.0/tools/nunit3-console.exe ./BuzzStats.WebApi.UnitTests/bin/Release/BuzzStats.WebApi.UnitTests.dll
+- cd BuzzStats.ListIngester.UnitTests
+- dotnet test
+- cd ..
+- cd BuzzStats.Parsing.UnitTests
+- dotnet test
+- cd ..
 # build client
 - cd ../client
 - npm test

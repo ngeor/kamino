@@ -2,7 +2,7 @@ using System;
 using AutoMapper;
 using BuzzStats.WebApi.Crawl;
 using BuzzStats.WebApi.DTOs;
-using BuzzStats.WebApi.Parsing;
+using BuzzStats.Parsing;
 using BuzzStats.WebApi.Storage;
 using BuzzStats.WebApi.Storage.Repositories;
 using BuzzStats.WebApi.Storage.Session;
@@ -13,6 +13,7 @@ using NGSoftware.Common.Messaging;
 using NHibernate;
 using NodaTime;
 using StructureMap;
+using BuzzStats.Parsing.DTOs;
 
 namespace BuzzStats.WebApi.IoC
 {
@@ -33,7 +34,8 @@ namespace BuzzStats.WebApi.IoC
                 x.For<IAppSettings>().Use(() => AppSettingsFactory.DefaultWithEnvironmentOverride());
 
                 // parsing
-                x.For<IUrlProvider>().Use<UrlProvider>();
+                x.For<IUrlProvider>()
+                    .Use(ctx => new UrlProvider(ctx.GetInstance<IAppSettings>()["BuzzServerUrl"]));
                 x.For<IParser>().Use<Parser>();
 
                 // crawl

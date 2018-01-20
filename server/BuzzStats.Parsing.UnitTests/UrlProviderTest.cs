@@ -1,60 +1,56 @@
 using System;
-using BuzzStats.WebApi.Parsing;
-using Moq;
-using NGSoftware.Common.Configuration;
-using NUnit.Framework;
+using BuzzStats.Parsing;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BuzzStats.WebApi.UnitTests.Parsing
+namespace BuzzStats.Parsing.UnitTests
 {
-    [TestFixture]
+    [TestClass]
     public class UrlProviderTest
     {
-        private IAppSettings _appSettings;
         private IUrlProvider _urlProvider;
 
-        [SetUp]
+        [TestInitialize]
         public void SetUp()
         {
-            _appSettings = Mock.Of<IAppSettings>(x => x["BuzzServerUrl"] == "http://test.com/");
-            _urlProvider = new UrlProvider(_appSettings);
+            _urlProvider = new UrlProvider("http://test.com/");
         }
 
-        [Test]
+        [TestMethod]
         public void ListingUrl_Home()
         {
             var listingUrl = _urlProvider.ListingUrl(StoryListing.Home);
             Assert.AreEqual("http://test.com/", listingUrl);
         }
 
-        [Test]
+        [TestMethod]
         public void ListingUrl_Upcoming()
         {
             var listingUrl = _urlProvider.ListingUrl(StoryListing.Upcoming);
             Assert.AreEqual("http://test.com/upcoming.php", listingUrl);
         }
 
-        [Test]
+        [TestMethod]
         public void ListingUrl_EnglishUpcoming()
         {
             var listingUrl = _urlProvider.ListingUrl(StoryListing.EnglishUpcoming);
             Assert.AreEqual("http://test.com/enupc.php", listingUrl);
         }
         
-        [Test]
+        [TestMethod]
         public void ListingUrl_Tech()
         {
             var listingUrl = _urlProvider.ListingUrl(StoryListing.Tech);
             Assert.AreEqual("http://test.com/tech.php", listingUrl);
         }
 
-        [Test]
+        [TestMethod]
         public void ListingUrl_Home_SecondPage()
         {
             var listingUrl = _urlProvider.ListingUrl(StoryListing.Home, 1);
             Assert.AreEqual("http://test.com/?page=2", listingUrl);
         }
 
-        [Test]
+        [TestMethod]
         public void ListingUrl_AllEnumsAreHandled()
         {
             foreach (StoryListing storyListing in Enum.GetValues(typeof(StoryListing)))
@@ -63,14 +59,14 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
             }
         }
 
-        [Test]
+        [TestMethod]
         public void StoryUrl()
         {
             var storyUrl = _urlProvider.StoryUrl(42);
             Assert.AreEqual("http://test.com/story.php?id=42", storyUrl);
         }
         
-        [Test]
+        [TestMethod]
         public void StoryUrl_WithComment()
         {
             var storyUrl = _urlProvider.StoryUrl(42, 100);

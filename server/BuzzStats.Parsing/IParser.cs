@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using BuzzStats.WebApi.DTOs;
+using BuzzStats.Parsing.DTOs;
 
-namespace BuzzStats.WebApi.Parsing
+namespace BuzzStats.Parsing
 {
     public interface IParser
     {
