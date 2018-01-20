@@ -14,6 +14,9 @@ install:
 - cd BuzzStats.ListIngester.UnitTests
 - dotnet restore
 - cd ..
+- cd BuzzStats.Parsing.UnitTests
+- dotnet restore
+- cd ..
 - cd ..
 # client
 - cd client
@@ -25,6 +28,9 @@ script:
 - msbuild /p:Configuration=Release BuzzStats.sln
 - mono ./testrunner/NUnit.ConsoleRunner.3.7.0/tools/nunit3-console.exe ./BuzzStats.WebApi.UnitTests/bin/Release/BuzzStats.WebApi.UnitTests.dll
 - cd BuzzStats.ListIngester.UnitTests
+- dotnet test
+- cd ..
+- cd BuzzStats.Parsing.UnitTests
 - dotnet test
 - cd ..
 # build client

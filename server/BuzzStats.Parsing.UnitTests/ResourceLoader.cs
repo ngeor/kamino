@@ -1,10 +1,10 @@
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 using System.Linq;
 using System.Text;
-using NUnit.Framework;
 
-namespace BuzzStats.WebApi.UnitTests.Parsing
+namespace BuzzStats.Parsing.UnitTests
 {
     static class ResourceLoader
     {
@@ -35,7 +35,7 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
             Assert.IsNotNull(stream, "Empty resource: " + resourceId);
             StreamReader sr = new StreamReader(stream);
             string result = sr.ReadToEnd();
-            Assert.That(result, Is.Not.Null.Or.Empty, "Empty resource: " + resourceId);
+            Assert.IsFalse(string.IsNullOrEmpty(result), "Empty resource: " + resourceId);
             return result;
         }
     }
