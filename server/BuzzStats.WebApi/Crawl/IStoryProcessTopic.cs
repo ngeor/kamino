@@ -1,3 +1,4 @@
+using BuzzStats.Parsing.DTOs;
 using BuzzStats.WebApi.DTOs;
 
 namespace BuzzStats.WebApi.Crawl

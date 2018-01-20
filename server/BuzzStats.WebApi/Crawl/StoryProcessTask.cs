@@ -1,8 +1,9 @@
 using System.Threading.Tasks;
 using BuzzStats.WebApi.DTOs;
-using BuzzStats.WebApi.Parsing;
+using BuzzStats.Parsing;
 using BuzzStats.WebApi.Storage;
 using log4net;
+using BuzzStats.Parsing.DTOs;
 
 namespace BuzzStats.WebApi.Crawl
 {

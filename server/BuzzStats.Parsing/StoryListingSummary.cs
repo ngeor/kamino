@@ -1,4 +1,4 @@
-namespace BuzzStats.WebApi.DTOs
+namespace BuzzStats.Parsing.DTOs
 {
     public class StoryListingSummary
     {

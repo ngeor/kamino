@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
-using BuzzStats.WebApi.DTOs;
-using BuzzStats.WebApi.Parsing;
+using BuzzStats.Parsing;
+using BuzzStats.Parsing.DTOs;
 using NodaTime;
 using NodaTime.Extensions;
 using NodaTime.Testing;

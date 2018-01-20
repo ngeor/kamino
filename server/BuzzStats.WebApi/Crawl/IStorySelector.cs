@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BuzzStats.Parsing;
+using BuzzStats.Parsing.DTOs;
 using BuzzStats.WebApi.DTOs;
-using BuzzStats.WebApi.Parsing;
 using BuzzStats.WebApi.Storage;
 
 namespace BuzzStats.WebApi.Crawl

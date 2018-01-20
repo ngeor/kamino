@@ -1,7 +1,5 @@
 using System;
-using BuzzStats.WebApi.Parsing;
-using Moq;
-using NGSoftware.Common.Configuration;
+using BuzzStats.Parsing;
 using NUnit.Framework;
 
 namespace BuzzStats.WebApi.UnitTests.Parsing
@@ -9,14 +7,12 @@ namespace BuzzStats.WebApi.UnitTests.Parsing
     [TestFixture]
     public class UrlProviderTest
     {
-        private IAppSettings _appSettings;
         private IUrlProvider _urlProvider;
 
         [SetUp]
         public void SetUp()
         {
-            _appSettings = Mock.Of<IAppSettings>(x => x["BuzzServerUrl"] == "http://test.com/");
-            _urlProvider = new UrlProvider(_appSettings);
+            _urlProvider = new UrlProvider("http://test.com/");
         }
 
         [Test]

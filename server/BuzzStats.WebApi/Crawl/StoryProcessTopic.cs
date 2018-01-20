@@ -1,3 +1,4 @@
+using BuzzStats.Parsing.DTOs;
 using BuzzStats.WebApi.DTOs;
 using Confluent.Kafka;
 using Confluent.Kafka.Serialization;

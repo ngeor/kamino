@@ -1,6 +1,6 @@
 using System;
 
-namespace BuzzStats.WebApi.DTOs
+namespace BuzzStats.Parsing.DTOs
 {
     public class Story
     {

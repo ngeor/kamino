@@ -57,11 +57,11 @@
     <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4">
       <HintPath>..\packages\NHibernate.4.0.0.4000\lib\net40\NHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="NodaTime, Version=2.2.0.0, Culture=neutral, PublicKeyToken=4226afe0d9b296d1">
-      <HintPath>..\packages\NodaTime.2.2.0\lib\net45\NodaTime.dll</HintPath>
+    <Reference Include="NodaTime, Version=2.2.3.0, Culture=neutral, PublicKeyToken=4226afe0d9b296d1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NodaTime.2.2.3\lib\net45\NodaTime.dll</HintPath>
     </Reference>
-    <Reference Include="NodaTime.Testing, Version=2.2.0.0, Culture=neutral, PublicKeyToken=4226afe0d9b296d1">
-      <HintPath>..\packages\NodaTime.Testing.2.2.0\lib\net45\NodaTime.Testing.dll</HintPath>
+    <Reference Include="NodaTime.Testing, Version=2.2.3.0, Culture=neutral, PublicKeyToken=4226afe0d9b296d1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NodaTime.Testing.2.2.3\lib\net45\NodaTime.Testing.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=3.7.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb">
       <HintPath>..\packages\NUnit.3.7.1\lib\net45\nunit.framework.dll</HintPath>
@@ -112,6 +112,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BuzzStats.Parsing\BuzzStats.Parsing.csproj">
+      <Project>{db5b7f3e-f135-4a27-962c-c0aabcfdd966}</Project>
+      <Name>BuzzStats.Parsing</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BuzzStats.WebApi\BuzzStats.WebApi.csproj">
       <Project>{7b2e2d42-c462-405f-9505-e89f546e96c6}</Project>
       <Name>BuzzStats.WebApi</Name>

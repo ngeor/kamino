@@ -1,15 +1,14 @@
 using System;
-using NGSoftware.Common.Configuration;
 
-namespace BuzzStats.WebApi.Parsing
+namespace BuzzStats.Parsing
 {
     public class UrlProvider : IUrlProvider
     {
-        private readonly IAppSettings _appSettings;
+        private readonly string _buzzStatsUrl;
 
-        public UrlProvider(IAppSettings appSettings)
+        public UrlProvider(string buzzStatsUrl)
         {
-            _appSettings = appSettings;
+            _buzzStatsUrl = buzzStatsUrl;
         }
 
         public string ListingUrl(StoryListing storyListing, int page)
@@ -38,12 +37,12 @@ namespace BuzzStats.WebApi.Parsing
                 path = path + "?page=" + (page + 1);
             }
 
-            return _appSettings["BuzzServerUrl"] + path;
+            return _buzzStatsUrl + path;
         }
 
         public string StoryUrl(int storyId, int? commentId)
         {
-            var result = _appSettings["BuzzServerUrl"] + "story.php?id=" + storyId;
+            var result = _buzzStatsUrl + "story.php?id=" + storyId;
             if (commentId.HasValue)
             {
                 result += "#wholecomment" + commentId.Value;

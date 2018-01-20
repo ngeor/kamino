@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.ListIngester.Unit
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{F813D7CD-4B2D-4A00-A071-661BFA990B2B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.Parsing", "BuzzStats.Parsing\BuzzStats.Parsing.csproj", "{DB5B7F3E-F135-4A27-962C-C0AABCFDD966}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{F813D7CD-4B2D-4A00-A071-661BFA990B2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F813D7CD-4B2D-4A00-A071-661BFA990B2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F813D7CD-4B2D-4A00-A071-661BFA990B2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB5B7F3E-F135-4A27-962C-C0AABCFDD966}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB5B7F3E-F135-4A27-962C-C0AABCFDD966}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB5B7F3E-F135-4A27-962C-C0AABCFDD966}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB5B7F3E-F135-4A27-962C-C0AABCFDD966}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

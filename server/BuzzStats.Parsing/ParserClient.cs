@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using BuzzStats.WebApi.DTOs;
+using BuzzStats.Parsing.DTOs;
 using log4net;
 
-namespace BuzzStats.WebApi.Parsing
+namespace BuzzStats.Parsing
 {
     public class ParserClient : IParserClient
     {

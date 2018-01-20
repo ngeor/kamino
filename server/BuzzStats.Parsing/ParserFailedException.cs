@@ -1,6 +1,6 @@
 using System;
 
-namespace BuzzStats.WebApi.Parsing
+namespace BuzzStats.Parsing
 {
     public class ParserFailedException : Exception
     {

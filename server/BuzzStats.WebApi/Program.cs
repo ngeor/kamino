@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using BuzzStats.WebApi.Crawl;
 using BuzzStats.WebApi.IoC;
-using BuzzStats.WebApi.Parsing;
+using BuzzStats.Parsing;
 using log4net;
 using Microsoft.Owin.Hosting;
 using NGSoftware.Common.Configuration;
