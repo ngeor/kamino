@@ -5,31 +5,24 @@ using System.Threading.Tasks;
 
 namespace BuzzStats.Kafka
 {
-    public class StreamingApp : BaseConsumerApp
+    public class StreamingApp<TConsumerKey, TConsumerValue, TProducerKey, TProducerValue> :
+        BaseStreamingApp<TConsumerKey, TConsumerValue, TProducerKey, TProducerValue>
     {
-        public StreamingApp(string brokerList, string consumerId, string inputTopic, string outputTopic, Func<string, Task<IEnumerable<string>>> messageConverter)
-            : base(brokerList, consumerId, inputTopic)
+        public StreamingApp(
+            string brokerList,
+            ConsumerOptions<TConsumerKey, TConsumerValue> consumerOptions,
+            ProducerOptions<TProducerKey, TProducerValue> producerOptions,
+            Func<Message<TConsumerKey, TConsumerValue>, Task<IEnumerable<KeyValuePair<TProducerKey, TProducerValue>>>> messageConverter)
+            : base(brokerList, consumerOptions, producerOptions)
         {
-            OutputTopic = outputTopic;
-            MessageConverter = messageConverter;
+            MessageConverter = messageConverter ?? throw new ArgumentNullException(nameof(messageConverter));
         }
 
-        public string OutputTopic { get; }
-        public Func<string, Task<IEnumerable<string>>> MessageConverter { get; }
+        public Func<Message<TConsumerKey, TConsumerValue>, Task<IEnumerable<KeyValuePair<TProducerKey, TProducerValue>>>> MessageConverter { get; }
 
-        protected override void OnMessage(Message<Null, string> msg)
+        protected override Task<IEnumerable<KeyValuePair<TProducerKey, TProducerValue>>> ConvertMessage(Message<TConsumerKey, TConsumerValue> message)
         {
-            base.OnMessage(msg);
-            Task.Run(async () =>
-            {
-                using (var producer = new ProducerApp(BrokerList, OutputTopic))
-                {
-                    foreach (var outputMessage in await MessageConverter(msg.Value))
-                    {
-                        await producer.Post(outputMessage);
-                    }
-                }
-            }).GetAwaiter().GetResult();
+            return MessageConverter(message);
         }
     }
 }

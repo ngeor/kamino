@@ -1,10 +1,10 @@
-using BuzzStats.Kafka;
 using BuzzStats.Parsing;
 using BuzzStats.Parsing.DTOs;
+using Confluent.Kafka;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace BuzzStats.ListIngester.UnitTests
 {
@@ -31,9 +31,10 @@ namespace BuzzStats.ListIngester.UnitTests
                 });
 
             var app = new Program(parseClientMock.Object);
+            var msg = "ping";
 
             // act
-            var result = app.Convert("ping").Result;
+            var result = app.Convert(msg).Result;
 
             // assert
             CollectionAssert.AreEqual(new[]

@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Confluent.Kafka;
+using System;
 
 namespace BuzzStats.Kafka
 {
-    public interface IConsumer
+    public interface IConsumer<TKey, TValue>
     {
-        event EventHandler<string> MessageReceived;
+        event EventHandler<Message<TKey, TValue>> MessageReceived;
     }
 }

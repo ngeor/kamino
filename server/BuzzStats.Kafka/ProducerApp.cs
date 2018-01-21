@@ -1,25 +1,23 @@
 ﻿using Confluent.Kafka;
-using Confluent.Kafka.Serialization;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BuzzStats.Kafka
 {
-    public class ProducerApp : IProducer, IDisposable
+    public class ProducerApp<TKey, TValue> : IProducer<TKey, TValue>, IDisposable
     {
-        private Producer<Null, string> _producer;
-        public ProducerApp(string brokerList, string topic)
+        private Producer<TKey, TValue> _producer;
+        public ProducerApp(string brokerList, ProducerOptions<TKey, TValue> producerOptions)
         {
-            BrokerList = brokerList;
-            Topic = topic;
+            BrokerList = brokerList ?? throw new ArgumentNullException(nameof(brokerList));
+            ProducerOptions = producerOptions ?? throw new ArgumentNullException(nameof(producerOptions));
         }
 
         public string BrokerList { get; }
-        public string Topic { get; }
+        public ProducerOptions<TKey, TValue> ProducerOptions { get; }
 
-        public async Task Post(string message)
+        public async Task Post(TKey key, TValue value)
         {
             if (_producer == null)
             {
@@ -28,18 +26,17 @@ namespace BuzzStats.Kafka
                 { "bootstrap.servers", BrokerList }
             };
 
-                _producer = new Producer<Null, string>(
+                _producer = new Producer<TKey, TValue>(
                     config,
-                    null,
-                    new StringSerializer(Encoding.UTF8)
-                    );
+                    ProducerOptions.KeySerializer,
+                    ProducerOptions.ValueSerializer);
             }
 
-            Console.Write($"Posting message to topic {Topic}...");
+            Console.Write($"Posting message to topic {ProducerOptions.OutputTopic}...");
             await _producer.ProduceAsync(
-                Topic,
-                null,
-                message);
+                ProducerOptions.OutputTopic,
+                key,
+                value);
             Console.WriteLine(" done");
         }
 

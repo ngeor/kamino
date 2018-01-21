@@ -1,12 +1,10 @@
 ﻿using BuzzStats.Kafka;
 using BuzzStats.Parsing;
-using BuzzStats.Parsing.DTOs;
 using Confluent.Kafka;
 using Confluent.Kafka.Serialization;
 using NodaTime;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,7 +26,8 @@ namespace BuzzStats.ListIngester
         public async Task<IEnumerable<string>> Convert(string msg)
         {
             var listings = await ParserClient.Listing(StoryListing.Home, 0);
-            var result = listings.Select(listing => $"Found story {listing.StoryId}")
+            var result = listings
+                .Select(listing => $"Found story {listing.StoryId}")
                 .ToArray();
             return result;
         }
@@ -44,11 +43,16 @@ namespace BuzzStats.ListIngester
 
             var program = new Program(parserClient);
 
-            var streamingApp = new StreamingApp(
-                brokerList,
+            var consumerOptions = ConsumerOptionsFactory.StringValues(
                 "BuzzStats.ListIngester",
-                InputTopic,
-                OutputTopic,
+                InputTopic);
+
+            var producerOptions = ProducerOptionsFactory.StringValues(OutputTopic);
+
+            var streamingApp = new KeyLessStreamingApp<string, string>(
+                brokerList,
+                consumerOptions,
+                producerOptions,
                 program.Convert);
             streamingApp.Poll();
         }

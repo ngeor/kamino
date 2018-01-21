@@ -6,27 +6,30 @@ using System.Text;
 
 namespace BuzzStats.Kafka
 {
-    public class BaseConsumerApp
+    public class BaseConsumerApp<TKey, TValue>
     {
-        public BaseConsumerApp(string brokerList, string consumerId, string topic)
+        public BaseConsumerApp(
+            string brokerList,
+            ConsumerOptions<TKey, TValue> consumerOptions)
         {
             BrokerList = brokerList ?? throw new ArgumentNullException(nameof(brokerList));
-            ConsumerId = consumerId ?? throw new ArgumentNullException(nameof(consumerId));
-            Topic = topic ?? throw new ArgumentNullException(nameof(topic));
+            ConsumerOptions = consumerOptions ?? throw new ArgumentNullException(nameof(consumerOptions));
         }
 
         public string BrokerList { get; }
-        public string ConsumerId { get; }
-        public string Topic { get; }
+        public ConsumerOptions<TKey, TValue> ConsumerOptions { get; }
 
-        protected virtual void OnMessage(Message<Null, string> msg)
+        protected virtual void OnMessage(Message<TKey, TValue> msg)
         {
             Console.WriteLine($"Topic: {msg.Topic} Partition: {msg.Partition} Offset: {msg.Offset} {msg.Value}");
         }
 
         public void Poll()
         {
-            using (var consumer = new Consumer<Null, string>(ConstructConfig(true), null, new StringDeserializer(Encoding.UTF8)))
+            using (var consumer = new Consumer<TKey, TValue>(
+                ConstructConfig(true),
+                ConsumerOptions.KeyDeserializer,
+                ConsumerOptions.ValueDeserializer))
             {
                 // Note: All event handlers are called on the main thread.
 
@@ -73,7 +76,7 @@ namespace BuzzStats.Kafka
                 consumer.OnStatistics += (_, json)
                     => Console.WriteLine($"Statistics: {json}");
 
-                consumer.Subscribe(Topic);
+                consumer.Subscribe(ConsumerOptions.InputTopic);
 
                 Console.WriteLine($"Subscribed to: [{string.Join(", ", consumer.Subscription)}]");
 
@@ -95,7 +98,7 @@ namespace BuzzStats.Kafka
         private Dictionary<string, object> ConstructConfig(bool enableAutoCommit) =>
             new Dictionary<string, object>
             {
-                { "group.id", ConsumerId },
+                { "group.id", ConsumerOptions.ConsumerId },
                 { "enable.auto.commit", enableAutoCommit },
                 { "auto.commit.interval.ms", 5000 },
                 { "statistics.interval.ms", 60000 },

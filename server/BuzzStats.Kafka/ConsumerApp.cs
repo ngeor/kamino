@@ -3,19 +3,19 @@ using System;
 
 namespace BuzzStats.Kafka
 {
-    public class ConsumerApp : BaseConsumerApp, IConsumer
+    public class ConsumerApp<TKey, TValue> : BaseConsumerApp<TKey, TValue>, IConsumer<TKey, TValue>
     {
-        public ConsumerApp(string brokerList, string consumerId, string topic)
-            : base(brokerList, consumerId, topic)
+        public ConsumerApp(string brokerList, ConsumerOptions<TKey, TValue> consumerOptions)
+            : base(brokerList, consumerOptions)
         {
         }
 
-        public event EventHandler<string> MessageReceived;
+        public event EventHandler<Message<TKey, TValue>> MessageReceived;
 
-        protected override void OnMessage(Message<Null, string> msg)
+        protected override void OnMessage(Message<TKey, TValue> msg)
         {
             base.OnMessage(msg);
-            MessageReceived?.Invoke(this, msg.Value);
+            MessageReceived?.Invoke(this, msg);
         }
     }
 }
