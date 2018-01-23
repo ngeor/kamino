@@ -15,5 +15,15 @@ namespace BuzzStats.Kafka
                 ValueSerializer = new StringSerializer(Encoding.UTF8)
             };
         }
+
+        public static ProducerOptions<Null, T> JsonValues<T>(string outputTopic)
+        {
+            return new ProducerOptions<Null, T>
+            {
+                OutputTopic = outputTopic,
+                KeySerializer = null,
+                ValueSerializer = new JsonSerializer<T>()
+            };
+        }
     }
 }

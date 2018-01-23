@@ -6,9 +6,14 @@ using System.Threading.Tasks;
 
 namespace BuzzStats.Kafka
 {
-    public class KeyLessStreamingApp<TConsumerValue, TProducerValue> : BaseStreamingApp<Null, TConsumerValue, Null, TProducerValue>
+    public class KeyLessOneToManyStreamingApp<TConsumerValue, TProducerValue> : BaseStreamingApp<Null, TConsumerValue, Null, TProducerValue>
     {
-        public KeyLessStreamingApp(string brokerList, ConsumerOptions<Null, TConsumerValue> consumerOptions, ProducerOptions<Null, TProducerValue> producerOptions, Func<TConsumerValue, Task<IEnumerable<TProducerValue>>> messageConverter) : base(brokerList, consumerOptions, producerOptions)
+        public KeyLessOneToManyStreamingApp(
+            string brokerList,
+            ConsumerOptions<Null, TConsumerValue> consumerOptions,
+            ProducerOptions<Null, TProducerValue> producerOptions,
+            Func<TConsumerValue, Task<IEnumerable<TProducerValue>>> messageConverter)
+            : base(brokerList, consumerOptions, producerOptions)
         {
             MessageConverter = messageConverter ?? throw new ArgumentNullException(nameof(messageConverter));
         }

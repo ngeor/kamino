@@ -27,15 +27,15 @@ namespace BuzzStats.ListIngester
         {
             var listings = await ParserClient.Listing(StoryListing.Home, 0);
             var result = listings
-                .Select(listing => $"Found story {listing.StoryId}")
+                .Select(listing => $"{listing.StoryId}")
                 .ToArray();
             return result;
         }
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            string brokerList = args[0];
+            Console.WriteLine("Starting List Ingester");
+            string brokerList = BrokerSelector.Select(args);
 
             var parserClient = new ParserClient(
                 new UrlProvider("http://buzz.reality-tape.com/"),
@@ -49,7 +49,7 @@ namespace BuzzStats.ListIngester
 
             var producerOptions = ProducerOptionsFactory.StringValues(OutputTopic);
 
-            var streamingApp = new KeyLessStreamingApp<string, string>(
+            var streamingApp = new KeyLessOneToManyStreamingApp<string, string>(
                 brokerList,
                 consumerOptions,
                 producerOptions,

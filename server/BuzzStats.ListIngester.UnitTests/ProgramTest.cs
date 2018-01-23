@@ -39,8 +39,8 @@ namespace BuzzStats.ListIngester.UnitTests
             // assert
             CollectionAssert.AreEqual(new[]
             {
-                "Found story 42",
-                "Found story 50"
+                "42",
+                "50"
             },
             result.ToArray());
         }

@@ -6,3 +6,12 @@ services:
     build:
       context: .
       dockerfile: BuzzStats.ListIngester/Dockerfile
+    environment:
+      - KAFKA_BROKER=192.168.99.100
+  buzzstats.storyingester:
+    image: buzzstats.storyingester
+    build:
+      context: .
+      dockerfile: BuzzStats.StoryIngester/Dockerfile
+    environment:
+      - KAFKA_BROKER=192.168.99.100
