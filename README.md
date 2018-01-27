@@ -3,6 +3,7 @@ BuzzStats collects data from Buzz in order to extract and present statistical
 information.
 
 [![Build Status](https://travis-ci.org/ngeor/BuzzStats.svg?branch=master)](https://travis-ci.org/ngeor/BuzzStats)
+[Sonarcloud Analysis](https://sonarcloud.io/dashboard?id=BuzzStats)
 
 ## Development
 
