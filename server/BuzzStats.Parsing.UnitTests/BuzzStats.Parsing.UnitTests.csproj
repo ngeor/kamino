@@ -8,45 +8,31 @@
 
   <ItemGroup>
     <None Remove="TestData\79444.txt" />
-    <None Remove="TestData\81065.html" />
-    <None Remove="TestData\82908.html" />
     <None Remove="TestData\bug59806.txt" />
     <None Remove="TestData\BugGoldenComments.txt" />
     <None Remove="TestData\BugRecursiveBuzz.txt" />
     <None Remove="TestData\BurriedComment.txt" />
-    <None Remove="TestData\Comment.txt" />
-    <None Remove="TestData\enupc.html" />
-    <None Remove="TestData\home.html" />
     <None Remove="TestData\homepage_vodafone.txt" />
     <None Remove="TestData\RemovedStory.txt" />
     <None Remove="TestData\SingleStoryDownVoteDisabled.txt" />
     <None Remove="TestData\Story.txt" />
     <None Remove="TestData\Story7Votes5Comments.txt" />
     <None Remove="TestData\Story7Votes5Comments9Votes13Comments.txt" />
-    <None Remove="TestData\tech.html" />
-    <None Remove="TestData\upcoming.html" />
     <None Remove="TestData\Upcoming.txt" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="TestData\79444.txt" />
-    <EmbeddedResource Include="TestData\81065.html" />
-    <EmbeddedResource Include="TestData\82908.html" />
     <EmbeddedResource Include="TestData\bug59806.txt" />
     <EmbeddedResource Include="TestData\BugGoldenComments.txt" />
     <EmbeddedResource Include="TestData\BugRecursiveBuzz.txt" />
     <EmbeddedResource Include="TestData\BurriedComment.txt" />
-    <EmbeddedResource Include="TestData\Comment.txt" />
-    <EmbeddedResource Include="TestData\enupc.html" />
-    <EmbeddedResource Include="TestData\home.html" />
     <EmbeddedResource Include="TestData\homepage_vodafone.txt" />
     <EmbeddedResource Include="TestData\RemovedStory.txt" />
     <EmbeddedResource Include="TestData\SingleStoryDownVoteDisabled.txt" />
     <EmbeddedResource Include="TestData\Story.txt" />
     <EmbeddedResource Include="TestData\Story7Votes5Comments.txt" />
     <EmbeddedResource Include="TestData\Story7Votes5Comments9Votes13Comments.txt" />
-    <EmbeddedResource Include="TestData\tech.html" />
-    <EmbeddedResource Include="TestData\upcoming.html" />
     <EmbeddedResource Include="TestData\Upcoming.txt" />
   </ItemGroup>
 
