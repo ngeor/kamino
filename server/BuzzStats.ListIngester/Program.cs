@@ -2,36 +2,19 @@
 using BuzzStats.Logging;
 using BuzzStats.Parsing;
 using Confluent.Kafka;
-using Confluent.Kafka.Serialization;
+using log4net;
 using NodaTime;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BuzzStats.ListIngester
 {
     public class Program
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(Program));
+
         const string InputTopic = "ListExpired";
         const string OutputTopic = "StoryDiscovered";
-
-        public Program(IParserClient parserClient)
-        {
-            ParserClient = parserClient;
-        }
-
-        public IParserClient ParserClient { get; }
-
-        public async Task<IEnumerable<string>> Convert(string msg)
-        {
-            var listings = await ParserClient.Listing(StoryListing.Home, 0);
-            var result = listings
-                .Select(listing => $"{listing.StoryId}")
-                .ToArray();
-            return result;
-        }
 
         static void Main(string[] args)
         {
@@ -39,24 +22,36 @@ namespace BuzzStats.ListIngester
             Console.WriteLine("Starting List Ingester");
             string brokerList = BrokerSelector.Select(args);
 
-            var parserClient = new ParserClient(
-                new UrlProvider("http://buzz.reality-tape.com/"),
-                new Parser(SystemClock.Instance));
-
-            var program = new Program(parserClient);
-
             var consumerOptions = ConsumerOptionsFactory.StringValues(
                 "BuzzStats.ListIngester",
                 InputTopic);
+            var consumer = new ConsumerApp<Null, string>(brokerList, consumerOptions);
 
-            var producerOptions = ProducerOptionsFactory.StringValues(OutputTopic);
+            using (var producer = new ProducerBuilder<Null, string>(brokerList, null, Serializers.String()).Build())
+            { 
+                var parserClient = new ParserClient(
+                    new UrlProvider("http://buzz.reality-tape.com/"),
+                    new Parser(SystemClock.Instance));
 
-            var streamingApp = new KeyLessOneToManyStreamingApp<string, string>(
-                brokerList,
-                consumerOptions,
-                producerOptions,
-                program.Convert);
-            streamingApp.Poll();
+                var messageConverter = new MessageConverter(parserClient);
+                var messagePublisher = new MessagePublisher(messageConverter, producer, OutputTopic);
+            
+                consumer.MessageReceived += (_, msg) =>
+                {
+                    messagePublisher.HandleMessage(msg.Value);
+                };
+
+                // TODO command line argument and/or environment variable for number of pages to go through
+                const int pageNumber = 3;
+                using (Cron cron = new Cron(
+                    messagePublisher,
+                    TimeSpan.FromSeconds(5),
+                    TimeSpan.FromMinutes(1),
+                    PageBuilder.Build(pageNumber).ToArray()))
+                {
+                    consumer.Poll();
+                }
+            }
         }
     }
 }

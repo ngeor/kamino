@@ -1,5 +1,4 @@
 using System;
-using BuzzStats.Parsing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BuzzStats.Parsing.UnitTests
@@ -46,7 +45,7 @@ namespace BuzzStats.Parsing.UnitTests
         [TestMethod]
         public void ListingUrl_Home_SecondPage()
         {
-            var listingUrl = _urlProvider.ListingUrl(StoryListing.Home, 1);
+            var listingUrl = _urlProvider.ListingUrl(StoryListing.Home, 2);
             Assert.AreEqual("http://test.com/?page=2", listingUrl);
         }
 

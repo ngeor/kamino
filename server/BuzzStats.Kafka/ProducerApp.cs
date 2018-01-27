@@ -1,37 +1,25 @@
 ﻿using Confluent.Kafka;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BuzzStats.Kafka
 {
     public class ProducerApp<TKey, TValue> : IProducer<TKey, TValue>, IDisposable
     {
-        private Producer<TKey, TValue> _producer;
+        private readonly Producer<TKey, TValue> _producer;
+
         public ProducerApp(string brokerList, ProducerOptions<TKey, TValue> producerOptions)
         {
-            BrokerList = brokerList ?? throw new ArgumentNullException(nameof(brokerList));
             ProducerOptions = producerOptions ?? throw new ArgumentNullException(nameof(producerOptions));
+
+            _producer = new ProducerBuilder<TKey, TValue>(brokerList, producerOptions.KeySerializer, producerOptions.ValueSerializer)
+                .Build();
         }
 
-        public string BrokerList { get; }
-        public ProducerOptions<TKey, TValue> ProducerOptions { get; }
+        private ProducerOptions<TKey, TValue> ProducerOptions { get; }
 
         public async Task Post(TKey key, TValue value)
         {
-            if (_producer == null)
-            {
-                var config = new Dictionary<string, object>
-            {
-                { "bootstrap.servers", BrokerList }
-            };
-
-                _producer = new Producer<TKey, TValue>(
-                    config,
-                    ProducerOptions.KeySerializer,
-                    ProducerOptions.ValueSerializer);
-            }
-
             Console.Write($"Posting message to topic {ProducerOptions.OutputTopic}...");
             await _producer.ProduceAsync(
                 ProducerOptions.OutputTopic,
@@ -49,7 +37,7 @@ namespace BuzzStats.Kafka
             {
                 if (disposing)
                 {
-                    _producer?.Dispose();
+                    _producer.Dispose();
                 }
 
                 disposedValue = true;

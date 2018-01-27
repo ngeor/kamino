@@ -1,6 +1,4 @@
 ﻿using Confluent.Kafka;
-using Confluent.Kafka.Serialization;
-using System.Text;
 
 namespace BuzzStats.Kafka
 {
@@ -12,7 +10,7 @@ namespace BuzzStats.Kafka
             {
                 OutputTopic = outputTopic,
                 KeySerializer = null,
-                ValueSerializer = new StringSerializer(Encoding.UTF8)
+                ValueSerializer = Serializers.String()
             };
         }
 
@@ -22,7 +20,7 @@ namespace BuzzStats.Kafka
             {
                 OutputTopic = outputTopic,
                 KeySerializer = null,
-                ValueSerializer = new JsonSerializer<T>()
+                ValueSerializer = Serializers.Json<T>()
             };
         }
     }

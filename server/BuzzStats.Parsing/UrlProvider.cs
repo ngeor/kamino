@@ -11,7 +11,7 @@ namespace BuzzStats.Parsing
             _buzzStatsUrl = buzzStatsUrl;
         }
 
-        public string ListingUrl(StoryListing storyListing, int page = 0)
+        public string ListingUrl(StoryListing storyListing, int page = 1)
         {
             string path;
             switch (storyListing)
@@ -32,9 +32,9 @@ namespace BuzzStats.Parsing
                     throw new ArgumentOutOfRangeException(nameof(storyListing));
             }
 
-            if (page >= 1)
+            if (page > 1)
             {
-                path = path + "?page=" + (page + 1);
+                path = path + "?page=" + page;
             }
 
             return _buzzStatsUrl + path;
