@@ -7,12 +7,14 @@ namespace BuzzStats.ListIngester
     public class MessagePublisher : IMessagePublisher
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(MessagePublisher));
+        private readonly IMongoRepository repository;
 
-        public MessagePublisher(IMessageConverter messageConverter, ISerializingProducer<Null, string> producer, string outputTopic)
+        public MessagePublisher(IMessageConverter messageConverter, ISerializingProducer<Null, string> producer, string outputTopic, IMongoRepository repository)
         {
             MessageConverter = messageConverter;
             Producer = producer;
             OutputTopic = outputTopic;
+            this.repository = repository;
         }
 
         private IMessageConverter MessageConverter { get; }
@@ -32,8 +34,15 @@ namespace BuzzStats.ListIngester
             Log.InfoFormat("Fetching {0}", inputMessage);
             foreach (string outputMessage in await MessageConverter.ConvertAsync(inputMessage))
             {
-                Log.InfoFormat("Publishing story {0} to topic {1}", outputMessage, OutputTopic);
-                await Producer.ProduceAsync(OutputTopic, null, outputMessage);
+                if (await repository.AddIfMissing(outputMessage))
+                {
+                    Log.InfoFormat("Publishing story {0} to topic {1}", outputMessage, OutputTopic);
+                    await Producer.ProduceAsync(OutputTopic, null, outputMessage);
+                }
+                else
+                {
+                    Log.InfoFormat("Story {0} already exists", outputMessage);
+                }
             }
         }
     }

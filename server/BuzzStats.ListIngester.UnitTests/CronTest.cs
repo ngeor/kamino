@@ -15,7 +15,6 @@ namespace BuzzStats.ListIngester.UnitTests
 
         private Cron cron;
 
-
         [TestCleanup]
         public void Cleanup()
         {
@@ -44,7 +43,7 @@ namespace BuzzStats.ListIngester.UnitTests
             var stopwatch = Stopwatch.StartNew();
 
             // act
-            var cron = new Cron(messagePublisherMock.Object, TimeSpan.FromSeconds(1), TimeSpan.FromMinutes(1));
+            cron = new Cron(messagePublisherMock.Object, TimeSpan.FromSeconds(1), TimeSpan.FromMinutes(1));
 
             // post-act
             waitHandle.Wait(TimeSpan.FromSeconds(5));
@@ -74,7 +73,7 @@ namespace BuzzStats.ListIngester.UnitTests
             var stopwatch = Stopwatch.StartNew();
 
             // act
-            var cron = new Cron(messagePublisherMock.Object, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
+            cron = new Cron(messagePublisherMock.Object, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
 
             // post-act
             waitHandle.Wait(TimeSpan.FromSeconds(5));
@@ -104,7 +103,7 @@ namespace BuzzStats.ListIngester.UnitTests
             var stopwatch = Stopwatch.StartNew();
 
             // act
-            var cron = new Cron(messagePublisherMock.Object, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1), "Home", "Upcoming");
+            cron = new Cron(messagePublisherMock.Object, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1), "Home", "Upcoming");
 
             // post-act
             waitHandle.Wait(TimeSpan.FromSeconds(5));

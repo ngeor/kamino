@@ -2,7 +2,6 @@
 using BuzzStats.Logging;
 using BuzzStats.Parsing;
 using Confluent.Kafka;
-using log4net;
 using NodaTime;
 using System;
 using System.Linq;
@@ -11,10 +10,12 @@ namespace BuzzStats.ListIngester
 {
     public class Program
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(Program));
-
         const string InputTopic = "ListExpired";
         const string OutputTopic = "StoryDiscovered";
+
+        protected Program()
+        {
+        }
 
         static void Main(string[] args)
         {
@@ -34,7 +35,12 @@ namespace BuzzStats.ListIngester
                     new Parser(SystemClock.Instance));
 
                 var messageConverter = new MessageConverter(parserClient);
-                var messagePublisher = new MessagePublisher(messageConverter, producer, OutputTopic);
+                var repository = new MongoRepository();
+                var messagePublisher = new MessagePublisher(
+                    messageConverter,
+                    producer,
+                    OutputTopic,
+                    repository);
             
                 consumer.MessageReceived += (_, msg) =>
                 {
