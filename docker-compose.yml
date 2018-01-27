@@ -1,22 +1,22 @@
 version: '3'
 services:
-  adminer:
-    image: adminer
-    ports:
-      - 8081:8080
-  mysql:
-    image: mysql:5.7
-    command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci
-    ports:
-      - 3306:3306
-    environment:
-      - MYSQL_ROOT_PASSWORD=yourStrongPassword1_
-      - MYSQL_DATABASE=BuzzStats
-      - MYSQL_USER=buzzstats
-      - MYSQL_PASSWORD=#buzzstats#
-# Commented out because of permission issues somewhere between VirtualBox and Docker Toolbox.
-#    volumes:
-#      - ./mysql-data:/var/lib/mysql
+#  adminer:
+#   image: adminer
+#   ports:
+#     - 8081:8080
+# mysql:
+#   image: mysql:5.7
+#   command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci
+#   ports:
+#     - 3306:3306
+#   environment:
+#     - MYSQL_ROOT_PASSWORD=yourStrongPassword1_
+#     - MYSQL_DATABASE=BuzzStats
+#     - MYSQL_USER=buzzstats
+#     - MYSQL_PASSWORD=#buzzstats#
+## Commented out because of permission issues somewhere between VirtualBox and Docker Toolbox.
+##    volumes:
+##      - ./mysql-data:/var/lib/mysql
   zookeeper:
     image: wurstmeister/zookeeper
     ports:

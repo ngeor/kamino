@@ -13,16 +13,15 @@ namespace BuzzStats.ChangeTracker
     {
         const string InputTopic = "StoryParsed";
         const string OutputTopic = "StoryChanged";
-        private static readonly ILog Log = LogManager.GetLogger(typeof(Program));
-        private readonly IEventProducer eventProducer;
-        private readonly IConsumerApp<Null, Story> consumer;
-        private readonly ISerializingProducer<Null, StoryEvent> producer;
+        private readonly IEventProducer _eventProducer;
+        private readonly IConsumerApp<Null, Story> _consumer;
+        private readonly ISerializingProducer<Null, StoryEvent> _producer;
 
         public Program(IEventProducer eventProducer, IConsumerApp<Null, Story> consumer, ISerializingProducer<Null, StoryEvent> producer)
         {
-            this.eventProducer = eventProducer;
-            this.consumer = consumer;
-            this.producer = producer;
+            _eventProducer = eventProducer;
+            _consumer = consumer;
+            _producer = producer;
         }
 
         static void Main(string[] args)
@@ -49,23 +48,23 @@ namespace BuzzStats.ChangeTracker
 
         public void Poll()
         {
-            consumer.MessageReceived += OnMessageReceived;
-            consumer.Poll(InputTopic);
+            _consumer.MessageReceived += OnMessageReceived;
+            _consumer.Poll(InputTopic);
         }
 
         private void OnMessageReceived(object sender, Message<Null, Story> e)
         {
             Task.Run(async () =>
             {
-                await OnMessageReceivedAsync(sender, e);
+                await OnMessageReceivedAsync(e);
             }).GetAwaiter().GetResult();
         }
 
-        private async Task OnMessageReceivedAsync(object sender, Message<Null, Story> e)
+        private async Task OnMessageReceivedAsync(Message<Null, Story> e)
         {
-            foreach (var storyEvent in await eventProducer.CreateEventsAsync(e.Value))
+            foreach (var storyEvent in await _eventProducer.CreateEventsAsync(e.Value))
             {
-                await producer.ProduceAsync(OutputTopic, null, storyEvent);
+                await _producer.ProduceAsync(OutputTopic, null, storyEvent);
             }
         }
     }

@@ -14,18 +14,18 @@ namespace BuzzStats.StoryIngester
     {
         const string InputTopic = "StoryExpired";
         const string OutputTopic = "StoryParsed";
-        private readonly IParserClient parserClient;
-        private readonly IConsumerApp<Null, string> consumer;
-        private readonly ISerializingProducer<Null, Story> producer;
+        private readonly IParserClient _parserClient;
+        private readonly IConsumerApp<Null, string> _consumer;
+        private readonly ISerializingProducer<Null, Story> _producer;
 
         public Program(
             IParserClient parserClient,
             IConsumerApp<Null, string> consumer,
             ISerializingProducer<Null, Story> producer)
         {
-            this.parserClient = parserClient;
-            this.consumer = consumer;
-            this.producer = producer;
+            _parserClient = parserClient;
+            _consumer = consumer;
+            _producer = producer;
         }
 
         static void Main(string[] args)
@@ -43,7 +43,6 @@ namespace BuzzStats.StoryIngester
                 "BuzzStats.StoryIngester");
             var consumer = new ConsumerApp<Null, string>(brokerList, consumerOptions);
 
-            var producerOptions = ProducerOptionsFactory.JsonValues<Story>(OutputTopic);
             using (var producer = new ProducerBuilder<Null, Story>(brokerList, null, Serializers.Json<Story>()).Build())
             {
                 var program = new Program(parserClient, consumer, producer);
@@ -53,23 +52,23 @@ namespace BuzzStats.StoryIngester
 
         public void Poll()
         {
-            consumer.MessageReceived += OnMessageReceived;
-            consumer.Poll(InputTopic);
+            _consumer.MessageReceived += OnMessageReceived;
+            _consumer.Poll(InputTopic);
         }
 
         private void OnMessageReceived(object sender, Message<Null, string> e)
         {
             Task.Run(async () =>
             {
-                await OnMessageReceivedAsync(sender, e);
+                await OnMessageReceivedAsync(e);
             }).GetAwaiter().GetResult();
         }
 
-        private async Task OnMessageReceivedAsync(object sender, Message<Null, string> e)
+        private async Task OnMessageReceivedAsync(Message<Null, string> e)
         {
             var storyId = Convert.ToInt32(e.Value);
-            var story = await parserClient.Story(storyId);
-            await producer.ProduceAsync(OutputTopic, null, story);
+            var story = await _parserClient.Story(storyId);
+            await _producer.ProduceAsync(OutputTopic, null, story);
         }
     }
 }
