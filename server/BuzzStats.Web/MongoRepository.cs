@@ -26,7 +26,7 @@ namespace BuzzStats.Web
             return await cursor.ToListAsync();
         }
 
-        internal async Task Save(RecentActivity recentActivity)
+        public async Task Save(RecentActivity recentActivity)
         {
             var collection = GetDb().GetCollection<RecentActivity>("RecentActivity");
             await collection.InsertOneAsync(recentActivity);

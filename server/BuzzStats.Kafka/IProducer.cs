@@ -2,7 +2,7 @@
 
 namespace BuzzStats.Kafka
 {
-    public interface IProducer<TKey, TValue>
+    public interface IProducer<in TKey, in TValue>
     {
         Task Post(TKey key, TValue value);
     }

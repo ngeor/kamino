@@ -6,10 +6,14 @@ using System.Reflection;
 
 namespace BuzzStats.Kafka
 {
-    public class BaseConsumerApp<TKey, TValue>
+    public abstract class BaseConsumerApp
     {
-        private static readonly ILog Log = LogManager.GetLogger(Assembly.GetEntryAssembly(), "BuzzStats.Kafka.Consumer");
+        protected static readonly ILog Log = LogManager.GetLogger(
+            Assembly.GetEntryAssembly(), typeof(BaseConsumerApp));
+    }
 
+    public class BaseConsumerApp<TKey, TValue> : BaseConsumerApp
+    {
         public BaseConsumerApp(
             string brokerList,
             ConsumerOptions<TKey, TValue> consumerOptions)

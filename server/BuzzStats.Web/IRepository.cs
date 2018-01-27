@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using BuzzStats.WebApi.DTOs;
 
@@ -10,5 +9,6 @@ namespace BuzzStats.Web
     {
         Task<IEnumerable<RecentActivity>> GetRecentActivity();
         Task<IEnumerable<StoryWithRecentComments>> GetStoriesWithRecentComments();
+        Task Save(RecentActivity recentActivity);
     }
 }

@@ -12,7 +12,7 @@ namespace BuzzStats.Web
 {
     class Program
     {
-        public static IWebHost BuildWebHost(string[] args) =>
+        private static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder()
                 .UseUrls("http://*:9000")
                 .UseStartup<Startup>()
@@ -30,8 +30,9 @@ namespace BuzzStats.Web
             {
                 HandleCancelKeyPress = false
             };
-
-            consumerApp.MessageReceived += ConsumerApp_MessageReceived;
+            var repository = new MongoRepository();
+            var app = new Program(repository);
+            consumerApp.MessageReceived += app.OnMessageReceived;
 
             Task task = Task.Run(() => consumerApp.Poll());
 
@@ -45,11 +46,18 @@ namespace BuzzStats.Web
             task.Wait();
         }
 
-        private static void ConsumerApp_MessageReceived(object sender, Message<Null, StoryEvent> e)
+        public Program(IRepository repository)
+        {
+            Repository = repository ?? throw new ArgumentNullException(nameof(repository));
+        }
+
+        private IRepository Repository { get; }
+
+        public void OnMessageReceived(object sender, Message<Null, StoryEvent> e)
         {
             Console.WriteLine($"Received story event {e.Value.EventType} for story {e.Value.StoryId}");
             var msg = e.Value;
-            var repository = new MongoRepository();
+            
             var recentActivity = new RecentActivity
             {
                 StoryId = msg.StoryId,
@@ -58,7 +66,7 @@ namespace BuzzStats.Web
                 CommentUsername = msg.EventType == StoryEventType.CommentCreated ? msg.Username : null
             };
 
-            Task.Run(async () => await repository.Save(recentActivity))
+            Task.Run(async () => await Repository.Save(recentActivity))
                 .GetAwaiter().GetResult();
         }
     }
