@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BuzzStats.ChangeTracker
+namespace BuzzStats.DTOs
 {
     public class StoryEvent
     {

@@ -1,4 +1,4 @@
-﻿using BuzzStats.Parsing.DTOs;
+﻿using BuzzStats.DTOs;
 using System.Threading.Tasks;
 
 namespace BuzzStats.ChangeTracker

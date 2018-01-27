@@ -1,5 +1,4 @@
-using BuzzStats.Parsing.DTOs;
-using BuzzStats.WebApi.DTOs;
+using BuzzStats.DTOs;
 using NHibernate;
 
 namespace BuzzStats.WebApi.Storage

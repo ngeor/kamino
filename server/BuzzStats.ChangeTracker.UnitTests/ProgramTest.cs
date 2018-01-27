@@ -1,4 +1,4 @@
-using BuzzStats.Parsing.DTOs;
+using BuzzStats.DTOs;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;

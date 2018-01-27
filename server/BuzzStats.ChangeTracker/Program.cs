@@ -1,5 +1,5 @@
 ﻿using BuzzStats.Kafka;
-using BuzzStats.Parsing.DTOs;
+using BuzzStats.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;

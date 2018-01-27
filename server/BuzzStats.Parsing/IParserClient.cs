@@ -1,3 +1,4 @@
+using BuzzStats.DTOs;
 using BuzzStats.Parsing.DTOs;
 using System.Collections.Generic;
 using System.Threading.Tasks;

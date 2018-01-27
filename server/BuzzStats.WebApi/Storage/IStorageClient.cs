@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using BuzzStats.Parsing.DTOs;
+using BuzzStats.DTOs;
 using BuzzStats.WebApi.DTOs;
 
 namespace BuzzStats.WebApi.Storage

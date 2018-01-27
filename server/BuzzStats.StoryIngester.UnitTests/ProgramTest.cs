@@ -1,8 +1,7 @@
+using BuzzStats.DTOs;
 using BuzzStats.Parsing;
-using BuzzStats.Parsing.DTOs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System.Linq;
 
 namespace BuzzStats.StoryIngester.UnitTests
 {

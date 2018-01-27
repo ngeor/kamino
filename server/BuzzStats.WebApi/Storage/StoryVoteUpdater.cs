@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using BuzzStats.Parsing.DTOs;
+using BuzzStats.DTOs;
 using BuzzStats.WebApi.Storage.Entities;
 using BuzzStats.WebApi.Storage.Repositories;
 using log4net;

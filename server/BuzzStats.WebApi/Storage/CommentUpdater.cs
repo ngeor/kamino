@@ -1,5 +1,4 @@
-using BuzzStats.Parsing.DTOs;
-using BuzzStats.WebApi.DTOs;
+using BuzzStats.DTOs;
 using BuzzStats.WebApi.Storage.Entities;
 using BuzzStats.WebApi.Storage.Repositories;
 using log4net;

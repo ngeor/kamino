@@ -2,7 +2,7 @@
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using BuzzStats.Parsing.DTOs;
+using BuzzStats.DTOs;
 using MongoDB.Driver;
 
 namespace BuzzStats.ChangeTracker

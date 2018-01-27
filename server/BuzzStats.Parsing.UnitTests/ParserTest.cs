@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
-using BuzzStats.Parsing;
-using BuzzStats.Parsing.DTOs;
+using BuzzStats.DTOs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NodaTime;
 using NodaTime.Extensions;

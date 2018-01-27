@@ -1,4 +1,4 @@
-﻿namespace BuzzStats.ChangeTracker
+﻿namespace BuzzStats.DTOs
 {
     public enum StoryEventType
     {

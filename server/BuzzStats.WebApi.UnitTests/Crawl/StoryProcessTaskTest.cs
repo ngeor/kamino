@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using BuzzStats.DTOs;
 using BuzzStats.Parsing;
 using BuzzStats.Parsing.DTOs;
 using BuzzStats.WebApi.Crawl;

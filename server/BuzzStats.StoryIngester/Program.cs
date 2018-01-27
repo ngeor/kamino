@@ -1,11 +1,8 @@
-﻿using BuzzStats.Kafka;
+﻿using BuzzStats.DTOs;
+using BuzzStats.Kafka;
 using BuzzStats.Parsing;
-using BuzzStats.Parsing.DTOs;
-using Newtonsoft.Json;
 using NodaTime;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BuzzStats.StoryIngester

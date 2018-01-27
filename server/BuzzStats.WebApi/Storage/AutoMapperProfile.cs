@@ -1,5 +1,5 @@
 using AutoMapper;
-using BuzzStats.Parsing.DTOs;
+using BuzzStats.DTOs;
 using BuzzStats.WebApi.DTOs;
 using BuzzStats.WebApi.Storage.Entities;
 

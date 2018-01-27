@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using BuzzStats.DTOs;
 using BuzzStats.Parsing.DTOs;
 
 namespace BuzzStats.Parsing

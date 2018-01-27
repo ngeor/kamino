@@ -1,6 +1,6 @@
 using System;
 
-namespace BuzzStats.Parsing.DTOs
+namespace BuzzStats.DTOs
 {
     public class Comment
     {

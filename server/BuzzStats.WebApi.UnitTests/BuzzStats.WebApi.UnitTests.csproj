@@ -109,6 +109,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BuzzStats.DTOs\BuzzStats.DTOs.csproj">
+      <Project>{ee6fbaa7-e884-4c43-a046-b0bd4d9610d8}</Project>
+      <Name>BuzzStats.DTOs</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BuzzStats.Parsing\BuzzStats.Parsing.csproj">
       <Project>{db5b7f3e-f135-4a27-962c-c0aabcfdd966}</Project>
       <Name>BuzzStats.Parsing</Name>

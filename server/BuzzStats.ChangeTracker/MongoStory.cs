@@ -1,5 +1,5 @@
 ﻿using System;
-using BuzzStats.Parsing.DTOs;
+using BuzzStats.DTOs;
 using MongoDB.Bson;
 
 namespace BuzzStats.ChangeTracker

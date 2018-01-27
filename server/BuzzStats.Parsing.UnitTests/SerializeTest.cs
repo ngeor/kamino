@@ -1,10 +1,8 @@
-﻿using BuzzStats.Parsing.DTOs;
+﻿using BuzzStats.DTOs;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BuzzStats.Parsing.UnitTests
 {
