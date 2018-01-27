@@ -1,5 +1,4 @@
-/* global browser */
-var expect = require('chai').expect;
+const expect = require('chai').expect;
 
 describe('about', function() {
     before(function() {
@@ -8,12 +7,12 @@ describe('about', function() {
     });
 
     it('should have correct title', function() {
-        var title = browser.getTitle();
+        const title = browser.getTitle();
         expect(title).to.equal('ngeor.net | BuzzStats | Για το BuzzStats');
     });
 
     it('should show the crawler to be up', function() {
-        var text = browser.getText('#ctl00_cphBody_lblServiceStatus');
+        const text = browser.getText('#ctl00_cphBody_lblServiceStatus');
         expect(text).to.equal('OK');
     });
 });

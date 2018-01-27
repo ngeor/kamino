@@ -1,5 +1,4 @@
-/* global browser */
-var expect = require('chai').expect;
+const expect = require('chai').expect;
 
 describe('Access stories page', function() {
     before(function() {
@@ -8,7 +7,7 @@ describe('Access stories page', function() {
     });
 
     it('should have correct title', function() {
-        var title = browser.getTitle();
+        const title = browser.getTitle();
         expect(title).to.equal('ngeor.net | BuzzStats | Άρθρα');
     });
 });
