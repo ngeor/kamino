@@ -306,7 +306,7 @@ namespace BuzzStats.ChangeTracker.UnitTests
         }
 
         [TestMethod]
-        [Ignore("Needs connection to Mongo")]
+        [Ignore("Needs connection to Mongo")] // Needs connection to Mongo
         public void TestMongo()
         {
             var story = new Story
