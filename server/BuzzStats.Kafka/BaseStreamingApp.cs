@@ -7,7 +7,7 @@ namespace BuzzStats.Kafka
 {
     public abstract class BaseStreamingApp<TConsumerKey, TConsumerValue, TProducerKey, TProducerValue> : BaseConsumerApp<TConsumerKey, TConsumerValue>
     {
-        public BaseStreamingApp(
+        protected BaseStreamingApp(
             string brokerList,
             ConsumerOptions<TConsumerKey, TConsumerValue> consumerOptions,
             ProducerOptions<TProducerKey, TProducerValue> producerOptions)
