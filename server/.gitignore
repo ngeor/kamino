@@ -1,27 +1,14 @@
-.DS_Store
-
 # .NET
-*.suo
-*.user
 bin/
 obj/
 packages/
+
+# VS
 .vs/
-UpgradeLog.htm
 
-# IntelliJ / Rider
-*.iml
-.idea/.idea.BuzzStats/.idea/*
-!.idea/.idea.BuzzStats/.idea/runConfigurations/
+# OpenCover
+opencover.xml
+coverage/
 
-# Coverage report
-results.xml
-
-# NUnit report
-TestResult.xml
-
-# ReportGenerator
-coveragereport/
-
-sonar.bat
+# SonarQube
 .sonarqube/
