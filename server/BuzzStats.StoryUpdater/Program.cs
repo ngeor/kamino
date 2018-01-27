@@ -29,8 +29,7 @@ namespace BuzzStats.StoryUpdater
             string brokerList = ConfigurationBuilder.KafkaBroker;
 
             var consumerOptions = ConsumerOptionsFactory.JsonValues<StoryEvent>(
-                "BuzzStats.StoryUpdater",
-                InputTopic);
+                "BuzzStats.StoryUpdater");
             var consumer = new ConsumerApp<Null, StoryEvent>(brokerList, consumerOptions);
             var repository = new MongoRepository(ConfigurationBuilder.MongoConnectionString);
 
@@ -54,7 +53,7 @@ namespace BuzzStats.StoryUpdater
                     TimeSpan.FromSeconds(10),
                     TimeSpan.FromSeconds(10)))
                 {
-                    consumer.Poll();
+                    consumer.Poll(InputTopic);
                 }
             }
         }

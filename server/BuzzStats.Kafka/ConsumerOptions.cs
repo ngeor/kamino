@@ -5,7 +5,6 @@ namespace BuzzStats.Kafka
     public class ConsumerOptions<TKey, TValue>
     {
         public string ConsumerId { get; set; }
-        public string InputTopic { get; set; }
         public IDeserializer<TKey> KeyDeserializer { get; set; }
         public IDeserializer<TValue> ValueDeserializer { get; set; }
     }

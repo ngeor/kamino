@@ -1,12 +1,11 @@
 ﻿using BuzzStats.Kafka;
 using BuzzStats.DTOs;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using BuzzStats.Logging;
 using BuzzStats.Configuration;
 using log4net;
+using Confluent.Kafka;
 
 namespace BuzzStats.ChangeTracker
 {
@@ -15,114 +14,15 @@ namespace BuzzStats.ChangeTracker
         const string InputTopic = "StoryParsed";
         const string OutputTopic = "StoryChanged";
         private static readonly ILog Log = LogManager.GetLogger(typeof(Program));
+        private readonly IEventProducer eventProducer;
+        private readonly IConsumerApp<Null, Story> consumer;
+        private readonly ISerializingProducer<Null, StoryEvent> producer;
 
-        public Program(IRepository repository)
+        public Program(IEventProducer eventProducer, IConsumerApp<Null, Story> consumer, ISerializingProducer<Null, StoryEvent> producer)
         {
-            Repository = repository ?? throw new ArgumentNullException(nameof(repository));
-        }
-
-        public IRepository Repository { get; }
-
-        private ICollection<StoryEvent> CollectEvents(Story parsedStory, Story dbStory)
-        {
-            if (dbStory == null)
-            {
-                // completely new story
-                return new[]
-                {
-                    new StoryEvent
-                    {
-                        StoryId = parsedStory.StoryId,
-                        CreatedAt = parsedStory.CreatedAt,
-                        EventType = StoryEventType.StoryCreated
-                    }
-                };
-            }
-
-            return CollectNewStoryVotes(parsedStory, dbStory)
-                .Concat(CollectNewComments(parsedStory, dbStory))
-                .ToArray();
-        }
-
-        private IEnumerable<StoryEvent> CollectNewStoryVotes(Story parsedStory, Story dbStory)
-        {
-            var parsedVoters = parsedStory.Voters ?? Enumerable.Empty<string>();
-            var dbVoters = dbStory.Voters ?? Enumerable.Empty<string>();
-            var newVotes = parsedVoters.Where(v => !dbVoters.Contains(v));
-            return newVotes.Select(v => new StoryEvent
-            {
-                StoryId = parsedStory.StoryId,
-                Username = v,
-                EventType = StoryEventType.StoryVoted
-            });
-        }
-
-        private IEnumerable<StoryEvent> CollectNewComments(Story parsedStory, Story dbStory)
-        {
-            var parsedComments = parsedStory.Comments ?? Enumerable.Empty<Comment>();
-            var dbComments = dbStory.Comments ?? Enumerable.Empty<Comment>();
-            var newComments = CollectNewComments(parsedComments, dbComments);
-            return newComments.Select(c => new StoryEvent
-            {
-                StoryId = parsedStory.StoryId,
-                Username = c.Username,
-                EventType = StoryEventType.CommentCreated
-            });
-        }
-
-        private IEnumerable<Comment> CollectNewComments(IEnumerable<Comment> parsedComments, IEnumerable<Comment> dbComments)
-        {
-            foreach (var parsedComment in parsedComments)
-            {
-                var dbComment = dbComments.SingleOrDefault(c => c.CommentId == parsedComment.CommentId);
-                if (dbComment == null)
-                {
-                    // parsed comment is new
-                    foreach (Comment c in CommentHierarchy(parsedComment))
-                    {
-                        yield return c;
-                    }
-                }
-                else
-                {
-                    // parsed comment exists
-                    foreach (Comment c in CollectNewComments(
-                        parsedComment.Comments ?? Enumerable.Empty<Comment>(),
-                        dbComment.Comments ?? Enumerable.Empty<Comment>()))
-                    {
-                        yield return c;
-                    }
-                }
-            }
-        }
-
-        private static IEnumerable<Comment> CommentHierarchy(Comment comment)
-        {
-            yield return comment;
-            foreach (Comment childComment in comment.Comments ?? Enumerable.Empty<Comment>())
-            {
-                foreach (Comment c in CommentHierarchy(childComment))
-                {
-                    yield return c;
-                }
-            }
-        }
-
-        public async Task<IEnumerable<StoryEvent>> Convert(Story parsedStory)
-        {
-            var dbStory = await Repository.Load(parsedStory.StoryId);
-            var events = CollectEvents(parsedStory, dbStory);
-            if (events.Any())
-            {
-                Log.InfoFormat("Detected changes for story {0}", parsedStory.StoryId);
-                await Repository.Save(parsedStory);
-            }
-            else
-            {
-                Log.InfoFormat("No changes for story {0}", parsedStory.StoryId);
-            }
-
-            return events;
+            this.eventProducer = eventProducer;
+            this.consumer = consumer;
+            this.producer = producer;
         }
 
         static void Main(string[] args)
@@ -133,20 +33,40 @@ namespace BuzzStats.ChangeTracker
             ConfigurationBuilder.Build(args);
             string brokerList = ConfigurationBuilder.KafkaBroker;
 
-            var program = new Program(new MongoRepository(ConfigurationBuilder.MongoConnectionString));
-
             var consumerOptions = ConsumerOptionsFactory.JsonValues<Story>(
-                "BuzzStats.ChangeTracker",
-                InputTopic);
+                "BuzzStats.ChangeTracker");
+            var consumer = new ConsumerApp<Null, Story>(brokerList, consumerOptions);
 
-            var producerOptions = ProducerOptionsFactory.JsonValues<StoryEvent>(OutputTopic);
+            using (var producer = new ProducerBuilder<Null, StoryEvent>(brokerList, null, Serializers.Json<StoryEvent>()).Build())
+            {
+                var program = new Program(
+                    new EventProducer(new MongoRepository(ConfigurationBuilder.MongoConnectionString)),
+                    consumer,
+                    producer);
+                program.Poll();
+            }
+        }
 
-            var streamingApp = new KeyLessOneToManyStreamingApp<Story, StoryEvent>(
-                brokerList,
-                consumerOptions,
-                producerOptions,
-                program.Convert);
-            streamingApp.Poll();
+        public void Poll()
+        {
+            consumer.MessageReceived += OnMessageReceived;
+            consumer.Poll(InputTopic);
+        }
+
+        private void OnMessageReceived(object sender, Message<Null, Story> e)
+        {
+            Task.Run(async () =>
+            {
+                await OnMessageReceivedAsync(sender, e);
+            }).GetAwaiter().GetResult();
+        }
+
+        private async Task OnMessageReceivedAsync(object sender, Message<Null, Story> e)
+        {
+            foreach (var storyEvent in await eventProducer.CreateEventsAsync(e.Value))
+            {
+                await producer.ProduceAsync(OutputTopic, null, storyEvent);
+            }
         }
     }
 }

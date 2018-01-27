@@ -50,7 +50,7 @@ The services are event driven.
 <!-- title Events Sequence
 
 Timer->List Ingester: List Expired
-List Ingester->Story Ingester: Story Discovered
+List Ingester->Story Ingester: Story Expired
 Story Updater->Story Ingester: Story Expired
 Story Ingester->Change Tracker: Story Parsed
 Change Tracker->Web: Story Changed

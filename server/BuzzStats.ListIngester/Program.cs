@@ -26,8 +26,7 @@ namespace BuzzStats.ListIngester
             string brokerList = ConfigurationBuilder.KafkaBroker;
 
             var consumerOptions = ConsumerOptionsFactory.StringValues(
-                "BuzzStats.ListIngester",
-                InputTopic);
+                "BuzzStats.ListIngester");
             var consumer = new ConsumerApp<Null, string>(brokerList, consumerOptions);
 
             using (var producer = new ProducerBuilder<Null, string>(brokerList, null, Serializers.String()).Build())
@@ -57,7 +56,7 @@ namespace BuzzStats.ListIngester
                     TimeSpan.FromMinutes(1),
                     PageBuilder.Build(pageNumber).ToArray()))
                 {
-                    consumer.Poll();
+                    consumer.Poll(InputTopic);
                 }
             }
         }

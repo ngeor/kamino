@@ -25,8 +25,7 @@ namespace BuzzStats.Web
             ConfigurationBuilder.Build(args);
             string brokerList = ConfigurationBuilder.KafkaBroker;
             var consumerOptions = ConsumerOptionsFactory.JsonValues<StoryEvent>(
-                "BuzzStats.Web",
-                "StoryChanged");
+                "BuzzStats.Web");
             var consumerApp = new ConsumerApp<Null, StoryEvent>(brokerList, consumerOptions)
             {
                 HandleCancelKeyPress = false
@@ -35,7 +34,7 @@ namespace BuzzStats.Web
             var app = new Program(repository);
             consumerApp.MessageReceived += app.OnMessageReceived;
 
-            Task task = Task.Run(() => consumerApp.Poll());
+            Task task = Task.Run(() => consumerApp.Poll("StoryChanged"));
 
             Console.CancelKeyPress += (_, e) =>
             {

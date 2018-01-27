@@ -1,4 +1,6 @@
 using BuzzStats.DTOs;
+using BuzzStats.Kafka;
+using Confluent.Kafka;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -10,26 +12,33 @@ namespace BuzzStats.ChangeTracker.UnitTests
     [TestClass]
     public class ProgramTest
     {
-        Mock<IRepository> repositoryMock;
-        Program app;
+        private Mock<IEventProducer> eventProducerMock;
+        private Mock<IConsumerApp<Null, Story>> consumerMock;
+        private Mock<ISerializingProducer<Null, StoryEvent>> producerMock;
+        private Program program;
 
         [TestInitialize]
         public void SetUp()
         {
-            repositoryMock = new Mock<IRepository>();
-            app = new Program(repositoryMock.Object);
+            eventProducerMock = new Mock<IEventProducer>();
+            consumerMock = new Mock<IConsumerApp<Null, Story>>();
+            producerMock = new Mock<ISerializingProducer<Null, StoryEvent>>();
+            program = new Program(eventProducerMock.Object, consumerMock.Object, producerMock.Object);
         }
 
         [TestMethod]
-        public void WhenStoryDoesNotExist_ItShouldReportNewStory()
+        public void ConsumesStoryParsed_ProducesStoryChanged()
         {
-            repositoryMock.Setup(p => p.Load(42)).ReturnsAsync((Story)null);
-            
+            // arrange
             var msg = new Story
             {
                 StoryId = 42,
                 CreatedAt = new DateTime(2018, 1, 26)
             };
+
+            consumerMock.Setup(p => p.Poll("StoryParsed"))
+                .Raises(p => p.MessageReceived += null, null, new Message<Null, Story>(null, 0, 0, null, msg, default(Timestamp), null));
+
             var expectedMsg = new StoryEvent
             {
                 StoryId = 42,
@@ -37,291 +46,14 @@ namespace BuzzStats.ChangeTracker.UnitTests
                 EventType = StoryEventType.StoryCreated
             };
 
-            // act
-            var result = app.Convert(msg).Result.ToArray();
-
-            // assert
-            result.Should().Equal(expectedMsg);
-            repositoryMock.Verify(p => p.Save(msg));
-        }
-
-        [TestMethod]
-        public void WhenStoryExists_ButHasNoChanges_ItShouldReportNoEvents()
-        {
-            var msg = new Story
-            {
-                StoryId = 42,
-                CreatedAt = new DateTime(2018, 1, 26)
-            };
-
-            repositoryMock.Setup(p => p.Load(42)).ReturnsAsync(msg);
+            eventProducerMock.Setup(p => p.CreateEventsAsync(msg))
+                .ReturnsAsync(new[] { expectedMsg });
 
             // act
-            var result = app.Convert(msg).Result.ToArray();
+            program.Poll();
 
             // assert
-            result.Should().BeEmpty();
-            repositoryMock.Verify(p => p.Save(msg), Times.Never());
-        }
-
-
-        [TestMethod]
-        public void WhenStoryExists_ItShouldReportNewVotes()
-        {
-            var msg = new Story
-            {
-                StoryId = 42,
-                Voters = new []
-                {
-                    "voter1", "voter2"
-                }
-            };
-
-            var dbStory = new Story
-            {
-                StoryId = 42,
-                Voters = new[]
-                {
-                    "voter1"
-                }
-            };
-
-            repositoryMock.Setup(p => p.Load(42)).ReturnsAsync(dbStory);
-
-            // act
-            var result = app.Convert(msg).Result.ToArray();
-
-            // assert
-            result.Should().Equal(new StoryEvent
-            {
-                StoryId = 42,
-                EventType = StoryEventType.StoryVoted,
-                Username = "voter2"
-            });
-
-            repositoryMock.Verify(p => p.Save(msg));
-        }
-
-        [TestMethod]
-        public void WhenStoryExists_ItShouldReportNewComments()
-        {
-            var msg = new Story
-            {
-                StoryId = 42,
-                Comments = new[]
-                {
-                    new Comment
-                    {
-                        CommentId = 100,
-                        Username = "user1"
-                    }
-                }
-            };
-
-            var dbStory = new Story
-            {
-                StoryId = 42
-            };
-
-            repositoryMock.Setup(p => p.Load(42)).ReturnsAsync(dbStory);
-
-            // act
-            var result = app.Convert(msg).Result.ToArray();
-
-            // assert
-            result.Should().Equal(new StoryEvent
-            {
-                StoryId = 42,
-                EventType = StoryEventType.CommentCreated,
-                Username = "user1"
-            });
-
-            repositoryMock.Verify(p => p.Save(msg));
-        }
-
-        [TestMethod]
-        public void WhenStoryExists_ItShouldReportNewVotesAndNewComments()
-        {
-            var msg = new Story
-            {
-                StoryId = 42,
-                Voters = new[]
-                {
-                    "voter1", "voter2"
-                },
-                Comments = new[]
-                {
-                    new Comment
-                    {
-                        CommentId = 100,
-                        Username = "hello"
-                    },
-                    new Comment
-                    {
-                        CommentId = 200,
-                        Username = "bye"
-                    }
-                }
-            };
-
-            var dbStory = new Story
-            {
-                StoryId = 42,
-                Voters = new[]
-                {
-                    "voter1"
-                },
-                Comments = new[]
-                {
-                    new Comment
-                    {
-                        CommentId = 100
-                    }
-                }
-            };
-
-            repositoryMock.Setup(p => p.Load(42)).ReturnsAsync(dbStory);
-
-            // act
-            var result = app.Convert(msg).Result.ToArray();
-
-            // assert
-            result.Should().Equal(new StoryEvent
-            {
-                StoryId = 42,
-                EventType = StoryEventType.StoryVoted,
-                Username = "voter2"
-            }, new StoryEvent
-            {
-                StoryId = 42,
-                EventType = StoryEventType.CommentCreated,
-                Username = "bye"
-            });
-
-            repositoryMock.Verify(p => p.Save(msg));
-        }
-
-        [TestMethod]
-        public void WhenStoryExists_ItShouldReportNewChildComments()
-        {
-            var msg = new Story
-            {
-                StoryId = 42,
-                Comments = new[]
-                {
-                    new Comment
-                    {
-                        CommentId = 100,
-                        Username = "user1",
-                        Comments = new[]
-                        {
-                            new Comment
-                            {
-                                CommentId = 200,
-                                Username = "user2"
-                            }
-                        }
-                    }
-                }
-            };
-
-            var dbStory = new Story
-            {
-                StoryId = 42
-            };
-
-            repositoryMock.Setup(p => p.Load(42)).ReturnsAsync(dbStory);
-
-            // act
-            var result = app.Convert(msg).Result.ToArray();
-
-            // assert
-            result.Should().Equal(new StoryEvent
-            {
-                StoryId = 42,
-                EventType = StoryEventType.CommentCreated,
-                Username = "user1"
-            },
-            new StoryEvent
-            {
-                StoryId = 42,
-                EventType = StoryEventType.CommentCreated,
-                Username = "user2"
-            });
-
-            repositoryMock.Verify(p => p.Save(msg));
-        }
-
-        [TestMethod]
-        public void WhenStoryExists_ItShouldReportNewChildCommentsOnExistingParentComment()
-        {
-            var msg = new Story
-            {
-                StoryId = 42,
-                Comments = new[]
-                {
-                    new Comment
-                    {
-                        CommentId = 100,
-                        Username = "user1",
-                        Comments = new[]
-                        {
-                            new Comment
-                            {
-                                CommentId = 200,
-                                Username = "user2"
-                            }
-                        }
-                    }
-                }
-            };
-
-            var dbStory = new Story
-            {
-                StoryId = 42,
-                Comments = new[]
-                {
-                    new Comment
-                    {
-                        CommentId = 100,
-                        Username = "user1"                        
-                    }
-                }
-            };
-
-            repositoryMock.Setup(p => p.Load(42)).ReturnsAsync(dbStory);
-
-            // act
-            var result = app.Convert(msg).Result.ToArray();
-
-            // assert
-            result.Should().Equal(new StoryEvent
-            {
-                StoryId = 42,
-                EventType = StoryEventType.CommentCreated,
-                Username = "user2"
-            });
-
-            repositoryMock.Verify(p => p.Save(msg));
-        }
-
-        [TestMethod]
-        [Ignore("Needs connection to Mongo")] // Needs connection to Mongo
-        public void TestMongo()
-        {
-            var story = new Story
-            {
-                StoryId = 42,
-                Title = "hello",
-                CreatedAt = new DateTime(2018, 1, 26, 0, 0, 0, DateTimeKind.Utc)
-            };
-
-            var repo = new MongoRepository("mongodb://192.168.99.100:27017");
-
-            repo.Save(story).Wait();
-
-            var loadedStory = repo.Load(42).Result;
-            loadedStory.Should().Be(story);
+            producerMock.Verify(p => p.ProduceAsync("StoryChanged", null, expectedMsg), Times.Once());
         }
     }
 }

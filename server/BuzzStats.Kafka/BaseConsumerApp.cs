@@ -16,7 +16,7 @@ namespace BuzzStats.Kafka
         }
     }
 
-    public class BaseConsumerApp<TKey, TValue> : BaseConsumerApp
+    public class BaseConsumerApp<TKey, TValue> : BaseConsumerApp, IConsumerApp<TKey, TValue>
     {
         public BaseConsumerApp(
             string brokerList,
@@ -26,18 +26,21 @@ namespace BuzzStats.Kafka
             ConsumerOptions = consumerOptions ?? throw new ArgumentNullException(nameof(consumerOptions));
         }
 
+        public event EventHandler<Message<TKey, TValue>> MessageReceived;
+
         public string BrokerList { get; }
         public ConsumerOptions<TKey, TValue> ConsumerOptions { get; }
 
         protected virtual void OnMessage(Message<TKey, TValue> msg)
         {
             Log.Debug($"Topic: {msg.Topic} Partition: {msg.Partition} Offset: {msg.Offset} {msg.Value}");
+            MessageReceived?.Invoke(this, msg);
         }
 
         public bool IsCancelled { get; set; }
         public bool HandleCancelKeyPress { get; set; } = true;
 
-        public void Poll()
+        public void Poll(string topic)
         {
             using (var consumer = new Consumer<TKey, TValue>(
                 ConstructConfig(true),
@@ -90,7 +93,7 @@ namespace BuzzStats.Kafka
                 consumer.OnStatistics += (_, json)
                     => Log.Debug($"Statistics: {json}");
 
-                consumer.Subscribe(ConsumerOptions.InputTopic);
+                consumer.Subscribe(topic);
 
                 Log.Info($"Subscribed to: [{string.Join(", ", consumer.Subscription)}]");
 

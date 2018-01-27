@@ -9,13 +9,5 @@ namespace BuzzStats.Kafka
             : base(brokerList, consumerOptions)
         {
         }
-
-        public event EventHandler<Message<TKey, TValue>> MessageReceived;
-
-        protected override void OnMessage(Message<TKey, TValue> msg)
-        {
-            base.OnMessage(msg);
-            MessageReceived?.Invoke(this, msg);
-        }
     }
 }

@@ -1,5 +1,7 @@
 using BuzzStats.DTOs;
+using BuzzStats.Kafka;
 using BuzzStats.Parsing;
+using Confluent.Kafka;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
@@ -8,29 +10,44 @@ namespace BuzzStats.StoryIngester.UnitTests
     [TestClass]
     public class ProgramTest
     {
+        private Mock<IParserClient> parserClientMock;
+        private Mock<ISerializingProducer<Null, Story>> producerMock;
+        private Mock<IConsumerApp<Null, string>> consumerMock;
+
+        private Program program;
+
+        [TestInitialize]
+        public void SetUp()
+        {
+            parserClientMock = new Mock<IParserClient>();
+            producerMock = new Mock<ISerializingProducer<Null, Story>>();
+            consumerMock = new Mock<IConsumerApp<Null, string>>();
+            program = new Program(
+                parserClientMock.Object,
+                consumerMock.Object,
+                producerMock.Object);
+        }
+
         [TestMethod]
-        public void ConvertMessage()
+        public void OnConsumingStoryExpired_ProducesStoryParsed()
         {
             // arrange
-            // setup IParserClient
-            var parseClientMock = new Mock<IParserClient>();
             var story = new Story
             {
                 StoryId = 42
             };
-            parseClientMock.Setup(p => p.Story(42))
+
+            consumerMock.Setup(p => p.Poll("StoryExpired"))
+                .Raises(p => p.MessageReceived += null, consumerMock.Object, new Message<Null, string>("StoryExpired", 0, 0, null, "42", default(Timestamp), null));
+
+            parserClientMock.Setup(p => p.Story(42))
                 .ReturnsAsync(story);
 
-            var app = new Program(parseClientMock.Object);
-            var msg = "42";
-
             // act
-            var result = app.Convert(msg).Result;
+            program.Poll();
 
             // assert
-            Assert.AreEqual(
-                story,
-                result);
+            producerMock.Verify(v => v.ProduceAsync("StoryParsed", null, story), Times.Once());
         }
     }
 }
