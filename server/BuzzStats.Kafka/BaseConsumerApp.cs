@@ -10,6 +10,10 @@ namespace BuzzStats.Kafka
     {
         protected static readonly ILog Log = LogManager.GetLogger(
             Assembly.GetEntryAssembly(), typeof(BaseConsumerApp));
+
+        protected BaseConsumerApp()
+        {
+        }
     }
 
     public class BaseConsumerApp<TKey, TValue> : BaseConsumerApp

@@ -195,12 +195,6 @@ namespace BuzzStats.Parsing
                     StoryId = Convert.ToInt32(match.Groups["storyId"].Value),
                     VoteCount = Convert.ToInt32(match.Groups["storyVotes"].Value)
                 };
-
-            //int storyCategory = Convert.ToInt32(match.Groups["storyCategory"].Value);
-            //string storyUrl = match.Groups["storyUrl"].Value;
-            //string storyTitle = match.Groups["storyTitle"].Value.Trim();
-            //DateTime storyCreatedAt = ToDateTime(match.Groups["storyCreatedAt"].Value);
-            //string storyUsername = match.Groups["storyUsername"].Value;
         }
 
         private DateTime ToDateTime(string relativeTimespan)
