@@ -4,7 +4,6 @@ using System;
 using System.Threading.Tasks;
 using BuzzStats.Logging;
 using BuzzStats.Configuration;
-using log4net;
 using Confluent.Kafka;
 
 namespace BuzzStats.ChangeTracker
@@ -31,19 +30,18 @@ namespace BuzzStats.ChangeTracker
             Console.WriteLine("Starting Change Tracker");
             ConfigurationBuilder.Build(args);
             string brokerList = ConfigurationBuilder.KafkaBroker;
-
-            var consumerOptions = ConsumerOptionsFactory.JsonValues<Story>(
-                "BuzzStats.ChangeTracker");
-            var consumer = new ConsumerApp<Null, Story>(brokerList, consumerOptions);
-
-            using (var producer = new ProducerBuilder<Null, StoryEvent>(brokerList, null, Serializers.Json<StoryEvent>()).Build())
+            string consumerId = typeof(Program).Namespace;
+            StreamingAppBuilder.JsonToJson<Story, StoryEvent>()
+                .WithBrokerList(brokerList)
+                .WithConsumerId(consumerId)
+                .Run((consumer, producer) =>
             {
                 var program = new Program(
                     new EventProducer(new MongoRepository(ConfigurationBuilder.MongoConnectionString)),
                     consumer,
                     producer);
                 program.Poll();
-            }
+            });
         }
 
         public void Poll()

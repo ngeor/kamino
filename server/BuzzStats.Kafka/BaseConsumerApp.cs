@@ -1,4 +1,5 @@
 ﻿using Confluent.Kafka;
+using Confluent.Kafka.Serialization;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -21,15 +22,28 @@ namespace BuzzStats.Kafka
         public BaseConsumerApp(
             string brokerList,
             ConsumerOptions<TKey, TValue> consumerOptions)
+            : this(brokerList, consumerOptions.ConsumerId, consumerOptions.KeyDeserializer, consumerOptions.ValueDeserializer)
+        {
+        }
+
+        public BaseConsumerApp(
+            string brokerList,
+            string consumerId,
+            IDeserializer<TKey> keyDeserializer,
+            IDeserializer<TValue> valueDeserializer)
         {
             BrokerList = brokerList ?? throw new ArgumentNullException(nameof(brokerList));
-            ConsumerOptions = consumerOptions ?? throw new ArgumentNullException(nameof(consumerOptions));
+            ConsumerId = consumerId;
+            KeyDeserializer = keyDeserializer;
+            ValueDeserializer = valueDeserializer;
         }
 
         public event EventHandler<Message<TKey, TValue>> MessageReceived;
 
         public string BrokerList { get; }
-        public ConsumerOptions<TKey, TValue> ConsumerOptions { get; }
+        public string ConsumerId { get; }
+        public IDeserializer<TKey> KeyDeserializer { get; }
+        public IDeserializer<TValue> ValueDeserializer { get; }
 
         protected virtual void OnMessage(Message<TKey, TValue> msg)
         {
@@ -44,8 +58,8 @@ namespace BuzzStats.Kafka
         {
             using (var consumer = new Consumer<TKey, TValue>(
                 ConstructConfig(true),
-                ConsumerOptions.KeyDeserializer,
-                ConsumerOptions.ValueDeserializer))
+                KeyDeserializer,
+                ValueDeserializer))
             {
                 // Note: All event handlers are called on the main thread.
 
@@ -122,7 +136,7 @@ namespace BuzzStats.Kafka
         private Dictionary<string, object> ConstructConfig(bool enableAutoCommit) =>
             new Dictionary<string, object>
             {
-                { "group.id", ConsumerOptions.ConsumerId },
+                { "group.id", ConsumerId },
                 { "enable.auto.commit", enableAutoCommit },
                 { "auto.commit.interval.ms", 5000 },
                 { "statistics.interval.ms", 60000 },

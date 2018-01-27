@@ -34,20 +34,19 @@ namespace BuzzStats.StoryIngester
             Console.WriteLine("Starting Story Ingester");
             ConfigurationBuilder.Build(args);
             string brokerList = ConfigurationBuilder.KafkaBroker;
-
+            string consumerId = typeof(Program).Namespace;
             var parserClient = new ParserClient(
                 new UrlProvider("http://buzz.reality-tape.com/"),
                 new Parser(SystemClock.Instance));
 
-            var consumerOptions = ConsumerOptionsFactory.StringValues(
-                "BuzzStats.StoryIngester");
-            var consumer = new ConsumerApp<Null, string>(brokerList, consumerOptions);
-
-            using (var producer = new ProducerBuilder<Null, Story>(brokerList, null, Serializers.Json<Story>()).Build())
-            {
-                var program = new Program(parserClient, consumer, producer);
-                program.Poll();
-            }
+            StreamingAppBuilder.StringToJson<Story>()
+                .WithBrokerList(brokerList)
+                .WithConsumerId(consumerId)
+                .Run((consumer, producer) =>
+                {
+                    var program = new Program(parserClient, consumer, producer);
+                    program.Poll();
+                });
         }
 
         public void Poll()
