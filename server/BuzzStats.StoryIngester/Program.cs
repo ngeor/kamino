@@ -1,5 +1,6 @@
 ﻿using BuzzStats.DTOs;
 using BuzzStats.Kafka;
+using BuzzStats.Logging;
 using BuzzStats.Parsing;
 using NodaTime;
 using System;
@@ -27,6 +28,7 @@ namespace BuzzStats.StoryIngester
 
         static void Main(string[] args)
         {
+            LogSetup.Setup();
             Console.WriteLine("Starting Story Ingester");
             string brokerList = BrokerSelector.Select(args);
 

@@ -1,13 +1,15 @@
 ﻿using Confluent.Kafka;
-using Confluent.Kafka.Serialization;
+using log4net;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Reflection;
 
 namespace BuzzStats.Kafka
 {
     public class BaseConsumerApp<TKey, TValue>
     {
+        private static readonly ILog Log = LogManager.GetLogger(Assembly.GetEntryAssembly(), "BuzzStats.Kafka.Consumer");
+
         public BaseConsumerApp(
             string brokerList,
             ConsumerOptions<TKey, TValue> consumerOptions)
@@ -21,8 +23,11 @@ namespace BuzzStats.Kafka
 
         protected virtual void OnMessage(Message<TKey, TValue> msg)
         {
-            Console.WriteLine($"Topic: {msg.Topic} Partition: {msg.Partition} Offset: {msg.Offset} {msg.Value}");
+            Log.Info($"Topic: {msg.Topic} Partition: {msg.Partition} Offset: {msg.Offset} {msg.Value}");
         }
+
+        public bool IsCancelled { get; set; }
+        public bool HandleCancelKeyPress { get; set; } = true;
 
         public void Poll()
         {
@@ -40,58 +45,66 @@ namespace BuzzStats.Kafka
                 };
 
                 consumer.OnPartitionEOF += (_, end)
-                    => Console.WriteLine($"Reached end of topic {end.Topic} partition {end.Partition}, next message will be at offset {end.Offset}");
+                    => Log.Info($"Reached end of topic {end.Topic} partition {end.Partition}, next message will be at offset {end.Offset}");
 
                 // Raised on critical errors, e.g. connection failures or all brokers down.
                 consumer.OnError += (_, error)
-                    => Console.WriteLine($"Error: {error}");
+                    => Log.Error($"Error: {error}");
 
                 // Raised on deserialization errors or when a consumed message has an error != NoError.
                 consumer.OnConsumeError += (_, msg)
-                    => Console.WriteLine($"Error consuming from topic/partition/offset {msg.Topic}/{msg.Partition}/{msg.Offset}: {msg.Error}");
+                    => Log.Error($"Error consuming from topic/partition/offset {msg.Topic}/{msg.Partition}/{msg.Offset}: {msg.Error}");
 
                 consumer.OnOffsetsCommitted += (_, commit) =>
                 {
-                    Console.WriteLine($"[{string.Join(", ", commit.Offsets)}]");
+                    Log.Info($"[{string.Join(", ", commit.Offsets)}]");
 
                     if (commit.Error)
                     {
-                        Console.WriteLine($"Failed to commit offsets: {commit.Error}");
+                        Log.Error($"Failed to commit offsets: {commit.Error}");
                     }
-                    Console.WriteLine($"Successfully committed offsets: [{string.Join(", ", commit.Offsets)}]");
+
+                    Log.Info($"Successfully committed offsets: [{string.Join(", ", commit.Offsets)}]");
                 };
 
                 consumer.OnPartitionsAssigned += (_, partitions) =>
                 {
-                    Console.WriteLine($"Assigned partitions: [{string.Join(", ", partitions)}], member id: {consumer.MemberId}");
+                    Log.Info($"Assigned partitions: [{string.Join(", ", partitions)}], member id: {consumer.MemberId}");
                     consumer.Assign(partitions);
                 };
 
                 consumer.OnPartitionsRevoked += (_, partitions) =>
                 {
-                    Console.WriteLine($"Revoked partitions: [{string.Join(", ", partitions)}]");
+                    Log.Info($"Revoked partitions: [{string.Join(", ", partitions)}]");
                     consumer.Unassign();
                 };
 
                 consumer.OnStatistics += (_, json)
-                    => Console.WriteLine($"Statistics: {json}");
+                    => Log.Debug($"Statistics: {json}");
 
                 consumer.Subscribe(ConsumerOptions.InputTopic);
 
-                Console.WriteLine($"Subscribed to: [{string.Join(", ", consumer.Subscription)}]");
+                Log.Info($"Subscribed to: [{string.Join(", ", consumer.Subscription)}]");
 
-                var cancelled = false;
-                Console.CancelKeyPress += (_, e) =>
+                if (HandleCancelKeyPress)
                 {
-                    e.Cancel = true; // prevent the process from terminating.
-                    cancelled = true;
-                };
+                    Console.CancelKeyPress += (_, e) =>
+                    {
+                        e.Cancel = true; // prevent the process from terminating.
+                        IsCancelled = true;
+                    };
 
-                Console.WriteLine("Ctrl-C to exit.");
-                while (!cancelled)
+                    Console.WriteLine("Ctrl-C to exit.");
+                }
+
+                Log.Info("Polling started");
+
+                while (!IsCancelled)
                 {
                     consumer.Poll(TimeSpan.FromMilliseconds(100));
                 }
+
+                Log.Info("Polling stopped");
             }
         }
 

@@ -7,10 +7,12 @@
 
   <ItemGroup>
     <PackageReference Include="Confluent.Kafka" Version="0.11.3" />
+    <PackageReference Include="log4net" Version="2.0.8" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BuzzStats.Kafka\BuzzStats.Kafka.csproj" />
+    <ProjectReference Include="..\BuzzStats.Logging\BuzzStats.Logging.csproj" />
     <ProjectReference Include="..\BuzzStats.Parsing\BuzzStats.Parsing.csproj" />
   </ItemGroup>
 

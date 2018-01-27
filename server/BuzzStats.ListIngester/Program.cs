@@ -1,4 +1,5 @@
 ﻿using BuzzStats.Kafka;
+using BuzzStats.Logging;
 using BuzzStats.Parsing;
 using Confluent.Kafka;
 using Confluent.Kafka.Serialization;
@@ -34,6 +35,7 @@ namespace BuzzStats.ListIngester
 
         static void Main(string[] args)
         {
+            LogSetup.Setup();
             Console.WriteLine("Starting List Ingester");
             string brokerList = BrokerSelector.Select(args);
 

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BuzzStats.Logging;
 
 namespace BuzzStats.ChangeTracker
 {
@@ -118,6 +119,8 @@ namespace BuzzStats.ChangeTracker
 
         static void Main(string[] args)
         {
+            LogSetup.Setup();
+
             Console.WriteLine("Starting Change Tracker");
             string brokerList = BrokerSelector.Select(args);
 

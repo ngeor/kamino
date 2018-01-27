@@ -23,3 +23,12 @@ services:
     environment:
       - KAFKA_BROKER=192.168.99.100
       - MONGO=192.168.99.100:27017
+  buzzstats.web:
+    image: buzzstats.web
+    build:
+      context: .
+      dockerfile: BuzzStats.Web/Dockerfile
+    ports:
+      - 9000:9000
+    environment:
+      - KAFKA_BROKER=192.168.99.100
