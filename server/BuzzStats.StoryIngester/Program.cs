@@ -53,5 +53,4 @@ namespace BuzzStats.StoryIngester
             streamingApp.Poll();
         }
     }
-
 }

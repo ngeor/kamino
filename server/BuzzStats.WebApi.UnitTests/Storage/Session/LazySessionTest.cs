@@ -24,7 +24,7 @@ namespace BuzzStats.WebApi.UnitTests.Storage.Session
         }
 
         [Test]
-        public void Dispose()
+        public void DisposeCallsSessionDispose()
         {
             _lazySession.Dispose();
             _mockSession.Verify(s => s.Dispose());

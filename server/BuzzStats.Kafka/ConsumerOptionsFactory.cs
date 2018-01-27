@@ -16,5 +16,16 @@ namespace BuzzStats.Kafka
                 ValueDeserializer = new StringDeserializer(Encoding.UTF8)
             };
         }
+
+        public static ConsumerOptions<Null, T> JsonValues<T>(string consumerId, string topic)
+        {
+            return new ConsumerOptions<Null, T>
+            {
+                ConsumerId = consumerId,
+                InputTopic = topic,
+                KeyDeserializer = null,
+                ValueDeserializer = new JsonDeserializer<T>()
+            };
+        }
     }
 }

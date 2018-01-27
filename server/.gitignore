@@ -23,3 +23,5 @@ TestResult.xml
 # ReportGenerator
 coveragereport/
 
+sonar.bat
+.sonarqube/

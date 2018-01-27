@@ -15,3 +15,11 @@ services:
       dockerfile: BuzzStats.StoryIngester/Dockerfile
     environment:
       - KAFKA_BROKER=192.168.99.100
+  buzzstats.changetracker:
+    image: buzzstats.changetracker
+    build:
+      context: .
+      dockerfile: BuzzStats.ChangeTracker/Dockerfile
+    environment:
+      - KAFKA_BROKER=192.168.99.100
+      - MONGO=192.168.99.100:27017

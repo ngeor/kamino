@@ -7,10 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="4.19.4" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.5.0" />
     <PackageReference Include="Moq" Version="4.8.1" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.2.0" />
     <PackageReference Include="MSTest.TestFramework" Version="1.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BuzzStats.Kafka\BuzzStats.Kafka.csproj" />
+    <ProjectReference Include="..\BuzzStats.ChangeTracker\BuzzStats.ChangeTracker.csproj" />
+    <ProjectReference Include="..\BuzzStats.Parsing\BuzzStats.Parsing.csproj" />
+  </ItemGroup>
 </Project>

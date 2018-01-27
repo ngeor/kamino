@@ -50,7 +50,7 @@ namespace BuzzStats.Kafka
                 if (disposing)
                 {
                     // TODO: dispose managed state (managed objects).
-                    _producer.Dispose();
+                    _producer?.Dispose();
                 }
 
                 // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.

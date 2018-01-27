@@ -19,16 +19,24 @@ script:
 - cd server
 - msbuild /p:Configuration=Release BuzzStats.sln
 - mono ./testrunner/NUnit.ConsoleRunner.3.7.0/tools/nunit3-console.exe ./BuzzStats.WebApi.UnitTests/bin/Release/BuzzStats.WebApi.UnitTests.dll
+# ChangeTracker tests
 - cd BuzzStats.ChangeTracker.UnitTests
 - dotnet test
 - cd ..
+# ListIngester tests
 - cd BuzzStats.ListIngester.UnitTests
 - dotnet test
 - cd ..
+# Parsing tests
 - cd BuzzStats.Parsing.UnitTests
 - dotnet test
 - cd ..
+# StoryIngester tests
 - cd BuzzStats.StoryIngester.UnitTests
+- dotnet test
+- cd ..
+# StoryUpdater tests
+- cd BuzzStats.StoryUpdater.UnitTests
 - dotnet test
 - cd ..
 # build client
