@@ -316,7 +316,7 @@ namespace BuzzStats.ChangeTracker.UnitTests
                 CreatedAt = new DateTime(2018, 1, 26, 0, 0, 0, DateTimeKind.Utc)
             };
 
-            var repo = new MongoRepository();
+            var repo = new MongoRepository("mongodb://192.168.99.100:27017");
 
             repo.Save(story).Wait();
 

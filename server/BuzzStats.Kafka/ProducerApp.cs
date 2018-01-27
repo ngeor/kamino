@@ -20,12 +20,10 @@ namespace BuzzStats.Kafka
 
         public async Task Post(TKey key, TValue value)
         {
-            Console.Write($"Posting message to topic {ProducerOptions.OutputTopic}...");
             await _producer.ProduceAsync(
                 ProducerOptions.OutputTopic,
                 key,
                 value);
-            Console.WriteLine(" done");
         }
 
         #region IDisposable Support

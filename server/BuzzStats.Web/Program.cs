@@ -1,4 +1,5 @@
-﻿using BuzzStats.DTOs;
+﻿using BuzzStats.Configuration;
+using BuzzStats.DTOs;
 using BuzzStats.Kafka;
 using BuzzStats.Logging;
 using BuzzStats.WebApi.DTOs;
@@ -21,8 +22,8 @@ namespace BuzzStats.Web
         static void Main(string[] args)
         {
             LogSetup.Setup();
-
-            string brokerList = BrokerSelector.Select(args);
+            ConfigurationBuilder.Build(args);
+            string brokerList = ConfigurationBuilder.KafkaBroker;
             var consumerOptions = ConsumerOptionsFactory.JsonValues<StoryEvent>(
                 "BuzzStats.Web",
                 "StoryChanged");
@@ -30,7 +31,7 @@ namespace BuzzStats.Web
             {
                 HandleCancelKeyPress = false
             };
-            var repository = new MongoRepository();
+            var repository = new MongoRepository(ConfigurationBuilder.MongoConnectionString);
             var app = new Program(repository);
             consumerApp.MessageReceived += app.OnMessageReceived;
 

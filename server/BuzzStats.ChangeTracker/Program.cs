@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BuzzStats.Logging;
+using BuzzStats.Configuration;
+using log4net;
 
 namespace BuzzStats.ChangeTracker
 {
@@ -12,6 +14,7 @@ namespace BuzzStats.ChangeTracker
     {
         const string InputTopic = "StoryParsed";
         const string OutputTopic = "StoryChanged";
+        private static readonly ILog Log = LogManager.GetLogger(typeof(Program));
 
         public Program(IRepository repository)
         {
@@ -111,7 +114,12 @@ namespace BuzzStats.ChangeTracker
             var events = CollectEvents(parsedStory, dbStory);
             if (events.Any())
             {
+                Log.InfoFormat("Detected changes for story {0}", parsedStory.StoryId);
                 await Repository.Save(parsedStory);
+            }
+            else
+            {
+                Log.InfoFormat("No changes for story {0}", parsedStory.StoryId);
             }
 
             return events;
@@ -122,9 +130,10 @@ namespace BuzzStats.ChangeTracker
             LogSetup.Setup();
 
             Console.WriteLine("Starting Change Tracker");
-            string brokerList = BrokerSelector.Select(args);
+            ConfigurationBuilder.Build(args);
+            string brokerList = ConfigurationBuilder.KafkaBroker;
 
-            var program = new Program(new MongoRepository());
+            var program = new Program(new MongoRepository(ConfigurationBuilder.MongoConnectionString));
 
             var consumerOptions = ConsumerOptionsFactory.JsonValues<Story>(
                 "BuzzStats.ChangeTracker",

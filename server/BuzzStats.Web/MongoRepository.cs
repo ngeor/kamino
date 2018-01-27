@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using BuzzStats.WebApi.DTOs;
+﻿using BuzzStats.WebApi.DTOs;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,14 @@ namespace BuzzStats.Web
 {
     public class MongoRepository : IRepository
     {
-        private MongoClient CreateClient() => new MongoClient("mongodb://192.168.99.100:27017");
+        private readonly string connectionString;
+
+        public MongoRepository(string connectionString)
+        {
+            this.connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
+        }
+
+        private MongoClient CreateClient() => new MongoClient(connectionString);
         private IMongoDatabase GetDb() => CreateClient().GetDatabase("BuzzStatsWeb");
 
         public async Task<IEnumerable<RecentActivity>> GetRecentActivity()

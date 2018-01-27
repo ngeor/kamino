@@ -14,7 +14,7 @@ namespace BuzzStats.Logging
             var logRepo = LogManager.GetRepository(Assembly.GetEntryAssembly());
             BasicConfigurator.Configure(logRepo, new ConsoleAppender
             {
-                Layout = new PatternLayout("%date [%thread] %-5level %logger - %message%newline"),
+                Layout = new PatternLayout("%-5level [%thread] %logger - %message%newline"),
                 Threshold = Level.Info
             });
         }

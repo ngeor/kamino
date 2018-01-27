@@ -1,4 +1,5 @@
-﻿using BuzzStats.DTOs;
+﻿using BuzzStats.Configuration;
+using BuzzStats.DTOs;
 using BuzzStats.Kafka;
 using BuzzStats.Logging;
 using BuzzStats.Parsing;
@@ -30,7 +31,8 @@ namespace BuzzStats.StoryIngester
         {
             LogSetup.Setup();
             Console.WriteLine("Starting Story Ingester");
-            string brokerList = BrokerSelector.Select(args);
+            ConfigurationBuilder.Build(args);
+            string brokerList = ConfigurationBuilder.KafkaBroker;
 
             var parserClient = new ParserClient(
                 new UrlProvider("http://buzz.reality-tape.com/"),

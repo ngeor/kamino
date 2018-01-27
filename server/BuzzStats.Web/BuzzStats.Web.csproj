@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BuzzStats.Configuration\BuzzStats.Configuration.csproj" />
     <ProjectReference Include="..\BuzzStats.DTOs\BuzzStats.DTOs.csproj" />
     <ProjectReference Include="..\BuzzStats.Kafka\BuzzStats.Kafka.csproj" />
     <ProjectReference Include="..\BuzzStats.Logging\BuzzStats.Logging.csproj" />

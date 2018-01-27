@@ -1,4 +1,5 @@
-﻿using BuzzStats.Kafka;
+﻿using BuzzStats.Configuration;
+using BuzzStats.Kafka;
 using BuzzStats.Logging;
 using BuzzStats.Parsing;
 using Confluent.Kafka;
@@ -21,7 +22,8 @@ namespace BuzzStats.ListIngester
         {
             LogSetup.Setup();
             Console.WriteLine("Starting List Ingester");
-            string brokerList = BrokerSelector.Select(args);
+            ConfigurationBuilder.Build(args);
+            string brokerList = ConfigurationBuilder.KafkaBroker;
 
             var consumerOptions = ConsumerOptionsFactory.StringValues(
                 "BuzzStats.ListIngester",
@@ -35,7 +37,7 @@ namespace BuzzStats.ListIngester
                     new Parser(SystemClock.Instance));
 
                 var messageConverter = new MessageConverter(parserClient);
-                var repository = new MongoRepository();
+                var repository = new MongoRepository(ConfigurationBuilder.MongoConnectionString);
                 var messagePublisher = new MessagePublisher(
                     messageConverter,
                     producer,
@@ -48,7 +50,7 @@ namespace BuzzStats.ListIngester
                 };
 
                 // TODO command line argument and/or environment variable for number of pages to go through
-                const int pageNumber = 3;
+                const int pageNumber = 4;
                 using (Cron cron = new Cron(
                     messagePublisher,
                     TimeSpan.FromSeconds(5),

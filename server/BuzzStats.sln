@@ -44,6 +44,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuzzStats.StoryUpdater", "B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuzzStats.StoryUpdater.UnitTests", "BuzzStats.StoryUpdater.UnitTests\BuzzStats.StoryUpdater.UnitTests.csproj", "{BB62B517-1B49-46A7-9E87-A034CDCF7934}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuzzStats.Configuration", "BuzzStats.Configuration\BuzzStats.Configuration.csproj", "{75F850E1-B3F6-471A-8CA9-8D679E6CD22E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -110,6 +112,10 @@ Global
 		{BB62B517-1B49-46A7-9E87-A034CDCF7934}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB62B517-1B49-46A7-9E87-A034CDCF7934}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB62B517-1B49-46A7-9E87-A034CDCF7934}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75F850E1-B3F6-471A-8CA9-8D679E6CD22E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75F850E1-B3F6-471A-8CA9-8D679E6CD22E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75F850E1-B3F6-471A-8CA9-8D679E6CD22E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75F850E1-B3F6-471A-8CA9-8D679E6CD22E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

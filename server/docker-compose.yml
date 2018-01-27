@@ -8,6 +8,7 @@ services:
       dockerfile: BuzzStats.ListIngester/Dockerfile
     environment:
       - KAFKA_BROKER=192.168.99.100
+      - MONGO=mongodb://192.168.99.100:27017
   buzzstats.storyingester:
     image: buzzstats.storyingester
     build:
@@ -15,6 +16,15 @@ services:
       dockerfile: BuzzStats.StoryIngester/Dockerfile
     environment:
       - KAFKA_BROKER=192.168.99.100
+      - MONGO=mongodb://192.168.99.100:27017
+  buzzstats.storyupdater:
+    image: buzzstats.storyupdater
+    build:
+      context: .
+      dockerfile: BuzzStats.StoryUpdater/Dockerfile
+    environment:
+      - KAFKA_BROKER=192.168.99.100
+      - MONGO=mongodb://192.168.99.100:27017
   buzzstats.changetracker:
     image: buzzstats.changetracker
     build:
@@ -22,7 +32,7 @@ services:
       dockerfile: BuzzStats.ChangeTracker/Dockerfile
     environment:
       - KAFKA_BROKER=192.168.99.100
-      - MONGO=192.168.99.100:27017
+      - MONGO=mongodb://192.168.99.100:27017
   buzzstats.web:
     image: buzzstats.web
     build:
@@ -32,3 +42,4 @@ services:
       - 9000:9000
     environment:
       - KAFKA_BROKER=192.168.99.100
+      - MONGO=mongodb://192.168.99.100:27017

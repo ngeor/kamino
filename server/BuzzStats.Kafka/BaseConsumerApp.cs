@@ -31,7 +31,7 @@ namespace BuzzStats.Kafka
 
         protected virtual void OnMessage(Message<TKey, TValue> msg)
         {
-            Log.Info($"Topic: {msg.Topic} Partition: {msg.Partition} Offset: {msg.Offset} {msg.Value}");
+            Log.Debug($"Topic: {msg.Topic} Partition: {msg.Partition} Offset: {msg.Offset} {msg.Value}");
         }
 
         public bool IsCancelled { get; set; }
@@ -53,7 +53,7 @@ namespace BuzzStats.Kafka
                 };
 
                 consumer.OnPartitionEOF += (_, end)
-                    => Log.Info($"Reached end of topic {end.Topic} partition {end.Partition}, next message will be at offset {end.Offset}");
+                    => Log.Debug($"Reached end of topic {end.Topic} partition {end.Partition}, next message will be at offset {end.Offset}");
 
                 // Raised on critical errors, e.g. connection failures or all brokers down.
                 consumer.OnError += (_, error)
@@ -65,14 +65,14 @@ namespace BuzzStats.Kafka
 
                 consumer.OnOffsetsCommitted += (_, commit) =>
                 {
-                    Log.Info($"[{string.Join(", ", commit.Offsets)}]");
+                    Log.Debug($"[{string.Join(", ", commit.Offsets)}]");
 
                     if (commit.Error)
                     {
                         Log.Error($"Failed to commit offsets: {commit.Error}");
                     }
 
-                    Log.Info($"Successfully committed offsets: [{string.Join(", ", commit.Offsets)}]");
+                    Log.Debug($"Successfully committed offsets: [{string.Join(", ", commit.Offsets)}]");
                 };
 
                 consumer.OnPartitionsAssigned += (_, partitions) =>
@@ -131,5 +131,4 @@ namespace BuzzStats.Kafka
                 }
             };
     }
-
 }
