@@ -11,7 +11,7 @@ namespace BuzzStats.Parsing
             _buzzStatsUrl = buzzStatsUrl;
         }
 
-        public string ListingUrl(StoryListing storyListing, int page)
+        public string ListingUrl(StoryListing storyListing, int page = 0)
         {
             string path;
             switch (storyListing)
@@ -40,7 +40,7 @@ namespace BuzzStats.Parsing
             return _buzzStatsUrl + path;
         }
 
-        public string StoryUrl(int storyId, int? commentId)
+        public string StoryUrl(int storyId, int? commentId = null)
         {
             var result = _buzzStatsUrl + "story.php?id=" + storyId;
             if (commentId.HasValue)
