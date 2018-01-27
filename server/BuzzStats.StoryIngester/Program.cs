@@ -10,7 +10,7 @@ namespace BuzzStats.StoryIngester
 {
     public class Program
     {
-        const string InputTopic = "StoryDiscovered";
+        const string InputTopic = "StoryExpired";
         const string OutputTopic = "StoryParsed";
 
         public Program(IParserClient parserClient)

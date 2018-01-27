@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using BuzzStats.DTOs;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NodaTime;
 using NodaTime.Extensions;
@@ -218,8 +219,7 @@ namespace BuzzStats.Parsing.UnitTests
             Assert.IsTrue(expectedVoters.All(expectedVoter => story.Voters.Any(v => v == expectedVoter)), "Voter");
 
             Assert.AreEqual((int) KnownStoryCategory.Blogs, story.Category);
-
-            Assert.IsTrue(story.Comments.Count() > 0);
+            story.Comments.Should().NotBeEmpty();
         }
 
         [TestMethod]

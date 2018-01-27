@@ -27,20 +27,17 @@ Using `docker-compose up`, you can start various services the app depends on:
 
 ## Services
 
-(Note: this is the future design)
-
 The services are event driven.
 
-| Event             | Triggered By                 | Consumed By     |
-| ----------------- | ---------------------------- | --------------- |
-| List Expired      | Timer                        | List Ingester   |
-| Story Discovered  | List Ingester, Story Updater | Story Ingester  |
-| Story Expired     | Story Updater                | Story Ingester  |
-| Story Parsed      | Story Ingester               | Change Tracker  |
-| Story Changed     | Change Tracker               | Web             |
+| Event             | Triggered By                 | Consumed By        |
+| ----------------- | ---------------------------- | ------------------ |
+| List Expired      | Timer                        | List Ingester      |
+| Story Expired     | List Ingester, Story Updater | Story Ingester     |
+| Story Parsed      | Story Ingester               | Change Tracker     |
+| Story Changed     | Change Tracker               | Web, Story Updater |
 
 * List Ingester: parses listing pages and publishes
-  the stories it discovers as Story Discovered events.
+  the new stories it discovers as Story Expired events.
 * Story Ingester: parses story pages and publishes them
   as Story Parsed events.
 * Story Updater: selects stories that should be rescanned for changes
@@ -57,4 +54,5 @@ List Ingester->Story Ingester: Story Discovered
 Story Updater->Story Ingester: Story Expired
 Story Ingester->Change Tracker: Story Parsed
 Change Tracker->Web: Story Changed
- -->
+Change Tracker->Story Updater: Story Changed
+-->

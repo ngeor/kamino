@@ -11,7 +11,7 @@ namespace BuzzStats.ListIngester
     public class Program
     {
         const string InputTopic = "ListExpired";
-        const string OutputTopic = "StoryDiscovered";
+        const string OutputTopic = "StoryExpired";
 
         protected Program()
         {
