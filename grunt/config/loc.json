@@ -1,8 +1,0 @@
-{
-	"csharp": {
-		"src": "<%= csharplint.local.src %>",
-		"options": {
-			"dest": "dist/loc.csv"
-		}
-	}
-}

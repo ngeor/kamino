@@ -1,8 +1,0 @@
-{
-    "all": {
-        "configFile": "./wdio.conf.js",
-        "options": {
-            "baseUrl": "<%= environment.url %>"
-        }
-    }
-}

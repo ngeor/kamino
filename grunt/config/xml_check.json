@@ -1,8 +1,0 @@
-{
-    "web.config": {
-        "src": "src/**/web.config",
-        "options": {
-            "xpathQuery": "configuration//system.web/compilation/assemblies/add[@assembly=\"System.Web.Entity\"]"
-        }
-    }
-}

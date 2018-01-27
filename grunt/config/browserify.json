@@ -1,6 +1,0 @@
-{
-    "all": {
-        "src": "<%= paths.webRoot %>/js/app/**/*.js",
-        "dest": "<%= paths.webRoot %>/js/app.js"
-    }
-}

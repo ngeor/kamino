@@ -1,7 +1,0 @@
-{
-    "all": {
-        "src": "<%= bom.all.src %>",
-        "options": {
-        }
-    }
-}

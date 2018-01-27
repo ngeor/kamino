@@ -7,7 +7,8 @@ SonarQube.Scanner.MSBuild.exe begin /k:"BuzzStats" `
     /d:sonar.organization="ngeor-github" `
     /d:sonar.host.url="https://sonarcloud.io" `
     /d:sonar.login="$Env:SONAR_LOGIN" `
-    /d:sonar.cs.opencover.reportsPaths="opencover.xml"
+    /d:sonar.cs.opencover.reportsPaths="opencover.xml" `
+    /d:sonar.coverage.exclusions="**/*Test.cs"
 
 MSBuild.exe /t:Rebuild .\BuzzStats.sln
 .\coverage.ps1
