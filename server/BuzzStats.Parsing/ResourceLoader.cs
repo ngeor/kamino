@@ -1,4 +1,3 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 using System.Linq;
@@ -6,7 +5,7 @@ using System.Text;
 
 namespace BuzzStats.Parsing.UnitTests
 {
-    static class ResourceLoader
+    internal static class ResourceLoader
     {
         public static string Load(string id)
         {
@@ -32,10 +31,19 @@ namespace BuzzStats.Parsing.UnitTests
         public static string LoadExact(string resourceId)
         {
             Stream stream = typeof(ResourceLoader).Assembly.GetManifestResourceStream(resourceId);
-            Assert.IsNotNull(stream, "Empty resource: " + resourceId);
+            if (stream == null)
+            {
+                throw new ArgumentException($"Resource not found: {resourceId}");
+            }
+
             StreamReader sr = new StreamReader(stream);
             string result = sr.ReadToEnd();
-            Assert.IsFalse(string.IsNullOrEmpty(result), "Empty resource: " + resourceId);
+
+            if (string.IsNullOrEmpty(result))
+            {
+                throw new ArgumentException("Empty resource: " + resourceId);
+            }
+
             return result;
         }
     }

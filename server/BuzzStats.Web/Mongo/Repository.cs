@@ -1,16 +1,15 @@
-﻿using BuzzStats.Web.DTOs;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BuzzStats.Web
+namespace BuzzStats.Web.Mongo
 {
-    public class MongoRepository : IRepository
+    public class Repository : IRepository
     {
         private readonly string connectionString;
 
-        public MongoRepository(string connectionString)
+        public Repository(string connectionString)
         {
             this.connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
         }

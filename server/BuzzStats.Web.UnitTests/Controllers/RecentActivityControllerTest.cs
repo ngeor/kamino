@@ -1,5 +1,5 @@
 ﻿using BuzzStats.Web.Controllers;
-using BuzzStats.Web.DTOs;
+using BuzzStats.Web.Mongo;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;

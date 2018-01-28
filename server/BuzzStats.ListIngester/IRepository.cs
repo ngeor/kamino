@@ -2,7 +2,7 @@
 
 namespace BuzzStats.ListIngester
 {
-    public interface IMongoRepository
+    public interface IRepository
     {
         Task<bool> AddIfMissing(string storyId);
     }

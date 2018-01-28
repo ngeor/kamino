@@ -10,7 +10,7 @@ namespace BuzzStats.ListIngester.UnitTests
     {
         private Mock<IMessageConverter> messageConverterMock;
         private Mock<ISerializingProducer<Null, string>> producerMock;
-        private Mock<IMongoRepository> repositoryMock;
+        private Mock<IRepository> repositoryMock;
         private MessagePublisher messagePublisher;
 
         [TestInitialize]
@@ -18,7 +18,7 @@ namespace BuzzStats.ListIngester.UnitTests
         {
             messageConverterMock = new Mock<IMessageConverter>();
             producerMock = new Mock<ISerializingProducer<Null, string>>();
-            repositoryMock = new Mock<IMongoRepository>();
+            repositoryMock = new Mock<IRepository>();
             messagePublisher = new MessagePublisher(
                 messageConverterMock.Object,
                 producerMock.Object,

@@ -1,6 +1,6 @@
 using System;
 
-namespace BuzzStats.Web.DTOs
+namespace BuzzStats.Web.Mongo
 {
     public class RecentComment
     {

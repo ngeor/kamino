@@ -1,5 +1,6 @@
 ﻿using BuzzStats.Configuration;
 using BuzzStats.Kafka;
+using BuzzStats.ListIngester.Mongo;
 using BuzzStats.Logging;
 using BuzzStats.Parsing;
 using Confluent.Kafka;
@@ -36,7 +37,7 @@ namespace BuzzStats.ListIngester
                     new Parser(SystemClock.Instance));
 
                 var messageConverter = new MessageConverter(parserClient);
-                var repository = new MongoRepository(ConfigurationBuilder.MongoConnectionString);
+                var repository = new Repository(ConfigurationBuilder.MongoConnectionString);
                 var messagePublisher = new MessagePublisher(
                     messageConverter,
                     producer,

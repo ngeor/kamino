@@ -3,13 +3,13 @@ using MongoDB.Driver;
 using System;
 using System.Threading.Tasks;
 
-namespace BuzzStats.StoryUpdater
+namespace BuzzStats.StoryUpdater.Mongo
 {
-    class MongoRepository : IMongoRepository
+    class Repository : IRepository
     {
         private readonly string connectionString;
 
-        public MongoRepository(string connectionString)
+        public Repository(string connectionString)
         {
             this.connectionString = connectionString;
         }
@@ -43,12 +43,13 @@ namespace BuzzStats.StoryUpdater
             return collection;
         }
 
-        public async Task<StoryHistory> OldestCheckedStory()
+        public async Task<int?> OldestCheckedStory()
         {
             var collection = GetCollection();
-            return await collection.Find(Builders<StoryHistory>.Filter.Empty)
+            var story = await collection.Find(Builders<StoryHistory>.Filter.Empty)
                 .Sort(Builders<StoryHistory>.Sort.Ascending(f => f.LastCheckedAt))
                 .FirstOrDefaultAsync();
+            return story?.StoryId;
         }
 
         public async Task UpdateLastCheckedDate(int storyId)

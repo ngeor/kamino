@@ -1,7 +1,7 @@
 ﻿using MongoDB.Bson;
 using System;
 
-namespace BuzzStats.StoryUpdater
+namespace BuzzStats.StoryUpdater.Mongo
 {
     public class StoryHistory
     {

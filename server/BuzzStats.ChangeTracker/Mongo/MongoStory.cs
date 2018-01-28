@@ -2,7 +2,7 @@
 using BuzzStats.DTOs;
 using MongoDB.Bson;
 
-namespace BuzzStats.ChangeTracker
+namespace BuzzStats.ChangeTracker.Mongo
 {
     public class MongoStory
     {

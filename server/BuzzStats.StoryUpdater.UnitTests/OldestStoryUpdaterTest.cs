@@ -11,7 +11,7 @@ namespace BuzzStats.StoryUpdater.UnitTests
         public void Update()
         {
             // arrange
-            var repositoryMock = new Mock<IMongoRepository>();
+            var repositoryMock = new Mock<IRepository>();
             var producerMock = new Mock<ISerializingProducer<Null, string>>();
             var oldestStoryUpdater = new OldestStoryUpdater(
                 repositoryMock.Object,
@@ -19,7 +19,7 @@ namespace BuzzStats.StoryUpdater.UnitTests
                 "outputTopic");
 
             repositoryMock.Setup(p => p.OldestCheckedStory())
-                .ReturnsAsync(new StoryHistory { StoryId = 42 });
+                .ReturnsAsync(42);
 
             // act
             oldestStoryUpdater.Update();
@@ -33,7 +33,7 @@ namespace BuzzStats.StoryUpdater.UnitTests
         public void Update_WhenNoStoriesExist()
         {
             // arrange
-            var repositoryMock = new Mock<IMongoRepository>();
+            var repositoryMock = new Mock<IRepository>();
             var producerMock = new Mock<ISerializingProducer<Null, string>>();
             var oldestStoryUpdater = new OldestStoryUpdater(
                 repositoryMock.Object,
@@ -41,7 +41,7 @@ namespace BuzzStats.StoryUpdater.UnitTests
                 "outputTopic");
 
             repositoryMock.Setup(p => p.OldestCheckedStory())
-                .ReturnsAsync((StoryHistory)null);
+                .ReturnsAsync((int?)null);
 
             // act
             oldestStoryUpdater.Update();

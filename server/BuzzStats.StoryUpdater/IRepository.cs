@@ -3,9 +3,9 @@ using BuzzStats.DTOs;
 
 namespace BuzzStats.StoryUpdater
 {
-    public interface IMongoRepository
+    public interface IRepository
     {
-        Task<StoryHistory> OldestCheckedStory();
+        Task<int?> OldestCheckedStory();
         Task RegisterChangeEvent(StoryEvent storyEvent);
         Task UpdateLastCheckedDate(int storyId);
     }

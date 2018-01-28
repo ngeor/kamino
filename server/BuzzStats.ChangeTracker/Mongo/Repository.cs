@@ -4,13 +4,13 @@ using AutoMapper;
 using BuzzStats.DTOs;
 using MongoDB.Driver;
 
-namespace BuzzStats.ChangeTracker
+namespace BuzzStats.ChangeTracker.Mongo
 {
-    public class MongoRepository : IRepository
+    public class Repository : IRepository
     {
         private readonly string connectionString;
 
-        public MongoRepository(string connectionString)
+        public Repository(string connectionString)
         {
             Mapper.Initialize(cfg =>
             {
@@ -24,7 +24,7 @@ namespace BuzzStats.ChangeTracker
         {
             IMongoCollection<MongoStory> collection = GetCollection();
             var mongoStory = await collection.Find(s => s.StoryId == storyId).SingleOrDefaultAsync();
-            return Mapper.Map<Story>(mongoStory);
+            return Mapper.Map<DTOs.Story>(mongoStory);
         }
 
         private IMongoCollection<MongoStory> GetCollection()

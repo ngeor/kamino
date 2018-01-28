@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BuzzStats.Logging;
 using BuzzStats.Configuration;
 using Confluent.Kafka;
+using BuzzStats.ChangeTracker.Mongo;
 
 namespace BuzzStats.ChangeTracker
 {
@@ -37,7 +38,7 @@ namespace BuzzStats.ChangeTracker
                 .Run((consumer, producer) =>
             {
                 var program = new Program(
-                    new EventProducer(new MongoRepository(ConfigurationBuilder.MongoConnectionString)),
+                    new EventProducer(new Repository(ConfigurationBuilder.MongoConnectionString)),
                     consumer,
                     producer);
                 program.Poll();

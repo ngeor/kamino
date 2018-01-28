@@ -1,4 +1,5 @@
 using AutoMapper;
+using BuzzStats.Web.Mongo;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -32,7 +33,7 @@ namespace BuzzStats.Web
             services.AddSingleton<IMapper>(_ =>
                 new Mapper(CreateMapperConfiguration()));
 
-            services.AddSingleton<IRepository, MongoRepository>();
+            services.AddSingleton<IRepository, Repository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -2,7 +2,7 @@
 using BuzzStats.DTOs;
 using BuzzStats.Kafka;
 using BuzzStats.Logging;
-using BuzzStats.Web.DTOs;
+using BuzzStats.Web.Mongo;
 using Confluent.Kafka;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
@@ -30,7 +30,7 @@ namespace BuzzStats.Web
             {
                 HandleCancelKeyPress = false
             };
-            var repository = new MongoRepository(ConfigurationBuilder.MongoConnectionString);
+            var repository = new Repository(ConfigurationBuilder.MongoConnectionString);
             var app = new Program(repository);
             consumerApp.MessageReceived += app.OnMessageReceived;
 

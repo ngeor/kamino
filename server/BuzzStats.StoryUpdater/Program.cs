@@ -2,6 +2,7 @@
 using BuzzStats.DTOs;
 using BuzzStats.Kafka;
 using BuzzStats.Logging;
+using BuzzStats.StoryUpdater.Mongo;
 using Confluent.Kafka;
 using log4net;
 using System;
@@ -31,7 +32,7 @@ namespace BuzzStats.StoryUpdater
             var consumerOptions = ConsumerOptionsFactory.JsonValues<StoryEvent>(
                 "BuzzStats.StoryUpdater");
             var consumer = new ConsumerApp<Null, StoryEvent>(brokerList, consumerOptions);
-            var repository = new MongoRepository(ConfigurationBuilder.MongoConnectionString);
+            var repository = new Repository(ConfigurationBuilder.MongoConnectionString);
 
             using (var producer = new ProducerBuilder<Null, string>(brokerList, null, Serializers.String()).Build())
             {

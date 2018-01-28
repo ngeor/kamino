@@ -1,7 +1,7 @@
 using MongoDB.Bson;
 using System;
 
-namespace BuzzStats.Web.DTOs
+namespace BuzzStats.Web.Mongo
 {
     /// <summary>
     /// Recent activity data object.

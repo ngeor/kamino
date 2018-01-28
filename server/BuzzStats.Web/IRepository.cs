@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BuzzStats.Web.DTOs;
+using BuzzStats.Web.Mongo;
 
 namespace BuzzStats.Web
 {

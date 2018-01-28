@@ -1,4 +1,5 @@
-﻿using BuzzStats.DTOs;
+﻿using BuzzStats.ChangeTracker.Mongo;
+using BuzzStats.DTOs;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -333,7 +334,7 @@ namespace BuzzStats.ChangeTracker.UnitTests
                 CreatedAt = new DateTime(2018, 1, 26, 0, 0, 0, DateTimeKind.Utc)
             };
 
-            var repo = new MongoRepository("mongodb://192.168.99.100:27017");
+            var repo = new Repository("mongodb://192.168.99.100:27017");
 
             repo.Save(story).Wait();
 

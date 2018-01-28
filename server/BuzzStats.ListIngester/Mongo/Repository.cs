@@ -4,13 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BuzzStats.ListIngester
+namespace BuzzStats.ListIngester.Mongo
 {
-    public class MongoRepository : IMongoRepository
+    public class Repository : IRepository
     {
         private readonly string connectionString;
 
-        public MongoRepository(string connectionString)
+        public Repository(string connectionString)
         {
             this.connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
         }

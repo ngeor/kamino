@@ -1,6 +1,6 @@
 using MongoDB.Bson;
 
-namespace BuzzStats.Web.DTOs
+namespace BuzzStats.Web.Mongo
 {
     public class StoryWithRecentComments
     {

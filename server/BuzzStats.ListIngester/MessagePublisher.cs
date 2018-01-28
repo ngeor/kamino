@@ -7,9 +7,9 @@ namespace BuzzStats.ListIngester
     public class MessagePublisher : IMessagePublisher
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(MessagePublisher));
-        private readonly IMongoRepository repository;
+        private readonly IRepository repository;
 
-        public MessagePublisher(IMessageConverter messageConverter, ISerializingProducer<Null, string> producer, string outputTopic, IMongoRepository repository)
+        public MessagePublisher(IMessageConverter messageConverter, ISerializingProducer<Null, string> producer, string outputTopic, IRepository repository)
         {
             MessageConverter = messageConverter;
             Producer = producer;

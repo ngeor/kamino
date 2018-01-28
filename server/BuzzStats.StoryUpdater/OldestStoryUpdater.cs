@@ -9,12 +9,12 @@ namespace BuzzStats.StoryUpdater
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(OldestStoryUpdater));
 
-        private readonly IMongoRepository repository;
+        private readonly IRepository repository;
         private readonly ISerializingProducer<Null, string> producer;
         private readonly string outputTopic;
 
         public OldestStoryUpdater(
-            IMongoRepository repository,
+            IRepository repository,
             ISerializingProducer<Null, string> producer,
             string outputTopic)
         {
@@ -25,17 +25,16 @@ namespace BuzzStats.StoryUpdater
 
         public async Task UpdateAsync()
         {
-            var storyHistory = await repository.OldestCheckedStory();
-            if (storyHistory == null)
+            var storyId = await repository.OldestCheckedStory();
+            if (!storyId.HasValue)
             {
                 Log.Info("No stories are known to story updater!");
                 return;
             }
 
-            var storyId = storyHistory.StoryId;
             Log.InfoFormat("Oldest checked story is {0}", storyId);
             await producer.ProduceAsync(outputTopic, null, storyId.ToString());
-            await repository.UpdateLastCheckedDate(storyId);
+            await repository.UpdateLastCheckedDate(storyId.Value);
         }
 
         public void Update()
