@@ -47,7 +47,7 @@ namespace BuzzStats.Parsing.UnitTests
         public void ListingUrl_UnsupportedValue()
         {
             StoryListing invalidValue = (StoryListing)(-1);
-            var listingUrl = _urlProvider.ListingUrl(invalidValue);
+            _urlProvider.ListingUrl(invalidValue);
         }
 
         [TestMethod]

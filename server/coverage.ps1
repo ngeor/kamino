@@ -1,7 +1,7 @@
 $UnitTestDirs = Get-ChildItem . | Where-Object { $_.PSIsContainer -and $_.Name.EndsWith("UnitTests")}
 Remove-Item -Force .\opencover.xml
 nuget install OpenCover -Version 4.6.519 -OutputDirectory packages
-nuget install ReportGenerator -Version 2.5.9 -OutputDirectory packages
+nuget install ReportGenerator -Version 3.1.2 -OutputDirectory packages
 
 foreach ($dir in $UnitTestDirs) {
 	.\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe `
@@ -11,7 +11,7 @@ foreach ($dir in $UnitTestDirs) {
 		-register:user `
 		-filter:"+[Buzz*]* -[*.UnitTests]*" `
 		-target:"C:\Program Files\dotnet\dotnet.exe" `
-		-targetargs:"test --no-build $dir" `
+		-targetargs:"test --no-build $dir"
 }
 
-.\packages\ReportGenerator.2.5.9\tools\ReportGenerator.exe -reports:opencover.xml -targetdir:coverage
+.\packages\ReportGenerator.3.1.2\tools\ReportGenerator.exe -reports:opencover.xml -targetdir:coverage
