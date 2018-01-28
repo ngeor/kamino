@@ -11,7 +11,7 @@ namespace BuzzStats.ListIngester.UnitTests
     [TestClass]
     public class CronTest
     {
-        const int timerEpsilon = 314; // allow some delay in msec for matching method duration
+        const int timerEpsilon = 373; // allow some delay in msec for matching method duration
 
         private Cron cron;
 
