@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BuzzStats.WebApi.DTOs;
+using BuzzStats.Web.DTOs;
 
 namespace BuzzStats.Web
 {

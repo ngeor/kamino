@@ -43,7 +43,7 @@ namespace BuzzStats.ChangeTracker.UnitTests
             var result = eventProducer.CreateEventsAsync(msg).Result.ToArray();
 
             // assert
-            result.Should().Equal(expectedMsg);
+            result.ShouldBeEquivalentTo(new[] { expectedMsg });
             repositoryMock.Verify(p => p.Save(msg));
         }
 
@@ -94,11 +94,14 @@ namespace BuzzStats.ChangeTracker.UnitTests
             var result = eventProducer.CreateEventsAsync(msg).Result.ToArray();
 
             // assert
-            result.Should().Equal(new StoryEvent
+            result.ShouldAllBeEquivalentTo(new[]
             {
-                StoryId = 42,
-                EventType = StoryEventType.StoryVoted,
-                Username = "voter2"
+                new StoryEvent
+                {
+                    StoryId = 42,
+                    EventType = StoryEventType.StoryVoted,
+                    Username = "voter2"
+                }
             });
 
             repositoryMock.Verify(p => p.Save(msg));
@@ -131,11 +134,14 @@ namespace BuzzStats.ChangeTracker.UnitTests
             var result = eventProducer.CreateEventsAsync(msg).Result.ToArray();
 
             // assert
-            result.Should().Equal(new StoryEvent
+            result.ShouldBeEquivalentTo(new[]
             {
-                StoryId = 42,
-                EventType = StoryEventType.CommentCreated,
-                Username = "user1"
+                new StoryEvent
+                {
+                    StoryId = 42,
+                    EventType = StoryEventType.CommentCreated,
+                    Username = "user1"
+                }
             });
 
             repositoryMock.Verify(p => p.Save(msg));
@@ -188,16 +194,19 @@ namespace BuzzStats.ChangeTracker.UnitTests
             var result = eventProducer.CreateEventsAsync(msg).Result.ToArray();
 
             // assert
-            result.Should().Equal(new StoryEvent
+            result.ShouldBeEquivalentTo(new[]
             {
-                StoryId = 42,
-                EventType = StoryEventType.StoryVoted,
-                Username = "voter2"
-            }, new StoryEvent
-            {
-                StoryId = 42,
-                EventType = StoryEventType.CommentCreated,
-                Username = "bye"
+                new StoryEvent
+                {
+                    StoryId = 42,
+                    EventType = StoryEventType.StoryVoted,
+                    Username = "voter2"
+                }, new StoryEvent
+                {
+                    StoryId = 42,
+                    EventType = StoryEventType.CommentCreated,
+                    Username = "bye"
+                }
             });
 
             repositoryMock.Verify(p => p.Save(msg));
@@ -238,17 +247,20 @@ namespace BuzzStats.ChangeTracker.UnitTests
             var result = eventProducer.CreateEventsAsync(msg).Result.ToArray();
 
             // assert
-            result.Should().Equal(new StoryEvent
+            result.ShouldBeEquivalentTo(new[]
             {
-                StoryId = 42,
-                EventType = StoryEventType.CommentCreated,
-                Username = "user1"
-            },
-            new StoryEvent
-            {
-                StoryId = 42,
-                EventType = StoryEventType.CommentCreated,
-                Username = "user2"
+                new StoryEvent
+                {
+                    StoryId = 42,
+                    EventType = StoryEventType.CommentCreated,
+                    Username = "user1"
+                },
+                new StoryEvent
+                {
+                    StoryId = 42,
+                    EventType = StoryEventType.CommentCreated,
+                    Username = "user2"
+                }
             });
 
             repositoryMock.Verify(p => p.Save(msg));
@@ -297,11 +309,14 @@ namespace BuzzStats.ChangeTracker.UnitTests
             var result = eventProducer.CreateEventsAsync(msg).Result.ToArray();
 
             // assert
-            result.Should().Equal(new StoryEvent
+            result.ShouldBeEquivalentTo(new[]
             {
-                StoryId = 42,
-                EventType = StoryEventType.CommentCreated,
-                Username = "user2"
+                new StoryEvent
+                {
+                    StoryId = 42,
+                    EventType = StoryEventType.CommentCreated,
+                    Username = "user2"
+                }
             });
 
             repositoryMock.Verify(p => p.Save(msg));

@@ -1,6 +1,6 @@
 using System;
 
-namespace BuzzStats.WebApi.DTOs
+namespace BuzzStats.Web.DTOs
 {
     public class RecentComment
     {
@@ -8,35 +8,5 @@ namespace BuzzStats.WebApi.DTOs
         public string Username { get; set; }
         public int VotesUp { get; set; }
         public DateTime CreatedAt { get; set; }
-
-        public override string ToString()
-        {
-            return $"CommentId: {CommentId}, Username: {Username}, VotesUp: {VotesUp}, CreatedAt: {CreatedAt}";
-        }
-
-        public override bool Equals(object obj)
-        {
-            RecentComment that = obj as RecentComment;
-            if (that == null)
-            {
-                return false;
-            }
-
-            return CommentId == that.CommentId && VotesUp == that.VotesUp
-                   && string.Equals(Username, that.Username)
-                   && CreatedAt == that.CreatedAt;
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                int result = CommentId;
-                result = result * 7 + VotesUp;
-                result = result * 11 + (Username ?? "").GetHashCode();
-                result = result * 13 + CreatedAt.GetHashCode();
-                return result;
-            }
-        }
     }
 }

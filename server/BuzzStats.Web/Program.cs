@@ -2,7 +2,7 @@
 using BuzzStats.DTOs;
 using BuzzStats.Kafka;
 using BuzzStats.Logging;
-using BuzzStats.WebApi.DTOs;
+using BuzzStats.Web.DTOs;
 using Confluent.Kafka;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;

@@ -1,4 +1,4 @@
-﻿using BuzzStats.WebApi.DTOs;
+﻿using BuzzStats.Web.DTOs;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;

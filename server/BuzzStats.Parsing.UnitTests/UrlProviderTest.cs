@@ -43,6 +43,14 @@ namespace BuzzStats.Parsing.UnitTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void ListingUrl_UnsupportedValue()
+        {
+            StoryListing invalidValue = (StoryListing)(-1);
+            var listingUrl = _urlProvider.ListingUrl(invalidValue);
+        }
+
+        [TestMethod]
         public void ListingUrl_Home_SecondPage()
         {
             var listingUrl = _urlProvider.ListingUrl(StoryListing.Home, 2);
