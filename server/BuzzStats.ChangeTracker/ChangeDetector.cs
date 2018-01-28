@@ -7,12 +7,16 @@ using System.Threading.Tasks;
 
 namespace BuzzStats.ChangeTracker
 {
-    public class EventProducer : IEventProducer
+    /// <summary>
+    /// Detects changes on parsed stories.
+    /// Uses an <see cref="IRepository"/> to track state.
+    /// </summary>
+    public class ChangeDetector : IChangeDetector
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(EventProducer));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(ChangeDetector));
         private readonly IRepository repository;
 
-        public EventProducer(IRepository repository)
+        public ChangeDetector(IRepository repository)
         {
             this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
@@ -40,8 +44,8 @@ namespace BuzzStats.ChangeTracker
 
         private IEnumerable<StoryEvent> CollectNewStoryVotes(Story parsedStory, Story dbStory)
         {
-            var parsedVoters = parsedStory.Voters ?? Enumerable.Empty<string>();
-            var dbVoters = dbStory.Voters ?? Enumerable.Empty<string>();
+            var parsedVoters = parsedStory.Voters.EnsureNotNull();
+            var dbVoters = dbStory.Voters.EnsureNotNull();
             var newVotes = parsedVoters.Where(v => !dbVoters.Contains(v));
             return newVotes.Select(v => new StoryEvent
             {
@@ -53,8 +57,8 @@ namespace BuzzStats.ChangeTracker
 
         private IEnumerable<StoryEvent> CollectNewComments(Story parsedStory, Story dbStory)
         {
-            var parsedComments = parsedStory.Comments ?? Enumerable.Empty<Comment>();
-            var dbComments = dbStory.Comments ?? Enumerable.Empty<Comment>();
+            var parsedComments = parsedStory.Comments.EnsureNotNull();
+            var dbComments = dbStory.Comments.EnsureNotNull();
             var newComments = CollectNewComments(parsedComments, dbComments);
             return newComments.Select(c => new StoryEvent
             {
@@ -81,8 +85,8 @@ namespace BuzzStats.ChangeTracker
                 {
                     // parsed comment exists
                     foreach (Comment c in CollectNewComments(
-                        parsedComment.Comments ?? Enumerable.Empty<Comment>(),
-                        dbComment.Comments ?? Enumerable.Empty<Comment>()))
+                        parsedComment.Comments.EnsureNotNull(),
+                        dbComment.Comments.EnsureNotNull()))
                     {
                         yield return c;
                     }
@@ -93,7 +97,7 @@ namespace BuzzStats.ChangeTracker
         private static IEnumerable<Comment> CommentHierarchy(Comment comment)
         {
             yield return comment;
-            foreach (Comment childComment in comment.Comments ?? Enumerable.Empty<Comment>())
+            foreach (Comment childComment in comment.Comments.EnsureNotNull())
             {
                 foreach (Comment c in CommentHierarchy(childComment))
                 {
@@ -102,7 +106,7 @@ namespace BuzzStats.ChangeTracker
             }
         }
 
-        public async Task<IEnumerable<StoryEvent>> CreateEventsAsync(Story parsedStory)
+        public async Task<IEnumerable<StoryEvent>> FindChangesAsync(Story parsedStory)
         {
             var dbStory = await repository.Load(parsedStory.StoryId);
             var events = CollectEvents(parsedStory, dbStory);

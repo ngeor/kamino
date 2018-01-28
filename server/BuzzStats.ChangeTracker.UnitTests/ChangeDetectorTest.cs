@@ -9,16 +9,16 @@ using System.Linq;
 namespace BuzzStats.ChangeTracker.UnitTests
 {
     [TestClass]
-    public class EventProducerTest
+    public class ChangeDetectorTest
     {
         private Mock<IRepository> repositoryMock;
-        private EventProducer eventProducer;
+        private ChangeDetector changeDetector;
 
         [TestInitialize]
         public void SetUp()
         {
             repositoryMock = new Mock<IRepository>();
-            eventProducer = new EventProducer(repositoryMock.Object);
+            changeDetector = new ChangeDetector(repositoryMock.Object);
         }
 
         [TestMethod]
@@ -41,7 +41,7 @@ namespace BuzzStats.ChangeTracker.UnitTests
             };
 
             // act
-            var result = eventProducer.CreateEventsAsync(msg).Result.ToArray();
+            var result = changeDetector.FindChangesAsync(msg).Result.ToArray();
 
             // assert
             result.ShouldBeEquivalentTo(new[] { expectedMsg });
@@ -60,7 +60,7 @@ namespace BuzzStats.ChangeTracker.UnitTests
             repositoryMock.Setup(p => p.Load(42)).ReturnsAsync(msg);
 
             // act
-            var result = eventProducer.CreateEventsAsync(msg).Result.ToArray();
+            var result = changeDetector.FindChangesAsync(msg).Result.ToArray();
 
             // assert
             result.Should().BeEmpty();
@@ -92,7 +92,7 @@ namespace BuzzStats.ChangeTracker.UnitTests
             repositoryMock.Setup(p => p.Load(42)).ReturnsAsync(dbStory);
 
             // act
-            var result = eventProducer.CreateEventsAsync(msg).Result.ToArray();
+            var result = changeDetector.FindChangesAsync(msg).Result.ToArray();
 
             // assert
             result.ShouldAllBeEquivalentTo(new[]
@@ -132,7 +132,7 @@ namespace BuzzStats.ChangeTracker.UnitTests
             repositoryMock.Setup(p => p.Load(42)).ReturnsAsync(dbStory);
 
             // act
-            var result = eventProducer.CreateEventsAsync(msg).Result.ToArray();
+            var result = changeDetector.FindChangesAsync(msg).Result.ToArray();
 
             // assert
             result.ShouldBeEquivalentTo(new[]
@@ -192,7 +192,7 @@ namespace BuzzStats.ChangeTracker.UnitTests
             repositoryMock.Setup(p => p.Load(42)).ReturnsAsync(dbStory);
 
             // act
-            var result = eventProducer.CreateEventsAsync(msg).Result.ToArray();
+            var result = changeDetector.FindChangesAsync(msg).Result.ToArray();
 
             // assert
             result.ShouldBeEquivalentTo(new[]
@@ -245,7 +245,7 @@ namespace BuzzStats.ChangeTracker.UnitTests
             repositoryMock.Setup(p => p.Load(42)).ReturnsAsync(dbStory);
 
             // act
-            var result = eventProducer.CreateEventsAsync(msg).Result.ToArray();
+            var result = changeDetector.FindChangesAsync(msg).Result.ToArray();
 
             // assert
             result.ShouldBeEquivalentTo(new[]
@@ -307,7 +307,7 @@ namespace BuzzStats.ChangeTracker.UnitTests
             repositoryMock.Setup(p => p.Load(42)).ReturnsAsync(dbStory);
 
             // act
-            var result = eventProducer.CreateEventsAsync(msg).Result.ToArray();
+            var result = changeDetector.FindChangesAsync(msg).Result.ToArray();
 
             // assert
             result.ShouldBeEquivalentTo(new[]

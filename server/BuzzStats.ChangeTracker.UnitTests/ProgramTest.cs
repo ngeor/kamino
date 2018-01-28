@@ -12,7 +12,7 @@ namespace BuzzStats.ChangeTracker.UnitTests
     [TestClass]
     public class ProgramTest
     {
-        private Mock<IEventProducer> eventProducerMock;
+        private Mock<IChangeDetector> changeDetectorMock;
         private Mock<IConsumerApp<Null, Story>> consumerMock;
         private Mock<ISerializingProducer<Null, StoryEvent>> producerMock;
         private Program program;
@@ -20,10 +20,10 @@ namespace BuzzStats.ChangeTracker.UnitTests
         [TestInitialize]
         public void SetUp()
         {
-            eventProducerMock = new Mock<IEventProducer>();
+            changeDetectorMock = new Mock<IChangeDetector>();
             consumerMock = new Mock<IConsumerApp<Null, Story>>();
             producerMock = new Mock<ISerializingProducer<Null, StoryEvent>>();
-            program = new Program(eventProducerMock.Object, consumerMock.Object, producerMock.Object);
+            program = new Program(changeDetectorMock.Object, consumerMock.Object, producerMock.Object);
         }
 
         [TestMethod]
@@ -46,7 +46,7 @@ namespace BuzzStats.ChangeTracker.UnitTests
                 EventType = StoryEventType.StoryCreated
             };
 
-            eventProducerMock.Setup(p => p.CreateEventsAsync(msg))
+            changeDetectorMock.Setup(p => p.FindChangesAsync(msg))
                 .ReturnsAsync(new[] { expectedMsg });
 
             // act

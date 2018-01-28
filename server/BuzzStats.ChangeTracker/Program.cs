@@ -13,13 +13,13 @@ namespace BuzzStats.ChangeTracker
     {
         const string InputTopic = "StoryParsed";
         const string OutputTopic = "StoryChanged";
-        private readonly IEventProducer _eventProducer;
+        private readonly IChangeDetector _changeDetector;
         private readonly IConsumerApp<Null, Story> _consumer;
         private readonly ISerializingProducer<Null, StoryEvent> _producer;
 
-        public Program(IEventProducer eventProducer, IConsumerApp<Null, Story> consumer, ISerializingProducer<Null, StoryEvent> producer)
+        public Program(IChangeDetector changeDetector, IConsumerApp<Null, Story> consumer, ISerializingProducer<Null, StoryEvent> producer)
         {
-            _eventProducer = eventProducer;
+            _changeDetector = changeDetector;
             _consumer = consumer;
             _producer = producer;
         }
@@ -38,7 +38,7 @@ namespace BuzzStats.ChangeTracker
                 .Run((consumer, producer) =>
             {
                 var program = new Program(
-                    new EventProducer(new Repository(ConfigurationBuilder.MongoConnectionString)),
+                    new ChangeDetector(new Repository(ConfigurationBuilder.MongoConnectionString)),
                     consumer,
                     producer);
                 program.Poll();
@@ -61,7 +61,7 @@ namespace BuzzStats.ChangeTracker
 
         private async Task OnMessageReceivedAsync(Message<Null, Story> e)
         {
-            foreach (var storyEvent in await _eventProducer.CreateEventsAsync(e.Value))
+            foreach (var storyEvent in await _changeDetector.FindChangesAsync(e.Value))
             {
                 await _producer.ProduceAsync(OutputTopic, null, storyEvent);
             }
