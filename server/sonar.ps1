@@ -11,6 +11,6 @@ SonarQube.Scanner.MSBuild.exe begin /k:"BuzzStats" `
     /d:sonar.coverage.exclusions="**/*Test.cs"
 
 MSBuild.exe /t:Rebuild .\BuzzStats.sln
-.\coverage.ps1
+.\coverage.ps1 -project all
 
 SonarQube.Scanner.MSBuild.exe end /d:sonar.login="$Env:SONAR_LOGIN"
