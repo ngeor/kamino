@@ -440,7 +440,7 @@ namespace BuzzStats.Parsing.UnitTests
 
         private string LoadTestData(string id)
         {
-            return ResourceLoader.Load(id);
+            return ResourceLoader.Load(GetType().Assembly, id);
         }
     }
 }

@@ -1,15 +1,15 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace BuzzStats.Parsing.UnitTests
 {
     internal static class ResourceLoader
     {
-        public static string Load(string id)
+        public static string Load(Assembly assembly, string id)
         {
-            var assembly = typeof(ResourceLoader).Assembly;
             string[] resourceNames = assembly.GetManifestResourceNames();
 
             try
@@ -26,25 +26,6 @@ namespace BuzzStats.Parsing.UnitTests
                     "Resource " + id + " not found! Available options are: " + string.Join(", ", resourceNames),
                     ex);
             }
-        }
-
-        public static string LoadExact(string resourceId)
-        {
-            Stream stream = typeof(ResourceLoader).Assembly.GetManifestResourceStream(resourceId);
-            if (stream == null)
-            {
-                throw new ArgumentException($"Resource not found: {resourceId}");
-            }
-
-            StreamReader sr = new StreamReader(stream);
-            string result = sr.ReadToEnd();
-
-            if (string.IsNullOrEmpty(result))
-            {
-                throw new ArgumentException("Empty resource: " + resourceId);
-            }
-
-            return result;
         }
     }
 }
