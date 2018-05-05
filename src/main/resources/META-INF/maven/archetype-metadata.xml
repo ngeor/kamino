@@ -20,9 +20,10 @@
         <fileSet filtered="true" packaged="false">
             <directory></directory>
             <includes>
+                <include>.editorconfig</include>
+                <include>.gitattributes</include>
                 <include>.gitignore</include>
                 <include>.travis.yml</include>
-                <include>checkstyle.xml</include>
             </includes>
         </fileSet>
     </fileSets>

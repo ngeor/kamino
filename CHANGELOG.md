@@ -6,7 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.1.1] - 2018-05-05
+
 - Removed two plugins from pom that are no longer needed.
+- Placed editorconfig in the correct folder.
 
 ## [1.1.0] - 2018-05-05
 
