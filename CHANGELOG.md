@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+- Removed two plugins from pom that are no longer needed.
+
+## [1.1.0] - 2018-05-05
+
 - Adding CHANGELOG file
 - Modifying travis build system to deploy on tag.
 - Upgraded JaCoCo to 0.8.1
