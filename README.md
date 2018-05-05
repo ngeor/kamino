@@ -36,11 +36,11 @@ mvn archetype:generate -DgroupId=com.mycompany.myapp \
     -DartifactId=myapp \
     -DarchetypeGroupId=com.github.ngeor \
     -DarchetypeArtifactId=archetype-quickstart-jdk8 \
-    -DarchetypeVersion=1.0.22 \
+    -DarchetypeVersion=1.2.0 \
     -DinteractiveMode=false
 ```
 
-Tip: double check `1.0.22` is the latest version, in case this README is outdated
+Tip: double check `1.2.0` is the latest version, in case this README is outdated
 (happens to the best of us).
 
 ## Contributing
@@ -50,18 +50,16 @@ If you want to make changes, you'll need to test the archetype locally.
 - Clone the repository
 - Use `mvn install` to have the archetype available locally
 
-To test it, generate a dummy app. The command is the same as above, but:
+To test it, generate a dummy app. The command is the same as above, but
+pass `-DarchetypeCatalog=local` to make sure it's not using the internet
 
-- use `1.0-SNAPSHOT` as the archetype version
-- also pass `-DarchetypeCatalog=local` to make sure it's not using the internet
+## Travis CI for archetype
 
-## Travis CD for archetype
-
-CI/CD is performed via a shell script (`travis/build.sh`).
+CI is performed via a shell script (`travis/build.sh`).
 
 - GPG keys are decrypted and imported from `keys.asc`. This is needed for signing artifacts before publishing them to the central maven repository. Environment variables: `GPG_KEY` and `GPG_PASSPHRASE`.
-- The pom.xml's version is set to `1.0.TRAVIS_BUILD_NUMBER`
 - The project is installed locally
 - To test the archetype, a small app is generated out of it and the app is tested
-- If we're on the master branch, we deploy to the central maven repository
 - GPG keys are deleted
+
+Deployment happens by tagging. Make sure the `pom.xml` is updated to match the tag!
