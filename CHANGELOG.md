@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.1.2] - 2018-05-05
+
+- Trying out automatic deployment to Nexus
+
 ## [1.1.1] - 2018-05-05
 
 - Removed two plugins from pom that are no longer needed.

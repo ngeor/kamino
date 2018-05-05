@@ -1,12 +1,10 @@
 #!/bin/bash
-set -e # break on error
-echo "Current branch: ${TRAVIS_BRANCH}"
 
 # Import GPG key
 gpg --passphrase=${GPG_PASSPHRASE} --no-use-agent --output - keys.asc | gpg --import
 
 echo "publishing to maven"
-mvn -V -B -s settings.xml -P gpg deploy
+mvn -B -s settings.xml -P gpg deploy
 
 # cleanup
 gpg --fingerprint --with-colons ${GPG_KEY} |\
