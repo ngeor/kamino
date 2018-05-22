@@ -1,23 +1,23 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
 using BuzzStats.DTOs;
 using MongoDB.Driver;
+using Yak.Configuration;
 
 namespace BuzzStats.ChangeTracker.Mongo
 {
     public class Repository : IRepository
     {
-        private readonly string connectionString;
+        [ConfigurationValue]
+        private string connectionString = "mongodb://127.0.0.1:27017";
 
-        public Repository(string connectionString)
+        public Repository()
         {
             Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<Story, MongoStory>();
                 cfg.CreateMap<MongoStory, Story>();
             });
-            this.connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
         }
 
         public async Task<Story> Load(int storyId)

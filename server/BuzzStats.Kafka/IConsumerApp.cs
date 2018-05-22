@@ -7,5 +7,6 @@ namespace BuzzStats.Kafka
     {
         event EventHandler<Message<TKey, TValue>> MessageReceived;
         void Poll(string topic);
+        bool IsCancelled { get; set; }
     }
 }

@@ -7,13 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Confluent.Kafka" Version="0.11.3" />
+    <PackageReference Include="Autofac" Version="4.8.1" />
+    <PackageReference Include="Confluent.Kafka" Version="0.11.4" />
     <PackageReference Include="log4net" Version="2.0.8" />
-    <PackageReference Include="MongoDB.Driver" Version="2.5.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.6.1" />
+    <PackageReference Include="Yak.Configuration" Version="0.2.1" />
+    <PackageReference Include="Yak.Configuration.Autofac" Version="0.1.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BuzzStats.Configuration\BuzzStats.Configuration.csproj" />
     <ProjectReference Include="..\BuzzStats.Kafka\BuzzStats.Kafka.csproj" />
     <ProjectReference Include="..\BuzzStats.Logging\BuzzStats.Logging.csproj" />
     <ProjectReference Include="..\BuzzStats.Parsing\BuzzStats.Parsing.csproj" />

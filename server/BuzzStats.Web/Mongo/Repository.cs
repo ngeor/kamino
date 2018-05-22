@@ -2,17 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Yak.Configuration;
 
 namespace BuzzStats.Web.Mongo
 {
     public class Repository : IRepository
     {
-        private readonly string connectionString;
-
-        public Repository(string connectionString)
-        {
-            this.connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
-        }
+        [ConfigurationValue]
+        private string connectionString = "mongodb://127.0.0.1:27017";
 
         private MongoClient CreateClient() => new MongoClient(connectionString);
         private IMongoDatabase GetDb() => CreateClient().GetDatabase("BuzzStatsWeb");

@@ -2,17 +2,14 @@
 using MongoDB.Driver;
 using System;
 using System.Threading.Tasks;
+using Yak.Configuration;
 
 namespace BuzzStats.StoryUpdater.Mongo
 {
     class Repository : IRepository
     {
-        private readonly string connectionString;
-
-        public Repository(string connectionString)
-        {
-            this.connectionString = connectionString;
-        }
+        [ConfigurationValue]
+        private string connectionString = "mongodb://127.0.0.1:27017";
 
         public async Task RegisterChangeEvent(StoryEvent storyEvent)
         {

@@ -1,19 +1,15 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Yak.Configuration;
 
 namespace BuzzStats.ListIngester.Mongo
 {
     public class Repository : IRepository
     {
-        private readonly string connectionString;
-
-        public Repository(string connectionString)
-        {
-            this.connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
-        }
+        [ConfigurationValue]
+        private string connectionString = "mongodb://127.0.0.1:27017";
 
         /// <summary>
         /// Adds the given story id to the Stories collection.

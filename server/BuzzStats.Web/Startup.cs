@@ -1,9 +1,13 @@
+using Autofac;
 using AutoMapper;
 using BuzzStats.Web.Mongo;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Threading.Tasks;
+using Yak.Configuration.Autofac;
 
 namespace BuzzStats.Web
 {
@@ -29,11 +33,21 @@ namespace BuzzStats.Web
                     c.AddPolicy("Default", b => b.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
                     c.DefaultPolicyName = "Default";
                 });
+        }
 
-            services.AddSingleton<IMapper>(_ =>
-                new Mapper(CreateMapperConfiguration()));
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterType<Program>()
+                .InjectConfiguration();
 
-            services.AddSingleton<IRepository, Repository>();
+            builder.RegisterType<ConsumerBuilder>()
+                .InjectConfiguration();
+
+            builder.Register(c => c.Resolve<ConsumerBuilder>().Build());
+            builder.RegisterType<Repository>().As<IRepository>().InjectConfiguration();
+            builder.Register(c => new Mapper(CreateMapperConfiguration()))
+                .As<IMapper>()
+                .SingleInstance();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +60,9 @@ namespace BuzzStats.Web
 
             app.UseMvc()
                 .UseCors("Default");
+
+            Program.Instance = app.ApplicationServices.GetRequiredService<Program>();
+            
         }
     }
 }

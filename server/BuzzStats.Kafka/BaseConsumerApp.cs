@@ -21,13 +21,6 @@ namespace BuzzStats.Kafka
     {
         public BaseConsumerApp(
             string brokerList,
-            ConsumerOptions<TKey, TValue> consumerOptions)
-            : this(brokerList, consumerOptions.ConsumerId, consumerOptions.KeyDeserializer, consumerOptions.ValueDeserializer)
-        {
-        }
-
-        public BaseConsumerApp(
-            string brokerList,
             string consumerId,
             IDeserializer<TKey> keyDeserializer,
             IDeserializer<TValue> valueDeserializer)

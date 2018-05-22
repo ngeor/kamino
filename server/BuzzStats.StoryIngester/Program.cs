@@ -1,15 +1,47 @@
-﻿using BuzzStats.Configuration;
+﻿using Autofac;
 using BuzzStats.DTOs;
 using BuzzStats.Kafka;
 using BuzzStats.Logging;
 using BuzzStats.Parsing;
 using Confluent.Kafka;
+using Confluent.Kafka.Serialization;
 using NodaTime;
 using System;
+using System.Text;
 using System.Threading.Tasks;
+using Yak.Configuration;
+using Yak.Configuration.Autofac;
+using Yak.Kafka;
 
 namespace BuzzStats.StoryIngester
 {
+    class ConsumerBuilder
+    {
+        [ConfigurationValue]
+        private string brokerList = "127.0.0.1";
+
+        public IConsumerApp<Null, string> Build()
+        {
+            return new ConsumerApp<Null, string>(
+                brokerList,
+                typeof(ConsumerBuilder).Namespace,
+                null,
+                new StringDeserializer(Encoding.UTF8));
+        }
+    }
+
+    class ProducerBuilder
+    {
+        [ConfigurationValue]
+        private string brokerList = "127.0.0.1";
+
+        public ISerializingProducer<Null, Story> Build()
+        {
+            return new ProducerBuilder<Null, Story>(brokerList, null,
+                new JsonSerializer<Story>()).Build();
+        }
+    }
+
     public class Program
     {
         const string InputTopic = "StoryExpired";
@@ -28,31 +60,42 @@ namespace BuzzStats.StoryIngester
             _producer = producer;
         }
 
-        static void Main(string[] args)
-        {
-            LogSetup.Setup();
-            Console.WriteLine("Starting Story Ingester");
-            ConfigurationBuilder.Build(args);
-            string brokerList = ConfigurationBuilder.KafkaBroker;
-            string consumerId = typeof(Program).Namespace;
-            var parserClient = new ParserClient(
-                new UrlProvider("http://buzz.reality-tape.com/"),
-                new Parser(SystemClock.Instance));
-
-            StreamingAppBuilder.StringToJson<Story>()
-                .WithBrokerList(brokerList)
-                .WithConsumerId(consumerId)
-                .Run((consumer, producer) =>
-                {
-                    var program = new Program(parserClient, consumer, producer);
-                    program.Poll();
-                });
-        }
-
         public void Poll()
         {
             _consumer.MessageReceived += OnMessageReceived;
             _consumer.Poll(InputTopic);
+        }
+
+        static void Main(string[] args)
+        {
+            LogSetup.Setup();
+            Console.WriteLine("Starting Story Ingester");
+
+            var builder = new ContainerBuilder();
+            builder.RegisterType<Program>()
+                .InjectConfiguration();
+
+            builder.RegisterType<ConsumerBuilder>()
+                .InjectConfiguration();
+
+            builder.RegisterType<ProducerBuilder>()
+                .InjectConfiguration();
+
+            builder.Register(c => c.Resolve<ConsumerBuilder>().Build());
+
+            builder.Register(c => c.Resolve<ProducerBuilder>().Build());
+
+            builder.RegisterType<ParserClient>().As<IParserClient>();
+            builder.RegisterType<Parser>().As<IParser>();
+            builder.Register(c => new UrlProvider("http://buzz.reality-tape.com/")).As<IUrlProvider>();
+            builder.Register(c => SystemClock.Instance).As<IClock>();
+
+            var container = builder.Build();
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var program = scope.Resolve<Program>();
+                program.Poll();
+            }
         }
 
         private void OnMessageReceived(object sender, Message<Null, string> e)

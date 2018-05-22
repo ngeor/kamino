@@ -9,11 +9,11 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.2.2" />
     <PackageReference Include="log4net" Version="2.0.8" />
-    <PackageReference Include="MongoDB.Driver" Version="2.5.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.6.1" />
+    <PackageReference Include="Yak.Configuration.Autofac" Version="0.1.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BuzzStats.Configuration\BuzzStats.Configuration.csproj" />
     <ProjectReference Include="..\BuzzStats.DTOs\BuzzStats.DTOs.csproj" />
     <ProjectReference Include="..\BuzzStats.Kafka\BuzzStats.Kafka.csproj" />
     <ProjectReference Include="..\BuzzStats.Logging\BuzzStats.Logging.csproj" />

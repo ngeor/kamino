@@ -3,6 +3,7 @@ using BuzzStats.Kafka.Abstractions;
 using Confluent.Kafka;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Yak.Kafka;
 
 namespace BuzzStats.Kafka.UnitTests.Abstractions
 {

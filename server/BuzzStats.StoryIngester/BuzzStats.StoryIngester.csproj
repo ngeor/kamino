@@ -8,12 +8,12 @@
 
   <ItemGroup>
     <PackageReference Include="log4net" Version="2.0.8" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
-    <PackageReference Include="NodaTime" Version="2.2.4" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="NodaTime" Version="2.3.0" />
+    <PackageReference Include="Yak.Configuration.Autofac" Version="0.1.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BuzzStats.Configuration\BuzzStats.Configuration.csproj" />
     <ProjectReference Include="..\BuzzStats.Kafka\BuzzStats.Kafka.csproj" />
     <ProjectReference Include="..\BuzzStats.Logging\BuzzStats.Logging.csproj" />
     <ProjectReference Include="..\BuzzStats.Parsing\BuzzStats.Parsing.csproj" />

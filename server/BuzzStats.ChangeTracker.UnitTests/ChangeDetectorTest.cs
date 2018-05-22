@@ -44,7 +44,7 @@ namespace BuzzStats.ChangeTracker.UnitTests
             var result = changeDetector.FindChangesAsync(msg).Result.ToArray();
 
             // assert
-            result.ShouldBeEquivalentTo(new[] { expectedMsg });
+            result.Should().BeEquivalentTo(new[] { expectedMsg });
             repositoryMock.Verify(p => p.Save(msg));
         }
 
@@ -95,7 +95,7 @@ namespace BuzzStats.ChangeTracker.UnitTests
             var result = changeDetector.FindChangesAsync(msg).Result.ToArray();
 
             // assert
-            result.ShouldAllBeEquivalentTo(new[]
+            result.Should().BeEquivalentTo(new[]
             {
                 new StoryEvent
                 {
@@ -135,7 +135,7 @@ namespace BuzzStats.ChangeTracker.UnitTests
             var result = changeDetector.FindChangesAsync(msg).Result.ToArray();
 
             // assert
-            result.ShouldBeEquivalentTo(new[]
+            result.Should().BeEquivalentTo(new[]
             {
                 new StoryEvent
                 {
@@ -195,7 +195,7 @@ namespace BuzzStats.ChangeTracker.UnitTests
             var result = changeDetector.FindChangesAsync(msg).Result.ToArray();
 
             // assert
-            result.ShouldBeEquivalentTo(new[]
+            result.Should().BeEquivalentTo(new[]
             {
                 new StoryEvent
                 {
@@ -248,7 +248,7 @@ namespace BuzzStats.ChangeTracker.UnitTests
             var result = changeDetector.FindChangesAsync(msg).Result.ToArray();
 
             // assert
-            result.ShouldBeEquivalentTo(new[]
+            result.Should().BeEquivalentTo(new[]
             {
                 new StoryEvent
                 {
@@ -310,7 +310,7 @@ namespace BuzzStats.ChangeTracker.UnitTests
             var result = changeDetector.FindChangesAsync(msg).Result.ToArray();
 
             // assert
-            result.ShouldBeEquivalentTo(new[]
+            result.Should().BeEquivalentTo(new[]
             {
                 new StoryEvent
                 {
@@ -334,7 +334,7 @@ namespace BuzzStats.ChangeTracker.UnitTests
                 CreatedAt = new DateTime(2018, 1, 26, 0, 0, 0, DateTimeKind.Utc)
             };
 
-            var repo = new Repository("mongodb://192.168.99.100:27017");
+            var repo = new Repository();
 
             repo.Save(story).Wait();
 

@@ -8,12 +8,12 @@ namespace BuzzStats.ListIngester
     {
         public static IEnumerable<string> Build(int pageCount)
         {
-            var values = Enum.GetValues(typeof(StoryListing));
-            for (var i = 1; i <= pageCount; i++)
+            var storyListingValues = Enum.GetValues(typeof(StoryListing));
+            for (var pageNumber = 1; pageNumber <= pageCount; pageNumber++)
             {
-                foreach (var v in values)
+                foreach (var storyListing in storyListingValues)
                 {
-                    yield return i == 1 ? v.ToString() : $"{v} {i}";
+                    yield return pageNumber == 1 ? storyListing.ToString() : $"{storyListing} {pageNumber}";
                 }
             }
         }

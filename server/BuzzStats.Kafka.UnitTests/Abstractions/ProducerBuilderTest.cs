@@ -5,6 +5,7 @@ using Confluent.Kafka.Serialization;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Yak.Kafka;
 
 namespace BuzzStats.Kafka.UnitTests.Abstractions
 {
