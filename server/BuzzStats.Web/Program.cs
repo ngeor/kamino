@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using BuzzStats.DTOs;
 using BuzzStats.Kafka;
-using BuzzStats.Logging;
 using BuzzStats.Web.Mongo;
 using Confluent.Kafka;
 using Microsoft.AspNetCore;
@@ -46,7 +45,6 @@ namespace BuzzStats.Web
 
         static void Main(string[] args)
         {
-            LogSetup.Setup();
             Console.WriteLine("Starting Web");
             Task webTask = BuildWebHost(args).RunAsync();
 

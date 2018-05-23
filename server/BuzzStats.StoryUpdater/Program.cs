@@ -1,11 +1,10 @@
 ﻿using Autofac;
 using BuzzStats.DTOs;
 using BuzzStats.Kafka;
-using BuzzStats.Logging;
 using BuzzStats.StoryUpdater.Mongo;
 using Confluent.Kafka;
 using Confluent.Kafka.Serialization;
-using log4net;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Text;
 using System.Threading;
@@ -48,27 +47,29 @@ namespace BuzzStats.StoryUpdater
         const string InputTopic = "StoryChanged";
         const string OutputTopic = "StoryExpired";
 
-        private static readonly ILog Log = LogManager.GetLogger(typeof(Program));
-
         private readonly IConsumerApp<Null, StoryEvent> _consumer;
         private readonly ISerializingProducer<Null, string> _producer;
         private readonly IRepository _repository;
 
+        public ILogger Logger { get; }
+
         public Program(
             IConsumerApp<Null, StoryEvent> consumer,
             ISerializingProducer<Null, string> producer,
-            IRepository repository)
+            IRepository repository,
+            ILogger logger)
         {
             _consumer = consumer;
             _producer = producer;
             _repository = repository;
+            Logger = logger;
         }
 
         public void Poll()
         {
             _consumer.MessageReceived += (_, msg) =>
             {
-                Log.InfoFormat("Registering recent activity for story {0}", msg.Value.StoryId);
+                Logger.LogInformation("Registering recent activity for story {0}", msg.Value.StoryId);
                 Task.Run(async () => await _repository.RegisterChangeEvent(msg.Value))
                     .GetAwaiter().GetResult();
             };
@@ -76,7 +77,8 @@ namespace BuzzStats.StoryUpdater
             var oldestStoryUpdater = new OldestStoryUpdater(
                 _repository,
                 _producer,
-                OutputTopic);
+                OutputTopic,
+                Logger);
 
             using (var timer = new Timer(
                 _ => oldestStoryUpdater.Update(),
@@ -90,7 +92,6 @@ namespace BuzzStats.StoryUpdater
 
         static void Main(string[] args)
         {
-            LogSetup.Setup();
             Console.WriteLine("Starting Story Updater");
 
             var builder = new ContainerBuilder();
@@ -110,6 +111,12 @@ namespace BuzzStats.StoryUpdater
             builder.Register(c => c.Resolve<ConsumerBuilder>().Build());
 
             builder.Register(c => c.Resolve<ProducerBuilder>().Build());
+
+            builder.RegisterType<LoggerFactory>()
+                .As<ILoggerFactory>()
+                .OnActivating(c => c.Instance.AddConsole());
+
+            builder.Register(c => c.Resolve<ILoggerFactory>().CreateLogger(typeof(Program))).As<ILogger>();
 
             var container = builder.Build();
             using (var scope = container.BeginLifetimeScope())

@@ -37,8 +37,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuzzStats.Web.UnitTests", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuzzStats.DTOs", "BuzzStats.DTOs\BuzzStats.DTOs.csproj", "{EE6FBAA7-E884-4C43-A046-B0BD4D9610D8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuzzStats.Logging", "BuzzStats.Logging\BuzzStats.Logging.csproj", "{F2632EE9-17BC-40D4-BFF9-438ACEF0D9F3}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuzzStats.StoryUpdater", "BuzzStats.StoryUpdater\BuzzStats.StoryUpdater.csproj", "{4F48AF48-D50C-49A8-93CB-0F11B1F76857}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuzzStats.StoryUpdater.UnitTests", "BuzzStats.StoryUpdater.UnitTests\BuzzStats.StoryUpdater.UnitTests.csproj", "{BB62B517-1B49-46A7-9E87-A034CDCF7934}"
@@ -99,10 +97,6 @@ Global
 		{EE6FBAA7-E884-4C43-A046-B0BD4D9610D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE6FBAA7-E884-4C43-A046-B0BD4D9610D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE6FBAA7-E884-4C43-A046-B0BD4D9610D8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F2632EE9-17BC-40D4-BFF9-438ACEF0D9F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F2632EE9-17BC-40D4-BFF9-438ACEF0D9F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F2632EE9-17BC-40D4-BFF9-438ACEF0D9F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F2632EE9-17BC-40D4-BFF9-438ACEF0D9F3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4F48AF48-D50C-49A8-93CB-0F11B1F76857}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4F48AF48-D50C-49A8-93CB-0F11B1F76857}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F48AF48-D50C-49A8-93CB-0F11B1F76857}.Release|Any CPU.ActiveCfg = Release|Any CPU

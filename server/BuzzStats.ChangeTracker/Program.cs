@@ -2,13 +2,13 @@
 using BuzzStats.DTOs;
 using System;
 using System.Threading.Tasks;
-using BuzzStats.Logging;
 using Confluent.Kafka;
 using BuzzStats.ChangeTracker.Mongo;
 using Autofac;
 using Yak.Configuration.Autofac;
 using Yak.Configuration;
 using Yak.Kafka;
+using Microsoft.Extensions.Logging;
 
 namespace BuzzStats.ChangeTracker
 {
@@ -63,7 +63,6 @@ namespace BuzzStats.ChangeTracker
 
         static void Main(string[] args)
         {
-            LogSetup.Setup();
             Console.WriteLine("Starting Change Tracker");
 
             var builder = new ContainerBuilder();
@@ -85,6 +84,12 @@ namespace BuzzStats.ChangeTracker
             builder.Register(c => c.Resolve<ConsumerBuilder>().Build()).As<IConsumerApp<Null, Story>>();
 
             builder.Register(c => c.Resolve<ProducerBuilder>().Build()).As<ISerializingProducer<Null, StoryEvent>>();
+
+            builder.RegisterType<LoggerFactory>()
+                .As<ILoggerFactory>()
+                .OnActivating(c => c.Instance.AddConsole());
+
+            builder.Register(c => c.Resolve<ILoggerFactory>().CreateLogger(typeof(Program))).As<ILogger>();
 
             var container = builder.Build();
             using (var scope = container.BeginLifetimeScope())

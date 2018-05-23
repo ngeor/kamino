@@ -1,4 +1,5 @@
 using Confluent.Kafka;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
@@ -16,7 +17,8 @@ namespace BuzzStats.StoryUpdater.UnitTests
             var oldestStoryUpdater = new OldestStoryUpdater(
                 repositoryMock.Object,
                 producerMock.Object,
-                "outputTopic");
+                "outputTopic",
+                NullLogger.Instance);
 
             repositoryMock.Setup(p => p.OldestCheckedStory())
                 .ReturnsAsync(42);
@@ -38,7 +40,8 @@ namespace BuzzStats.StoryUpdater.UnitTests
             var oldestStoryUpdater = new OldestStoryUpdater(
                 repositoryMock.Object,
                 producerMock.Object,
-                "outputTopic");
+                "outputTopic",
+                NullLogger.Instance);
 
             repositoryMock.Setup(p => p.OldestCheckedStory())
                 .ReturnsAsync((int?)null);

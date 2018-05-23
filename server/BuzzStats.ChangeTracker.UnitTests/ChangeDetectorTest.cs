@@ -1,6 +1,7 @@
 ﻿using BuzzStats.ChangeTracker.Mongo;
 using BuzzStats.DTOs;
 using FluentAssertions;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -18,7 +19,7 @@ namespace BuzzStats.ChangeTracker.UnitTests
         public void SetUp()
         {
             repositoryMock = new Mock<IRepository>();
-            changeDetector = new ChangeDetector(repositoryMock.Object);
+            changeDetector = new ChangeDetector(repositoryMock.Object, NullLogger.Instance);
         }
 
         [TestMethod]

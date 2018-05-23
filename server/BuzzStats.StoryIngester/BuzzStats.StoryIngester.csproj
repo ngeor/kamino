@@ -7,15 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="log4net" Version="2.0.8" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="NodaTime" Version="2.3.0" />
     <PackageReference Include="Yak.Configuration.Autofac" Version="0.1.2" />
+    <PackageReference Include="Yak.Kafka" Version="0.1.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BuzzStats.Kafka\BuzzStats.Kafka.csproj" />
-    <ProjectReference Include="..\BuzzStats.Logging\BuzzStats.Logging.csproj" />
     <ProjectReference Include="..\BuzzStats.Parsing\BuzzStats.Parsing.csproj" />
   </ItemGroup>
 

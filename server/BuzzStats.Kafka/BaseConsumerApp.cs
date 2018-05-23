@@ -1,17 +1,188 @@
 ﻿using Confluent.Kafka;
 using Confluent.Kafka.Serialization;
-using log4net;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
+using System.Threading;
 
 namespace BuzzStats.Kafka
 {
+    public class ConsumerOptions
+    {
+        public string ConsumerId { get; set; }
+        public string BrokerList { get; set; }
+        public string Topic { get; set; }
+        public bool EnableAutoCommit { get; set; } = true;
+        public TimeSpan PollInterval { get; set; } = TimeSpan.FromMilliseconds(100);
+    }
+
+    public class ConsumerObservable : IObservable<byte[]>, IDisposable
+    {
+        private readonly List<IObserver<byte[]>> observers = new List<IObserver<byte[]>>();
+        private readonly ConsumerEvents consumerEvents;
+
+        public ConsumerObservable(ConsumerOptions consumerOptions)
+        {
+            consumerEvents = new ConsumerEvents(this);
+
+            Consumer = new Consumer<Ignore, byte[]>(
+                ConstructConfig(consumerOptions),
+                new IgnoreDeserializer(),
+                new ByteArrayDeserializer());
+
+            Consumer.SubscribeConsumerEvents(consumerEvents);
+            Consumer.Subscribe(consumerOptions.Topic);
+            ConsumerOptions = consumerOptions;
+        }
+
+        public void Dispose()
+        {
+            if (Consumer != null)
+            {
+                Consumer.Dispose();
+                Consumer.UnsubscribeConsumerEvents(consumerEvents);
+                Consumer = null;
+            }
+        }
+
+        private Dictionary<string, object> ConstructConfig(ConsumerOptions consumerOptions) =>
+            new Dictionary<string, object>
+            {
+                { "group.id", consumerOptions.ConsumerId },
+                { "enable.auto.commit", consumerOptions.EnableAutoCommit },
+                { "auto.commit.interval.ms", 5000 },
+                { "statistics.interval.ms", 60000 },
+                { "bootstrap.servers", consumerOptions.BrokerList ?? "127.0.0.1" },
+                { "default.topic.config", new Dictionary<string, object>()
+                    {
+                        { "auto.offset.reset", "smallest" }
+                    }
+                }
+            };
+
+        private void Consumer_OnMessage(object sender, Message<Ignore, byte[]> e)
+        {
+            OnNext(e.Value);
+        }
+
+        public void SubscribeConsumerEvents(IConsumerEvents<Ignore, byte[]> logConsumerEvents)
+        {
+            Consumer.SubscribeConsumerEvents(logConsumerEvents);
+        }
+
+        private Consumer<Ignore, byte[]> Consumer { get; set; }
+        public ConsumerOptions ConsumerOptions { get; }
+
+        public IDisposable Subscribe(IObserver<byte[]> observer)
+        {
+            lock (observers)
+            {
+                observers.Add(observer);
+                return new Subscription(this, observer);
+            }
+        }
+
+        void Unsubscribe(IObserver<byte[]> observer)
+        {
+            lock (observers)
+            {
+                observers.Remove(observer);
+            }
+        }
+
+        private void OnNext(byte[] message)
+        {
+            foreach (var observer in SafeObservers())
+            {
+                observer.OnNext(message);
+            }
+        }
+
+        public void Poll(CancellationToken token)
+        {
+            while (!token.IsCancellationRequested)
+            {
+                Consumer.Poll(ConsumerOptions.PollInterval);
+            }
+
+            foreach (var observer in SafeObservers())
+            {
+                observer.OnCompleted();
+            }
+        }
+
+        private void OnError(Exception exception)
+        {
+            foreach (var observer in SafeObservers())
+            {
+                observer.OnError(exception);
+            }
+        }
+
+        private IEnumerable<IObserver<byte[]>> SafeObservers()
+        {
+            lock (observers)
+            {
+                return observers.ToArray();
+            }
+        }
+
+        class ConsumerEvents : StubConsumerEvents<Ignore, byte[]>
+        {
+            private readonly ConsumerObservable consumerObservable;
+
+            public ConsumerEvents(ConsumerObservable consumerObservable)
+            {
+                this.consumerObservable = consumerObservable ?? throw new ArgumentNullException(nameof(consumerObservable));
+            }
+
+            public override void OnMessage(object sender, Message<Ignore, byte[]> message)
+            {
+                consumerObservable.OnNext(message.Value);
+            }
+
+            public override void OnError(object sender, Error error)
+            {
+                consumerObservable.OnError(new ConsumerErrorException(error));
+            }
+
+            public override void OnConsumeError(object sender, Message message)
+            {
+                consumerObservable.OnError(new ConsumerMessageException(message));
+            }
+
+            public override void OnPartitionsAssigned(object sender, List<TopicPartition> partitions)
+            {
+                consumerObservable.Consumer.Assign(partitions);
+            }
+
+            public override void OnPartitionsRevoked(object sender, List<TopicPartition> partitions)
+            {
+                consumerObservable.Consumer.Unassign();
+            }
+        }
+
+        class Subscription : IDisposable
+        {
+            private ConsumerObservable consumerObservable;
+            private IObserver<byte[]> observer;
+
+            public Subscription(ConsumerObservable consumerObservable, IObserver<byte[]> observer)
+            {
+                this.consumerObservable = consumerObservable;
+                this.observer = observer;
+            }
+
+            public void Dispose()
+            {
+                consumerObservable?.Unsubscribe(observer);
+                consumerObservable = null;
+                observer = null;
+            }
+        }
+    }
+
     public abstract class BaseConsumerApp
     {
-        protected static readonly ILog Log = LogManager.GetLogger(
-            Assembly.GetEntryAssembly(), typeof(BaseConsumerApp));
-
         protected BaseConsumerApp()
         {
         }
@@ -40,7 +211,6 @@ namespace BuzzStats.Kafka
 
         protected virtual void OnMessage(Message<TKey, TValue> msg)
         {
-            Log.Debug($"Topic: {msg.Topic} Partition: {msg.Partition} Offset: {msg.Offset} {msg.Value}");
             MessageReceived?.Invoke(this, msg);
         }
 
@@ -62,47 +232,17 @@ namespace BuzzStats.Kafka
                     OnMessage(msg);
                 };
 
-                consumer.OnPartitionEOF += (_, end)
-                    => Log.Debug($"Reached end of topic {end.Topic} partition {end.Partition}, next message will be at offset {end.Offset}");
-
-                // Raised on critical errors, e.g. connection failures or all brokers down.
-                consumer.OnError += (_, error)
-                    => Log.Error($"Error: {error}");
-
-                // Raised on deserialization errors or when a consumed message has an error != NoError.
-                consumer.OnConsumeError += (_, msg)
-                    => Log.Error($"Error consuming from topic/partition/offset {msg.Topic}/{msg.Partition}/{msg.Offset}: {msg.Error}");
-
-                consumer.OnOffsetsCommitted += (_, commit) =>
-                {
-                    Log.Debug($"[{string.Join(", ", commit.Offsets)}]");
-
-                    if (commit.Error)
-                    {
-                        Log.Error($"Failed to commit offsets: {commit.Error}");
-                    }
-
-                    Log.Debug($"Successfully committed offsets: [{string.Join(", ", commit.Offsets)}]");
-                };
-
                 consumer.OnPartitionsAssigned += (_, partitions) =>
                 {
-                    Log.Info($"Assigned partitions: [{string.Join(", ", partitions)}], member id: {consumer.MemberId}");
                     consumer.Assign(partitions);
                 };
 
                 consumer.OnPartitionsRevoked += (_, partitions) =>
                 {
-                    Log.Info($"Revoked partitions: [{string.Join(", ", partitions)}]");
                     consumer.Unassign();
                 };
 
-                consumer.OnStatistics += (_, json)
-                    => Log.Debug($"Statistics: {json}");
-
                 consumer.Subscribe(topic);
-
-                Log.Info($"Subscribed to: [{string.Join(", ", consumer.Subscription)}]");
 
                 if (HandleCancelKeyPress)
                 {
@@ -115,14 +255,10 @@ namespace BuzzStats.Kafka
                     Console.WriteLine("Ctrl-C to exit.");
                 }
 
-                Log.Info("Polling started");
-
                 while (!IsCancelled)
                 {
                     consumer.Poll(TimeSpan.FromMilliseconds(100));
                 }
-
-                Log.Info("Polling stopped");
             }
         }
 

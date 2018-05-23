@@ -1,4 +1,5 @@
 using Confluent.Kafka;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Threading.Tasks;
@@ -23,7 +24,8 @@ namespace BuzzStats.ListIngester.UnitTests
                 messageConverterMock.Object,
                 producerMock.Object,
                 "outputTopic",
-                repositoryMock.Object
+                repositoryMock.Object,
+                NullLogger.Instance
             );
         }
 

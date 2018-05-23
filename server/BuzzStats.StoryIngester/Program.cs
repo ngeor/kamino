@@ -1,10 +1,10 @@
 ﻿using Autofac;
 using BuzzStats.DTOs;
 using BuzzStats.Kafka;
-using BuzzStats.Logging;
 using BuzzStats.Parsing;
 using Confluent.Kafka;
 using Confluent.Kafka.Serialization;
+using Microsoft.Extensions.Logging;
 using NodaTime;
 using System;
 using System.Text;
@@ -68,7 +68,6 @@ namespace BuzzStats.StoryIngester
 
         static void Main(string[] args)
         {
-            LogSetup.Setup();
             Console.WriteLine("Starting Story Ingester");
 
             var builder = new ContainerBuilder();
@@ -89,6 +88,12 @@ namespace BuzzStats.StoryIngester
             builder.RegisterType<Parser>().As<IParser>();
             builder.Register(c => new UrlProvider("http://buzz.reality-tape.com/")).As<IUrlProvider>();
             builder.Register(c => SystemClock.Instance).As<IClock>();
+
+            builder.RegisterType<LoggerFactory>()
+                .As<ILoggerFactory>()
+                .OnActivating(c => c.Instance.AddConsole());
+
+            builder.Register(c => c.Resolve<ILoggerFactory>().CreateLogger(typeof(Program))).As<ILogger>();
 
             var container = builder.Build();
             using (var scope = container.BeginLifetimeScope())

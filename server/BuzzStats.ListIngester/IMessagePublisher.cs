@@ -1,10 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BuzzStats.ListIngester
 {
     public interface IMessagePublisher
     {
-        void HandleMessage(string inputMessage);
-        Task HandleMessageAsync(string inputMessage);
+        IEnumerable<string> HandleMessage(string inputMessage);
+        Task<IEnumerable<string>> HandleMessageAsync(string inputMessage);
     }
 }

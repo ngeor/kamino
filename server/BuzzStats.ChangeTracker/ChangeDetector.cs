@@ -1,5 +1,5 @@
 ﻿using BuzzStats.DTOs;
-using log4net;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +13,13 @@ namespace BuzzStats.ChangeTracker
     /// </summary>
     public class ChangeDetector : IChangeDetector
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(ChangeDetector));
         private readonly IRepository repository;
+        private readonly ILogger logger;
 
-        public ChangeDetector(IRepository repository)
+        public ChangeDetector(IRepository repository, ILogger logger)
         {
             this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this.logger = logger;
         }
 
         private ICollection<StoryEvent> CollectEvents(Story parsedStory, Story dbStory)
@@ -112,12 +113,12 @@ namespace BuzzStats.ChangeTracker
             var events = CollectEvents(parsedStory, dbStory);
             if (events.Any())
             {
-                Log.InfoFormat("Detected changes for story {0}", parsedStory.StoryId);
+                logger.LogInformation("Detected changes for story {0}", parsedStory.StoryId);
                 await repository.Save(parsedStory);
             }
             else
             {
-                Log.InfoFormat("No changes for story {0}", parsedStory.StoryId);
+                logger.LogInformation("No changes for story {0}", parsedStory.StoryId);
             }
 
             return events;
