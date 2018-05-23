@@ -53,7 +53,7 @@ namespace BuzzStats.ListIngester.UnitTests
             var result = converter.Parse(msg);
 
             // assert
-            result.Should().Be(Tuple.Create(StoryListing.Tech, 1)));
+            result.Should().Be(Tuple.Create(StoryListing.Tech, 1));
         }
     }
 }

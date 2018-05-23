@@ -110,13 +110,12 @@ namespace BuzzStats.ListIngester
                 .Do(_ => Logger.LogInformation("Parsing complete {0}", _.Item1.Offset))
                 .RepackPayloadTask(CombineAsync)
                 .Do(_ => Logger.LogInformation("Published {0} messages to producer for original message {1}", _.Item2.Count, _.Item1.Offset))
-                .RepackPayloadTask(ConsumerObservable.Commit);
+                .RepackPayloadTask(_ => ConsumerObservable.Commit());
 
             q.Subscribe(_ =>
             {
                 Logger.LogInformation("Message {0} processed", _.Item1.Offset);
             });
-
 
             using (CancellationTokenSource cts = new CancellationTokenSource())
             {

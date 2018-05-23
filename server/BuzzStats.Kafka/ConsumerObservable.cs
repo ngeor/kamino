@@ -11,14 +11,6 @@ namespace BuzzStats.Kafka
 {
     public static class ObservableExtensions
     {
-        public static IObservable<T2> Merge<T1, T2>(
-            this IObservable<T1> observable,
-            Func<T1, IObservable<T2>> func
-        )
-        {
-            return observable.Select(func).Merge();
-        }
-
         public static IObservable<Tuple<T1, T2>> PackPayload<T1, T2>(
             this IObservable<T1> observable,
             Func<T1, IObservable<T2>> func)
