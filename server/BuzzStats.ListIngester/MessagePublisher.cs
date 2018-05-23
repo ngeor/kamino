@@ -1,6 +1,5 @@
-﻿using Confluent.Kafka;
+﻿using BuzzStats.Parsing.DTOs;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BuzzStats.ListIngester
@@ -19,7 +18,7 @@ namespace BuzzStats.ListIngester
 
         private IMessageConverter MessageConverter { get; }
 
-        public IEnumerable<string> HandleMessage(string inputMessage)
+        public StoryListingSummary HandleMessage(StoryListingSummary inputMessage)
         {
             return Task.Run(async () =>
             {
@@ -27,24 +26,18 @@ namespace BuzzStats.ListIngester
             }).GetAwaiter().GetResult();
         }
 
-        public async Task<IEnumerable<string>> HandleMessageAsync(string inputMessage)
+        public async Task<StoryListingSummary> HandleMessageAsync(StoryListingSummary inputMessage)
         {
-            List<string> result = new List<string>();
-            logger.LogInformation("Fetching {0}", inputMessage);
-            foreach (string outputMessage in await MessageConverter.ConvertAsync(inputMessage))
+            if (await repository.AddIfMissing(inputMessage.StoryId))
             {
-                if (await repository.AddIfMissing(outputMessage))
-                {
-                    logger.LogInformation("Publishing story {0}", outputMessage);
-                    result.Add(outputMessage);
-                }
-                else
-                {
-                    logger.LogInformation("Story {0} already exists", outputMessage);
-                }
+                logger.LogInformation("Story {0} is new", inputMessage.StoryId);
+                return inputMessage;
             }
-
-            return result;
+            else
+            {
+                logger.LogInformation("Story {0} already exists", inputMessage.StoryId);
+                return null;
+            }
         }
     }
 }

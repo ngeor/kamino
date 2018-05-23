@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using BuzzStats.DTOs;
@@ -21,7 +20,7 @@ namespace BuzzStats.Parsing
             this.logger = logger;
         }
 
-        public virtual async Task<IEnumerable<StoryListingSummary>> Listing(StoryListing storyListing, int page)
+        public virtual async Task<StoryListingSummaries> ListingAsync(StoryListing storyListing, int page)
         {
             HttpClient client = new HttpClient();
             var requestUri = _urlProvider.ListingUrl(storyListing, page);
@@ -29,6 +28,7 @@ namespace BuzzStats.Parsing
             try
             {
                 string htmlContents = await client.GetStringAsync(requestUri);
+                logger.LogInformation("Received response {0}", requestUri);
                 return _parser.ParseListingPage(htmlContents);
             }
             catch (Exception ex)
@@ -38,7 +38,7 @@ namespace BuzzStats.Parsing
             }
         }
 
-        public virtual async Task<Story> Story(int storyId)
+        public virtual async Task<Story> StoryAsync(int storyId)
         {
             HttpClient client = new HttpClient();
             var requestUri = _urlProvider.StoryUrl(storyId);

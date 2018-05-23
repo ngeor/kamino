@@ -114,7 +114,7 @@ namespace BuzzStats.StoryIngester
         private async Task OnMessageReceivedAsync(Message<Null, string> e)
         {
             var storyId = Convert.ToInt32(e.Value);
-            var story = await _parserClient.Story(storyId);
+            var story = await _parserClient.StoryAsync(storyId);
             await _producer.ProduceAsync(OutputTopic, null, story);
         }
     }

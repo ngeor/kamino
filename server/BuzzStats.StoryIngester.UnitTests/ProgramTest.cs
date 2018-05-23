@@ -40,7 +40,7 @@ namespace BuzzStats.StoryIngester.UnitTests
             consumerMock.Setup(p => p.Poll("StoryExpired"))
                 .Raises(p => p.MessageReceived += null, consumerMock.Object, new Message<Null, string>("StoryExpired", 0, 0, null, "42", default(Timestamp), null));
 
-            parserClientMock.Setup(p => p.Story(42))
+            parserClientMock.Setup(p => p.StoryAsync(42))
                 .ReturnsAsync(story);
 
             // act

@@ -17,7 +17,6 @@ namespace BuzzStats.ListIngester.UnitTests
         {
             parserClientMock = new Mock<IParserClient>();
             converter= new MessageConverter(parserClientMock.Object);
-
         }
 
         [TestMethod]
@@ -25,8 +24,8 @@ namespace BuzzStats.ListIngester.UnitTests
         {
             // arrange
             // setup IParserClient
-            parserClientMock.Setup(p => p.Listing(StoryListing.Home, 0))
-                .ReturnsAsync(new[]
+            parserClientMock.Setup(p => p.ListingAsync(StoryListing.Home, 0))
+                .ReturnsAsync(new StoryListingSummaries(new[]
                 {
                     new StoryListingSummary
                     {
@@ -36,7 +35,7 @@ namespace BuzzStats.ListIngester.UnitTests
                     {
                         StoryId = 50
                     }
-                });
+                }));
 
             var msg = "ping";
 
@@ -51,8 +50,8 @@ namespace BuzzStats.ListIngester.UnitTests
         public void OnUpcomingMessage_ItUpdatesTheUpcomingPage()
         {
             // arrange
-            parserClientMock.Setup(p => p.Listing(StoryListing.Upcoming, 0))
-                .ReturnsAsync(new[]
+            parserClientMock.Setup(p => p.ListingAsync(StoryListing.Upcoming, 0))
+                .ReturnsAsync(new StoryListingSummaries(new[]
                 {
                     new StoryListingSummary
                     {
@@ -62,7 +61,7 @@ namespace BuzzStats.ListIngester.UnitTests
                     {
                         StoryId = 50
                     }
-                });
+                }));
 
             var msg = "Upcoming";
 
@@ -77,8 +76,8 @@ namespace BuzzStats.ListIngester.UnitTests
         public void OnTechMessageWithPage_ItUpdatesTheCorrectPage()
         {
             // arrange
-            parserClientMock.Setup(p => p.Listing(StoryListing.Tech, 1))
-                .ReturnsAsync(new[]
+            parserClientMock.Setup(p => p.ListingAsync(StoryListing.Tech, 1))
+                .ReturnsAsync(new StoryListingSummaries(new[]
                 {
                     new StoryListingSummary
                     {
@@ -88,7 +87,7 @@ namespace BuzzStats.ListIngester.UnitTests
                     {
                         StoryId = 13
                     }
-                });
+                }));
 
             var msg = "Tech 1";
 

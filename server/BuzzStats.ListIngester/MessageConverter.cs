@@ -17,7 +17,7 @@ namespace BuzzStats.ListIngester
 
         private async Task<IEnumerable<string>> ParseListing(StoryListing storyListing, int page)
         {
-            var listings = await ParserClient.Listing(storyListing, page);
+            var listings = await ParserClient.ListingAsync(storyListing, page);
             var result = listings
                 .Select(listing => $"{listing.StoryId}")
                 .ToArray();

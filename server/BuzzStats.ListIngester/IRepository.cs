@@ -4,6 +4,6 @@ namespace BuzzStats.ListIngester
 {
     public interface IRepository
     {
-        Task<bool> AddIfMissing(string storyId);
+        Task<bool> AddIfMissing(int storyId);
     }
 }

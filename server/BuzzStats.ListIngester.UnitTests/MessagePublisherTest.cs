@@ -29,28 +29,28 @@ namespace BuzzStats.ListIngester.UnitTests
         public void HandleMessage_NewStories()
         {
             // arrange
-            repositoryMock.Setup(r => r.AddIfMissing(It.IsAny<string>()))
+            repositoryMock.Setup(r => r.AddIfMissing(It.IsAny<int>()))
                 .ReturnsAsync(true); // all are new
 
             messageConverterMock.Setup(p => p.ConvertAsync("hello"))
                 .ReturnsAsync(new[] { "42", "84" });
 
             // act & assert
-            messagePublisher.HandleMessage("hello").Should().Equal("42", "84");
+            messagePublisher.HandleMessage(new Parsing.DTOs.StoryListingSummary()).Should().Be(new Parsing.DTOs.StoryListingSummary());
         }
 
         [TestMethod]
         public void HandleMessage_ExistingStory()
         {
             // arrange
-            repositoryMock.Setup(r => r.AddIfMissing(It.IsAny<string>()))
+            repositoryMock.Setup(r => r.AddIfMissing(It.IsAny<int>()))
                 .Returns<string>(s => Task.FromResult(s == "42")); // 42 is new
 
             messageConverterMock.Setup(p => p.ConvertAsync("hello"))
                 .ReturnsAsync(new[] { "42", "84" });
 
             // act & assert
-            messagePublisher.HandleMessage("hello").Should().Equal("42");
+            messagePublisher.HandleMessage(new Parsing.DTOs.StoryListingSummary()).Should().BeNull();
         }
     }
 }

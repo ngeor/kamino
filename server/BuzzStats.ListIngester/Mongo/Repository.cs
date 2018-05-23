@@ -16,12 +16,13 @@ namespace BuzzStats.ListIngester.Mongo
         /// </summary>
         /// <param name="storyId">The story id.</param>
         /// <returns><c>true</c> if the story was added because it is new; <c>false</c> if the story already existed.</returns>
-        public async Task<bool> AddIfMissing(string storyId)
+        public async Task<bool> AddIfMissing(int storyId)
         {
+            //return true;
             var mongoClient = new MongoClient(connectionString);
             var db = mongoClient.GetDatabase("ListIngester");
             var collection = db.GetCollection<BsonDocument>("Stories");
-            var dictionary = new Dictionary<string, string>
+            var dictionary = new Dictionary<string, int>
             {
                 ["StoryId"] = storyId
             };

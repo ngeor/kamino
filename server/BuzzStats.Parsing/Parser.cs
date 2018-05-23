@@ -158,11 +158,11 @@ namespace BuzzStats.Parsing
             throw new ParserFailedException();
         }
 
-        public IEnumerable<StoryListingSummary> ParseListingPage(string htmlUpcomingPage)
+        public StoryListingSummaries ParseListingPage(string htmlUpcomingPage)
         {
             var storyIds = ParseListingPageMainArea(htmlUpcomingPage);
             var commentedStoryIds = ParseListingPageRecentComments(htmlUpcomingPage);
-            return Merge(storyIds, commentedStoryIds);
+            return new StoryListingSummaries(Merge(storyIds, commentedStoryIds));
         }
 
         /// <summary>
