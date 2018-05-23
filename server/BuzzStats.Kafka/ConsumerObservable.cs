@@ -5,14 +5,23 @@ using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Reactive.Threading.Tasks;
 
 namespace BuzzStats.Kafka
 {
     public static class ObservableExtensions
     {
-        public static IObservable<Tuple<Message<Ignore, byte[]>, T>> KeepMessage<T>(
-            this IObservable<Message<Ignore, byte[]>> observable,
-            Func<Message<Ignore, byte[]>, IObservable<T>> func)
+        public static IObservable<T2> Merge<T1, T2>(
+            this IObservable<T1> observable,
+            Func<T1, IObservable<T2>> func
+        )
+        {
+            return observable.Select(func).Merge();
+        }
+
+        public static IObservable<Tuple<T1, T2>> PackPayload<T1, T2>(
+            this IObservable<T1> observable,
+            Func<T1, IObservable<T2>> func)
         {
             var q =
                 from message in observable
@@ -21,8 +30,8 @@ namespace BuzzStats.Kafka
             return q.Merge();
         }
 
-        public static IObservable<Tuple<Message<Ignore, byte[]>, T2>> KeepMessage<T1, T2>(
-            this IObservable<Tuple<Message<Ignore, byte[]>, T1>> observable,
+        public static IObservable<Tuple<T, T2>> RepackPayload<T, T1, T2>(
+            this IObservable<Tuple<T, T1>> observable,
             Func<T1, IObservable<T2>> func)
         {
             var q =
@@ -30,6 +39,19 @@ namespace BuzzStats.Kafka
                 let message = t.Item1
                 let value = t.Item2
                 let newObservable = func(value)
+                select newObservable.Select(x => Tuple.Create(message, x));
+            return q.Merge();
+        }
+
+        public static IObservable<Tuple<Message<Ignore, byte[]>, T2>> RepackPayloadTask<T1, T2>(
+            this IObservable<Tuple<Message<Ignore, byte[]>, T1>> observable,
+            Func<T1, Task<T2>> func)
+        {
+            var q =
+                from t in observable
+                let message = t.Item1
+                let value = t.Item2
+                let newObservable = func(value).ToObservable()
                 select newObservable.Select(x => Tuple.Create(message, x));
             return q.Merge();
         }

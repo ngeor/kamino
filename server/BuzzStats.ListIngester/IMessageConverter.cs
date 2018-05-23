@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System;
+using BuzzStats.Parsing;
 
 namespace BuzzStats.ListIngester
 {
     public interface IMessageConverter
     {
-        Task<IEnumerable<string>> ConvertAsync(string msg);
+        Tuple<StoryListing, int> Parse(string msg);
     }
 }

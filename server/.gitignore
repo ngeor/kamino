@@ -12,3 +12,6 @@ coverage/
 
 # SonarQube
 .sonarqube/
+
+# MonoDevelop
+*.userprefs

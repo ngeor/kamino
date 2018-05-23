@@ -65,49 +65,33 @@ namespace BuzzStats.ListIngester
         public ProducerObserver ProducerObserver { get; }
         public IParserClient ParserClient { get; }
 
-        private Tuple<StoryListing, int> ParseMessage(string message)
-        {
-            string[] parts = message.Split(' ');
-            if (parts.Length <= 0 || !Enum.TryParse(parts[0], out StoryListing storyListing))
-            {
-                storyListing = StoryListing.Home;
-            }
-
-            if (parts.Length <= 1 || !int.TryParse(parts[1], out int page))
-            {
-                page = 0;
-            }
-
-            return Tuple.Create(storyListing, page);
-        }
-
         private IObservable<StoryListingSummaries> Parse(Message<Ignore, byte[]> message)
         {
             return Observable.Return(message)
                 .Select(m => m.Value)
                 .Select(Encoding.UTF8.GetString) // deserialize
-                .Select(ParseMessage) // parse message
+                .Select(MessageConverter.Parse) // parse message
                 .Select(t => ParserClient.ListingAsync(t.Item1, t.Item2).ToObservable())
                 .Merge(); // unwrap observable
         }
 
-        private async Task<Message<Null, byte[]>> PublishAsync(MessagePublisher messagePublisher, StoryListingSummary storyListingSummary)
+        private async Task<Message<Null, byte[]>> PublishAsync(StoryListingSummary storyListingSummary)
         {
-            StoryListingSummary result = await messagePublisher.HandleMessageAsync(storyListingSummary);
-            if (result == null)
+            bool added = await Repository.AddIfMissing(storyListingSummary.StoryId);
+            if (added)
             {
-                return null;
+                return await ProducerObserver.ProduceAsync(Encoding.UTF8.GetBytes(storyListingSummary.StoryId.ToString()));
             }
 
-            return await ProducerObserver.ProduceAsync(Encoding.UTF8.GetBytes(result.StoryId.ToString()));
+            return null;
         }
 
-        private async Task<ICollection<Message<Null, byte[]>>> CombineAsync(MessagePublisher messagePublisher, StoryListingSummaries storyListingSummaries)
+        private async Task<ICollection<Message<Null, byte[]>>> CombineAsync(StoryListingSummaries storyListingSummaries)
         {
             List<Message<Null, byte[]>> result = new List<Message<Null, byte[]>>();
             foreach (var s in storyListingSummaries)
             {
-                result.Add(await PublishAsync(messagePublisher, s));
+                result.Add(await PublishAsync(s));
             }
 
             return result;
@@ -118,20 +102,15 @@ namespace BuzzStats.ListIngester
         {
             Logger.LogInformation("Starting List Ingester");
 
-            var messagePublisher = new MessagePublisher(
-                MessageConverter,
-                Repository,
-                Logger);
-
             ConsumerObservable.SubscribeConsumerEvents(new LogConsumerEvents<Ignore, byte[]>(Logger));
 
             var q = ConsumerObservable
                 .Do(_ => Logger.LogInformation("Received message {0}", _.Offset))
-                .KeepMessage(Parse)
+                .PackPayload(Parse)
                 .Do(_ => Logger.LogInformation("Parsing complete {0}", _.Item1.Offset))
-                .KeepMessage(parsed => CombineAsync(messagePublisher, parsed).ToObservable())
+                .RepackPayloadTask(CombineAsync)
                 .Do(_ => Logger.LogInformation("Published {0} messages to producer for original message {1}", _.Item2.Count, _.Item1.Offset))
-                .KeepMessage(_ => ConsumerObservable.Commit().ToObservable());
+                .RepackPayloadTask(ConsumerObservable.Commit);
 
             q.Subscribe(_ =>
             {
@@ -162,7 +141,7 @@ namespace BuzzStats.ListIngester
             Logger.LogInformation("Exiting app");
         }
 
-        private void Timer(MessagePublisher messagePublisher)
+        private void Timer()
         {
             // TODO command line argument and/or environment variable for number of pages to go through
             const int pageNumber = 4;
