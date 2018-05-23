@@ -1,4 +1,4 @@
-using Confluent.Kafka;
+using FluentAssertions;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -10,7 +10,6 @@ namespace BuzzStats.ListIngester.UnitTests
     public class MessagePublisherTest
     {
         private Mock<IMessageConverter> messageConverterMock;
-        private Mock<ISerializingProducer<Null, string>> producerMock;
         private Mock<IRepository> repositoryMock;
         private MessagePublisher messagePublisher;
 
@@ -18,12 +17,9 @@ namespace BuzzStats.ListIngester.UnitTests
         public void SetUp()
         {
             messageConverterMock = new Mock<IMessageConverter>();
-            producerMock = new Mock<ISerializingProducer<Null, string>>();
             repositoryMock = new Mock<IRepository>();
             messagePublisher = new MessagePublisher(
                 messageConverterMock.Object,
-                producerMock.Object,
-                "outputTopic",
                 repositoryMock.Object,
                 NullLogger.Instance
             );
@@ -39,12 +35,8 @@ namespace BuzzStats.ListIngester.UnitTests
             messageConverterMock.Setup(p => p.ConvertAsync("hello"))
                 .ReturnsAsync(new[] { "42", "84" });
 
-            // act
-            messagePublisher.HandleMessage("hello");
-
-            // assert
-            producerMock.Verify(v => v.ProduceAsync("outputTopic", null, "42"), Times.Once());
-            producerMock.Verify(v => v.ProduceAsync("outputTopic", null, "84"), Times.Once());
+            // act & assert
+            messagePublisher.HandleMessage("hello").Should().Equal("42", "84");
         }
 
         [TestMethod]
@@ -57,12 +49,8 @@ namespace BuzzStats.ListIngester.UnitTests
             messageConverterMock.Setup(p => p.ConvertAsync("hello"))
                 .ReturnsAsync(new[] { "42", "84" });
 
-            // act
-            messagePublisher.HandleMessage("hello");
-
-            // assert
-            producerMock.Verify(v => v.ProduceAsync("outputTopic", null, "42"), Times.Once());
-            producerMock.Verify(v => v.ProduceAsync("outputTopic", null, "84"), Times.Never());
+            // act & assert
+            messagePublisher.HandleMessage("hello").Should().Equal("42");
         }
     }
 }
