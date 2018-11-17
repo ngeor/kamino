@@ -5,6 +5,8 @@ Testing utilities for Spring
 
 [![Build Status](https://travis-ci.org/ngeor/yak4j-spring-test-utils.svg?branch=master)](https://travis-ci.org/ngeor/yak4j-spring-test-utils)
 
+[![Coverage Status](https://coveralls.io/repos/github/ngeor/yak4j-spring-test-utils/badge.svg?branch=master)](https://coveralls.io/github/ngeor/yak4j-spring-test-utils?branch=master)
+
 ## Maven
 
 ```xml
