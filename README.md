@@ -47,6 +47,7 @@ ResultActions resultActions = mockMvc.perform(/* do the mock MVC call */);
 
 assertThat(resultActions)
     .isOk() // check status = 200
+```
 
 Checking for validation errors:
 
