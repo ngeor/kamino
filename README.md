@@ -11,7 +11,7 @@ Testing utilities for Spring
 <dependency>
   <groupId>com.github.ngeor</groupId>
   <artifactId>yak4j-spring-test-utils</artifactId>
-  <version>0.9.2</version>
+  <version>0.9.4</version>
   <scope>test</scope>
 </dependency>
 ```
