@@ -9,7 +9,7 @@ mvn -B -s settings.xml -P gpg clean install
 
 # get version from pom
 VERSION=$(cat pom.xml | grep version -m 1 | sed 's/[^0-9.]//g')
-
+echo "Creating dummy app based on version ${VERSION}"
 # create a dummy app based on it
 cd target
 mvn archetype:generate -DgroupId=myapp \
