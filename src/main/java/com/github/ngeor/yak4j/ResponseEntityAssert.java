@@ -17,6 +17,22 @@ public class ResponseEntityAssert<T> extends AbstractAssert<ResponseEntityAssert
     }
 
     /**
+     * Verifies that the response contains the given object as body.
+     *
+     * @param body The expected body.
+     * @return This instance.
+     */
+    public ResponseEntityAssert<T> hasBody(T body) {
+        isNotNull();
+        T actualBody = actual.getBody();
+        Assertions.assertThat(actualBody)
+            .withFailMessage("Expecting response entity body to be %s but was %s", body, actualBody)
+            .isNotNull()
+            .isEqualTo(body);
+        return this;
+    }
+
+    /**
      * Verifies that the response has the given HTTP status code.
      *
      * @param httpStatus The expected HTTP status code.
@@ -31,16 +47,16 @@ public class ResponseEntityAssert<T> extends AbstractAssert<ResponseEntityAssert
         return this;
     }
 
-    public ResponseEntityAssert<T> isOk() {
-        return hasStatus(HttpStatus.OK);
+    public ResponseEntityAssert<T> isBadRequest() {
+        return hasStatus(HttpStatus.BAD_REQUEST);
+    }
+
+    public ResponseEntityAssert<T> isConflict() {
+        return hasStatus(HttpStatus.CONFLICT);
     }
 
     public ResponseEntityAssert<T> isCreated() {
         return hasStatus(HttpStatus.CREATED);
-    }
-
-    public ResponseEntityAssert<T> isBadRequest() {
-        return hasStatus(HttpStatus.BAD_REQUEST);
     }
 
     public ResponseEntityAssert<T> isForbidden() {
@@ -51,27 +67,15 @@ public class ResponseEntityAssert<T> extends AbstractAssert<ResponseEntityAssert
         return hasStatus(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    public ResponseEntityAssert<T> isNotFound() {
+        return hasStatus(HttpStatus.NOT_FOUND);
+    }
+
+    public ResponseEntityAssert<T> isOk() {
+        return hasStatus(HttpStatus.OK);
+    }
+
     public ResponseEntityAssert<T> isUnauthorized() {
         return hasStatus(HttpStatus.UNAUTHORIZED);
-    }
-
-    public ResponseEntityAssert<T> isConflict() {
-        return hasStatus(HttpStatus.CONFLICT);
-    }
-
-    /**
-     * Verifies that the response contains the given object as body.
-     *
-     * @param body The expected body.
-     * @return This instance.
-     */
-    public ResponseEntityAssert<T> hasBody(T body) {
-        isNotNull();
-        T actualBody = actual.getBody();
-        Assertions.assertThat(actualBody)
-            .withFailMessage("Expecting response entity body to be %s but was %s", body, actualBody)
-            .isNotNull()
-            .isEqualTo(body);
-        return this;
     }
 }

@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.ngeor</groupId>
   <artifactId>yak4j-spring-test-utils</artifactId>
-  <version>0.9.6</version>
+  <version>0.10.0</version>
   <packaging>jar</packaging>
   <name>yak4j-spring-test-utils</name>
   <description>yak shaving for Java: Testing utilities for Spring</description>
@@ -58,16 +58,16 @@
     <!--
     dependencies
     -->
-    <assertj-core.version>3.12.0</assertj-core.version>
-    <mockito-core.version>2.24.0</mockito-core.version>
+    <assertj-core.version>3.12.2</assertj-core.version>
+    <mockito-core.version>2.25.1</mockito-core.version>
     <commons-lang3.version>3.8.1</commons-lang3.version>
-    <spring.version>5.1.5.RELEASE</spring.version>
+    <spring.version>5.1.6.RELEASE</spring.version>
     <!--
     jacoco thresholds
     -->
     <jacoco.unit-tests.limit.instruction-ratio>93%</jacoco.unit-tests.limit.instruction-ratio>
     <jacoco.unit-tests.limit.branch-ratio>74%</jacoco.unit-tests.limit.branch-ratio>
-    <jacoco.unit-tests.limit.class-complexity>16</jacoco.unit-tests.limit.class-complexity>
+    <jacoco.unit-tests.limit.class-complexity>20</jacoco.unit-tests.limit.class-complexity>
     <jacoco.unit-tests.limit.method-complexity>5</jacoco.unit-tests.limit.method-complexity>
   </properties>
   <dependencies>

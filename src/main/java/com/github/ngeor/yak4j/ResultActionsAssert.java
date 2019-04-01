@@ -24,40 +24,12 @@ public final class ResultActionsAssert extends AbstractAssert<ResultActionsAsser
         super(resultActions, ResultActionsAssert.class);
     }
 
-    public ResultActionsAssert isForbidden() throws Exception {
-        actual.andExpect(status().isForbidden());
-        return this;
-    }
+    private static boolean hasCode(String[] codes, String code) {
+        if (codes == null) {
+            return false;
+        }
 
-    public ResultActionsAssert isOk() throws Exception {
-        actual.andExpect(status().isOk());
-        return this;
-    }
-
-    public ResultActionsAssert isInternalServerError() throws Exception {
-        actual.andExpect(status().isInternalServerError());
-        return this;
-    }
-
-    public ResultActionsAssert hasStatus(HttpStatus httpStatus) throws Exception {
-        actual.andExpect(status().is(httpStatus.value()));
-        return this;
-    }
-
-    /**
-     * Checks that the result has a resolved exception of the given class.
-     *
-     * @param exceptionClass The expected class of the resolved exception.
-     * @return This instance.
-     * @see MvcResult#getResolvedException
-     */
-    public ResultActionsAssert resolvedExceptionIsInstanceOf(Class<? extends Exception> exceptionClass) {
-        Exception resolvedException = actual.andReturn().getResolvedException();
-        Assertions.assertThat(resolvedException)
-            .withFailMessage("Expecting resolved exception to be instance of %s: %s", exceptionClass, resolvedException)
-            .isNotNull()
-            .isInstanceOf(exceptionClass);
-        return this;
+        return Arrays.asList(codes).contains(code);
     }
 
     /**
@@ -96,6 +68,11 @@ public final class ResultActionsAssert extends AbstractAssert<ResultActionsAsser
         return this;
     }
 
+    public ResultActionsAssert hasStatus(HttpStatus httpStatus) throws Exception {
+        actual.andExpect(status().is(httpStatus.value()));
+        return this;
+    }
+
     public ResultActionsAssert isBadRequest() throws Exception {
         actual.andExpect(status().isBadRequest());
         return this;
@@ -104,6 +81,57 @@ public final class ResultActionsAssert extends AbstractAssert<ResultActionsAsser
     public ResultActionsAssert isBadRequest(InvalidFieldExpectation... invalidFieldExpectations) throws Exception {
         return isBadRequest()
             .containsValidationErrorsExactly(invalidFieldExpectations);
+    }
+
+    public ResultActionsAssert isConflict() throws Exception {
+        actual.andExpect(status().isConflict());
+        return this;
+    }
+
+    public ResultActionsAssert isCreated() throws Exception {
+        actual.andExpect(status().isCreated());
+        return this;
+    }
+
+    public ResultActionsAssert isForbidden() throws Exception {
+        actual.andExpect(status().isForbidden());
+        return this;
+    }
+
+    public ResultActionsAssert isInternalServerError() throws Exception {
+        actual.andExpect(status().isInternalServerError());
+        return this;
+    }
+
+    public ResultActionsAssert isNotFound() throws Exception {
+        actual.andExpect(status().isNotFound());
+        return this;
+    }
+
+    public ResultActionsAssert isOk() throws Exception {
+        actual.andExpect(status().isOk());
+        return this;
+    }
+
+    public ResultActionsAssert isUnauthorized() throws Exception {
+        actual.andExpect(status().isUnauthorized());
+        return this;
+    }
+
+    /**
+     * Checks that the result has a resolved exception of the given class.
+     *
+     * @param exceptionClass The expected class of the resolved exception.
+     * @return This instance.
+     * @see MvcResult#getResolvedException
+     */
+    public ResultActionsAssert resolvedExceptionIsInstanceOf(Class<? extends Exception> exceptionClass) {
+        Exception resolvedException = actual.andReturn().getResolvedException();
+        Assertions.assertThat(resolvedException)
+            .withFailMessage("Expecting resolved exception to be instance of %s: %s", exceptionClass, resolvedException)
+            .isNotNull()
+            .isInstanceOf(exceptionClass);
+        return this;
     }
 
     private boolean isExpectedField(ObjectError objectError, String field, String code) {
@@ -117,13 +145,5 @@ public final class ResultActionsAssert extends AbstractAssert<ResultActionsAsser
         }
 
         return hasCode(fieldError.getCodes(), code);
-    }
-
-    private static boolean hasCode(String[] codes, String code) {
-        if (codes == null) {
-            return false;
-        }
-
-        return Arrays.asList(codes).contains(code);
     }
 }

@@ -23,39 +23,31 @@ import static org.mockito.Mockito.when;
  */
 class ResultActionsAssertTest {
 
-    @Test
-    void isForbidden() throws Exception {
-        ResultActions resultActions = withStatus(HttpStatus.FORBIDDEN);
-        Assertions.assertThat(resultActions)
-            .isForbidden();
+    private static ResultActions withStatus(HttpStatus httpStatus) throws Exception {
+        MvcResult mvcResult = mock(MvcResult.class);
+        MockHttpServletResponse response = mock(MockHttpServletResponse.class);
+        when(mvcResult.getResponse()).thenReturn(response);
+        when(response.getStatus()).thenReturn(httpStatus.value());
+
+        return getResultActions(mvcResult);
     }
 
-    @Test
-    void isOk() throws Exception {
-        ResultActions resultActions = withStatus(HttpStatus.OK);
-        Assertions.assertThat(resultActions)
-            .isOk();
+    private static ResultActions getResultActions(MvcResult mvcResult) throws Exception {
+        ResultActions resultActions = mock(ResultActions.class);
+        when(resultActions.andExpect(any(ResultMatcher.class)))
+            .thenAnswer((Answer<Void>) invocation -> {
+                ((ResultMatcher) invocation.getArgument(0)).match(mvcResult);
+                return null;
+            });
+
+        when(resultActions.andReturn()).thenReturn(mvcResult);
+        return resultActions;
     }
 
-    @Test
-    void isInternalServerError() throws Exception {
-        ResultActions resultActions = withStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-        Assertions.assertThat(resultActions)
-            .isInternalServerError();
-    }
-
-    @Test
-    void hasStatus() throws Exception {
-        ResultActions resultActions = withStatus(HttpStatus.I_AM_A_TEAPOT);
-        Assertions.assertThat(resultActions)
-            .hasStatus(HttpStatus.I_AM_A_TEAPOT);
-    }
-
-    @Test
-    void isBadRequest() throws Exception {
-        ResultActions resultActions = withStatus(HttpStatus.BAD_REQUEST);
-        Assertions.assertThat(resultActions)
-            .hasStatus(HttpStatus.BAD_REQUEST);
+    private static FieldError createFieldError(String field, String code) {
+        return new FieldError(
+            "test", field, "", true, new String[]{code}, new Object[0], "cannot be " + code
+        );
     }
 
     @Test
@@ -92,25 +84,67 @@ class ResultActionsAssertTest {
             );
     }
 
-    private static ResultActions withStatus(HttpStatus httpStatus) throws Exception {
-        MvcResult mvcResult = mock(MvcResult.class);
-        MockHttpServletResponse response = mock(MockHttpServletResponse.class);
-        when(mvcResult.getResponse()).thenReturn(response);
-        when(response.getStatus()).thenReturn(httpStatus.value());
-
-        return getResultActions(mvcResult);
+    @Test
+    void hasStatus() throws Exception {
+        ResultActions resultActions = withStatus(HttpStatus.I_AM_A_TEAPOT);
+        Assertions.assertThat(resultActions)
+            .hasStatus(HttpStatus.I_AM_A_TEAPOT);
     }
 
-    private static ResultActions getResultActions(MvcResult mvcResult) throws Exception {
-        ResultActions resultActions = mock(ResultActions.class);
-        when(resultActions.andExpect(any(ResultMatcher.class)))
-            .thenAnswer((Answer<Void>) invocation -> {
-                ((ResultMatcher) invocation.getArgument(0)).match(mvcResult);
-                return null;
-            });
+    @Test
+    void isBadRequest() throws Exception {
+        ResultActions resultActions = withStatus(HttpStatus.BAD_REQUEST);
+        Assertions.assertThat(resultActions)
+            .isBadRequest();
+    }
 
-        when(resultActions.andReturn()).thenReturn(mvcResult);
-        return resultActions;
+    @Test
+    void isConflict() throws Exception {
+        ResultActions resultActions = withStatus(HttpStatus.CONFLICT);
+        Assertions.assertThat(resultActions)
+            .isConflict();
+    }
+
+    @Test
+    void isCreated() throws Exception {
+        ResultActions resultActions = withStatus(HttpStatus.CREATED);
+        Assertions.assertThat(resultActions)
+            .isCreated();
+    }
+
+    @Test
+    void isForbidden() throws Exception {
+        ResultActions resultActions = withStatus(HttpStatus.FORBIDDEN);
+        Assertions.assertThat(resultActions)
+            .isForbidden();
+    }
+
+    @Test
+    void isInternalServerError() throws Exception {
+        ResultActions resultActions = withStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+        Assertions.assertThat(resultActions)
+            .isInternalServerError();
+    }
+
+    @Test
+    void isNotFound() throws Exception {
+        ResultActions resultActions = withStatus(HttpStatus.NOT_FOUND);
+        Assertions.assertThat(resultActions)
+            .isNotFound();
+    }
+
+    @Test
+    void isOk() throws Exception {
+        ResultActions resultActions = withStatus(HttpStatus.OK);
+        Assertions.assertThat(resultActions)
+            .isOk();
+    }
+
+    @Test
+    void isUnauthorized() throws Exception {
+        ResultActions resultActions = withStatus(HttpStatus.UNAUTHORIZED);
+        Assertions.assertThat(resultActions)
+            .isUnauthorized();
     }
 
     private MethodArgumentNotValidException createMethodArgumentNotValidException(FieldError... fieldErrors) {
@@ -133,11 +167,5 @@ class ResultActionsAssertTest {
         FieldError... fieldErrors) {
         MethodArgumentNotValidException exception = createMethodArgumentNotValidException(fieldErrors);
         return when(mvcResult.getResolvedException()).thenReturn(exception);
-    }
-
-    private static FieldError createFieldError(String field, String code) {
-        return new FieldError(
-            "test", field, "", true, new String[]{code}, new Object[0], "cannot be " + code
-        );
     }
 }

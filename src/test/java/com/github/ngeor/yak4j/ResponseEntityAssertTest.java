@@ -10,6 +10,13 @@ import org.springframework.http.ResponseEntity;
 class ResponseEntityAssertTest {
 
     @Test
+    void hasBody() {
+        ResponseEntity<String> responseEntity = new ResponseEntity<>("hello world", HttpStatus.OK);
+        Assertions.assertThat(responseEntity)
+            .hasBody("hello world");
+    }
+
+    @Test
     void hasStatus() {
         ResponseEntity<String> responseEntity = new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
         Assertions.assertThat(responseEntity)
@@ -17,17 +24,24 @@ class ResponseEntityAssertTest {
     }
 
     @Test
-    void isOk() {
-        ResponseEntity<String> responseEntity = new ResponseEntity<>(HttpStatus.OK);
-        Assertions.assertThat(responseEntity)
-            .isOk();
-    }
-
-    @Test
     void isBadRequest() {
         ResponseEntity<String> responseEntity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         Assertions.assertThat(responseEntity)
             .isBadRequest();
+    }
+
+    @Test
+    void isConflict() {
+        ResponseEntity<String> responseEntity = new ResponseEntity<>(HttpStatus.CONFLICT);
+        Assertions.assertThat(responseEntity)
+            .isConflict();
+    }
+
+    @Test
+    void isCreated() {
+        ResponseEntity<String> responseEntity = new ResponseEntity<>(HttpStatus.CREATED);
+        Assertions.assertThat(responseEntity)
+            .isCreated();
     }
 
     @Test
@@ -45,10 +59,17 @@ class ResponseEntityAssertTest {
     }
 
     @Test
-    void hasBody() {
-        ResponseEntity<String> responseEntity = new ResponseEntity<>("hello world", HttpStatus.OK);
+    void isNotFound() {
+        ResponseEntity<String> responseEntity = new ResponseEntity<>(HttpStatus.NOT_FOUND);
         Assertions.assertThat(responseEntity)
-            .hasBody("hello world");
+            .isNotFound();
+    }
+
+    @Test
+    void isOk() {
+        ResponseEntity<String> responseEntity = new ResponseEntity<>(HttpStatus.OK);
+        Assertions.assertThat(responseEntity)
+            .isOk();
     }
 
     @Test
@@ -56,19 +77,5 @@ class ResponseEntityAssertTest {
         ResponseEntity<String> responseEntity = new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         Assertions.assertThat(responseEntity)
             .isUnauthorized();
-    }
-
-    @Test
-    void isCreated() {
-        ResponseEntity<String> responseEntity = new ResponseEntity<>(HttpStatus.CREATED);
-        Assertions.assertThat(responseEntity)
-            .isCreated();
-    }
-
-    @Test
-    void isConflict() {
-        ResponseEntity<String> responseEntity = new ResponseEntity<>(HttpStatus.CONFLICT);
-        Assertions.assertThat(responseEntity)
-            .isConflict();
     }
 }
