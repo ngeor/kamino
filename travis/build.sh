@@ -4,7 +4,7 @@ set -e # break on error
 # Import GPG key
 gpg --passphrase=${GPG_PASSPHRASE} --no-use-agent --output - ./travis/keys.asc | gpg --import
 
-# install archetype locally
+# Run the Maven goal specified as parameter
 mvn -B -s ./travis/settings.xml -P gpg -Dgpg.keyname=${GPG_KEY} -Dgpg.passphrase=${GPG_PASSPHRASE} clean $1
 
 # cleanup GPG keys
