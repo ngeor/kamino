@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.ngeor</groupId>
   <artifactId>yak4j-spring-test-utils</artifactId>
-  <version>0.10.0</version>
+  <version>0.11.0</version>
   <packaging>jar</packaging>
   <name>yak4j-spring-test-utils</name>
   <description>yak shaving for Java: Testing utilities for Spring</description>
@@ -43,29 +43,29 @@
     <!--
     plugins
     -->
-    <maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
-    <checkstyle-rules.version>3.0.0</checkstyle-rules.version>
-    <checkstyle.version>8.18</checkstyle.version>
+    <maven-checkstyle-plugin.version>3.1.0</maven-checkstyle-plugin.version>
+    <checkstyle-rules.version>3.3.0</checkstyle-rules.version>
+    <checkstyle.version>8.24</checkstyle.version>
     <maven-enforcer-plugin.version>3.0.0-M2</maven-enforcer-plugin.version>
     <maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>
-    <junit-jupiter.version>5.4.0</junit-jupiter.version>
-    <jacoco-maven-plugin.version>0.8.3</jacoco-maven-plugin.version>
+    <junit-jupiter.version>5.5.2</junit-jupiter.version>
+    <jacoco-maven-plugin.version>0.8.4</jacoco-maven-plugin.version>
     <coveralls-maven-plugin.version>4.3.0</coveralls-maven-plugin.version>
-    <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
-    <maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
+    <maven-source-plugin.version>3.1.0</maven-source-plugin.version>
+    <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
     <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
     <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
     <!--
     dependencies
     -->
-    <assertj-core.version>3.12.2</assertj-core.version>
-    <mockito-core.version>2.25.1</mockito-core.version>
+    <assertj-core.version>3.13.2</assertj-core.version>
+    <mockito-core.version>3.0.0</mockito-core.version>
     <commons-lang3.version>3.8.1</commons-lang3.version>
-    <spring.version>5.1.6.RELEASE</spring.version>
+    <spring.version>5.1.9.RELEASE</spring.version>
     <!--
     jacoco thresholds
     -->
-    <jacoco.unit-tests.limit.instruction-ratio>93%</jacoco.unit-tests.limit.instruction-ratio>
+    <jacoco.unit-tests.limit.instruction-ratio>96%</jacoco.unit-tests.limit.instruction-ratio>
     <jacoco.unit-tests.limit.branch-ratio>74%</jacoco.unit-tests.limit.branch-ratio>
     <jacoco.unit-tests.limit.class-complexity>20</jacoco.unit-tests.limit.class-complexity>
     <jacoco.unit-tests.limit.method-complexity>5</jacoco.unit-tests.limit.method-complexity>

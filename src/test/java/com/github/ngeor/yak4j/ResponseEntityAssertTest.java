@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 /**
  * Unit test for {@link ResponseEntityAssert}.
  */
@@ -14,6 +17,40 @@ class ResponseEntityAssertTest {
         ResponseEntity<String> responseEntity = new ResponseEntity<>("hello world", HttpStatus.OK);
         Assertions.assertThat(responseEntity)
             .hasBody("hello world");
+    }
+
+    @Test
+    void hasNotNullBody_pass() {
+        ResponseEntity<String> responseEntity = new ResponseEntity<>("hello world", HttpStatus.OK);
+        Assertions.assertThat(responseEntity)
+            .hasNotNullBody();
+    }
+
+    @Test
+    void hasNotNullBody_fail() {
+        ResponseEntity<?> responseEntity = ResponseEntity.ok().build();
+        assertThatThrownBy(
+            () -> Assertions.assertThat(responseEntity).hasNotNullBody()
+        )
+            .isInstanceOf(AssertionError.class)
+            .hasMessage("Expecting response entity body to not be null");
+    }
+
+    @Test
+    void hasBody_consumer_pass() {
+        ResponseEntity<String> responseEntity = new ResponseEntity<>("hello world", HttpStatus.OK);
+        Assertions.assertThat(responseEntity)
+            .hasBody(body -> assertThat(body).isEqualTo("hello world"));
+    }
+
+    @Test
+    void hasBody_consumer_fail() {
+        ResponseEntity<String> responseEntity = new ResponseEntity<>("hello world", HttpStatus.OK);
+        assertThatThrownBy(
+            () ->
+                Assertions.assertThat(responseEntity)
+                    .hasBody(body -> assertThat(body).isEqualTo("goodbye world"))
+        ).isInstanceOf(AssertionError.class);
     }
 
     @Test

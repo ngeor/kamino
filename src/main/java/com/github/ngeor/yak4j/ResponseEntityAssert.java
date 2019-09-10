@@ -1,5 +1,6 @@
 package com.github.ngeor.yak4j;
 
+import java.util.function.Consumer;
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.Assertions;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,40 @@ public class ResponseEntityAssert<T> extends AbstractAssert<ResponseEntityAssert
             .withFailMessage("Expecting response entity body to be %s but was %s", body, actualBody)
             .isNotNull()
             .isEqualTo(body);
+        return this;
+    }
+
+    /**
+     * Verifies that the response entity contains a body that satisfies the
+     * given requirements.
+     * <p>
+     * Example:
+     * <pre><code>
+     * assertThat(responseEntity).hasBody(
+     *     body -&gt; assertThat(body).isEqualTo("hello, world!")
+     * );
+     * </code></pre>
+     *
+     * @param requirements The requirements that the body must meet.
+     * @return This instance.
+     */
+    public ResponseEntityAssert<T> hasBody(Consumer<T> requirements) {
+        isNotNull();
+        T actualBody = actual.getBody();
+        Assertions.assertThat(actualBody).satisfies(requirements);
+        return this;
+    }
+
+    /**
+     * Verifies that the body of the response entity is not null.
+     * @return This instance.
+     */
+    public ResponseEntityAssert<T> hasNotNullBody() {
+        isNotNull();
+        T actualBody = actual.getBody();
+        Assertions.assertThat(actualBody)
+            .withFailMessage("Expecting response entity body to not be null")
+            .isNotNull();
         return this;
     }
 

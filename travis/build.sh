@@ -5,7 +5,7 @@ set -e # break on error
 gpg --passphrase=${GPG_PASSPHRASE} --no-use-agent --output - ./travis/keys.asc | gpg --import
 
 # install archetype locally
-mvn -B -s ./travis/settings.xml -P gpg -Dgpg.keyname=${GPG_KEY} -Dgpg.passphrase=${GPG_PASSPHRASE} clean install
+mvn -B -s ./travis/settings.xml -P gpg -Dgpg.keyname=${GPG_KEY} -Dgpg.passphrase=${GPG_PASSPHRASE} clean $1
 
 # cleanup GPG keys
 gpg --fingerprint --with-colons ${GPG_KEY} |\
