@@ -10,5 +10,5 @@ Testing utilities for Spring
 
 [Project documentation](https://ngeor.github.io/yak4j-spring-test-utils/)
 
-The documentation is generated with `mvn clean package site site:stage` and
-needs to be committed.
+The documentation is generated with `mvn clean verify site site:stage` and needs
+to be committed.
