@@ -19,4 +19,5 @@ buildNumber.properties
 .vscode/
 *.iml
 .idea/
+bin/
 docs/jacoco*
