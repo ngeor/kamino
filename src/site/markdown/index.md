@@ -5,6 +5,26 @@ yak shaving for Java: Testing utilities for Spring
 The package offers custom assertions for easier testing with Spring. Assertions
 are built on top of [assertJ](https://joel-costigliola.github.io/assertj/).
 
+### RequestEntity
+
+```java
+import static com.github.ngeor.yak4j.Assertions.assertThat;
+
+RequestEntity<String> requestEntity = RequestEntity
+    .post(URI.create("http://localhost/"))
+    .accept(MediaType.APPLICATION_JSON)
+    .contentType(MediaType.APPLICATION_JSON)
+    .header("Authorization", "Basic 1234")
+    .body("hello world");
+
+assertThat(requestEntity)
+    .hasMethod(HttpMethod.POST)
+    .hasUrl("http://localhost/")
+    .hasJsonAcceptAndContentTypeHeaders()
+    .hasAuthorizationHeader("Basic 1234")
+    .hasBody("hello world");
+```
+
 ### ResponseEntity
 
 Checking of status and body:
