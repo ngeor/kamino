@@ -15,3 +15,6 @@ coverage/
 
 # MonoDevelop
 *.userprefs
+
+node_modules/
+dist/
