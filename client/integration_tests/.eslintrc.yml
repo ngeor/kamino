@@ -1,3 +1,0 @@
-extends: ngeor/mocha
-globals:
-  browser: false
