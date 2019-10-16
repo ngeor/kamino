@@ -6,9 +6,67 @@ Testing utilities for Spring
 [![Build Status](https://travis-ci.org/ngeor/yak4j-spring-test-utils.svg?branch=master)](https://travis-ci.org/ngeor/yak4j-spring-test-utils)
 [![Coverage Status](https://coveralls.io/repos/github/ngeor/yak4j-spring-test-utils/badge.svg?branch=master)](https://coveralls.io/github/ngeor/yak4j-spring-test-utils?branch=master)
 
-## Project documentation
+## Overview
 
-[Project documentation](https://ngeor.github.io/yak4j-spring-test-utils/)
+yak shaving for Java: Testing utilities for Spring
 
-The documentation is generated with `mvn clean verify site site:stage` and needs
-to be committed.
+The package offers custom assertions for easier testing with Spring. Assertions
+are built on top of [assertJ](https://joel-costigliola.github.io/assertj/).
+
+### RequestEntity
+
+```java
+import static com.github.ngeor.yak4j.Assertions.assertThat;
+
+RequestEntity<String> requestEntity = RequestEntity
+    .post(URI.create("http://localhost/"))
+    .accept(MediaType.APPLICATION_JSON)
+    .contentType(MediaType.APPLICATION_JSON)
+    .header("Authorization", "Basic 1234")
+    .body("hello world");
+
+assertThat(requestEntity)
+    .hasMethod(HttpMethod.POST)
+    .hasUrl("http://localhost/")
+    .hasJsonAcceptAndContentTypeHeaders()
+    .hasAuthorizationHeader("Basic 1234")
+    .hasBody("hello world");
+```
+
+### ResponseEntity
+
+Checking of status and body:
+
+```java
+import static com.github.ngeor.yak4j.Assertions.assertThat;
+
+ResponseEntity<String> responseEntity = ResponseEntity.ok("hello world");
+
+assertThat(responseEntity)
+    .isOk() // check status = 200
+    .hasBody("hello world"); // check body
+```
+
+### ResultActions
+
+Checking status:
+
+```java
+import static com.github.ngeor.yak4j.Assertions.assertThat;
+
+ResultActions resultActions = mockMvc.perform(/* do the mock MVC call */);
+
+assertThat(resultActions)
+    .isOk() // check status = 200
+```
+
+Checking for validation errors:
+
+```java
+import static com.github.ngeor.yak4j.InvalidFieldExpectationBuilder.invalidField;
+
+assertThat(resultActions)
+    .isBadRequest( // check status = 400
+        invalidField("name", "NotNull") // check these validation errors
+    );
+```
