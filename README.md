@@ -36,11 +36,11 @@ mvn archetype:generate -DgroupId=com.mycompany.myapp \
     -DartifactId=myapp \
     -DarchetypeGroupId=com.github.ngeor \
     -DarchetypeArtifactId=archetype-quickstart-jdk8 \
-    -DarchetypeVersion=1.4.0 \
+    -DarchetypeVersion=1.3.0 \
     -DinteractiveMode=false
 ```
 
-Tip: double check `1.4.0` is the latest version, in case this README is outdated
+Tip: double check `1.3.0` is the latest version, in case this README is outdated
 (happens to the best of us).
 
 ## Contributing
