@@ -44,8 +44,8 @@
     plugins
     -->
     <maven-checkstyle-plugin.version>3.1.0</maven-checkstyle-plugin.version>
-    <checkstyle-rules.version>3.3.0</checkstyle-rules.version>
-    <checkstyle.version>8.24</checkstyle.version>
+    <checkstyle-rules.version>3.5.0</checkstyle-rules.version>
+    <checkstyle.version>8.29</checkstyle.version>
     <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
     <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
     <junit-jupiter.version>5.6.0</junit-jupiter.version>
@@ -58,7 +58,7 @@
     <!--
     dependencies
     -->
-    <assertj-core.version>3.14.0</assertj-core.version>
+    <assertj-core.version>3.15.0</assertj-core.version>
     <mockito-core.version>3.2.4</mockito-core.version>
     <commons-lang3.version>3.8.1</commons-lang3.version>
     <spring.version>5.2.3.RELEASE</spring.version>
