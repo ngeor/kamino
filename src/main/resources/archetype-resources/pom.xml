@@ -8,9 +8,9 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <junit.version>4.12</junit.version>
-    <maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
-    <checkstyle.version>8.23</checkstyle.version>
-    <checkstyle-rules.version>3.2.0</checkstyle-rules.version>
+    <maven-checkstyle-plugin.version>3.1.0</maven-checkstyle-plugin.version>
+    <checkstyle.version>8.29</checkstyle.version>
+    <checkstyle-rules.version>3.5.0</checkstyle-rules.version>
     <jacoco-maven-plugin.version>0.8.4</jacoco-maven-plugin.version>
     <maven-javadoc-plugin.version>3.0.0</maven-javadoc-plugin.version>
     <coveralls-maven-plugin.version>4.3.0</coveralls-maven-plugin.version>
