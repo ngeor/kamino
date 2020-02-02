@@ -1,5 +1,7 @@
 # buzzstats
 
+[![Build Status](https://travis-ci.org/ngeor/BuzzStats.svg?branch=master)](https://travis-ci.org/ngeor/BuzzStats)
+
 ## How to start the buzzstats application
 
 1. Run `mvn clean install` to build your application
