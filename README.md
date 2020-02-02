@@ -1,61 +1,21 @@
-# BuzzStats
+# buzzstats
 
-BuzzStats collects data from Buzz in order to extract and present statistical
-information.
+## How to start the buzzstats application
 
-[![Build Status](https://travis-ci.org/ngeor/BuzzStats.svg?branch=master)](https://travis-ci.org/ngeor/BuzzStats)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=BuzzStats&metric=alert_status)](https://sonarcloud.io/dashboard?id=BuzzStats)
-[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=BuzzStats&metric=sqale_index)](https://sonarcloud.io/dashboard?id=BuzzStats)
-[![Code Coverage](https://sonarcloud.io/api/project_badges/measure?project=BuzzStats&metric=coverage)](https://sonarcloud.io/dashboard?id=BuzzStats)
+1. Run `mvn clean install` to build your application
+1. Start application with
+   `java -jar target/buzzstats-1.0-SNAPSHOT.jar server config.yml`
+1. To check that your application is running enter url `http://localhost:8080`
 
-## Development
+## Health Check
 
-### Tips
+To see your applications health enter url `http://localhost:8081/healthcheck`
 
-- If you don't have a MySQL database, you can start one with
-  `docker-compose up`.
-- Run the backend application. Verify it runs at
-  http://localhost:9000/api/recentactivity
-- Run the frontend application (`cd client && npm run dev`). Verify it runs at
-  http://localhost:8080/
+## Db migrations
 
-### First time run
+Build the application with `mvn package`.
 
-- You might want to set ExportSchema to True in `app.config`, so that the
-  database schema gets created.
-
-### Docker Compose
-
-Using `docker-compose up`, you can start various services the app depends on:
-
-- mysql database
-- zookeeper and kafka
-- database web UI available at http://localhost:8081/
-
-## Services
-
-The services are event driven.
-
-| Event         | Triggered By                 | Consumed By        |
-| ------------- | ---------------------------- | ------------------ |
-| List Expired  | Timer                        | List Ingester      |
-| Story Expired | List Ingester, Story Updater | Story Ingester     |
-| Story Parsed  | Story Ingester               | Change Tracker     |
-| Story Changed | Change Tracker               | Web, Story Updater |
-
-- List Ingester: parses listing pages and publishes the new stories it discovers
-  as Story Expired events.
-- Story Ingester: parses story pages and publishes them as Story Parsed events.
-- Story Updater: selects stories that should be rescanned for changes and
-  publishes them as Story Expired events.
-- Change Tracker: compares its state with incoming Story Parsed events and
-  publishes activity events.
-
-```plantuml
-Timer->"List Ingester": List Expired
-"List Ingester"->"Story Ingester": Story Expired
-"Story Updater"->"Story Ingester": Story Expired
-"Story Ingester"->"Change Tracker": Story Parsed
-"Change Tracker"->"Web": Story Changed
-"Change Tracker"->"Story Updater": Story Changed
-```
+- Check the migration status with
+  `java -jar target/buzzstats-1.0-SNAPSHOT.jar db status config.yml`
+- Apply migrations with
+  `java -jar target/buzzstats-1.0-SNAPSHOT.jar db migrate config.yml`

@@ -1,25 +1,3 @@
-language: csharp
-dotnet: 2.0.0
-mono: none
-before_install:
-  # we need nodeJS
-  - nvm install "lts/*"
-  - nvm use "lts/*"
-install:
-  # backend
-  - cd server
-  - dotnet restore BuzzStats.sln
-  # client
-  - cd ../client
-  - npm install
-  - cd ..
-script:
-  # build server
-  - cd server
-  - dotnet build BuzzStats.sln
-  - find . -maxdepth 1 -iname "*.UnitTests" | xargs -n1 dotnet test
-  # build client
-  - cd ../client
-  - npm test
-  - npm run build
-  - cd ..
+language: java
+jdk:
+  - openjdk11

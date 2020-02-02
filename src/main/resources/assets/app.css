@@ -1,0 +1,23 @@
+* {
+    font-family: Verdana, sans-serif;
+}
+
+body {
+    background: #efefef;
+}
+
+.widget {
+    border: 1px solid #ccc;
+    background: white;
+    padding: 1rem;
+    margin: 1rem;
+}
+
+.widget p {
+    font-weight: bold;
+}
+
+footer {
+    padding: 1rem;
+    margin: 1rem;
+}

@@ -1,4 +1,10 @@
-.DS_Store
-
-# MySQL datbase files
-mysql-data/
+target/
+*.iml
+.idea/*
+!.idea/runConfigurations
+dependency-reduced-pom.xml
+.project
+.settings/
+.classpath
+.factorypath
+.vscode/
