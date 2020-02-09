@@ -197,10 +197,32 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <version>3.1.12.2</version>
+        <dependencies>
+          <dependency>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs</artifactId>
+            <version>4.0.0-RC3</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <excludeFilterFile>spotbugs.xml</excludeFilterFile>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
-  <!-- add find bugs, add formatter, add unit test -->
+  <!-- add  unit test -->
 
   <reporting>
     <plugins>
