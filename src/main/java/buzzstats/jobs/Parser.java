@@ -6,7 +6,15 @@ import org.jsoup.nodes.Element;
 
 import buzzstats.db.ThingEntity;
 
+/**
+ * Parses the HTML of a page.
+ */
 public class Parser {
+    /**
+     * Parses the HTML of a page.
+     * @param thingElement The HTML element.
+     * @return The parsed story.
+     */
     public ThingEntity parse(Element thingElement) {
         Element storyLink = thingElement.selectFirst("a.storylink");
 

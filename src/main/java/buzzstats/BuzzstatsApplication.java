@@ -84,11 +84,17 @@ public class BuzzstatsApplication extends Application<BuzzstatsConfiguration> {
         scheduler.getContext().put("jdbi", jdbi);
 
         scheduleJob(scheduler, "crawler", configuration.getCrawlerInterval(), CrawlerJob.class);
-        scheduleJob(scheduler, "oldestCheckedStory", configuration.getOldestCheckedStoryInterval(), OldestCheckedStoryJob.class);
+        scheduleJob(
+            scheduler,
+            "oldestCheckedStory",
+            configuration.getOldestCheckedStoryInterval(),
+            OldestCheckedStoryJob.class);
         //scheduler.shutdown();
     }
 
-    private void scheduleJob(Scheduler scheduler, String name, int intervalInSeconds, Class<? extends Job> jobClass) throws SchedulerException {
+    private void scheduleJob(
+        Scheduler scheduler, String name, int intervalInSeconds, Class<? extends Job> jobClass
+    ) throws SchedulerException {
         JobDetail job = newJob(jobClass)
             .withIdentity(name)
             .build();

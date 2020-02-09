@@ -6,6 +6,9 @@ import buzzstats.api.Thing;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.views.View;
 
+/**
+ * The view for the things resource.
+ */
 public class ThingsView extends View {
     private List<Thing> things;
 

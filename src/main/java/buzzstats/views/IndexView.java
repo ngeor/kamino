@@ -5,6 +5,9 @@ import java.util.List;
 import buzzstats.api.Thing;
 import io.dropwizard.views.View;
 
+/**
+ * View for the index resource.
+ */
 public class IndexView extends View {
     private long totalCount;
     private List<Thing> mostVoted;

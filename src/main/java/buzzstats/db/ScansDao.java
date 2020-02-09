@@ -3,6 +3,9 @@ package buzzstats.db;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
+/**
+ * DAO for story scans.
+ */
 public interface ScansDao {
     @SqlUpdate(
         "INSERT INTO scans "

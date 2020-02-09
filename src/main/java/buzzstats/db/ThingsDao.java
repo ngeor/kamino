@@ -48,6 +48,7 @@ public interface ThingsDao {
     @RegisterBeanMapper(ThingEntity.class)
     List<ThingEntity> findByInternalUrl(String internalUrl);
 
+    @SuppressWarnings("checkstyle:LineLength")
     @SqlUpdate(
         "INSERT INTO things "
             + "(title, url, score, username, published_at, comments, internal_url, created_at, last_modified_at, last_checked_at) "
@@ -56,6 +57,7 @@ public interface ThingsDao {
     @GetGeneratedKeys
     long insert(@BindBean ThingEntity thingEntity);
 
+    @SuppressWarnings("checkstyle:LineLength")
     @SqlUpdate(
         "UPDATE things SET score=:score, comments=:comments, last_modified_at=:lastModifiedAt, last_checked_at=:lastCheckedAt WHERE id=:id"
     )

@@ -2,7 +2,6 @@ package buzzstats.jobs;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
-
 import org.slf4j.Logger;
 
 import buzzstats.db.ScanEntity;
@@ -10,14 +9,35 @@ import buzzstats.db.ScansDao;
 import buzzstats.db.ThingEntity;
 import buzzstats.db.ThingsDao;
 
+/**
+ * Updates existing stories.
+ */
 public class Updater {
-    public void update(ThingEntity existing, ThingEntity parsed, ThingsDao thingsDao, ScansDao scansDao, Logger logger) {
+    /**
+     * Updates existing stories.
+     */
+    public void update(
+        ThingEntity existing,
+        ThingEntity parsed,
+        ThingsDao thingsDao,
+        ScansDao scansDao,
+        Logger logger
+    ) {
         boolean hadChanges = existing.getScore() != parsed.getScore() || existing.getComments() != parsed.getComments();
         if (hadChanges) {
             logger.info("Story had changes {} {} {}", existing.getId(), existing.getInternalUrl(), existing.getTitle());
-            thingsDao.update(parsed.getScore(), parsed.getComments(), LocalDateTime.now(Clock.systemUTC()), LocalDateTime.now(Clock.systemUTC()), existing.getId());
+            thingsDao.update(
+                parsed.getScore(),
+                parsed.getComments(),
+                LocalDateTime.now(Clock.systemUTC()),
+                LocalDateTime.now(Clock.systemUTC()),
+                existing.getId());
         } else {
-            logger.info("Story had no changes {} {} {}", existing.getId(), existing.getInternalUrl(), existing.getTitle());
+            logger.info(
+                "Story had no changes {} {} {}",
+                existing.getId(),
+                existing.getInternalUrl(),
+                existing.getTitle());
             thingsDao.update(LocalDateTime.now(Clock.systemUTC()), existing.getId());
         }
 

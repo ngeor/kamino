@@ -109,6 +109,10 @@ public class ThingEntity {
         this.lastCheckedAt = lastCheckedAt;
     }
 
+    /**
+     * Converts to the model object.
+     * @return The equivalent model object.
+     */
     public Thing toThing() {
         return ImmutableThing.builder()
             .id(getId())

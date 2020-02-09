@@ -26,7 +26,7 @@ public class BuzzstatsConfiguration extends Configuration {
 
     @Valid
     @NotNull
-    private Map<String, Map<String, String>> views;
+    private Map<String, Map<String, String>> viewRendererConfiguration;
 
     @JsonProperty("database")
     public DataSourceFactory getDataSourceFactory() {
@@ -60,11 +60,11 @@ public class BuzzstatsConfiguration extends Configuration {
 
     @JsonProperty("views")
     public Map<String, Map<String, String>> getViewRendererConfiguration() {
-        return views;
+        return viewRendererConfiguration;
     }
 
     @JsonProperty("views")
     public void setViewRendererConfiguration(Map<String, Map<String, String>> views) {
-        this.views = views;
+        this.viewRendererConfiguration = views;
     }
 }

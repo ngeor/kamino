@@ -17,6 +17,9 @@ import buzzstats.db.ScansDao;
 import buzzstats.db.ThingEntity;
 import buzzstats.db.ThingsDao;
 
+/**
+ * Updates the story which hasn't been checked the most.
+ */
 public class OldestCheckedStoryJob implements Job {
     private static final Logger LOGGER = LoggerFactory.getLogger(OldestCheckedStoryJob.class);
     private final Parser parser = new Parser();
@@ -47,7 +50,9 @@ public class OldestCheckedStoryJob implements Job {
         LOGGER.info("end");
     }
 
-    private void process(ThingsDao thingsDao, ThingEntity thing, ScansDao scansDao) throws JobExecutionException, IOException {
+    private void process(
+        ThingsDao thingsDao, ThingEntity thing, ScansDao scansDao
+    ) throws JobExecutionException, IOException {
         LOGGER.info("Processing {} {}", thing.getId(), thing.getTitle());
         String url = "https://news.ycombinator.com/" + thing.getInternalUrl();
         Document document = Jsoup.connect(url).get();

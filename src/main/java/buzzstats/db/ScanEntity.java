@@ -2,6 +2,9 @@ package buzzstats.db;
 
 import java.time.LocalDateTime;
 
+/**
+ * Stores information about a story scan.
+ */
 public class ScanEntity {
     private long id;
     private long thingId;
