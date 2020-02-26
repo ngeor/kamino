@@ -14,12 +14,14 @@ with the following changes:
 - removed typo "rigourous" from `AppTest.java` because it is annoying
 
 ## Additional features
+
 In addition to the improvements mentioned above,
 the following new features are implemented:
 
 - .gitignore file
 - checkstyle rules
 - travis support
+- enforcer plugin
 - checkstyle plugin
 - jacoco plugin
 - javadoc plugin
@@ -36,11 +38,11 @@ mvn archetype:generate -DgroupId=com.mycompany.myapp \
     -DartifactId=myapp \
     -DarchetypeGroupId=com.github.ngeor \
     -DarchetypeArtifactId=archetype-quickstart-jdk8 \
-    -DarchetypeVersion=1.3.0 \
+    -DarchetypeVersion=1.4.0 \
     -DinteractiveMode=false
 ```
 
-Tip: double check `1.3.0` is the latest version, in case this README is outdated
+Tip: double check `1.4.0` is the latest version, in case this README is outdated
 (happens to the best of us).
 
 ## Contributing
