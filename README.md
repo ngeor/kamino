@@ -9,7 +9,7 @@ This is effectively the same as the maven-archetype-quickstart,
 with the following changes:
 
 - Java version set to 8
-- jUnit updated to latest (4.12)
+- jUnit 5
 - fixed indentation and formatting (4 spaces)
 - removed typo "rigourous" from `AppTest.java` because it is annoying
 
@@ -38,11 +38,11 @@ mvn archetype:generate -DgroupId=com.mycompany.myapp \
     -DartifactId=myapp \
     -DarchetypeGroupId=com.github.ngeor \
     -DarchetypeArtifactId=archetype-quickstart-jdk8 \
-    -DarchetypeVersion=1.4.0 \
+    -DarchetypeVersion=2.0.0 \
     -DinteractiveMode=false
 ```
 
-Tip: double check `1.4.0` is the latest version, in case this README is outdated
+Tip: double check `2.0.0` is the latest version, in case this README is outdated
 (happens to the best of us).
 
 ## Contributing
