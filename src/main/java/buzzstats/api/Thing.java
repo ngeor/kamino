@@ -6,25 +6,25 @@ import org.immutables.value.Value;
 /** Thing model. */
 @Value.Immutable
 public interface Thing {
-  long getId();
+    long getId();
 
-  String getTitle();
+    String getTitle();
 
-  String getUrl();
+    String getUrl();
 
-  int getScore();
+    int getScore();
 
-  String getUsername();
+    String getUsername();
 
-  LocalDateTime getPublishedAt();
+    LocalDateTime getPublishedAt();
 
-  int getComments();
+    int getComments();
 
-  String getInternalUrl();
+    String getInternalUrl();
 
-  LocalDateTime getCreatedAt();
+    LocalDateTime getCreatedAt();
 
-  LocalDateTime getLastModifiedAt();
+    LocalDateTime getLastModifiedAt();
 
-  LocalDateTime getLastCheckedAt();
+    LocalDateTime getLastCheckedAt();
 }

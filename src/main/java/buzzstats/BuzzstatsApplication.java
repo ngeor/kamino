@@ -1,9 +1,5 @@
 package buzzstats;
 
-import static org.quartz.JobBuilder.newJob;
-import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
-import static org.quartz.TriggerBuilder.newTrigger;
-
 import buzzstats.jobs.CrawlerJob;
 import buzzstats.jobs.OldestCheckedStoryJob;
 import buzzstats.resources.IndexResource;
@@ -27,87 +23,85 @@ import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 import org.quartz.impl.StdSchedulerFactory;
 
+import static org.quartz.JobBuilder.newJob;
+import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
+import static org.quartz.TriggerBuilder.newTrigger;
+
 /** Main application. */
 public class BuzzstatsApplication extends Application<BuzzstatsConfiguration> {
+    public static void main(final String[] args) throws Exception {
+        new BuzzstatsApplication().run(args);
+    }
 
-  public static void main(final String[] args) throws Exception {
-    new BuzzstatsApplication().run(args);
-  }
+    @Override
+    public String getName() {
+        return "buzzstats";
+    }
 
-  @Override
-  public String getName() {
-    return "buzzstats";
-  }
+    @Override
+    public void initialize(final Bootstrap<BuzzstatsConfiguration> bootstrap) {
+        // configure Java 8 date-time for Jackson
+        bootstrap.getObjectMapper().registerModule(new JavaTimeModule());
+        bootstrap.getObjectMapper().disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
-  @Override
-  public void initialize(final Bootstrap<BuzzstatsConfiguration> bootstrap) {
-    // configure Java 8 date-time for Jackson
-    bootstrap.getObjectMapper().registerModule(new JavaTimeModule());
-    bootstrap.getObjectMapper().disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-
-    // db migrations
-    bootstrap.addBundle(
-        new MigrationsBundle<BuzzstatsConfiguration>() {
-          @Override
-          public PooledDataSourceFactory getDataSourceFactory(
-              BuzzstatsConfiguration configuration) {
-            return configuration.getDataSourceFactory();
-          }
+        // db migrations
+        bootstrap.addBundle(new MigrationsBundle<BuzzstatsConfiguration>() {
+            @Override
+            public PooledDataSourceFactory getDataSourceFactory(BuzzstatsConfiguration configuration) {
+                return configuration.getDataSourceFactory();
+            }
         });
 
-    // views
-    bootstrap.addBundle(new AssetsBundle());
-    bootstrap.addBundle(
-        new ViewBundle<BuzzstatsConfiguration>() {
-          @Override
-          public Map<String, Map<String, String>> getViewConfiguration(
-              BuzzstatsConfiguration configuration) {
-            return configuration.getViewRendererConfiguration();
-          }
+        // views
+        bootstrap.addBundle(new AssetsBundle());
+        bootstrap.addBundle(new ViewBundle<BuzzstatsConfiguration>() {
+            @Override
+            public Map<String, Map<String, String>> getViewConfiguration(BuzzstatsConfiguration configuration) {
+                return configuration.getViewRendererConfiguration();
+            }
         });
-  }
+    }
 
-  @Override
-  public void run(final BuzzstatsConfiguration configuration, final Environment environment)
-      throws SchedulerException {
-    // register db
-    final JdbiFactory jdbiFactory = new JdbiFactory();
-    final Jdbi jdbi = jdbiFactory.build(environment, configuration.getDataSourceFactory(), "h2");
+    @Override
+    public void run(final BuzzstatsConfiguration configuration, final Environment environment)
+        throws SchedulerException {
 
-    // register resources
-    registerResources(environment, jdbi);
+        // register db
+        final JdbiFactory jdbiFactory = new JdbiFactory();
+        final Jdbi jdbi               = jdbiFactory.build(environment, configuration.getDataSourceFactory(), "h2");
 
-    // start scheduler
-    Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-    scheduler.start();
-    scheduler.getContext().put("jdbi", jdbi);
+        // register resources
+        registerResources(environment, jdbi);
 
-    scheduleJob(scheduler, "crawler", configuration.getCrawlerInterval(), CrawlerJob.class);
-    scheduleJob(
-        scheduler,
-        "oldestCheckedStory",
-        configuration.getOldestCheckedStoryInterval(),
-        OldestCheckedStoryJob.class);
-    // scheduler.shutdown();
-  }
+        // start scheduler
+        Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
+        scheduler.start();
+        scheduler.getContext().put("jdbi", jdbi);
 
-  private void scheduleJob(
-      Scheduler scheduler, String name, int intervalInSeconds, Class<? extends Job> jobClass)
-      throws SchedulerException {
-    JobDetail job = newJob(jobClass).withIdentity(name).build();
+        scheduleJob(scheduler, "crawler", configuration.getCrawlerInterval(), CrawlerJob.class);
+        scheduleJob(
+            scheduler,
+            "oldestCheckedStory",
+            configuration.getOldestCheckedStoryInterval(),
+            OldestCheckedStoryJob.class);
+        // scheduler.shutdown();
+    }
 
-    Trigger trigger =
-        newTrigger()
-            .withIdentity(name + "Trigger")
-            .startNow()
-            .withSchedule(simpleSchedule().withIntervalInSeconds(intervalInSeconds).repeatForever())
-            .build();
+    private void scheduleJob(Scheduler scheduler, String name, int intervalInSeconds, Class<? extends Job> jobClass)
+        throws SchedulerException {
+        JobDetail job = newJob(jobClass).withIdentity(name).build();
 
-    scheduler.scheduleJob(job, trigger);
-  }
+        Trigger trigger = newTrigger()
+                              .withIdentity(name + "Trigger")
+                              .startNow()
+                              .withSchedule(simpleSchedule().withIntervalInSeconds(intervalInSeconds).repeatForever())
+                              .build();
 
-  private void registerResources(Environment environment, Jdbi jdbi) {
-    environment.jersey().register(new IndexResource(jdbi));
-    environment.jersey().register(new ThingsResource(jdbi));
-  }
+        scheduler.scheduleJob(job, trigger);
+    }
+
+    private void registerResources(Environment environment, Jdbi jdbi) {
+        environment.jersey().register(new IndexResource(jdbi));
+        environment.jersey().register(new ThingsResource(jdbi));
+    }
 }
