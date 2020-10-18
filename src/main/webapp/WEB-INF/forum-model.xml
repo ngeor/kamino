@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : forum-model.xml
+    Created on : July 12, 2004, 12:26 PM
+    Author     : ngeor
+    Description:
+        Purpose of the document follows.
+-->
+
+<model>
+    <node name="forums" classname="org.demosite.model.Forums" id="1" cardinality="1">
+	<node name="forumGroup" classname="org.demosite.model.ForumGroup" id="2" cardinality="*">
+	    <node name="forumGroup" cardinality="*" />
+	    <node name="forum" classname="org.demosite.model.Forum" id="3" cardinality="*">
+		<node name="forumPost" classname="org.demosite.model.ForumPost" id="4" cardinality="*">
+		    <node name="forumPost" cardinality="*" />
+		</node>
+	    </node>
+	</node>
+    </node>
+</model>
