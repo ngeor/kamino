@@ -1,0 +1,246 @@
+swagger: '2.0'
+info:
+  title: Address Book Service
+  description: Manage your frequently used addresses
+  version: "1.0.0"
+  license:
+    name: Private License
+    url: https://address-book.acme.com/
+  contact:
+    email: contact@acme.com
+    url: https://address-book.acme.com/
+
+# the domain of the service
+host: address-book.acme.com
+
+# array of all schemes that your API supports
+schemes:
+- https
+
+# will be prefixed to all paths
+basePath: /v1
+produces:
+- application/json
+
+securityDefinitions:
+  jwtAuth:
+    type: apiKey
+    description: 'JWT Access Token (e.g. Authorization: Bearer access-token)'
+    name: Authorization
+    in: header
+
+security:
+- jwtAuth: []
+
+paths:
+  /addresses:
+    get:
+      summary: Get all addresses
+      operationId: getAddresses
+      parameters:
+      - name: sortKey
+        in: query
+        required: false
+        default: 'createdAt'
+        type: string
+        enum: [firstName, createdAt, company]
+        description: 'The key to sort the results by. Valid values are firstName, createdAt and company'
+      - name: sortDirection
+        in: query
+        required: false
+        default: 'ASC'
+        type: string
+        enum: [DESC, ASC]
+        description: 'The direction to sort the results in. Valid values are DESC and ASC'
+      - name: searchKey
+        in: query
+        type: string
+        required: false
+        description: 'Searches in all fields for the query data.'
+      - name: filter
+        in: query
+        type: string
+        required: false
+        description: 'Filters the results for private or business addresses. Valid values are private and business'
+        enum: [private, business]
+      responses:
+        200:
+          description: An array of addresses
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Address'
+        401:
+          description: Authorization error
+          schema:
+            $ref: './error.yml#/ErrorInfo'
+    post:
+      summary: Create a new address.
+      operationId: createAddress
+      parameters:
+      - name: address
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Address'
+      responses:
+        201:
+          description: The newly created address
+          schema:
+            $ref: '#/definitions/Address'
+        400:
+          description: Validation error
+          schema:
+            $ref: './error.yml#/ErrorInfo'
+        401:
+          description: Authorization error
+          schema:
+            $ref: './error.yml#/ErrorInfo'
+    put:
+      summary: Update an address
+      operationId: updateAddress
+      parameters:
+      - name: address
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Address'
+      responses:
+        200:
+          description: An address
+          schema:
+            $ref: '#/definitions/Address'
+        400:
+          description: Validation error
+          schema:
+            $ref: './error.yml#/ErrorInfo'
+        401:
+          description: Authorization error
+          schema:
+            $ref: './error.yml#/ErrorInfo'
+        404:
+          description: Address not found
+          schema:
+            $ref: './error.yml#/ErrorInfo'
+  /addresses/{addressId}:
+    get:
+      summary: Gets an address
+      operationId: getAddress
+      responses:
+        200:
+          description: An address
+          schema:
+            $ref: '#/definitions/Address'
+        400:
+          description: Validation error
+          schema:
+            $ref: './error.yml#/ErrorInfo'
+        401:
+          description: Authorization error
+          schema:
+            $ref: './error.yml#/ErrorInfo'
+        404:
+          description: Address not found
+          schema:
+            $ref: './error.yml#/ErrorInfo'
+      parameters:
+      - in: path
+        name: addressId
+        description: The address ID
+        required: true
+        type: string
+    delete:
+      summary: Deletes the specified address
+      operationId: deleteAddress
+      responses:
+        200:
+          description: Specified address is deleted
+        404:
+          description: Address not found
+          schema:
+            $ref: './error.yml#/ErrorInfo'
+      parameters:
+      - in: path
+        name: addressId
+        description: The id of the address to delete
+        required: true
+        type: string
+
+definitions:
+
+  Address:
+    type: object
+    required:
+    - firstName
+    - lastName
+    - addressLine1
+    - postCode
+    - city
+    - country
+    - contactInfo
+    properties:
+      id:
+        type: string
+        description: The unique identifier of the address
+        minLength: 1
+      createdAt:
+        type: string
+        format: date-time
+      firstName:
+        type: string
+        description: The first name of a person
+        minLength: 1
+      lastName:
+        type: string
+        description: The last name of a person
+        minLength: 1
+      company:
+        type: string
+        description: The company name, in case this is a company
+      addressLine1:
+        type: string
+        description: The first address line
+        minLength: 1
+      addressLine2:
+        type: string
+        description: The second address line (optional)
+      postCode:
+        type: string
+        description: The post code
+        minLength: 1
+      city:
+        type: string
+        description: The city
+        minLength: 1
+      country:
+        type: string
+        description: The country code
+        minLength: 2
+        maxLength: 2
+      state:
+        type: string
+        description: The state code
+        minLength: 2
+        maxLength: 3
+      contactInfo:
+        $ref: '#/definitions/ContactInfo'
+        description: Contact information
+
+  ContactInfo:
+    type: object
+    required:
+    - dialCode
+    - telephone
+    properties:
+      dialCode:
+        type: string
+        description: Area code or dial code
+        minLength: 1
+      telephone:
+        type: string
+        description: The telephone number
+        minLength: 1
+      email:
+        type: string
+        description: E-mail address for contacting
+        minLength: 1

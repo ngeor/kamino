@@ -1,0 +1,225 @@
+swagger: '2.0'
+info:
+  title: Pricing Service
+  description: Pricing Service
+  version: "1.0.0"
+  license:
+    name: Private License
+    url: https://pricing.acme.com/
+  contact:
+    email: contact@acme.com
+    url: https://pricing.acme.com/
+
+# the domain of the service
+host: pricing.acme.com
+
+# array of all schemes that your API supports
+schemes:
+  - https
+
+# will be prefixed to all paths
+basePath: /v1
+produces:
+  - application/json
+
+securityDefinitions:
+  jwtAuth:
+    type: apiKey
+    description: 'JWT Access Token (e.g. Authorization: Bearer access-token)'
+    name: Authorization
+    in: header
+
+security:
+  - jwtAuth: []
+
+paths:
+  /price:
+    post:
+      summary: Get price estimate for a shipment
+      operationId: estimatePrice
+      tags:
+      - Pricing
+      parameters:
+        - name: shipment
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Shipment'
+      responses:
+        200:
+          description: Pricing result
+          schema:
+            $ref: '#/definitions/PriceResult'
+        400:
+          description: Validation error
+          schema:
+            $ref: './error.yml#/ErrorInfo'
+        401:
+          description: Authorization error
+          schema:
+            $ref: './error.yml#/ErrorInfo'
+
+  /products:
+    post:
+      summary: Gets all applicable products for a shipment
+      operationId: getProducts
+      tags:
+      - Pricing
+      parameters:
+        - name: shipment
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ShipmentWithoutProduct'
+      responses:
+        200:
+          description: The available products
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ProductDefinition'
+        400:
+          description: Validation error
+          schema:
+            $ref: './error.yml#/ErrorInfo'
+        401:
+          description: Authorization error
+          schema:
+            $ref: './error.yml#/ErrorInfo'
+
+definitions:
+  ProductDefinition:
+    type: object
+    required:
+      - carrier
+      - productId
+    description: "Represents a carrier product definition"
+    properties:
+      carrier:
+        $ref: '#/definitions/Carrier'
+        description: "The carrier that owns the product"
+      productId:
+        type: string
+        description: "The id of the product"
+        minLength: 1
+      title:
+        type: string
+        description: "A human friendly name for the product"
+
+  ShipmentWithoutProduct:
+    type: object
+    description: "A shipment that does not have a selected carrier product"
+    required:
+      - sender
+      - recipient
+      - parcels
+    properties:
+      sender:
+        $ref: '#/definitions/Address'
+      recipient:
+        $ref: '#/definitions/Address'
+      delivery:
+        $ref: '#/definitions/Address'
+      parcels:
+        type: array
+        description: The parcels of the shipment (min 1, max 10)
+        minItems: 1 # at least one parcel
+        maxItems: 10 # just to have a maximum
+        items:
+          $ref: '#/definitions/Parcel'
+
+  Shipment:
+    type: object
+    description: "A shipment with a selected carrier product"
+    allOf:
+      - $ref: '#/definitions/ShipmentWithoutProduct'
+      - properties:
+          pickupDateTime:
+            type: string
+            description: The date-time when the shipment should be picked up (in ISO format, e.g. 2018-06-28T09:00)
+            minLength: 16 # 2018-06-28T13:28
+          carrierProduct:
+            $ref: '#/definitions/ProductDefinition'
+            description: The carrier product that this shipment will be or has been shipped with
+        required:
+          - pickupDateTime
+          - carrierProduct
+
+  Address:
+    type: object
+    required:
+      - postCode
+      - city
+      - country
+    properties:
+      postCode:
+        type: string
+        description: The post code
+        minLength: 1
+      city:
+        type: string
+        description: The city
+        minLength: 1
+      country:
+        type: string
+        description: The country code
+        minLength: 2
+        maxLength: 2
+
+  Parcel:
+    type: object
+    required:
+      - count
+      - weight
+      - length
+      - width
+      - height
+      - description
+    properties:
+      count:
+        type: integer
+        description: The number of identical parcels
+        minimum: 1
+        maximum: 10
+      weight:
+        type: number
+        description: The weight of the parcel in kilograms
+        minimum: 0.1
+        maximum: 100
+      length:
+        type: number
+        description: The length of the parcel in centimeters
+        minimum: 1
+        maximum: 200
+      width:
+        type: number
+        description: The width of the parcel in centimeters
+        minimum: 1
+        maximum: 200
+      height:
+        type: number
+        description: The height of the parcel in centimeters
+        minimum: 1
+        maximum: 200
+      description:
+        type: string
+        description: The description of the parcel
+        minLength: 1
+
+  Carrier:
+    type: string
+    description: "Represents the available carriers (values: TNT, PostNL)"
+    enum:
+      - TNT
+      - PostNL
+
+  PriceResult:
+    type: object
+    description: The result of a price estimation
+    properties:
+      price:
+        type: number
+        description: The estimated price of the shipment.
+      currency:
+        type: string
+        description: The currency of the price.
