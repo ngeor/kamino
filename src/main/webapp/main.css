@@ -1,0 +1,47 @@
+body {
+	font-family: Verdana;
+	font-size: 10pt;
+	background-color: #ffcc33
+}
+
+h1 {
+	font-family: Verdana;
+	font-size: 14pt;
+}
+
+
+td {
+	font-family: Verdana;
+	font-size: 10pt;
+	background-color: #ffffff
+}
+
+th {
+	font-family: Verdana;
+	font-size: 10pt;
+	font-weight: bold;
+	text-align: left;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	background-color: #cc9900;
+	color: black
+}
+
+.leftborder {
+	border-left: 1px solid black;
+}
+
+.leftrightborder {
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+}
+
+.bottomborder {
+	border-bottom: 1px solid black
+}
+
+input {
+	font-family: Verdana;
+	font-size: 10pt
+}
+
