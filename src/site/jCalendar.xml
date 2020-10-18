@@ -1,0 +1,27 @@
+<root NormalImageFilename="E:\MyProjects\jCalendar\docs\jCalendar.bmp">
+<cell Name="cell" SliceType="stHorizontal" Left="0" Top="0" Right="735" Bottom="369">
+<cell Name="cell-r1" SliceType="stVertical" Left="0" Top="0" Right="735" Bottom="6">
+<cell Name="cell-r1-c1" SliceType="stNone" Left="0" Top="0" Right="4" Bottom="6" SingleColor="16777215" />
+<cell Name="cell-r1-c2" SliceType="stNone" Left="4" Top="0" Right="727" Bottom="6" SingleColor="16777215" />
+<cell Name="cell-r1-c3" SliceType="stNone" Left="727" Top="0" Right="735" Bottom="6" SingleColor="16777215" />
+</cell><cell Name="cell-r2" SliceType="stVertical" Left="0" Top="6" Right="735" Bottom="81">
+<cell Name="cell-r2-c1" SliceType="stNone" Left="0" Top="6" Right="4" Bottom="81" SingleColor="16777215" />
+<cell Name="cell-r2-c2" SliceType="stNone" Left="4" Top="6" Right="727" Bottom="81" />
+<cell Name="cell-r2-c3" SliceType="stNone" Left="727" Top="6" Right="735" Bottom="81" SingleColor="16777215" />
+</cell><cell Name="cell-r3" SliceType="stVertical" Left="0" Top="81" Right="735" Bottom="369">
+<cell Name="cell-r3-c1" SliceType="stNone" Left="0" Top="81" Right="4" Bottom="369" SingleColor="16777215" />
+<cell Name="cell-r3-c2" SliceType="stHorizontal" Left="4" Top="81" Right="727" Bottom="369">
+<cell Name="cell-r3-c2-r1" SliceType="stNone" Left="4" Top="81" Right="727" Bottom="109" SingleColor="16777215">
+<attr name="text" value="Open source calendar component written in Java" />
+</cell><cell Name="cell-r3-c2-r2" SliceType="stNone" Left="4" Top="109" Right="727" Bottom="114" />
+<cell Name="cell-r3-c2-r3" SliceType="stNone" Left="4" Top="114" Right="727" Bottom="126" SingleColor="16777215" />
+<cell Name="cell-r3-c2-r4" SliceType="stVertical" Left="4" Top="126" Right="727" Bottom="369">
+<cell Name="cell-r3-c2-r4-c1" SliceType="stHorizontal" Left="4" Top="126" Right="202" Bottom="369">
+<cell Name="cell-r3-c2-r4-c1-r1" SliceType="stNone" Left="4" Top="126" Right="202" Bottom="359" SingleColor="16777215">
+<attr name="width" value="198" />
+<attr name="text" value="Menu" />
+</cell><cell Name="cell-r3-c2-r4-c1-r2" SliceType="stNone" Left="4" Top="359" Right="202" Bottom="369" SingleColor="16777215" />
+</cell><cell Name="cell-r3-c2-r4-c2" SliceType="stNone" Left="202" Top="126" Right="727" Bottom="369" SingleColor="16777215">
+<attr name="text" value="About jCalendar" />
+</cell></cell></cell><cell Name="cell-r3-c3" SliceType="stNone" Left="727" Top="81" Right="735" Bottom="369" SingleColor="16777215" />
+</cell></cell></root>

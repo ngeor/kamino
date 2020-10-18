@@ -1,0 +1,15 @@
+<root NormalImageFilename="E:\MyProjects\jCalendar\docs\jCalendar.bmp">
+<cell SliceType="stHorizontal" Left="0" Top="0" Right="735" Bottom="369">
+<cell SliceType="stNone" Left="0" Top="0" Right="735" Bottom="6" SingleColor="16777215" />
+<cell SliceType="stVertical" Left="0" Top="6" Right="735" Bottom="81">
+<cell SliceType="stNone" Left="0" Top="6" Right="4" Bottom="81" SingleColor="16777215" />
+<cell SliceType="stNone" Left="4" Top="6" Right="727" Bottom="81" />
+<cell SliceType="stNone" Left="727" Top="6" Right="735" Bottom="81" SingleColor="16777215" />
+</cell><cell SliceType="stNone" Left="0" Top="81" Right="735" Bottom="90" SingleColor="16777215" />
+<cell SliceType="stNone" Left="0" Top="90" Right="735" Bottom="105" />
+<cell SliceType="stNone" Left="0" Top="105" Right="735" Bottom="109" SingleColor="16777215" />
+<cell SliceType="stNone" Left="0" Top="109" Right="735" Bottom="114" />
+<cell SliceType="stNone" Left="0" Top="114" Right="735" Bottom="126" SingleColor="16777215" />
+<cell SliceType="stNone" Left="0" Top="126" Right="735" Bottom="359" />
+<cell SliceType="stNone" Left="0" Top="359" Right="735" Bottom="369" SingleColor="16777215" />
+</cell></root>
