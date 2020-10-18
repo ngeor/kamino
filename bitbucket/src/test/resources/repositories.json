@@ -1,0 +1,1048 @@
+{
+  "pagelen": 10,
+  "size": 75,
+  "values": [
+    {
+      "scm": "git",
+      "website": "",
+      "has_wiki": false,
+      "uuid": "{2a3eea40-0864-4625-bff2-3d69c5feeba6}",
+      "links": {
+        "watchers": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/logika/watchers"
+        },
+        "branches": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/logika/refs/branches"
+        },
+        "tags": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/logika/refs/tags"
+        },
+        "commits": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/logika/commits"
+        },
+        "clone": [
+          {
+            "href": "https://ngeor-sendasyou@bitbucket.org/beeyou/logika.git",
+            "name": "https"
+          },
+          {
+            "href": "git@bitbucket.org:beeyou/logika.git",
+            "name": "ssh"
+          }
+        ],
+        "self": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/logika"
+        },
+        "source": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/logika/src"
+        },
+        "html": {
+          "href": "https://bitbucket.org/beeyou/logika"
+        },
+        "avatar": {
+          "href": "https://bytebucket.org/ravatar/%7B2a3eea40-0864-4625-bff2-3d69c5feeba6%7D?ts=java"
+        },
+        "hooks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/logika/hooks"
+        },
+        "forks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/logika/forks"
+        },
+        "downloads": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/logika/downloads"
+        },
+        "pullrequests": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/logika/pullrequests"
+        }
+      },
+      "fork_policy": "no_forks",
+      "name": "logika",
+      "project": {
+        "key": "POC",
+        "type": "project",
+        "uuid": "{d44f8a5c-41ea-409e-a8fd-98887e89667f}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/teams/beeyou/projects/POC"
+          },
+          "html": {
+            "href": "https://bitbucket.org/account/user/beeyou/projects/POC"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/user/beeyou/projects/POC/avatar/32"
+          }
+        },
+        "name": "Proof of Concept"
+      },
+      "language": "java",
+      "created_on": "2018-02-27T07:42:23.222567+00:00",
+      "mainbranch": {
+        "type": "branch",
+        "name": "master"
+      },
+      "full_name": "beeyou/logika",
+      "has_issues": false,
+      "owner": {
+        "username": "beeyou",
+        "display_name": "beeyou",
+        "type": "team",
+        "uuid": "{0a90cfed-b87b-4e5d-92dc-3e98e214ea60}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/teams/beeyou"
+          },
+          "html": {
+            "href": "https://bitbucket.org/beeyou/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/beeyou/avatar/"
+          }
+        }
+      },
+      "updated_on": "2018-10-20T15:22:10.400951+00:00",
+      "size": 204480,
+      "type": "repository",
+      "slug": "logika",
+      "is_private": true,
+      "description": "Microservice for Logika carrier."
+    },
+    {
+      "scm": "git",
+      "website": "",
+      "has_wiki": false,
+      "uuid": "{fe4dadba-869a-4893-aa29-1bd1c229fa3a}",
+      "links": {
+        "watchers": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/locations/watchers"
+        },
+        "branches": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/locations/refs/branches"
+        },
+        "tags": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/locations/refs/tags"
+        },
+        "commits": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/locations/commits"
+        },
+        "clone": [
+          {
+            "href": "https://ngeor-sendasyou@bitbucket.org/beeyou/locations.git",
+            "name": "https"
+          },
+          {
+            "href": "git@bitbucket.org:beeyou/locations.git",
+            "name": "ssh"
+          }
+        ],
+        "self": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/locations"
+        },
+        "source": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/locations/src"
+        },
+        "html": {
+          "href": "https://bitbucket.org/beeyou/locations"
+        },
+        "avatar": {
+          "href": "https://bytebucket.org/ravatar/%7Bfe4dadba-869a-4893-aa29-1bd1c229fa3a%7D?ts=c_sharp"
+        },
+        "hooks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/locations/hooks"
+        },
+        "forks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/locations/forks"
+        },
+        "downloads": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/locations/downloads"
+        },
+        "pullrequests": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/locations/pullrequests"
+        }
+      },
+      "fork_policy": "no_forks",
+      "name": "locations",
+      "project": {
+        "key": "POC",
+        "type": "project",
+        "uuid": "{d44f8a5c-41ea-409e-a8fd-98887e89667f}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/teams/beeyou/projects/POC"
+          },
+          "html": {
+            "href": "https://bitbucket.org/account/user/beeyou/projects/POC"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/user/beeyou/projects/POC/avatar/32"
+          }
+        },
+        "name": "Proof of Concept"
+      },
+      "language": "c#",
+      "created_on": "2018-03-01T08:35:08.688297+00:00",
+      "mainbranch": {
+        "type": "branch",
+        "name": "master"
+      },
+      "full_name": "beeyou/locations",
+      "has_issues": false,
+      "owner": {
+        "username": "beeyou",
+        "display_name": "beeyou",
+        "type": "team",
+        "uuid": "{0a90cfed-b87b-4e5d-92dc-3e98e214ea60}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/teams/beeyou"
+          },
+          "html": {
+            "href": "https://bitbucket.org/beeyou/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/beeyou/avatar/"
+          }
+        }
+      },
+      "updated_on": "2018-10-20T15:22:10.631542+00:00",
+      "size": 1285202,
+      "type": "repository",
+      "slug": "locations",
+      "is_private": true,
+      "description": "This solution implements services for all carriers parcel shops."
+    },
+    {
+      "scm": "git",
+      "website": "",
+      "has_wiki": false,
+      "uuid": "{22b396d4-dd79-4b8f-9d27-42eda9383ca8}",
+      "links": {
+        "watchers": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.dtos/watchers"
+        },
+        "branches": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.dtos/refs/branches"
+        },
+        "tags": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.dtos/refs/tags"
+        },
+        "commits": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.dtos/commits"
+        },
+        "clone": [
+          {
+            "href": "https://ngeor-sendasyou@bitbucket.org/beeyou/ub.parcelshops.dtos.git",
+            "name": "https"
+          },
+          {
+            "href": "git@bitbucket.org:beeyou/ub.parcelshops.dtos.git",
+            "name": "ssh"
+          }
+        ],
+        "self": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.dtos"
+        },
+        "source": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.dtos/src"
+        },
+        "html": {
+          "href": "https://bitbucket.org/beeyou/ub.parcelshops.dtos"
+        },
+        "avatar": {
+          "href": "https://bytebucket.org/ravatar/%7B22b396d4-dd79-4b8f-9d27-42eda9383ca8%7D?ts=c_sharp"
+        },
+        "hooks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.dtos/hooks"
+        },
+        "forks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.dtos/forks"
+        },
+        "downloads": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.dtos/downloads"
+        },
+        "pullrequests": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.dtos/pullrequests"
+        }
+      },
+      "fork_policy": "no_forks",
+      "name": "UB.ParcelShops.DTOs",
+      "project": {
+        "key": "POC",
+        "type": "project",
+        "uuid": "{d44f8a5c-41ea-409e-a8fd-98887e89667f}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/teams/beeyou/projects/POC"
+          },
+          "html": {
+            "href": "https://bitbucket.org/account/user/beeyou/projects/POC"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/user/beeyou/projects/POC/avatar/32"
+          }
+        },
+        "name": "Proof of Concept"
+      },
+      "language": "c#",
+      "created_on": "2018-03-09T08:48:24.432902+00:00",
+      "mainbranch": {
+        "type": "branch",
+        "name": "master"
+      },
+      "full_name": "beeyou/ub.parcelshops.dtos",
+      "has_issues": false,
+      "owner": {
+        "username": "beeyou",
+        "display_name": "beeyou",
+        "type": "team",
+        "uuid": "{0a90cfed-b87b-4e5d-92dc-3e98e214ea60}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/teams/beeyou"
+          },
+          "html": {
+            "href": "https://bitbucket.org/beeyou/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/beeyou/avatar/"
+          }
+        }
+      },
+      "updated_on": "2018-10-20T15:21:45.002093+00:00",
+      "size": 412400,
+      "type": "repository",
+      "slug": "ub.parcelshops.dtos",
+      "is_private": true,
+      "description": ""
+    },
+    {
+      "scm": "git",
+      "website": "",
+      "has_wiki": false,
+      "uuid": "{420552a9-440b-48b2-966f-3541bb9ac8a5}",
+      "links": {
+        "watchers": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.common/watchers"
+        },
+        "branches": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.common/refs/branches"
+        },
+        "tags": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.common/refs/tags"
+        },
+        "commits": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.common/commits"
+        },
+        "clone": [
+          {
+            "href": "https://ngeor-sendasyou@bitbucket.org/beeyou/ub.parcelshops.common.git",
+            "name": "https"
+          },
+          {
+            "href": "git@bitbucket.org:beeyou/ub.parcelshops.common.git",
+            "name": "ssh"
+          }
+        ],
+        "self": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.common"
+        },
+        "source": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.common/src"
+        },
+        "html": {
+          "href": "https://bitbucket.org/beeyou/ub.parcelshops.common"
+        },
+        "avatar": {
+          "href": "https://bytebucket.org/ravatar/%7B420552a9-440b-48b2-966f-3541bb9ac8a5%7D?ts=c_sharp"
+        },
+        "hooks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.common/hooks"
+        },
+        "forks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.common/forks"
+        },
+        "downloads": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.common/downloads"
+        },
+        "pullrequests": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.common/pullrequests"
+        }
+      },
+      "fork_policy": "no_forks",
+      "name": "UB.ParcelShops.Common",
+      "project": {
+        "key": "POC",
+        "type": "project",
+        "uuid": "{d44f8a5c-41ea-409e-a8fd-98887e89667f}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/teams/beeyou/projects/POC"
+          },
+          "html": {
+            "href": "https://bitbucket.org/account/user/beeyou/projects/POC"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/user/beeyou/projects/POC/avatar/32"
+          }
+        },
+        "name": "Proof of Concept"
+      },
+      "language": "c#",
+      "created_on": "2018-03-09T10:31:58.226903+00:00",
+      "mainbranch": {
+        "type": "branch",
+        "name": "master"
+      },
+      "full_name": "beeyou/ub.parcelshops.common",
+      "has_issues": false,
+      "owner": {
+        "username": "beeyou",
+        "display_name": "beeyou",
+        "type": "team",
+        "uuid": "{0a90cfed-b87b-4e5d-92dc-3e98e214ea60}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/teams/beeyou"
+          },
+          "html": {
+            "href": "https://bitbucket.org/beeyou/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/beeyou/avatar/"
+          }
+        }
+      },
+      "updated_on": "2018-10-20T15:21:45.076710+00:00",
+      "size": 547866,
+      "type": "repository",
+      "slug": "ub.parcelshops.common",
+      "is_private": true,
+      "description": ""
+    },
+    {
+      "scm": "git",
+      "website": "",
+      "has_wiki": false,
+      "uuid": "{5021eb27-d918-4b22-8838-8e733489678b}",
+      "links": {
+        "watchers": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.gls/watchers"
+        },
+        "branches": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.gls/refs/branches"
+        },
+        "tags": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.gls/refs/tags"
+        },
+        "commits": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.gls/commits"
+        },
+        "clone": [
+          {
+            "href": "https://ngeor-sendasyou@bitbucket.org/beeyou/ub.parcelshops.gls.git",
+            "name": "https"
+          },
+          {
+            "href": "git@bitbucket.org:beeyou/ub.parcelshops.gls.git",
+            "name": "ssh"
+          }
+        ],
+        "self": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.gls"
+        },
+        "source": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.gls/src"
+        },
+        "html": {
+          "href": "https://bitbucket.org/beeyou/ub.parcelshops.gls"
+        },
+        "avatar": {
+          "href": "https://bytebucket.org/ravatar/%7B5021eb27-d918-4b22-8838-8e733489678b%7D?ts=c_sharp"
+        },
+        "hooks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.gls/hooks"
+        },
+        "forks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.gls/forks"
+        },
+        "downloads": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.gls/downloads"
+        },
+        "pullrequests": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.gls/pullrequests"
+        }
+      },
+      "fork_policy": "no_forks",
+      "name": "UB.ParcelShops.GLS",
+      "project": {
+        "key": "POC",
+        "type": "project",
+        "uuid": "{d44f8a5c-41ea-409e-a8fd-98887e89667f}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/teams/beeyou/projects/POC"
+          },
+          "html": {
+            "href": "https://bitbucket.org/account/user/beeyou/projects/POC"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/user/beeyou/projects/POC/avatar/32"
+          }
+        },
+        "name": "Proof of Concept"
+      },
+      "language": "c#",
+      "created_on": "2018-03-09T11:18:35.778735+00:00",
+      "mainbranch": {
+        "type": "branch",
+        "name": "master"
+      },
+      "full_name": "beeyou/ub.parcelshops.gls",
+      "has_issues": false,
+      "owner": {
+        "username": "beeyou",
+        "display_name": "beeyou",
+        "type": "team",
+        "uuid": "{0a90cfed-b87b-4e5d-92dc-3e98e214ea60}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/teams/beeyou"
+          },
+          "html": {
+            "href": "https://bitbucket.org/beeyou/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/beeyou/avatar/"
+          }
+        }
+      },
+      "updated_on": "2018-10-20T15:21:45.142370+00:00",
+      "size": 413482,
+      "type": "repository",
+      "slug": "ub.parcelshops.gls",
+      "is_private": true,
+      "description": ""
+    },
+    {
+      "scm": "git",
+      "website": "",
+      "has_wiki": false,
+      "uuid": "{aadd03b4-20c5-4dbc-ac0e-050f46a3bdae}",
+      "links": {
+        "watchers": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.posti/watchers"
+        },
+        "branches": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.posti/refs/branches"
+        },
+        "tags": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.posti/refs/tags"
+        },
+        "commits": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.posti/commits"
+        },
+        "clone": [
+          {
+            "href": "https://ngeor-sendasyou@bitbucket.org/beeyou/ub.parcelshops.posti.git",
+            "name": "https"
+          },
+          {
+            "href": "git@bitbucket.org:beeyou/ub.parcelshops.posti.git",
+            "name": "ssh"
+          }
+        ],
+        "self": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.posti"
+        },
+        "source": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.posti/src"
+        },
+        "html": {
+          "href": "https://bitbucket.org/beeyou/ub.parcelshops.posti"
+        },
+        "avatar": {
+          "href": "https://bytebucket.org/ravatar/%7Baadd03b4-20c5-4dbc-ac0e-050f46a3bdae%7D?ts=c_sharp"
+        },
+        "hooks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.posti/hooks"
+        },
+        "forks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.posti/forks"
+        },
+        "downloads": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.posti/downloads"
+        },
+        "pullrequests": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.posti/pullrequests"
+        }
+      },
+      "fork_policy": "no_forks",
+      "name": "UB.ParcelShops.Posti",
+      "project": {
+        "key": "POC",
+        "type": "project",
+        "uuid": "{d44f8a5c-41ea-409e-a8fd-98887e89667f}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/teams/beeyou/projects/POC"
+          },
+          "html": {
+            "href": "https://bitbucket.org/account/user/beeyou/projects/POC"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/user/beeyou/projects/POC/avatar/32"
+          }
+        },
+        "name": "Proof of Concept"
+      },
+      "language": "c#",
+      "created_on": "2018-03-09T11:26:34.105503+00:00",
+      "mainbranch": {
+        "type": "branch",
+        "name": "master"
+      },
+      "full_name": "beeyou/ub.parcelshops.posti",
+      "has_issues": false,
+      "owner": {
+        "username": "beeyou",
+        "display_name": "beeyou",
+        "type": "team",
+        "uuid": "{0a90cfed-b87b-4e5d-92dc-3e98e214ea60}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/teams/beeyou"
+          },
+          "html": {
+            "href": "https://bitbucket.org/beeyou/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/beeyou/avatar/"
+          }
+        }
+      },
+      "updated_on": "2018-10-20T15:21:45.210377+00:00",
+      "size": 547396,
+      "type": "repository",
+      "slug": "ub.parcelshops.posti",
+      "is_private": true,
+      "description": ""
+    },
+    {
+      "scm": "git",
+      "website": "",
+      "has_wiki": false,
+      "uuid": "{aca1d134-c762-47bf-ab13-738740915fcb}",
+      "links": {
+        "watchers": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.restapi/watchers"
+        },
+        "branches": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.restapi/refs/branches"
+        },
+        "tags": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.restapi/refs/tags"
+        },
+        "commits": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.restapi/commits"
+        },
+        "clone": [
+          {
+            "href": "https://ngeor-sendasyou@bitbucket.org/beeyou/ub.parcelshops.restapi.git",
+            "name": "https"
+          },
+          {
+            "href": "git@bitbucket.org:beeyou/ub.parcelshops.restapi.git",
+            "name": "ssh"
+          }
+        ],
+        "self": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.restapi"
+        },
+        "source": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.restapi/src"
+        },
+        "html": {
+          "href": "https://bitbucket.org/beeyou/ub.parcelshops.restapi"
+        },
+        "avatar": {
+          "href": "https://bytebucket.org/ravatar/%7Baca1d134-c762-47bf-ab13-738740915fcb%7D?ts=c_sharp"
+        },
+        "hooks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.restapi/hooks"
+        },
+        "forks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.restapi/forks"
+        },
+        "downloads": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.restapi/downloads"
+        },
+        "pullrequests": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.parcelshops.restapi/pullrequests"
+        }
+      },
+      "fork_policy": "no_forks",
+      "name": "UB.ParcelShops.RestAPI",
+      "project": {
+        "key": "POC",
+        "type": "project",
+        "uuid": "{d44f8a5c-41ea-409e-a8fd-98887e89667f}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/teams/beeyou/projects/POC"
+          },
+          "html": {
+            "href": "https://bitbucket.org/account/user/beeyou/projects/POC"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/user/beeyou/projects/POC/avatar/32"
+          }
+        },
+        "name": "Proof of Concept"
+      },
+      "language": "c#",
+      "created_on": "2018-03-09T11:31:34.474373+00:00",
+      "mainbranch": {
+        "type": "branch",
+        "name": "master"
+      },
+      "full_name": "beeyou/ub.parcelshops.restapi",
+      "has_issues": false,
+      "owner": {
+        "username": "beeyou",
+        "display_name": "beeyou",
+        "type": "team",
+        "uuid": "{0a90cfed-b87b-4e5d-92dc-3e98e214ea60}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/teams/beeyou"
+          },
+          "html": {
+            "href": "https://bitbucket.org/beeyou/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/beeyou/avatar/"
+          }
+        }
+      },
+      "updated_on": "2018-10-20T15:21:45.286603+00:00",
+      "size": 433060,
+      "type": "repository",
+      "slug": "ub.parcelshops.restapi",
+      "is_private": true,
+      "description": ""
+    },
+    {
+      "scm": "git",
+      "website": "",
+      "has_wiki": false,
+      "uuid": "{97860096-4cf4-4d27-9d91-e55acd6794c2}",
+      "links": {
+        "watchers": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ci/watchers"
+        },
+        "branches": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ci/refs/branches"
+        },
+        "tags": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ci/refs/tags"
+        },
+        "commits": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ci/commits"
+        },
+        "clone": [
+          {
+            "href": "https://ngeor-sendasyou@bitbucket.org/beeyou/ci.git",
+            "name": "https"
+          },
+          {
+            "href": "git@bitbucket.org:beeyou/ci.git",
+            "name": "ssh"
+          }
+        ],
+        "self": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ci"
+        },
+        "source": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ci/src"
+        },
+        "html": {
+          "href": "https://bitbucket.org/beeyou/ci"
+        },
+        "avatar": {
+          "href": "https://bytebucket.org/ravatar/%7B97860096-4cf4-4d27-9d91-e55acd6794c2%7D?ts=default"
+        },
+        "hooks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ci/hooks"
+        },
+        "forks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ci/forks"
+        },
+        "downloads": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ci/downloads"
+        },
+        "pullrequests": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ci/pullrequests"
+        }
+      },
+      "fork_policy": "no_forks",
+      "name": "ci",
+      "project": {
+        "key": "POC",
+        "type": "project",
+        "uuid": "{d44f8a5c-41ea-409e-a8fd-98887e89667f}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/teams/beeyou/projects/POC"
+          },
+          "html": {
+            "href": "https://bitbucket.org/account/user/beeyou/projects/POC"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/user/beeyou/projects/POC/avatar/32"
+          }
+        },
+        "name": "Proof of Concept"
+      },
+      "language": "shell",
+      "created_on": "2018-03-13T19:15:24.163726+00:00",
+      "mainbranch": {
+        "type": "branch",
+        "name": "master"
+      },
+      "full_name": "beeyou/ci",
+      "has_issues": false,
+      "owner": {
+        "username": "beeyou",
+        "display_name": "beeyou",
+        "type": "team",
+        "uuid": "{0a90cfed-b87b-4e5d-92dc-3e98e214ea60}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/teams/beeyou"
+          },
+          "html": {
+            "href": "https://bitbucket.org/beeyou/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/beeyou/avatar/"
+          }
+        }
+      },
+      "updated_on": "2018-10-20T15:22:10.483064+00:00",
+      "size": 277758,
+      "type": "repository",
+      "slug": "ci",
+      "is_private": true,
+      "description": "Tools to implement a common CI/CD pipeline."
+    },
+    {
+      "scm": "git",
+      "website": "",
+      "has_wiki": false,
+      "uuid": "{bb528507-1cf3-4af4-841c-ad0e8d83e0ef}",
+      "links": {
+        "watchers": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.stylecop.common/watchers"
+        },
+        "branches": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.stylecop.common/refs/branches"
+        },
+        "tags": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.stylecop.common/refs/tags"
+        },
+        "commits": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.stylecop.common/commits"
+        },
+        "clone": [
+          {
+            "href": "https://ngeor-sendasyou@bitbucket.org/beeyou/ub.stylecop.common.git",
+            "name": "https"
+          },
+          {
+            "href": "git@bitbucket.org:beeyou/ub.stylecop.common.git",
+            "name": "ssh"
+          }
+        ],
+        "self": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.stylecop.common"
+        },
+        "source": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.stylecop.common/src"
+        },
+        "html": {
+          "href": "https://bitbucket.org/beeyou/ub.stylecop.common"
+        },
+        "avatar": {
+          "href": "https://bytebucket.org/ravatar/%7Bbb528507-1cf3-4af4-841c-ad0e8d83e0ef%7D?ts=c_sharp"
+        },
+        "hooks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.stylecop.common/hooks"
+        },
+        "forks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.stylecop.common/forks"
+        },
+        "downloads": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.stylecop.common/downloads"
+        },
+        "pullrequests": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/ub.stylecop.common/pullrequests"
+        }
+      },
+      "fork_policy": "no_forks",
+      "name": "UB.StyleCop.Common",
+      "project": {
+        "key": "POC",
+        "type": "project",
+        "uuid": "{d44f8a5c-41ea-409e-a8fd-98887e89667f}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/teams/beeyou/projects/POC"
+          },
+          "html": {
+            "href": "https://bitbucket.org/account/user/beeyou/projects/POC"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/user/beeyou/projects/POC/avatar/32"
+          }
+        },
+        "name": "Proof of Concept"
+      },
+      "language": "c#",
+      "created_on": "2018-03-14T08:18:05.655840+00:00",
+      "mainbranch": {
+        "type": "branch",
+        "name": "master"
+      },
+      "full_name": "beeyou/ub.stylecop.common",
+      "has_issues": false,
+      "owner": {
+        "username": "beeyou",
+        "display_name": "beeyou",
+        "type": "team",
+        "uuid": "{0a90cfed-b87b-4e5d-92dc-3e98e214ea60}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/teams/beeyou"
+          },
+          "html": {
+            "href": "https://bitbucket.org/beeyou/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/beeyou/avatar/"
+          }
+        }
+      },
+      "updated_on": "2018-10-20T15:21:45.356892+00:00",
+      "size": 193120,
+      "type": "repository",
+      "slug": "ub.stylecop.common",
+      "is_private": true,
+      "description": "Common StyleCop rules based on StyleCop.Analyzers."
+    },
+    {
+      "scm": "git",
+      "website": "",
+      "has_wiki": false,
+      "uuid": "{ee77dc08-0de1-4890-b2f3-bf74dd2419ba}",
+      "links": {
+        "watchers": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/labelpoc/watchers"
+        },
+        "branches": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/labelpoc/refs/branches"
+        },
+        "tags": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/labelpoc/refs/tags"
+        },
+        "commits": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/labelpoc/commits"
+        },
+        "clone": [
+          {
+            "href": "https://ngeor-sendasyou@bitbucket.org/beeyou/labelpoc.git",
+            "name": "https"
+          },
+          {
+            "href": "git@bitbucket.org:beeyou/labelpoc.git",
+            "name": "ssh"
+          }
+        ],
+        "self": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/labelpoc"
+        },
+        "source": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/labelpoc/src"
+        },
+        "html": {
+          "href": "https://bitbucket.org/beeyou/labelpoc"
+        },
+        "avatar": {
+          "href": "https://bytebucket.org/ravatar/%7Bee77dc08-0de1-4890-b2f3-bf74dd2419ba%7D?ts=java"
+        },
+        "hooks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/labelpoc/hooks"
+        },
+        "forks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/labelpoc/forks"
+        },
+        "downloads": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/labelpoc/downloads"
+        },
+        "pullrequests": {
+          "href": "https://api.bitbucket.org/2.0/repositories/beeyou/labelpoc/pullrequests"
+        }
+      },
+      "fork_policy": "no_forks",
+      "name": "labelpoc",
+      "project": {
+        "key": "POC",
+        "type": "project",
+        "uuid": "{d44f8a5c-41ea-409e-a8fd-98887e89667f}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/teams/beeyou/projects/POC"
+          },
+          "html": {
+            "href": "https://bitbucket.org/account/user/beeyou/projects/POC"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/user/beeyou/projects/POC/avatar/32"
+          }
+        },
+        "name": "Proof of Concept"
+      },
+      "language": "java",
+      "created_on": "2018-03-19T13:33:07.219696+00:00",
+      "mainbranch": {
+        "type": "branch",
+        "name": "master"
+      },
+      "full_name": "beeyou/labelpoc",
+      "has_issues": false,
+      "owner": {
+        "username": "beeyou",
+        "display_name": "beeyou",
+        "type": "team",
+        "uuid": "{0a90cfed-b87b-4e5d-92dc-3e98e214ea60}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/teams/beeyou"
+          },
+          "html": {
+            "href": "https://bitbucket.org/beeyou/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/beeyou/avatar/"
+          }
+        }
+      },
+      "updated_on": "2018-10-20T15:22:10.551380+00:00",
+      "size": 566725,
+      "type": "repository",
+      "slug": "labelpoc",
+      "is_private": true,
+      "description": "PoC for label printing"
+    }
+  ],
+  "page": 1,
+  "next": "https://api.bitbucket.org/2.0/repositories/beeyou?page=2"
+}

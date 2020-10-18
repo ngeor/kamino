@@ -1,0 +1,16 @@
+<table>
+  <thead>
+    <tr>
+      <th>Slug</th>
+      <th>Pipelines last imported at</th>
+      <th>Pull requests last imported at</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let repository of repositories">
+      <td>{{ repository.slug }}</td>
+      <td>{{ repository.pipelineImporterHistory.lastCheckedAt | ago }}</td>
+      <td>{{ repository.pullRequestImporterHistory.lastCheckedAt | ago }}</td>
+    </tr>
+  </tbody>
+</table>
