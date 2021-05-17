@@ -18,10 +18,10 @@ function CopyDir
 }
 
 CopyDir ".ssh"
+CopyDir "AndroidStudioProjects"
 CopyDir "Archive"
 CopyDir "Documents"
 CopyDir "DOSBOX"
-CopyDir "go"
 CopyDir "Google Drive"
 CopyDir "Music"
 
