@@ -1,20 +1,20 @@
 package net.ngeor.t3.models;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Created by ngeor on 2/4/2017.
  */
-public class PlayerSymbolTest {
+class PlayerSymbolTest {
     @Test
-    public void opponentOfXShouldBeO() {
+    void opponentOfXShouldBeO() {
         assertEquals(PlayerSymbol.O, PlayerSymbol.X.opponent());
     }
 
     @Test
-    public void opponentOfOShouldBeX() {
+    void opponentOfOShouldBeX() {
         assertEquals(PlayerSymbol.X, PlayerSymbol.O.opponent());
     }
 }

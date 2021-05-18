@@ -5,8 +5,8 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
@@ -19,15 +19,15 @@ import static org.mockito.Mockito.when;
  *
  * @author ngeor on 11/2/2018.
  */
-public class EnablingDependencyTest {
+class EnablingDependencyTest {
 
     private PreferenceFragment preferenceFragment;
     private SharedPreferences sharedPreferences;
     private Preference enablePreference;
     private Preference dependencyPreference;
 
-    @Before
-    public void before() {
+    @BeforeEach
+    void before() {
         preferenceFragment = mock(PreferenceFragment.class);
         PreferenceManager preferenceManager = mock(PreferenceManager.class);
         sharedPreferences = mock(SharedPreferences.class);
@@ -42,7 +42,7 @@ public class EnablingDependencyTest {
     }
 
     @Test
-    public void whenDependencyIsNotSetToExpectedValue_disablePreference() {
+    void whenDependencyIsNotSetToExpectedValue_disablePreference() {
         // arrange
         when(sharedPreferences.getString("takeBackups", "")).thenReturn("false");
 
@@ -57,7 +57,7 @@ public class EnablingDependencyTest {
     }
 
     @Test
-    public void whenDependencyIsSetToExpectedValue_enablePreference() {
+    void whenDependencyIsSetToExpectedValue_enablePreference() {
         // arrange
         when(sharedPreferences.getString("takeBackups", "")).thenReturn("true");
 
@@ -72,7 +72,7 @@ public class EnablingDependencyTest {
     }
 
     @Test
-    public void whenDependencyChangesToExpectedValue_enablePreference() {
+    void whenDependencyChangesToExpectedValue_enablePreference() {
         // arrange
         when(sharedPreferences.getString("takeBackups", "")).thenReturn("false");
 
@@ -94,7 +94,7 @@ public class EnablingDependencyTest {
     }
 
     @Test
-    public void whenDependencyChangesToUnexpectedValue_disablePreference() {
+    void whenDependencyChangesToUnexpectedValue_disablePreference() {
         // arrange
         when(sharedPreferences.getString("takeBackups", "")).thenReturn("true");
 

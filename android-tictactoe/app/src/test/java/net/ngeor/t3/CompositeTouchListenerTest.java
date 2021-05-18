@@ -3,11 +3,11 @@ package net.ngeor.t3;
 import android.view.MotionEvent;
 import android.view.View;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -16,7 +16,7 @@ import static org.mockito.Mockito.when;
 /**
  * Created by ngeor on 3/5/2017.
  */
-public class CompositeTouchListenerTest {
+class CompositeTouchListenerTest {
     private View view;
     private MotionEvent motionEvent;
     private CompositeTouchListener compositeTouchListener;
@@ -31,8 +31,8 @@ public class CompositeTouchListenerTest {
      */
     private View.OnTouchListener nonHandlingTouchListener;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         view = mock(View.class);
         motionEvent = mock(MotionEvent.class);
         compositeTouchListener = new CompositeTouchListener();
@@ -43,13 +43,13 @@ public class CompositeTouchListenerTest {
     }
 
     @Test
-    public void onTouchWithoutListeners() {
+    void onTouchWithoutListeners() {
         boolean handled = compositeTouchListener.onTouch(view, motionEvent);
         assertFalse(handled);
     }
 
     @Test
-    public void addListener() throws Exception {
+    void addListener() {
         // arrange
         compositeTouchListener.addListener(handlingTouchListener);
 
@@ -62,7 +62,7 @@ public class CompositeTouchListenerTest {
     }
 
     @Test
-    public void removeListener() throws Exception {
+    void removeListener() {
         // arrange
         compositeTouchListener.addListener(handlingTouchListener);
 
@@ -75,7 +75,7 @@ public class CompositeTouchListenerTest {
     }
 
     @Test
-    public void handlingListenerSkipsNonHandlingListener() throws Exception {
+    void handlingListenerSkipsNonHandlingListener() {
         // arrange
         compositeTouchListener.addListener(handlingTouchListener);
         compositeTouchListener.addListener(nonHandlingTouchListener);
@@ -90,7 +90,7 @@ public class CompositeTouchListenerTest {
     }
 
     @Test
-    public void nonHandlingListenerDoesNotSkipHandlingListener() throws Exception {
+    void nonHandlingListenerDoesNotSkipHandlingListener() {
         // arrange
         compositeTouchListener.addListener(nonHandlingTouchListener);
         compositeTouchListener.addListener(handlingTouchListener);

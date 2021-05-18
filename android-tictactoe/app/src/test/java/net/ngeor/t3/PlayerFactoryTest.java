@@ -12,7 +12,7 @@ import net.ngeor.t3.settings.HumanPlayerDefinition;
 import net.ngeor.t3.settings.PlayerDefinitions;
 import net.ngeor.t3.settings.Settings;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -24,9 +24,9 @@ import static org.mockito.Mockito.when;
  *
  * @author ngeor on 10/2/2018.
  */
-public class PlayerFactoryTest {
+class PlayerFactoryTest {
     @Test
-    public void createPlayers() {
+    void createPlayers() {
         Context context = mock(Context.class);
         MutableGameModel model = mock(MutableGameModel.class);
         MessageBox messageBox = mock(MessageBox.class);
@@ -48,7 +48,7 @@ public class PlayerFactoryTest {
     }
 
     @Test
-    public void destroyPlayers() {
+    void destroyPlayers() {
         Context context = mock(Context.class);
         MutableGameModel model = mock(MutableGameModel.class);
         MessageBox messageBox = mock(MessageBox.class);

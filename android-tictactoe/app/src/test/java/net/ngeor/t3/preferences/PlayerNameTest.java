@@ -1,22 +1,22 @@
 package net.ngeor.t3.preferences;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Unit tests for PlayerName.
  *
  * @author ngeor on 11/2/2018.
  */
-public class PlayerNameTest {
+class PlayerNameTest {
     @Test
-    public void otherOfFirstIsSecond() throws Exception {
+    void otherOfFirstIsSecond() {
         assertEquals(PlayerName.second, PlayerName.first.other());
     }
 
     @Test
-    public void otherOfSecondIsFirst() throws Exception {
+    void otherOfSecondIsFirst() {
         assertEquals(PlayerName.first, PlayerName.second.other());
     }
 }

@@ -4,8 +4,8 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
 import static org.mockito.ArgumentMatchers.anyString;
@@ -19,14 +19,14 @@ import static org.mockito.Mockito.when;
  *
  * @author ngeor on 11/2/2018.
  */
-public class ExclusiveListDependencyTest {
+class ExclusiveListDependencyTest {
 
     private ListPreference destinationPreference;
     private ListPreference sourcePreference;
     private PreferenceFragment preferenceFragment;
 
-    @Before
-    public void before() {
+    @BeforeEach
+    void before() {
         preferenceFragment = mock(PreferenceFragment.class);
         sourcePreference = mock(ListPreference.class);
         destinationPreference = mock(ListPreference.class);
@@ -42,7 +42,7 @@ public class ExclusiveListDependencyTest {
     }
 
     @Test
-    public void whenSourcePreferenceToggles_destinationPreferenceToggles() {
+    void whenSourcePreferenceToggles_destinationPreferenceToggles() {
         // arrange
         ExclusiveListDependency dependency = new ExclusiveListDependency(preferenceFragment, id -> {
         });
@@ -62,7 +62,7 @@ public class ExclusiveListDependencyTest {
     }
 
     @Test
-    public void whenSourcePreferenceStaysTheSame_destinationPreferenceDoesNotToggle() {
+    void whenSourcePreferenceStaysTheSame_destinationPreferenceDoesNotToggle() {
         // arrange
         ExclusiveListDependency dependency = new ExclusiveListDependency(preferenceFragment, id -> {
         });

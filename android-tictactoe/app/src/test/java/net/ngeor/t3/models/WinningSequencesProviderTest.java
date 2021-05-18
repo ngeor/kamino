@@ -1,24 +1,24 @@
 package net.ngeor.t3.models;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Unit test for WinningSequencesProvider.
  *
  * @author ngeor on 10/2/2018.
  */
-public class WinningSequencesProviderTest {
+class WinningSequencesProviderTest {
     private List<List<Location>> sequences;
 
-    @Before
-    public void before() {
+    @BeforeEach
+    void before() {
         // arrange
         BoardModel boardModel = new BoardModel(3, 3);
         WinningSequencesProvider winningSequencesProvider = new WinningSequencesProvider();
@@ -28,52 +28,52 @@ public class WinningSequencesProviderTest {
     }
 
     @Test
-    public void shouldNotBeNull() {
+    void shouldNotBeNull() {
         assertNotNull(sequences);
     }
 
     @Test
-    public void shouldBeEight() {
+    void shouldBeEight() {
         assertEquals(8, sequences.size());
     }
 
     @Test
-    public void shouldIncludeHorizontal1() {
+    void shouldIncludeHorizontal1() {
         assertTrue(sequences.stream().anyMatch(l -> isHorizontalSequence(l, 0)));
     }
 
     @Test
-    public void shouldIncludeHorizontal2() {
+    void shouldIncludeHorizontal2() {
         assertTrue(sequences.stream().anyMatch(l -> isHorizontalSequence(l, 1)));
     }
 
     @Test
-    public void shouldIncludeHorizontal3() {
+    void shouldIncludeHorizontal3() {
         assertTrue(sequences.stream().anyMatch(l -> isHorizontalSequence(l, 2)));
     }
 
     @Test
-    public void shouldIncludeVertical1() {
+    void shouldIncludeVertical1() {
         assertTrue(sequences.stream().anyMatch(l -> isVerticalSequence(l, 0)));
     }
 
     @Test
-    public void shouldIncludeVertical2() {
+    void shouldIncludeVertical2() {
         assertTrue(sequences.stream().anyMatch(l -> isVerticalSequence(l, 1)));
     }
 
     @Test
-    public void shouldIncludeVertical3() {
+    void shouldIncludeVertical3() {
         assertTrue(sequences.stream().anyMatch(l -> isVerticalSequence(l, 2)));
     }
 
     @Test
-    public void shouldIncludeBackslash() {
+    void shouldIncludeBackslash() {
         assertTrue(sequences.stream().anyMatch(this::isBackslash));
     }
 
     @Test
-    public void shouldIncludeSlash() {
+    void shouldIncludeSlash() {
         assertTrue(sequences.stream().anyMatch(this::isSlash));
     }
 

@@ -4,14 +4,14 @@ import net.ngeor.t3.settings.HumanPlayerDefinition;
 import net.ngeor.t3.settings.PlayerDefinitions;
 import net.ngeor.t3.settings.Settings;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Unit tests for ImmutableGameModelImpl.
@@ -19,21 +19,21 @@ import static org.junit.Assert.assertSame;
  * @author ngeor on 10/2/2018.
  */
 
-@RunWith(Enclosed.class)
-public class ImmutableGameModelImplTest {
+class ImmutableGameModelImplTest {
 
-    public static class Draw {
+    @Nested
+    class Draw {
         private Settings settings;
 
-        @Before
-        public void before() {
+        @BeforeEach
+        void before() {
             settings = new Settings(3, 3, false, new PlayerDefinitions(
                     new HumanPlayerDefinition(PlayerSymbol.X),
                     new HumanPlayerDefinition(PlayerSymbol.O)));
         }
 
         @Test
-        public void draw() {
+        void draw() {
             ImmutableGameModel model = new ImmutableGameModelImpl(settings);
             model = model.immutableStart()
                     .immutablePlay(0, 0)
@@ -49,12 +49,13 @@ public class ImmutableGameModelImplTest {
         }
     }
 
-    public static class NewModel {
+    @Nested
+    class NewModel {
         private Settings settings;
         private ImmutableGameModel model;
 
-        @Before
-        public void before() {
+        @BeforeEach
+        void before() {
             settings = new Settings(3, 3, false, new PlayerDefinitions(
                     new HumanPlayerDefinition(PlayerSymbol.X),
                     new HumanPlayerDefinition(PlayerSymbol.O)));
@@ -62,12 +63,12 @@ public class ImmutableGameModelImplTest {
         }
 
         @Test
-        public void settingsShouldBeSame() {
+        void settingsShouldBeSame() {
             assertSame(settings, model.getSettings());
         }
 
         @Test
-        public void boardModelShouldBeEmpty() {
+        void boardModelShouldBeEmpty() {
             BoardModel boardModel = model.getBoardModel();
             assertEquals(3, boardModel.getCols());
             assertEquals(3, boardModel.getRows());
@@ -75,23 +76,23 @@ public class ImmutableGameModelImplTest {
         }
 
         @Test
-        public void stateShouldBeNotStarted() {
+        void stateShouldBeNotStarted() {
             assertEquals(GameState.NotStarted, model.getState());
         }
 
-        @Test(expected = IllegalStateException.class)
-        public void cannotPlayOnNonStartedGame() {
-            model.immutablePlay(0, 0);
+        @Test
+        void cannotPlayOnNonStartedGame() {
+            assertThrows(IllegalStateException.class, () ->             model.immutablePlay(0, 0));
         }
     }
 
-    public static class StartedModel {
-        private Settings settings;
+    @Nested
+    class StartedModel {
         private ImmutableGameModel model;
 
-        @Before
-        public void before() {
-            settings = new Settings(3, 3, false, new PlayerDefinitions(
+        @BeforeEach
+        void before() {
+            Settings settings = new Settings(3, 3, false, new PlayerDefinitions(
                     new HumanPlayerDefinition(PlayerSymbol.X),
                     new HumanPlayerDefinition(PlayerSymbol.O)));
             model = new ImmutableGameModelImpl(settings);
@@ -99,17 +100,17 @@ public class ImmutableGameModelImplTest {
         }
 
         @Test
-        public void stateShouldBeWaitingForPlayer() {
+        void stateShouldBeWaitingForPlayer() {
             assertEquals(GameState.WaitingPlayer, model.getState());
         }
 
         @Test
-        public void turnShouldBePlayerX() {
+        void turnShouldBePlayerX() {
             assertEquals(PlayerSymbol.X, model.getTurn());
         }
 
         @Test
-        public void canPlay() {
+        void canPlay() {
             ImmutableGameModel nextModel = model.immutablePlay(0, 0);
             assertNotNull(nextModel);
             assertEquals(PlayerSymbol.X, model.getTurn());

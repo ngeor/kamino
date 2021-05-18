@@ -3,64 +3,66 @@ package net.ngeor.t3.settings;
 import net.ngeor.t3.models.AILevel;
 import net.ngeor.t3.models.PlayerSymbol;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 /**
  * Unit tests for HumanPlayerDefinition.
  *
  * @author ngeor on 11/2/2018.
  */
-public class HumanPlayerDefinitionTest {
-    @Test(expected = IllegalArgumentException.class)
-    public void playerSymbolCannotBeNull() {
-        new HumanPlayerDefinition(null);
+class HumanPlayerDefinitionTest {
+    @Test
+    void playerSymbolCannotBeNull() {
+        assertThrows(IllegalArgumentException.class, () ->
+                new HumanPlayerDefinition(null));
     }
 
     @Test
-    public void testToString() throws Exception {
+    void testToString() {
         HumanPlayerDefinition definition = new HumanPlayerDefinition(PlayerSymbol.O);
         assertEquals("HumanPlayerDefinition {O}", definition.toString());
     }
 
     @Test
-    public void testEquals() throws Exception {
+    void testEquals() {
         HumanPlayerDefinition a = new HumanPlayerDefinition(PlayerSymbol.X);
         HumanPlayerDefinition b = new HumanPlayerDefinition(PlayerSymbol.X);
         assertEquals(a, b);
     }
 
     @Test
-    public void testNotEquals() throws Exception {
+    void testNotEquals() {
         HumanPlayerDefinition a = new HumanPlayerDefinition(PlayerSymbol.X);
         HumanPlayerDefinition b = new HumanPlayerDefinition(PlayerSymbol.O);
         assertNotEquals(a, b);
     }
 
     @Test
-    public void testNullNotEquals() {
+    void testNullNotEquals() {
         HumanPlayerDefinition a = new HumanPlayerDefinition(PlayerSymbol.X);
         assertNotEquals(a, null);
     }
 
     @Test
-    public void testDifferentImplNotEquals() {
+    void testDifferentImplNotEquals() {
         HumanPlayerDefinition a = new HumanPlayerDefinition(PlayerSymbol.X);
         AIPlayerDefinition b = new AIPlayerDefinition(PlayerSymbol.X, AILevel.EASY);
         assertNotEquals(a, b);
     }
 
     @Test
-    public void testHashCode() throws Exception {
+    void testHashCode() {
         HumanPlayerDefinition a = new HumanPlayerDefinition(PlayerSymbol.X);
         HumanPlayerDefinition b = new HumanPlayerDefinition(PlayerSymbol.X);
         assertEquals(a.hashCode(), b.hashCode());
     }
 
     @Test
-    public void getPlayerSymbol() throws Exception {
+    void getPlayerSymbol() {
         HumanPlayerDefinition x = new HumanPlayerDefinition(PlayerSymbol.X);
         assertEquals(PlayerSymbol.X, x.getPlayerSymbol());
     }

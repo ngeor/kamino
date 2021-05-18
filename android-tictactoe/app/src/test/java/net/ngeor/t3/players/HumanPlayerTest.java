@@ -11,11 +11,11 @@ import net.ngeor.t3.models.MutableGameModel;
 import net.ngeor.t3.models.PlayerSymbol;
 import net.ngeor.t3.settings.Settings;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
  *
  * @author ngeor on 8/2/2018.
  */
-public class HumanPlayerTest {
+class HumanPlayerTest {
 
     private HumanPlayer player;
     private MutableGameModel model;
@@ -35,8 +35,8 @@ public class HumanPlayerTest {
     private MotionEvent motionEvent;
     private Settings settings;
 
-    @Before
-    public void before() {
+    @BeforeEach
+    void before() {
         // conditions are setup to allow for the player to play.
         Context context = mock(Context.class);
         when(context.getSystemService(Context.VIBRATOR_SERVICE)).thenReturn(mock(Vibrator.class));
@@ -64,7 +64,7 @@ public class HumanPlayerTest {
     }
 
     @Test
-    public void canIPlay_shouldBeFalse_whenGameIsNotStarted() {
+    void canIPlay_shouldBeFalse_whenGameIsNotStarted() {
         // arrange
         when(model.getState()).thenReturn(GameState.NotStarted);
 
@@ -73,13 +73,13 @@ public class HumanPlayerTest {
     }
 
     @Test
-    public void canIPlay_shouldBeTrue_whenGameIsStarted() {
+    void canIPlay_shouldBeTrue_whenGameIsStarted() {
         // act & assert
         assertTrue(player.canIPlay(model));
     }
 
     @Test
-    public void touch_doNothingOnDown() {
+    void touch_doNothingOnDown() {
         // arrange
         when(motionEvent.getAction()).thenReturn(MotionEvent.ACTION_DOWN);
 
@@ -89,7 +89,7 @@ public class HumanPlayerTest {
     }
 
     @Test
-    public void touch_cannotPlayWhenGameNotStarted() {
+    void touch_cannotPlayWhenGameNotStarted() {
         // arrange
         when(model.getState()).thenReturn(GameState.NotStarted);
 
@@ -99,7 +99,7 @@ public class HumanPlayerTest {
     }
 
     @Test
-    public void touch_cannotPlayWhenNotMyTurn() {
+    void touch_cannotPlayWhenNotMyTurn() {
         // arrange
         when(model.getTurn()).thenReturn(PlayerSymbol.O);
 
@@ -109,7 +109,7 @@ public class HumanPlayerTest {
     }
 
     @Test
-    public void touch_cannotPlayWhenTileTaken() {
+    void touch_cannotPlayWhenTileTaken() {
         // arrange
         when(model.getBoardModel()).thenReturn(
                 new BoardModel(3, 3).playAt(0, 0, PlayerSymbol.O));
@@ -120,31 +120,31 @@ public class HumanPlayerTest {
     }
 
     @Test
-    public void touch_playOnUp() {
+    void touch_playOnUp() {
         // act & assert
         assertTrue(player.onTouch(view, motionEvent));
         verify(model).play(0, 0);
     }
 
     @Test
-    public void stateChanged_whenICanPlay_invisibleModeOff() {
+    void stateChanged_whenICanPlay_invisibleModeOff() {
         player.stateChanged(model);
     }
 
     @Test
-    public void stateChanged_whenICannotPlay_invisibleModeOff() {
+    void stateChanged_whenICannotPlay_invisibleModeOff() {
         when(model.getState()).thenReturn(GameState.NotStarted);
         player.stateChanged(model);
     }
 
     @Test
-    public void stateChanged_whenICanPlay_invisibleModeOn() {
+    void stateChanged_whenICanPlay_invisibleModeOn() {
         when(settings.isInvisibleMode()).thenReturn(true);
         player.stateChanged(model);
     }
 
     @Test
-    public void stateChanged_whenICannotPlay_invisibleModeOn() {
+    void stateChanged_whenICannotPlay_invisibleModeOn() {
         when(model.getState()).thenReturn(GameState.NotStarted);
         when(settings.isInvisibleMode()).thenReturn(true);
         player.stateChanged(model);

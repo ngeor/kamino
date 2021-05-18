@@ -8,10 +8,10 @@ import net.ngeor.t3.settings.AIPlayerDefinition;
 import net.ngeor.t3.settings.HumanPlayerDefinition;
 import net.ngeor.t3.settings.PlayerDefinitions;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -19,12 +19,12 @@ import static org.mockito.Mockito.when;
  * Unit tests for PreferenceBackedSettings.
  * Created by ngeor on 2/11/2017.
  */
-public class PreferenceBackedSettingsTest {
+class PreferenceBackedSettingsTest {
     private SharedPreferences sharedPreferences;
     private PreferenceBackedSettings settings;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         sharedPreferences = mock(SharedPreferences.class);
         settings = new PreferenceBackedSettings(sharedPreferences);
 
@@ -39,17 +39,17 @@ public class PreferenceBackedSettingsTest {
     }
 
     @Test
-    public void getRows() {
+    void getRows() {
         assertEquals(3, settings.createSettings().getRows());
     }
 
     @Test
-    public void getCols() {
+    void getCols() {
         assertEquals(3, settings.createSettings().getCols());
     }
 
     @Test
-    public void getPlayerDefinitions_withDefaultSettings() {
+    void getPlayerDefinitions_withDefaultSettings() {
         // arrange
 
         // act
@@ -64,7 +64,7 @@ public class PreferenceBackedSettingsTest {
     }
 
     @Test
-    public void getPlayerDefinitions_withCustomSettings() {
+    void getPlayerDefinitions_withCustomSettings() {
         // arrange
         mockPreference("pref_key_first_player_symbol", "X", "O");
         mockPreference("pref_key_first_player_type", "HUMAN", "CPU");

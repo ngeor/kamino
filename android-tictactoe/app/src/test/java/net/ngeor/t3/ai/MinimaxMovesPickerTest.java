@@ -11,23 +11,23 @@ import net.ngeor.t3.settings.PlayerDefinition;
 import net.ngeor.t3.settings.PlayerDefinitions;
 import net.ngeor.t3.settings.Settings;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 /**
  * Unit test for MinimaxMovesPicker.
  *
  * @author ngeor on 2/6/2017.
  */
-public class MinimaxMovesPickerTest {
+class MinimaxMovesPickerTest {
     private GameModelHolder model;
 
-    @Before
-    public void before() {
+    @BeforeEach
+    void before() {
         PlayerDefinition first = new HumanPlayerDefinition(PlayerSymbol.X);
         PlayerDefinition second = new AIPlayerDefinition(PlayerSymbol.O, AILevel.EASY);
         Settings settings = new Settings(3, 3, false, new PlayerDefinitions(first, second));
@@ -47,7 +47,7 @@ public class MinimaxMovesPickerTest {
      * The correct move is to play on the top row.
      */
     @Test
-    public void shouldPreventLosing() {
+    void shouldPreventLosing() {
         // arrange
         model.play(0, 0); // X
         model.play(1, 0); // O
@@ -63,7 +63,7 @@ public class MinimaxMovesPickerTest {
         List<Location> locations = move.pickMoves(model);
 
         // assert
-        Location[] actual = locations.toArray(new Location[locations.size()]);
+        Location[] actual = locations.toArray(new Location[0]);
         Location[] expected = new Location[]{
                 new Location(0, 1)
         };
@@ -75,7 +75,7 @@ public class MinimaxMovesPickerTest {
      * when the user starts in the middle.
      */
     @Test
-    public void shouldDefendCorner() {
+    void shouldDefendCorner() {
         // arrange
         model.play(1, 1); // X
 
@@ -85,7 +85,7 @@ public class MinimaxMovesPickerTest {
         List<Location> locations = move.pickMoves(model);
 
         // assert
-        Location[] actual = locations.toArray(new Location[locations.size()]);
+        Location[] actual = locations.toArray(new Location[0]);
         Location[] expected = {
                 new Location(0, 0),
                 new Location(0, 2),
@@ -111,7 +111,7 @@ public class MinimaxMovesPickerTest {
      * O X
      */
     @Test
-    public void shouldDefendAgainstDoubleThreat() {
+    void shouldDefendAgainstDoubleThreat() {
         // arrange
         model.play(0, 0); // X
         model.play(1, 1); // O
@@ -122,7 +122,7 @@ public class MinimaxMovesPickerTest {
         List<Location> locations = move.pickMoves(model);
 
         // assert
-        Location[] actual = locations.toArray(new Location[locations.size()]);
+        Location[] actual = locations.toArray(new Location[0]);
         Location[] expected = {
                 new Location(0, 1),
                 new Location(1, 0),
@@ -133,7 +133,7 @@ public class MinimaxMovesPickerTest {
     }
 
     @Test
-    public void shouldStopCalculatingAfterVictory() {
+    void shouldStopCalculatingAfterVictory() {
         // arrange
         model.play(0, 0);
         model.play(1, 1);
@@ -144,7 +144,7 @@ public class MinimaxMovesPickerTest {
         List<Location> locations = move.pickMoves(model);
 
         // assert
-        Location[] actual = locations.toArray(new Location[locations.size()]);
+        Location[] actual = locations.toArray(new Location[0]);
         Location[] expected = {
                 new Location(0, 1)
         };

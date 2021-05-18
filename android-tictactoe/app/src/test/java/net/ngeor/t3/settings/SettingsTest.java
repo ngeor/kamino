@@ -3,21 +3,22 @@ package net.ngeor.t3.settings;
 import net.ngeor.t3.models.AILevel;
 import net.ngeor.t3.models.PlayerSymbol;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Unit tests for Settings.
  *
  * @author ngeor on 2/11/2017.
  */
-public class SettingsTest {
+class SettingsTest {
     @Test
-    public void create() {
+    void create() {
         // arrange
         AIPlayerDefinition ai = new AIPlayerDefinition(PlayerSymbol.X, AILevel.MEDIUM);
         HumanPlayerDefinition human = new HumanPlayerDefinition(PlayerSymbol.O);
@@ -33,7 +34,7 @@ public class SettingsTest {
     }
 
     @Test
-    public void create_invisibleMode() {
+    void create_invisibleMode() {
         // arrange
         AIPlayerDefinition ai = new AIPlayerDefinition(PlayerSymbol.X, AILevel.MEDIUM);
         HumanPlayerDefinition human = new HumanPlayerDefinition(PlayerSymbol.O);
@@ -45,13 +46,14 @@ public class SettingsTest {
         assertTrue(settings.isInvisibleMode());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void create_playerDefinitionsCannotBeNull() {
-        new Settings(3, 3, false, null);
+    @Test
+    void create_playerDefinitionsCannotBeNull() {
+        assertThrows(IllegalArgumentException.class, () ->
+                new Settings(3, 3, false, null));
     }
 
     @Test
-    public void testEquals() {
+    void testEquals() {
         AIPlayerDefinition ai = new AIPlayerDefinition(PlayerSymbol.X, AILevel.MEDIUM);
         HumanPlayerDefinition human = new HumanPlayerDefinition(PlayerSymbol.O);
         Settings settings1 = new Settings(3, 4, false, new PlayerDefinitions(ai, human));
@@ -60,7 +62,7 @@ public class SettingsTest {
     }
 
     @Test
-    public void testHashCode() {
+    void testHashCode() {
         AIPlayerDefinition ai = new AIPlayerDefinition(PlayerSymbol.X, AILevel.MEDIUM);
         HumanPlayerDefinition human = new HumanPlayerDefinition(PlayerSymbol.O);
         Settings settings1 = new Settings(3, 4, false, new PlayerDefinitions(ai, human));
@@ -69,7 +71,7 @@ public class SettingsTest {
     }
 
     @Test
-    public void testHashCode_differentInvisibleMode() {
+    void testHashCode_differentInvisibleMode() {
         AIPlayerDefinition ai = new AIPlayerDefinition(PlayerSymbol.X, AILevel.MEDIUM);
         HumanPlayerDefinition human = new HumanPlayerDefinition(PlayerSymbol.O);
         Settings settings1 = new Settings(3, 4, false, new PlayerDefinitions(ai, human));
@@ -78,7 +80,7 @@ public class SettingsTest {
     }
 
     @Test
-    public void testNotEquals_Null() {
+    void testNotEquals_Null() {
         AIPlayerDefinition ai = new AIPlayerDefinition(PlayerSymbol.X, AILevel.MEDIUM);
         HumanPlayerDefinition human = new HumanPlayerDefinition(PlayerSymbol.O);
         Settings settings1 = new Settings(3, 4, false, new PlayerDefinitions(ai, human));
@@ -86,7 +88,7 @@ public class SettingsTest {
     }
 
     @Test
-    public void testNotEquals_WrongType() {
+    void testNotEquals_WrongType() {
         AIPlayerDefinition ai = new AIPlayerDefinition(PlayerSymbol.X, AILevel.MEDIUM);
         HumanPlayerDefinition human = new HumanPlayerDefinition(PlayerSymbol.O);
         Settings settings1 = new Settings(3, 4, false, new PlayerDefinitions(ai, human));
@@ -94,7 +96,7 @@ public class SettingsTest {
     }
 
     @Test
-    public void testNotEquals_differentRows() {
+    void testNotEquals_differentRows() {
         AIPlayerDefinition ai = new AIPlayerDefinition(PlayerSymbol.X, AILevel.MEDIUM);
         HumanPlayerDefinition human = new HumanPlayerDefinition(PlayerSymbol.O);
         Settings settings1 = new Settings(3, 4, false, new PlayerDefinitions(ai, human));
@@ -103,7 +105,7 @@ public class SettingsTest {
     }
 
     @Test
-    public void testNotEquals_differentCols() {
+    void testNotEquals_differentCols() {
         AIPlayerDefinition ai = new AIPlayerDefinition(PlayerSymbol.X, AILevel.MEDIUM);
         HumanPlayerDefinition human = new HumanPlayerDefinition(PlayerSymbol.O);
         Settings settings1 = new Settings(3, 4, false, new PlayerDefinitions(ai, human));
@@ -112,7 +114,7 @@ public class SettingsTest {
     }
 
     @Test
-    public void testNotEquals_differentInvisibleMode() {
+    void testNotEquals_differentInvisibleMode() {
         AIPlayerDefinition ai = new AIPlayerDefinition(PlayerSymbol.X, AILevel.MEDIUM);
         HumanPlayerDefinition human = new HumanPlayerDefinition(PlayerSymbol.O);
         Settings settings1 = new Settings(3, 3, false, new PlayerDefinitions(ai, human));
@@ -121,7 +123,7 @@ public class SettingsTest {
     }
 
     @Test
-    public void testNotEquals_differentPlayerDefinitions() {
+    void testNotEquals_differentPlayerDefinitions() {
         AIPlayerDefinition ai = new AIPlayerDefinition(PlayerSymbol.X, AILevel.MEDIUM);
         HumanPlayerDefinition human = new HumanPlayerDefinition(PlayerSymbol.O);
         Settings settings1 = new Settings(3, 3, false, new PlayerDefinitions(ai, human));
