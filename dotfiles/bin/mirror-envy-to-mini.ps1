@@ -21,6 +21,7 @@ function CopyDir
   CopyAnyDir "$SRC\$Folder" "$DST\$Folder"
 }
 
+CopyDir ".gnupg"
 CopyDir ".ssh"
 CopyDir "AndroidStudioProjects"
 CopyDir "Archive"
