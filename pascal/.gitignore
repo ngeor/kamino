@@ -1,9 +1,0 @@
-*.bak
-*.compiled
-*.exe
-*.lps
-*.o
-*.obj
-*.ppu
-**/lib/x86_64-win64/
-AutomaticConversion.log
