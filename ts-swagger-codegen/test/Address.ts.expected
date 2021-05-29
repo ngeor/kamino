@@ -1,6 +1,0 @@
-// Address.ts
-export interface Address {
-  postCode: string;
-  city: string;
-  country: string;
-}

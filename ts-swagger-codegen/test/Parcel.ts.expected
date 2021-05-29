@@ -1,9 +1,0 @@
-// Parcel.ts
-export interface Parcel {
-  count: number;
-  weight: number;
-  length: number;
-  width: number;
-  height: number;
-  description: string;
-}

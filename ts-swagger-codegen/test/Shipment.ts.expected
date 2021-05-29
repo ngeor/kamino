@@ -1,8 +1,0 @@
-// Shipment.ts
-import { ShipmentWithoutProduct } from "./ShipmentWithoutProduct";
-import { ProductDefinition } from "./ProductDefinition";
-
-export interface Shipment extends ShipmentWithoutProduct {
-  pickupDateTime: string;
-  carrierProduct: ProductDefinition;
-}

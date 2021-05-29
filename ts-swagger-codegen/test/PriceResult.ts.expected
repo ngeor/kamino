@@ -1,5 +1,0 @@
-// PriceResult.ts
-export interface PriceResult {
-  price?: number;
-  currency?: string;
-}
