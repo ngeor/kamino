@@ -1,4 +1,0 @@
-VBGROUP 5.0
-StartupProject=Server\RTFChatServer.vbp
-Project=Client\RTFChat.vbp
-Project=Shared\RTFChatShared.vbp
