@@ -1,0 +1,67 @@
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+          version="2.5">
+  <display-name>jcms</display-name>
+  <filter>
+    <filter-name>XHtmlFilter</filter-name>
+    <filter-class>org.jcms.filters.XHtmlFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>XHtmlFilter</filter-name>
+    <url-pattern>*.jsp</url-pattern>
+  </filter-mapping>
+  <servlet>
+    <servlet-name>AddUserServlet</servlet-name>
+    <servlet-class>org.jcms.servlets.AddUserServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>AddNodeServlet</servlet-name>
+    <servlet-class>org.jcms.servlets.AddNodeServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ConfigurationServlet</servlet-name>
+    <servlet-class>org.jcms.servlets.ConfigurationServlet</servlet-class>
+    <init-param>
+      <param-name>modelFile</param-name>
+      <param-value>/WEB-INF/forum-model.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet>
+    <servlet-name>XHtmlServlet</servlet-name>
+    <servlet-class>org.jcms.servlets.XHtmlServlet</servlet-class>
+  </servlet>  
+  <servlet-mapping>
+    <servlet-name>AddUserServlet</servlet-name>
+    <url-pattern>/users/Add</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AddNodeServlet</servlet-name>
+    <url-pattern>/nodes/Add</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ConfigurationServlet</servlet-name>
+    <url-pattern>/ConfigurationServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>XHtmlServlet</servlet-name>
+    <url-pattern>*.xhtml</url-pattern>
+  </servlet-mapping>
+  
+  <session-config>
+    <session-timeout>
+            30
+        </session-timeout>
+  </session-config>
+
+  <welcome-file-list>
+
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>
+            index.htm
+        </welcome-file>
+  </welcome-file-list>
+
+</web-app>
