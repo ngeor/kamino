@@ -1,0 +1,1197 @@
+---
+swagger: "2.0"
+info:
+  title: "Acme API"
+  description: "Acme API"
+  version: "1.0.0"
+  license:
+    name: "Private License"
+    url: "https://api.acme.com/"
+  contact:
+    url: "https://api.acme.com/"
+    email: "contact@acme.com"
+host: "api.acme.com"
+schemes:
+- "https"
+basePath: "/v1"
+produces:
+- "application/json"
+securityDefinitions:
+  jwtAuth:
+    type: "apiKey"
+    in: "header"
+    name: "Authorization"
+    description: "JWT Access Token (e.g. Authorization: Bearer access-token)\n"
+  clientId:
+    type: "apiKey"
+    in: "header"
+    name: "ClientId"
+    description: "In case of a user that belongs to multiple clients,\nthis header\
+      \ can identify which client is active\nwithin the API call.\n"
+paths:
+  /address-book/addresses:
+    get:
+      summary: "Get all addresses"
+      operationId: "getAddresses"
+      parameters:
+      - name: "sortKey"
+        in: "query"
+        required: false
+        default: "createdAt"
+        type: "string"
+        enum:
+        - "firstName"
+        - "createdAt"
+        - "company"
+        description: "The key to sort the results by. Valid values are firstName,\
+          \ createdAt and company"
+      - name: "sortDirection"
+        in: "query"
+        required: false
+        default: "ASC"
+        type: "string"
+        enum:
+        - "DESC"
+        - "ASC"
+        description: "The direction to sort the results in. Valid values are DESC\
+          \ and ASC"
+      - name: "searchKey"
+        in: "query"
+        type: "string"
+        required: false
+        description: "Searches in all fields for the query data."
+      - name: "filter"
+        in: "query"
+        type: "string"
+        required: false
+        description: "Filters the results for private or business addresses. Valid\
+          \ values are private and business"
+        enum:
+        - "private"
+        - "business"
+      responses:
+        200:
+          description: "An array of addresses"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/AddressBookAddress"
+        401:
+          description: "Authorization error"
+          schema:
+            $ref: "#/definitions/ErrorInfo"
+    post:
+      summary: "Create a new address."
+      operationId: "createAddress"
+      parameters:
+      - name: "address"
+        in: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/AddressBookAddress"
+      responses:
+        201:
+          description: "The newly created address"
+          schema:
+            $ref: "#/definitions/AddressBookAddress"
+        400:
+          description: "Validation error"
+          schema:
+            $ref: "#/definitions/ErrorInfo"
+        401:
+          description: "Authorization error"
+          schema:
+            $ref: "#/definitions/ErrorInfo"
+    put:
+      summary: "Update an address"
+      operationId: "updateAddress"
+      parameters:
+      - name: "address"
+        in: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/AddressBookAddress"
+      responses:
+        200:
+          description: "An address"
+          schema:
+            $ref: "#/definitions/AddressBookAddress"
+        400:
+          description: "Validation error"
+          schema:
+            $ref: "#/definitions/ErrorInfo"
+        401:
+          description: "Authorization error"
+          schema:
+            $ref: "#/definitions/ErrorInfo"
+        404:
+          description: "Address not found"
+          schema:
+            $ref: "#/definitions/ErrorInfo"
+  /address-book/addresses/{addressId}:
+    get:
+      summary: "Gets an address"
+      operationId: "getAddress"
+      responses:
+        200:
+          description: "An address"
+          schema:
+            $ref: "#/definitions/AddressBookAddress"
+        400:
+          description: "Validation error"
+          schema:
+            $ref: "#/definitions/ErrorInfo"
+        401:
+          description: "Authorization error"
+          schema:
+            $ref: "#/definitions/ErrorInfo"
+        404:
+          description: "Address not found"
+          schema:
+            $ref: "#/definitions/ErrorInfo"
+      parameters:
+      - in: "path"
+        name: "addressId"
+        description: "The address ID"
+        required: true
+        type: "string"
+    delete:
+      summary: "Deletes the specified address"
+      operationId: "deleteAddress"
+      responses:
+        200:
+          description: "Specified address is deleted"
+        404:
+          description: "Address not found"
+          schema:
+            $ref: "#/definitions/ErrorInfo"
+      parameters:
+      - in: "path"
+        name: "addressId"
+        description: "The id of the address to delete"
+        required: true
+        type: "string"
+  /auth/login:
+    post:
+      operationId: "login"
+      summary: "Login to the service"
+      tags:
+      - "Authentication"
+      parameters:
+      - name: "credentials"
+        in: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/AuthUserCredentials"
+      responses:
+        200:
+          description: "The result of the login operation"
+          schema:
+            $ref: "#/definitions/AuthLoginResult"
+        400:
+          description: "Invalid request"
+          schema:
+            $ref: "#/definitions/ErrorInfo"
+        403:
+          description: "User not found or user not confirmed"
+          schema:
+            $ref: "#/definitions/ErrorInfo"
+  /auth/token:
+    post:
+      operationId: "verifyToken"
+      summary: "Verify an access token and returns information about the user who\
+        \ holds it"
+      tags:
+      - "Verification"
+      parameters:
+      - name: "token"
+        in: "body"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        200:
+          description: "The result of the verification"
+          schema:
+            $ref: "#/definitions/AuthTokenVerificationResult"
+        400:
+          description: "Invalid request or malformed token"
+          schema:
+            $ref: "#/definitions/ErrorInfo"
+  /auth/refresh-token:
+    post:
+      operationId: "refreshToken"
+      summary: "Refresh an access token and returns information about the user who\
+        \ holds it"
+      tags:
+      - "Authentication"
+      parameters:
+      - name: "refreshToken"
+        in: "body"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        200:
+          description: "The result of the new login with the refresh token"
+          schema:
+            $ref: "#/definitions/AuthLoginResult"
+        400:
+          description: "Invalid request or malformed token"
+          schema:
+            $ref: "#/definitions/ErrorInfo"
+  /auth/sign-up:
+    post:
+      operationId: "signUp"
+      summary: "Sign up as a new user"
+      tags:
+      - "Authentication"
+      parameters:
+      - name: "signUpRequest"
+        in: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/AuthSignUpRequest"
+      responses:
+        200:
+          description: "The result of the sign up operation"
+        400:
+          description: "Invalid request"
+          schema:
+            $ref: "#/definitions/ErrorInfo"
+        409:
+          description: "User already exists"
+          schema:
+            $ref: "#/definitions/ErrorInfo"
+  /auth/confirm-sign-up:
+    post:
+      operationId: "confirmSignUp"
+      summary: "Confirms an unconfirmed user using a code sent by email"
+      tags:
+      - "Authentication"
+      parameters:
+      - name: "confirmSignUpRequest"
+        in: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/AuthConfirmSignUpRequest"
+      responses:
+        200:
+          description: "The result of the confirm operation"
+        400:
+          description: "Invalid request"
+          schema:
+            $ref: "#/definitions/ErrorInfo"
+        401:
+          description: "user confirmation failed due to invalid code"
+          schema:
+            $ref: "#/definitions/ErrorInfo"
+  /auth/availability:
+    post:
+      operationId: "checkAvailability"
+      summary: "Check if an e-mail address or username is being used by an existing\
+        \ user"
+      tags:
+      - "Authentication"
+      parameters:
+      - name: "availabilityRequest"
+        in: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/AuthAvailabilityRequest"
+      responses:
+        200:
+          description: "Indicates that the username or e-mail is available for use"
+        400:
+          description: "Invalid request"
+          schema:
+            $ref: "#/definitions/ErrorInfo"
+        409:
+          description: "Indiciates that the username or e-mail is already used"
+  /auth/users:
+    get:
+      operationId: "getUsers"
+      summary: "Gets a list of users (only for administrators, requires authentication)"
+      tags:
+      - "Users"
+      responses:
+        200:
+          description: "A list of users"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/AuthUser"
+      security:
+      - jwtAuth: []
+      - clientId: []
+    put:
+      operationId: "updateUser"
+      summary: "Update a user"
+      parameters:
+      - in: "body"
+        name: "user"
+        required: true
+        schema:
+          $ref: "#/definitions/AuthUser"
+      responses:
+        200:
+          description: "User attributes were successfully updated"
+        400:
+          description: "Invalid request"
+          schema:
+            $ref: "#/definitions/ErrorInfo"
+      security:
+      - jwtAuth: []
+  /auth/users/{username}:
+    parameters:
+    - in: "path"
+      name: "username"
+      description: "The username identifies the user"
+      required: true
+      type: "string"
+    get:
+      operationId: "getUser"
+      summary: "Gets a user (only for administrators, requires authentication)"
+      tags:
+      - "Users"
+      responses:
+        200:
+          description: "A user"
+          schema:
+            $ref: "#/definitions/AuthUser"
+      security:
+      - jwtAuth: []
+  /auth/users/{username}/confirm:
+    parameters:
+    - in: "path"
+      name: "username"
+      description: "The username identifies the user"
+      required: true
+      type: "string"
+    post:
+      operationId: "confirmUser"
+      summary: "Marks a sign-up request as confirmed (only for administrators, requires\
+        \ authentication)"
+      tags:
+      - "Users"
+      responses:
+        200:
+          description: "The user was successfully confirmed"
+      security:
+      - jwtAuth: []
+  /auth/users/{username}/reset-password:
+    parameters:
+    - in: "path"
+      name: "username"
+      description: "The username identifies the user"
+      required: true
+      type: "string"
+    post:
+      operationId: "resetUserPassword"
+      summary: "Make a request to reset user password (only for administrators, requires\
+        \ authentication)"
+      tags:
+      - "Users"
+      responses:
+        200:
+          description: "The user password was succesfully reset"
+      security:
+      - jwtAuth: []
+  /auth/clients:
+    get:
+      operationId: "getClients"
+      summary: "Gets a list of clients"
+      tags:
+      - "Clients"
+      responses:
+        200:
+          description: "A list of clients"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/AuthClientDetails"
+      security:
+      - jwtAuth: []
+      - clientId: []
+    post:
+      operationId: "createClient"
+      summary: "Create a new client"
+      parameters:
+      - in: "body"
+        name: "client"
+        required: true
+        schema:
+          $ref: "#/definitions/AuthClientDetails"
+      responses:
+        200:
+          description: "Client created successfully"
+          schema:
+            $ref: "#/definitions/AuthClientDetails"
+        400:
+          description: "Indicates an invalid request. This can be due to missing or\
+            \ invalid fields.\nIt can also be because the ClientId header is missing\
+            \ and the calling\nuser belongs to multiple clients.\n"
+          schema:
+            $ref: "#/definitions/ErrorInfo"
+      security:
+      - jwtAuth: []
+      - clientId: []
+    put:
+      operationId: "updateClient"
+      summary: "Update an existing client"
+      parameters:
+      - in: "body"
+        name: "client"
+        required: true
+        schema:
+          $ref: "#/definitions/AuthClientDetails"
+      responses:
+        200:
+          description: "Client attributes were successfully updated"
+          schema:
+            $ref: "#/definitions/AuthClientDetails"
+        400:
+          description: "Invalid request"
+          schema:
+            $ref: "#/definitions/ErrorInfo"
+      security:
+      - jwtAuth: []
+  /auth/clients/{id}:
+    parameters:
+    - in: "path"
+      name: "id"
+      description: "The id of the client"
+      required: true
+      type: "integer"
+      format: "int64"
+      minimum: 1
+    get:
+      operationId: "getClient"
+      summary: "Gets a client"
+      tags:
+      - "Clients"
+      responses:
+        200:
+          description: "A client"
+          schema:
+            $ref: "#/definitions/AuthClientDetails"
+      security:
+      - jwtAuth: []
+  /auth/clients/{id}/roles:
+    parameters:
+    - in: "path"
+      name: "id"
+      description: "The id of the client"
+      required: true
+      type: "integer"
+      format: "int64"
+      minimum: 1
+    get:
+      operationId: "getClientRoles"
+      summary: "Gets the roles for a client"
+      tags:
+      - "Roles"
+      responses:
+        200:
+          description: "A list of roles available for the specified client"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/AuthRole"
+      security:
+        jwtAuth: []
+    post:
+      operationId: "createClientRole"
+      summary: "Creates a new role for the client"
+      tags:
+      - "Roles"
+      parameters:
+      - in: "body"
+        name: "role"
+        required: true
+        schema:
+          $ref: "#/definitions/AuthRole"
+      responses:
+        200:
+          description: "Role created successfully"
+          schema:
+            $ref: "#/definitions/AuthRole"
+        400:
+          description: "Indicates an invalid request. This can be due to missing or\
+            \ invalid fields.\n"
+          schema:
+            $ref: "#/definitions/ErrorInfo"
+      security:
+        jwtAuth: []
+    put:
+      operationId: "updateClientRole"
+      summary: "Updates a the role for the client"
+      tags:
+      - "Roles"
+      parameters:
+      - in: "body"
+        name: "role"
+        required: true
+        schema:
+          $ref: "#/definitions/AuthRole"
+      responses:
+        200:
+          description: "Role updated successfully"
+          schema:
+            $ref: "#/definitions/AuthRole"
+        400:
+          description: "Indicates an invalid request. This can be due to missing or\
+            \ invalid fields.\n"
+          schema:
+            $ref: "#/definitions/ErrorInfo"
+      security:
+        jwtAuth: []
+  /auth/clients/{clientId}/roles/{roleId}:
+    get:
+      operationId: "getClientRole"
+      summary: "Gets a specific role for a client"
+      tags:
+      - "Roles"
+      responses:
+        200:
+          description: "The requested role"
+          schema:
+            $ref: "#/definitions/AuthRole"
+      parameters:
+      - in: "path"
+        name: "clientId"
+        description: "The id of the client"
+        required: true
+        type: "integer"
+        format: "int64"
+        minimum: 1
+      - in: "path"
+        name: "roleId"
+        description: "The id of the role to search for"
+        required: true
+        type: "integer"
+        format: "int64"
+        minimum: 1
+      security:
+        jwtAuth: []
+    delete:
+      operationId: "deleteClientRole"
+      summary: "Deletes a specific role"
+      tags:
+      - "Roles"
+      respones:
+        200:
+          description: "Specified role is deleted"
+        404:
+          description: "The role to delete was not found."
+      parameters:
+      - in: "path"
+        name: "clientId"
+        description: "The id of the client"
+        required: true
+        type: "integer"
+        format: "int64"
+        minimum: 1
+      - in: "path"
+        name: "roleId"
+        description: "The id of the role to search for"
+        required: true
+        type: "integer"
+        format: "int64"
+        minimum: 1
+  /pricing/price:
+    post:
+      summary: "Get price estimate for a shipment"
+      operationId: "estimatePrice"
+      tags:
+      - "Pricing"
+      parameters:
+      - name: "shipment"
+        in: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/PricingShipment"
+      responses:
+        200:
+          description: "Pricing result"
+          schema:
+            $ref: "#/definitions/PricingPriceResult"
+        400:
+          description: "Validation error"
+          schema:
+            $ref: "#/definitions/ErrorInfo"
+        401:
+          description: "Authorization error"
+          schema:
+            $ref: "#/definitions/ErrorInfo"
+  /pricing/products:
+    post:
+      summary: "Gets all applicable products for a shipment"
+      operationId: "getProducts"
+      tags:
+      - "Pricing"
+      parameters:
+      - name: "shipment"
+        in: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/PricingShipmentWithoutProduct"
+      responses:
+        200:
+          description: "The available products"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/PricingProductDefinition"
+        400:
+          description: "Validation error"
+          schema:
+            $ref: "#/definitions/ErrorInfo"
+        401:
+          description: "Authorization error"
+          schema:
+            $ref: "#/definitions/ErrorInfo"
+definitions:
+  AddressBookAddress:
+    type: "object"
+    required:
+    - "firstName"
+    - "lastName"
+    - "addressLine1"
+    - "postCode"
+    - "city"
+    - "country"
+    - "contactInfo"
+    properties:
+      id:
+        type: "string"
+        description: "The unique identifier of the address"
+        minLength: 1
+      createdAt:
+        type: "string"
+        format: "date-time"
+      firstName:
+        type: "string"
+        description: "The first name of a person"
+        minLength: 1
+      lastName:
+        type: "string"
+        description: "The last name of a person"
+        minLength: 1
+      company:
+        type: "string"
+        description: "The company name, in case this is a company"
+      addressLine1:
+        type: "string"
+        description: "The first address line"
+        minLength: 1
+      addressLine2:
+        type: "string"
+        description: "The second address line (optional)"
+      postCode:
+        type: "string"
+        description: "The post code"
+        minLength: 1
+      city:
+        type: "string"
+        description: "The city"
+        minLength: 1
+      country:
+        type: "string"
+        description: "The country code"
+        minLength: 2
+        maxLength: 2
+      state:
+        type: "string"
+        description: "The state code"
+        minLength: 2
+        maxLength: 3
+      contactInfo:
+        $ref: "#/definitions/AddressBookContactInfo"
+        description: "Contact information"
+  AddressBookContactInfo:
+    type: "object"
+    required:
+    - "dialCode"
+    - "telephone"
+    properties:
+      dialCode:
+        type: "string"
+        description: "Area code or dial code"
+        minLength: 1
+      telephone:
+        type: "string"
+        description: "The telephone number"
+        minLength: 1
+      email:
+        type: "string"
+        description: "E-mail address for contacting"
+        minLength: 1
+  AuthUserCredentials:
+    type: "object"
+    description: "User credentials to authenticate against the service"
+    required:
+    - "username"
+    - "password"
+    properties:
+      username:
+        type: "string"
+        description: "The username"
+        minLength: 1
+        maxLength: 50
+      password:
+        type: "string"
+        description: "The password"
+        minLength: 6
+        maxLength: 50
+  AuthCommonUserProperties:
+    type: "object"
+    description: "Mandatory user properties"
+    required:
+    - "email"
+    - "firstName"
+    - "lastName"
+    properties:
+      email:
+        type: "string"
+        description: "The e-mail of the user"
+        minLength: 1
+        maxLength: 250
+      firstName:
+        type: "string"
+        description: "The first name of the user"
+        minLength: 1
+        maxLength: 100
+      lastName:
+        type: "string"
+        description: "The last name of the user"
+        minLength: 1
+        maxLength: 100
+      newsletterOptIn:
+        type: "boolean"
+        description: "Indicates if the user is subscribed to the newletter"
+  AuthSignUpRequest:
+    type: "object"
+    description: "A request to sign up a user into the service"
+    allOf:
+    - $ref: "#/definitions/AuthUserCredentials"
+    - $ref: "#/definitions/AuthCommonUserProperties"
+  AuthConfirmSignUpRequest:
+    type: "object"
+    description: "A request to sign up a user into the service"
+    properties:
+      code:
+        type: "string"
+        description: "the code to use to confirm the user"
+        minLength: 1
+        maxLength: 2048
+      username:
+        type: "string"
+        description: "The username"
+        minLength: 1
+        maxLength: 50
+  AuthAvailabilityRequest:
+    type: "object"
+    description: "A request to check if an e-mail or username is available"
+    properties:
+      username:
+        type: "string"
+        description: "The username"
+        minLength: 1
+        maxLength: 50
+      email:
+        type: "string"
+        description: "The e-mail of the user"
+        minLength: 1
+        maxLength: 250
+  AuthUserStatus:
+    type: "string"
+    description: "User status can be one of UNCONFIRMED, CONFIRMED, ARCHIVED, COMPROMISED,\
+      \ UNKNOWN, RESET_REQUIRED, FORCE_CHANGE_PASSWORD"
+    enum:
+    - "UNCONFIRMED"
+    - "CONFIRMED"
+    - "ARCHIVED"
+    - "COMPROMISED"
+    - "UNKNOWN"
+    - "RESET_REQUIRED"
+    - "FORCE_CHANGE_PASSWORD"
+  AuthRole:
+    type: "object"
+    description: "Represents a role associated with a claim (e.g. Store Manager)."
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+        description: "The ID of the role."
+      name:
+        type: "string"
+        description: "The name of the role."
+      description:
+        type: "string"
+        description: "The long description of the role"
+      permissions:
+        type: "array"
+        description: "The permissions that comprise the role."
+        items:
+          type: "string"
+    required:
+    - "name"
+  AuthClient:
+    type: "object"
+    description: "Represents a client associated with a claim. Please note that this\
+      \ object does\nnot hold the full details of a client. If you are interested\
+      \ in the full details,\nsee the /clients endpoint and the ClientDetails model.\n"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+        description: "The ID of the client."
+      name:
+        type: "string"
+        description: "The name of the client."
+        minLength: 1
+        maxLength: 100
+    required:
+    - "name"
+  AuthClaim:
+    type: "object"
+    description: "Represents the membership of a user in a client."
+    properties:
+      client:
+        $ref: "#/definitions/AuthClient"
+      roles:
+        type: "array"
+        description: "The roles that the user is assigned to within this client."
+        items:
+          $ref: "#/definitions/AuthRole"
+  AuthConfirmedUser:
+    type: "object"
+    description: "Represents a user who is allowed to login. This object does not\
+      \ have a status property."
+    allOf:
+    - $ref: "#/definitions/AuthCommonUserProperties"
+    - type: "object"
+      properties:
+        username:
+          type: "string"
+          description: "The username of the user"
+        claims:
+          type: "array"
+          description: "The clients that the user is a member of"
+          items:
+            $ref: "#/definitions/AuthClaim"
+  AuthUser:
+    type: "object"
+    description: "Represents a user. This object is used in user management operations."
+    allOf:
+    - $ref: "#/definitions/AuthConfirmedUser"
+    - type: "object"
+      properties:
+        status:
+          $ref: "#/definitions/AuthUserStatus"
+          description: "The user status"
+  AuthLoginResult:
+    type: "object"
+    description: "The result of the login operation includes the access token and\
+      \ the user details"
+    allOf:
+    - $ref: "#/definitions/AuthConfirmedUser"
+    - type: "object"
+      properties:
+        accessToken:
+          type: "string"
+          description: "The access token to use for subsequent requests"
+        expiresIn:
+          type: "integer"
+          description: "The amount of seconds the access token is valid from the moment\
+            \ is was given out"
+        refreshToken:
+          type: "string"
+          description: "The refresh token used to refresh the access token"
+  AuthTokenVerificationResult:
+    type: "object"
+    description: "The result of the token verification includes the user details"
+    allOf:
+    - $ref: "#/definitions/AuthConfirmedUser"
+  AuthBillingSchedule:
+    type: "string"
+    description: "How frequently should billing be done. Values are WEEKLY and MONTHLY."
+    enum:
+    - "WEEKLY"
+    - "MONTHLY"
+  AuthBillingInfo:
+    type: "object"
+    description: "Holds billing information of a client."
+    properties:
+      schedule:
+        $ref: "#/definitions/AuthBillingSchedule"
+        description: "How frequently should billing be done. Values are WEEKLY and\
+          \ MONTHLY."
+      currency:
+        type: "string"
+        description: "Currency code for billing (e.g. EUR, USD, etc)."
+      vat:
+        type: "string"
+        description: "The VAT number for billing."
+      eori:
+        type: "string"
+        description: "Economic Operators Registration and Identification number.\n\
+          The EORI number is a unique identification number that\ncompanies are required\
+          \ to use when exchanging\ndata with Customs in all EU Member States.\n"
+      additionalBillingEmail:
+        type: "string"
+        description: "An optional additional e-mail address to receive billing updates."
+  AuthAddress:
+    type: "object"
+    description: "Contains address information."
+    required:
+    - "firstName"
+    - "lastName"
+    - "addressLine1"
+    - "postCode"
+    - "city"
+    - "country"
+    - "contactInfo"
+    properties:
+      firstName:
+        type: "string"
+        description: "The first name of a person"
+        minLength: 1
+      lastName:
+        type: "string"
+        description: "The last name of a person"
+        minLength: 1
+      company:
+        type: "string"
+        description: "The company name, in case this is a company"
+      addressLine1:
+        type: "string"
+        description: "The first address line"
+        minLength: 1
+      addressLine2:
+        type: "string"
+        description: "The second address line (optional)"
+      postCode:
+        type: "string"
+        description: "The post code"
+        minLength: 1
+      city:
+        type: "string"
+        description: "The city"
+        minLength: 1
+      country:
+        type: "string"
+        description: "The country code"
+        minLength: 2
+        maxLength: 2
+      state:
+        type: "string"
+        description: "The state code"
+        minLength: 2
+        maxLength: 3
+      contactInfo:
+        $ref: "#/definitions/AuthContactInfo"
+        description: "Contact information"
+  AuthContactInfo:
+    type: "object"
+    description: "Contant information"
+    required:
+    - "dialCode"
+    - "telephone"
+    - "email"
+    properties:
+      dialCode:
+        type: "string"
+        description: "Area code or dial code"
+        minLength: 1
+      telephone:
+        type: "string"
+        description: "The telephone number"
+        minLength: 1
+      email:
+        type: "string"
+        description: "E-mail address for contacting"
+        minLength: 1
+  AuthClientDetails:
+    type: "object"
+    description: "Represents the full details of a client."
+    allOf:
+    - $ref: "#/definitions/AuthClient"
+    - type: "object"
+      properties:
+        address:
+          $ref: "#/definitions/AuthAddress"
+          description: "The address of the client."
+        billingInfo:
+          $ref: "#/definitions/AuthBillingInfo"
+          description: "Billing information of the client."
+  PricingProductDefinition:
+    type: "object"
+    required:
+    - "carrier"
+    - "productId"
+    description: "Represents a carrier product definition"
+    properties:
+      carrier:
+        $ref: "#/definitions/PricingCarrier"
+        description: "The carrier that owns the product"
+      productId:
+        type: "string"
+        description: "The id of the product"
+        minLength: 1
+      title:
+        type: "string"
+        description: "A human friendly name for the product"
+  PricingShipmentWithoutProduct:
+    type: "object"
+    description: "A shipment that does not have a selected carrier product"
+    required:
+    - "sender"
+    - "recipient"
+    - "parcels"
+    properties:
+      sender:
+        $ref: "#/definitions/PricingAddress"
+      recipient:
+        $ref: "#/definitions/PricingAddress"
+      delivery:
+        $ref: "#/definitions/PricingAddress"
+      parcels:
+        type: "array"
+        description: "The parcels of the shipment (min 1, max 10)"
+        minItems: 1
+        maxItems: 10
+        items:
+          $ref: "#/definitions/PricingParcel"
+  PricingShipment:
+    type: "object"
+    description: "A shipment with a selected carrier product"
+    allOf:
+    - $ref: "#/definitions/PricingShipmentWithoutProduct"
+    - properties:
+        pickupDateTime:
+          type: "string"
+          description: "The date-time when the shipment should be picked up (in ISO\
+            \ format, e.g. 2018-06-28T09:00)"
+          minLength: 16
+        carrierProduct:
+          $ref: "#/definitions/PricingProductDefinition"
+          description: "The carrier product that this shipment will be or has been\
+            \ shipped with"
+      required:
+      - "pickupDateTime"
+      - "carrierProduct"
+  PricingAddress:
+    type: "object"
+    required:
+    - "postCode"
+    - "city"
+    - "country"
+    properties:
+      postCode:
+        type: "string"
+        description: "The post code"
+        minLength: 1
+      city:
+        type: "string"
+        description: "The city"
+        minLength: 1
+      country:
+        type: "string"
+        description: "The country code"
+        minLength: 2
+        maxLength: 2
+  PricingParcel:
+    type: "object"
+    required:
+    - "count"
+    - "weight"
+    - "length"
+    - "width"
+    - "height"
+    - "description"
+    properties:
+      count:
+        type: "integer"
+        description: "The number of identical parcels"
+        minimum: 1
+        maximum: 10
+      weight:
+        type: "number"
+        description: "The weight of the parcel in kilograms"
+        minimum: 0.1
+        maximum: 100
+      length:
+        type: "number"
+        description: "The length of the parcel in centimeters"
+        minimum: 1
+        maximum: 200
+      width:
+        type: "number"
+        description: "The width of the parcel in centimeters"
+        minimum: 1
+        maximum: 200
+      height:
+        type: "number"
+        description: "The height of the parcel in centimeters"
+        minimum: 1
+        maximum: 200
+      description:
+        type: "string"
+        description: "The description of the parcel"
+        minLength: 1
+  PricingCarrier:
+    type: "string"
+    description: "Represents the available carriers (values: TNT, PostNL)"
+    enum:
+    - "TNT"
+    - "PostNL"
+  PricingPriceResult:
+    type: "object"
+    description: "The result of a price estimation"
+    properties:
+      price:
+        type: "number"
+        description: "The estimated price of the shipment."
+      currency:
+        type: "string"
+        description: "The currency of the price."
+  ErrorInfo:
+    type: "object"
+    description: "An error thrown by the API"
+    properties:
+      timestamp:
+        type: "string"
+        description: "The date-time when the error occurred"
+      status:
+        type: "number"
+        format: "int32"
+        description: "The status code of the error"
+      error:
+        type: "string"
+        description: "The type of the error"
+      message:
+        type: "string"
+        description: "A message describing the error"
+      path:
+        type: "string"
+        description: "The URL path where the error occurred"
+      errors:
+        type: "array"
+        description: "A collection of details about the errors"
+        items:
+          $ref: "#/definitions/ErrorDetail"
+  ErrorDetail:
+    type: "object"
+    description: "Details about an error, usually specific to a field."
+    properties:
+      defaultMessage:
+        type: "string"
+        description: "A detailed error message"
+      objectName:
+        type: "string"
+        description: "The name of the object that caused the error"
+      code:
+        type: "string"
+        description: "A code for the specific error"
