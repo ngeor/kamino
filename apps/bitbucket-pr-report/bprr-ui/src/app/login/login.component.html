@@ -1,0 +1,17 @@
+<form [formGroup]="loginFormGroup" (ngSubmit)="onSubmit()">
+  <div>
+    <label>Bitbucket Owner</label>
+    <input type="text" formControlName="owner" />
+  </div>
+  <div>
+    <label>Bitbucket Username</label>
+    <input type="text" formControlName="username" />
+  </div>
+  <div>
+    <label>Bitbucket Password</label>
+    <input type="password" formControlName="password" />
+  </div>
+  <div class="button">
+    <button type="submit">Login</button>
+  </div>
+</form>

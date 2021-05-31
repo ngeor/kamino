@@ -1,0 +1,22 @@
+nav {
+  background: #eee;
+  padding: 1em;
+  a {
+    display: inline-block;
+    margin-right: 1em;
+    text-decoration: none;
+    color: #333;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+h1 {
+  text-align: center;
+}
+
+main {
+  padding: 1em;
+}
