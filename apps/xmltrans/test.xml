@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-7"?>
+
+<program title="heeloo">
+	<lesson>
+		<date>67</date>
+		<time>45</time>
+		<name>Test</name>
+		<location>Location</location>
+	</lesson>
+</program>
