@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                              http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.github.ngeor</groupId>
+  <artifactId>java</artifactId>
+  <version>1.0.0</version>
+  <packaging>pom</packaging>
+  <name>java</name>
+  <description>Parent pom for Java repository</description>
+  <url>https://github.com/ngeor/java</url>
+  <licenses>
+    <license>
+      <name>MIT</name>
+      <url>https://opensource.org/licenses/MIT</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <name>Nikolaos Georgiou</name>
+      <email>nikolaos.georgiou@gmail.com</email>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:https://github.com/ngeor/java.git</connection>
+    <developerConnection>scm:git:git@github.com:ngeor/java.git</developerConnection>
+    <url>https://github.com/ngeor/java</url>
+  </scm>
+  <distributionManagement>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
+  <properties>
+    <java.version>1.8</java.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <modules>
+    <module>apps/bitbucket-pr-report</module>
+    <module>apps/icqfriends</module>
+    <module>apps/jCalendar</module>
+    <module>apps/jcms</module>
+    <module>apps/jDirDiff</module>
+    <module>apps/jHangMan</module>
+    <module>apps/jSpiderGame</module>
+    <module>apps/jTetris</module>
+    <module>apps/webtail</module>
+    <module>apps/xmltrans</module>
+    <module>apps/zfs-snapshot-trimmer</module>
+    <module>libs/yak4j-spring-test-utils</module>
+    <module>libs/yak4j-utc-time-zone-mapper</module>
+    <module>libs/yak4j-xml</module>
+    <module>maven-archetypes/archetype-quickstart-jdk8</module>
+    <module>maven-plugins/yak4j-bitbucket-maven-plugin</module>
+    <module>maven-plugins/yak4j-filename-conventions-maven-plugin</module>
+    <module>maven-plugins/yak4j-json-yaml-converter-maven-plugin</module>
+    <module>maven-plugins/yak4j-swagger-maven-plugin</module>
+    <module>maven-plugins/yak4j-sync-archetype-maven-plugin</module>
+  </modules>
+</project>

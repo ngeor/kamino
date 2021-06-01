@@ -114,7 +114,7 @@
                   <requireMavenVersion>
                     <version>3.3.9</version>
                   </requireMavenVersion>
-                  <reactorModuleConvergence></reactorModuleConvergence>
+                  <!-- <reactorModuleConvergence></reactorModuleConvergence> -->
                   <banDuplicatePomDependencyVersions></banDuplicatePomDependencyVersions>
                 </rules>
               </configuration>
