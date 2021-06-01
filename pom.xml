@@ -53,6 +53,7 @@
     <module>apps/webtail</module>
     <module>apps/xmltrans</module>
     <module>apps/zfs-snapshot-trimmer</module>
+    <module>libs/checkstyle-rules</module>
     <module>libs/yak4j-spring-test-utils</module>
     <module>libs/yak4j-utc-time-zone-mapper</module>
     <module>libs/yak4j-xml</module>
