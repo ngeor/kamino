@@ -1,45 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                              http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.github.ngeor</groupId>
+  <parent>
+    <groupId>com.github.ngeor</groupId>
+    <artifactId>java</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <relativePath>../../pom.xml</relativePath>
+  </parent>
   <artifactId>yak4j-spring-test-utils</artifactId>
   <version>0.12.1</version>
   <packaging>jar</packaging>
   <name>yak4j-spring-test-utils</name>
   <description>yak shaving for Java: Testing utilities for Spring</description>
-  <url>https://github.com/ngeor/yak4j-spring-test-utils</url>
-  <licenses>
-    <license>
-      <name>MIT</name>
-      <url>https://opensource.org/licenses/MIT</url>
-    </license>
-  </licenses>
-  <developers>
-    <developer>
-      <name>Nikolaos Georgiou</name>
-      <email>nikolaos.georgiou@gmail.com</email>
-    </developer>
-  </developers>
-  <scm>
-    <connection>scm:git:https://github.com/ngeor/yak4j-spring-test-utils.git</connection>
-    <developerConnection>scm:git:git@github.com:ngeor/yak4j-spring-test-utils.git</developerConnection>
-    <url>https://github.com/ngeor/yak4j-spring-test-utils</url>
-  </scm>
-  <distributionManagement>
-    <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-  </distributionManagement>
   <properties>
-    <java.version>1.8</java.version>
-    <maven.compiler.source>${java.version}</maven.compiler.source>
-    <maven.compiler.target>${java.version}</maven.compiler.target>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!--
     plugins
     -->
