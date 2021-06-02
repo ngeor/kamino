@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                              http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.ngeor</groupId>
@@ -197,15 +197,11 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-checkstyle-plugin</artifactId>
           <version>${maven-checkstyle-plugin.version}</version>
-          <executions>
-            <execution>
-              <id>validate</id>
-              <phase>validate</phase>
-              <goals>
-                <goal>check</goal>
-              </goals>
-            </execution>
-          </executions>
+          <configuration>
+            <configLocation>com/github/ngeor/checkstyle.xml</configLocation>
+            <includeTestSourceDirectory>true</includeTestSourceDirectory>
+            <excludes>**/HelpMojo.*</excludes>
+          </configuration>
           <dependencies>
             <dependency>
               <groupId>com.github.ngeor</groupId>
@@ -218,11 +214,15 @@
               <version>${checkstyle.version}</version>
             </dependency>
           </dependencies>
-          <configuration>
-            <configLocation>com/github/ngeor/checkstyle.xml</configLocation>
-            <includeTestSourceDirectory>true</includeTestSourceDirectory>
-            <excludes>**/HelpMojo.*</excludes>
-          </configuration>
+          <executions>
+            <execution>
+              <id>validate</id>
+              <goals>
+                <goal>check</goal>
+              </goals>
+              <phase>validate</phase>
+            </execution>
+          </executions>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -236,27 +236,27 @@
           <executions>
             <execution>
               <id>pre-integration-test</id>
-              <phase>pre-integration-test</phase>
               <goals>
                 <goal>prepare-agent-integration</goal>
               </goals>
+              <phase>pre-integration-test</phase>
               <configuration>
                 <propertyName>invoker.mavenOpts</propertyName>
               </configuration>
             </execution>
             <execution>
               <id>post-integration-test</id>
-              <phase>post-integration-test</phase>
               <goals>
                 <goal>report-integration</goal>
               </goals>
+              <phase>post-integration-test</phase>
             </execution>
             <execution>
               <id>check-aggregate</id>
-              <phase>verify</phase>
               <goals>
                 <goal>check</goal>
               </goals>
+              <phase>verify</phase>
               <configuration>
                 <dataFile>${project.build.directory}/jacoco-it.exec</dataFile>
                 <rules>
@@ -370,6 +370,9 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
         <version>${maven-plugin-plugin.version}</version>
+        <configuration>
+          <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+        </configuration>
         <executions>
           <execution>
             <id>mojo-descriptor</id>
@@ -384,9 +387,6 @@
             </goals>
           </execution>
         </executions>
-        <configuration>
-          <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -413,16 +413,6 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-invoker-plugin</artifactId>
             <version>${maven-invoker-plugin.version}</version>
-            <executions>
-              <execution>
-                <id>integration-test</id>
-                <goals>
-                  <goal>install</goal>
-                  <goal>integration-test</goal>
-                  <goal>verify</goal>
-                </goals>
-              </execution>
-            </executions>
             <configuration>
               <debug>true</debug>
               <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
@@ -434,6 +424,16 @@
                 <goal>compile</goal>
               </goals>
             </configuration>
+            <executions>
+              <execution>
+                <id>integration-test</id>
+                <goals>
+                  <goal>install</goal>
+                  <goal>integration-test</goal>
+                  <goal>verify</goal>
+                </goals>
+              </execution>
+            </executions>
           </plugin>
           <plugin>
             <groupId>org.jacoco</groupId>
@@ -459,10 +459,10 @@
             <executions>
               <execution>
                 <id>sign-artifacts</id>
-                <phase>verify</phase>
                 <goals>
                   <goal>sign</goal>
                 </goals>
+                <phase>verify</phase>
               </execution>
             </executions>
           </plugin>
