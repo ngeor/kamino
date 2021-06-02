@@ -125,14 +125,11 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-checkstyle-plugin</artifactId>
           <version>${maven.checkstyle.plugin.version}</version>
-          <executions>
-            <execution>
-              <phase>verify</phase>
-              <goals>
-                <goal>check</goal>
-              </goals>
-            </execution>
-          </executions>
+          <configuration>
+            <configLocation>com/github/ngeor/checkstyle.xml</configLocation>
+            <includeTestSourceDirectory>true</includeTestSourceDirectory>
+            <includes>${project.build.sourceDirectory}/**/*.java</includes>
+          </configuration>
           <dependencies>
             <dependency>
               <groupId>com.github.ngeor</groupId>
@@ -145,11 +142,14 @@
               <version>${checkstyle.version}</version>
             </dependency>
           </dependencies>
-          <configuration>
-            <configLocation>com/github/ngeor/checkstyle.xml</configLocation>
-            <includeTestSourceDirectory>true</includeTestSourceDirectory>
-            <includes>${project.build.sourceDirectory}/**/*.java</includes>
-          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>check</goal>
+              </goals>
+              <phase>verify</phase>
+            </execution>
+          </executions>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -174,17 +174,17 @@
             </execution>
             <execution>
               <id>post-unit-test</id>
-              <phase>test</phase>
               <goals>
                 <goal>report</goal>
               </goals>
+              <phase>test</phase>
             </execution>
             <execution>
               <id>check-unit-test</id>
-              <phase>test</phase>
               <goals>
                 <goal>check</goal>
               </goals>
+              <phase>test</phase>
               <configuration>
                 <rules>
                   <rule>
@@ -239,10 +239,10 @@
             </execution>
             <execution>
               <id>merge-results</id>
-              <phase>verify</phase>
               <goals>
                 <goal>merge</goal>
               </goals>
+              <phase>verify</phase>
               <configuration>
                 <fileSets>
                   <fileSet>
@@ -260,10 +260,10 @@
             </execution>
             <execution>
               <id>post-merge-report</id>
-              <phase>verify</phase>
               <goals>
                 <goal>report</goal>
               </goals>
+              <phase>verify</phase>
               <configuration>
                 <dataFile>${project.build.directory}/aggregate.exec</dataFile>
                 <outputDirectory>${project.reporting.outputDirectory}/jacoco-aggregate</outputDirectory>
@@ -271,10 +271,10 @@
             </execution>
             <execution>
               <id>check-aggregate</id>
-              <phase>verify</phase>
               <goals>
                 <goal>check</goal>
               </goals>
+              <phase>verify</phase>
               <configuration>
                 <dataFile>${project.build.directory}/aggregate.exec</dataFile>
                 <rules>

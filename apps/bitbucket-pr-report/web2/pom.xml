@@ -34,8 +34,8 @@
       <scope>test</scope>
       <exclusions>
         <exclusion>
-          <artifactId>junit</artifactId>
           <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
