@@ -12,4 +12,5 @@ import static com.github.ngeor.web2.configuration.CorsConfiguration.ORIGIN;
 @Repository
 @CrossOrigin(origins = ORIGIN)
 public interface CredentialsRepository
-    extends JpaRepository<Credentials, String> {}
+    extends JpaRepository<Credentials, String> {
+}

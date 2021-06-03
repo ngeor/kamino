@@ -1,8 +1,7 @@
 package jtetris.common.graphics.swing;
 
-import org.junit.Test;
-
 import jtetris.common.graphics.Color;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 

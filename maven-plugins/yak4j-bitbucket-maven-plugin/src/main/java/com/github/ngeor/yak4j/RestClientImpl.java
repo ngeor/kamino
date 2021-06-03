@@ -1,7 +1,6 @@
 package com.github.ngeor.yak4j;
 
 import java.io.IOException;
-
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

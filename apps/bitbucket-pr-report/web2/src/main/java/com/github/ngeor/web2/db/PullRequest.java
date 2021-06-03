@@ -13,57 +13,84 @@ import javax.persistence.MapsId;
  */
 @Entity
 public class PullRequest {
-  @EmbeddedId private PullRequestId id;
+    @EmbeddedId
+    private PullRequestId id;
 
-  @MapsId("repositoryUuid") @ManyToOne private Repository repository;
+    @MapsId("repositoryUuid")
+    @ManyToOne
+    private Repository repository;
 
-  @ManyToOne private User author;
+    @ManyToOne
+    private User author;
 
-  private OffsetDateTime createdOn;
-  private OffsetDateTime updatedOn;
-  private String title;
-  @Column(updatable = false) private LocalDateTime importedAt;
-  private LocalDateTime lastCheckedAt;
+    private OffsetDateTime createdOn;
+    private OffsetDateTime updatedOn;
+    private String title;
+    @Column(updatable = false)
+    private LocalDateTime importedAt;
+    private LocalDateTime lastCheckedAt;
 
-  public PullRequestId getId() { return id; }
+    public PullRequestId getId() {
+        return id;
+    }
 
-  public void setId(PullRequestId id) { this.id = id; }
+    public void setId(PullRequestId id) {
+        this.id = id;
+    }
 
-  public Repository getRepository() { return repository; }
+    public Repository getRepository() {
+        return repository;
+    }
 
-  public void setRepository(Repository repository) {
-    this.repository = repository;
-  }
+    public void setRepository(Repository repository) {
+        this.repository = repository;
+    }
 
-  public User getAuthor() { return author; }
+    public User getAuthor() {
+        return author;
+    }
 
-  public void setAuthor(User author) { this.author = author; }
+    public void setAuthor(User author) {
+        this.author = author;
+    }
 
-  public OffsetDateTime getCreatedOn() { return createdOn; }
+    public OffsetDateTime getCreatedOn() {
+        return createdOn;
+    }
 
-  public void setCreatedOn(OffsetDateTime createdOn) {
-    this.createdOn = createdOn;
-  }
+    public void setCreatedOn(OffsetDateTime createdOn) {
+        this.createdOn = createdOn;
+    }
 
-  public OffsetDateTime getUpdatedOn() { return updatedOn; }
+    public OffsetDateTime getUpdatedOn() {
+        return updatedOn;
+    }
 
-  public void setUpdatedOn(OffsetDateTime updatedOn) {
-    this.updatedOn = updatedOn;
-  }
+    public void setUpdatedOn(OffsetDateTime updatedOn) {
+        this.updatedOn = updatedOn;
+    }
 
-  public String getTitle() { return title; }
+    public String getTitle() {
+        return title;
+    }
 
-  public void setTitle(String title) { this.title = title; }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-  public LocalDateTime getImportedAt() { return importedAt; }
+    public LocalDateTime getImportedAt() {
+        return importedAt;
+    }
 
-  public void setImportedAt(LocalDateTime importedAt) {
-    this.importedAt = importedAt;
-  }
+    public void setImportedAt(LocalDateTime importedAt) {
+        this.importedAt = importedAt;
+    }
 
-  public LocalDateTime getLastCheckedAt() { return lastCheckedAt; }
+    public LocalDateTime getLastCheckedAt() {
+        return lastCheckedAt;
+    }
 
-  public void setLastCheckedAt(LocalDateTime lastCheckedAt) {
-    this.lastCheckedAt = lastCheckedAt;
-  }
+    public void setLastCheckedAt(LocalDateTime lastCheckedAt) {
+        this.lastCheckedAt = lastCheckedAt;
+    }
 }

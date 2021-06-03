@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 @org.springframework.stereotype.Repository
 public interface PipelineImporterHistoryRepository
     extends JpaRepository<PipelineImporterHistory, String> {
-  boolean existsByRepository(Repository repository);
+    boolean existsByRepository(Repository repository);
 }

@@ -1,9 +1,8 @@
 package com.ngss.jcalendardemo;
 
+import com.ngss.jcalendar.JCalendar;
 import java.awt.*;
 import javax.swing.*;
-
-import com.ngss.jcalendar.JCalendar;
 
 /**
  * The demo app.

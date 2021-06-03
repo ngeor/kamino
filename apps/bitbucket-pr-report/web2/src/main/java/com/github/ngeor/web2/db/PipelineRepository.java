@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Repository of pipelines.
  */
 public interface PipelineRepository extends JpaRepository<Pipeline, String> {
-  Page<Pipeline> findAllByRepositoryAndStateAndResult(Repository repository,
-                                                      String state,
-                                                      String result,
-                                                      Pageable pageable);
+    Page<Pipeline> findAllByRepositoryAndStateAndResult(Repository repository,
+                                                        String state,
+                                                        String result,
+                                                        Pageable pageable);
 }

@@ -11,13 +11,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableWebMvc
 public class CorsConfiguration implements WebMvcConfigurer {
-  /**
-   * The allowed origin.
-   */
-  public static final String ORIGIN = "http://localhost:4200";
+    /**
+     * The allowed origin.
+     */
+    public static final String ORIGIN = "http://localhost:4200";
 
-  @Override
-  public void addCorsMappings(CorsRegistry registry) {
-    registry.addMapping("/**").allowedOrigins(ORIGIN);
-  }
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedOrigins(ORIGIN);
+    }
 }

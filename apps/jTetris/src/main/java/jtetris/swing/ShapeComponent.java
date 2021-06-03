@@ -2,7 +2,6 @@ package jtetris.swing;
 
 import java.awt.*;
 import javax.swing.*;
-
 import jtetris.common.MovingShape;
 
 /**

@@ -12,58 +12,59 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class PipelineStats {
-  @Autowired private EntityManager entityManager;
+    @Autowired
+    private EntityManager entityManager;
 
-  /**
-   * Deployments per repository.
-   */
-  @SuppressWarnings("unchecked")
-  public List<Pair<Repository, Long>> deploymentsPerRepository() {
-    List<Object[]> resultList =
-        entityManager
-            .createQuery("SELECT p.repository, COUNT(p) AS c "
-                         + "FROM Pipeline p "
-                         + "WHERE p.targetRefName=:branch "
-                         + "GROUP BY p.repository "
-                         + "ORDER BY c DESC")
-            .setParameter("branch", "master")
-            .getResultList();
-    return resultList.stream()
-        .map(x -> Pair.of((Repository)x[0], ((Number)x[1]).longValue()))
-        .collect(Collectors.toList());
-  }
+    /**
+     * Deployments per repository.
+     */
+    @SuppressWarnings("unchecked")
+    public List<Pair<Repository, Long>> deploymentsPerRepository() {
+        List<Object[]> resultList =
+            entityManager
+                .createQuery("SELECT p.repository, COUNT(p) AS c "
+                    + "FROM Pipeline p "
+                    + "WHERE p.targetRefName=:branch "
+                    + "GROUP BY p.repository "
+                    + "ORDER BY c DESC")
+                .setParameter("branch", "master")
+                .getResultList();
+        return resultList.stream()
+            .map(x -> Pair.of((Repository) x[0], ((Number) x[1]).longValue()))
+            .collect(Collectors.toList());
+    }
 
-  /**
-   * Builds per user.
-   */
-  @SuppressWarnings("unchecked")
-  public List<Pair<String, Long>> buildsPerUser() {
-    List<Object[]> resultList =
-        entityManager
-            .createQuery("SELECT p.creator.displayName, COUNT(p) AS c "
-                         + "FROM Pipeline p "
-                         + "GROUP BY p.creator.displayName "
-                         + "ORDER BY c DESC")
-            .getResultList();
-    return resultList.stream()
-        .map(x -> Pair.of((String)x[0], ((Number)x[1]).longValue()))
-        .collect(Collectors.toList());
-  }
+    /**
+     * Builds per user.
+     */
+    @SuppressWarnings("unchecked")
+    public List<Pair<String, Long>> buildsPerUser() {
+        List<Object[]> resultList =
+            entityManager
+                .createQuery("SELECT p.creator.displayName, COUNT(p) AS c "
+                    + "FROM Pipeline p "
+                    + "GROUP BY p.creator.displayName "
+                    + "ORDER BY c DESC")
+                .getResultList();
+        return resultList.stream()
+            .map(x -> Pair.of((String) x[0], ((Number) x[1]).longValue()))
+            .collect(Collectors.toList());
+    }
 
-  /**
-   * PRs per user.
-   */
-  @SuppressWarnings("unchecked")
-  public List<Pair<String, Long>> prsPerUser() {
-    List<Object[]> resultList =
-        entityManager
-            .createQuery("SELECT p.author.displayName, COUNT(p) AS c "
-                         + "FROM PullRequest p "
-                         + "GROUP BY p.author.displayName "
-                         + "ORDER BY c DESC")
-            .getResultList();
-    return resultList.stream()
-        .map(x -> Pair.of((String)x[0], ((Number)x[1]).longValue()))
-        .collect(Collectors.toList());
-  }
+    /**
+     * PRs per user.
+     */
+    @SuppressWarnings("unchecked")
+    public List<Pair<String, Long>> prsPerUser() {
+        List<Object[]> resultList =
+            entityManager
+                .createQuery("SELECT p.author.displayName, COUNT(p) AS c "
+                    + "FROM PullRequest p "
+                    + "GROUP BY p.author.displayName "
+                    + "ORDER BY c DESC")
+                .getResultList();
+        return resultList.stream()
+            .map(x -> Pair.of((String) x[0], ((Number) x[1]).longValue()))
+            .collect(Collectors.toList());
+    }
 }

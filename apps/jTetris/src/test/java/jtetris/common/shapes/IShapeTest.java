@@ -1,11 +1,10 @@
 package jtetris.common.shapes;
 
+import jtetris.common.BlockType;
 import org.junit.Before;
 import org.junit.Test;
 
-import jtetris.common.BlockType;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Unit test for {@link IShape}.

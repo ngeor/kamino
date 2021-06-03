@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Repository of pull request approvers.
  */
 public interface PullRequestApproverRepository
-    extends JpaRepository<PullRequestApprover, PullRequestApproverId> {}
+    extends JpaRepository<PullRequestApprover, PullRequestApproverId> {
+}

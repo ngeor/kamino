@@ -1,8 +1,7 @@
 package jtetris.swing;
 
 import java.awt.*;
-import java.util.*;
-
+import java.util.EnumMap;
 import jtetris.common.BlockType;
 
 /**

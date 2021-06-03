@@ -8,16 +8,23 @@ import javax.persistence.Id;
  */
 @Entity
 public class User {
-  @Id private String uuid;
-  private String displayName;
+    @Id
+    private String uuid;
+    private String displayName;
 
-  public String getUuid() { return uuid; }
+    public String getUuid() {
+        return uuid;
+    }
 
-  public void setUuid(String uuid) { this.uuid = uuid; }
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
-  public String getDisplayName() { return displayName; }
+    public String getDisplayName() {
+        return displayName;
+    }
 
-  public void setDisplayName(String displayName) {
-    this.displayName = displayName;
-  }
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
 }

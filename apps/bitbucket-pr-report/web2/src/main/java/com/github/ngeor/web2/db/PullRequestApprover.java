@@ -9,9 +9,14 @@ import javax.persistence.Entity;
  */
 @Entity
 public class PullRequestApprover implements Serializable {
-  @EmbeddedId private PullRequestApproverId id;
+    @EmbeddedId
+    private PullRequestApproverId id;
 
-  public PullRequestApproverId getId() { return id; }
+    public PullRequestApproverId getId() {
+        return id;
+    }
 
-  public void setId(PullRequestApproverId id) { this.id = id; }
+    public void setId(PullRequestApproverId id) {
+        this.id = id;
+    }
 }

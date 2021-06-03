@@ -12,6 +12,7 @@ public class Credentials {
 
     /**
      * Creates an instance of this class.
+     *
      * @param username The username.
      * @param password The password.
      */

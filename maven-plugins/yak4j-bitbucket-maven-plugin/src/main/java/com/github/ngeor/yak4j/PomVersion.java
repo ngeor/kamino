@@ -41,9 +41,10 @@ public class PomVersion {
 
     /**
      * Creates an instance of this class.
-     * @param major The major version component.
-     * @param minor The minor version component.
-     * @param patch The patch version component.
+     *
+     * @param major    The major version component.
+     * @param minor    The minor version component.
+     * @param patch    The patch version component.
      * @param snapshot Determines if it is a snapshot version.
      */
     public PomVersion(int major, int minor, int patch, boolean snapshot) {
@@ -100,6 +101,7 @@ public class PomVersion {
 
     /**
      * Checks if this version is an allowed next version of the given version.
+     *
      * @param smallerVersion The version that is an allowed previous version of this instance.
      * @return true if this instance is an allowed next version of the given instance, false otherwise.
      */

@@ -65,10 +65,10 @@ public final class Color {
     @Override
     public String toString() {
         return "Color R: "
-                + red
-                + " G: "
-                + green
-                + " B: "
-                + blue;
+            + red
+            + " G: "
+            + green
+            + " B: "
+            + blue;
     }
 }

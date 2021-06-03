@@ -8,9 +8,10 @@ import java.io.IOException;
 public interface BitbucketApi {
     /**
      * Checks if a Bitbucket Cloud repository contains the given tag.
+     *
      * @param owner The owner of the repository.
-     * @param slug The slug of the repository.
-     * @param tag The tag to find.
+     * @param slug  The slug of the repository.
+     * @param tag   The tag to find.
      * @return true if the tag exists, false otherwise.
      * @throws IOException if a network error occurs.
      */
@@ -18,8 +19,9 @@ public interface BitbucketApi {
 
     /**
      * Gets the tag that represents the biggest version.
+     *
      * @param owner The owner of the repository.
-     * @param slug The slug of the repository.
+     * @param slug  The slug of the repository.
      * @return The tag name of the biggest version.
      * @throws IOException if a network error occurs.
      */
@@ -27,10 +29,11 @@ public interface BitbucketApi {
 
     /**
      * Creates a new git tag in a Bitbucket repository.
+     *
      * @param owner The owner of the repository.
-     * @param slug The slug of the repository.
-     * @param tag The tag.
-     * @param hash The git hash that the tag will point to.
+     * @param slug  The slug of the repository.
+     * @param tag   The tag.
+     * @param hash  The git hash that the tag will point to.
      * @throws IOException if a network error occurs.
      */
     void createTag(String owner, String slug, String tag, String hash) throws IOException;

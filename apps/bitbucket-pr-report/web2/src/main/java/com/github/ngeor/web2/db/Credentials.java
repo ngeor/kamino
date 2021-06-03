@@ -8,21 +8,34 @@ import javax.persistence.Id;
  */
 @Entity
 public class Credentials {
-  @Id private String owner;
+    @Id
+    private String owner;
 
-  private String username;
+    private String username;
 
-  private String password;
+    private String password;
 
-  public String getOwner() { return owner; }
+    public String getOwner() {
+        return owner;
+    }
 
-  public void setOwner(String owner) { this.owner = owner; }
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
 
-  public String getUsername() { return username; }
+    public String getUsername() {
+        return username;
+    }
 
-  public void setUsername(String username) { this.username = username; }
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-  public String getPassword() { return password; }
+    public String getPassword() {
+        return password;
+    }
 
-  public void setPassword(String password) { this.password = password; }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

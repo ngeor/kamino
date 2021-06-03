@@ -4,7 +4,8 @@ package com.github.ngeor.yak4j;
  * Utility methods.
  */
 final class Util {
-    private Util() {}
+    private Util() {
+    }
 
     /**
      * Converts a version to a tag.

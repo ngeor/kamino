@@ -20,63 +20,64 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 class PipelineImporterHistoryRepositoryIT {
-  @Autowired
-  private PipelineImporterHistoryRepository pipelineImporterHistoryRepository;
+    @Autowired
+    private PipelineImporterHistoryRepository pipelineImporterHistoryRepository;
 
-  @Autowired private RepositoryRepository repositoryRepository;
+    @Autowired
+    private RepositoryRepository repositoryRepository;
 
-  private Repository repository;
+    private Repository repository;
 
-  @BeforeEach
-  void beforeEach() {
-    repository = new Repository();
-    repository.setUuid("1234");
-    repository.setSlug("repo");
-    repository.setOwner("acme");
-    repositoryRepository.saveAndFlush(repository);
-  }
+    @BeforeEach
+    void beforeEach() {
+        repository = new Repository();
+        repository.setUuid("1234");
+        repository.setSlug("repo");
+        repository.setOwner("acme");
+        repositoryRepository.saveAndFlush(repository);
+    }
 
-  @Test
-  void existsByRepository_doesNotExist() {
-    // act and assert
-    assertThat(pipelineImporterHistoryRepository.existsByRepository(repository))
-        .isFalse();
-  }
+    @Test
+    void existsByRepository_doesNotExist() {
+        // act and assert
+        assertThat(pipelineImporterHistoryRepository.existsByRepository(repository))
+            .isFalse();
+    }
 
-  @Test
-  void existsByRepository_exists() {
-    // arrange
-    PipelineImporterHistory pipelineImporterHistory =
-        new PipelineImporterHistory();
-    pipelineImporterHistory.setRepository(repository);
-    pipelineImporterHistory.setLastCheckedAt(
-        LocalDateTime.now(Clock.systemUTC()));
-    pipelineImporterHistoryRepository.saveAndFlush(pipelineImporterHistory);
+    @Test
+    void existsByRepository_exists() {
+        // arrange
+        PipelineImporterHistory pipelineImporterHistory =
+            new PipelineImporterHistory();
+        pipelineImporterHistory.setRepository(repository);
+        pipelineImporterHistory.setLastCheckedAt(
+            LocalDateTime.now(Clock.systemUTC()));
+        pipelineImporterHistoryRepository.saveAndFlush(pipelineImporterHistory);
 
-    // act and assert
-    assertThat(pipelineImporterHistoryRepository.existsByRepository(repository))
-        .isTrue();
-  }
+        // act and assert
+        assertThat(pipelineImporterHistoryRepository.existsByRepository(repository))
+            .isTrue();
+    }
 
-  @Test
-  void repositoryIsUnique() {
-    // arrange
-    PipelineImporterHistory pipelineImporterHistory =
-        new PipelineImporterHistory();
-    pipelineImporterHistory.setRepository(repository);
-    pipelineImporterHistory.setLastCheckedAt(
-        LocalDateTime.now(Clock.systemUTC()));
-    pipelineImporterHistoryRepository.saveAndFlush(pipelineImporterHistory);
+    @Test
+    void repositoryIsUnique() {
+        // arrange
+        PipelineImporterHistory pipelineImporterHistory =
+            new PipelineImporterHistory();
+        pipelineImporterHistory.setRepository(repository);
+        pipelineImporterHistory.setLastCheckedAt(
+            LocalDateTime.now(Clock.systemUTC()));
+        pipelineImporterHistoryRepository.saveAndFlush(pipelineImporterHistory);
 
-    PipelineImporterHistory pipelineImporterHistory2 =
-        new PipelineImporterHistory();
-    pipelineImporterHistory2.setRepository(repository);
-    pipelineImporterHistory2.setLastCheckedAt(
-        LocalDateTime.now(Clock.systemUTC()));
-    assertThatThrownBy(()
-                           -> pipelineImporterHistoryRepository.saveAndFlush(
-                               pipelineImporterHistory2))
-        .isInstanceOf(DataIntegrityViolationException.class)
-        .hasCauseInstanceOf(ConstraintViolationException.class);
-  }
+        PipelineImporterHistory pipelineImporterHistory2 =
+            new PipelineImporterHistory();
+        pipelineImporterHistory2.setRepository(repository);
+        pipelineImporterHistory2.setLastCheckedAt(
+            LocalDateTime.now(Clock.systemUTC()));
+        assertThatThrownBy(()
+            -> pipelineImporterHistoryRepository.saveAndFlush(
+            pipelineImporterHistory2))
+            .isInstanceOf(DataIntegrityViolationException.class)
+            .hasCauseInstanceOf(ConstraintViolationException.class);
+    }
 }

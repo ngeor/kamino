@@ -12,25 +12,36 @@ import javax.persistence.OneToOne;
  */
 @Entity
 public class PullRequestImporterHistory {
-  @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-  @OneToOne private Repository repository;
+    @OneToOne
+    private Repository repository;
 
-  private LocalDateTime lastCheckedAt;
+    private LocalDateTime lastCheckedAt;
 
-  public Long getId() { return id; }
+    public Long getId() {
+        return id;
+    }
 
-  public void setId(Long id) { this.id = id; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-  public Repository getRepository() { return repository; }
+    public Repository getRepository() {
+        return repository;
+    }
 
-  public void setRepository(Repository repository) {
-    this.repository = repository;
-  }
+    public void setRepository(Repository repository) {
+        this.repository = repository;
+    }
 
-  public LocalDateTime getLastCheckedAt() { return lastCheckedAt; }
+    public LocalDateTime getLastCheckedAt() {
+        return lastCheckedAt;
+    }
 
-  public void setLastCheckedAt(LocalDateTime lastCheckedAt) {
-    this.lastCheckedAt = lastCheckedAt;
-  }
+    public void setLastCheckedAt(LocalDateTime lastCheckedAt) {
+        this.lastCheckedAt = lastCheckedAt;
+    }
 }

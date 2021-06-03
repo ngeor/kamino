@@ -16,9 +16,6 @@
     <module>web2</module>
   </modules>
   <properties>
-    <checkstyle.version>8.29</checkstyle.version>
-    <maven.checkstyle.plugin.version>3.1.0</maven.checkstyle.plugin.version>
-    <checkstyle.rules.version>3.5.0</checkstyle.rules.version>
     <!-- todo improve limits -->
     <jacoco.unit-tests.limit.instruction-ratio>80%</jacoco.unit-tests.limit.instruction-ratio>
     <jacoco.unit-tests.limit.branch-ratio>80%</jacoco.unit-tests.limit.branch-ratio>
@@ -100,36 +97,6 @@
   <build>
     <pluginManagement>
       <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-checkstyle-plugin</artifactId>
-          <version>${maven.checkstyle.plugin.version}</version>
-          <configuration>
-            <configLocation>com/github/ngeor/checkstyle.xml</configLocation>
-            <includeTestSourceDirectory>true</includeTestSourceDirectory>
-            <includes>${project.build.sourceDirectory}/**/*.java</includes>
-          </configuration>
-          <dependencies>
-            <dependency>
-              <groupId>com.github.ngeor</groupId>
-              <artifactId>checkstyle-rules</artifactId>
-              <version>${checkstyle.rules.version}</version>
-            </dependency>
-            <dependency>
-              <groupId>com.puppycrawl.tools</groupId>
-              <artifactId>checkstyle</artifactId>
-              <version>${checkstyle.version}</version>
-            </dependency>
-          </dependencies>
-          <executions>
-            <execution>
-              <goals>
-                <goal>check</goal>
-              </goals>
-              <phase>verify</phase>
-            </execution>
-          </executions>
-        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>

@@ -1,9 +1,8 @@
 package com.github.ngeor.yak4j;
 
-import java.io.IOException;
-
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 
 /**
  * Implementation of the Bitbucket Cloud REST API.
@@ -16,6 +15,7 @@ class BitbucketApiImpl implements BitbucketApi {
 
     /**
      * Creates an instance of this class.
+     *
      * @param restClient The REST client.
      */
     BitbucketApiImpl(RestClient restClient) {

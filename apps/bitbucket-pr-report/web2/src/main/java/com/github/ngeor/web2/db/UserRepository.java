@@ -11,5 +11,5 @@ import static com.github.ngeor.web2.configuration.CorsConfiguration.ORIGIN;
  */
 @CrossOrigin(origins = ORIGIN)
 public interface UserRepository extends JpaRepository<User, String> {
-  Optional<User> findByDisplayName(String displayName);
+    Optional<User> findByDisplayName(String displayName);
 }

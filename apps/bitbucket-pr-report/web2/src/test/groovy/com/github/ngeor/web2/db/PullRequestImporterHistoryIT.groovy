@@ -10,55 +10,55 @@ import java.time.Clock
 import java.time.LocalDateTime
 
 trait RepositoryDSL {
-  @Autowired
-  RepositoryRepository repositoryRepository
+    @Autowired
+    RepositoryRepository repositoryRepository
 
-  Repository createRepository(String slug = 'slug') {
-    return repositoryRepository.saveAndFlush(new Repository(
-      owner: 'acme',
-      slug: slug,
-      uuid: slug
-    ))
-  }
+    Repository createRepository(String slug = 'slug') {
+        return repositoryRepository.saveAndFlush(new Repository(
+            owner: 'acme',
+            slug: slug,
+            uuid: slug
+        ))
+    }
 }
 
 trait PullRequestImporterHistoryDSL {
-  @Autowired
-  PullRequestImporterHistoryRepository pullRequestImporterHistoryRepository
+    @Autowired
+    PullRequestImporterHistoryRepository pullRequestImporterHistoryRepository
 
-  PullRequestImporterHistory createPullRequestImporterHistory(Repository repository) {
-    return pullRequestImporterHistoryRepository.saveAndFlush(new PullRequestImporterHistory(
-      repository: repository,
-      lastCheckedAt: LocalDateTime.now(Clock.systemUTC())
-    ))
-  }
+    PullRequestImporterHistory createPullRequestImporterHistory(Repository repository) {
+        return pullRequestImporterHistoryRepository.saveAndFlush(new PullRequestImporterHistory(
+            repository: repository,
+            lastCheckedAt: LocalDateTime.now(Clock.systemUTC())
+        ))
+    }
 }
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 class PullRequestImporterHistoryIT implements RepositoryDSL, PullRequestImporterHistoryDSL {
-  @Test
-  void existsByRepository_false() {
-    // arrange
-    Repository repository = createRepository('repo1')
+    @Test
+    void existsByRepository_false() {
+        // arrange
+        Repository repository = createRepository('repo1')
 
-    // act
-    boolean result = pullRequestImporterHistoryRepository.existsByRepository(repository)
+        // act
+        boolean result = pullRequestImporterHistoryRepository.existsByRepository(repository)
 
-    // assert
-    assert !result
-  }
+        // assert
+        assert !result
+    }
 
-  @Test
-  void existsByRepository_true() {
-    // arrange
-    Repository repository = createRepository('repo1')
-    createPullRequestImporterHistory(repository)
+    @Test
+    void existsByRepository_true() {
+        // arrange
+        Repository repository = createRepository('repo1')
+        createPullRequestImporterHistory(repository)
 
-    // act
-    boolean result = pullRequestImporterHistoryRepository.existsByRepository(repository)
+        // act
+        boolean result = pullRequestImporterHistoryRepository.existsByRepository(repository)
 
-    // assert
-    assert result
-  }
+        // assert
+        assert result
+    }
 }

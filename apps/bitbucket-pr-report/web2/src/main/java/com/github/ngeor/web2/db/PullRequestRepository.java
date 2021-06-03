@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface PullRequestRepository
     extends JpaRepository<PullRequest, PullRequestId> {
-  Page<PullRequest> findAllByRepository(Repository repository,
-                                        Pageable pageable);
+    Page<PullRequest> findAllByRepository(Repository repository,
+                                          Pageable pageable);
 }
