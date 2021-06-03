@@ -36,7 +36,7 @@ public class BitbucketClient {
    * Gets all repositories.
    */
   public Stream<Repository> getAllRepositories() {
-    var iterable =
+      Iterable<PaginatedRepositories> iterable =
         PageCollector.collectAll(new Paginator<PaginatedRepositories>() {
           @Override
           public PaginatedRepositories first() {
@@ -63,7 +63,7 @@ public class BitbucketClient {
    * Gets all pipelines.
    */
   public Stream<Pipeline> getAllPipelines(String slug) {
-    var iterable =
+      Iterable<PaginatedPipelines> iterable =
         PageCollector.collectAll(new Paginator<PaginatedPipelines>() {
           @Override
           public PaginatedPipelines first() {
@@ -98,7 +98,7 @@ public class BitbucketClient {
    * Gets all merged pull requests.
    */
   public Stream<PullRequest> getAllMergedPullRequests(String slug) {
-    var iterable = PageCollector.collectAll(new Paginator<
+      Iterable<PaginatedPullRequests> iterable = PageCollector.collectAll(new Paginator<
                                             PaginatedPullRequests>() {
       @Override
       public PaginatedPullRequests first() {

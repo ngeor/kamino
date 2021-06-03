@@ -19,7 +19,6 @@
     <maven-checkstyle-plugin.version>3.1.0</maven-checkstyle-plugin.version>
     <checkstyle-rules.version>3.5.0</checkstyle-rules.version>
     <checkstyle.version>8.29</checkstyle.version>
-    <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
     <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
     <junit-jupiter.version>5.6.0</junit-jupiter.version>
     <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
@@ -120,35 +119,6 @@
                 <goal>check</goal>
               </goals>
               <phase>validate</phase>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-enforcer-plugin</artifactId>
-          <version>${maven-enforcer-plugin.version}</version>
-          <executions>
-            <execution>
-              <id>enforce-banned-dependencies</id>
-              <goals>
-                <goal>enforce</goal>
-              </goals>
-              <configuration>
-                <rules>
-                  <requireMavenVersion>
-                    <version>3.3.9</version>
-                  </requireMavenVersion>
-                  <bannedDependencies>
-                    <excludes>
-                      <!--
-                      we do not use junit 4
-                      -->
-                      <exclude>junit</exclude>
-                    </excludes>
-                  </bannedDependencies>
-                </rules>
-                <fail>true</fail>
-              </configuration>
             </execution>
           </executions>
         </plugin>
@@ -270,10 +240,6 @@
       </plugins>
     </pluginManagement>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-enforcer-plugin</artifactId>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
