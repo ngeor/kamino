@@ -1,6 +1,6 @@
 package jtetris.common;
 
-import java.util.*;
+import java.util.Random;
 
 /**
  * Defines the possible block types.

@@ -12,9 +12,9 @@ public final class JShape extends ShapeWithEmptyBlocks {
      */
     public JShape() {
         super(BlockType.J, new char[][]{
-                {' ', 'J'},
-                {' ', 'J'},
-                {'J', 'J'}
+            {' ', 'J'},
+            {' ', 'J'},
+            {'J', 'J'}
         });
     }
 }

@@ -1,11 +1,10 @@
 package jtetris.common.shapes;
 
+import jtetris.common.BlockType;
 import org.junit.Before;
 import org.junit.Test;
 
-import jtetris.common.BlockType;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Unit test for {@link SShape}.
@@ -22,9 +21,9 @@ public class SShapeTest {
 
     @Test
     public void blockAt() throws Exception {
-        char[][] expected = new char[][] {
-                {' ', 'S', 'S'},
-                {'S', 'S', ' '}
+        char[][] expected = new char[][]{
+            {' ', 'S', 'S'},
+            {'S', 'S', ' '}
         };
 
         for (int row = 0; row < shape.getRows(); row++) {

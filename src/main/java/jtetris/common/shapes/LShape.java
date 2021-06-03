@@ -12,9 +12,9 @@ public final class LShape extends ShapeWithEmptyBlocks {
      */
     public LShape() {
         super(BlockType.L, new char[][]{
-                {'L', ' '},
-                {'L', ' '},
-                {'L', 'L'}
+            {'L', ' '},
+            {'L', ' '},
+            {'L', 'L'}
         });
     }
 }

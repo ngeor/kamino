@@ -1,7 +1,6 @@
 package jtetris.swing;
 
 import java.awt.*;
-
 import jtetris.common.BlockComposite;
 import jtetris.common.BlockType;
 import jtetris.common.GameMap;

@@ -1,8 +1,5 @@
 package jtetris.common;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import jtetris.common.shapes.EmptyShape;
 import jtetris.common.shapes.IShape;
 import jtetris.common.shapes.JShape;
@@ -11,10 +8,13 @@ import jtetris.common.shapes.OShape;
 import jtetris.common.shapes.SShape;
 import jtetris.common.shapes.TShape;
 import jtetris.common.shapes.ZShape;
+import org.junit.Before;
+import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 /**
  * Unit test for {@link BlockBuilder}.

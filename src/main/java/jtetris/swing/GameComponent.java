@@ -7,7 +7,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
-
 import jtetris.common.Game;
 import jtetris.common.GameListener;
 import jtetris.common.GameState;

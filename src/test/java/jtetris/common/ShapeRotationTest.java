@@ -1,11 +1,10 @@
 package jtetris.common;
 
-import org.junit.Test;
-
 import jtetris.common.shapes.IShape;
 import jtetris.common.shapes.JShape;
+import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Unit test for {@link ShapeRotation}.
@@ -32,8 +31,8 @@ public class ShapeRotationTest {
         assertEquals(2, rotated.getRows());
 
         char[][] expectedData = new char[][]{
-                {'J', ' ', ' '},
-                {'J', 'J', 'J'}
+            {'J', ' ', ' '},
+            {'J', 'J', 'J'}
         };
 
         for (int row = 0; row < rotated.getRows(); row++) {
@@ -51,9 +50,9 @@ public class ShapeRotationTest {
         assertEquals(3, rotated.getRows());
 
         char[][] expectedData = new char[][]{
-                {'J', 'J'},
-                {'J', ' '},
-                {'J', ' '}
+            {'J', 'J'},
+            {'J', ' '},
+            {'J', ' '}
         };
 
         for (int row = 0; row < rotated.getRows(); row++) {

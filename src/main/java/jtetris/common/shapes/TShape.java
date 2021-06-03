@@ -12,8 +12,8 @@ public final class TShape extends ShapeWithEmptyBlocks {
      */
     public TShape() {
         super(BlockType.T, new char[][]{
-                {'T', 'T', 'T'},
-                {' ', 'T', ' '}
+            {'T', 'T', 'T'},
+            {' ', 'T', ' '}
         });
     }
 }

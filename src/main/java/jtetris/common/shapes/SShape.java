@@ -12,8 +12,8 @@ public final class SShape extends ShapeWithEmptyBlocks {
      */
     public SShape() {
         super(BlockType.S, new char[][]{
-                {' ', 'S', 'S'},
-                {'S', 'S', ' '}
+            {' ', 'S', 'S'},
+            {'S', 'S', ' '}
         });
     }
 }

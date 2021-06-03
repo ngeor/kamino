@@ -1,11 +1,10 @@
 package jtetris.common.shapes;
 
+import jtetris.common.BlockType;
 import org.junit.Before;
 import org.junit.Test;
 
-import jtetris.common.BlockType;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Unit test for {@link ZShape}. Created by ngeor on 16/6/2017.
@@ -21,7 +20,7 @@ public class ZShapeTest {
 
     @Test
     public void blockAt() throws Exception {
-        char[][] expected = new char[][] {
+        char[][] expected = new char[][]{
             {'Z', 'Z', ' '}, {' ', 'Z', 'Z'}
         };
 
