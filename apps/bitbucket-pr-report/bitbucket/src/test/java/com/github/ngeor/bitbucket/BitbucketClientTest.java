@@ -10,25 +10,25 @@ import com.github.ngeor.bitbucket.models.PullRequest;
 import com.github.ngeor.bitbucket.models.Repository;
 import com.github.ngeor.http.JsonHttpClient;
 import java.util.Collections;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
 /**
  * Unit tests for {@link BitbucketClient}.
  */
-@ExtendWith(MockitoExtension.class)
 class BitbucketClientTest {
-    @InjectMocks
     private BitbucketClient bitbucketClient;
-
-    @Mock
     private JsonHttpClient jsonHttpClient;
+
+    @BeforeEach
+    void beforeEach() {
+        jsonHttpClient = mock(JsonHttpClient.class);
+        bitbucketClient = new BitbucketClient(jsonHttpClient);
+    }
 
     @Test
     void getAllRepositories() {

@@ -7,8 +7,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Integration tests for {@link PipelineRepository}.
@@ -63,7 +66,7 @@ class PipelineRepositoryIT {
     @Test
     void findAllByRepositoryAndStateAndResult_success() {
         // act
-        var result = pipelineRepository.findAllByRepositoryAndStateAndResult(
+        Page<Pipeline> result = pipelineRepository.findAllByRepositoryAndStateAndResult(
             repository, "COMPLETED", "SUCCESSFUL", Pageable.unpaged());
 
         // assert
@@ -75,7 +78,7 @@ class PipelineRepositoryIT {
     @Test
     void findAllByRepositoryAndStateAndResult_wrongRepository() {
         // act
-        var result = pipelineRepository.findAllByRepositoryAndStateAndResult(
+        Page<Pipeline> result = pipelineRepository.findAllByRepositoryAndStateAndResult(
             repository2, "COMPLETED", "SUCCESSFUL", Pageable.unpaged());
 
         // assert
@@ -85,7 +88,7 @@ class PipelineRepositoryIT {
     @Test
     void findAllByRepositoryAndStateAndResult_wrongState() {
         // act
-        var result = pipelineRepository.findAllByRepositoryAndStateAndResult(
+        Page<Pipeline> result = pipelineRepository.findAllByRepositoryAndStateAndResult(
             repository, "RUNNING", "SUCCESSFUL", Pageable.unpaged());
 
         // assert
@@ -95,7 +98,7 @@ class PipelineRepositoryIT {
     @Test
     void findAllByRepositoryAndStateAndResult_wrongResult() {
         // act
-        var result = pipelineRepository.findAllByRepositoryAndStateAndResult(
+        Page<Pipeline> result = pipelineRepository.findAllByRepositoryAndStateAndResult(
             repository, "COMPLETED", "FAILED", Pageable.unpaged());
 
         // assert

@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * Unit test for deserialization.
  */

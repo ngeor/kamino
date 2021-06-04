@@ -22,7 +22,6 @@
     <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
     <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
     <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
-    <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
     <maven-invoker-plugin.version>3.2.1</maven-invoker-plugin.version>
     <!--
     dependencies
@@ -115,11 +114,6 @@
   <build>
     <pluginManagement>
       <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>${maven-surefire-plugin.version}</version>
-        </plugin>
         <plugin>
           <groupId>org.jacoco</groupId>
           <artifactId>jacoco-maven-plugin</artifactId>
