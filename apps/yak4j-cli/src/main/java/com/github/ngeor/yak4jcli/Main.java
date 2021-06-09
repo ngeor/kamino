@@ -8,10 +8,15 @@ import picocli.CommandLine;
 @SuppressWarnings("checkstyle:HideUtilityClassConstructor")
 @CommandLine.Command(subcommands = {
     NewProjectCommand.class,
+    ListProjectsCommand.class,
     CommandLine.HelpCommand.class
 })
 public class Main {
+    /**
+     * Main entrypoint for the program.
+     */
     public static void main(String[] args) {
+        //noinspection InstantiationOfUtilityClass
         int exitCode = new CommandLine(new Main()).execute(args);
         System.exit(exitCode);
     }
