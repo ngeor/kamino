@@ -11,4 +11,4 @@ APP=yak4j-cli
 DIR=apps/$APP
 JAR=$DIR/target/$APP-0.1.0-SNAPSHOT.jar
 mvn package -pl $DIR -q
-java -jar $JAR  $*
+java -jar $JAR $*
