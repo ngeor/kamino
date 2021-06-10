@@ -3,6 +3,8 @@ package com.github.ngeor.yak4jcli;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
+import com.github.ngeor.yak4jdom.DocumentWrapper;
+import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,23 +14,9 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.xml.sax.SAXException;
 import picocli.CommandLine;
-
-import static com.github.ngeor.yak4jcli.DomUtil.getChildElement;
-import static com.github.ngeor.yak4jcli.DomUtil.getXmlTextContent;
 
 /**
  * Creates a new project.
@@ -63,7 +51,7 @@ public class NewProjectCommand implements Runnable {
             createPomFile(destinationPath, parentPomInfo, name, artifactId);
             registerModuleInParentPom(destinationPath, parentPomInfo);
             createDefaultDirectories(destinationPath);
-        } catch (ParserConfigurationException | IOException | SAXException | TransformerException ex) {
+        } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
     }
@@ -102,31 +90,22 @@ public class NewProjectCommand implements Runnable {
         }
     }
 
-    private void registerModuleInParentPom(Path destinationPath, ParentPomInfo parentPomInfo)
-        throws ParserConfigurationException, IOException, SAXException, TransformerException {
+    private void registerModuleInParentPom(Path destinationPath, ParentPomInfo parentPomInfo) {
         // calculate module relative path
         Path parentPomPath = parentPomInfo.getPath();
         Path parentPath = parentPomPath.getParent();
         Path relative = parentPath.relativize(destinationPath);
         // parse dom
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder documentBuilder = factory.newDocumentBuilder();
-        Document document = documentBuilder.parse(parentPomPath.toFile());
-        Element projectElement = document.getDocumentElement();
-        Element modulesElement = getChildElement(projectElement, "modules")
+        DocumentWrapper document = DocumentWrapper.parse(parentPomPath.toFile());
+        ElementWrapper projectElement = document.getDocumentElement();
+        ElementWrapper modulesElement = projectElement.firstElement("modules")
             .orElseThrow(() -> new IllegalArgumentException("parent pom does not have modules element"));
         // append module
-        Element moduleElement = document.createElement("module");
+        ElementWrapper moduleElement = document.createElement("module");
         moduleElement.setTextContent(useUnixStylePaths(relative.toString()));
         modulesElement.appendChild(moduleElement);
         // write dom
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer = transformerFactory.newTransformer();
-        DOMSource domSource = new DOMSource(document);
-        try (FileWriter fileWriter = new FileWriter(parentPomPath.toFile())) {
-            StreamResult streamResult = new StreamResult(fileWriter);
-            transformer.transform(domSource, streamResult);
-        }
+        document.write(parentPomPath.toFile());
     }
 
     private static String useUnixStylePaths(String path) {
@@ -150,8 +129,7 @@ public class NewProjectCommand implements Runnable {
         return parent;
     }
 
-    private ParentPomInfo locateParentPom(String subFolder)
-        throws ParserConfigurationException, IOException, SAXException {
+    private ParentPomInfo locateParentPom(String subFolder) {
         Path currentPath = Paths.get(".").toAbsolutePath();
         Path subPath = StringUtils.isBlank(subFolder) ? currentPath : Paths.get(".", subFolder).toAbsolutePath();
         if (!subPath.startsWith(currentPath)) {
@@ -176,24 +154,20 @@ public class NewProjectCommand implements Runnable {
             throw new IllegalArgumentException("Could not locate parent pom");
         }
 
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder documentBuilder = factory.newDocumentBuilder();
-        Document document = documentBuilder.parse(pom);
-        Element projectElement = document.getDocumentElement();
-        String packaging = getXmlTextContent(projectElement, "packaging");
-        if (!"pom".equals(packaging)) {
+        PomDocument document = PomDocument.parse(pom);
+        if (!"pom".equals(document.getPackaging())) {
             throw new IllegalArgumentException("pom file " + pom + " was detected but it was not a parent pom");
         }
         String groupId = Validate.notBlank(
-            getXmlTextContent(projectElement, "groupId"),
+            document.getGroupId(),
             "Parent pom cannot have empty group id"
         );
         String artifactId = Validate.notBlank(
-            getXmlTextContent(projectElement, "artifactId"),
+            document.getArtifactId(),
             "Parent pom cannot have empty artifact id"
         );
         String version = Validate.notBlank(
-            getXmlTextContent(projectElement, "version"),
+            document.getVersion(),
             "Parent pom cannot have empty version"
         );
         return new ParentPomInfo(

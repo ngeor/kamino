@@ -30,6 +30,11 @@
       <artifactId>picocli</artifactId>
       <version>4.6.1</version>
     </dependency>
+    <dependency>
+      <groupId>com.github.ngeor</groupId>
+      <artifactId>yak4j-dom</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>

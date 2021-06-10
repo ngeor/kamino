@@ -34,6 +34,7 @@
     <module>apps/yak4j-cli</module>
     <module>apps/zfs-snapshot-trimmer</module>
     <module>libs/checkstyle-rules</module>
+    <module>libs/yak4j-dom</module>
     <module>libs/yak4j-spring-test-utils</module>
     <module>libs/yak4j-utc-time-zone-mapper</module>
     <module>libs/yak4j-xml</module>

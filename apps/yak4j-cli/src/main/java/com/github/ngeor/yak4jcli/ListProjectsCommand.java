@@ -1,17 +1,9 @@
 package com.github.ngeor.yak4jcli;
 
 import java.io.File;
-import java.io.IOException;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.xml.sax.SAXException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import picocli.CommandLine;
-
-import static com.github.ngeor.yak4jcli.DomUtil.getChildElement;
-import static com.github.ngeor.yak4jcli.DomUtil.getChildElements;
 
 /**
  * Lists all projects inside the repo.
@@ -20,23 +12,23 @@ import static com.github.ngeor.yak4jcli.DomUtil.getChildElements;
 public class ListProjectsCommand implements Runnable {
     @Override
     public void run() {
-        try {
-            File rootPomFile = new File("pom.xml");
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder documentBuilder = factory.newDocumentBuilder();
-            Document document = documentBuilder.parse(rootPomFile);
-            Element projectElement = document.getDocumentElement();
-            Element modulesElement = getChildElement(projectElement, "modules").orElse(null);
-            if (modulesElement == null) {
-                return;
-            }
+        listModules(Paths.get("."));
+    }
 
-            getChildElements(modulesElement, "module").forEach(moduleElement -> {
-                System.out.println(moduleElement.getTextContent());
-                // TODO ensure child pom exists. If also packaging pom, recurse.
-            });
-        } catch (ParserConfigurationException | SAXException | IOException ex) {
-            throw new RuntimeException(ex);
-        }
+    private void listModules(Path rootPath) {
+        File rootPomFile = rootPath.resolve("pom.xml").toFile();
+        PomDocument pomDocument = PomDocument.parse(rootPomFile);
+        String groupId = pomDocument.getGroupId();
+        String artifactId = pomDocument.getArtifactId();
+        String version = pomDocument.getVersion();
+        // TODO if a version component is missing, resolve effective pom
+        String mavenCoordinates = String.format(
+            "%s:%s:%s", groupId, artifactId, version);
+        System.out.printf("%s\t%s%n", rootPath, mavenCoordinates);
+        pomDocument.getModules().forEach(moduleElement -> {
+            String moduleName = moduleElement.getTextContent();
+            Path childPath = rootPath.resolve(moduleName);
+            listModules(childPath);
+        });
     }
 }
