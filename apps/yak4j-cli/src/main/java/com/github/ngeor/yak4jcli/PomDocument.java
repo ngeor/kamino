@@ -3,6 +3,7 @@ package com.github.ngeor.yak4jcli;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.File;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -39,5 +40,9 @@ public class PomDocument {
 
     public String getPackaging() {
         return document.getDocumentElement().firstElementText("packaging");
+    }
+
+    public Optional<PomParentElement> getParent() {
+        return document.getDocumentElement().firstElement("parent").map(PomParentElement::new);
     }
 }
