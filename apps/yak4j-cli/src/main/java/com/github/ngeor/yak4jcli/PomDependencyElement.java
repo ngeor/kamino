@@ -3,12 +3,12 @@ package com.github.ngeor.yak4jcli;
 import com.github.ngeor.yak4jdom.ElementWrapper;
 
 /**
- * A wrapper around the {@code parent} element of a pom file.
+ * A wrapper around a {@code dependency} pom element.
  */
-public class PomParentElement implements HasCoordinates {
+public class PomDependencyElement implements HasCoordinates {
     private final ElementWrapper element;
 
-    public PomParentElement(ElementWrapper element) {
+    public PomDependencyElement(ElementWrapper element) {
         this.element = element;
     }
 
@@ -27,7 +27,7 @@ public class PomParentElement implements HasCoordinates {
     }
 
     /**
-     * Sets the version of the parent pom.
+     * Sets the version of the dependency.
      */
     public void setVersion(String version) {
         ElementWrapper versionElement = element.firstElement("version").orElseThrow(

@@ -3,8 +3,6 @@ package com.github.ngeor.yak4jcli;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Optional;
-import org.apache.commons.lang3.StringUtils;
 import picocli.CommandLine;
 
 /**
@@ -23,16 +21,6 @@ public class ListProjectsCommand implements Runnable {
         String groupId = pomDocument.getGroupId();
         String artifactId = pomDocument.getArtifactId();
         String version = pomDocument.getVersion();
-        if (groupId == null || artifactId == null || version == null) {
-            Optional<PomParentElement> optionalParent = pomDocument.getParent();
-            if (optionalParent.isPresent()) {
-                PomParentElement pomParentElement = optionalParent.get();
-                String parentGroupId = pomParentElement.getGroupId();
-                String parentVersion = pomParentElement.getVersion();
-                groupId = StringUtils.defaultString(groupId, parentGroupId);
-                version = StringUtils.defaultString(version, parentVersion);
-            }
-        }
         if (groupId == null || artifactId == null || version == null) {
             throw new IllegalStateException("Could not resolve coordinates for " + rootPomFile);
         }
