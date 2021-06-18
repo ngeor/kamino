@@ -3,6 +3,7 @@ package com.github.ngeor.yak4jdom;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -32,6 +33,19 @@ public class DocumentWrapper {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = factory.newDocumentBuilder();
             return new DocumentWrapper(documentBuilder.parse(file));
+        } catch (ParserConfigurationException | SAXException | IOException ex) {
+            throw new DomRuntimeException(ex);
+        }
+    }
+
+    /**
+     * Parses the given input stream.
+     */
+    public static DocumentWrapper parse(InputStream inputStream) {
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = factory.newDocumentBuilder();
+            return new DocumentWrapper(documentBuilder.parse(inputStream));
         } catch (ParserConfigurationException | SAXException | IOException ex) {
             throw new DomRuntimeException(ex);
         }

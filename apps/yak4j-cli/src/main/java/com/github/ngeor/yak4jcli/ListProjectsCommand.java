@@ -1,6 +1,7 @@
 package com.github.ngeor.yak4jcli;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import picocli.CommandLine;
@@ -10,6 +11,7 @@ import picocli.CommandLine;
  */
 @CommandLine.Command(name = "list", description = "Lists all projects inside the repo")
 public class ListProjectsCommand implements Runnable {
+
     @Override
     public void run() {
         listModules(Paths.get("."));
@@ -26,11 +28,20 @@ public class ListProjectsCommand implements Runnable {
         }
         String mavenCoordinates = String.format(
             "%s:%s:%s", groupId, artifactId, version);
-        System.out.printf("%s\t%s%n", rootPath, mavenCoordinates);
+        String latestPublishedVersion = getLatestPublishedVersion(groupId, artifactId);
+        System.out.printf("%s\t%s\t%s%n", rootPath, mavenCoordinates, latestPublishedVersion);
         pomDocument.getModules().forEach(moduleElement -> {
             String moduleName = moduleElement.getTextContent();
             Path childPath = rootPath.resolve(moduleName);
             listModules(childPath);
         });
+    }
+
+    private String getLatestPublishedVersion(String groupId, String artifactId) {
+        try {
+            return new RemoteRepo().getLatestPublishedVersion(groupId, artifactId);
+        } catch (IOException ex) {
+            return ex.getMessage();
+        }
     }
 }
