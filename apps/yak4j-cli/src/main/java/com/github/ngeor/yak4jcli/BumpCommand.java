@@ -113,6 +113,6 @@ public class BumpCommand implements Runnable {
     }
 
     private String bump(String version) {
-        return SemVerUtil.bump(version);
+        return SemVerUtil.bump(version, semVerBump, snapshot);
     }
 }
