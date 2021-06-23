@@ -33,16 +33,17 @@ public class BumpCommand implements Runnable {
         // 1. validate all dependencies point to the correct versions
         // e.g. the dependency in yak4j-cli of yak4j-dom matches the version declared in yak4j-dom
         // 2. bump all versions (update dependencies too)
-        // TODO: how to bump only changed libraries
         dirtyDocuments = new HashMap<>();
         for (PomDocument pomDocument : documents.values()) {
             String oldVersion = pomDocument.getVersion();
             String newVersion = bump(oldVersion);
-            pomDocument.setVersion(newVersion);
-            markDocumentDirty(pomDocument);
-            for (PomDocument otherDocument : documents.values()) {
-                if (!pomDocument.getFile().equals(otherDocument.getFile())) {
-                    update(otherDocument, pomDocument, newVersion);
+            if (!oldVersion.equals(newVersion)) {
+                pomDocument.setVersion(newVersion);
+                markDocumentDirty(pomDocument);
+                for (PomDocument otherDocument : documents.values()) {
+                    if (!pomDocument.getFile().equals(otherDocument.getFile())) {
+                        update(otherDocument, pomDocument, newVersion);
+                    }
                 }
             }
         }

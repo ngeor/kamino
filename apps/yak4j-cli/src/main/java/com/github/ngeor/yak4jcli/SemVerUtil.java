@@ -12,6 +12,14 @@ public final class SemVerUtil {
      */
     public static String bump(String version, SemVerBump bump, boolean snapshot) {
         String[] parts = version.split("[.-]");
+        boolean oldVersionIsSnapshot = "SNAPSHOT".equals(parts[parts.length - 1]);
+        if (snapshot == oldVersionIsSnapshot) {
+            return version;
+        }
+        if (!snapshot) {
+            boolean isMajorMinorFormat = parts.length == SemVerBump.values().length;
+            return isMajorMinorFormat ? parts[0] + "." + parts[1] + ".0" : parts[0] + "." + parts[1] + "." + parts[2];
+        }
         String result;
         switch (bump) {
             case MAJOR:
@@ -26,9 +34,7 @@ public final class SemVerUtil {
             default:
                 throw new IllegalArgumentException("bump");
         }
-        if (snapshot) {
-            result += "-SNAPSHOT";
-        }
+        result += "-SNAPSHOT";
         return result;
     }
 }
