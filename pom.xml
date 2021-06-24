@@ -13,6 +13,7 @@
   <name>jtetris</name>
   <properties>
     <jacoco.maven.plugin.version>0.8.5</jacoco.maven.plugin.version>
+    <maven.deploy.skip>true</maven.deploy.skip>
   </properties>
   <dependencies>
     <dependency>
