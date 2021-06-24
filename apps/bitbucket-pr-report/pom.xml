@@ -16,6 +16,7 @@
     <module>web2</module>
   </modules>
   <properties>
+    <maven.deploy.skip>true</maven.deploy.skip>
     <!-- todo improve limits -->
     <jacoco.unit-tests.limit.instruction-ratio>80%</jacoco.unit-tests.limit.instruction-ratio>
     <jacoco.unit-tests.limit.branch-ratio>80%</jacoco.unit-tests.limit.branch-ratio>

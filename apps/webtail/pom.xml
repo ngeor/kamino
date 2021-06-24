@@ -12,6 +12,9 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>webtail</name>
+  <properties>
+    <maven.deploy.skip>true</maven.deploy.skip>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
