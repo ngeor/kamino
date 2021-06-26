@@ -197,6 +197,7 @@
             <nexusUrl>https://oss.sonatype.org/</nexusUrl>
             <autoReleaseAfterClose>true</autoReleaseAfterClose>
             <stagingProgressTimeoutMinutes>60</stagingProgressTimeoutMinutes>
+            <skipNexusStagingDeployMojo>${maven.deploy.skip}</skipNexusStagingDeployMojo>
           </configuration>
         </plugin>
       </plugins>
