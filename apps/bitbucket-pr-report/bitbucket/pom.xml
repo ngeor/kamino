@@ -9,7 +9,6 @@
   <artifactId>bitbucket</artifactId>
   <version>2.0.0-SNAPSHOT</version>
   <properties>
-    <java.version>11</java.version>
     <jacoco.unit-tests.limit.instruction-ratio>58%</jacoco.unit-tests.limit.instruction-ratio>
     <jacoco.unit-tests.limit.branch-ratio>46%</jacoco.unit-tests.limit.branch-ratio>
     <jacoco.unit-tests.limit.class-complexity>40</jacoco.unit-tests.limit.class-complexity>
@@ -45,10 +44,6 @@
     <dependency>
       <groupId>com.google.auto.value</groupId>
       <artifactId>auto-value-annotations</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.google.auto.value</groupId>
-      <artifactId>auto-value</artifactId>
     </dependency>
   </dependencies>
   <build>
