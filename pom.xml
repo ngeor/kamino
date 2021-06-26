@@ -19,7 +19,6 @@
     <maven-checkstyle-plugin.version>3.1.0</maven-checkstyle-plugin.version>
     <checkstyle-rules.version>3.5.0</checkstyle-rules.version>
     <checkstyle.version>8.29</checkstyle.version>
-    <maven-failsafe-plugin.version>3.0.0-M3</maven-failsafe-plugin.version>
     <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
     <coveralls-maven-plugin.version>4.3.0</coveralls-maven-plugin.version>
     <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
