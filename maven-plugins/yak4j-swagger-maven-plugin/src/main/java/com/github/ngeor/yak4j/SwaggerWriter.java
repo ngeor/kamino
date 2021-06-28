@@ -1,12 +1,11 @@
 package com.github.ngeor.yak4j;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.List;
-
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.List;
 
 /**
  * Writes a Swagger document as YAML.
