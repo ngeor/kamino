@@ -23,7 +23,6 @@
                 <include>.editorconfig</include>
                 <include>.gitattributes</include>
                 <include>.gitignore</include>
-                <include>.travis.yml</include>
             </includes>
         </fileSet>
     </fileSets>

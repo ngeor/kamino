@@ -1,6 +1,5 @@
 # archetype-quickstart-jdk8
 
-[![Build Status](https://travis-ci.org/ngeor/archetype-quickstart-jdk8.svg?branch=master)](https://travis-ci.org/ngeor/archetype-quickstart-jdk8)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.ngeor/archetype-quickstart-jdk8/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.ngeor/archetype-quickstart-jdk8)
 
 A Maven archetype for a simple Java app, updated for Java 8.
@@ -20,7 +19,6 @@ the following new features are implemented:
 
 - .gitignore file
 - checkstyle rules
-- travis support
 - enforcer plugin
 - checkstyle plugin
 - jacoco plugin
@@ -63,5 +61,3 @@ CI is performed via a shell script (`travis/build.sh`).
 - The project is installed locally
 - To test the archetype, a small app is generated out of it and the app is tested
 - GPG keys are deleted
-
-Deployment happens by tagging. Make sure the `pom.xml` is updated to match the tag!
