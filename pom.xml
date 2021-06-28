@@ -14,16 +14,8 @@
   <description>yak shaving for Java: Testing utilities for Spring</description>
   <properties>
     <!--
-    plugins
-    -->
-    <junit-jupiter.version>5.6.0</junit-jupiter.version>
-    <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
-    <coveralls-maven-plugin.version>4.3.0</coveralls-maven-plugin.version>
-    <!--
     dependencies
     -->
-    <assertj-core.version>3.15.0</assertj-core.version>
-    <mockito-core.version>3.2.4</mockito-core.version>
     <spring.version>5.2.3.RELEASE</spring.version>
     <!--
     jacoco thresholds
@@ -59,25 +51,16 @@
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
-      <version>${assertj-core.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <version>${junit-jupiter.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <version>${junit-jupiter.version}</version>
+      <artifactId>junit-jupiter</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
-      <version>${mockito-core.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -99,7 +82,6 @@
         <plugin>
           <groupId>org.jacoco</groupId>
           <artifactId>jacoco-maven-plugin</artifactId>
-          <version>${jacoco-maven-plugin.version}</version>
           <executions>
             <execution>
               <id>pre-unit-test</id>
@@ -164,11 +146,6 @@
           </executions>
         </plugin>
         <plugin>
-          <groupId>org.eluder.coveralls</groupId>
-          <artifactId>coveralls-maven-plugin</artifactId>
-          <version>${coveralls-maven-plugin.version}</version>
-        </plugin>
-        <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
           <configuration>
@@ -192,10 +169,6 @@
       <plugin>
         <groupId>org.eluder.coveralls</groupId>
         <artifactId>coveralls-maven-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
