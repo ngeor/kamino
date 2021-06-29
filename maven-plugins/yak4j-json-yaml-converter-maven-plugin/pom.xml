@@ -18,10 +18,6 @@
     -->
     <maven-invoker-plugin.version>3.2.1</maven-invoker-plugin.version>
     <!--
-    dependencies
-    -->
-    <jackson.version>2.10.2</jackson.version>
-    <!--
     dependencies for maven plugins
     -->
     <maven-core.version>3.6.3</maven-core.version>
@@ -34,20 +30,6 @@
     <jacoco.it.limit.class-complexity>10</jacoco.it.limit.class-complexity>
     <jacoco.it.limit.method-complexity>5</jacoco.it.limit.method-complexity>
   </properties>
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>${jackson.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.fasterxml.jackson.dataformat</groupId>
-        <artifactId>jackson-dataformat-yaml</artifactId>
-        <version>${jackson.version}</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
