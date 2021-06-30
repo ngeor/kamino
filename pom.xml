@@ -132,9 +132,6 @@
               </goals>
               <configuration>
                 <rules>
-                  <requireMavenVersion>
-                    <version>3.6.3</version>
-                  </requireMavenVersion>
                   <banDuplicatePomDependencyVersions></banDuplicatePomDependencyVersions>
                   <bannedDependencies>
                     <excludes>
@@ -148,6 +145,32 @@
                       <exclude>com.squareup.okhttp3:mockwebserver</exclude>
                     </excludes>
                   </bannedDependencies>
+<!--                  <dependencyConvergence/>-->
+<!--                  <reactorModuleConvergence/>-->
+                  <requireMavenVersion>
+                    <version>3.6.3</version>
+                  </requireMavenVersion>
+                  <requireReleaseDeps>
+                    <onlyWhenRelease>true</onlyWhenRelease>
+                  </requireReleaseDeps>
+                  <requireSameVersions>
+                    <plugins>
+                      <plugin>org.apache.maven.plugins:maven-surefire-plugin</plugin>
+                      <plugin>org.apache.maven.plugins:maven-failsafe-plugin</plugin>
+                      <plugin>org.apache.maven.plugins:maven-surefire-report-plugin</plugin>
+                    </plugins>
+                  </requireSameVersions>
+                  <requireSameVersions>
+                    <dependencies>
+                      <dependency>org.apache.maven</dependency> <!-- or org.apache.maven:* -->
+                    </dependencies>
+                  </requireSameVersions>
+                  <requireSameVersions>
+                    <dependencies>
+                      <dependency>com.fasterxml.jackson.core</dependency>
+                      <dependency>com.fasterxml.jackson.dataformat</dependency>
+                    </dependencies>
+                  </requireSameVersions>
                 </rules>
               </configuration>
             </execution>
