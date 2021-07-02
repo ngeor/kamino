@@ -4,11 +4,11 @@
   <parent>
     <groupId>com.github.ngeor</groupId>
     <artifactId>java</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>1.1.0</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
   <artifactId>yak4j-swagger-maven-plugin</artifactId>
-  <version>0.11.0-SNAPSHOT</version>
+  <version>0.11.0</version>
   <packaging>maven-plugin</packaging>
   <name>yak4j-swagger-maven-plugin</name>
   <description>yak shaving for Java: A Maven plugin which processes Swagger documents</description>
@@ -177,7 +177,6 @@
             </goals>
             <phase>test</phase>
             <configuration>
-              <dataFile>${project.build.directory}/jacoco.exec</dataFile>
               <rules>
                 <rule>
                   <element>BUNDLE</element>
@@ -222,7 +221,6 @@
             <goals>
               <goal>prepare-agent-integration</goal>
             </goals>
-            <phase>pre-integration-test</phase>
             <configuration>
               <propertyName>invoker.mavenOpts</propertyName>
             </configuration>
@@ -232,7 +230,6 @@
             <goals>
               <goal>report-integration</goal>
             </goals>
-            <phase>post-integration-test</phase>
           </execution>
           <execution>
             <id>merge-results</id>
