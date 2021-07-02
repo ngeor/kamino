@@ -10,6 +10,6 @@ set -e
 APP=yak4j-cli
 DIR=apps/$APP
 # TODO detect the correct version of the filename
-JAR=$DIR/target/$APP-0.2.0-SNAPSHOT.jar
+JAR=$DIR/target/$APP-0.3.0-SNAPSHOT.jar
 mvn package -pl $DIR -q -am
 java -jar $JAR $*
