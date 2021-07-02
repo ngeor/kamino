@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0](https://github.com/ngeor/java/compare/v1.1.0...trunk) - 2021-07-02
+
 ### Added
 
 - Added changelog
@@ -13,7 +15,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Changed license to MIT
+- Added more enforcer rules
+- Setting `maven-archetype-plugin` version to 3.2.0
+- `archetype-quickstart-jdk8`
+    - Removed travis and coveralls support
+    - Specifying `maven-archetype` packaging
+    - Adding archetype tests
+    - Using `package` property for the generated package instead of `groupId`
+- `bprr`
+    - Upgraded to Spring Boot 2.5.2
 
-## [1.0.0] - 2021-06-27
+## [1.0.0](https://github.com/ngeor/java/compare/v1.0.0...v1.1.0) - 2021-06-27
 
 - First release in the new Java repo

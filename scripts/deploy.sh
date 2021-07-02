@@ -47,5 +47,5 @@ GPG_KEY=$GPG_KEY \
 GPG_PASSPHRASE=$GPG_PASSPHRASE \
 OSSRH_USERNAME=$OSSRH_USERNAME \
 OSSRH_PASSWORD=$OSSRH_PASSWORD \
-mvn -B -s "$(dirname $0)/settings.xml" -P gpg -DskipTests=true -Dcheckstyle.skip=true clean deploy
+mvn -B -s "$(dirname $0)/settings.xml" -P gpg -DskipTests=true -Dcheckstyle.skip=true -Djacoco.skip=true clean deploy
 clean_gpg

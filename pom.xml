@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.ngeor</groupId>
   <artifactId>java</artifactId>
-  <version>1.1.0-SNAPSHOT</version>
+  <version>1.1.0</version>
   <packaging>pom</packaging>
   <name>java</name>
   <description>Parent pom for Java repository</description>
@@ -145,8 +145,8 @@
                       <exclude>com.squareup.okhttp3:mockwebserver</exclude>
                     </excludes>
                   </bannedDependencies>
-<!--                  <dependencyConvergence/>-->
-<!--                  <reactorModuleConvergence/>-->
+                  <!--                  <dependencyConvergence/>-->
+                  <!--                  <reactorModuleConvergence/>-->
                   <requireMavenVersion>
                     <version>3.6.3</version>
                   </requireMavenVersion>
@@ -162,7 +162,8 @@
                   </requireSameVersions>
                   <requireSameVersions>
                     <dependencies>
-                      <dependency>org.apache.maven</dependency> <!-- or org.apache.maven:* -->
+                      <dependency>org.apache.maven</dependency>
+                      <!-- or org.apache.maven:* -->
                     </dependencies>
                   </requireSameVersions>
                   <requireSameVersions>
