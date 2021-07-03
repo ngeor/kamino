@@ -6,7 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.1.0](https://github.com/ngeor/java/compare/v1.1.0...trunk) - 2021-07-02
+## [1.3.0](https://github.com/ngeor/java/compare/v1.3.0...trunk) - 2021-07-03
+
+### Changed
+
+- Adjusting maven release plugin
+
+## [1.2.0](https://github.com/ngeor/java/compare/v1.2.0...v1.3.0) - 2021-07-03
+
+### Added
+
+- Using maven release plugin
+
+## [1.1.0](https://github.com/ngeor/java/compare/v1.1.0...v1.2.0) - 2021-07-02
 
 ### Added
 

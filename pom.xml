@@ -321,9 +321,10 @@
           <configuration>
             <tagNameFormat>v@{project.version}</tagNameFormat>
             <projectVersionPolicyId>SemVerVersionPolicy</projectVersionPolicyId>
-            <preparationGoals>clean test</preparationGoals>
+            <preparationGoals>clean compile</preparationGoals>
             <releaseProfiles>gpg</releaseProfiles>
             <goals>deploy</goals>
+            <arguments>-DskipTests=true -Dcheckstyle.skip=true -Djacoco.skip=true -Dinvoker.skip=true</arguments>
           </configuration>
         </plugin>
       </plugins>

@@ -42,10 +42,12 @@ function clean_gpg {
     gpg --batch --yes --delete-key ${GPG_KEY}
 }
 
+mvn release:clean
+mvn -B release:prepare
 import_gpg
 GPG_KEY=$GPG_KEY \
 GPG_PASSPHRASE=$GPG_PASSPHRASE \
 OSSRH_USERNAME=$OSSRH_USERNAME \
 OSSRH_PASSWORD=$OSSRH_PASSWORD \
-mvn -B -s "$(dirname $0)/settings.xml" -P gpg -DskipTests=true -Dcheckstyle.skip=true -Djacoco.skip=true -Dinvoker.skip=true clean deploy
+mvn -B -s "$(dirname $0)/settings.xml" release:perform
 clean_gpg
