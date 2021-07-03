@@ -4,12 +4,12 @@
   <parent>
     <groupId>com.github.ngeor</groupId>
     <artifactId>java</artifactId>
-    <version>1.3.0-SNAPSHOT</version>
+    <version>1.3.0</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
   <groupId>com.ngss.jcalendar</groupId>
   <artifactId>jcalendar</artifactId>
-  <version>1.3.0-SNAPSHOT</version>
+  <version>1.3.0</version>
   <packaging>jar</packaging>
   <name>jcalendar</name>
   <properties>
