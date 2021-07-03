@@ -49,6 +49,12 @@ void updateArchetypeResourcesPom(File pomFile, String checkstyleRulesVersion) {
     }
 }
 
+void gitAdd(File file) {
+    def processBuilder = new ProcessBuilder("git", "add", file.toString())
+    def process = processBuilder.start()
+    process.waitFor()
+}
+
 void updateArchetypeResourcesPom() {
     def checkstyleRulesPomFile = new File("libs/checkstyle-rules/pom.xml")
     assert checkstyleRulesPomFile.exists()
@@ -59,6 +65,7 @@ void updateArchetypeResourcesPom() {
     if (archetypeResourcePomFile.lastModified() < checkstyleRulesPomFile.lastModified()) {
         def checkstyleRulesVersion = getPomVersion(checkstyleRulesPomFile)
         updateArchetypeResourcesPom(archetypeResourcePomFile, checkstyleRulesVersion)
+        gitAdd(archetypeResourcePomFile)
     }
 }
 
@@ -72,6 +79,7 @@ void updateReadme() {
     if (readmeFile.lastModified() < pomFile.lastModified()) {
         def pomVersion = getPomVersion(pomFile)
         updateReadme(readmeFile, pomVersion)
+        gitAdd(readmeFile)
     }
 }
 
