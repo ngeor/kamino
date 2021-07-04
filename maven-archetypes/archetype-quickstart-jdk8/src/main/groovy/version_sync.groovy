@@ -27,6 +27,10 @@ List<String> readLines(File file) {
     return lines
 }
 
+boolean isReleaseVersion(String version) {
+    return version != null && !version.isEmpty() && !version.endsWith("-SNAPSHOT")
+}
+
 void updateArchetypeResourcesPom(File pomFile, String checkstyleRulesVersion) {
     def lines = readLines(pomFile)
     try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(pomFile))) {
@@ -64,8 +68,10 @@ void updateArchetypeResourcesPom() {
 
     if (archetypeResourcePomFile.lastModified() < checkstyleRulesPomFile.lastModified()) {
         def checkstyleRulesVersion = getPomVersion(checkstyleRulesPomFile)
-        updateArchetypeResourcesPom(archetypeResourcePomFile, checkstyleRulesVersion)
-        gitAdd(archetypeResourcePomFile)
+        if (isReleaseVersion(checkstyleRulesVersion)) {
+            updateArchetypeResourcesPom(archetypeResourcePomFile, checkstyleRulesVersion)
+            gitAdd(archetypeResourcePomFile)
+        }
     }
 }
 
@@ -78,8 +84,10 @@ void updateReadme() {
 
     if (readmeFile.lastModified() < pomFile.lastModified()) {
         def pomVersion = getPomVersion(pomFile)
-        updateReadme(readmeFile, pomVersion)
-        gitAdd(readmeFile)
+        if (isReleaseVersion(pomVersion)) {
+            updateReadme(readmeFile, pomVersion)
+            gitAdd(readmeFile)
+        }
     }
 }
 

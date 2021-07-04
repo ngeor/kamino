@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+### Changed
+
+- `archetype-quickstart-jdk8`
+    - Only updating archetype resource version numbers for release versions
+
+### Removed
+
+- `yak4j-cli`
+    - Removed the bump functionality, as the maven release plugin suffices
+
 ## [1.3.0](https://github.com/ngeor/java/compare/v1.3.0...trunk) - 2021-07-03
 
 ### Changed
