@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
+## [1.4.0](https://github.com/ngeor/java/compare/v1.4.0...trunk) - 2021-07-04
 
 ### Changed
 
@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `yak4j-cli`
     - Removed the bump functionality, as the maven release plugin suffices
 
-## [1.3.0](https://github.com/ngeor/java/compare/v1.3.0...trunk) - 2021-07-03
+## [1.3.0](https://github.com/ngeor/java/compare/v1.3.0...v1.4.0) - 2021-07-03
 
 ### Changed
 
