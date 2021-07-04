@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `archetype-quickstart-jdk8`
     - Only updating archetype resource version numbers for release versions
+- `yak4j-bitbucket-maven-plugin`
+    - Upgraded Jackson to 2.12.3 (aligned with parent pom)
+    - Upgraded okhttp to 4.9.1
 - `yak4j-spring-test-utils`
     - Upgraded Spring version to 5.3.8
 

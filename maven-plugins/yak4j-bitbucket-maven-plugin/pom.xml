@@ -18,11 +18,6 @@
     -->
     <maven-invoker-plugin.version>3.2.1</maven-invoker-plugin.version>
     <!--
-    dependencies
-    -->
-    <jackson.version>2.10.2</jackson.version>
-    <okhttp.version>4.3.1</okhttp.version>
-    <!--
     dependencies for maven plugins
     -->
     <maven-core.version>3.6.3</maven-core.version>
@@ -65,17 +60,14 @@
     <dependency>
       <groupId>com.squareup.okhttp3</groupId>
       <artifactId>okhttp</artifactId>
-      <version>${okhttp.version}</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
-      <version>${jackson.version}</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>${jackson.version}</version>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
