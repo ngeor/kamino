@@ -4,12 +4,12 @@
   <parent>
     <groupId>com.github.ngeor</groupId>
     <artifactId>java</artifactId>
-    <version>1.4.0</version>
+    <version>1.5.0-SNAPSHOT</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
   <groupId>org.ngss.jdirdiff</groupId>
   <artifactId>jdirdiff</artifactId>
-  <version>1.4.0</version>
+  <version>1.5.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>jdirdiff</name>
   <properties>
