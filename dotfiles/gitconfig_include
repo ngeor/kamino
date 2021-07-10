@@ -18,8 +18,8 @@
     #
     co = checkout
     cob = checkout -b
-    # start a new branch out of freshly fetched master, stashing changes in between
-    start = "!f() { git stash && git fetch -p -t && git checkout master && git pull && git checkout -b $1 && git stash pop; }; f"
+    default = !git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'   
+    #
     #
     # Working in a branch
     #
@@ -31,10 +31,10 @@
     #
     # Clean up
     #
-    # delete local branches without failing (it fails when there are no branches to delete)
-    bclean = "!f() { git branch -l | grep -v master | xargs git branch -D; return 0; }; f"
-    # checkout master, get latest, delete branches
-    bdone = "!f() { git checkout master && git up && git bclean; }; f"
+    # Deletes all branches merged into the specified branch (or the default branch if no branch is specified)
+    bclean = "!f() { DEFAULT=$(git default); git branch --merged ${1-$DEFAULT} | grep -v " ${1-$DEFAULT}$" | xargs git branch -d; return 0; }; f"
+    # Switches to specified branch (or the dafult branch if no branch is specified), runs git up, then runs bclean.
+    bdone = "!f() { DEFAULT=$(git default); git checkout ${1-$DEFAULT} && git up && git bclean ${1-$DEFAULT}; }; f"
     # wipe out everything and get master
     nuke = !git reset HEAD --hard && git clean -dfx && git bdone
 [filter "clang-format-java"]
