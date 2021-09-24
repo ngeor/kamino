@@ -1,7 +1,7 @@
 # java
 Open source Java code
 
-![Build status](https://github.com/ngeor/java/actions/workflows/maven/badge.svg)
+![Build status](https://github.com/ngeor/java/actions/workflows/maven.yml/badge.svg)
 
 ## Repository structure
 
