@@ -1,6 +1,8 @@
 # java
 Open source Java code
 
+![Build status](https://github.com/ngeor/java/actions/workflows/maven/badge.svg)
+
 ## Repository structure
 
 - apps: Standalone applications (Desktop and Web)
