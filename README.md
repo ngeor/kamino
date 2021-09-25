@@ -47,5 +47,6 @@ Steps
 - Create a branch and push it (`git checkout -b release && git push -u origin HEAD`)
 - Remove the modules that aren't supposed to be released from the parent `pom.xml`, commit and push
 - Prepare the release with `mvn release:prepare`. Only the parent pom and the non-deleted modules should be released.
-- Revert the commented out modules, commit and push
+- Revert the commented out modules
+- Update the parent pom version in all the child modules
 - Merge and delete the branch
