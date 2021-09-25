@@ -4,11 +4,11 @@
   <parent>
     <groupId>com.github.ngeor</groupId>
     <artifactId>java</artifactId>
-    <version>1.8.0-SNAPSHOT</version>
+    <version>1.8.0</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
   <artifactId>yak4j-spring-test-utils</artifactId>
-  <version>0.21.0-SNAPSHOT</version>
+  <version>0.21.0</version>
   <packaging>jar</packaging>
   <name>yak4j-spring-test-utils</name>
   <description>yak shaving for Java: Testing utilities for Spring</description>
