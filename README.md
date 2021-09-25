@@ -15,7 +15,17 @@ Open source Java code
 
 - Make sure you're on the default branch and there are no pending changes
 - Make sure `CHANGELOG.md` is up to date before releasing
-- Run `./scripts/deploy.sh` (or `./scripts/deploy-local.sh` if it exists)
+- Cleanup with `mvn release:clean`
 
-- mvn -BdryRun=true release:prepare
-- mvn release:clean
+### Automatic release (via GitHub Actions)
+
+Prepare the release with `mvn release:prepare`.
+
+Other options:
+
+- Without prompting for each version: `mvn -B release:prepare`
+- Dry run mode: `mvn -DdryRun=true release:prepare`
+
+### Manual release
+
+Run `./scripts/deploy.sh` (or `./scripts/deploy-local.sh` if it exists).

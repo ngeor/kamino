@@ -64,6 +64,7 @@ else
         OSSRH_USERNAME=$OSSRH_USERNAME \
         OSSRH_PASSWORD=$OSSRH_PASSWORD \
         mvn -B -s "$(dirname $0)/settings.xml" \
+        -Pgpg \
         -DskipTests=true -Dcheckstyle.skip=true -Djacoco.skip=true -Dinvoker.skip=true \
         deploy
     clean_gpg
