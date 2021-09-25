@@ -63,8 +63,9 @@ else
         GPG_PASSPHRASE=$GPG_PASSPHRASE \
         OSSRH_USERNAME=$OSSRH_USERNAME \
         OSSRH_PASSWORD=$OSSRH_PASSWORD \
-        mvn -B -s "$(dirname $0)/settings.xml" release:perform \
-        -DconnectionUrl=scm:git:https://github.com/ngeor/java.git/$GITHUB_REF
+        mvn -B -s "$(dirname $0)/settings.xml" \
+        -DskipTests=true -Dcheckstyle.skip=true -Djacoco.skip=true -Dinvoker.skip=true \
+        deploy
     clean_gpg
 
 fi
