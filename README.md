@@ -52,12 +52,3 @@ If you want to make changes, you'll need to test the archetype locally.
 
 To test it, generate a dummy app. The command is the same as above, but
 pass `-DarchetypeCatalog=local` to make sure it's not using the internet
-
-## Travis CI for archetype
-
-CI is performed via a shell script (`travis/build.sh`).
-
-- GPG keys are decrypted and imported from `keys.asc`. This is needed for signing artifacts before publishing them to the central maven repository. Environment variables: `GPG_KEY` and `GPG_PASSPHRASE`.
-- The project is installed locally
-- To test the archetype, a small app is generated out of it and the app is tested
-- GPG keys are deleted
