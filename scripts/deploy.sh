@@ -43,9 +43,6 @@ function clean_gpg {
 }
 
 # GITHUB_REF -> refs/heads/feature-branch-1
-echo "github ref:"
-echo $GITHUB_REF
-printenv
 
 if [[ -z "$GITHUB_REF" ]]; then
 
@@ -67,8 +64,7 @@ else
         OSSRH_USERNAME=$OSSRH_USERNAME \
         OSSRH_PASSWORD=$OSSRH_PASSWORD \
         mvn -B -s "$(dirname $0)/settings.xml" release:perform \
-        -DdryRun=true \
-        -DconnectionUrl=scm:git:https://github.com/ngeor/java.git/tags/$TAG
+        -DconnectionUrl=scm:git:https://github.com/ngeor/java.git/$GITHUB_REF
     clean_gpg
 
 fi
