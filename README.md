@@ -16,3 +16,6 @@ Open source Java code
 - Make sure you're on the default branch and there are no pending changes
 - Make sure `CHANGELOG.md` is up to date before releasing
 - Run `./scripts/deploy.sh` (or `./scripts/deploy-local.sh` if it exists)
+
+- mvn -BdryRun=true release:prepare
+- mvn release:clean

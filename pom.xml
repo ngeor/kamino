@@ -331,8 +331,10 @@
           <configuration>
             <tagNameFormat>v@{project.version}</tagNameFormat>
             <projectVersionPolicyId>SemVerVersionPolicy</projectVersionPolicyId>
+            <!-- goals used by release:prepare -->
             <preparationGoals>clean compile</preparationGoals>
             <releaseProfiles>gpg</releaseProfiles>
+            <!-- goals used by release:perform -->
             <goals>deploy</goals>
             <arguments>-DskipTests=true -Dcheckstyle.skip=true -Djacoco.skip=true -Dinvoker.skip=true</arguments>
           </configuration>

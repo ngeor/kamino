@@ -42,12 +42,28 @@ function clean_gpg {
     gpg --batch --yes --delete-key ${GPG_KEY}
 }
 
-mvn release:clean
-mvn -B release:prepare
-import_gpg
-GPG_KEY=$GPG_KEY \
-GPG_PASSPHRASE=$GPG_PASSPHRASE \
-OSSRH_USERNAME=$OSSRH_USERNAME \
-OSSRH_PASSWORD=$OSSRH_PASSWORD \
-mvn -B -s "$(dirname $0)/settings.xml" release:perform
-clean_gpg
+# GITHUB_REF -> refs/heads/feature-branch-1
+if [[ -z "$GITHUB_REF" ]]; then
+
+    mvn release:clean
+    mvn -B release:prepare
+    import_gpg
+    GPG_KEY=$GPG_KEY \
+        GPG_PASSPHRASE=$GPG_PASSPHRASE \
+        OSSRH_USERNAME=$OSSRH_USERNAME \
+        OSSRH_PASSWORD=$OSSRH_PASSWORD \
+        mvn -B -s "$(dirname $0)/settings.xml" release:perform
+    clean_gpg
+
+else
+    
+    import_gpg
+    GPG_KEY=$GPG_KEY \
+        GPG_PASSPHRASE=$GPG_PASSPHRASE \
+        OSSRH_USERNAME=$OSSRH_USERNAME \
+        OSSRH_PASSWORD=$OSSRH_PASSWORD \
+        mvn -B -s "$(dirname $0)/settings.xml" release:perform \
+        -DconnectionUrl=scm:git:https://github.com/ngeor/java.git/tags/$TAG
+    clean_gpg
+
+fi
