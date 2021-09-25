@@ -4,9 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [Unreleased](https://github.com/ngeor/java/compare/v1.7.0...trunk)
 
-## [1.4.0](https://github.com/ngeor/java/compare/v1.4.0...trunk) - 2021-07-04
+### Changed
+
+- Fixed Changelog links
+
+## [1.7.0](https://github.com/ngeor/java/compare/v1.4.0...v1.7.0) - 2021-09-25
+
+### Changed
+
+- Using GitHub Actions instead of Travis for build and release
+
+## [1.4.0](https://github.com/ngeor/java/compare/v1.3.0...v1.4.0) - 2021-07-04
 
 ### Changed
 
@@ -23,19 +33,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `yak4j-cli`
     - Removed the bump functionality, as the maven release plugin suffices
 
-## [1.3.0](https://github.com/ngeor/java/compare/v1.3.0...v1.4.0) - 2021-07-03
+## [1.3.0](https://github.com/ngeor/java/compare/v1.2.0...v1.3.0) - 2021-07-03
 
 ### Changed
 
 - Adjusting maven release plugin
 
-## [1.2.0](https://github.com/ngeor/java/compare/v1.2.0...v1.3.0) - 2021-07-03
+## [1.2.0](https://github.com/ngeor/java/compare/v1.1.0...v1.2.0) - 2021-07-03
 
 ### Added
 
 - Using maven release plugin
 
-## [1.1.0](https://github.com/ngeor/java/compare/v1.1.0...v1.2.0) - 2021-07-02
+## [1.1.0](https://github.com/ngeor/java/compare/v1.0.0...v1.1.0) - 2021-07-02
 
 ### Added
 
@@ -54,6 +64,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `bprr`
     - Upgraded to Spring Boot 2.5.2
 
-## [1.0.0](https://github.com/ngeor/java/compare/v1.0.0...v1.1.0) - 2021-06-27
+## 1.0.0 - 2021-06-27
 
 - First release in the new Java repo
