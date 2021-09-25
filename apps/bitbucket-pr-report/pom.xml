@@ -4,11 +4,11 @@
   <parent>
     <groupId>com.github.ngeor</groupId>
     <artifactId>java</artifactId>
-    <version>1.7.0-SNAPSHOT</version>
+    <version>1.7.0</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
   <artifactId>bprr</artifactId>
-  <version>2.7.0-SNAPSHOT</version>
+  <version>2.7.0</version>
   <packaging>pom</packaging>
   <name>bprr main project</name>
   <modules>

@@ -4,12 +4,12 @@
   <parent>
     <groupId>com.github.ngeor</groupId>
     <artifactId>java</artifactId>
-    <version>1.7.0-SNAPSHOT</version>
+    <version>1.7.0</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
   <groupId>org.jcms</groupId>
   <artifactId>jcms</artifactId>
-  <version>1.7.0-SNAPSHOT</version>
+  <version>1.7.0</version>
   <packaging>war</packaging>
   <name>jcms Maven Webapp</name>
   <properties>
