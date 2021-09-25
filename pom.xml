@@ -48,8 +48,8 @@
   <scm>
     <connection>scm:git:https://github.com/ngeor/java.git</connection>
     <developerConnection>scm:git:git@github.com:ngeor/java.git</developerConnection>
-    <url>https://github.com/ngeor/java</url>
     <tag>HEAD</tag>
+    <url>https://github.com/ngeor/java</url>
   </scm>
   <distributionManagement>
     <repository>
@@ -143,7 +143,7 @@
               </goals>
               <configuration>
                 <rules>
-                  <banDuplicatePomDependencyVersions />
+                  <banDuplicatePomDependencyVersions></banDuplicatePomDependencyVersions>
                   <bannedDependencies>
                     <excludes>
                       <!--

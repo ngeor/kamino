@@ -11,6 +11,11 @@ Open source Java code
 - maven-plugins: Maven Plugins
 - scripts: Small scripts and tooling for the repo itself and CI
 
+## Building
+
+- Build everything with `mvn package`
+- Build just one package with `mvn package -pl PACKAGE_DIR -am`
+
 ## Releasing
 
 ### Releasing everything
