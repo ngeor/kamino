@@ -2,7 +2,6 @@
 
 Rules for [checkstyle]. Share rules among projects.
 
-[![Build Status](https://travis-ci.org/ngeor/checkstyle-rules.svg?branch=master)](https://travis-ci.org/ngeor/checkstyle-rules)
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.ngeor/checkstyle-rules.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.ngeor%22%20AND%20a:%22checkstyle-rules%22)
 
 ## Overview
