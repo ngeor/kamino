@@ -4,11 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/ngeor/java/compare/v1.7.0...trunk)
+## [Unreleased](https://github.com/ngeor/java/compare/v1.8.0...trunk)
+
+## [1.8.0](https://github.com/ngeor/java/compare/v1.7.0...v1.8.0) - 2021-09-25
 
 ### Changed
 
+- `yak4j-spring-test-utils` Bump spring from 5.3.8 to 5.3.10
 - Fixed Changelog links
+- Updating readme with instructions on how to release a single library
+
+### Removed
+
+- Removed Travis and Coveralls badges, removed old child repo build scripts
 
 ## [1.7.0](https://github.com/ngeor/java/compare/v1.4.0...v1.7.0) - 2021-09-25
 
