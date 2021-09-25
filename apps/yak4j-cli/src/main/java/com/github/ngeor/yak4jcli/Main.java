@@ -9,6 +9,7 @@ import picocli.CommandLine;
 @CommandLine.Command(subcommands = {
     NewProjectCommand.class,
     ListProjectsCommand.class,
+    ReleaseCommand.class,
     CommandLine.HelpCommand.class
 })
 public class Main {

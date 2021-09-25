@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * A wrapper for a DOM Element.
@@ -53,5 +54,15 @@ public class ElementWrapper {
 
     public void appendChild(ElementWrapper childElement) {
         this.element.appendChild(childElement.element);
+    }
+
+    /**
+     * Removes all child nodes of this element.
+     */
+    public void removeChildNodes() {
+        NodeList childNodes = this.element.getChildNodes();
+        for (int i = childNodes.getLength() - 1; i >= 0; i--) {
+            this.element.removeChild(childNodes.item(i));
+        }
     }
 }

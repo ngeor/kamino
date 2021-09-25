@@ -3,6 +3,7 @@ package com.github.ngeor.yak4jcli;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.File;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Stream;
 import org.apache.commons.lang3.Validate;
@@ -62,6 +63,24 @@ public class PomDocument implements HasCoordinates {
     public Stream<ElementWrapper> getModules() {
         return document.getDocumentElement().findChildElements("modules").flatMap(
             modules -> modules.findChildElements("module")
+        );
+    }
+
+    /**
+     * Sets the modules of this pom document.
+     * The pom file should be a parent pom file already containing modules.
+     * @param modules A collection of modules.
+     */
+    public void setModules(Collection<String> modules) {
+        document.getDocumentElement().findChildElements("modules").forEach(
+            modulesElement -> {
+                modulesElement.removeChildNodes();
+                for (String module : modules) {
+                    ElementWrapper newElement = document.createElement("module");
+                    newElement.setTextContent(module);
+                    modulesElement.appendChild(newElement);
+                }
+            }
         );
     }
 
