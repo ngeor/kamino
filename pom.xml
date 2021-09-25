@@ -4,11 +4,11 @@
   <parent>
     <groupId>com.github.ngeor</groupId>
     <artifactId>java</artifactId>
-    <version>1.5.0-SNAPSHOT</version>
+    <version>1.5.0</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
   <artifactId>xmltrans</artifactId>
-  <version>1.5.0-SNAPSHOT</version>
+  <version>1.5.0</version>
   <name>xmltrans</name>
   <properties>
     <maven.deploy.skip>true</maven.deploy.skip>
