@@ -4,12 +4,12 @@
   <parent>
     <groupId>com.github.ngeor</groupId>
     <artifactId>java</artifactId>
-    <version>1.6.0</version>
+    <version>1.7.0-SNAPSHOT</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
   <groupId>net.ngeor.webtail</groupId>
   <artifactId>webtail</artifactId>
-  <version>1.6.0</version>
+  <version>1.7.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>webtail</name>
   <properties>
