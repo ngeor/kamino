@@ -47,10 +47,13 @@ Inspired by:
 - [Open Source Libs - Maven - Monorepo](https://opensourcelibs.com/lib/logiball-monorepo)
 - [Maven In A Google Style Monorepo](https://paulhammant.com/2017/01/27/maven-in-a-google-style-monorepo/)
 
-Steps
+Provided by `yak4j-cli` with the release sub-command,
+run `./scripts/yak4j-cli.sh release module [...module]`
 
-- Create a branch and push it (`git checkout -b release && git push -u origin HEAD`)
-- Remove the modules that aren't supposed to be released from the parent `pom.xml`, commit and push
+Steps that are run under the hood
+
+- Create a branch
+- Remove the modules that aren't supposed to be released from the parent `pom.xml`, commit
 - Prepare the release with `mvn release:prepare`. Only the parent pom and the non-deleted modules should be released.
 - Revert the commented out modules
 - Update the parent pom version in all the child modules
