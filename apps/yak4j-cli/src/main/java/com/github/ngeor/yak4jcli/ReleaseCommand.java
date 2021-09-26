@@ -107,7 +107,8 @@ public class ReleaseCommand implements Callable<Integer> {
         // sort pom to auto-format it
         mvn.runShowOutput("com.github.ekryd.sortpom:sortpom-maven-plugin:sort", "-Dsort.createBackupFile=false");
 
-        // add all pom.xml files to git index
+        // add all affected pom.xml files to git index
+        git.add("pom.xml");
         for (String excludedModule : excludedModules) {
             git.add(excludedModule + "/pom.xml");
         }
