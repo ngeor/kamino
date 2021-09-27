@@ -104,14 +104,25 @@
                 import java.nio.file.Path
 
                 def lines = [
-                  "#!/usr/bin/env sh",
-                  "# This script is automatically generated, do not edit manually.",
-                  "# Re-generate the script with mvn package -pl apps/${project.artifactId} -am",
-                  "set -e",
-                  "java -jar apps/${project.artifactId}/target/${project.artifactId}-${project.version}.jar \$*"
+                  '#!/usr/bin/env bash',
+                  '# This script is automatically generated, do not edit manually.',
+                  '# Re-generate the script with mvn package -pl apps/${project.artifactId} -am',
+                  'set -e',
+                  'JAR_NAME=${project.artifactId}-${project.version}.jar',
+                  'SOURCE_JAR=apps/${project.artifactId}/target/$' + '{JAR_NAME}',
+                  'if [[ ! -r $' + '{SOURCE_JAR} ]]; then',
+                  '    mvn package -pl apps/${project.artifactId} -am',
+                  'fi',
+                  '# Use jar from a temp location, to be able to clean the folder of yak4j-cli',
+                  'TEMP_JAR=$' + '{TMP}/$' + '{JAR_NAME}',
+                  '# Delete the temp file upon exit',
+                  'trap "{ rm $' + '{TEMP_JAR}; }" EXIT',
+                  'cp $' + '{SOURCE_JAR} $' + '{TEMP_JAR}',
+                  'java -jar $' + '{TEMP_JAR} $*',
+                  ''
                 ]
-                def contents = lines.join("\n")
-                Files.write(Path.of("scripts", "${project.artifactId}.sh"), contents.getBytes(StandardCharsets.UTF_8))</source>
+                def contents = lines.join('\n')
+                Files.write(Path.of('scripts', '${project.artifactId}.sh'), contents.getBytes(StandardCharsets.UTF_8))</source>
             </configuration>
           </execution>
         </executions>
