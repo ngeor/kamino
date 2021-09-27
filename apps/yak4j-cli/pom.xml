@@ -12,9 +12,6 @@
   <packaging>jar</packaging>
   <name>yak4j-cli</name>
   <description>Interactive CLI for yak4j</description>
-  <properties>
-    <dependency.directory>libs</dependency.directory>
-  </properties>
   <dependencies>
     <dependency>
       <groupId>org.apache.commons</groupId>
@@ -64,9 +61,6 @@
         <configuration>
           <archive>
             <manifest>
-              <addClasspath>true</addClasspath>
-              <addBuildEnvironmentEntries>true</addBuildEnvironmentEntries>
-              <classpathPrefix>${dependency.directory}/</classpathPrefix>
               <mainClass>com.github.ngeor.yak4jcli.Main</mainClass>
             </manifest>
           </archive>
@@ -74,17 +68,16 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <configuration>
+          <minimizeJar>true</minimizeJar>
+        </configuration>
         <executions>
           <execution>
-            <goals>
-              <goal>copy-dependencies</goal>
-            </goals>
             <phase>package</phase>
-            <configuration>
-              <includeScope>compile</includeScope>
-              <outputDirectory>${project.build.directory}/${dependency.directory}</outputDirectory>
-            </configuration>
+            <goals>
+              <goal>shade</goal>
+            </goals>
           </execution>
         </executions>
       </plugin>

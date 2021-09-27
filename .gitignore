@@ -31,3 +31,4 @@ pom.xml.releaseBackup
 pom.xml.tag
 release-pom.xml
 release.properties
+dependency-reduced-pom.xml
