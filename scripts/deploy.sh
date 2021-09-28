@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -e -o pipefail
 if [[ -z "$GPG_KEY" ]]; then
     echo "GPG_KEY not set"
     exit 1
@@ -25,11 +25,6 @@ KEYS_ASC="$(dirname $0)/keys.asc"
 function import_gpg {
     # Import GPG key
     gpg --batch --yes --passphrase=${GPG_PASSPHRASE} --output - $KEYS_ASC | gpg --batch --yes --import
-    RESULT=$?
-    if [[ $RESULT -ne 0 ]]; then
-        echo "Could not import GPG key"
-        exit $RESULT
-    fi
 }
 
 function clean_gpg {

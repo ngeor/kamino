@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # This script is automatically generated, do not edit manually.
 # Re-generate the script with mvn package -pl apps/yak4j-cli -am
-set -e
-JAR_NAME=yak4j-cli-0.10.0.jar
+set -e -o pipefail
+JAR_NAME=yak4j-cli-0.11.0-SNAPSHOT.jar
 SOURCE_JAR=apps/yak4j-cli/target/${JAR_NAME}
 if [[ ! -r ${SOURCE_JAR} ]]; then
     mvn package -pl apps/yak4j-cli -am

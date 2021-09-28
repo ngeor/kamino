@@ -107,7 +107,7 @@
                   '#!/usr/bin/env bash',
                   '# This script is automatically generated, do not edit manually.',
                   '# Re-generate the script with mvn package -pl apps/${project.artifactId} -am',
-                  'set -e',
+                  'set -e -o pipefail',
                   'JAR_NAME=${project.artifactId}-${project.version}.jar',
                   'SOURCE_JAR=apps/${project.artifactId}/target/$' + '{JAR_NAME}',
                   'if [[ ! -r $' + '{SOURCE_JAR} ]]; then',
