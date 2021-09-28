@@ -21,7 +21,29 @@
     </developer>
   </developers>
   <modules>
+    <module>apps/bitbucket-pr-report</module>
+    <module>apps/icqfriends</module>
+    <module>apps/jCalendar</module>
+    <module>apps/jcms</module>
+    <module>apps/jDirDiff</module>
+    <module>apps/jHangMan</module>
+    <module>apps/jSpiderGame</module>
+    <module>apps/jTetris</module>
+    <module>apps/webtail</module>
+    <module>apps/xmltrans</module>
     <module>apps/yak4j-cli</module>
+    <module>apps/zfs-snapshot-trimmer</module>
+    <module>libs/checkstyle-rules</module>
+    <module>libs/yak4j-dom</module>
+    <module>libs/yak4j-spring-test-utils</module>
+    <module>libs/yak4j-utc-time-zone-mapper</module>
+    <module>libs/yak4j-xml</module>
+    <module>maven-archetypes/archetype-quickstart-jdk8</module>
+    <module>maven-plugins/yak4j-bitbucket-maven-plugin</module>
+    <module>maven-plugins/yak4j-filename-conventions-maven-plugin</module>
+    <module>maven-plugins/yak4j-json-yaml-converter-maven-plugin</module>
+    <module>maven-plugins/yak4j-swagger-maven-plugin</module>
+    <module>maven-plugins/yak4j-sync-archetype-maven-plugin</module>
   </modules>
   <scm>
     <connection>scm:git:https://github.com/ngeor/java.git</connection>
@@ -121,7 +143,7 @@
               </goals>
               <configuration>
                 <rules>
-                  <banDuplicatePomDependencyVersions />
+                  <banDuplicatePomDependencyVersions></banDuplicatePomDependencyVersions>
                   <bannedDependencies>
                     <excludes>
                       <!--
