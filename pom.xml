@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.ngeor</groupId>
   <artifactId>java</artifactId>
-  <version>1.10.0-SNAPSHOT</version>
+  <version>1.10.0</version>
   <packaging>pom</packaging>
   <name>java</name>
   <description>Parent pom for Java repository</description>
@@ -26,7 +26,7 @@
   <scm>
     <connection>scm:git:https://github.com/ngeor/java.git</connection>
     <developerConnection>scm:git:git@github.com:ngeor/java.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>v1.10.0</tag>
     <url>https://github.com/ngeor/java</url>
   </scm>
   <distributionManagement>
@@ -121,7 +121,7 @@
               </goals>
               <configuration>
                 <rules>
-                  <banDuplicatePomDependencyVersions></banDuplicatePomDependencyVersions>
+                  <banDuplicatePomDependencyVersions />
                   <bannedDependencies>
                     <excludes>
                       <!--
