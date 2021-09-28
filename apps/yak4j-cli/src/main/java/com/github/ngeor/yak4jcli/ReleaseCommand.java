@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -23,8 +24,13 @@ public class ReleaseCommand implements Callable<Integer> {
     @CommandLine.Parameters(description = "The module(s) to release", arity = "1..*")
     private List<String> modules;
 
+    private Git git;
+    private Maven mvn;
+
     @Override
     public Integer call() throws Exception {
+        initializeExternalPrograms();
+
         // validate input
         validateModules(modules, "Error in input modules: ");
 
@@ -39,8 +45,6 @@ public class ReleaseCommand implements Callable<Integer> {
 
         // validate input modules are subset of parent pom modules
         validateSubSet(modules, existingModules);
-
-        Git git = new Git();
 
         // validate on main branch (do not assume branch name)
         String defaultBranch = git.defaultBranch();
@@ -57,8 +61,7 @@ public class ReleaseCommand implements Callable<Integer> {
         }
 
         // run mvn clean + mvn release:clean
-        Maven mvn = new Maven();
-        // TODO cannot run clean because we're running ourselves during development
+        mvn.runShowOutput("clean");
         mvn.runShowOutput("release:clean");
 
         // create release branch
@@ -66,8 +69,7 @@ public class ReleaseCommand implements Callable<Integer> {
 
         // remove modules that aren't in the release
 
-        // make a copy of pom.xml to restore the modules later
-        // we could also keep them in-memory
+        // make a copy of pom.xml in case something goes wrong
         Files.copy(new File("pom.xml").toPath(), new File("pom.xml.bak").toPath());
 
         // TODO automatically include dependencies (recursively), e.g.
@@ -77,7 +79,7 @@ public class ReleaseCommand implements Callable<Integer> {
         pomDocument.write();
 
         // sort pom to auto-format it
-        mvn.runShowOutput("com.github.ekryd.sortpom:sortpom-maven-plugin:sort", "-Dsort.createBackupFile=false");
+        sortPom();
 
         git.runDiscardOutput("add", "-u", ".");
         git.commit("[bot] Removing modules to prepare for release");
@@ -85,27 +87,21 @@ public class ReleaseCommand implements Callable<Integer> {
         // prepare the release (will push the tag to remote which will trigger the selective release)
         mvn.runShowOutput("release:prepare");
 
-        // read again the pom.xml because release:prepare has modified it
-        PomDocument pomDocument2 = PomDocument.parse(new File("pom.xml"));
-
         // revert to original modules
-        pomDocument2.setModules(existingModules);
-        pomDocument2.write();
+        String parentVersion = setModulesAndGetVersion(existingModules);
 
         // Update the parent pom version in all the child modules that were previously excluded
-        String parentVersion = pomDocument2.getVersion();
-
         List<String> excludedModules = existingModules.stream()
             .filter(s -> !modules.contains(s)).collect(Collectors.toList());
 
         for (String excludedModule : excludedModules) {
-            PomDocument childDocument = PomDocument.parse(new File(excludedModule + "/pom.xml"));
+            PomDocument childDocument = PomDocument.parse(Paths.get(excludedModule, "pom.xml").toFile());
             childDocument.getParent().get().setVersion(parentVersion);
             childDocument.write();
         }
 
         // sort pom to auto-format it
-        mvn.runShowOutput("com.github.ekryd.sortpom:sortpom-maven-plugin:sort", "-Dsort.createBackupFile=false");
+        sortPom();
 
         // add all affected pom.xml files to git index
         git.runDiscardOutput("add", "-u", ".");
@@ -118,6 +114,22 @@ public class ReleaseCommand implements Callable<Integer> {
         git.runDiscardOutput("merge", "release");
         git.runDiscardOutput("branch", "-D", "release");
         return 0;
+    }
+
+    private void initializeExternalPrograms() {
+        git = new Git();
+        mvn = new Maven();
+    }
+
+    private void sortPom() throws IOException, InterruptedException {
+        mvn.runShowOutput("com.github.ekryd.sortpom:sortpom-maven-plugin:sort", "-Dsort.createBackupFile=false");
+    }
+
+    private static String setModulesAndGetVersion(Collection<String> modules) {
+        PomDocument pomDocument = PomDocument.parse(new File("pom.xml"));
+        pomDocument.setModules(modules);
+        pomDocument.write();
+        return pomDocument.getVersion();
     }
 
     private static void validateModules(Collection<String> modules, String errorPrefix) {

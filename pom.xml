@@ -332,8 +332,7 @@
             <tagNameFormat>v@{project.version}</tagNameFormat>
             <projectVersionPolicyId>SemVerVersionPolicy</projectVersionPolicyId>
             <!-- goals used by release:prepare -->
-            <!-- TODO temporarily not running clean to be able to release while running yak4j-cli -->
-            <preparationGoals>compile</preparationGoals>
+            <preparationGoals>clean test</preparationGoals>
             <releaseProfiles>gpg</releaseProfiles>
             <!-- goals used by release:perform -->
             <goals>deploy</goals>
