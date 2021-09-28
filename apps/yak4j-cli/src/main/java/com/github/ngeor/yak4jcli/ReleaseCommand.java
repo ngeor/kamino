@@ -79,7 +79,7 @@ public class ReleaseCommand implements Callable<Integer> {
         // sort pom to auto-format it
         mvn.runShowOutput("com.github.ekryd.sortpom:sortpom-maven-plugin:sort", "-Dsort.createBackupFile=false");
 
-        git.add("pom.xml");
+        git.runDiscardOutput("add", "-u", ".");
         git.commit("[bot] Removing modules to prepare for release");
 
         // prepare the release (will push the tag to remote which will trigger the selective release)
@@ -108,10 +108,7 @@ public class ReleaseCommand implements Callable<Integer> {
         mvn.runShowOutput("com.github.ekryd.sortpom:sortpom-maven-plugin:sort", "-Dsort.createBackupFile=false");
 
         // add all affected pom.xml files to git index
-        git.add("pom.xml");
-        for (String excludedModule : excludedModules) {
-            git.add(excludedModule + "/pom.xml");
-        }
+        git.runDiscardOutput("add", "-u", ".");
 
         // commit
         git.commit("[bot] Restoring all modules");
@@ -215,10 +212,6 @@ public class ReleaseCommand implements Callable<Integer> {
 
         void createBranch(String branch) throws IOException, InterruptedException {
             runDiscardOutput("checkout", "-b", branch);
-        }
-
-        void add(String file) throws IOException, InterruptedException {
-            runDiscardOutput("add", file);
         }
 
         void commit(String msg) throws IOException, InterruptedException {
