@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -e
 if [[ -z "$GPG_KEY" ]]; then
     echo "GPG_KEY not set"
     exit 1
@@ -34,30 +34,25 @@ function import_gpg {
 
 function clean_gpg {
     # cleanup GPG keys
-    gpg --fingerprint --with-colons ${GPG_KEY} |\
-        grep "^fpr" |\
-        sed -n 's/^fpr:::::::::\([[:alnum:]]\+\):/\1/p' |\
-        xargs gpg --batch --yes --delete-secret-keys
-
+    # cleanup secret key by fingerprint
+    gpg -K | grep "^  " | tr -d " " | xargs gpg --batch --yes --delete-secret-keys
+    # cleanup key
     gpg --batch --yes --delete-key ${GPG_KEY}
 }
 
 # GITHUB_REF -> refs/heads/feature-branch-1
-
 if [[ -z "$GITHUB_REF" ]]; then
-
     mvn release:clean
     mvn -B release:prepare
+    trap "{ clean_gpg; }" EXIT
     import_gpg
     GPG_KEY=$GPG_KEY \
         GPG_PASSPHRASE=$GPG_PASSPHRASE \
         OSSRH_USERNAME=$OSSRH_USERNAME \
         OSSRH_PASSWORD=$OSSRH_PASSWORD \
         mvn -B -s "$(dirname $0)/settings.xml" release:perform
-    clean_gpg
-
 else
-
+    trap "{ clean_gpg; }" EXIT
     import_gpg
     GPG_KEY=$GPG_KEY \
         GPG_PASSPHRASE=$GPG_PASSPHRASE \
@@ -67,6 +62,4 @@ else
         -Pgpg \
         -DskipTests=true -Dcheckstyle.skip=true -Djacoco.skip=true -Dinvoker.skip=true \
         deploy
-    clean_gpg
-
 fi
