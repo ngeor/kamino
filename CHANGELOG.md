@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/ngeor/java/compare/v1.10.0...trunk)
+## [Unreleased](https://github.com/ngeor/java/compare/v2.0.0...trunk)
+
+## [2.0.0](https://github.com/ngeor/java/compare/v1.10.0...v2.0.0) - 2021-10-03
+
+- Moved away from monorepo approach, back to multirepo. Each project has moved
+  to its own separate repository. This project is now just the parent pom.
+- Known issue: checkstyle has been disabled  
 
 ## [1.10.0](https://github.com/ngeor/java/compare/v1.9.0...v1.10.0) - 2021-09-28
 
