@@ -1,5 +1,7 @@
 # buzzstats
 
+Monitors web pages for changes.
+
 [![Build Status](https://travis-ci.org/ngeor/BuzzStats.svg?branch=master)](https://travis-ci.org/ngeor/BuzzStats)
 
 ## How to start the buzzstats application
