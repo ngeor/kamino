@@ -1,5 +1,4 @@
-icqfriends
-==========
+# icqfriends
 
 A JSP web app managing ICQ friends list (legacy project)
 
