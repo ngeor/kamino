@@ -36,7 +36,7 @@ You can configure the maven-checkstyle-plugin in this way:
       <dependency>
         <groupId>com.github.ngeor</groupId>
         <artifactId>checkstyle-rules</artifactId>
-        <version>4.9.2</version>
+        <version>4.9.3</version>
       </dependency>
     </dependencies>
     <configuration>
