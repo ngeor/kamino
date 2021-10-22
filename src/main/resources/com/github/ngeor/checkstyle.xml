@@ -98,7 +98,7 @@
     <!-- Javadoc Comments -->
     <module name="JavadocMethod">
       <property name="allowedAnnotations" value="Override,Test,ParameterizedTest,Before,BeforeClass,BeforeEach,BeforeAll,After,AfterClass,AfterEach,AfterAll,DisplayName" />
-      <property name="scope" value="package" />
+      <property name="accessModifiers" value="public, protected" />
       <property name="allowMissingParamTags" value="true" />
       <property name="allowMissingReturnTag" value="true" />
     </module>
