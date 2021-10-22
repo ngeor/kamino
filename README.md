@@ -17,7 +17,7 @@ You can configure the maven-checkstyle-plugin in this way:
   <plugin>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-checkstyle-plugin</artifactId>
-    <version>3.1.0</version>
+    <version>3.1.2</version>
     <executions>
       <execution>
         <id>validate</id>
@@ -31,12 +31,12 @@ You can configure the maven-checkstyle-plugin in this way:
       <dependency>
         <groupId>com.puppycrawl.tools</groupId>
         <artifactId>checkstyle</artifactId>
-        <version>8.29</version>
+        <version>8.45.1</version>
       </dependency>
       <dependency>
         <groupId>com.github.ngeor</groupId>
         <artifactId>checkstyle-rules</artifactId>
-        <version>4.0.1</version>
+        <version>4.9.0</version>
       </dependency>
     </dependencies>
     <configuration>
