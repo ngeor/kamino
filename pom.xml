@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.ngeor</groupId>
   <artifactId>checkstyle-rules</artifactId>
-  <version>4.9.3-SNAPSHOT</version>
+  <version>4.9.3</version>
   <name>checkstyle-rules</name>
   <description>Rules for checkstyle</description>
   <url>https://github.com/ngeor/checkstyle-rules</url>
@@ -22,7 +22,7 @@
   <scm>
     <connection>scm:git:https://github.com/ngeor/checkstyle-rules.git</connection>
     <developerConnection>scm:git:git@github.com:ngeor/checkstyle-rules.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>v4.9.3</tag>
     <url>https://github.com/ngeor/checkstyle-rules</url>
   </scm>
   <distributionManagement>
