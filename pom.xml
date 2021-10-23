@@ -7,14 +7,14 @@
     <version>2.1.0</version>
   </parent>
   <artifactId>yak4j-dom</artifactId>
-  <version>1.9.0-SNAPSHOT</version>
+  <version>1.9.0</version>
   <packaging>jar</packaging>
   <name>yak4j-dom</name>
   <url>https://github.com/ngeor/yak4j-dom</url>
   <scm>
     <connection>scm:git:https://github.com/ngeor/yak4j-dom.git</connection>
     <developerConnection>scm:git:git@github.com:ngeor/yak4j-dom.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>v1.9.0</tag>
     <url>https://github.com/ngeor/yak4j-dom</url>
   </scm>
   <build>
