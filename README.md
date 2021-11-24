@@ -4,6 +4,8 @@ A Maven plugin which updates your project from its archetype, replacing only the
 files that you want.
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.ngeor/yak4j-sync-archetype-maven-plugin.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.ngeor%22%20AND%20a:%22yak4j-sync-archetype-maven-plugin%22)
+[![Java CI with Maven](https://github.com/ngeor/yak4j-sync-archetype-maven-plugin/actions/workflows/maven.yml/badge.svg)](https://github.com/ngeor/yak4j-sync-archetype-maven-plugin/actions/workflows/maven.yml)
+[![javadoc](https://javadoc.io/badge2/com.github.ngeor/yak4j-sync-archetype-maven-plugin/javadoc.svg)](https://javadoc.io/doc/com.github.ngeor/yak4j-sync-archetype-maven-plugin)
 
 ## Sync
 
