@@ -1,4 +1,7 @@
 # zfs-snapshot-trimmer
+
+[![Java CI with Maven](https://github.com/ngeor/zfs-snapshot-trimmer/actions/workflows/maven.yml/badge.svg)](https://github.com/ngeor/zfs-snapshot-trimmer/actions/workflows/maven.yml)
+
 Remove older zfs snapshots.
 
 It keeps:
