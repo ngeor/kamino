@@ -3,6 +3,7 @@
 Rules for [checkstyle]. Share rules among projects.
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.ngeor/checkstyle-rules.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.ngeor%22%20AND%20a:%22checkstyle-rules%22)
+[![Java CI with Maven](https://github.com/ngeor/checkstyle-rules/actions/workflows/maven.yml/badge.svg)](https://github.com/ngeor/checkstyle-rules/actions/workflows/maven.yml)
 
 ## Overview
 
