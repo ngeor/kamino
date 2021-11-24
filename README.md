@@ -1,5 +1,8 @@
 # java
 
+[![Java CI with Maven](https://github.com/ngeor/java/actions/workflows/maven.yml/badge.svg)](https://github.com/ngeor/java/actions/workflows/maven.yml)
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.ngeor/java.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.ngeor%22%20AND%20a:%22java%22)
+
 Parent pom for Java projects
 
 ![Build status](https://github.com/ngeor/java/actions/workflows/maven.yml/badge.svg)
@@ -22,4 +25,3 @@ Other options:
 ### Manual release
 
 Run `./scripts/deploy.sh` (or `./scripts/deploy-local.sh` if it exists).
-
