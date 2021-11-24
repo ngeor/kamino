@@ -3,6 +3,8 @@
 XML utilities.
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.ngeor/yak4j-xml.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.ngeor%22%20AND%20a:%22yak4j-xml%22)
+[![Java CI with Maven](https://github.com/ngeor/yak4j-xml/actions/workflows/maven.yml/badge.svg)](https://github.com/ngeor/yak4j-xml/actions/workflows/maven.yml)
+[![javadoc](https://javadoc.io/badge2/com.github.ngeor/yak4j-xml/javadoc.svg)](https://javadoc.io/doc/com.github.ngeor/yak4j-xml)
 
 ## Usage
 
