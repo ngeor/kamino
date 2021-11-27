@@ -12,6 +12,13 @@
   <packaging>jar</packaging>
 
   <name>zfs-snapshot-trimmer</name>
+  <url>https://github.com/ngeor/zfs-snapshot-trimmer</url>
+  <scm>
+    <connection>scm:git:https://github.com/ngeor/zfs-snapshot-trimmer.git</connection>
+    <developerConnection>scm:git:git@github.com:ngeor/zfs-snapshot-trimmer.git</developerConnection>
+    <tag>HEAD</tag>
+    <url>https://github.com/ngeor/zfs-snapshot-trimmer</url>
+  </scm>
 
   <properties>
     <maven.deploy.skip>true</maven.deploy.skip>
