@@ -11,6 +11,13 @@
   <packaging>jar</packaging>
   <name>yak4j-spring-test-utils</name>
   <description>yak shaving for Java: Testing utilities for Spring</description>
+  <url>https://github.com/ngeor/yak4j-spring-test-utils</url>
+  <scm>
+    <connection>scm:git:https://github.com/ngeor/yak4j-spring-test-utils.git</connection>
+    <developerConnection>scm:git:git@github.com:ngeor/yak4j-spring-test-utils.git</developerConnection>
+    <tag>HEAD</tag>
+    <url>https://github.com/ngeor/yak4j-spring-test-utils</url>
+  </scm>
   <properties>
     <!--
     dependencies
