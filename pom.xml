@@ -10,6 +10,13 @@
   <version>1.8.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>jtetris</name>
+  <url>https://github.com/ngeor/jTetris</url>
+  <scm>
+    <connection>scm:git:https://github.com/ngeor/jTetris.git</connection>
+    <developerConnection>scm:git:git@github.com:ngeor/jTetris.git</developerConnection>
+    <tag>HEAD</tag>
+    <url>https://github.com/ngeor/jTetris</url>
+  </scm>
   <properties>
     <maven.deploy.skip>true</maven.deploy.skip>
   </properties>
