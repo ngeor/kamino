@@ -11,6 +11,13 @@
   <version>1.8.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>jspidergame</name>
+  <url>https://github.com/ngeor/jSpiderGame</url>
+  <scm>
+    <connection>scm:git:https://github.com/ngeor/jSpiderGame.git</connection>
+    <developerConnection>scm:git:git@github.com:ngeor/jSpiderGame.git</developerConnection>
+    <tag>HEAD</tag>
+    <url>https://github.com/ngeor/jSpiderGame</url>
+  </scm>
   <properties>
     <maven.deploy.skip>true</maven.deploy.skip>
   </properties>
