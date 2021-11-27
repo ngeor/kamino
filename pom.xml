@@ -11,6 +11,13 @@
   <packaging>jar</packaging>
   <name>yak4j-utc-time-zone-mapper</name>
   <description>yak shaving for Java: utility library to map between OffsetDateTime and LocalDateTime in UTC</description>
+  <url>https://github.com/ngeor/yak4j-utc-time-zone-mapper</url>
+  <scm>
+    <connection>scm:git:https://github.com/ngeor/yak4j-utc-time-zone-mapper.git</connection>
+    <developerConnection>scm:git:git@github.com:ngeor/yak4j-utc-time-zone-mapper.git</developerConnection>
+    <tag>HEAD</tag>
+    <url>https://github.com/ngeor/yak4j-utc-time-zone-mapper</url>
+  </scm>
   <properties>
     <!--
     jacoco thresholds
