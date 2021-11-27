@@ -11,6 +11,13 @@
   <packaging>maven-plugin</packaging>
   <name>yak4j-sync-archetype-maven-plugin</name>
   <description>yak shaving for Java: A Maven plugin which updates your project from its archetype, replacing only the files that you want.</description>
+  <url>https://github.com/ngeor/yak4j-sync-archetype-maven-plugin</url>
+  <scm>
+    <connection>scm:git:https://github.com/ngeor/yak4j-sync-archetype-maven-plugin.git</connection>
+    <developerConnection>scm:git:git@github.com:ngeor/yak4j-sync-archetype-maven-plugin.git</developerConnection>
+    <tag>HEAD</tag>
+    <url>https://github.com/ngeor/yak4j-sync-archetype-maven-plugin</url>
+  </scm>
   <properties>
     <!--
     plugins
