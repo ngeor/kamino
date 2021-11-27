@@ -11,6 +11,13 @@
   <version>1.8.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>jdirdiff</name>
+  <url>https://github.com/ngeor/jDirDiff</url>
+  <scm>
+    <connection>scm:git:https://github.com/ngeor/jDirDiff.git</connection>
+    <developerConnection>scm:git:git@github.com:ngeor/jDirDiff.git</developerConnection>
+    <tag>HEAD</tag>
+    <url>https://github.com/ngeor/jDirDiff</url>
+  </scm>
   <properties>
     <jacoco.unit-tests.limit.instruction-ratio>1%</jacoco.unit-tests.limit.instruction-ratio>
     <jacoco.unit-tests.limit.branch-ratio>0%</jacoco.unit-tests.limit.branch-ratio>
