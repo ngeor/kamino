@@ -11,6 +11,13 @@
   <packaging>maven-plugin</packaging>
   <name>yak4j-filename-conventions-maven-plugin</name>
   <description>yak shaving for Java: A Maven plugin which enforces filename conventions</description>
+  <url>https://github.com/ngeor/yak4j-filename-conventions-maven-plugin</url>
+  <scm>
+    <connection>scm:git:https://github.com/ngeor/yak4j-filename-conventions-maven-plugin.git</connection>
+    <developerConnection>scm:git:git@github.com:ngeor/yak4j-filename-conventions-maven-plugin.git</developerConnection>
+    <tag>HEAD</tag>
+    <url>https://github.com/ngeor/yak4j-filename-conventions-maven-plugin</url>
+  </scm>
   <properties>
     <!--
     plugins
