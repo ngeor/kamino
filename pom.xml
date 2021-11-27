@@ -9,6 +9,13 @@
   <artifactId>xmltrans</artifactId>
   <version>1.8.0-SNAPSHOT</version>
   <name>xmltrans</name>
+  <url>https://github.com/ngeor/xmltrans</url>
+  <scm>
+    <connection>scm:git:https://github.com/ngeor/xmltrans.git</connection>
+    <developerConnection>scm:git:git@github.com:ngeor/xmltrans.git</developerConnection>
+    <tag>HEAD</tag>
+    <url>https://github.com/ngeor/xmltrans</url>
+  </scm>
   <properties>
     <maven.deploy.skip>true</maven.deploy.skip>
   </properties>
