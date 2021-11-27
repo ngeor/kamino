@@ -11,6 +11,13 @@
   <packaging>maven-archetype</packaging>
   <name>archetype-quickstart-jdk8</name>
   <description>A Maven archetype for a simple Java app, updated for Java 8</description>
+  <url>https://github.com/ngeor/archetype-quickstart-jdk8</url>
+  <scm>
+    <connection>scm:git:https://github.com/ngeor/archetype-quickstart-jdk8.git</connection>
+    <developerConnection>scm:git:git@github.com:ngeor/archetype-quickstart-jdk8.git</developerConnection>
+    <tag>HEAD</tag>
+    <url>https://github.com/ngeor/archetype-quickstart-jdk8</url>
+  </scm>
   <build>
     <plugins>
       <plugin>
