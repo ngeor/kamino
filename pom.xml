@@ -11,6 +11,13 @@
   <packaging>jar</packaging>
   <name>yak4j-xml</name>
   <description>yak shaving for Java: XML utilities</description>
+  <url>https://github.com/ngeor/yak4j-xml</url>
+  <scm>
+    <connection>scm:git:https://github.com/ngeor/yak4j-xml.git</connection>
+    <developerConnection>scm:git:git@github.com:ngeor/yak4j-xml.git</developerConnection>
+    <tag>HEAD</tag>
+    <url>https://github.com/ngeor/yak4j-xml</url>
+  </scm>
   <properties>
     <!--
     jacoco thresholds
