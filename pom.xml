@@ -9,6 +9,13 @@
   <packaging>jar</packaging>
 
   <name>buzzstats</name>
+  <url>https://github.com/ngeor/BuzzStats</url>
+  <scm>
+    <connection>scm:git:https://github.com/ngeor/BuzzStats.git</connection>
+    <developerConnection>scm:git:git@github.com:ngeor/BuzzStats.git</developerConnection>
+    <tag>HEAD</tag>
+    <url>https://github.com/ngeor/BuzzStats</url>
+  </scm>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
