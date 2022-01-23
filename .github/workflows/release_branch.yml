@@ -22,4 +22,13 @@ jobs:
         git config --global user.name "bot"
         git config --global user.email "Nikolaos.Georgiou@gmail.com"
     - name: Prepare release
-      run: mvn -B release:prepare
+      run: mvn -B -DpushChanges=false release:prepare
+    - name: Push changes
+      run: git push --follow-tags
+    - name: Perform release
+      run: ./scripts/deploy.sh new
+      env:
+        GPG_KEY: ${{ secrets.GPG_KEY }}
+        GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+        OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}

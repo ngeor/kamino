@@ -35,6 +35,16 @@ function clean_gpg {
     gpg --batch --yes --delete-key ${GPG_KEY}
 }
 
+if [[ "$1" == "new" ]]; then
+    trap "{ clean_gpg; }" EXIT
+    import_gpg
+    GPG_KEY=$GPG_KEY \
+        GPG_PASSPHRASE=$GPG_PASSPHRASE \
+        OSSRH_USERNAME=$OSSRH_USERNAME \
+        OSSRH_PASSWORD=$OSSRH_PASSWORD \
+        mvn -B -s "$(dirname $0)/settings.xml" -DlocalCheckout=true -DreleaseProfiles=gpg release:perform
+fi
+
 # GITHUB_REF -> refs/heads/feature-branch-1
 if [[ -z "$GITHUB_REF" ]]; then
     mvn release:clean
