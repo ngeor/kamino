@@ -15,12 +15,8 @@ Parent pom for Java projects
 
 ### Automatic release (via GitHub Actions)
 
-Prepare the release with `mvn release:prepare`.
-
-Other options:
-
-- Without prompting for each version: `mvn -B release:prepare`
-- Dry run mode: `mvn -DdryRun=true release:prepare`
+Push the `release` branch and wait for GitHub Actions to publish evreything.
+Merge the `release` branch into `trunk` once complete.
 
 ### Manual release
 

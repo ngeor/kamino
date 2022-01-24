@@ -43,6 +43,7 @@ if [[ "$1" == "new" ]]; then
         OSSRH_USERNAME=$OSSRH_USERNAME \
         OSSRH_PASSWORD=$OSSRH_PASSWORD \
         mvn -B -s "$(dirname $0)/settings.xml" -DlocalCheckout=true -DreleaseProfiles=gpg release:perform
+    exit 0
 fi
 
 # GITHUB_REF -> refs/heads/feature-branch-1
