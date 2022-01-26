@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 ### Miscellaneous Tasks
 
 - Remove obsolete release files
+- Excluding changelog commits from changelog
 
 ## [2.2.1] - 2022-01-26
 

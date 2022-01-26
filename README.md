@@ -13,4 +13,5 @@ Parent pom for Java projects
 - Push a release branch in the naming convention `release-x.y.z`
 - Wait for GitHub actions to publish the release
 - Merge to the main branch and delete the release branch
-- Update the change log with `git cliff`
+- Update the change log with `git cliff` and commit with
+  a message like `chore(changelog): Updated changelog`
