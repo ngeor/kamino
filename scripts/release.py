@@ -77,15 +77,29 @@ def release(args):
 
 
 def finalize(args):
+    git = Git()
     # ensure we're on the release branch
+    default_branch = git.get_default_branch()
+    current_branch = git.get_current_branch()
+    if current_branch == default_branch:
+        raise ValueError("Please switch to the release branch")
+    # ensure there are no pending changes
+    if git.has_pending_changes():
+        raise ValueError("There are pending changes")
     # get tag and upstream commits by maven release plugin
     # git fetch -p -t && git pull
+    git.fetch()
+    git.pull()
     # git checkout default branch
+    git.checkout(default_branch)
     # git merge release-x.y.z
+    git.merge(current_branch)
     # git branch -D release-x.y.z
+    git.delete_local_branch(current_branch)
     # git push origin :release-x.y.z
+    git.delete_remote_branch(current_branch)
     # git push
-    pass
+    git.push()
 
 
 def configure_git_identity(user_name, user_email):
@@ -208,9 +222,29 @@ class Git:
     def create_branch(self, name):
         subprocess.run(["git", "checkout", "-b", name], check=True)
 
+    def push(self):
+        subprocess.run(["git", "push"], check=True)
+
     def push_new_branch(self):
         subprocess.run(["git", "push", "-u", "origin", "HEAD"], check=True)
 
+    def fetch(self):
+        subprocess.run(["git", "fetch", "-p", "-t"], check=True)
+
+    def pull(self):
+        subprocess.run(["git", "pull"], check=True)
+
+    def checkout(self, name):
+        subprocess.run(["git", "checkout", name], check=True)
+
+    def merge(self, name):
+        subprocess.run(["git", "merge", name], check=True)
+
+    def delete_local_branch(self, name):
+        subprocess.run(["git", "branch", "-D", name], check=True)
+
+    def delete_remote_branch(self, name):
+        subprocess.run(["git", "push", "origin", ":" + name], check=True)
 
 if __name__ == "__main__":
     main()
