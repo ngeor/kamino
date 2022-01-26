@@ -5,8 +5,6 @@
 
 Parent pom for Java projects
 
-![Build status](https://github.com/ngeor/java/actions/workflows/maven.yml/badge.svg)
-
 ## Releasing
 
 - Make sure you're on the default branch and there are no pending changes
