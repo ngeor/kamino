@@ -18,6 +18,7 @@ jobs:
     - name: Release
       run: >-
         ./scripts/release.py
+        release
         --gpg-key ${{ secrets.GPG_KEY }}
         --gpg-passphrase ${{ secrets.GPG_PASSPHRASE }}
         --gpg-key-file scripts/keys.asc

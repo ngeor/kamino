@@ -9,7 +9,54 @@ import tempfile
 
 def main():
     args = parse_args()
+    if args.subparser_name == "initialize":
+        initialize(args)
+    elif args.subparser_name == "release":
+        release(args)
+    elif args.subparser_name == "finalize":
+        finalize(args)
+    else:
+        raise ValueError(f"Unsupported command: {args.subparser_name}")
 
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="Creates a release of a Maven library")
+    subparsers = parser.add_subparsers(
+        dest="subparser_name", help="Sub-commands help", required=True
+    )
+    initialize_parser = subparsers.add_parser("initialize", help="Initializes the release")
+    initialize_parser.add_argument("--version", help="The version to release, in x.y.z format", required=True)
+    release_parser = subparsers.add_parser("release", help="Performs the release")
+    release_parser.add_argument("--gpg-key", help="GPG key", required=True)
+    release_parser.add_argument("--gpg-passphrase", help="GPG passphrase", required=True)
+    release_parser.add_argument("--gpg-key-file", help="GPG key file", required=True)
+    release_parser.add_argument("--git-user-name", help="Configure the git user.name property")
+    release_parser.add_argument("--git-user-email", help="Configure the git user.email property")
+    release_parser.add_argument("--version-from-github-actions", help="Derive the release version from the current branch as specified from GitHub Actions environment variables", action="store_true")
+    release_parser.add_argument("--maven-username", help="The username to use for publishing the release to Maven", required=True)
+    release_parser.add_argument("--maven-password", help="The password to use for publishing the release to Maven", required=True)
+    finalize_parser = subparsers.add_parser("finalize", help="Finalizes the release")
+    return parser.parse_args()
+
+
+def initialize(args):
+    git = Git()
+    # ensure we're on the default branch
+    default_branch = git.get_default_branch()
+    current_branch = git.get_current_branch()
+    if current_branch != default_branch:
+        raise ValueError("Please switch to the default branch")
+    # ensure there are no pending changes
+    if git.has_pending_changes():
+        raise ValueError("There are pending changes")
+    # create branch based on input version (accept major / minor / patch arguments)
+    branch_name = f"release-{args.version}"
+    git.create_branch(branch_name)
+    # push branch
+    git.push_new_branch()
+
+
+def release(args):
     if args.version_from_github_actions:
         version = get_version_from_github()
     else:
@@ -29,17 +76,16 @@ def main():
         clean_gpg(args.gpg_key)
 
 
-def parse_args():
-    parser = argparse.ArgumentParser(description="Creates a release of a Maven library")
-    parser.add_argument("--gpg-key", help="GPG key", required=True)
-    parser.add_argument("--gpg-passphrase", help="GPG passphrase", required=True)
-    parser.add_argument("--gpg-key-file", help="GPG key file", required=True)
-    parser.add_argument("--git-user-name", help="Configure the git user.name property")
-    parser.add_argument("--git-user-email", help="Configure the git user.email property")
-    parser.add_argument("--version-from-github-actions", help="Derive the release version from the current branch as specified from GitHub Actions environment variables", action="store_true")
-    parser.add_argument("--maven-username", help="The username to use for publishing the release to Maven", required=True)
-    parser.add_argument("--maven-password", help="The password to use for publishing the release to Maven", required=True)
-    return parser.parse_args()
+def finalize(args):
+    # ensure we're on the release branch
+    # get tag and upstream commits by maven release plugin
+    # git fetch -p -t && git pull
+    # git checkout default branch
+    # git merge release-x.y.z
+    # git branch -D release-x.y.z
+    # git push origin :release-x.y.z
+    # git push
+    pass
 
 
 def configure_git_identity(user_name, user_email):
@@ -144,6 +190,26 @@ def perform_release(gpg_key, gpg_passphrase, maven_username, maven_password):
             "-DlocalCheckout=true",
             "release:perform"
         ], check=True)
+
+
+class Git:
+    def get_default_branch(self):
+        result = subprocess.run(["git", "symbolic-ref", "refs/remotes/origin/HEAD"], check=True, encoding="utf-8", stdout=subprocess.PIPE)
+        return result.stdout.strip().replace("refs/remotes/origin/", "")
+
+    def get_current_branch(self):
+        result = subprocess.run(["git", "rev-parse", "--abbrev-ref", "HEAD"], check=True, encoding="utf-8", stdout=subprocess.PIPE)
+        return result.stdout.strip()
+
+    def has_pending_changes(self):
+        result = subprocess.run(["git", "diff", "--quiet"])
+        return result.returncode != 0
+
+    def create_branch(self, name):
+        subprocess.run(["git", "checkout", "-b", name], check=True)
+
+    def push_new_branch(self):
+        subprocess.run(["git", "push", "-u", "origin", "HEAD"], check=True)
 
 
 if __name__ == "__main__":
