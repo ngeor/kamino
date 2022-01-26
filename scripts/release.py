@@ -4,6 +4,7 @@ import argparse
 import os
 import os.path
 import subprocess
+import tempfile
 
 
 def main():
@@ -22,6 +23,8 @@ def main():
         import_gpg(args.gpg_passphrase, args.gpg_key_file)
         configure_git_identity(args.git_user_name, args.git_user_email)
         prepare_release(version)
+        push_changes()
+        perform_release(args.gpg_key, args.gpg_passphrase, args.maven_username, args.maven_password)
     finally:
         clean_gpg(args.gpg_key)
 
@@ -34,14 +37,9 @@ def parse_args():
     parser.add_argument("--git-user-name", help="Configure the git user.name property")
     parser.add_argument("--git-user-email", help="Configure the git user.email property")
     parser.add_argument("--version-from-github-actions", help="Derive the release version from the current branch as specified from GitHub Actions environment variables", action="store_true")
+    parser.add_argument("--maven-username", help="The username to use for publishing the release to Maven", required=True)
+    parser.add_argument("--maven-password", help="The password to use for publishing the release to Maven", required=True)
     return parser.parse_args()
-#     prepare_release()
-#     push_changes()
-#     try:
-#         import_gpg()
-#         perform_release()
-#     except:
-#         clean_gpg()
 
 
 def configure_git_identity(user_name, user_email):
@@ -60,6 +58,7 @@ def configure_git_identity(user_name, user_email):
 def prepare_release(release_version):
     subprocess.run([
         "mvn",
+        "-ntp",
         "-B",
         "-DpushChanges=false",
         f"-DreleaseVersion={release_version}",
@@ -67,10 +66,10 @@ def prepare_release(release_version):
     ], check=True)
 
 
-# def push_changes():
-#     subprocess.run([
-#         "git", "push", "--follow-tags"
-#     ], check=True)
+def push_changes():
+    subprocess.run([
+        "git", "push", "--follow-tags"
+    ], check=True)
 
 
 def import_gpg(gpg_passphrase, gpg_key_file):
@@ -101,16 +100,6 @@ def clean_gpg(gpg_key):
     subprocess.run(["gpg", "--batch", "--yes", "--delete-key", gpg_key], check=True)
 
 
-# def perform_release():
-#     subprocess.run([
-#         "mvn",
-#         "-B",
-#         "-DlocalCheckout=true",
-#         "-DreleaseProfiles=gpg",
-#         "release:perform"
-#     ], check=True)
-
-
 def get_version_from_github():
     ref_name = os.environ["GITHUB_REF_NAME"]
     ref_type = os.environ["GITHUB_REF_TYPE"]
@@ -120,6 +109,42 @@ def get_version_from_github():
     if len(parts) != 2 or not parts[1]:
         raise ValueError(f"Branch {ref_name} is not in the expected format 'release-x.y.z'")
     return parts[1]
+
+
+def perform_release(gpg_key, gpg_passphrase, maven_username, maven_password):
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        settings_xml_file = os.path.join(tmp_dir, "settings.xml")
+        with open(settings_xml_file, "w") as f:
+            f.write(f"""
+<settings>
+    <servers>
+        <server>
+            <id>ossrh</id>
+            <username>{maven_username}</username>
+            <password>{maven_password}</password>
+        </server>
+    </servers>
+    <profiles>
+        <profile>
+            <id>gpg</id>
+            <properties>
+                <gpg.keyname>{gpg_key}</gpg.keyname>
+                <gpg.passphrase>{gpg_passphrase}</gpg.passphrase>
+            </properties>
+        </profile>
+    </profiles>
+</settings>
+            """)
+        subprocess.run([
+            "mvn",
+            "-ntp",
+            "-B",
+            "-s",
+            settings_xml_file,
+            "-DlocalCheckout=true",
+            # "-DreleaseProfiles=gpg",
+            "release:perform"
+        ], check=True)
 
 
 if __name__ == "__main__":
