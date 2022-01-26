@@ -1,6 +1,23 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [unreleased]
+
+### Miscellaneous Tasks
+
+- Remove obsolete release files
+
+## [2.2.1] - 2022-01-26
+
+### Features
+
+- Adding a Python script for releasing
+- Performing the release with the Python script
+
+### Miscellaneous Tasks
+
+- Update readme
+
 ## [2.2.0] - 2022-01-23
 
 ### Features
