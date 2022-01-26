@@ -10,14 +10,7 @@ Parent pom for Java projects
 ## Releasing
 
 - Make sure you're on the default branch and there are no pending changes
-- Make sure `CHANGELOG.md` is up to date before releasing
-- Cleanup with `mvn release:clean`
-
-### Automatic release (via GitHub Actions)
-
-Push the `release` branch and wait for GitHub Actions to publish evreything.
-Merge the `release` branch into `trunk` once complete.
-
-### Manual release
-
-Run `./scripts/deploy.sh` (or `./scripts/deploy-local.sh` if it exists).
+- Push a release branch in the naming convention `release-x.y.z`
+- Wait for GitHub actions to publish the release
+- Merge to the main branch and delete the release branch
+- Update the change log with `git cliff`

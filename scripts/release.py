@@ -142,7 +142,6 @@ def perform_release(gpg_key, gpg_passphrase, maven_username, maven_password):
             "-s",
             settings_xml_file,
             "-DlocalCheckout=true",
-            # "-DreleaseProfiles=gpg",
             "release:perform"
         ], check=True)
 
