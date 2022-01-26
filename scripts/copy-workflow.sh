@@ -17,3 +17,8 @@ mkdir -p $TARGET/scripts
 cp $SRC/keys.asc $TARGET/scripts/
 cp $SRC/release.py $TARGET/scripts/
 cp $SRC/../cliff.toml $TARGET/
+
+pushd $TARGET
+git add .
+git update-index --chmod +x scripts/release.py
+popd
