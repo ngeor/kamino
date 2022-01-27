@@ -1,12 +1,29 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## [2.4.0] - 2022-01-27
+
+### Bug Fixes
+
+- Make release script executable upon copying to other repo
+
+### Features
+
+- Support finalizing release
+
+## [2.3.0] - 2022-01-26
+
+### Features
+
+- Adding script to install workflows and release script in other repos
+- Support initialization step in release script
 
 ### Miscellaneous Tasks
 
 - Remove obsolete release files
 - Excluding changelog commits from changelog
+- Removed unused workflow
+- Removed duplicate badge
 
 ## [2.2.1] - 2022-01-26
 
