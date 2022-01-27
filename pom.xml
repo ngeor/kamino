@@ -42,9 +42,9 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- version properties for dependencies that have multiple artifacts -->
-    <auto-value.version>1.8.2</auto-value.version>
+    <auto-value.version>1.9</auto-value.version>
     <mapstruct.version>1.4.2.Final</mapstruct.version>
-    <jackson.version>2.13.0</jackson.version>
+    <jackson.version>2.13.1</jackson.version>
   </properties>
   <dependencyManagement>
     <dependencies>
