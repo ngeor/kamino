@@ -7,7 +7,7 @@
     <version>2.1.0</version>
   </parent>
   <artifactId>yak4j-json-yaml-converter-maven-plugin</artifactId>
-  <version>0.8.1</version>
+  <version>0.9.0-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
   <name>yak4j-json-yaml-converter-maven-plugin</name>
   <description>yak shaving for Java: A Maven plugin which converts between JSON and YAML formats</description>
@@ -15,7 +15,7 @@
   <scm>
     <connection>scm:git:https://github.com/ngeor/yak4j-json-yaml-converter-maven-plugin.git</connection>
     <developerConnection>scm:git:git@github.com:ngeor/yak4j-json-yaml-converter-maven-plugin.git</developerConnection>
-    <tag>v0.8.1</tag>
+    <tag>HEAD</tag>
     <url>https://github.com/ngeor/yak4j-json-yaml-converter-maven-plugin</url>
   </scm>
   <properties>
