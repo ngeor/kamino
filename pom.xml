@@ -42,9 +42,9 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- version properties for dependencies that have multiple artifacts -->
-    <auto-value.version>1.8.2</auto-value.version>
+    <auto-value.version>1.9</auto-value.version>
     <mapstruct.version>1.4.2.Final</mapstruct.version>
-    <jackson.version>2.13.0</jackson.version>
+    <jackson.version>2.13.1</jackson.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -56,13 +56,13 @@
       <dependency>
         <groupId>org.junit.jupiter</groupId>
         <artifactId>junit-jupiter</artifactId>
-        <version>5.8.1</version>
+        <version>5.8.2</version>
         <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.assertj</groupId>
         <artifactId>assertj-core</artifactId>
-        <version>3.21.0</version>
+        <version>3.22.0</version>
         <scope>test</scope>
       </dependency>
       <dependency>
@@ -118,7 +118,7 @@
               </goals>
               <configuration>
                 <rules>
-                  <banDuplicatePomDependencyVersions />
+                  <banDuplicatePomDependencyVersions></banDuplicatePomDependencyVersions>
                   <bannedDependencies>
                     <excludes>
                       <!--
