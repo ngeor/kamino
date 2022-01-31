@@ -1,7 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## [5.0.0] - 2022-01-31
+
+### Features
+
+- [**breaking**] Upgrade to checkstyle 9.2.1
 
 ### Miscellaneous Tasks
 
