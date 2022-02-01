@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [unreleased]
+
+### Features
+
+- Using properties to manage dependency and plugin versions
+
 ## [2.4.0] - 2022-01-27
 
 ### Bug Fixes
