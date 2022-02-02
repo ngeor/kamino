@@ -1,11 +1,16 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## [3.0.0] - 2022-02-02
 
 ### Features
 
 - Using properties to manage dependency and plugin versions
+- [**breaking**] Upgrade checkstyle to 9.2.1
+
+### Miscellaneous Tasks
+
+- Updated pom properties
 
 ## [2.4.0] - 2022-01-27
 
