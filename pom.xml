@@ -63,7 +63,7 @@
     <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
     <maven-compiler-plugin.version>3.9.0</maven-compiler-plugin.version>
     <checkstyle-rules.version>5.0.0</checkstyle-rules.version>
-    <checkstyle.version>9.2.1</checkstyle.version>
+    <checkstyle.version>9.3</checkstyle.version>
     <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
     <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
     <okhttp.version>4.9.3</okhttp.version>
@@ -144,7 +144,7 @@
               </goals>
               <configuration>
                 <rules>
-                  <banDuplicatePomDependencyVersions />
+                  <banDuplicatePomDependencyVersions></banDuplicatePomDependencyVersions>
                   <bannedDependencies>
                     <excludes>
                       <!--
