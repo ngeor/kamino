@@ -9,7 +9,7 @@ Parent pom for Java projects
 
 - Make sure you're on the default branch and there are no pending changes
 - Push a release branch in the naming convention `release-x.y.z`
+  - Tip: do that with `./scripts/release.py initialize --version x.y.z`
 - Wait for GitHub actions to publish the release
 - Merge to the main branch and delete the release branch
-- Update the change log with `git cliff` and commit with
-  a message like `chore(changelog): Updated changelog`
+  - Tip: do that with `./scripts/release.py finalize`
