@@ -8,6 +8,13 @@ All notable changes to this project will be documented in this file.
 - Updated copyright year in LICENSE
 - Updating parent from 2.1.0 to 2.4.0
 - Updating parent from 2.4.0 to 3.1.1
+- Update dependency org.apache.maven.archetype:archetype-packaging to v3.2.1
+- Update dependency org.apache.maven.plugins:maven-enforcer-plugin to v3.0.0
+- Update dependency org.apache.maven.plugins:maven-javadoc-plugin to v3.3.1
+- Update dependency com.github.ngeor:checkstyle-rules to v5
+- Update dependency com.puppycrawl.tools:checkstyle to v9
+- Update dependency org.jacoco:jacoco-maven-plugin to v0.8.7
+- Update junit.version to v5.8.2
 
 ## [2.8.1] - 2022-01-26
 
