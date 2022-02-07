@@ -1,11 +1,16 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## [5.1.0] - 2022-02-07
 
 ### Miscellaneous Tasks
 
 - Updated ${checkstyle.version} from 9.2.1 to 9.3
+- Update dependency org.apache.maven.plugins:maven-deploy-plugin to v3.0.0-m2
+- Update dependency org.apache.maven.plugins:maven-compiler-plugin to v3.9.0
+- Update dependency org.apache.maven.plugins:maven-release-plugin to v3.0.0-m5
+- Update dependency org.apache.maven.plugins:maven-javadoc-plugin to v3.3.1
+- Use release script from java repo
 
 ## [5.0.0] - 2022-01-31
 
