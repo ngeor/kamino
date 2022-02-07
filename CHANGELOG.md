@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [unreleased]
+
+### Miscellaneous Tasks
+
+- Add renovate.json (#19)
+- Update dependency org.mockito:mockito-core to v4 (#20)
+- Update dependency org.mockito:mockito-core to v4 (#20)
+
 ## [3.1.1] - 2022-02-05
 
 ### Bug Fixes
