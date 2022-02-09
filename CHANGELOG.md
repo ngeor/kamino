@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
 - Update dependency com.puppycrawl.tools:checkstyle to v9
 - Update dependency org.jacoco:jacoco-maven-plugin to v0.8.7
 - Update junit.version to v5.8.2
+- Update dependency com.github.ngeor:checkstyle-rules to v5.1.0
 
 ## [2.8.1] - 2022-01-26
 
