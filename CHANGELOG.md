@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - Add renovate.json (#19)
 - Update dependency org.mockito:mockito-core to v4 (#20)
 - Update dependency org.mockito:mockito-core to v4 (#20)
+- Update dependency com.github.ngeor:checkstyle-rules to v5.1.0
 
 ## [3.1.1] - 2022-02-05
 
