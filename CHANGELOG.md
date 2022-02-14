@@ -3,12 +3,18 @@ All notable changes to this project will be documented in this file.
 
 ## [unreleased]
 
+### Dependencies
+
+- Updated ${dropwizard.version} from 2.0.25 to 2.0.28
+- Updated org.immutables:value:jar:2.8.8 to version 2.9.0
+- Upgrade checkstyle and spotbugs
+- Update dependency com.github.spotbugs:spotbugs to v4.5.3
+- Update dependency org.apache.maven.plugins:maven-checkstyle-plugin to v3.1.2
+
 ### Miscellaneous Tasks
 
-- Updated copyright year in LICENSE
-- Updated org.immutables:value:jar:2.8.8 to version 2.9.0
-- Updated ${dropwizard.version} from 2.0.25 to 2.0.28
 - Adding cliff.toml
+- Updated copyright year in LICENSE
 
 ### Cleanup
 
