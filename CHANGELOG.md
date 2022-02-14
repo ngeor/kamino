@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file.
 - Update dependency org.jacoco:jacoco-maven-plugin to v0.8.7
 - Update junit.version to v5.8.2
 - Update dependency com.github.ngeor:checkstyle-rules to v5.1.0
+- Update dependency org.apache.maven.plugins:maven-javadoc-plugin to v3.3.2
 
 ## [2.8.1] - 2022-01-26
 
