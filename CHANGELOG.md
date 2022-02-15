@@ -8,6 +8,9 @@ All notable changes to this project will be documented in this file.
 - Updated copyright year in LICENSE
 - Updating parent from 2.1.0 to 2.4.0
 - Updating parent from 2.4.0 to 3.1.1
+- Update dependency org.apache.maven.plugins:maven-invoker-plugin to v3.2.2
+- Update maven-plugin-plugin.version to v3.6.4
+- Update dependency com.fasterxml.jackson.core:jackson-databind to v2.13.1
 
 ## [0.17.1] - 2022-01-27
 
