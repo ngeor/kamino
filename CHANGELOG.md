@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [unreleased]
+
+### Miscellaneous Tasks
+
+- Update dependency org.apache.maven.plugins:maven-javadoc-plugin to v3.3.2
+
 ## [5.1.0] - 2022-02-07
 
 ### Miscellaneous Tasks
