@@ -27,14 +27,6 @@ fn app<'a>() -> App<'a> {
                 .possible_values(["npm"]),
         )
         .arg(
-            Arg::new("project")
-                .short('p')
-                .long("project")
-                .help("The project to release in a monorepo")
-                .takes_value(true)
-                .required(false),
-        )
-        .arg(
             Arg::new("dry-run")
                 .long("dry-run")
                 .help("Do not actually modify anything")
@@ -47,36 +39,12 @@ fn app<'a>() -> App<'a> {
                 .required(false),
         )
         .arg(
-            Arg::new("git-cliff-include-path")
-                .long("git-cliff-include-path")
-                .help("The include-path argument for git-cliff")
-                .takes_value(true)
-                .required(false),
-        )
-        .arg(
-            Arg::new("repository")
-                .short('r')
-                .long("repository")
-                .help("Path to the git repository")
-                .takes_value(true)
-                .required(false),
-        )
-        .arg(
             Arg::new("git-remote-name")
                 .long("git-remote-name")
                 .help("The name of the git remote")
                 .takes_value(true)
                 .required(false)
                 .default_value("origin"),
-        )
-        .arg(
-            Arg::new("git-tag-style")
-                .long("git-tag-style")
-                .help("The style to use for the git tag")
-                .takes_value(true)
-                .required(false)
-                .default_value("project-slash-version")
-                .possible_values(["project-slash-version", "v-version"]),
         )
 }
 

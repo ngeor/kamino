@@ -1,7 +1,59 @@
+use std::env;
+use std::path::{Path, PathBuf};
 use std::process::Command;
 mod cli;
+mod dir_util;
 extern crate clap;
 use clap::ArgMatches;
+use dir_util::{AncestorsUtil, SafeFileName};
+
+#[derive(Debug)]
+struct DirInfo {
+    current_dir: PathBuf,
+    repository_dir: Option<PathBuf>,
+}
+
+impl DirInfo {
+    fn current_dir_name(&self) -> &str {
+        self.current_dir.safe_file_name()
+    }
+}
+
+fn detect_git_dir() -> Result<DirInfo, std::io::Error> {
+    let current_dir = env::current_dir()?;
+    let is_at_git_root = has_git_dir(&current_dir);
+    let mut found_git = false;
+    let mut repository_dir: Option<PathBuf> = None;
+    if is_at_git_root {
+        found_git = true;
+    } else {
+        let mut parent = current_dir.parent();
+        while !found_git && parent.is_some() {
+            if has_git_dir(parent.unwrap()) {
+                found_git = true;
+                repository_dir = Some(parent.unwrap().to_owned());
+            } else {
+                parent = parent.unwrap().parent();
+            }
+        }
+    }
+    if found_git {
+        Ok(DirInfo {
+            current_dir,
+            repository_dir,
+        })
+    } else {
+        Err(std::io::Error::new(
+            std::io::ErrorKind::Other,
+            "Not in a git repository",
+        ))
+    }
+}
+
+fn has_git_dir(path: &Path) -> bool {
+    let git_dir = path.join(".git");
+    git_dir.is_dir()
+}
 
 fn main() -> Result<(), String> {
     let matches = cli::parse_args();
@@ -17,10 +69,7 @@ fn main() -> Result<(), String> {
     // TODO support patch|minor|major
     // TODO support validating against package.json to avoid semver gaps
     let version = matches.value_of("version").unwrap();
-    let project = matches.value_of("project").unwrap_or_default();
-    if project == "" {
-        return Err(format!("empty project not implemented yet"));
-    }
+    let dir_info = detect_git_dir().map_err(|e| e.to_string())?;
     let dry_run = matches.is_present("dry-run");
     let ignore_pending_changes = matches.is_present("ignore-pending-changes");
     ensure_on_default_branch(&matches)?;
@@ -30,9 +79,9 @@ fn main() -> Result<(), String> {
     git_fetch()?;
     git_pull()?;
     npm_version(version)?;
-    git_cliff(&matches)?;
-    git_commit(&matches)?;
-    git_tag(&matches)?;
+    git_cliff(&dir_info, &matches)?;
+    git_commit(&dir_info, &matches)?;
+    git_tag(&dir_info, &matches)?;
     git_push()?;
     // TODO support snapshot / development version
     // npm_version(version)?; set snapshot version
@@ -109,13 +158,11 @@ fn npm_version(version: &str) -> Result<String, String> {
         .run()
 }
 
-fn git_cliff(matches: &ArgMatches) -> Result<String, String> {
+fn git_cliff(dir_info: &DirInfo, matches: &ArgMatches) -> Result<String, String> {
     // git-cliff --include-path 'generator-python-kamino/*' -r .. -o CHANGELOG.md -t 0.0.1
-    let include_path = matches
-        .value_of("git-cliff-include-path")
-        .unwrap_or_default();
-    let repository = matches.value_of("repository").unwrap_or_default();
-    let version = matches.value_of("version").unwrap_or_default();
+    let include_path = git_cliff_include_path(dir_info);
+    let repository = git_cliff_repository(dir_info);
+    let version = matches.value_of("version").unwrap();
     let mut cmd = &mut Command::new("git-cliff");
     if include_path != "" {
         cmd = cmd.arg("--include-path").arg(include_path);
@@ -130,9 +177,13 @@ fn git_cliff(matches: &ArgMatches) -> Result<String, String> {
         .run()
 }
 
-fn git_commit(matches: &ArgMatches) -> Result<String, String> {
+fn git_commit(dir_info: &DirInfo, matches: &ArgMatches) -> Result<String, String> {
     let version = matches.value_of("version").unwrap_or_default();
-    let project = matches.value_of("project").unwrap_or_default();
+    let project = if dir_info.repository_dir.is_some() {
+        dir_info.current_dir_name()
+    } else {
+        ""
+    };
     let msg = if project != "" {
         format!(
             "chore(release): prepare for version {} of {}",
@@ -149,22 +200,23 @@ fn git_commit(matches: &ArgMatches) -> Result<String, String> {
         .run()
 }
 
-fn git_tag(matches: &ArgMatches) -> Result<String, String> {
+fn git_tag(dir_info: &DirInfo, matches: &ArgMatches) -> Result<String, String> {
     // TODO if possible add the changelog of only the current release in the git tag
     let version = matches.value_of("version").unwrap_or_default();
-    let project = matches.value_of("project").unwrap_or_default();
-    let tag_style = matches.value_of("git-tag-style").unwrap_or_default();
+    let project = if dir_info.repository_dir.is_some() {
+        dir_info.current_dir_name()
+    } else {
+        ""
+    };
     let msg = if project != "" {
         format!("Releasing version {} of {}", version, project)
     } else {
         format!("Releasing version {}", version)
     };
-    let tag = if tag_style == "project-slash-version" && project != "" {
+    let tag = if project != "" {
         format!("{}/{}", project, version)
-    } else if tag_style == "v-version" {
-        format!("v{}", version)
     } else {
-        format!("{}", version)
+        format!("v{}", version)
     };
     Command::new("git")
         .arg("tag")
@@ -201,5 +253,116 @@ impl SimpleCommand for Command {
             }
             Err(err) => Err(err.to_string()),
         }
+    }
+}
+
+fn git_cliff_include_path(dir_info: &DirInfo) -> String {
+    match &dir_info.repository_dir {
+        Some(repository_dir) => {
+            let ancestors = dir_info.current_dir.ancestors_until(repository_dir);
+            if ancestors.is_empty() {
+                String::new()
+            } else {
+                let mut result: String = ancestors
+                    .iter()
+                    .map(|x| x.safe_file_name().to_owned())
+                    .reduce(|accum, item| format!("{}/{}", accum, item))
+                    .unwrap_or_default();
+                result.push_str("/*");
+                result
+            }
+        }
+        None => String::new(),
+    }
+}
+
+fn git_cliff_repository(dir_info: &DirInfo) -> String {
+    match &dir_info.repository_dir {
+        Some(repository_dir) => {
+            let ancestors = dir_info.current_dir.ancestors_until(repository_dir);
+            ancestors
+                .iter()
+                .map(|_| "..".to_owned())
+                .reduce(|accum, item| format!("{}/{}", accum, item))
+                .unwrap_or_default()
+        }
+        None => String::new(),
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_git_cliff_include_path_no_repository_dir() {
+        let dir_info = DirInfo {
+            current_dir: env::temp_dir(),
+            repository_dir: None,
+        };
+        assert_eq!(git_cliff_include_path(&dir_info), "");
+    }
+
+    #[test]
+    fn test_git_cliff_include_path_with_repository_dir() {
+        let dir_info = DirInfo {
+            current_dir: env::temp_dir().join("child"),
+            repository_dir: Some(env::temp_dir()),
+        };
+        assert_eq!(git_cliff_include_path(&dir_info), "child/*");
+    }
+
+    #[test]
+    fn test_git_cliff_include_path_with_grand_child_repository_dir() {
+        let dir_info = DirInfo {
+            current_dir: env::temp_dir().join("child").join("grand-child"),
+            repository_dir: Some(env::temp_dir()),
+        };
+        assert_eq!(git_cliff_include_path(&dir_info), "child/grand-child/*");
+    }
+
+    #[test]
+    fn test_git_cliff_include_path_with_repository_dir_accidentally_equal_to_current_dir() {
+        let dir_info = DirInfo {
+            current_dir: env::temp_dir(),
+            repository_dir: Some(env::temp_dir()),
+        };
+        assert_eq!(git_cliff_include_path(&dir_info), "");
+    }
+
+    #[test]
+    fn test_git_cliff_repository_no_repository_dir() {
+        let dir_info = DirInfo {
+            current_dir: env::temp_dir(),
+            repository_dir: None,
+        };
+        assert_eq!(git_cliff_repository(&dir_info), "");
+    }
+
+    #[test]
+    fn test_git_cliff_repository_with_repository_dir() {
+        let dir_info = DirInfo {
+            current_dir: env::temp_dir().join("child"),
+            repository_dir: Some(env::temp_dir()),
+        };
+        assert_eq!(git_cliff_repository(&dir_info), "..");
+    }
+
+    #[test]
+    fn test_git_cliff_repository_with_grand_child_repository_dir() {
+        let dir_info = DirInfo {
+            current_dir: env::temp_dir().join("child").join("grand-child"),
+            repository_dir: Some(env::temp_dir()),
+        };
+        assert_eq!(git_cliff_repository(&dir_info), "../..");
+    }
+
+    #[test]
+    fn test_git_cliff_repository_with_repository_dir_accidentally_equal_to_current_dir() {
+        let dir_info = DirInfo {
+            current_dir: env::temp_dir(),
+            repository_dir: Some(env::temp_dir()),
+        };
+        assert_eq!(git_cliff_repository(&dir_info), "");
     }
 }
