@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 ### Miscellaneous Tasks
 
 - Update dependency org.apache.maven.plugins:maven-javadoc-plugin to v3.3.2
+- Update dependency org.sonatype.plugins:nexus-staging-maven-plugin to v1.6.10
 
 ## [5.1.0] - 2022-02-07
 
