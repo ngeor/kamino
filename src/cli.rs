@@ -1,6 +1,59 @@
 extern crate clap;
 use clap::{App, Arg, ArgMatches};
 
+const VERSION: &str = "version";
+const TYPE: &str = "type";
+const IGNORE_PENDING_CHANGES: &str = "ignore-pending-changes";
+const GIT_REMOTE_NAME: &str = "git-remote-name";
+const NO_PUSH: &str = "no-push";
+
+const PROJECT_TYPE_NPM: &str = "npm";
+const PROJECT_TYPE_PIP: &str = "pip";
+
+pub trait Args {
+    fn version(&self) -> &str;
+
+    fn project_type(&self) -> Option<ProjectType>;
+
+    fn ignore_pending_changes(&self) -> bool;
+
+    fn git_remote_name(&self) -> &str;
+
+    fn push(&self) -> bool;
+}
+
+impl Args for ArgMatches {
+    fn version(&self) -> &str {
+        self.value_of(VERSION).unwrap_or_default()
+    }
+
+    fn project_type(&self) -> Option<ProjectType> {
+        match self.value_of(TYPE) {
+            Some(PROJECT_TYPE_NPM) => Some(ProjectType::NPM),
+            Some(PROJECT_TYPE_PIP) => Some(ProjectType::PIP),
+            _ => None,
+        }
+    }
+
+    fn ignore_pending_changes(&self) -> bool {
+        self.is_present(IGNORE_PENDING_CHANGES)
+    }
+
+    fn git_remote_name(&self) -> &str {
+        self.value_of(GIT_REMOTE_NAME).unwrap_or_default()
+    }
+
+    fn push(&self) -> bool {
+        !self.is_present(NO_PUSH)
+    }
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum ProjectType {
+    NPM,
+    PIP,
+}
+
 pub fn parse_args() -> ArgMatches {
     app().get_matches()
 }
@@ -12,39 +65,39 @@ fn app<'a>() -> App<'a> {
         .author("Nikolaos Georgiou <nikolaos.georgiou@gmail.com>")
         .about("kamino release tool")
         .arg(
-            Arg::new("version")
+            Arg::new(VERSION)
                 .help("Specify the target version")
                 .takes_value(true)
                 .required(true),
         )
         .arg(
-            Arg::new("type")
+            Arg::new(TYPE)
                 .short('t')
-                .long("type")
+                .long(TYPE)
                 .help("The type of project to release")
                 .takes_value(true)
                 .required(false)
-                .possible_values(["npm"]),
+                .possible_values([PROJECT_TYPE_NPM, PROJECT_TYPE_PIP]),
         )
         .arg(
-            Arg::new("dry-run")
-                .long("dry-run")
-                .help("Do not actually modify anything")
-                .required(false),
-        )
-        .arg(
-            Arg::new("ignore-pending-changes")
-                .long("ignore-pending-changes")
+            Arg::new(IGNORE_PENDING_CHANGES)
+                .long(IGNORE_PENDING_CHANGES)
                 .help("Do not check for any pending changes")
                 .required(false),
         )
         .arg(
-            Arg::new("git-remote-name")
-                .long("git-remote-name")
+            Arg::new(GIT_REMOTE_NAME)
+                .long(GIT_REMOTE_NAME)
                 .help("The name of the git remote")
                 .takes_value(true)
                 .required(false)
                 .default_value("origin"),
+        )
+        .arg(
+            Arg::new(NO_PUSH)
+                .long(NO_PUSH)
+                .help("Do not push to the git remote")
+                .required(false),
         )
 }
 
@@ -68,7 +121,24 @@ mod tests {
 
     #[test]
     fn test_parse_version_only() {
-        let matches = parse_args_from(vec!["krt", "0.1.0"]).unwrap();
-        assert_eq!(matches.value_of("version").unwrap_or_default(), "0.1.0");
+        let args = parse_args_from(vec!["krt", "0.1.0"]).unwrap();
+        assert_eq!(args.value_of("version").unwrap_or_default(), "0.1.0");
+    }
+
+    #[test]
+    fn test_parse_version_with_args() {
+        let args = parse_args_from(vec!["krt", "0.2.0"]).unwrap();
+        assert_eq!(args.version(), "0.2.0");
+        assert!(!args.ignore_pending_changes());
+        assert_eq!(args.git_remote_name(), "origin");
+        assert_eq!(args.project_type(), None);
+        assert!(args.push());
+    }
+
+    #[test]
+    fn test_parse_no_push() {
+        let args = parse_args_from(vec!["krt", "0.2.0", "--no-push"]).unwrap();
+        assert_eq!(args.version(), "0.2.0");
+        assert!(!args.push());
     }
 }
