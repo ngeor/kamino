@@ -1,9 +1,9 @@
 use std::env;
-use std::fs;
 use std::path::{Path, PathBuf};
 use std::process::Command;
 mod cli;
 mod dir_util;
+mod file_version;
 extern crate clap;
 use clap::ArgMatches;
 use cli::{Args, ProjectType};
@@ -35,15 +35,7 @@ fn main() -> Result<(), String> {
     // TODO validate semver
     // TODO support patch|minor|major
     // TODO support validating against package.json to avoid semver gaps
-    match project_type {
-        ProjectType::NPM => {
-            // bump version in package.json and package-lock.json via external command
-            npm_version(&args)?;
-        }
-        ProjectType::PIP => {
-            pip_version(&args).map_err(|e| e.to_string())?;
-        }
-    }
+    file_version::set_version(project_type, args.version())?;
 
     // generate changelog
     git_cliff(&args, &dir_info)?;
@@ -58,10 +50,19 @@ fn main() -> Result<(), String> {
     if args.push() {
         git_push()?;
     }
-    // TODO support snapshot / development version
-    // npm_version(version)?; set snapshot version
-    //git_commit(version)?;
-    //git_push()?;
+
+    // snapshot / development version
+    if args.snapshot_version() != "" {
+        // set version
+        file_version::set_version(project_type, args.snapshot_version())?;
+
+        // commit
+        git_commit(&args, &dir_info)?;
+
+        if args.push() {
+            git_push()?;
+        }
+    }
     Ok(())
 }
 
@@ -167,18 +168,6 @@ fn git_has_pending_changes() -> Result<bool, String> {
         Ok(output) => Ok(!output.status.success()),
         Err(err) => Err(err.to_string()),
     }
-}
-
-fn npm_version(args: &ArgMatches) -> Result<String, String> {
-    // npm version --no-git-tag-version patch
-    // TODO support non-Windows
-    Command::new("cmd")
-        .arg("/C")
-        .arg("npm.cmd")
-        .arg("version")
-        .arg("--no-git-tag-version")
-        .arg(args.version())
-        .run()
 }
 
 fn git_cliff(args: &ArgMatches, dir_info: &DirInfo) -> Result<String, String> {
@@ -313,86 +302,6 @@ fn git_cliff_repository(dir_info: &DirInfo) -> String {
     }
 }
 
-fn pip_version(args: &ArgMatches) -> Result<(), PipError> {
-    let setup_cfg_contents = String::from_utf8(fs::read("setup.cfg")?)?;
-    let module_name = pip_get_module_name_from_setup_cfg(&setup_cfg_contents)?;
-    let module_file = format!("{}/__init__.py", module_name);
-    let module_contents = String::from_utf8(fs::read(&module_file)?)?;
-    let new_contents = pip_update_version(&module_contents, args.version());
-    fs::write(&module_file, new_contents)?;
-    Ok(())
-}
-
-fn pip_get_module_name_from_setup_cfg(contents: &str) -> Result<&str, PipError> {
-    let prefix = "version = attr: ";
-    let version_line = contents
-        .lines()
-        .filter(|line| line.starts_with(prefix))
-        .next()
-        .ok_or(PipError::VersionLineNotFound)?;
-    let (_, version_source) = version_line.split_at(prefix.len());
-    let postfix = ".__version__";
-    if version_source.ends_with(postfix) {
-        let (result, _) = version_source.split_at(version_source.len() - postfix.len());
-        Ok(result)
-    } else {
-        Err(PipError::VersionLineNotSupported)
-    }
-}
-
-fn pip_update_version(contents: &str, version: &str) -> String {
-    let mut result = String::new();
-    for line in contents.lines() {
-        if line.starts_with("__version__") {
-            result.push_str("__version__ = \"");
-            result.push_str(version);
-            result.push('"');
-        } else {
-            result.push_str(&line);
-        }
-        result.push('\n');
-    }
-    result
-}
-
-#[derive(Debug)]
-enum PipError {
-    VersionLineNotFound,
-    VersionLineNotSupported,
-    IOError(std::io::Error),
-    Utf8Error(std::string::FromUtf8Error),
-}
-
-impl std::fmt::Display for PipError {
-    fn fmt(
-        &self,
-        formatter: &mut std::fmt::Formatter<'_>,
-    ) -> std::result::Result<(), std::fmt::Error> {
-        match self {
-            Self::VersionLineNotFound => {
-                formatter.write_str("Could not find version line in setup.cfg")
-            }
-            Self::VersionLineNotSupported => {
-                formatter.write_str("The version line in setup.cfg is not supported")
-            }
-            Self::IOError(e) => e.fmt(formatter),
-            Self::Utf8Error(e) => e.fmt(formatter),
-        }
-    }
-}
-
-impl From<std::io::Error> for PipError {
-    fn from(err: std::io::Error) -> Self {
-        Self::IOError(err)
-    }
-}
-
-impl From<std::string::FromUtf8Error> for PipError {
-    fn from(err: std::string::FromUtf8Error) -> Self {
-        Self::Utf8Error(err)
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -467,30 +376,5 @@ mod tests {
             repository_dir: Some(env::temp_dir()),
         };
         assert_eq!(git_cliff_repository(&dir_info), "");
-    }
-
-    #[test]
-    fn test_pip_get_module_name_from_setup_cfg() {
-        let contents = r"
-[metadata]
-name = instarepo
-version = attr: instarepo.__version__
-";
-        let module_name = pip_get_module_name_from_setup_cfg(contents).unwrap();
-        assert_eq!(module_name, "instarepo");
-    }
-
-    #[test]
-    fn test_pip_update_version() {
-        let old_contents = r#"
-# commented line
-__version__ = "0.1.0"
-"#;
-        let new_contents = pip_update_version(old_contents, "0.2.0");
-        let expected_contents = r#"
-# commented line
-__version__ = "0.2.0"
-"#;
-        assert_eq!(new_contents, expected_contents);
     }
 }

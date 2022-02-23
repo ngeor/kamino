@@ -1,7 +1,8 @@
 extern crate clap;
-use clap::{App, Arg, ArgMatches};
+use clap::{Arg, ArgMatches, Command};
 
 const VERSION: &str = "version";
+const SNAPSHOT_VERSION: &str = "snapshot-version";
 const TYPE: &str = "type";
 const IGNORE_PENDING_CHANGES: &str = "ignore-pending-changes";
 const GIT_REMOTE_NAME: &str = "git-remote-name";
@@ -12,6 +13,8 @@ const PROJECT_TYPE_PIP: &str = "pip";
 
 pub trait Args {
     fn version(&self) -> &str;
+
+    fn snapshot_version(&self) -> &str;
 
     fn project_type(&self) -> Option<ProjectType>;
 
@@ -25,6 +28,10 @@ pub trait Args {
 impl Args for ArgMatches {
     fn version(&self) -> &str {
         self.value_of(VERSION).unwrap_or_default()
+    }
+
+    fn snapshot_version(&self) -> &str {
+        self.value_of(SNAPSHOT_VERSION).unwrap_or_default()
     }
 
     fn project_type(&self) -> Option<ProjectType> {
@@ -58,9 +65,9 @@ pub fn parse_args() -> ArgMatches {
     app().get_matches()
 }
 
-fn app<'a>() -> App<'a> {
+fn app<'a>() -> Command<'a> {
     // TODO: pick up name and version from Cargo.toml
-    App::new("krt")
+    Command::new("krt")
         .version("0.1.0")
         .author("Nikolaos Georgiou <nikolaos.georgiou@gmail.com>")
         .about("kamino release tool")
@@ -69,6 +76,14 @@ fn app<'a>() -> App<'a> {
                 .help("Specify the target version")
                 .takes_value(true)
                 .required(true),
+        )
+        .arg(
+            Arg::new(SNAPSHOT_VERSION)
+                .short('s')
+                .long(SNAPSHOT_VERSION)
+                .help("An optional version to use for the next development iteration")
+                .takes_value(true)
+                .required(false),
         )
         .arg(
             Arg::new(TYPE)
