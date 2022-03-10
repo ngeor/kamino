@@ -1,12 +1,16 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## [5.2.0] - 2022-03-10
 
 ### Miscellaneous Tasks
 
 - Update dependency org.apache.maven.plugins:maven-javadoc-plugin to v3.3.2
 - Update dependency org.sonatype.plugins:nexus-staging-maven-plugin to v1.6.10
+- Update dependency org.sonatype.plugins:nexus-staging-maven-plugin to v1.6.11
+- Update dependency org.apache.maven.plugins:maven-compiler-plugin to v3.10.0
+- Update dependency org.sonatype.plugins:nexus-staging-maven-plugin to v1.6.12
+- Update dependency com.puppycrawl.tools:checkstyle to v10
 
 ## [5.1.0] - 2022-02-07
 
