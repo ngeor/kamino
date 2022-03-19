@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [5.3.0] - 2022-03-19
+
+### Miscellaneous Tasks
+
+- Set Java version to 11
+- Update dependency org.apache.maven.plugins:maven-compiler-plugin to v3.10.1
+
 ## [5.2.0] - 2022-03-10
 
 ### Miscellaneous Tasks
