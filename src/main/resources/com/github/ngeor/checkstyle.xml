@@ -84,38 +84,18 @@
     <module name="UnnecessaryParentheses" />
     <!-- Headers -->
     <!-- Imports -->
-    <module name="AvoidStarImport">
-      <property name="excludes" value="java.awt,java.io,java.util,javax.swing,java.lang.Math,org.junit.Assert,org.mockito.Mockito,org.springframework.test.web.servlet.result.MockMvcResultMatchers" />
-    </module>
     <module name="IllegalImport" />
     <module name="ImportOrder">
-      <property name="option" value="bottom" />
-      <property name="sortStaticImportsAlphabetically" value="true" />
-      <property name="separatedStaticGroups" value="true" />
+      <property name="groups" value="*,javax,java"/>
+      <property name="ordered" value="true"/>
+      <property name="separated" value="true"/>
+      <property name="option" value="bottom"/>
+      <property name="sortStaticImportsAlphabetically" value="true"/>
     </module>
     <module name="RedundantImport" />
     <module name="UnusedImports" />
     <!-- Javadoc Comments -->
-    <module name="JavadocMethod">
-      <property name="allowedAnnotations" value="Override,Test,ParameterizedTest,Before,BeforeClass,BeforeEach,BeforeAll,After,AfterClass,AfterEach,AfterAll,DisplayName" />
-      <property name="accessModifiers" value="public, protected" />
-      <property name="allowMissingParamTags" value="true" />
-      <property name="allowMissingReturnTag" value="true" />
-    </module>
     <module name="JavadocStyle" />
-    <module name="JavadocType" />
-    <module name="JavadocVariable">
-      <property name="scope" value="protected" /> <!-- *** don't document private fields -->
-    </module>
-    <module name="MissingJavadocMethod">
-      <property name="scope" value="package" />
-      <property name="allowMissingPropertyJavadoc" value="true" />
-      <property name="minLineCount" value="2" />
-      <property name="allowedAnnotations" value="Override,Test,ParameterizedTest,Before,BeforeClass,BeforeEach,BeforeAll,After,AfterClass,AfterEach,AfterAll,DisplayName" />
-    </module>
-    <module name="MissingJavadocType">
-      <property name="scope" value="package" />
-    </module>
     <!-- Metrics -->
     <!-- Miscellaneous -->
     <module name="ArrayTypeStyle" />

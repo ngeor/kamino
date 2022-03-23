@@ -157,33 +157,26 @@ Allows magic numbers in hash code, field declarations and annotations.
 
 ### [Imports](https://checkstyle.sourceforge.io/config_imports.html)
 
-| Rule              | Status    |
-| ----------------- | --------- |
-| AvoidStarImport   | _Altered_ |
-| AvoidStaticImport | Not Used  |
-| CustomImportOrder | Not Used  |
-| IllegalImport     | Used      |
-| ImportControl     | Not Used  |
-| ImportOrder       | _Altered_ |
-| RedundantImport   | Used      |
-| UnusedImports     | Used      |
-
-#### AvoidStarImport
-
-Allowing packages:
-
-- `java.awt`
-- `java.io`
-- `java.util`
-- `javax.swing`
-- `java.lang.Math`
-- `org.junit.Assert`
-- `org.mockito.Mockito`
-- `org.springframework.test.web.servlet.result.MockMvcResultMatchers`
+| Rule              | Status     |
+| ----------------- | ---------- |
+| AvoidStarImport   | _Not Used_ |
+| AvoidStaticImport | Not Used   |
+| CustomImportOrder | Not Used   |
+| IllegalImport     | Used       |
+| ImportControl     | Not Used   |
+| ImportOrder       | _Altered_  |
+| RedundantImport   | Used       |
+| UnusedImports     | Used       |
 
 #### ImportOrder
 
-- All non-static imports in one group, alphabetically sorted
+Approximately matches default IntelliJ behavior:
+
+- All non Java imports in one group, alphabetically sorted
+- One line separator
+- All javax imports in one group, alphabetically sorted
+- One line separator
+- All java imports in one group, alphabetically sorted
 - One line separator
 - All static imports in one group, alphabetically sorted
 
@@ -194,34 +187,20 @@ Allowing packages:
 | AtclauseOrder                     | Not Used                      |
 | InvalidJavadocPosition            | Not Used                      |
 | JavadocBlockTagLocation           | Not Used                      |
-| JavadocMethod                     | _Altered_                     |
-| JavadocPackage                    | _Disabled_                    |
+| JavadocMethod                     | Not Used                      |
+| JavadocPackage                    | Not Used                      |
 | JavadocParagraph                  | Not Used                      |
 | JavadocStyle                      | Used                          |
 | JavadocTagContinuationIndentation | Not Used                      |
-| JavadocType                       | Used                          |
-| JavadocVariable                   | _Altered_                     |
-| MissingJavadocMethod              | _Altered_ (see JavadocMethod) |
+| JavadocType                       | Not Used                      |
+| JavadocVariable                   | Not Used                      |
+| MissingJavadocMethod              | Not Used                      |
 | MissingJavadocPackage             | Not Used                      |
-| MissingJavadocType                | _Altered_ (see JavadocType)   |
+| MissingJavadocType                | Not Used                      |
 | NonEmptyAtclauseDescription       | Not Used                      |
 | SingleLineJavadoc                 | Not Used                      |
 | SummaryJavadoc                    | Not Used                      |
 | WriteTag                          | Not Used                      |
-
-#### JavadocMethod
-
-- No need to document private methods
-- Allow missing params, throws, return tags
-- No need to document methods less than 2 lines long
-- No need to document getters and setters
-- No need to document methods annotated with one of Override, Test,
-  ParameterizedTest, Before, BeforeClass, BeforeEach, BeforeAll, After,
-  AfterClass, AfterEach, AfterAll, DisplayName
-
-#### JavadocVariable
-
-- No need to document private fields
 
 ### [Metrics](https://checkstyle.sourceforge.io/config_metrics.html)
 
