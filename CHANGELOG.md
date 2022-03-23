@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [6.0.1] - 2022-03-23
+
+### Miscellaneous Tasks
+
+- Fix the build
+
 ## [6.0.0] - 2022-03-23
 
 ### Features
