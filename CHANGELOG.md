@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [6.0.0] - 2022-03-23
+
+### Features
+
+- [**breaking**] Change import order, relax javadoc rules
+
 ## [5.3.0] - 2022-03-19
 
 ### Miscellaneous Tasks
