@@ -1,8 +1,9 @@
 package rules;
 
 import com.foo.Bar;
-import java.io.File;
 import org.something.Else;
+
+import java.io.File;
 
 import static com.foo.Bar.something;
 import static java.io.File.somethingElse;

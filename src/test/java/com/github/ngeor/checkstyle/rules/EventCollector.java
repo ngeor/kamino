@@ -2,6 +2,7 @@ package com.github.ngeor.checkstyle.rules;
 
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import com.puppycrawl.tools.checkstyle.api.AuditListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
