@@ -2,6 +2,7 @@ package buzzstats.views;
 
 import buzzstats.api.Thing;
 import io.dropwizard.views.View;
+
 import java.util.List;
 
 /** View for the index resource. */

@@ -5,13 +5,15 @@ import buzzstats.db.ThingEntity;
 import buzzstats.db.ThingsDao;
 import buzzstats.views.ThingsView;
 import com.codahale.metrics.annotation.Timed;
-import java.util.List;
-import java.util.stream.Collectors;
+import org.jdbi.v3.core.Jdbi;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import org.jdbi.v3.core.Jdbi;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /** A resource for things. */
 @Path("/things")

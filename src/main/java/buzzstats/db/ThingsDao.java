@@ -1,13 +1,14 @@
 package buzzstats.db;
 
-import java.time.LocalDateTime;
-import java.util.List;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
 import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /** Things DAO. */
 public interface ThingsDao {

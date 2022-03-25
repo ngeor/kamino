@@ -4,9 +4,10 @@ import buzzstats.db.ScanEntity;
 import buzzstats.db.ScansDao;
 import buzzstats.db.ThingEntity;
 import buzzstats.db.ThingsDao;
+import org.slf4j.Logger;
+
 import java.time.Clock;
 import java.time.LocalDateTime;
-import org.slf4j.Logger;
 
 /** Updates existing stories. */
 public class Updater {
