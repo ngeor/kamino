@@ -1,9 +1,10 @@
 package buzzstats.jobs;
 
 import buzzstats.db.ThingEntity;
+import org.jsoup.nodes.Element;
+
 import java.time.Clock;
 import java.time.LocalDateTime;
-import org.jsoup.nodes.Element;
 
 /** Parses the HTML of a page. */
 public class Parser {

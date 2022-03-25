@@ -2,6 +2,7 @@ package buzzstats.db;
 
 import buzzstats.api.ImmutableThing;
 import buzzstats.api.Thing;
+
 import java.time.LocalDateTime;
 
 /** Thing db model. */

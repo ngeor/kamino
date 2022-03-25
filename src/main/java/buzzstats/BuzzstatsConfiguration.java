@@ -3,9 +3,11 @@ package buzzstats;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
 import io.dropwizard.db.DataSourceFactory;
-import java.util.Map;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+
+import java.util.Map;
 
 /** Configuration of the app. */
 public class BuzzstatsConfiguration extends Configuration {

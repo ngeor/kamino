@@ -3,8 +3,6 @@ package buzzstats.jobs;
 import buzzstats.db.ScansDao;
 import buzzstats.db.ThingEntity;
 import buzzstats.db.ThingsDao;
-import java.io.IOException;
-import java.util.List;
 import org.jdbi.v3.core.Jdbi;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -15,6 +13,9 @@ import org.quartz.JobExecutionException;
 import org.quartz.SchedulerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.util.List;
 
 /** Updates the story which hasn't been checked the most. */
 public class OldestCheckedStoryJob implements Job {
