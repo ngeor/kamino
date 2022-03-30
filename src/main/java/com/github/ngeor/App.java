@@ -9,9 +9,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.concurrent.Callable;
 
-/**
- * Hello world!
- */
 @Command(name = "krt", description = "kamino release tool")
 public final class App implements Callable<Integer> {
     @Parameters(description = "The version to release")
@@ -114,12 +111,18 @@ public final class App implements Callable<Integer> {
 
     private VersionSetter createVersionSetter(Path currentDir) {
         VersionSetter versionSetter;
-        if (type == ProjectType.NPM) {
-            versionSetter = new NpmVersionSetter();
-        } else if (type == ProjectType.PIP) {
-            versionSetter = new PipVersionSetter(currentDir);
-        } else {
-            throw new IllegalArgumentException("Unsupported project type");
+        switch (type) {
+            case MAVEN:
+                versionSetter = new MavenVersionSetter(currentDir);
+                break;
+            case NPM:
+                versionSetter = new NpmVersionSetter();
+                break;
+            case PIP:
+                versionSetter = new PipVersionSetter(currentDir);
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported project type");
         }
         return versionSetter;
     }
