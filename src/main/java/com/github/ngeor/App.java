@@ -94,7 +94,7 @@ public final class App implements Callable<Integer> {
         versionSetter.bumpVersion(version);
         GitCliff gitCliff = new GitCliff();
         gitCliff.run(currentDir, projectDir, version);
-        git.add("CHANGELOG.md");
+        git.add(projectDir.relativize(currentDir.resolve("CHANGELOG.md")).toString());
 
         GitCommitMessageProvider gitCommitMessageProvider = new GitCommitMessageProvider();
         git.commit(gitCommitMessageProvider.getMessage(currentDir, projectDir, version));
