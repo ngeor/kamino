@@ -75,8 +75,11 @@ public final class App implements Callable<Integer> {
     @Override
     public Integer call() throws Exception {
         GitDirFinder gitDirFinder = new GitDirFinder();
-        Path currentDir = Path.of(".");
+        Path currentDir = Path.of(".").toAbsolutePath();
         Path projectDir = gitDirFinder.find(currentDir);
+        if (projectDir == null) {
+            throw new IllegalStateException("Could not detect git directory");
+        }
         Git git = new Git(projectDir.toFile());
         EnsureOnDefaultBranchRule ensureOnDefaultBranchRule = new EnsureOnDefaultBranchRule(git);
         ensureOnDefaultBranchRule.validate();
