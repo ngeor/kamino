@@ -75,7 +75,7 @@ public final class App implements Callable<Integer> {
     @Override
     public Integer call() throws Exception {
         GitDirFinder gitDirFinder = new GitDirFinder();
-        Path currentDir = Path.of(".").toAbsolutePath();
+        Path currentDir = Path.of(".").toAbsolutePath().normalize();
         Path projectDir = gitDirFinder.find(currentDir);
         if (projectDir == null) {
             throw new IllegalStateException("Could not detect git directory");
@@ -94,6 +94,7 @@ public final class App implements Callable<Integer> {
         versionSetter.bumpVersion(version);
         GitCliff gitCliff = new GitCliff();
         gitCliff.run(currentDir, projectDir, version);
+        git.add("CHANGELOG.md");
 
         GitCommitMessageProvider gitCommitMessageProvider = new GitCommitMessageProvider();
         git.commit(gitCommitMessageProvider.getMessage(currentDir, projectDir, version));
