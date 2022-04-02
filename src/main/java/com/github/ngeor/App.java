@@ -7,6 +7,7 @@ import picocli.CommandLine.Parameters;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
 @Command(name = "krt", description = "kamino release tool")
@@ -74,27 +75,17 @@ public final class App implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        GitDirFinder gitDirFinder = new GitDirFinder();
+        version = ensureSemVerRelease(version);
+        snapshotVersion = snapshotVersion == null ? null : ensureSemVerPreRelease(snapshotVersion);
         Path currentDir = Path.of(".").toAbsolutePath().normalize();
-        Path projectDir = gitDirFinder.find(currentDir);
-        if (projectDir == null) {
-            throw new IllegalStateException("Could not detect git directory");
-        }
+        Path projectDir = findProjectDir(currentDir);
         Git git = new Git(projectDir.toFile());
-        EnsureOnDefaultBranchRule ensureOnDefaultBranchRule = new EnsureOnDefaultBranchRule(git);
-        ensureOnDefaultBranchRule.validate();
-        if (failOnPendingChanges) {
-            EnsureNoPendingChangesRule ensureNoPendingChangesRule = new EnsureNoPendingChangesRule(git);
-            ensureNoPendingChangesRule.validate();
-        }
-        git.fetch();
-        git.pull();
+        validateGitPreconditions(git);
+        fetchAndPull(git);
 
         VersionSetter versionSetter = createVersionSetter(currentDir);
         versionSetter.bumpVersion(version);
-        GitCliff gitCliff = new GitCliff();
-        gitCliff.run(currentDir, projectDir, version);
-        git.add(projectDir.relativize(currentDir.resolve("CHANGELOG.md")).toString());
+        updateChangelog(currentDir, projectDir, git);
 
         GitCommitMessageProvider gitCommitMessageProvider = new GitCommitMessageProvider();
         git.commit(gitCommitMessageProvider.getMessage(currentDir, projectDir, version));
@@ -111,6 +102,25 @@ public final class App implements Callable<Integer> {
             doGitPush(git);
         }
         return 0;
+    }
+
+    private Path findProjectDir(Path currentDir) {
+        GitDirFinder gitDirFinder = new GitDirFinder();
+        return Objects.requireNonNull(gitDirFinder.find(currentDir), "Could not detect git directory");
+    }
+
+    private void validateGitPreconditions(Git git) throws IOException, InterruptedException {
+        EnsureOnDefaultBranchRule ensureOnDefaultBranchRule = new EnsureOnDefaultBranchRule(git);
+        ensureOnDefaultBranchRule.validate();
+        if (failOnPendingChanges) {
+            EnsureNoPendingChangesRule ensureNoPendingChangesRule = new EnsureNoPendingChangesRule(git);
+            ensureNoPendingChangesRule.validate();
+        }
+    }
+
+    private void fetchAndPull(Git git) throws IOException, InterruptedException {
+        git.fetch();
+        git.pull();
     }
 
     private VersionSetter createVersionSetter(Path currentDir) {
@@ -131,9 +141,31 @@ public final class App implements Callable<Integer> {
         return versionSetter;
     }
 
+    private void updateChangelog(Path currentDir, Path projectDir, Git git) throws IOException, InterruptedException {
+        GitCliff gitCliff = new GitCliff();
+        gitCliff.run(currentDir, projectDir, version);
+        git.add(projectDir.relativize(currentDir.resolve("CHANGELOG.md")).toString());
+    }
+
     private void doGitPush(Git git) throws IOException, InterruptedException {
         if (push) {
             git.push();
         }
+    }
+
+    private static String ensureSemVerRelease(String input) {
+        SemVer semVer = SemVer.parse(input);
+        if (semVer.isPreRelease()) {
+            throw new IllegalArgumentException("Version " + input + " is not allowed to be pre-release");
+        }
+        return semVer.toString();
+    }
+
+    private static String ensureSemVerPreRelease(String input) {
+        SemVer semVer = SemVer.parse(input);
+        if (!semVer.isPreRelease()) {
+            throw new IllegalArgumentException("Version " + input + " is not allowed to be a release");
+        }
+        return semVer.toString();
     }
 }
