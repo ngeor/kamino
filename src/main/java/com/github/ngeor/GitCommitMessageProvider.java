@@ -1,14 +1,12 @@
 package com.github.ngeor;
 
-import java.nio.file.Path;
-
 public class GitCommitMessageProvider {
-    public String getMessage(Path currentDir, Path projectDir, String version) {
-        if (currentDir.equals(projectDir)) {
+    public String getMessage(DirContext dirContext, String version) {
+        if (dirContext.isTopLevelProject()) {
             return "chore(release): prepare for version " + version;
         }
 
-        String projectName = currentDir.getFileName().toString();
+        String projectName = dirContext.getProjectName();
         return "chore(release): prepare for version " + version + " of " + projectName;
     }
 }

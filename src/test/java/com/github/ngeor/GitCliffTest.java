@@ -13,7 +13,8 @@ class GitCliffTest {
 
     @Test
     void testBuildArgsSameDirectory() {
-        String[] args = gitCliff.buildArgs(Path.of("."), Path.of("."), "1.2.3");
+        DirContext dirContext = new DirContext(Path.of("."), Path.of("."));
+        String[] args = gitCliff.buildArgs(dirContext, "1.2.3");
         assertArrayEquals(
             new String[] {"git-cliff", "-o", "CHANGELOG.md", "-t", "1.2.3"},
             args);
@@ -25,7 +26,7 @@ class GitCliffTest {
         try {
             Path currentDirectory = projectDirectory.resolve("child");
             assertTrue(currentDirectory.toFile().mkdir());
-            String[] args = gitCliff.buildArgs(currentDirectory, projectDirectory, "2.1.0");
+            String[] args = gitCliff.buildArgs(new DirContext(currentDirectory, projectDirectory), "2.1.0");
             assertArrayEquals(
                 new String[] {
                     "git-cliff",
@@ -53,7 +54,7 @@ class GitCliffTest {
             assertTrue(childDirectory.toFile().mkdir());
             Path grandChildDirectory = childDirectory.resolve("grand-child");
             assertTrue(grandChildDirectory.toFile().mkdir());
-            String[] args = gitCliff.buildArgs(grandChildDirectory, projectDirectory, "0.4.1");
+            String[] args = gitCliff.buildArgs(new DirContext(grandChildDirectory, projectDirectory), "0.4.1");
             assertArrayEquals(
                 new String[] {
                     "git-cliff",

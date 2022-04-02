@@ -7,7 +7,6 @@ import picocli.CommandLine.Parameters;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Objects;
 import java.util.concurrent.Callable;
 
 @Command(name = "krt", description = "kamino release tool")
@@ -26,12 +25,14 @@ public final class App implements Callable<Integer> {
         description = "A snapshot version to use after the release")
     private String snapshotVersion;
 
+    @SuppressWarnings("FieldMayBeFinal")
     @Option(
         names = "--no-fail-on-pending-changes",
         negatable = true,
         description = "Check for pending changes")
     private boolean failOnPendingChanges = true;
 
+    @SuppressWarnings("FieldMayBeFinal")
     @Option(
         names = "--no-push",
         negatable = true,
@@ -77,21 +78,20 @@ public final class App implements Callable<Integer> {
     public Integer call() throws Exception {
         version = ensureSemVerRelease(version);
         snapshotVersion = snapshotVersion == null ? null : ensureSemVerPreRelease(snapshotVersion);
-        Path currentDir = Path.of(".").toAbsolutePath().normalize();
-        Path projectDir = findProjectDir(currentDir);
-        Git git = new Git(projectDir.toFile());
+        DirContext dirContext = DirContext.build();
+        Git git = new Git(dirContext.getRepoDir().toFile());
         validateGitPreconditions(git);
         fetchAndPull(git);
 
-        VersionSetter versionSetter = createVersionSetter(currentDir);
+        VersionSetter versionSetter = createVersionSetter(dirContext.getCurrentDir());
         versionSetter.bumpVersion(version);
-        updateChangelog(currentDir, projectDir, git);
+        updateChangelog(dirContext, git);
 
         GitCommitMessageProvider gitCommitMessageProvider = new GitCommitMessageProvider();
-        git.commit(gitCommitMessageProvider.getMessage(currentDir, projectDir, version));
+        git.commit(gitCommitMessageProvider.getMessage(dirContext, version));
 
         GitTagMessageProvider gitTagMessageProvider = new GitTagMessageProvider(
-            currentDir, projectDir, version
+            dirContext, version
         );
         git.tag(gitTagMessageProvider.getMessage(), gitTagMessageProvider.getTag());
         doGitPush(git);
@@ -102,11 +102,6 @@ public final class App implements Callable<Integer> {
             doGitPush(git);
         }
         return 0;
-    }
-
-    private Path findProjectDir(Path currentDir) {
-        GitDirFinder gitDirFinder = new GitDirFinder();
-        return Objects.requireNonNull(gitDirFinder.find(currentDir), "Could not detect git directory");
     }
 
     private void validateGitPreconditions(Git git) throws IOException, InterruptedException {
@@ -141,10 +136,10 @@ public final class App implements Callable<Integer> {
         return versionSetter;
     }
 
-    private void updateChangelog(Path currentDir, Path projectDir, Git git) throws IOException, InterruptedException {
+    private void updateChangelog(DirContext dirContext, Git git) throws IOException, InterruptedException {
         GitCliff gitCliff = new GitCliff();
-        gitCliff.run(currentDir, projectDir, version);
-        git.add(projectDir.relativize(currentDir.resolve("CHANGELOG.md")).toString());
+        gitCliff.run(dirContext, version);
+        git.add(dirContext.resolveRelative("CHANGELOG.md"));
     }
 
     private void doGitPush(Git git) throws IOException, InterruptedException {

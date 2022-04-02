@@ -8,20 +8,20 @@ import java.util.List;
 
 public class GitCliff {
     public void run(
-        Path currentDirectory, Path projectDirectory, String version
+        DirContext dirContext, String version
     ) throws IOException, InterruptedException {
-        String[] args = buildArgs(currentDirectory, projectDirectory, version);
+        String[] args = buildArgs(dirContext, version);
         ProcessBuilder processBuilder = new ProcessBuilder(args);
         Process process = processBuilder.start();
         ProcessUtils.waitForSuccess(process);
     }
 
-    String[] buildArgs(Path currentDirectory, Path projectDirectory, String version) {
+    String[] buildArgs(DirContext dirContext, String version) {
         List<String> result = new ArrayList<>();
         result.add("git-cliff");
         StringBuilder includePath = new StringBuilder();
         StringBuilder repository = new StringBuilder();
-        for (Path p : new PathIterator(projectDirectory, currentDirectory)) {
+        for (Path p : new PathIterator(dirContext.getRepoDir(), dirContext.getCurrentDir())) {
             includePath.insert(0, '/');
             includePath.insert(0, p.getFileName().toString());
             if (repository.length() > 0) {

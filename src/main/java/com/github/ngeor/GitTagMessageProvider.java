@@ -1,30 +1,26 @@
 package com.github.ngeor;
 
-import java.nio.file.Path;
-
 public class GitTagMessageProvider {
-    private final Path currentDir;
-    private final Path projectDir;
+    private final DirContext dirContext;
     private final String version;
 
-    public GitTagMessageProvider(Path currentDir, Path projectDir, String version) {
-        this.currentDir = currentDir;
-        this.projectDir = projectDir;
+    public GitTagMessageProvider(DirContext dirContext, String version) {
+        this.dirContext = dirContext;
         this.version = version;
     }
 
     public String getMessage() {
-        if (currentDir.equals(projectDir)) {
+        if (dirContext.isTopLevelProject()) {
             return "Releasing version " + version;
         }
 
-        return "Releasing version " + version + " of " + currentDir.getFileName().toString();
+        return "Releasing version " + version + " of " + dirContext.getProjectName();
     }
 
     public String getTag() {
-        if (currentDir.equals(projectDir)) {
+        if (dirContext.isTopLevelProject()) {
             return "v" + version;
         }
-        return currentDir.getFileName().toString() + "/" + version;
+        return dirContext.getProjectName() + "/" + version;
     }
 }
