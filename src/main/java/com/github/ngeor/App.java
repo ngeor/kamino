@@ -90,8 +90,9 @@ public final class App implements Callable<Integer> {
         GitCommitMessageProvider gitCommitMessageProvider = new GitCommitMessageProvider();
         git.commit(gitCommitMessageProvider.getMessage(dirContext, version));
 
+        GitTagPrefix gitTagPrefix = new GitTagPrefix(dirContext);
         GitTagMessageProvider gitTagMessageProvider = new GitTagMessageProvider(
-            dirContext, version
+            dirContext, gitTagPrefix, version
         );
         git.tag(gitTagMessageProvider.getMessage(), gitTagMessageProvider.getTag());
         doGitPush(git);

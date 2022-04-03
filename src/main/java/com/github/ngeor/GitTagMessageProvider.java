@@ -2,10 +2,12 @@ package com.github.ngeor;
 
 public class GitTagMessageProvider {
     private final DirContext dirContext;
+    private final GitTagPrefix gitTagPrefix;
     private final String version;
 
-    public GitTagMessageProvider(DirContext dirContext, String version) {
+    public GitTagMessageProvider(DirContext dirContext, GitTagPrefix gitTagPrefix, String version) {
         this.dirContext = dirContext;
+        this.gitTagPrefix = gitTagPrefix;
         this.version = version;
     }
 
@@ -18,9 +20,6 @@ public class GitTagMessageProvider {
     }
 
     public String getTag() {
-        if (dirContext.isTopLevelProject()) {
-            return "v" + version;
-        }
-        return dirContext.getProjectName() + "/" + version;
+        return gitTagPrefix.getPrefix() + version;
     }
 }
