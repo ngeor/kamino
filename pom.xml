@@ -234,7 +234,10 @@
             <artifactId>native-maven-plugin</artifactId>
             <version>0.9.11</version>
             <extensions>true</extensions>
-            <configuration></configuration>
+            <configuration>
+              <!-- revisit if this is fixed https://github.com/graalvm/native-build-tools/issues/180 -->
+              <buildArgs>-H:IncludeResources='.*toml$'</buildArgs>
+            </configuration>
             <executions>
               <execution>
                 <id>build-native</id>
