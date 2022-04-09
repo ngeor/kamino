@@ -5,8 +5,10 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
 @Command(name = "krt", description = "kamino release tool")
@@ -81,7 +83,7 @@ public final class App implements Callable<Integer> {
 
         VersionSetter versionSetter = createVersionSetter(dirContext.getCurrentDir());
         versionSetter.bumpVersion(version);
-        updateChangelog(dirContext, git);
+        updateChangelog(dirContext, git, gitTagPrefix.getPrefix());
 
         GitCommitMessageProvider gitCommitMessageProvider = new GitCommitMessageProvider();
         git.commit(gitCommitMessageProvider.getMessage(dirContext, version));
@@ -94,7 +96,7 @@ public final class App implements Callable<Integer> {
 
         SemVer snapshotVersion = resolved.bump(SemVerBump.MINOR).preRelease("SNAPSHOT");
         versionSetter.bumpVersion(snapshotVersion.toString());
-        git.commit("chore(release): setting snapshot version for next development iteration");
+        git.commit("chore(release): prepare for next development iteration");
         doGitPush(git);
 
         return 0;
@@ -132,9 +134,30 @@ public final class App implements Callable<Integer> {
         return versionSetter;
     }
 
-    private void updateChangelog(DirContext dirContext, Git git) throws IOException, InterruptedException {
+    private void updateChangelog(
+        DirContext dirContext,
+        Git git,
+        String tagPrefix
+    ) throws IOException, InterruptedException {
+        String tagPattern = tagPrefix + "[0-9]*";
+        Path cliffTomlPath = Files.createTempFile("cliff", ".toml");
+        File cliffTomlFile = cliffTomlPath.toFile();
+        cliffTomlFile.deleteOnExit();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(
+            Objects.requireNonNull(getClass().getResourceAsStream("/cliff.toml"))))) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(cliffTomlFile))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    writer.append(line);
+                    writer.newLine();
+                }
+
+                writer.append("tag_pattern = \"").append(tagPattern).append('"');
+                writer.newLine();
+            }
+        }
         GitCliff gitCliff = new GitCliff();
-        gitCliff.run(dirContext, version);
+        gitCliff.run(dirContext, version, cliffTomlPath);
         git.add(dirContext.resolveRelative("CHANGELOG.md"));
     }
 

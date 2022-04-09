@@ -14,9 +14,9 @@ class GitCliffTest {
     @Test
     void testBuildArgsSameDirectory() {
         DirContext dirContext = new DirContext(Path.of("."), Path.of("."));
-        String[] args = gitCliff.buildArgs(dirContext, "1.2.3");
+        String[] args = gitCliff.buildArgs(dirContext, "1.2.3", Path.of("/tmp/cliff.toml"));
         assertArrayEquals(
-            new String[] {"git-cliff", "-o", "CHANGELOG.md", "-t", "1.2.3"},
+            new String[] {"git-cliff", "-o", "CHANGELOG.md", "-t", "1.2.3", "-c", "/tmp/cliff.toml"},
             args);
     }
 
@@ -26,7 +26,11 @@ class GitCliffTest {
         try {
             Path currentDirectory = projectDirectory.resolve("child");
             assertTrue(currentDirectory.toFile().mkdir());
-            String[] args = gitCliff.buildArgs(new DirContext(currentDirectory, projectDirectory), "2.1.0");
+            String[] args = gitCliff.buildArgs(
+                new DirContext(currentDirectory, projectDirectory),
+                "2.1.0",
+                Path.of("/tmp/cliff.toml")
+            );
             assertArrayEquals(
                 new String[] {
                     "git-cliff",
@@ -37,7 +41,9 @@ class GitCliffTest {
                     "-o",
                     "CHANGELOG.md",
                     "-t",
-                    "2.1.0"
+                    "2.1.0",
+                    "-c",
+                    "/tmp/cliff.toml"
                 },
                 args
             );
@@ -54,7 +60,11 @@ class GitCliffTest {
             assertTrue(childDirectory.toFile().mkdir());
             Path grandChildDirectory = childDirectory.resolve("grand-child");
             assertTrue(grandChildDirectory.toFile().mkdir());
-            String[] args = gitCliff.buildArgs(new DirContext(grandChildDirectory, projectDirectory), "0.4.1");
+            String[] args = gitCliff.buildArgs(
+                new DirContext(grandChildDirectory, projectDirectory),
+                "0.4.1",
+                Path.of("/tmp/cliff2.toml")
+            );
             assertArrayEquals(
                 new String[] {
                     "git-cliff",
@@ -65,7 +75,9 @@ class GitCliffTest {
                     "-o",
                     "CHANGELOG.md",
                     "-t",
-                    "0.4.1"
+                    "0.4.1",
+                    "-c",
+                    "/tmp/cliff2.toml"
                 },
                 args
             );

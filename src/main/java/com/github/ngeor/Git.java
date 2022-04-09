@@ -2,8 +2,8 @@ package com.github.ngeor;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.github.ngeor.ProcessUtils.waitForSuccess;
@@ -111,11 +111,9 @@ public class Git {
         ProcessBuilder processBuilder = createProcessBuilder(args);
         Process process = processBuilder.start();
         waitForSuccess(process);
-        List<String> result = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-            result.add(reader.readLine());
+            return reader.lines().collect(Collectors.toList());
         }
-        return result;
     }
 
     private ProcessBuilder createProcessBuilder(String... args) {

@@ -8,15 +8,17 @@ import java.util.List;
 
 public class GitCliff {
     public void run(
-        DirContext dirContext, String version
+        DirContext dirContext,
+        String version,
+        Path cliffTomlPath
     ) throws IOException, InterruptedException {
-        String[] args = buildArgs(dirContext, version);
+        String[] args = buildArgs(dirContext, version, cliffTomlPath);
         ProcessBuilder processBuilder = new ProcessBuilder(args);
         Process process = processBuilder.start();
         ProcessUtils.waitForSuccess(process);
     }
 
-    String[] buildArgs(DirContext dirContext, String version) {
+    String[] buildArgs(DirContext dirContext, String version, Path cliffTomlPath) {
         List<String> result = new ArrayList<>();
         result.add("git-cliff");
         StringBuilder includePath = new StringBuilder();
@@ -40,6 +42,8 @@ public class GitCliff {
         result.add("CHANGELOG.md");
         result.add("-t");
         result.add(version);
+        result.add("-c");
+        result.add(cliffTomlPath.toString());
         return result.toArray(new String[0]);
     }
 
