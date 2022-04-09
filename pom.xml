@@ -17,7 +17,7 @@
     <!-- JaCoCo thresholds. Increase gradually as you add tests. -->
     <jacoco.unit-tests.limit.instruction-ratio>67%</jacoco.unit-tests.limit.instruction-ratio>
     <jacoco.unit-tests.limit.branch-ratio>67%</jacoco.unit-tests.limit.branch-ratio>
-    <jacoco.unit-tests.limit.class-complexity>26</jacoco.unit-tests.limit.class-complexity>
+    <jacoco.unit-tests.limit.class-complexity>29</jacoco.unit-tests.limit.class-complexity>
     <jacoco.unit-tests.limit.method-complexity>10</jacoco.unit-tests.limit.method-complexity>
   </properties>
   <dependencies>

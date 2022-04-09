@@ -20,11 +20,6 @@ public final class App implements Callable<Integer> {
         required = true)
     private ProjectType type;
 
-    @Option(
-        names = {"-s", "--snapshot"},
-        description = "A snapshot version to use after the release")
-    private String snapshotVersion;
-
     @SuppressWarnings("FieldMayBeFinal")
     @Option(
         names = "--no-fail-on-pending-changes",
@@ -55,10 +50,6 @@ public final class App implements Callable<Integer> {
         return failOnPendingChanges;
     }
 
-    public String getSnapshotVersion() {
-        return snapshotVersion;
-    }
-
     public boolean isPush() {
         return push;
     }
@@ -76,12 +67,17 @@ public final class App implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        version = ensureSemVerRelease(version);
-        snapshotVersion = snapshotVersion == null ? null : ensureSemVerPreRelease(snapshotVersion);
         DirContext dirContext = DirContext.build();
         Git git = new Git(dirContext.getRepoDir().toFile());
         validateGitPreconditions(git);
         fetchAndPull(git);
+
+        GitTagPrefix gitTagPrefix = new GitTagPrefix(dirContext);
+        GitTagProvider gitTagProvider = new GitTagProvider(git, gitTagPrefix);
+        VersionResolver versionResolver = new VersionResolver(gitTagProvider);
+
+        SemVer resolved = versionResolver.resolve(version);
+        version = resolved.toString();
 
         VersionSetter versionSetter = createVersionSetter(dirContext.getCurrentDir());
         versionSetter.bumpVersion(version);
@@ -90,18 +86,17 @@ public final class App implements Callable<Integer> {
         GitCommitMessageProvider gitCommitMessageProvider = new GitCommitMessageProvider();
         git.commit(gitCommitMessageProvider.getMessage(dirContext, version));
 
-        GitTagPrefix gitTagPrefix = new GitTagPrefix(dirContext);
         GitTagMessageProvider gitTagMessageProvider = new GitTagMessageProvider(
             dirContext, gitTagPrefix, version
         );
         git.tag(gitTagMessageProvider.getMessage(), gitTagMessageProvider.getTag());
         doGitPush(git);
 
-        if (snapshotVersion != null && !snapshotVersion.isBlank()) {
-            versionSetter.bumpVersion(snapshotVersion);
-            git.commit("chore(release): setting snapshot version for next development iteration");
-            doGitPush(git);
-        }
+        SemVer snapshotVersion = resolved.bump(SemVerBump.MINOR).preRelease("SNAPSHOT");
+        versionSetter.bumpVersion(snapshotVersion.toString());
+        git.commit("chore(release): setting snapshot version for next development iteration");
+        doGitPush(git);
+
         return 0;
     }
 

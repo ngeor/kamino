@@ -2,6 +2,7 @@ package com.github.ngeor;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -61,5 +62,23 @@ class SemVerTest {
             new SemVer(11, 12, 31, "alpha-beta"),
             SemVer.parse("11.12.31-alpha-beta")
         );
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+        "1.2.3, major, 2.0.0",
+        "0.4.5, minor, 0.5.0",
+        "1.3.4, patch, 1.3.5"
+    })
+    void testBump(String version, String bump, String expected) {
+        // arrange
+        SemVer original = SemVer.parse(version);
+        SemVerBump semVerBump = SemVerBump.parse(bump);
+
+        // act
+        SemVer result = original.bump(semVerBump);
+
+        // assert
+        assertEquals(expected, result.toString());
     }
 }

@@ -95,4 +95,18 @@ public class SemVer implements Comparable<SemVer> {
     public boolean isPreRelease() {
         return preRelease != null;
     }
+
+    public SemVer bump(SemVerBump bump) {
+        switch (bump) {
+            case MAJOR: return new SemVer(major + 1, 0, 0);
+            case MINOR: return new SemVer(major, minor + 1, 0);
+            case PATCH: return new SemVer(major, minor, patch + 1);
+            default: throw new IllegalArgumentException();
+        }
+    }
+
+    @SuppressWarnings("checkstyle:HiddenField")
+    public SemVer preRelease(String preRelease) {
+        return new SemVer(major, minor, patch, preRelease);
+    }
 }

@@ -2,6 +2,8 @@ package com.github.ngeor;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static com.github.ngeor.ProcessUtils.waitForSuccess;
@@ -69,6 +71,10 @@ public class Git {
         run("tag", "-a", "-m", msg, tag);
     }
 
+    public List<String> listTags(String pattern) throws IOException, InterruptedException {
+        return pattern != null ? runAsStrings("tag", "-l", pattern) : runAsStrings("tag", "-l");
+    }
+
     public void fetch() throws IOException, InterruptedException {
         run("fetch", "-p", "-t");
     }
@@ -99,6 +105,17 @@ public class Git {
         try (BufferedInputStream stdout = new BufferedInputStream(process.getInputStream())) {
             return new String(stdout.readAllBytes(), StandardCharsets.UTF_8).trim();
         }
+    }
+
+    private List<String> runAsStrings(String... args) throws IOException, InterruptedException {
+        ProcessBuilder processBuilder = createProcessBuilder(args);
+        Process process = processBuilder.start();
+        waitForSuccess(process);
+        List<String> result = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+            result.add(reader.readLine());
+        }
+        return result;
     }
 
     private ProcessBuilder createProcessBuilder(String... args) {
