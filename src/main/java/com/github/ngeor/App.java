@@ -11,8 +11,11 @@ import java.nio.file.Path;
 import java.util.Objects;
 import java.util.concurrent.Callable;
 
-@Command(name = "krt", description = "kamino release tool")
+@Command(name = "krt", description = "kamino release tool", versionProvider = ManifestVersionProvider.class)
 public final class App implements Callable<Integer> {
+    @Option(names = {"-V", "--version"}, versionHelp = true, description = "Print version info and exit")
+    private boolean versionRequested;
+
     @Parameters(description = "The version to release")
     private String version;
 
