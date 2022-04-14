@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.1.1] - 2022-04-09
+## [0.2.0] - 2022-04-12
+
+### Features
+
+- Add version information
+
+## [krt/0.1.1] - 2022-04-09
 
 ### Bug Fixes
 
