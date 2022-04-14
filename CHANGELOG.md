@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.2.0] - 2022-04-12
+## [krt/0.2.0] - 2022-04-14
 
 ### Features
 
