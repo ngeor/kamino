@@ -22,7 +22,7 @@
     <!--
     plugins
     -->
-    <maven-invoker-plugin.version>3.2.2</maven-invoker-plugin.version>
+    <maven-invoker-plugin.version>3.3.0</maven-invoker-plugin.version>
     <!--
     dependencies for maven plugins
     -->
