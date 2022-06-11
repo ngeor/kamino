@@ -16,7 +16,7 @@ public final class App implements Callable<Integer> {
     @Option(names = {"-V", "--version"}, versionHelp = true, description = "Print version info and exit")
     private boolean versionRequested;
 
-    @Parameters(description = "The version to release")
+    @Parameters(description = "The version to release. Either explicit version or one of major, minor, patch.")
     private String version;
 
     @Option(
