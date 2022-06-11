@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.2] - 2022-06-11
+
+### Miscellaneous Tasks
+
+- Update dependency com.puppycrawl.tools:checkstyle to v10.2
+- Update dependency org.mockito:mockito-core to v4.5.1
+- Update dependency org.mockito:mockito-core to v4.6.0
+- Update dependency com.puppycrawl.tools:checkstyle to v10.3
+- Update dependency org.mockito:mockito-core to v4.6.1
+- Update dependency org.apache.maven.plugins:maven-surefire-plugin to v3.0.0-m7
+- Added readme
+- Added download section in readme
+
 ## [krt/0.2.0] - 2022-04-14
 
 ### Features
