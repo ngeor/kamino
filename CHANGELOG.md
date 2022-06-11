@@ -1,6 +1,20 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [6.1.0] - 2022-06-11
+
+### Miscellaneous Tasks
+
+- Update dependency com.puppycrawl.tools:checkstyle to v10.1
+- Update dependency org.apache.maven.plugins:maven-surefire-plugin to v3.0.0-m6
+- Update dependency org.sonatype.plugins:nexus-staging-maven-plugin to v1.6.13
+- Update dependency com.puppycrawl.tools:checkstyle to v10.2
+- Update dependency org.apache.maven.plugins:maven-javadoc-plugin to v3.4.0
+- Update dependency com.puppycrawl.tools:checkstyle to v10.3
+- Update dependency org.assertj:assertj-core to v3.23.1
+- Update dependency org.apache.maven.plugins:maven-surefire-plugin to v3.0.0-m7
+- Update dependency org.apache.maven.plugins:maven-release-plugin to v3.0.0-m6
+
 ## [6.0.1] - 2022-03-23
 
 ### Miscellaneous Tasks
