@@ -30,3 +30,8 @@ Finally, it will switch the version to a snapshot version and push it again.
 - Maven
 - NPM (requires `npm` to be installed)
 - Python/Pip (expects a `setup.cfg` file)
+
+## Download
+
+In the [releases page](https://github.com/ngeor/kamino/releases?q=krt&expanded=true) you'll find
+pre-built native binaries that don't require Java.
