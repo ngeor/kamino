@@ -26,7 +26,7 @@
     <!--
     dependencies for maven plugins
     -->
-    <maven-core.version>3.8.5</maven-core.version>
+    <maven-core.version>3.8.6</maven-core.version>
     <maven-plugin-plugin.version>3.6.4</maven-plugin-plugin.version>
     <!--
     jacoco thresholds
