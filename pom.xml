@@ -4,7 +4,7 @@
   <parent>
     <groupId>com.github.ngeor</groupId>
     <artifactId>java</artifactId>
-    <version>3.1.1</version>
+    <version>3.2.0</version>
   </parent>
   <groupId>net.ngeor</groupId>
   <artifactId>zfs-snapshot-trimmer</artifactId>
@@ -25,12 +25,16 @@
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13.2</version>
-      <scope>test</scope>
-    </dependency>
+      <dependency>
+          <groupId>org.junit.jupiter</groupId>
+          <artifactId>junit-jupiter</artifactId>
+          <scope>test</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.assertj</groupId>
+          <artifactId>assertj-core</artifactId>
+          <scope>test</scope>
+      </dependency>
   </dependencies>
 
   <build>
