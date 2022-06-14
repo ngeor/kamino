@@ -1,6 +1,5 @@
 package com.github.ngeor.yak4j;
 
-import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 import org.mockito.stubbing.Answer;
 import org.mockito.stubbing.OngoingStubbing;
@@ -13,6 +12,8 @@ import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+
+import java.util.Arrays;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;

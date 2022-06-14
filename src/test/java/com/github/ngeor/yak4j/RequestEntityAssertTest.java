@@ -1,10 +1,11 @@
 package com.github.ngeor.yak4j;
 
-import java.net.URI;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
+
+import java.net.URI;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

@@ -1,10 +1,11 @@
 package com.github.ngeor.yak4j;
 
-import java.util.function.Consumer;
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.Assertions;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.util.function.Consumer;
 
 /**
  * Assertion DSL for {@link ResponseEntity}.

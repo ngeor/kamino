@@ -1,13 +1,14 @@
 package com.github.ngeor.yak4j;
 
-import java.net.URI;
-import java.util.List;
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.Assertions;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
+
+import java.net.URI;
+import java.util.List;
 
 /**
  * Assertions for {@link RequestEntity}.
