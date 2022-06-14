@@ -1,5 +1,5 @@
-import java.nio.file.Files
 import java.nio.charset.StandardCharsets
+import java.nio.file.Files
 
 def logFile = new File(basedir, "build.log")
 assert logFile.isFile()
