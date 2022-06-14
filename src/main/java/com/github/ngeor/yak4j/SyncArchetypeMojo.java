@@ -1,12 +1,5 @@
 package com.github.ngeor.yak4j;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecution;
@@ -18,9 +11,15 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.codehaus.plexus.util.FileUtils;
 
-import static com.github.ngeor.yak4j.Util.combine;
-import static com.github.ngeor.yak4j.Util.concatNull;
-import static com.github.ngeor.yak4j.Util.formatParameters;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import static com.github.ngeor.yak4j.Util.*;
 
 /**
  * A mojo that synchronizes from the archetype.
