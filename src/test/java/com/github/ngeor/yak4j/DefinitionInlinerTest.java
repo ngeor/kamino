@@ -1,9 +1,10 @@
 package com.github.ngeor.yak4j;
 
+import org.junit.jupiter.api.Test;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.jupiter.api.Test;
 
 import static com.github.ngeor.yak4j.Util.loadSwaggerDocument;
 import static org.assertj.core.api.Assertions.assertThat;

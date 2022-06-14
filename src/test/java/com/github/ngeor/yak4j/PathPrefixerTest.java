@@ -1,7 +1,8 @@
 package com.github.ngeor.yak4j;
 
-import java.io.IOException;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
 
 import static com.github.ngeor.yak4j.Util.loadSwaggerDocument;
 import static org.assertj.core.api.Assertions.assertThat;

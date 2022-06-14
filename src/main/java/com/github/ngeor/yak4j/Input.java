@@ -1,7 +1,8 @@
 package com.github.ngeor.yak4j;
 
-import java.io.File;
 import org.apache.maven.plugins.annotations.Parameter;
+
+import java.io.File;
 
 /**
  * An input definition.
