@@ -6,7 +6,7 @@
 
 package com.ngss.jspidergame;
 
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 
 /**

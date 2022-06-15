@@ -6,7 +6,7 @@
 
 package com.ngss.jspidergame;
 
-import java.awt.Dimension;
+import java.awt.*;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;

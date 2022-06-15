@@ -6,8 +6,7 @@
 
 package com.ngss.jspidergame;
 
-import java.awt.Graphics;
-import java.awt.Rectangle;
+import java.awt.*;
 
 /**
  * This class represents a game entity.

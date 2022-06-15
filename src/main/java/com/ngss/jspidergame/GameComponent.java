@@ -6,15 +6,12 @@
 
 package com.ngss.jspidergame;
 
+import javax.sound.sampled.*;
+import javax.swing.*;
+
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.*;
 
 
 /**
