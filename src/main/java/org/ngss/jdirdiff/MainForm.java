@@ -6,12 +6,12 @@
 
 package org.ngss.jdirdiff;
 
-import java.awt.Color;
-import java.awt.Component;
+import javax.swing.*;
+
+import java.awt.*;
 import java.io.*;
 import java.util.Arrays;
 import java.util.Comparator;
-import javax.swing.*;
 
 /**
  * Main form.

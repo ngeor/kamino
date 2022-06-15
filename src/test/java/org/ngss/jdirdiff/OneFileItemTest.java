@@ -1,9 +1,10 @@
 package org.ngss.jdirdiff;
 
-import java.io.File;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import java.io.File;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Unit tests for {@link OneFileItem}.
