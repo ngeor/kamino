@@ -1,13 +1,6 @@
 package jtetris.common;
 
-import jtetris.common.shapes.EmptyShape;
-import jtetris.common.shapes.IShape;
-import jtetris.common.shapes.JShape;
-import jtetris.common.shapes.LShape;
-import jtetris.common.shapes.OShape;
-import jtetris.common.shapes.SShape;
-import jtetris.common.shapes.TShape;
-import jtetris.common.shapes.ZShape;
+import jtetris.common.shapes.*;
 
 /**
  * Creates standard shapes out of the known block types.

@@ -1,11 +1,13 @@
 package jtetris.swing;
 
-import java.awt.*;
-import javax.swing.*;
 import jtetris.common.Game;
 import jtetris.common.GameListener;
 import jtetris.common.GameState;
 import jtetris.common.MovingShape;
+
+import javax.swing.*;
+
+import java.awt.*;
 
 /**
  * MainForm.java.

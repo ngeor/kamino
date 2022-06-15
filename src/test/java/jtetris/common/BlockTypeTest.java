@@ -1,7 +1,8 @@
 package jtetris.common;
 
-import java.util.EnumSet;
 import org.junit.Test;
+
+import java.util.EnumSet;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
