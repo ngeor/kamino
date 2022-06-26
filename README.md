@@ -1,5 +1,7 @@
 # krt
 
+[![Java CI with Maven](https://github.com/ngeor/krt/actions/workflows/maven.yml/badge.svg)](https://github.com/ngeor/krt/actions/workflows/maven.yml)
+
 > Kamino Release Tool
 
 krt is a Java CLI application that can be used to release libraries.
