@@ -1,10 +1,8 @@
-name: Test krt
+name: Publish krt
 
 on:
   push:
-    branches: [ trunk ]
-  pull_request:
-    branches: [ trunk ]
+    tags: [ "v*" ]
 
 jobs:
   krt:
@@ -42,11 +40,14 @@ jobs:
         java: 'java11'
         # Architecture flag, optional, defaults to 'amd64'. Available options are 'amd64' and 'aarch64'. Later is available only for linux runners.
         arch: 'amd64'
-    - run: mvn -Pnative -DskipTests package
+    - name: Build artifact
+      run: mvn -Pnative -DskipTests package
+    - name: Rename artifact
+      run: mv target/krt target/krt-${{ matrix.os }}
     - uses: actions/upload-artifact@v3
       with:
         name: krt-native-image-${{ matrix.os }}
-        path: target/krt
+        path: target/krt-${{ matrix.os }}
   krt-native-windows:
     runs-on: windows-latest
     steps:
@@ -72,3 +73,19 @@ jobs:
       with:
         name: krt-native-image-windows-latest
         path: target/krt.exe
+  release:
+    runs-on: ubuntu-latest
+    needs:
+      - krt-native
+      - krt-native-windows
+    steps:
+      - name: Download all workflow run artifacts
+        uses: actions/download-artifact@v3
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          files: |
+            krt-native-image-macos-latest/krt-macos-latest
+            krt-native-image-ubuntu-latest/krt-ubuntu-latest
+            krt-native-image-windows-latest/krt.exe
