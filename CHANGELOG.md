@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.2.1] - 2022-09-03
+
+### Bug Fixes
+
+- Fix CI pipeline
+
 ## [6.2.0] - 2022-09-03
 
 ### Features
