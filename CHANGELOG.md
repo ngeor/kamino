@@ -1,10 +1,27 @@
 # Changelog
+
 All notable changes to this project will be documented in this file.
+
+## [6.2.0] - 2022-09-03
+
+### Features
+
+- Use tag based release
+
+### Miscellaneous Tasks
+
+- Update changelog for 6.1.0
+- Update dependency com.puppycrawl.tools:checkstyle to v10.3.1
+- Update dependency org.apache.maven.plugins:maven-deploy-plugin to v3.0.0
+- Update dependency com.puppycrawl.tools:checkstyle to v10.3.3
+- Update dependency org.apache.maven.plugins:maven-javadoc-plugin to v3.4.1
+- Update dependency org.junit.jupiter:junit-jupiter to v5.9.0
 
 ## [6.1.0] - 2022-06-11
 
 ### Miscellaneous Tasks
 
+- Update changelog for 6.0.1
 - Update dependency com.puppycrawl.tools:checkstyle to v10.1
 - Update dependency org.apache.maven.plugins:maven-surefire-plugin to v3.0.0-m6
 - Update dependency org.sonatype.plugins:nexus-staging-maven-plugin to v1.6.13
@@ -19,6 +36,7 @@ All notable changes to this project will be documented in this file.
 
 ### Miscellaneous Tasks
 
+- Update changelog for 6.0.0
 - Fix the build
 
 ## [6.0.0] - 2022-03-23
@@ -27,10 +45,15 @@ All notable changes to this project will be documented in this file.
 
 - [**breaking**] Change import order, relax javadoc rules
 
+### Miscellaneous Tasks
+
+- Update changelog for 5.3.0
+
 ## [5.3.0] - 2022-03-19
 
 ### Miscellaneous Tasks
 
+- Update changelog for 5.2.0
 - Set Java version to 11
 - Update dependency org.apache.maven.plugins:maven-compiler-plugin to v3.10.1
 
@@ -38,8 +61,11 @@ All notable changes to this project will be documented in this file.
 
 ### Miscellaneous Tasks
 
+- Update changelog for 5.1.0
 - Update dependency org.apache.maven.plugins:maven-javadoc-plugin to v3.3.2
+- Updated changelog
 - Update dependency org.sonatype.plugins:nexus-staging-maven-plugin to v1.6.10
+- Updated changelog
 - Update dependency org.sonatype.plugins:nexus-staging-maven-plugin to v1.6.11
 - Update dependency org.apache.maven.plugins:maven-compiler-plugin to v3.10.0
 - Update dependency org.sonatype.plugins:nexus-staging-maven-plugin to v1.6.12
@@ -49,7 +75,9 @@ All notable changes to this project will be documented in this file.
 
 ### Miscellaneous Tasks
 
+- Updating changelog
 - Updated ${checkstyle.version} from 9.2.1 to 9.3
+- Updated changelog
 - Update dependency org.apache.maven.plugins:maven-deploy-plugin to v3.0.0-m2
 - Update dependency org.apache.maven.plugins:maven-compiler-plugin to v3.9.0
 - Update dependency org.apache.maven.plugins:maven-release-plugin to v3.0.0-m5
@@ -66,6 +94,7 @@ All notable changes to this project will be documented in this file.
 
 - Updated copyright year in LICENSE
 - Using latest releases
+- Updated changelog
 
 ## [4.9.4] - 2022-01-27
 
