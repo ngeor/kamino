@@ -2,7 +2,7 @@ name: Release
 
 on:
   push:
-    branches: [ release* ]
+    tags: [ "v*" ]
 
 jobs:
   build:
@@ -15,15 +15,12 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
         cache: maven
+    - name: Import GPG key
+      run: gpg --batch --yes --passphrase=${{ secrets.GPG_PASSPHRASE }} --output - scripts/keys.asc | gpg --batch --yes --import
     - name: Release
       run: >-
         ./scripts/release.py
-        release
         --gpg-key ${{ secrets.GPG_KEY }}
         --gpg-passphrase ${{ secrets.GPG_PASSPHRASE }}
-        --gpg-key-file scripts/keys.asc
-        --git-user-name bot
-        --git-user-email Nikolaos.Georgiou@gmail.com
-        --version-from-github-actions
         --maven-username ${{ secrets.OSSRH_USERNAME }}
         --maven-password ${{ secrets.OSSRH_PASSWORD }}
