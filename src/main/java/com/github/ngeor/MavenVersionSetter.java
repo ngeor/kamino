@@ -46,6 +46,8 @@ public class MavenVersionSetter implements VersionSetter {
                 }
                 xmlEventWriter.add(xmlWriteEvent);
             }
+            xmlEventWriter.close();
+            xmlEventReader.close();
         } catch (XMLStreamException e) {
             throw new IOException(e);
         }
