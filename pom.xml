@@ -44,7 +44,7 @@
     <!-- version properties for dependencies that have multiple artifacts -->
     <auto-value.version>1.9</auto-value.version>
     <mapstruct.version>1.5.2.Final</mapstruct.version>
-    <jackson.version>2.13.3</jackson.version>
+    <jackson.version>2.13.4</jackson.version>
     <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
     <groovy-all.version>3.0.12</groovy-all.version>
     <groovy-maven-plugin.version>2.1.1</groovy-maven-plugin.version>
