@@ -46,7 +46,7 @@
     <mapstruct.version>1.5.2.Final</mapstruct.version>
     <jackson.version>2.13.4</jackson.version>
     <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
-    <groovy-all.version>3.0.12</groovy-all.version>
+    <groovy-all.version>3.0.13</groovy-all.version>
     <groovy-maven-plugin.version>2.1.1</groovy-maven-plugin.version>
     <maven-archetype-plugin.version>3.2.1</maven-archetype-plugin.version>
     <tomcat7-maven-plugin.version>2.2</tomcat7-maven-plugin.version>
