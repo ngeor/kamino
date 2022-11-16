@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.3.0] - 2022-11-16
+
+### Miscellaneous Tasks
+
+- Update dependency org.junit.jupiter:junit-jupiter to v5.9.1
+- Update dependency com.puppycrawl.tools:checkstyle to v10.3.4
+- Update checkstyle to 10.4
+
 ## [6.2.1] - 2022-09-03
 
 ### Bug Fixes
