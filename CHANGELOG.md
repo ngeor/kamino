@@ -2,7 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
-## [3.3.0] - 2022-09-05
+## [3.4.0] - 2022-11-17
+
+### Miscellaneous Tasks
+
+- Update dependency org.mockito:mockito-core to v4.8.0
+- Update dependency org.apache.maven.plugins:maven-shade-plugin to v3.4.0
+- Update dependency org.apache.maven.plugins:maven-jar-plugin to v3.3.0
+- Update dependency org.codehaus.groovy:groovy-all to v3.0.13
+- Update dependency org.junit.jupiter:junit-jupiter to v5.9.1
+- Update dependency com.puppycrawl.tools:checkstyle to v10.3.4
+- Updated auto-value to 1.10
+- Updated MapStruct to 1.5.3
+- Updated Jackson to 2.14.0
+- Updated Maven Shade plugin to 3.4.1
+- Updated checkstyle rules to 6.3.0
+- Updated checkstyle to 10.4
+- Updated Mockito to 4.9.0
+
+## [3.3.0] - 2022-09-07
 
 ### Features
 
