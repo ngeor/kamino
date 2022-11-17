@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.0] - 2022-11-17
+
+### Miscellaneous Tasks
+
+- Update dependency com.github.ngeor:checkstyle-rules to v6.2.1
+- Update dependency org.mockito:mockito-core to v4.8.0
+- Update dependency org.apache.maven.plugins:maven-jar-plugin to v3.3.0
+- Update junit.version to v5.9.1
+- Update dependency org.graalvm.buildtools:native-maven-plugin to v0.9.14
+- Update dependency com.puppycrawl.tools:checkstyle to v10.3.4
+- Updated checkstyle to 10.4
+- Updated Mockito to 4.9.0
+- Upgraded picocli to 4.7.0
+- Updated checkstyle-rules to 6.3.0
+- Updated graalvm native maven plugin to 0.9.17
+
 ## [0.3.0] - 2022-09-04
 
 ### Bug Fixes
