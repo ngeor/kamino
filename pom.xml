@@ -20,6 +20,7 @@
     <maven-enforcer-plugin.version>3.1.0</maven-enforcer-plugin.version>
     <maven-checkstyle-plugin.version>3.2.0</maven-checkstyle-plugin.version>
     <checkstyle.version>10.4</checkstyle.version>
+    <checkstyle-rules.version>6.3.0</checkstyle-rules.version>
     <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
     <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
     <maven-javadoc-plugin.version>3.0.0</maven-javadoc-plugin.version>
@@ -105,7 +106,7 @@
           <dependency>
             <groupId>com.github.ngeor</groupId>
             <artifactId>checkstyle-rules</artifactId>
-            <version>6.2.1</version>
+            <version>${checkstyle-rules.version}</version>
           </dependency>
         </dependencies>
         <executions>
