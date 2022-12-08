@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.1.0] - 2022-12-08
+
+### Features
+
+- Added sortpom
+
 ## [4.0.0] - 2022-12-08
 
 ### Miscellaneous Tasks
