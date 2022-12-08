@@ -37,17 +37,19 @@
     </snapshotRepository>
   </distributionManagement>
   <properties>
+    <checkstyle-rules.version>6.3.0</checkstyle-rules.version>
+    <checkstyle.version>10.4</checkstyle.version>
     <java.version>17</java.version>
+    <maven-checkstyle-plugin.version>3.2.0</maven-checkstyle-plugin.version>
+    <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
+    <maven-enforcer-plugin.version>3.1.0</maven-enforcer-plugin.version>
+    <maven-failsafe-plugin.version>3.0.0-M7</maven-failsafe-plugin.version>
+    <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
+    <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven-enforcer-plugin.version>3.1.0</maven-enforcer-plugin.version>
-    <maven-checkstyle-plugin.version>3.2.0</maven-checkstyle-plugin.version>
-    <maven-failsafe-plugin.version>3.0.0-M7</maven-failsafe-plugin.version>
-    <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
-    <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
-    <checkstyle-rules.version>6.3.0</checkstyle-rules.version>
-    <checkstyle.version>10.4</checkstyle.version>
+    <sortpom-maven-plugin.version>3.0.0</sortpom-maven-plugin.version>
   </properties>
   <build>
     <pluginManagement>
@@ -63,8 +65,8 @@
               </goals>
               <configuration>
                 <rules>
-                  <banDuplicatePomDependencyVersions />
-                  <dependencyConvergence/>
+                  <banDuplicatePomDependencyVersions></banDuplicatePomDependencyVersions>
+                  <dependencyConvergence></dependencyConvergence>
                   <requireMavenVersion>
                     <version>3.6.3</version>
                   </requireMavenVersion>
@@ -129,6 +131,15 @@
             </execution>
           </executions>
         </plugin>
+        <plugin>
+          <groupId>com.github.ekryd.sortpom</groupId>
+          <artifactId>sortpom-maven-plugin</artifactId>
+          <version>${sortpom-maven-plugin.version}</version>
+          <configuration>
+            <sortProperties>true</sortProperties>
+            <sortDependencies>scope</sortDependencies>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
@@ -142,4 +153,31 @@
       </plugin>
     </plugins>
   </build>
+  <profiles>
+    <profile>
+      <id>gpg</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>${maven-gpg-plugin.version}</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+                <phase>verify</phase>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.sonatype.plugins</groupId>
+            <artifactId>nexus-staging-maven-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
