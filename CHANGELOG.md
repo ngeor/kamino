@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.0.0] - 2022-12-08
+
+### Miscellaneous Tasks
+
+- [**breaking**] Upgraded to Java 17
+- [**breaking**] Removed dependency management and most plugins
+- Updated CI for Java 17
+
 ## [3.4.0] - 2022-11-17
 
 ### Miscellaneous Tasks
