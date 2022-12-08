@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.4.0] - 2022-12-08
+
+### Miscellaneous Tasks
+
+- Upgrade checkstyle to 10.5.0
+- [**breaking**] Upgrade to Java 17
+
 ## [6.3.0] - 2022-11-16
 
 ### Miscellaneous Tasks
