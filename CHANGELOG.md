@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.4.2] - 2022-12-08
+
+### Miscellaneous Tasks
+
+- Troubleshooting gpg in CI
+
 ## [6.4.1] - 2022-12-08
 
 ### Miscellaneous Tasks
