@@ -15,8 +15,8 @@ jobs:
         java-version: '17'
         distribution: 'adopt'
         cache: maven
-    - name: Ensure GPG directory does not exist
-      run: rm -rf $HOME/.gnupg
+    - name: Import GPG key test
+      run: gpg --batch --yes --passphrase=${{ secrets.GPG_PASSPHRASE }} --output - scripts/keys.asc
     - name: Import GPG key
       run: gpg --batch --yes --passphrase=${{ secrets.GPG_PASSPHRASE }} --output - scripts/keys.asc | gpg --batch --yes --import
     - name: Release
