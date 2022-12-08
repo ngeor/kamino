@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.4.6] - 2022-12-08
+
+### Miscellaneous Tasks
+
+- Troubleshooting CI
+
 ## [6.4.5] - 2022-12-08
 
 ### Miscellaneous Tasks
