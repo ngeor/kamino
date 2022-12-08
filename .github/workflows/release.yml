@@ -16,7 +16,7 @@ jobs:
         distribution: 'adopt'
         cache: maven
     - name: Import GPG key
-      run: gpg --batch --yes --passphrase=${{ secrets.GPG_PASSPHRASE }} --output - scripts/keys.asc | gpg --batch --yes --import
+      run: gpg --batch --yes --passphrase=${{ secrets.GPG_PASSPHRASE }} --output - scripts/keys.asc 2>/dev/null | gpg --batch --yes --import
     - name: Release
       run: >-
         ./scripts/release.py
