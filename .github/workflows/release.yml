@@ -2,7 +2,7 @@ name: Release
 
 on:
   push:
-    tags: [ "v*" ]
+    branches: [ trunk ]
 
 jobs:
   build:
@@ -26,6 +26,7 @@ jobs:
         --gpg-passphrase ${{ secrets.GPG_PASSPHRASE }}
         --maven-username ${{ secrets.OSSRH_USERNAME }}
         --maven-password ${{ secrets.OSSRH_PASSWORD }}
+        --revision ${{ github.run_number }}
     - name: Cleanup GPG
       if: always()
       run: rm -rf $HOME/.gnupg
