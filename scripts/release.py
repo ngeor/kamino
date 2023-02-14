@@ -97,7 +97,7 @@ def perform_release(gpg_key, gpg_passphrase, maven_username, maven_password, rev
                 "-Dcheckstyle.skip=true",
                 "-Djacoco.skip=true",
                 "-Dinvoker.skip=true",
-                f"-Drevision={revision}"
+                f"-Drevision={revision}",
                 "-Pgpg",
                 "deploy",
             ],
