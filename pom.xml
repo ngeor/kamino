@@ -39,8 +39,8 @@
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <junit-jupiter.version>5.9.2</junit-jupiter.version>
-    <checkstyle.version>10.9.2</checkstyle.version>
+    <junit-jupiter.version>5.10.0-M1</junit-jupiter.version>
+    <checkstyle.version>10.11.0</checkstyle.version>
     <assertj-core.version>3.24.2</assertj-core.version>
     <jsr250-api.version>1.0</jsr250-api.version>
     <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
