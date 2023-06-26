@@ -40,7 +40,7 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <junit-jupiter.version>5.10.0-M1</junit-jupiter.version>
-    <checkstyle.version>10.12.0</checkstyle.version>
+    <checkstyle.version>10.12.1</checkstyle.version>
     <assertj-core.version>3.24.2</assertj-core.version>
     <jsr250-api.version>1.0</jsr250-api.version>
     <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
