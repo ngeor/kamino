@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.5.0] - 2023-07-08
+
+### Bug Fixes
+
+- Fix release script
+
+### Miscellaneous Tasks
+
+- [**breaking**] Do not follow semver anymore (#42)
+- Upgraded to checkstyle 10.7.0
+- Upgrade checkstyle
+- Upgrade jUnit and checkstyle
+- [**breaking**] Revert to previous Maven release workflow (tag based)
+
+### Deps
+
+- Upgraded checkstyle to 10.12.0
+- Upgrade checkstyle to 10.12.1
+
 ## [6.4.6] - 2022-12-08
 
 ### Miscellaneous Tasks
