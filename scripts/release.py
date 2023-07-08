@@ -28,18 +28,13 @@ def parse_args():
         help="The password to use for publishing the release to Maven",
         required=True,
     )
-    parser.add_argument(
-        "--revision",
-        help="The build number, will be appended to the version",
-        required=True,
-    )
     return parser.parse_args()
 
 
 def release(args):
     try:
         perform_release(
-            args.gpg_key, args.gpg_passphrase, args.maven_username, args.maven_password, args.revision
+            args.gpg_key, args.gpg_passphrase, args.maven_username, args.maven_password
         )
     finally:
         clean_gpg(args.gpg_key)
@@ -61,7 +56,7 @@ def clean_gpg(gpg_key):
     subprocess.run(["gpg", "--batch", "--yes", "--delete-key", gpg_key], check=True)
 
 
-def perform_release(gpg_key, gpg_passphrase, maven_username, maven_password, revision):
+def perform_release(gpg_key, gpg_passphrase, maven_username, maven_password):
     with tempfile.TemporaryDirectory() as tmp_dir:
         settings_xml_file = os.path.join(tmp_dir, "settings.xml")
         with open(settings_xml_file, "w") as f:
@@ -97,7 +92,6 @@ def perform_release(gpg_key, gpg_passphrase, maven_username, maven_password, rev
                 "-Dcheckstyle.skip=true",
                 "-Djacoco.skip=true",
                 "-Dinvoker.skip=true",
-                f"-Drevision={revision}",
                 "-Pgpg",
                 "deploy",
             ],
