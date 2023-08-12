@@ -5,11 +5,10 @@
 
 Parent pom for Java projects
 
+The goal of the project is to configure Maven plugins in a standard way.
+Dependency management is out of scope.
+
 ## Releasing
 
 - Make sure you're on the default branch and there are no pending changes
-- Push a release branch in the naming convention `release-x.y.z`
-  - Tip: do that with `./scripts/release.py initialize --version x.y.z`
-- Wait for GitHub actions to publish the release
-- Merge to the main branch and delete the release branch
-  - Tip: do that with `./scripts/release.py finalize`
+- Push a tag in the naming convention `vx.y.z`
