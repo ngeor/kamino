@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.6.0] - 2023-08-12
+
+### Miscellaneous Tasks
+
+- Update dependency org.junit.jupiter:junit-jupiter to v5.10.0 (#44)
+
 ## [6.5.0] - 2023-07-08
 
 ### Bug Fixes
