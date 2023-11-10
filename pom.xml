@@ -15,14 +15,12 @@
     <jacoco.unit-tests.limit.method-complexity>5</jacoco.unit-tests.limit.method-complexity>
     <!-- dependencies -->
     <assertj-core.version>3.24.2</assertj-core.version>
-    <checkstyle-rules.version>6.3.0</checkstyle-rules.version>
-    <checkstyle.version>10.12.1</checkstyle.version>
     <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
     <junit.version>5.10.1</junit.version>
-    <maven-checkstyle-plugin.version>3.2.0</maven-checkstyle-plugin.version>
     <maven-enforcer-plugin.version>3.1.0</maven-enforcer-plugin.version>
     <maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
     <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
+    <spotless-maven-plugin.version>2.40.0</spotless-maven-plugin.version>
   </properties>
   <dependencies>
     <dependency>
@@ -61,29 +59,18 @@
         </executions>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>${maven-checkstyle-plugin.version}</version>
-        <dependencies>
-          <dependency>
-            <groupId>com.puppycrawl.tools</groupId>
-            <artifactId>checkstyle</artifactId>
-            <version>${checkstyle.version}</version>
-          </dependency>
-          <dependency>
-            <groupId>com.github.ngeor</groupId>
-            <artifactId>checkstyle-rules</artifactId>
-            <version>${checkstyle-rules.version}</version>
-          </dependency>
-        </dependencies>
+        <groupId>com.diffplug.spotless</groupId>
+        <artifactId>spotless-maven-plugin</artifactId>
+        <version>${spotless-maven-plugin.version}</version>
         <configuration>
-          <configLocation>com/github/ngeor/checkstyle.xml</configLocation>
-          <includeTestSourceDirectory>true</includeTestSourceDirectory>
+          <java>
+            <palantirJavaFormat>
+              
+            </palantirJavaFormat>
+          </java>
         </configuration>
         <executions>
           <execution>
-            <id>checkstyle</id>
-            <phase>validate</phase>
             <goals>
               <goal>check</goal>
             </goals>
