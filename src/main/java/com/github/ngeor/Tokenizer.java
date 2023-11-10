@@ -11,9 +11,15 @@ import java.util.function.IntPredicate;
 public class Tokenizer {
     private final CharReader reader;
     private final List<TokenizerListener> listeners = new ArrayList<>();
+    private final Map<TokenKind, IntPredicate> recognizers;
 
     public Tokenizer(CharReader reader) {
         this.reader = reader;
+        recognizers = new EnumMap<>(TokenKind.class);
+        recognizers.put(TokenKind.SPACE, i -> i == ' ' || i == '\t');
+        recognizers.put(TokenKind.NEW_LINE, i -> i == '\r' || i == '\n');
+        recognizers.put(TokenKind.DIGIT, i -> i >= '0' && i <= '9');
+        recognizers.put(TokenKind.LETTER, i -> (i >= 'A' && i <= 'Z') || (i >= 'a' && i <= 'z'));
     }
 
     public Tokenizer(String input) {
@@ -30,11 +36,6 @@ public class Tokenizer {
 
     public Token next() {
         StringBuilder buffer = new StringBuilder();
-        EnumMap<TokenKind, IntPredicate> recognizers = new EnumMap<>(TokenKind.class);
-        recognizers.put(TokenKind.SPACE, i -> i == ' ' || i == '\t');
-        recognizers.put(TokenKind.NEW_LINE, i -> i == '\r' || i == '\n');
-        recognizers.put(TokenKind.DIGIT, i -> i >= '0' && i <= '9');
-        recognizers.put(TokenKind.LETTER, i -> (i >= 'A' && i <= 'Z') || (i >= 'a' && i <= 'z'));
         Set<TokenKind> eligible = EnumSet.copyOf(recognizers.keySet());
         TokenKind lastMatch = TokenKind.EOF;
         while (reader.hasNext() && !eligible.isEmpty()) {
@@ -62,17 +63,13 @@ public class Tokenizer {
         }
 
         Token result = new Token(lastMatch, buffer.toString());
-        for (TokenizerListener listener : listeners) {
-            listener.tokenReturned(result);
-        }
+        notifyTokenReturned(result);
         return result;
     }
 
     public void undo(Token token) {
         undo(token.value());
-        for (TokenizerListener listener : listeners) {
-            listener.tokenReverted(token);
-        }
+        notifyTokenReverted(token);
     }
 
     private void undo(String value) {
@@ -80,6 +77,18 @@ public class Tokenizer {
         while (i > 0) {
             i--;
             reader.undo(value.charAt(i));
+        }
+    }
+
+    private void notifyTokenReturned(Token result) {
+        for (TokenizerListener listener : listeners) {
+            listener.tokenReturned(result);
+        }
+    }
+
+    private void notifyTokenReverted(Token token) {
+        for (TokenizerListener listener : listeners) {
+            listener.tokenReverted(token);
         }
     }
 }
