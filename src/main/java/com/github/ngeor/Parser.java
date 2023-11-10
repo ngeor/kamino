@@ -14,4 +14,8 @@ public interface Parser<E> {
     default <O> Parser<O> map(Function<E, O> mapper) {
         return new MapParser<>(this, mapper);
     }
+
+    default Parser<E> or(Parser<E> other) {
+        return new OrParser<>(this, other);
+    }
 }

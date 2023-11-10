@@ -1,13 +1,16 @@
 package com.github.ngeor;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.IntPredicate;
 
 public class Tokenizer {
     private final CharReader reader;
+    private final List<TokenizerListener> listeners = new ArrayList<>();
 
     public Tokenizer(CharReader reader) {
         this.reader = reader;
@@ -15,6 +18,14 @@ public class Tokenizer {
 
     public Tokenizer(String input) {
         this(new StringCharReader(input));
+    }
+
+    public void addListener(TokenizerListener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeListener(TokenizerListener listener) {
+        listeners.remove(listener);
     }
 
     public Token next() {
@@ -50,14 +61,21 @@ public class Tokenizer {
             buffer.deleteCharAt(buffer.length() - 1);
         }
 
-        return new Token(lastMatch, buffer.toString());
+        Token result = new Token(lastMatch, buffer.toString());
+        for (TokenizerListener listener : listeners) {
+            listener.tokenReturned(result);
+        }
+        return result;
     }
 
     public void undo(Token token) {
         undo(token.value());
+        for (TokenizerListener listener : listeners) {
+            listener.tokenReverted(token);
+        }
     }
 
-    public void undo(String value) {
+    private void undo(String value) {
         int i = value.length();
         while (i > 0) {
             i--;
