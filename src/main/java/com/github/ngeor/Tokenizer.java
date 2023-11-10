@@ -13,6 +13,10 @@ public class Tokenizer {
         this.reader = reader;
     }
 
+    public Tokenizer(String input) {
+        this(new StringCharReader(input));
+    }
+
     public Token next() {
         StringBuilder buffer = new StringBuilder();
         EnumMap<TokenKind, IntPredicate> recognizers = new EnumMap<>(TokenKind.class);

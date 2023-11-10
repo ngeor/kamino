@@ -9,7 +9,7 @@ class TokenParserTest {
     @Test
     void test() {
         String input = "Hello, world";
-        Tokenizer tokenizer = new Tokenizer(new StringCharReader(input));
+        Tokenizer tokenizer = new Tokenizer(input);
         Parser<Token> parser = new TokenParser();
         assertThat(parser.parse(tokenizer)).isEqualTo(new ParseResult<>(new Token(TokenKind.LETTER, "Hello")));
         assertThat(parser.parse(tokenizer)).isEqualTo(new ParseResult<>(new Token(TokenKind.SYMBOL, ",")));
