@@ -5,4 +5,5 @@ public sealed interface Expression {
 
     record Name(String value) implements Expression {}
 
+    record UnaryExpression(String operation, Expression expression) implements Expression {}
 }

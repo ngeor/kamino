@@ -19,4 +19,12 @@ class ExpressionParserTest {
         Parser<Expression> parser = new ExpressionParser();
         assertThat(parser.parse(tokenizer)).isEqualTo(new ParseResult<>(new Expression.Name("Answer")));
     }
+
+    @Test
+    void minusLiteralDigit() {
+        Tokenizer tokenizer = new Tokenizer("-42");
+        Parser<Expression> parser = new ExpressionParser();
+        assertThat(parser.parse(tokenizer))
+                .isEqualTo(new ParseResult<>(new Expression.UnaryExpression("-", new Expression.LiteralDigit("42"))));
+    }
 }

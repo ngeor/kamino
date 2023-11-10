@@ -18,4 +18,8 @@ public interface Parser<E> {
     default Parser<E> or(Parser<E> other) {
         return new OrParser<>(this, other);
     }
+
+    default <O> Parser<AndParser.Tuple<E, O>> and(Parser<O> other) {
+        return new AndParser<>(this, other);
+    }
 }
