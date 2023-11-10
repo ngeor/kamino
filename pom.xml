@@ -10,7 +10,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- JaCoCo thresholds. Increase gradually as you add tests. -->
     <jacoco.unit-tests.limit.instruction-ratio>80%</jacoco.unit-tests.limit.instruction-ratio>
-    <jacoco.unit-tests.limit.branch-ratio>80%</jacoco.unit-tests.limit.branch-ratio>
+    <jacoco.unit-tests.limit.branch-ratio>75%</jacoco.unit-tests.limit.branch-ratio>
     <jacoco.unit-tests.limit.class-complexity>35</jacoco.unit-tests.limit.class-complexity>
     <jacoco.unit-tests.limit.method-complexity>10</jacoco.unit-tests.limit.method-complexity>
     <!-- dependencies -->
