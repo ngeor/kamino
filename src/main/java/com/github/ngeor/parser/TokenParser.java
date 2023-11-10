@@ -1,4 +1,4 @@
-package com.github.ngeor;
+package com.github.ngeor.parser;
 
 public class TokenParser implements Parser<Token> {
     @Override

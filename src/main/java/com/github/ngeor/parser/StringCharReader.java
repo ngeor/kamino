@@ -1,4 +1,4 @@
-package com.github.ngeor;
+package com.github.ngeor.parser;
 
 public class StringCharReader implements CharReader {
     private final String input;

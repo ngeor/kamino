@@ -1,4 +1,4 @@
-package com.github.ngeor;
+package com.github.ngeor.parser;
 
 public class ExpressionParser implements Parser<Expression> {
     @Override

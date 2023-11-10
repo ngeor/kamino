@@ -1,4 +1,4 @@
-package com.github.ngeor;
+package com.github.ngeor.parser;
 
 public class AndParser<L, R> implements Parser<AndParser.Tuple<L, R>> {
     private final Parser<L> left;

@@ -1,4 +1,4 @@
-package com.github.ngeor;
+package com.github.ngeor.parser;
 
 public sealed interface Expression {
     record LiteralDigit(String value) implements Expression {}

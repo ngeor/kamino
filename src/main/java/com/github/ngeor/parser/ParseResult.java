@@ -1,4 +1,4 @@
-package com.github.ngeor;
+package com.github.ngeor.parser;
 
 import java.util.function.Function;
 import java.util.function.Predicate;
