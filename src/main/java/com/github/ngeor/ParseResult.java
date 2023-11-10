@@ -1,5 +1,6 @@
 package com.github.ngeor;
 
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 public record ParseResult<E>(E value) {
@@ -10,11 +11,23 @@ public record ParseResult<E>(E value) {
         return (ParseResult<E>) EMPTY;
     }
 
+    public boolean isEmpty() {
+        return value == null;
+    }
+
+    public boolean isPresent() {
+        return value != null;
+    }
+
     public ParseResult<E> filter(Predicate<E> predicate) {
-        if (predicate.test(value)) {
+        if (isPresent() && predicate.test(value)) {
             return this;
         }
 
         return empty();
+    }
+
+    public <O> ParseResult<O> map(Function<E, O> mapper) {
+        return isEmpty() ? empty() : new ParseResult<>(mapper.apply(value));
     }
 }
