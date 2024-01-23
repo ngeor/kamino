@@ -13,14 +13,12 @@ public class OrParser<E> implements Parser<E> {
     public ParseResult<E> parse(Tokenizer tokenizer) {
         tokenizer.mark();
         ParseResult<E> result = left.parse(tokenizer);
-        return result
-            .map(x -> {
-                tokenizer.accept();
-                return x;
-            })
-            .or(() -> {
-                tokenizer.undo();
-                return right.parse(tokenizer);
-            });
+        if (result instanceof ParseResult.None<E>) {
+            tokenizer.undo();
+            return right.parse(tokenizer);
+        }
+        // Ok or Err win
+        tokenizer.accept();
+        return result;
     }
 }

@@ -11,11 +11,14 @@ public class AndParser<L, R> implements Parser<AndParser.Tuple<L, R>> {
 
     @Override
     public ParseResult<Tuple<L, R>> parse(Tokenizer tokenizer) {
+        tokenizer.mark();
         ParseResult<L> leftResult = left.parse(tokenizer);
-        return leftResult.flatMap(leftValue -> {
+        ParseResult<Tuple<L, R>> result = leftResult.flatMap(leftValue -> {
             ParseResult<R> rightResult = right.parse(tokenizer);
             return rightResult.flatMap(rightValue -> ParseResult.of(new Tuple<>(leftValue, rightValue)));
         });
+        tokenizer.undo(result instanceof ParseResult.None<Tuple<L,R>>);
+        return result;
     }
 
     public record Tuple<L, R>(L left, R right) {}

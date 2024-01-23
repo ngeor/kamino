@@ -8,7 +8,6 @@ public record ManyParser<E>(Parser<E> parser) implements Parser<List<E>> {
     public ParseResult<List<E>> parse(Tokenizer tokenizer) {
         List<E> result = new ArrayList<>();
         while (true) {
-            // TODO simplify mark/undo/accept
             tokenizer.mark();
 
             // TODO upgrade to Java 21 for switch patters
