@@ -21,10 +21,9 @@ public class ExpressionParser implements Parser<Expression> {
     }
 
     private Parser<Expression> stringLiteral() {
-        // TODO simplify Tuple selection
-        return quote().and(notQuote().many()).and(quote().orThrow())
-            .map(AndParser.Tuple::left)
-            .map(AndParser.Tuple::right)
+        return quote()
+            .andKeepingRight(innerStringToken().many())
+            .andKeepingLeft(quote().orThrow())
             .map(tokens -> tokens.stream().map(Token::value).collect(Collectors.joining()))
             .map(Expression.StringLiteral::new);
     }
@@ -33,7 +32,7 @@ public class ExpressionParser implements Parser<Expression> {
         return new TokenParser().filter(token -> "\"".equals(token.value()));
     }
 
-    private Parser<Token> notQuote() {
+    private Parser<Token> innerStringToken() {
         return new TokenParser()
             .filter(token -> token.kind() != TokenKind.NEW_LINE && !"\"".equals(token.value()));
     }

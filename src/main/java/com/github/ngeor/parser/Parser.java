@@ -24,6 +24,14 @@ public interface Parser<E> {
         return new AndParser<>(this, other);
     }
 
+    default <O> Parser<O> andKeepingRight(Parser<O> other) {
+        return this.and(other).map(AndParser.Tuple::right);
+    }
+
+    default <O> Parser<E> andKeepingLeft(Parser<O> other) {
+        return this.and(other).map(AndParser.Tuple::left);
+    }
+
     default Parser<List<E>> many() {
         return new ManyParser<>(this);
     }
