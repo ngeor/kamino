@@ -12,6 +12,6 @@ class StatementParserTest {
         Tokenizer tokenizer = new Tokenizer("A=42");
         Parser<Statement> parser = new StatementParser();
         assertThat(parser.parse(tokenizer))
-                .isEqualTo(new ParseResult<>(new Statement.Assignment("A", new Expression.LiteralDigit("42"))));
+                .isEqualTo(ParseResult.of(new Statement.Assignment("A", new Expression.LiteralDigit("42"))));
     }
 }

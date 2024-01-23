@@ -10,14 +10,14 @@ class ExpressionParserTest {
     void literalDigit() {
         Tokenizer tokenizer = new Tokenizer("42");
         Parser<Expression> parser = new ExpressionParser();
-        assertThat(parser.parse(tokenizer)).isEqualTo(new ParseResult<>(new Expression.LiteralDigit("42")));
+        assertThat(parser.parse(tokenizer)).isEqualTo(ParseResult.of(new Expression.LiteralDigit("42")));
     }
 
     @Test
     void name() {
         Tokenizer tokenizer = new Tokenizer("Answer");
         Parser<Expression> parser = new ExpressionParser();
-        assertThat(parser.parse(tokenizer)).isEqualTo(new ParseResult<>(new Expression.Name("Answer")));
+        assertThat(parser.parse(tokenizer)).isEqualTo(ParseResult.of(new Expression.Name("Answer")));
     }
 
     @Test
@@ -25,6 +25,6 @@ class ExpressionParserTest {
         Tokenizer tokenizer = new Tokenizer("-42");
         Parser<Expression> parser = new ExpressionParser();
         assertThat(parser.parse(tokenizer))
-                .isEqualTo(new ParseResult<>(new Expression.UnaryExpression("-", new Expression.LiteralDigit("42"))));
+                .isEqualTo(ParseResult.of(new Expression.UnaryExpression("-", new Expression.LiteralDigit("42"))));
     }
 }

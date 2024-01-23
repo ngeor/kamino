@@ -11,10 +11,10 @@ class TokenParserTest {
         String input = "Hello, world";
         Tokenizer tokenizer = new Tokenizer(input);
         Parser<Token> parser = new TokenParser();
-        assertThat(parser.parse(tokenizer)).isEqualTo(new ParseResult<>(new Token(TokenKind.LETTER, "Hello")));
-        assertThat(parser.parse(tokenizer)).isEqualTo(new ParseResult<>(new Token(TokenKind.SYMBOL, ",")));
-        assertThat(parser.parse(tokenizer)).isEqualTo(new ParseResult<>(new Token(TokenKind.SPACE, " ")));
-        assertThat(parser.parse(tokenizer)).isEqualTo(new ParseResult<>(new Token(TokenKind.LETTER, "world")));
+        assertThat(parser.parse(tokenizer)).isEqualTo(ParseResult.of(new Token(TokenKind.LETTER, "Hello")));
+        assertThat(parser.parse(tokenizer)).isEqualTo(ParseResult.of(new Token(TokenKind.SYMBOL, ",")));
+        assertThat(parser.parse(tokenizer)).isEqualTo(ParseResult.of(new Token(TokenKind.SPACE, " ")));
+        assertThat(parser.parse(tokenizer)).isEqualTo(ParseResult.of(new Token(TokenKind.LETTER, "world")));
         assertThat(parser.parse(tokenizer)).isEqualTo(ParseResult.empty());
     }
 }

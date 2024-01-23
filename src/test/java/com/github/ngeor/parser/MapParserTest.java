@@ -10,6 +10,6 @@ class MapParserTest {
     void test() {
         Tokenizer tokenizer = new Tokenizer("Hi");
         Parser<String> parser = new TokenParser().map(Token::value);
-        assertThat(parser.parse(tokenizer)).isEqualTo(new ParseResult<>("Hi"));
+        assertThat(parser.parse(tokenizer)).isEqualTo(ParseResult.of("Hi"));
     }
 }

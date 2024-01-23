@@ -10,7 +10,7 @@ class FilterParserTest {
     void success() {
         Tokenizer tokenizer = new Tokenizer("42");
         Parser<Token> parser = new TokenParser().filter(token -> token.kind() == TokenKind.DIGIT);
-        assertThat(parser.parse(tokenizer)).isEqualTo(new ParseResult<>(new Token(TokenKind.DIGIT, "42")));
+        assertThat(parser.parse(tokenizer)).isEqualTo(ParseResult.of(new Token(TokenKind.DIGIT, "42")));
     }
 
     @Test
