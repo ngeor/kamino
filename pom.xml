@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.ngeor</groupId>
   <artifactId>krt</artifactId>
-  <version>0.5.0</version>
+  <version>0.6.0-SNAPSHOT</version>
   <url>https://github.com/ngeor/krt</url>
   <scm>
     <connection>scm:git:https://github.com/ngeor/krt.git</connection>
