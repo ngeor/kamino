@@ -39,4 +39,8 @@ public interface Parser<E> {
     default Parser<E> orThrow() {
         return new OrThrowParser<>(this);
     }
+
+    default Parser<E> rollingBack() {
+        return this instanceof RollingBackParser<E> ? this : new RollingBackParser<>(this);
+    }
 }

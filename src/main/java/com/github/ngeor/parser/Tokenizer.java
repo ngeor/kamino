@@ -82,13 +82,6 @@ public class Tokenizer {
         offsets.remove(0);
     }
 
-    public void undo(boolean undo) {
-        int popped = offsets.remove(0);
-        if (undo) {
-            offset = popped;
-        }
-    }
-
     private boolean isAlpha(char ch) {
         return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z');
     }

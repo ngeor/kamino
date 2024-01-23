@@ -13,10 +13,7 @@ public class FilterParser<E> implements Parser<E> {
 
     @Override
     public ParseResult<E> parse(Tokenizer tokenizer) {
-        tokenizer.mark();
         ParseResult<E> original = decorated.parse(tokenizer);
-        ParseResult<E> filtered = original.filter(predicate);
-        tokenizer.undo(filtered instanceof ParseResult.None<E>);
-        return filtered;
+        return original.filter(predicate);
     }
 }
