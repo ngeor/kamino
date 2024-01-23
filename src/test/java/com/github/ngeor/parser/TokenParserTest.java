@@ -15,6 +15,6 @@ class TokenParserTest {
         assertThat(parser.parse(tokenizer)).isEqualTo(new ParseResult<>(new Token(TokenKind.SYMBOL, ",")));
         assertThat(parser.parse(tokenizer)).isEqualTo(new ParseResult<>(new Token(TokenKind.SPACE, " ")));
         assertThat(parser.parse(tokenizer)).isEqualTo(new ParseResult<>(new Token(TokenKind.LETTER, "world")));
-        assertThat(parser.parse(tokenizer)).isEqualTo(new ParseResult<>(new Token(TokenKind.EOF, "")));
+        assertThat(parser.parse(tokenizer)).isEqualTo(ParseResult.empty());
     }
 }

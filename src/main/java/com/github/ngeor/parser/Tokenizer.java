@@ -1,94 +1,100 @@
 package com.github.ngeor.parser;
 
 import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.EnumSet;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.function.IntPredicate;
+import java.util.Optional;
 
 public class Tokenizer {
-    private final CharReader reader;
-    private final List<TokenizerListener> listeners = new ArrayList<>();
-    private final Map<TokenKind, IntPredicate> recognizers;
-
-    public Tokenizer(CharReader reader) {
-        this.reader = reader;
-        recognizers = new EnumMap<>(TokenKind.class);
-        recognizers.put(TokenKind.SPACE, i -> i == ' ' || i == '\t');
-        recognizers.put(TokenKind.NEW_LINE, i -> i == '\r' || i == '\n');
-        recognizers.put(TokenKind.DIGIT, i -> i >= '0' && i <= '9');
-        recognizers.put(TokenKind.LETTER, i -> (i >= 'A' && i <= 'Z') || (i >= 'a' && i <= 'z'));
-    }
+    private final String input;
+    private int offset;
+    private List<Integer> offsets;
 
     public Tokenizer(String input) {
-        this(new StringCharReader(input));
+        this.input = input;
+        this.offset = 0;
+        this.offsets = new ArrayList<>();
     }
 
-    public void addListener(TokenizerListener listener) {
-        listeners.add(listener);
-    }
+    public Optional<Token> next() {
+        if (offset >= input.length()) {
+            return Optional.empty();
+        }
 
-    public void removeListener(TokenizerListener listener) {
-        listeners.remove(listener);
-    }
+        List<TokenKind> eligible = new ArrayList<>(Arrays.asList(TokenKind.values()));
 
-    public Token next() {
-        StringBuilder buffer = new StringBuilder();
-        Set<TokenKind> eligible = EnumSet.copyOf(recognizers.keySet());
-        TokenKind lastMatch = TokenKind.EOF;
-        while (reader.hasNext() && !eligible.isEmpty()) {
-            buffer.append(reader.next());
-            for (Map.Entry<TokenKind, IntPredicate> entry : recognizers.entrySet()) {
-                if (buffer.chars().allMatch(entry.getValue())) {
-                    lastMatch = entry.getKey();
+        boolean isFirst = true;
+        int maxOffset = offset;
+        int maxMatch = offset;
+        for (int i = offset; i < input.length(); i++) {
+            char ch = input.charAt(i);
+
+            List<TokenKind> pass = new ArrayList<>();
+            List<TokenKind> fail = new ArrayList<>();
+
+            while (!eligible.isEmpty()) {
+                TokenKind kind = eligible.remove(0);
+
+                boolean matches = switch (kind) {
+                    case LETTER -> isAlpha(ch) || (!isFirst && isDigit(ch));
+                    case DIGIT -> isDigit(ch);
+                    case SPACE -> isSpace(ch);
+                    case NEW_LINE -> isNewLine(ch);
+                    case SYMBOL -> isFirst;
+                    default -> false;
+                };
+
+                if (matches) {
+                    pass.add(kind);
+                    maxMatch = i;
                 } else {
-                    eligible.remove(entry.getKey());
+                    fail.add(kind);
                 }
             }
-        }
 
-        if (lastMatch == TokenKind.EOF) {
-            // None of the recognizers matched anything ever.
-            // Either it was EOF from the start, or it was a symbol.
-            if (!buffer.isEmpty()) {
-                lastMatch = TokenKind.SYMBOL;
+            isFirst = false;
+            maxOffset = i;
+
+            if (pass.isEmpty()) {
+                eligible.addAll(fail);
+                break;
+            } else {
+                eligible.addAll(pass);
             }
-        } else if (eligible.isEmpty()) {
-            // All recognizers were disqualified on the last round.
-            // Need to unread the last character.
-            reader.undo(buffer.charAt(buffer.length() - 1));
-            buffer.deleteCharAt(buffer.length() - 1);
         }
 
-        Token result = new Token(lastMatch, buffer.toString());
-        notifyTokenReturned(result);
-        return result;
+        String value = maxOffset == maxMatch ? input.substring(offset) : input.substring(offset, maxOffset);
+        TokenKind kind = eligible.remove(0);
+        Token token = new Token(kind, value);
+        offset += value.length();
+        return Optional.of(token);
     }
 
-    public void undo(Token token) {
-        undo(token.value());
-        notifyTokenReverted(token);
+    public void mark() {
+        offsets.add(0, offset);
     }
 
-    private void undo(String value) {
-        int i = value.length();
-        while (i > 0) {
-            i--;
-            reader.undo(value.charAt(i));
-        }
+    public void undo() {
+        offset = offsets.remove(0);
     }
 
-    private void notifyTokenReturned(Token result) {
-        for (TokenizerListener listener : listeners) {
-            listener.tokenReturned(result);
-        }
+    public void accept() {
+        offsets.remove(0);
     }
 
-    private void notifyTokenReverted(Token token) {
-        for (TokenizerListener listener : listeners) {
-            listener.tokenReverted(token);
-        }
+    private boolean isAlpha(char ch) {
+        return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z');
+    }
+
+    private boolean isDigit(char ch) {
+        return ch >= '0' && ch <= '9';
+    }
+
+    private boolean isSpace(char ch) {
+        return ch == ' ' || ch == '\t';
+    }
+
+    private boolean isNewLine(char ch) {
+        return ch == '\r' || ch == '\n';
     }
 }

@@ -1,7 +1,5 @@
 package com.github.ngeor.parser;
 
-import java.util.LinkedList;
-
 public class OrParser<E> implements Parser<E> {
     private final Parser<E> left;
     private final Parser<E> right;
@@ -21,9 +19,8 @@ public class OrParser<E> implements Parser<E> {
         }
     }
 
-    private static final class OptionalParser<E> implements Parser<E>, TokenizerListener {
+    private static final class OptionalParser<E> implements Parser<E> {
         private final Parser<E> decorated;
-        private final LinkedList<Token> tokens = new LinkedList<>();
 
         private OptionalParser(Parser<E> decorated) {
             this.decorated = decorated;
@@ -31,33 +28,14 @@ public class OrParser<E> implements Parser<E> {
 
         @Override
         public ParseResult<E> parse(Tokenizer tokenizer) {
-            tokenizer.addListener(this);
-            final ParseResult<E> result;
-            try {
-                result = decorated.parse(tokenizer);
-            } finally {
-                tokenizer.removeListener(this);
-            }
+            tokenizer.mark();
+            final ParseResult<E> result = decorated.parse(tokenizer);
             if (result.isEmpty()) {
-                undo(tokenizer);
+                tokenizer.undo();
+            } else {
+                tokenizer.accept();
             }
             return result;
-        }
-
-        @Override
-        public void tokenReturned(Token token) {
-            tokens.addLast(token);
-        }
-
-        @Override
-        public void tokenReverted(Token token) {
-            tokens.removeLast();
-        }
-
-        private void undo(Tokenizer tokenizer) {
-            while (!tokens.isEmpty()) {
-                tokenizer.undo(tokens.removeLast());
-            }
         }
     }
 }
