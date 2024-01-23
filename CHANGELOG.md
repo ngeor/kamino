@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.0] - 2024-01-23
+
+### Bug Fixes
+
+- Fixing native jobs
+- Fixing native jobs
+- Fixing workflows
+- Fixing workflows
+
+### Miscellaneous Tasks
+
+- Upgrade dependencies
+
 ## [0.4.0] - 2022-11-17
 
 ### Miscellaneous Tasks
