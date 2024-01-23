@@ -54,7 +54,7 @@ public class MavenVersionSetter implements VersionSetter {
         }
     }
 
-    private static class PathStack {
+    private static final class PathStack {
         private final LinkedList<String> path = new LinkedList<>();
 
         public void add(String name) {

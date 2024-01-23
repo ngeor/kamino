@@ -39,11 +39,11 @@ public class Git {
     }
 
     public void init() throws IOException, InterruptedException {
-        run("init");
+        run("init", "-b", "master");
     }
 
     public void initBare() throws IOException, InterruptedException {
-        run("init", "--bare");
+        run("init", "--bare", "-b", "master");
     }
 
     public void clone(String url) throws IOException, InterruptedException {
