@@ -3,6 +3,8 @@ package com.github.ngeor.parser;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 @SuppressWarnings("MagicNumber")
 class ExpressionParserTest {
@@ -50,6 +52,44 @@ class ExpressionParserTest {
         act();
         assertThat(parseResult.value())
                 .isEqualTo(new Expression.UnaryExpression("-", new Expression.IntegerLiteral(42)));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+        "1+2",
+        "1 +2",
+        "1+ 2",
+        "1 + 2"
+    })
+    void integerLiteralPlusIntegerLiteral(String input) {
+        this.input = input;
+        act();
+        assertThat(parseResult.value()).isEqualTo(
+            new Expression.BinaryExpression(
+                new Expression.IntegerLiteral(1),
+                "+",
+                new Expression.IntegerLiteral(2)
+            )
+        );
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+        "1-2",
+        "1 -2",
+        "1- 2",
+        "1 - 2"
+    })
+    void integerLiteralMinusIntegerLiteral(String input) {
+        this.input = input;
+        act();
+        assertThat(parseResult.value()).isEqualTo(
+            new Expression.BinaryExpression(
+                new Expression.IntegerLiteral(1),
+                "-",
+                new Expression.IntegerLiteral(2)
+            )
+        );
     }
 
     private void act() {

@@ -24,6 +24,19 @@ public sealed interface ParseResult<E> {
         throw new NoSuchElementException();
     }
 
+    default ParseResult<E> orThrow() {
+        return this;
+    }
+
+    /**
+     * Abandons the current value for the value provided by the given supplier.
+     * Can be used in order to discard an unimportant value.
+     * Errors are not discarded.
+     */
+    default <O> ParseResult<O> switchTo(Supplier<ParseResult<O>> supplier) {
+        return supplier.get();
+    }
+
     static <E> ParseResult<E> of(E value) {
         return new Ok<>(value);
     }
@@ -66,12 +79,23 @@ public sealed interface ParseResult<E> {
         public ParseResult<E> or(Supplier<ParseResult<E>> supplier) {
             return supplier.get();
         }
+
+        @Override
+        public ParseResult<E> orThrow() {
+            return ParseResult.err();
+        }
     }
 
     record Err<E>() implements ParseResult<E> {
         @Override
         public ParseResult<E> or(Supplier<ParseResult<E>> supplier) {
             return this;
+        }
+
+        @Override
+        @SuppressWarnings("unchecked")
+        public <O> ParseResult<O> switchTo(Supplier<ParseResult<O>> supplier) {
+            return (ParseResult<O>) this;
         }
     }
 }

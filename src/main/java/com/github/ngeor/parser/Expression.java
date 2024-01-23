@@ -7,5 +7,7 @@ public sealed interface Expression {
 
     record Name(String value) implements Expression {}
 
-    record UnaryExpression(String operation, Expression expression) implements Expression {}
+    record UnaryExpression(String operator, Expression expression) implements Expression {}
+
+    record BinaryExpression(Expression left, String operator, Expression right) implements Expression {}
 }

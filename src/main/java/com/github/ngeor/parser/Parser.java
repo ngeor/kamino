@@ -43,4 +43,14 @@ public interface Parser<E> {
     default Parser<E> rollingBack() {
         return this instanceof RollingBackParser<E> ? this : new RollingBackParser<>(this);
     }
+
+    default <O> Parser<E> surroundedBy(Parser<O> aroundParser) {
+        return new SurroundedByParser<>(this, aroundParser);
+    }
+
+    default Parser<E> surroundedByOptionalSpace() {
+        return this.surroundedBy(
+            new TokenParser().filter(t -> t.kind() == TokenKind.SPACE).rollingBack()
+        );
+    }
 }
