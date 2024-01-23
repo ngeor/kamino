@@ -39,11 +39,14 @@ jobs:
         java-version: '21'
         distribution: 'graalvm'
         github-token: ${{ secrets.GITHUB_TOKEN }}
-    - run: mvn -B -ntp -Pnative -DskipTests package
+    - name: Build artifact
+      run: mvn -B -ntp -Pnative -DskipTests package
+    - name: Rename artifact
+      run: mv target/krt target/krt-${{ matrix.os }}
     - uses: actions/upload-artifact@v3
       with:
         name: krt-native-image-${{ matrix.os }}
-        path: target/krt
+        path: target/krt-${{ matrix.os }}
   krt-native-windows:
     runs-on: windows-latest
     steps:
