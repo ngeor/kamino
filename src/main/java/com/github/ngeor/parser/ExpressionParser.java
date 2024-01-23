@@ -3,14 +3,15 @@ package com.github.ngeor.parser;
 public class ExpressionParser implements Parser<Expression> {
     @Override
     public ParseResult<Expression> parse(Tokenizer tokenizer) {
-        return literalDigit().or(name()).or(unaryExpression()).parse(tokenizer);
+        return integerLiteral().or(name()).or(unaryExpression()).parse(tokenizer);
     }
 
-    private Parser<Expression> literalDigit() {
+    private Parser<Expression> integerLiteral() {
         return new TokenParser()
                 .filter(token -> token.kind() == TokenKind.DIGIT)
                 .map(Token::value)
-                .map(Expression.LiteralDigit::new);
+                .map(Integer::parseInt)
+                .map(Expression.IntegerLiteral::new);
     }
 
     private Parser<Expression> name() {

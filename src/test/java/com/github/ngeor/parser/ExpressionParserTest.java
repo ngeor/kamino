@@ -10,10 +10,10 @@ class ExpressionParserTest {
     private ParseResult<Expression> parseResult;
 
     @Test
-    void literalDigit() {
+    void integerLiteral() {
         input = "42";
         act();
-        assertThat(parseResult.value()).isEqualTo(new Expression.LiteralDigit("42"));
+        assertThat(parseResult.value()).isEqualTo(new Expression.IntegerLiteral(42));
     }
 
     @Test
@@ -24,11 +24,11 @@ class ExpressionParserTest {
     }
 
     @Test
-    void minusLiteralDigit() {
+    void minusIntegerLiteral() {
         input = "-42";
         act();
         assertThat(parseResult.value())
-                .isEqualTo(new Expression.UnaryExpression("-", new Expression.LiteralDigit("42")));
+                .isEqualTo(new Expression.UnaryExpression("-", new Expression.IntegerLiteral(42)));
     }
 
     private void act() {

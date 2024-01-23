@@ -21,8 +21,8 @@ public class Interpreter {
     }
 
     private Variant evaluateExpression(Expression expression) {
-        if (expression instanceof Expression.LiteralDigit l) {
-            return new Variant.VInt(Integer.parseInt(l.value()));
+        if (expression instanceof Expression.IntegerLiteral l) {
+            return new Variant.VInt(l.value());
         } else {
             throw new UnsupportedOperationException();
         }
