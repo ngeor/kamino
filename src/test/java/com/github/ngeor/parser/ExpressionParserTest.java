@@ -17,6 +17,27 @@ class ExpressionParserTest {
     }
 
     @Test
+    void stringLiteral() {
+        input = "\"hello, world\"";
+        act();
+        assertThat(parseResult.value()).isEqualTo(new Expression.StringLiteral("hello, world"));
+    }
+
+    @Test
+    void emptyStringLiteral() {
+        input = "\"\"";
+        act();
+        assertThat(parseResult.value()).isEqualTo(new Expression.StringLiteral(""));
+    }
+
+    @Test
+    void unfinishedStringLiteral() {
+        input = "\"oops";
+        act();
+        assertThat(parseResult).isEqualTo(ParseResult.err());
+    }
+
+    @Test
     void name() {
         input = "Answer";
         act();

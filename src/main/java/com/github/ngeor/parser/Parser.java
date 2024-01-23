@@ -1,5 +1,6 @@
 package com.github.ngeor.parser;
 
+import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -21,5 +22,13 @@ public interface Parser<E> {
 
     default <O> Parser<AndParser.Tuple<E, O>> and(Parser<O> other) {
         return new AndParser<>(this, other);
+    }
+
+    default Parser<List<E>> many() {
+        return new ManyParser<>(this);
+    }
+
+    default Parser<E> orThrow() {
+        return new OrThrowParser<>(this);
     }
 }
