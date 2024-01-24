@@ -49,8 +49,6 @@ public interface Parser<E> {
     }
 
     default Parser<E> surroundedByOptionalSpace() {
-        return this.surroundedBy(
-            new TokenParser().filter(t -> t.kind() == TokenKind.SPACE).rollingBack()
-        );
+        return this.surroundedBy(Parsers.kind(TokenKind.SPACE).rollingBack());
     }
 }

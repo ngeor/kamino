@@ -13,12 +13,11 @@ public class StatementParser implements Parser<Statement> {
     }
 
     private Parser<String> name() {
-        return new TokenParser()
-                .filter(token -> token.kind() == TokenKind.LETTER)
+        return Parsers.kind(TokenKind.LETTER)
                 .map(Token::value);
     }
 
     private Parser<Token> equals() {
-        return new TokenParser().filter(token -> token.kind() == TokenKind.SYMBOL && "=".equals(token.value()));
+        return Parsers.symbol('=');
     }
 }

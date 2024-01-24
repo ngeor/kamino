@@ -33,8 +33,7 @@ public class ExpressionParser implements Parser<Expression> {
     }
 
     private Parser<Expression> integerLiteral() {
-        return new TokenParser()
-                .filter(token -> token.kind() == TokenKind.DIGIT)
+        return Parsers.kind(TokenKind.DIGIT)
                 .map(Token::value)
                 .map(Integer::parseInt)
                 .map(Expression.IntegerLiteral::new);
@@ -49,7 +48,7 @@ public class ExpressionParser implements Parser<Expression> {
     }
 
     private Parser<Token> quote() {
-        return new TokenParser().filter(token -> "\"".equals(token.value()));
+        return Parsers.symbol('"');
     }
 
     private Parser<Token> innerStringToken() {
@@ -58,8 +57,7 @@ public class ExpressionParser implements Parser<Expression> {
     }
 
     private Parser<Expression> name() {
-        return new TokenParser()
-                .filter(token -> token.kind() == TokenKind.LETTER)
+        return Parsers.kind(TokenKind.LETTER)
                 .map(Token::value)
                 .map(Expression.Name::new);
     }
@@ -71,8 +69,7 @@ public class ExpressionParser implements Parser<Expression> {
     }
 
     private Parser<String> unaryOperator() {
-        return new TokenParser()
-                .filter(token -> token.kind() == TokenKind.SYMBOL && "-".equals(token.value()))
+        return Parsers.symbol('-')
                 .map(Token::value);
     }
 
