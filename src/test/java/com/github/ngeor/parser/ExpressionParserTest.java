@@ -1,6 +1,7 @@
 package com.github.ngeor.parser;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,26 +11,27 @@ import org.junit.jupiter.params.provider.ValueSource;
 class ExpressionParserTest {
     private String input;
     private ParseResult<Expression> parseResult;
+    private Expression value;
 
     @Test
     void integerLiteral() {
         input = "42";
         act();
-        assertThat(parseResult.value()).isEqualTo(new Expression.IntegerLiteral(42));
+        assertThat(value).isEqualTo(new Expression.IntegerLiteral(42));
     }
 
     @Test
     void stringLiteral() {
         input = "\"hello, world\"";
         act();
-        assertThat(parseResult.value()).isEqualTo(new Expression.StringLiteral("hello, world"));
+        assertThat(value).isEqualTo(new Expression.StringLiteral("hello, world"));
     }
 
     @Test
     void emptyStringLiteral() {
         input = "\"\"";
         act();
-        assertThat(parseResult.value()).isEqualTo(new Expression.StringLiteral(""));
+        assertThat(value).isEqualTo(new Expression.StringLiteral(""));
     }
 
     @Test
@@ -43,14 +45,14 @@ class ExpressionParserTest {
     void name() {
         input = "Answer";
         act();
-        assertThat(parseResult.value()).isEqualTo(new Expression.Name("Answer"));
+        assertThat(value).isEqualTo(new Expression.Name("Answer"));
     }
 
     @Test
     void minusIntegerLiteral() {
         input = "-42";
         act();
-        assertThat(parseResult.value())
+        assertThat(value)
                 .isEqualTo(new Expression.UnaryExpression("-", new Expression.IntegerLiteral(42)));
     }
 
@@ -64,7 +66,7 @@ class ExpressionParserTest {
     void integerLiteralPlusIntegerLiteral(String input) {
         this.input = input;
         act();
-        assertThat(parseResult.value()).isEqualTo(
+        assertThat(value).isEqualTo(
             new Expression.BinaryExpression(
                 new Expression.IntegerLiteral(1),
                 "+",
@@ -83,7 +85,7 @@ class ExpressionParserTest {
     void integerLiteralMinusIntegerLiteral(String input) {
         this.input = input;
         act();
-        assertThat(parseResult.value()).isEqualTo(
+        assertThat(value).isEqualTo(
             new Expression.BinaryExpression(
                 new Expression.IntegerLiteral(1),
                 "-",
@@ -94,5 +96,10 @@ class ExpressionParserTest {
 
     private void act() {
         parseResult = new ExpressionParser().parse(new Tokenizer(input));
+        if (parseResult instanceof ParseResult.Ok<Expression> ok) {
+            value = ok.value();
+        } else {
+            value = null;
+        }
     }
 }

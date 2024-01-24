@@ -11,18 +11,23 @@ public record ManyParser<E>(Parser<E> parser) implements Parser<List<E>> {
     @Override
     public ParseResult<List<E>> parse(Tokenizer tokenizer) {
         List<E> result = new ArrayList<>();
-        while (true) {
-            // TODO upgrade to Java 21 for switch patters
-            ParseResult<E> parseResult = parser.parse(tokenizer);
-            if (parseResult instanceof ParseResult.Ok<E> ok) {
-                result.add(ok.value());
-            } else if (parseResult instanceof ParseResult.None<E>) {
-                break;
-            } else if (parseResult instanceof ParseResult.Err<E>) {
-                return (ParseResult<List<E>>) parseResult;
+        boolean goOn = true;
+        ParseResult<E> err = ParseResult.empty();
+        while (goOn) {
+            switch (parser.parse(tokenizer)) {
+                case ParseResult.Ok<E> ok:
+                    result.add(ok.value());
+                    break;
+                case ParseResult.None<E> ignored:
+                    goOn = false;
+                    break;
+                case ParseResult.Err<E> e:
+                    goOn = false;
+                    err = e;
+                    break;
             }
         }
 
-        return ParseResult.of(result);
+        return err.switchTo(() -> ParseResult.of(result));
     }
 }

@@ -11,25 +11,25 @@ public class ExpressionParser implements Parser<Expression> {
             .or(name())
             .or(unaryExpression())
             .parse(tokenizer);
-        if (!(singleResult instanceof ParseResult.Ok<Expression>)) {
-            return singleResult;
-        }
+        return singleResult.flatMap(leftValue -> {
+            // try if there is a binary operator next
+            ParseResult<String> opResult = binaryOperator()
+                .surroundedByOptionalSpace()
+                .rollingBack()
+                .parse(tokenizer);
 
-        // try if there is a binary operator next
-        ParseResult<String> opResult = binaryOperator()
-            .surroundedByOptionalSpace()
-            .rollingBack()
-            .parse(tokenizer);
-        if (opResult instanceof ParseResult.Err<String>) {
-            return ParseResult.err(); // TODO (ParseResult<Expression>) opResult;
-        }
-        if (opResult instanceof ParseResult.None<String>) {
-            return singleResult;
-        }
-
-        // there is an operator, so it's recursion time
-        ParseResult<Expression> rightResult = parse(tokenizer).orThrow();
-        return rightResult.map(right -> new Expression.BinaryExpression(singleResult.value(), opResult.value(), right));
+            return switch (opResult) {
+                case ParseResult.Ok<String> ok -> {
+                    // there is an operator, so it's recursion time
+                    ParseResult<Expression> rightResult = parse(tokenizer).orThrow();
+                    yield rightResult.map(right -> new Expression.BinaryExpression(leftValue, ok.value(), right));
+                }
+                // no operator, return the already parsed expression
+                case ParseResult.None<String> ignored -> singleResult;
+                // errors take precedence
+                case ParseResult.Err<String> err -> err.cast();
+            };
+        });
     }
 
     private Parser<Expression> integerLiteral() {
