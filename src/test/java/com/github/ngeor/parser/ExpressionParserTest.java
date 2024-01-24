@@ -1,7 +1,6 @@
 package com.github.ngeor.parser;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -110,6 +109,143 @@ class ExpressionParserTest {
             operator,
             new Expression.IntegerLiteral(right)
         ));
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+        "1 + 2 + 3, 1, +, 2, +, 3",
+        "1 - 2 + 3, 1, -, 2, +, 3",
+        "1 * 2 + 3, 1, *, 2, +, 3",
+        "1 / 2 * 3, 1, /, 2, *, 3",
+    })
+    void mathBinaryUnchangedPriority(
+        String expression,
+        int innerLeft,
+        String innerOp,
+        int innerRight,
+        String outerOp,
+        int outerRight
+    ) {
+        this.input = expression;
+        act();
+        assertThat(value).isEqualTo(
+            new Expression.BinaryExpression(
+                new Expression.BinaryExpression(
+                    new Expression.IntegerLiteral(innerLeft),
+                    innerOp,
+                    new Expression.IntegerLiteral(innerRight)
+                ),
+                outerOp,
+                new Expression.IntegerLiteral(outerRight)
+            )
+        );
+    }
+
+    @Test
+    void fourMemberAddition() {
+        this.input = "1 + 2 + 3 + 4";
+        act();
+        assertThat(value).isEqualTo(
+            new Expression.BinaryExpression(
+                new Expression.BinaryExpression(
+                    new Expression.BinaryExpression(
+                        new Expression.IntegerLiteral(1),
+                        "+",
+                        new Expression.IntegerLiteral(2)
+                    ),
+                    "+",
+                    new Expression.IntegerLiteral(3)
+                ),
+                "+",
+                new Expression.IntegerLiteral(4)
+            )
+        );
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({
+        "1 + 2 * 3, 1, +, 2, *, 3",
+        "1 - 2 / 3, 1, -, 2, /, 3",
+    })
+    void mathBinaryChangedPriority(
+        String expression,
+        int outerLeft,
+        String outerOp,
+        int innerLeft,
+        String innerOp,
+        int innerRight
+    ) {
+        this.input = expression;
+        act();
+        assertThat(value).isEqualTo(
+            new Expression.BinaryExpression(
+                new Expression.IntegerLiteral(outerLeft),
+                outerOp,
+                new Expression.BinaryExpression(
+                    new Expression.IntegerLiteral(innerLeft),
+                    innerOp,
+                    new Expression.IntegerLiteral(innerRight)
+                )
+            )
+        );
+    }
+
+    @Test
+    void fourMemberChangedPriority() {
+        input = "1 + 2 + 3 * 4";
+        act();
+        assertThat(value).isEqualTo(
+            new Expression.BinaryExpression(
+                new Expression.BinaryExpression(
+                    new Expression.IntegerLiteral(1),
+                    "+",
+                    new Expression.IntegerLiteral(2)
+                ),
+                "+",
+                new Expression.BinaryExpression(
+                    new Expression.IntegerLiteral(3),
+                    "*",
+                    new Expression.IntegerLiteral(4)
+                )
+            )
+        );
+
+        input = "1 + 2 * 3 + 4";
+        act();
+        assertThat(value).isEqualTo(
+            new Expression.BinaryExpression(
+                new Expression.BinaryExpression(
+                    new Expression.IntegerLiteral(1),
+                    "+",
+                    new Expression.BinaryExpression(
+                        new Expression.IntegerLiteral(2),
+                        "*",
+                        new Expression.IntegerLiteral(3)
+                    )
+                ),
+                "+",
+                new Expression.IntegerLiteral(4)
+            )
+        );
+
+        input = "1 * 2 + 3 + 4";
+        act();
+        assertThat(value).isEqualTo(
+            new Expression.BinaryExpression(
+                new Expression.BinaryExpression(
+                    new Expression.BinaryExpression(
+                        new Expression.IntegerLiteral(1),
+                        "*",
+                        new Expression.IntegerLiteral(2)
+                    ),
+                    "+",
+                    new Expression.IntegerLiteral(3)
+                ),
+                "+",
+                new Expression.IntegerLiteral(4)
+            )
+        );
     }
 
     private void act() {

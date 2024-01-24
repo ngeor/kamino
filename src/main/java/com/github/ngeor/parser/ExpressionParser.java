@@ -4,32 +4,58 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ExpressionParser implements Parser<Expression> {
-    @Override
-    public ParseResult<Expression> parse(Tokenizer tokenizer) {
-        ParseResult<Expression> singleResult = integerLiteral()
+
+    private Parser<Expression> nonBinaryParser() {
+        return integerLiteral()
             .or(stringLiteral())
             .or(name())
-            .or(unaryExpression())
-            .parse(tokenizer);
-        return singleResult.flatMap(leftValue -> {
+            .or(unaryExpression());
+    }
+
+    @Override
+    public ParseResult<Expression> parse(Tokenizer tokenizer) {
+        ParseResult<Expression> leftResult = nonBinaryParser().parse(tokenizer);
+
+        if (!(leftResult instanceof ParseResult.Ok<Expression>)) {
+            return leftResult;
+        }
+
+        boolean goOn = true;
+        while (goOn) {
             // try if there is a binary operator next
             ParseResult<String> opResult = binaryOperator()
                 .surroundedByOptionalSpace()
                 .rollingBack()
                 .parse(tokenizer);
 
-            return switch (opResult) {
-                case ParseResult.Ok<String> ok -> {
-                    // there is an operator, so it's recursion time
-                    ParseResult<Expression> rightResult = parse(tokenizer).orThrow();
-                    yield rightResult.map(right -> new Expression.BinaryExpression(leftValue, ok.value(), right));
-                }
-                // no operator, return the already parsed expression
-                case ParseResult.None<String> ignored -> singleResult;
-                // errors take precedence
-                case ParseResult.Err<String> err -> err.cast();
-            };
-        });
+            switch (opResult) {
+                case ParseResult.Ok<String> opOk:
+                    ParseResult<Expression> rightResult = nonBinaryParser().parse(tokenizer);
+                    switch (rightResult) {
+                        case ParseResult.Ok<Expression> rightOk:
+                            // combine
+                            leftResult = leftResult.map(
+                                leftValue -> leftValue.toBinary(
+                                    opOk.value(),
+                                    rightOk.value()
+                                )
+                            );
+                            break;
+                        case ParseResult.None<Expression> ignored:
+                            return ParseResult.err();
+                        case ParseResult.Err<Expression> rightErr:
+                            return rightErr.cast();
+                    }
+                    break;
+                case ParseResult.None<String> ignored:
+                    goOn = false;
+                    break;
+                case ParseResult.Err<String> opErr:
+                    return opErr.cast();
+            }
+        }
+
+        return leftResult;
     }
 
     private Parser<Expression> integerLiteral() {
