@@ -75,7 +75,7 @@ public class ExpressionParser implements Parser<Expression> {
 
     private Parser<String> binaryOperator() {
         return new TokenParser()
-            .filter(token -> token.kind() == TokenKind.SYMBOL && Set.of("-", "+").contains(token.value()))
+            .filter(token -> token.kind() == TokenKind.SYMBOL && Set.of("+", "-", "*", "/").contains(token.value()))
             .map(Token::value);
     }
 }

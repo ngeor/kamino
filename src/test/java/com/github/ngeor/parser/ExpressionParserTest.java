@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 @SuppressWarnings("MagicNumber")
@@ -92,6 +93,23 @@ class ExpressionParserTest {
                 new Expression.IntegerLiteral(2)
             )
         );
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+        "1 + 4, 1, +, 4",
+        "42 - 10, 42, -, 10",
+        "5 * 7, 5, *, 7",
+        "8 / 2, 8, /, 2"
+    })
+    void mathBinary(String expression, int left, String operator, int right) {
+        this.input = expression;
+        act();
+        assertThat(value).isEqualTo(new Expression.BinaryExpression(
+            new Expression.IntegerLiteral(left),
+            operator,
+            new Expression.IntegerLiteral(right)
+        ));
     }
 
     private void act() {
