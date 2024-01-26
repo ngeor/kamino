@@ -60,7 +60,7 @@ public final class App {
                             .redirectOutput(ProcessBuilder.Redirect.PIPE),
                     new ProcessBuilder("gpg", "--batch", "--yes", "--import")
                             .redirectError(ProcessBuilder.Redirect.INHERIT)));
-            processes.getLast().waitFor();
+            processes.get(processes.size() - 1).waitFor();
 
             // prepare settings.xml
             File settingsFile = createMavenSettingsFile(nexusUsername, nexusPassword, gpgKey, gpgPassphrase);
