@@ -21,6 +21,6 @@ Each project's folder should have a README file and a CHANGELOG (if applicable).
 ## Releasing
 
 Releasing is tag based. The tag format is the folder structure,
-followed by the version, e.g.: `app1/v1.2.3`, `lib1/v.1.2.3`, etc.
+followed by the version, e.g.: `apps/app1/v1.2.3`, `libs/lib1/v.1.2.3`, etc.
 
 Normally apps aren't released to Nexus.

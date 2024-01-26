@@ -2,7 +2,7 @@ name: Release
 
 on:
   push:
-    tags: [ "v*" ]
+    tags: [ "libs/yak4j-dom/v*" ]
 
 jobs:
   build:

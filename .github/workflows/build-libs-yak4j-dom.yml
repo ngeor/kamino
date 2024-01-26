@@ -5,9 +5,13 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ trunk ]
+    branches: [ master ]
+    paths:
+      - libs/yak4j-dom/**
   pull_request:
-    branches: [ trunk ]
+    branches: [ master ]
+    paths:
+      - libs/yak4j-dom/**
 
 jobs:
   build:
@@ -23,4 +27,4 @@ jobs:
         distribution: 'adopt'
         cache: maven
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B package --file libs/yak4j-dom/pom.xml
