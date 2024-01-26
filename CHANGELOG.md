@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.8.3] - 2024-01-26
+
+### Bug Fixes
+
+- Fixing release github workflow
+
 ## [2.8.2] - 2024-01-26
 
 ### Features
