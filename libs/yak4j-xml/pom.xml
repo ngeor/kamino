@@ -7,7 +7,7 @@
     <version>3.3.0</version>
   </parent>
   <artifactId>yak4j-xml</artifactId>
-  <version>0.17.2</version>
+  <version>0.18.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>yak4j-xml</name>
   <description>yak shaving for Java: XML utilities</description>
@@ -15,7 +15,7 @@
   <scm>
     <connection>scm:git:https://github.com/ngeor/yak4j-xml.git</connection>
     <developerConnection>scm:git:git@github.com:ngeor/yak4j-xml.git</developerConnection>
-    <tag>libs/yak4j-xml/v0.17.2</tag>
+    <tag>HEAD</tag>
     <url>https://github.com/ngeor/yak4j-xml</url>
   </scm>
   <properties>
