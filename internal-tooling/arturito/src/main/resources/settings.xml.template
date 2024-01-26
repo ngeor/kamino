@@ -1,0 +1,18 @@
+<settings>
+    <servers>
+        <server>
+            <id>ossrh</id>
+            <username>%s</username>
+            <password>%s</password>
+        </server>
+    </servers>
+    <profiles>
+        <profile>
+            <id>gpg</id>
+            <properties>
+                <gpg.keyname>%s</gpg.keyname>
+                <gpg.passphrase>%s</gpg.passphrase>
+            </properties>
+        </profile>
+    </profiles>
+</settings>
