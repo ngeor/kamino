@@ -15,17 +15,12 @@ jobs:
         java-version: '11'
         distribution: 'zulu'
         cache: maven
-    - name: Import GPG key workaround
-      run: gpg --batch --yes --passphrase=${{ secrets.GPG_PASSPHRASE }} --output - scripts/keys.asc > /dev/null
-    - name: Import GPG key
-      run: gpg --batch --yes --passphrase=${{ secrets.GPG_PASSPHRASE }} --output - scripts/keys.asc | gpg --batch --yes --import
-    - name: Release
+    - name: Build arturito release tooling
+      run: mvn -B --file internal-tooling/arturito/pom.xml package
+    - name: Run arturito release tooling
       run: >-
-        ./scripts/release.py
-        --gpg-key ${{ secrets.GPG_KEY }}
-        --gpg-passphrase ${{ secrets.GPG_PASSPHRASE }}
-        --maven-username ${{ secrets.OSSRH_USERNAME }}
-        --maven-password ${{ secrets.OSSRH_PASSWORD }}
-    - name: Cleanup GPG
-      if: always()
-      run: rm -rf $HOME/.gnupg
+        cd libs/yak4j-xml && java -jar ../../internal-tooling/arturito/target/arturito-1.0-SNAPSHOT.jar
+        ${{ secrets.GPG_KEY }}
+        ${{ secrets.GPG_PASSPHRASE }}
+        ${{ secrets.OSSRH_USERNAME }}
+        ${{ secrets.OSSRH_PASSWORD }}
