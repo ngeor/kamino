@@ -20,7 +20,7 @@ jobs:
     - name: Run arturito release tooling
       run: >-
         cd libs/yak4j-dom && java -jar ../../internal-tooling/arturito/target/arturito-1.0-SNAPSHOT.jar
-        --gpg-key ${{ secrets.GPG_KEY }}
-        --gpg-passphrase ${{ secrets.GPG_PASSPHRASE }}
-        --maven-username ${{ secrets.OSSRH_USERNAME }}
-        --maven-password ${{ secrets.OSSRH_PASSWORD }}
+        ${{ secrets.GPG_KEY }}
+        ${{ secrets.GPG_PASSPHRASE }}
+        ${{ secrets.OSSRH_USERNAME }}
+        ${{ secrets.OSSRH_PASSWORD }}
