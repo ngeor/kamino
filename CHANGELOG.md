@@ -1,13 +1,20 @@
 # Changelog
+
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## [2.8.2] - 2024-01-26
+
+### Features
+
+- Use tag based release workflow
 
 ### Miscellaneous Tasks
 
 - Updated copyright year in LICENSE
 - Updating parent from 2.1.0 to 2.4.0
+- Updated changelog
 - Updating parent from 2.4.0 to 3.1.1
+- Updated changelog
 - Update dependency org.apache.maven.archetype:archetype-packaging to v3.2.1
 - Update dependency org.apache.maven.plugins:maven-enforcer-plugin to v3.0.0
 - Update dependency org.apache.maven.plugins:maven-javadoc-plugin to v3.3.1
@@ -15,8 +22,35 @@ All notable changes to this project will be documented in this file.
 - Update dependency com.puppycrawl.tools:checkstyle to v9
 - Update dependency org.jacoco:jacoco-maven-plugin to v0.8.7
 - Update junit.version to v5.8.2
+- Updated changelog
 - Update dependency com.github.ngeor:checkstyle-rules to v5.1.0
+- Updated changelog
 - Update dependency org.apache.maven.plugins:maven-javadoc-plugin to v3.3.2
+- Updated changelog
+- Update dependency com.puppycrawl.tools:checkstyle to v10
+- Update dependency com.github.ngeor:checkstyle-rules to v5.2.0
+- Updated .editorconfig
+- Update dependency com.github.ngeor:checkstyle-rules to v5.3.0
+- Update dependency com.github.ngeor:checkstyle-rules to v6
+- Update dependency com.puppycrawl.tools:checkstyle to v10.1
+- Update dependency org.apache.maven.plugins:maven-surefire-plugin to v3.0.0-m6
+- Update dependency org.jacoco:jacoco-maven-plugin to v0.8.8
+- Update dependency com.puppycrawl.tools:checkstyle to v10.2
+- Update dependency org.apache.maven.plugins:maven-javadoc-plugin to v3.4.0
+- Update dependency com.puppycrawl.tools:checkstyle to v10.3
+- Update dependency org.apache.maven.plugins:maven-surefire-plugin to v3.0.0-m7
+- Update dependency org.apache.maven.plugins:maven-enforcer-plugin to v3.1.0
+- Update dependency com.github.ngeor:checkstyle-rules to v6.1.0
+- Update dependency com.github.ngeor:java to v3.2.0
+- Update dependency com.puppycrawl.tools:checkstyle to v10.3.1
+- Update dependency com.puppycrawl.tools:checkstyle to v10.3.3
+- Update dependency org.apache.maven.plugins:maven-javadoc-plugin to v3.4.1
+- Update dependency org.apache.maven.plugins:maven-checkstyle-plugin to v3.2.0
+- Update junit.version to v5.9.0
+- Update dependency com.github.ngeor:checkstyle-rules to v6.2.1
+- Update dependency com.github.ngeor:java to v3.3.0
+- Update junit.version to v5.9.1
+- Update dependency com.puppycrawl.tools:checkstyle to v10.3.4
 
 ## [2.8.1] - 2022-01-26
 
