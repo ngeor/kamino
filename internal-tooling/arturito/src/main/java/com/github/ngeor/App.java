@@ -43,6 +43,7 @@ public final class App {
                             "-",
                             keysFile.toString())
                     .inheritIO()
+                    .redirectOutput(ProcessBuilder.Redirect.DISCARD)
                     .start()
                     .waitFor();
 
@@ -59,6 +60,7 @@ public final class App {
                             .inheritIO()
                             .redirectOutput(ProcessBuilder.Redirect.PIPE),
                     new ProcessBuilder("gpg", "--batch", "--yes", "--import")
+                            .redirectOutput(ProcessBuilder.Redirect.DISCARD)
                             .redirectError(ProcessBuilder.Redirect.INHERIT)));
             processes.get(processes.size() - 1).waitFor();
 
@@ -103,7 +105,7 @@ public final class App {
     }
 
     private static void runMavenDeploy(File settingsFile) throws InterruptedException, IOException {
-        new ProcessBuilder("mvn", "-B", "-s", settingsFile.toString(), "-Pgpg", "deploy")
+        new ProcessBuilder("mvn", "-B", "-ntp", "-s", settingsFile.toString(), "-Pgpg", "deploy")
                 .inheritIO()
                 .start()
                 .waitFor();
