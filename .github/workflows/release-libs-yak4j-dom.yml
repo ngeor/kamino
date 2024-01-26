@@ -19,7 +19,7 @@ jobs:
       run: mvn -B --file internal-tooling/arturito/pom.xml package
     - name: Run arturito release tooling
       run: >-
-        cd libs/yak4j-dom && java -jar ../../internal-tooling/arturito/target/arturito-1.0-SNAPSHOT-jar-with-dependencies.jar
+        cd libs/yak4j-dom && java -jar ../../internal-tooling/arturito/target/arturito-1.0-SNAPSHOT.jar
         --gpg-key ${{ secrets.GPG_KEY }}
         --gpg-passphrase ${{ secrets.GPG_PASSPHRASE }}
         --maven-username ${{ secrets.OSSRH_USERNAME }}
