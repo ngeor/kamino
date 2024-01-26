@@ -7,6 +7,8 @@ A monorepo for my hobby Java projects
 ```txt
 apps
   app1
+internal-tooling
+  tool1
 libs
   lib1
 maven-plugins
@@ -17,6 +19,8 @@ Each project is independent. There is no root parent pom for the entire monorepo
 It might even be in the future that some projects are not using Maven.
 
 Each project's folder should have a README file and a CHANGELOG (if applicable).
+
+`internal-tooling` holds solutions specific to managing this repository.
 
 ## Releasing
 
