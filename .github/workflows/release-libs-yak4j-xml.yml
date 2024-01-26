@@ -2,7 +2,7 @@ name: Release
 
 on:
   push:
-    tags: [ "v*" ]
+    tags: [ "libs/yak4j-xml/v*" ]
 
 jobs:
   build:
@@ -13,8 +13,10 @@ jobs:
       uses: actions/setup-java@v2
       with:
         java-version: '11'
-        distribution: 'adopt'
+        distribution: 'zulu'
         cache: maven
+    - name: Import GPG key workaround
+      run: gpg --batch --yes --passphrase=${{ secrets.GPG_PASSPHRASE }} --output - scripts/keys.asc > /dev/null
     - name: Import GPG key
       run: gpg --batch --yes --passphrase=${{ secrets.GPG_PASSPHRASE }} --output - scripts/keys.asc | gpg --batch --yes --import
     - name: Release
@@ -24,3 +26,6 @@ jobs:
         --gpg-passphrase ${{ secrets.GPG_PASSPHRASE }}
         --maven-username ${{ secrets.OSSRH_USERNAME }}
         --maven-password ${{ secrets.OSSRH_PASSWORD }}
+    - name: Cleanup GPG
+      if: always()
+      run: rm -rf $HOME/.gnupg
