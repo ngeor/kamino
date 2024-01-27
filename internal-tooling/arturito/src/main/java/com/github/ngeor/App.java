@@ -105,9 +105,12 @@ public final class App {
     }
 
     private static void runMavenDeploy(File settingsFile) throws InterruptedException, IOException {
-        new ProcessBuilder("mvn", "-B", "-ntp", "-s", settingsFile.toString(), "-Pgpg", "deploy")
+        int exitCode = new ProcessBuilder("mvn", "-B", "-ntp", "-s", settingsFile.toString(), "-Pgpg", "deploy")
                 .inheritIO()
                 .start()
                 .waitFor();
+        if (exitCode != 0) {
+            throw new IllegalStateException("Maven deploy failed");
+        }
     }
 }
