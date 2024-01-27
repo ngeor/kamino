@@ -7,7 +7,7 @@
     <version>3.3.0</version>
   </parent>
   <artifactId>yak4j-xml</artifactId>
-  <version>0.18.0-SNAPSHOT</version>
+  <version>0.17.3</version>
   <packaging>jar</packaging>
   <name>yak4j-xml</name>
   <description>yak shaving for Java: XML utilities</description>
@@ -15,7 +15,7 @@
   <scm>
     <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
     <developerConnection>scm:git:git@github.com:ngeor/kamino.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>libs/yak4j-xml/v0.17.3</tag>
     <url>https://github.com/ngeor/kamino/tree/master/libs/yak4j-xml</url>
   </scm>
   <properties>
