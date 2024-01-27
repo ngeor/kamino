@@ -19,6 +19,8 @@ import org.xml.sax.SAXException;
  * Hello world!
  */
 public final class App {
+    private static final String GROUP_ID = "com.github.ngeor";
+
     private final StringTemplate buildTemplate = StringTemplate.ofResource("/build-template.yml");
     private final StringTemplate releaseTemplate = StringTemplate.ofResource("/release-template.yml");
     private final File root;
@@ -82,8 +84,8 @@ public final class App {
                     releaseTemplate.render(variables));
         }
 
-        // fixProjectUrls(typeLevel, projectLevel, pomFile);
-        // sortPom(pomFile);
+         fixProjectUrls(typeLevel, projectLevel, pomFile);
+         sortPom(pomFile);
 
         fixProjectBadges(typeLevel, projectLevel, pomFile);
     }
@@ -91,6 +93,9 @@ public final class App {
     private void fixProjectUrls(File typeLevel, File projectLevel, File pomFile)
             throws ParserConfigurationException, IOException, SAXException, TransformerException {
         Document document = XmlUtils.parse(pomFile);
+
+        XmlUtils.setChildText(document.getDocumentElement(), "groupId", GROUP_ID);
+        XmlUtils.setChildText(document.getDocumentElement(), "artifactId", projectLevel.getName());
 
         // TODO do not hardcode the github URL
         String url =
@@ -125,9 +130,8 @@ public final class App {
             return;
         }
 
-        // TODO read group and artifact from effective pom
-        String group = "com.github.ngeor";
-        String artifact = projectLevel.getName();
+        String groupId = GROUP_ID;
+        String artifactId = projectLevel.getName();
         boolean foundBadges = false;
         List<String> lines = Files.readAllLines(readmeFile.toPath());
         for (int i = 0; i < lines.size(); i++) {
@@ -135,18 +139,20 @@ public final class App {
             if (line.startsWith("[![")) {
                 foundBadges = true;
 
+                // TODO add missing badges
                 if (line.startsWith("[![Maven Central")) {
-                    line = "[![Maven Central](https://img.shields.io/maven-central/v/" + group + "/" + artifact
-                            + ".svg?label=Maven%20Central)](https://central.sonatype.com/artifact/" + group + "/"
-                            + artifact + "/overview)";
+                    line = "[![Maven Central](https://img.shields.io/maven-central/v/" + groupId + "/" + artifactId
+                            + ".svg?label=Maven%20Central)](https://central.sonatype.com/artifact/" + groupId + "/"
+                            + artifactId + "/overview)";
                     lines.set(i, line);
                 } else if (line.startsWith("[![Java CI") || line.startsWith("[![Build")) {
-                    String url = "https://github.com/ngeor/kamino/actions/workflows/build-" + typeLevel.getName() + "-" + projectLevel.getName() +".yml";
+                    String url = "https://github.com/ngeor/kamino/actions/workflows/build-" + typeLevel.getName() + "-"
+                            + projectLevel.getName() + ".yml";
                     line = String.format("[![Build %s](%s/badge.svg)](%s)", projectLevel.getName(), url, url);
                     lines.set(i, line);
                 } else if (line.startsWith("[![javadoc")) {
-                    String badgeUrl = String.format("https://javadoc.io/badge2/%s/%s/javadoc.svg", group, artifact);
-                    String url = String.format("https://javadoc.io/doc/%s/%s", group, artifact);
+                    String badgeUrl = String.format("https://javadoc.io/badge2/%s/%s/javadoc.svg", groupId, artifactId);
+                    String url = String.format("https://javadoc.io/doc/%s/%s", groupId, artifactId);
                     line = String.format("[![javadoc](%s)](%s)", badgeUrl, url);
                     lines.set(i, line);
                 }

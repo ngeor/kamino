@@ -35,14 +35,22 @@ public final class XmlUtils {
     }
 
     public static Element ensureChild(Element parentElement, String tag) {
-        Element childElement;
-        NodeList elements = parentElement.getElementsByTagName(tag);
-        if (elements.getLength() == 0) {
+        Element childElement = getChild(parentElement, tag);
+        if (childElement == null) {
             childElement = parentElement.getOwnerDocument().createElement(tag);
             parentElement.appendChild(childElement);
-        } else {
-            childElement = (Element) elements.item(0);
         }
         return childElement;
+    }
+
+    public static Element getChild(Element parentElement, String tag) {
+        NodeList elements = parentElement.getChildNodes();
+        for (int i = 0; i < elements.getLength(); i++) {
+            if (elements.item(i) instanceof Element e && tag.equals(e.getTagName())) {
+                return e;
+            }
+        }
+
+        return null;
     }
 }
