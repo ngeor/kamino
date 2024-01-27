@@ -31,7 +31,7 @@ public final class App {
      */
     public static void main(String[] args)
             throws IOException, InterruptedException, ParserConfigurationException, SAXException, TransformerException {
-        new App(new File("../../")).run();
+        new App(detectRootDirectory()).run();
     }
 
     private App(File root) throws IOException {
@@ -179,5 +179,18 @@ public final class App {
             }
         }
         return null;
+    }
+
+    private static File detectRootDirectory() {
+        File file = new File(".").getAbsoluteFile();
+        while (!looksLikeRootDirectory(file)) {
+            file = file.getParentFile();
+        }
+
+        return file;
+    }
+
+    private static boolean looksLikeRootDirectory(File file) {
+        return file.isDirectory() && new File(file, ".git").isDirectory() && new File(file, ".github").isDirectory();
     }
 }
