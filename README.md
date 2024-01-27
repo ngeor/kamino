@@ -7,11 +7,13 @@ A monorepo for my hobby Java projects
 ```txt
 apps
   app1
+archetypes
+  archetype1
 internal-tooling
   tool1
 libs
   lib1
-maven-plugins
+plugins
   plugin1
 ```
 
