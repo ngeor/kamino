@@ -13,55 +13,64 @@ import java.util.regex.Pattern;
  * Hello world!
  */
 public final class App {
-    private App() {}
+    private final StringTemplate buildTemplate = StringTemplate.ofResource("/build-template.yml");
+    private final StringTemplate releaseTemplate = StringTemplate.ofResource("/release-template.yml");
+    private final File root;
 
     /**
      * Says hello to the world.
      * @param args The arguments of the program.
      */
     public static void main(String[] args) throws IOException {
-        File root = new File("../../");
+        new App(new File("../../")).run();
+    }
+
+    private App(File root) throws IOException {
         if (!root.toPath().resolve(".github").toFile().isDirectory()) {
             throw new IllegalStateException("Could not find .github folder");
         }
 
-        StringTemplate buildTemplate = StringTemplate.ofResource("/build-template.yml");
-        StringTemplate releaseTemplate = StringTemplate.ofResource("/release-template.yml");
+        this.root = root;
+    }
 
+    private void run() throws IOException {
         for (File typeLevel : getDirectories(root)) {
             for (File projectLevel : getDirectories(typeLevel)) {
                 File pomFile = new File(projectLevel, "pom.xml");
                 if (pomFile.isFile()) {
-                    System.out.println(projectLevel);
-                    String javaVersion = Objects.requireNonNullElse(calculateJavaVersion(pomFile), "11");
-                    Map<String, String> variables = Map.of(
-                            "name",
-                            projectLevel.getName(),
-                            "group",
-                            typeLevel.getName(),
-                            "path",
-                            typeLevel.getName() + "/" + projectLevel.getName(),
-                            "javaVersion",
-                            javaVersion);
-
-                    Files.writeString(
-                            root.toPath()
-                                    .resolve(".github")
-                                    .resolve("workflows")
-                                    .resolve("build-" + typeLevel.getName() + "-" + projectLevel.getName() + ".yml"),
-                            buildTemplate.render(variables));
-
-                    if (Set.of("archetypes", "libs").contains(typeLevel.getName())) {
-                        Files.writeString(
-                                root.toPath()
-                                        .resolve(".github")
-                                        .resolve("workflows")
-                                        .resolve("release-" + typeLevel.getName() + "-" + projectLevel.getName()
-                                                + ".yml"),
-                                releaseTemplate.render(variables));
-                    }
+                    processProject(typeLevel, projectLevel, pomFile);
                 }
             }
+        }
+    }
+
+    private void processProject(File typeLevel, File projectLevel, File pomFile) throws IOException {
+        System.out.println(projectLevel);
+        String javaVersion = Objects.requireNonNullElse(calculateJavaVersion(pomFile), "11");
+        Map<String, String> variables = Map.of(
+                "name",
+                projectLevel.getName(),
+                "group",
+                typeLevel.getName(),
+                "path",
+                typeLevel.getName() + "/" + projectLevel.getName(),
+                "javaVersion",
+                javaVersion);
+
+        Files.writeString(
+                root.toPath()
+                        .resolve(".github")
+                        .resolve("workflows")
+                        .resolve("build-" + typeLevel.getName() + "-" + projectLevel.getName() + ".yml"),
+                buildTemplate.render(variables));
+
+        if (Set.of("archetypes", "libs").contains(typeLevel.getName())) {
+            Files.writeString(
+                    root.toPath()
+                            .resolve(".github")
+                            .resolve("workflows")
+                            .resolve("release-" + typeLevel.getName() + "-" + projectLevel.getName() + ".yml"),
+                    releaseTemplate.render(variables));
         }
     }
 
