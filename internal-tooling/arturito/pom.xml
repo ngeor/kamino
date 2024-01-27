@@ -4,6 +4,7 @@
     <groupId>com.github.ngeor</groupId>
     <artifactId>arturito</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <description>Release tooling for the kamino monorepo</description>
     <properties>
         <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
