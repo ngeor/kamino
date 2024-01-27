@@ -27,4 +27,11 @@ Each project's folder should have a README file and a CHANGELOG (if applicable).
 Releasing is tag based. The tag format is the folder structure,
 followed by the version, e.g.: `apps/app1/v1.2.3`, `libs/lib1/v.1.2.3`, etc.
 
+Example:
+
+```sh
+mvn -B -Dtag=libs/yak4j-dom/v1.9.7 release:prepare -DreleaseVersion=1.9.7 -DdevelopmentVersion=1.10.0-SNAPSHOT
+mvn release:clear
+```
+
 Normally apps aren't released to Nexus.
