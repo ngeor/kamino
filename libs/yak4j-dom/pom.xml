@@ -7,7 +7,7 @@
     <version>3.3.0</version>
   </parent>
   <artifactId>yak4j-dom</artifactId>
-  <version>1.10.0-SNAPSHOT</version>
+  <version>1.9.7</version>
   <packaging>jar</packaging>
   <name>yak4j-dom</name>
   <description>A Java library to work easier with DOM</description>
@@ -15,7 +15,7 @@
   <scm>
     <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
     <developerConnection>scm:git:git@github.com:ngeor/kamino.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>libs/yak4j-dom/v1.9.7</tag>
     <url>https://github.com/ngeor/kamino/tree/master/libs/yak4j-dom</url>
   </scm>
   <build>
