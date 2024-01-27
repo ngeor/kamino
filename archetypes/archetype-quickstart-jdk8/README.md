@@ -1,7 +1,7 @@
 # archetype-quickstart-jdk8
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.github.ngeor/archetype-quickstart-jdk8.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/com.github.ngeor/archetype-quickstart-jdk8)
-[![Java CI with Maven](https://github.com/ngeor/archetype-quickstart-jdk8/actions/workflows/maven.yml/badge.svg)](https://github.com/ngeor/archetype-quickstart-jdk8/actions/workflows/maven.yml)
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.ngeor/archetype-quickstart-jdk8.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/com.github.ngeor/archetype-quickstart-jdk8/overview)
+[![Build archetype-quickstart-jdk8](https://github.com/ngeor/kamino/actions/workflows/build-archetypes-archetype-quickstart-jdk8.yml/badge.svg)](https://github.com/ngeor/kamino/actions/workflows/build-archetypes-archetype-quickstart-jdk8.yml)
 
 A Maven archetype for a simple Java app, updated for Java 8.
 

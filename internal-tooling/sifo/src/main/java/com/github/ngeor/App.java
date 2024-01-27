@@ -3,6 +3,7 @@ package com.github.ngeor;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -81,8 +82,10 @@ public final class App {
                     releaseTemplate.render(variables));
         }
 
-        fixProjectUrls(typeLevel, projectLevel, pomFile);
-        sortPom(pomFile);
+        // fixProjectUrls(typeLevel, projectLevel, pomFile);
+        // sortPom(pomFile);
+
+        fixProjectBadges(typeLevel, projectLevel, pomFile);
     }
 
     private void fixProjectUrls(File typeLevel, File projectLevel, File pomFile)
@@ -113,6 +116,47 @@ public final class App {
         if (status != 0) {
             throw new IllegalStateException("sort pom failed");
         }
+    }
+
+    private void fixProjectBadges(File typeLevel, File projectLevel, File pomFile) throws IOException {
+        File readmeFile = pomFile.toPath().resolveSibling("README.md").toFile();
+        if (!readmeFile.exists()) {
+            // TODO create if it does not exist
+            return;
+        }
+
+        // TODO read group and artifact from effective pom
+        String group = "com.github.ngeor";
+        String artifact = projectLevel.getName();
+        boolean foundBadges = false;
+        List<String> lines = Files.readAllLines(readmeFile.toPath());
+        for (int i = 0; i < lines.size(); i++) {
+            String line = lines.get(i);
+            if (line.startsWith("[![")) {
+                foundBadges = true;
+
+                if (line.startsWith("[![Maven Central")) {
+                    line = "[![Maven Central](https://img.shields.io/maven-central/v/" + group + "/" + artifact
+                            + ".svg?label=Maven%20Central)](https://central.sonatype.com/artifact/" + group + "/"
+                            + artifact + "/overview)";
+                    lines.set(i, line);
+                } else if (line.startsWith("[![Java CI") || line.startsWith("[![Build")) {
+                    String url = "https://github.com/ngeor/kamino/actions/workflows/build-" + typeLevel.getName() + "-" + projectLevel.getName() +".yml";
+                    line = String.format("[![Build %s](%s/badge.svg)](%s)", projectLevel.getName(), url, url);
+                    lines.set(i, line);
+                } else if (line.startsWith("[![javadoc")) {
+                    String badgeUrl = String.format("https://javadoc.io/badge2/%s/%s/javadoc.svg", group, artifact);
+                    String url = String.format("https://javadoc.io/doc/%s/%s", group, artifact);
+                    line = String.format("[![javadoc](%s)](%s)", badgeUrl, url);
+                    lines.set(i, line);
+                }
+            } else {
+                if (foundBadges) {
+                    break;
+                }
+            }
+        }
+        Files.writeString(readmeFile.toPath(), String.join(System.lineSeparator(), lines) + System.lineSeparator());
     }
 
     private static File[] getDirectories(File file) {
