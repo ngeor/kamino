@@ -8,6 +8,11 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
 /**
  * Hello world!
@@ -21,7 +26,8 @@ public final class App {
      * Says hello to the world.
      * @param args The arguments of the program.
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args)
+            throws IOException, InterruptedException, ParserConfigurationException, SAXException, TransformerException {
         new App(new File("../../")).run();
     }
 
@@ -33,7 +39,8 @@ public final class App {
         this.root = root;
     }
 
-    private void run() throws IOException {
+    private void run()
+            throws IOException, InterruptedException, ParserConfigurationException, SAXException, TransformerException {
         for (File typeLevel : getDirectories(root)) {
             for (File projectLevel : getDirectories(typeLevel)) {
                 File pomFile = new File(projectLevel, "pom.xml");
@@ -44,7 +51,8 @@ public final class App {
         }
     }
 
-    private void processProject(File typeLevel, File projectLevel, File pomFile) throws IOException {
+    private void processProject(File typeLevel, File projectLevel, File pomFile)
+            throws IOException, InterruptedException, ParserConfigurationException, SAXException, TransformerException {
         System.out.println(projectLevel);
         String javaVersion = Objects.requireNonNullElse(calculateJavaVersion(pomFile), "11");
         Map<String, String> variables = Map.of(
@@ -71,6 +79,39 @@ public final class App {
                             .resolve("workflows")
                             .resolve("release-" + typeLevel.getName() + "-" + projectLevel.getName() + ".yml"),
                     releaseTemplate.render(variables));
+        }
+
+        fixProjectUrls(typeLevel, projectLevel, pomFile);
+        sortPom(pomFile);
+    }
+
+    private void fixProjectUrls(File typeLevel, File projectLevel, File pomFile)
+            throws ParserConfigurationException, IOException, SAXException, TransformerException {
+        Document document = XmlUtils.parse(pomFile);
+
+        // TODO do not hardcode the github URL
+        String url =
+                "https://github.com/ngeor/kamino/tree/master/" + typeLevel.getName() + "/" + projectLevel.getName();
+        XmlUtils.setChildText(document.getDocumentElement(), "url", url);
+
+        Element scm = XmlUtils.ensureChild(document.getDocumentElement(), "scm");
+        XmlUtils.setChildText(scm, "connection", "scm:git:https://github.com/ngeor/kamino.git");
+        XmlUtils.setChildText(scm, "developerConnection", "scm:git:git@github.com:ngeor/kamino.git");
+        XmlUtils.setChildText(scm, "tag", "HEAD");
+        XmlUtils.setChildText(scm, "url", url);
+
+        XmlUtils.write(document, pomFile);
+    }
+
+    private void sortPom(File pomFile) throws IOException, InterruptedException {
+        String cmd = System.getProperty("os.name").contains("Windows") ? "mvn.cmd" : "mvn";
+        int status = new ProcessBuilder(cmd, "-B", "-ntp", "-q", "com.github.ekryd.sortpom:sortpom-maven-plugin:sort")
+                .redirectOutput(ProcessBuilder.Redirect.INHERIT)
+                .directory(pomFile.getParentFile())
+                .start()
+                .waitFor();
+        if (status != 0) {
+            throw new IllegalStateException("sort pom failed");
         }
     }
 
