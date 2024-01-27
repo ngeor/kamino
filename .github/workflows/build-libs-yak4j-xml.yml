@@ -1,17 +1,16 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
-
-name: Java CI with Maven
+name: Build yak4j-xml
 
 on:
   push:
     branches: [ master ]
     paths:
       - libs/yak4j-xml/**
+      - .github/workflows/build-libs-yak4j-xml.yml
   pull_request:
     branches: [ master ]
     paths:
       - libs/yak4j-xml/**
+      - .github/workflows/build-libs-yak4j-xml.yml
 
 jobs:
   build:
@@ -27,4 +26,4 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build with Maven
-      run: mvn -B package --file libs/yak4j-xml/pom.xml
+      run: mvn -B -ntp verify --file libs/yak4j-xml/pom.xml
