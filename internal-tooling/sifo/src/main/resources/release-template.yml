@@ -1,25 +1,25 @@
-name: Release archetype-quickstart-jdk8
+name: Release $name
 
 on:
   push:
-    tags: [ "archetypes/archetype-quickstart-jdk8/v*" ]
+    tags: [ "$path/v*" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Set up JDK 11
+    - name: Set up JDK $javaVersion
       uses: actions/setup-java@v2
       with:
-        java-version: '11'
+        java-version: '$javaVersion'
         distribution: 'zulu'
         cache: maven
     - name: Build arturito release tooling
       run: mvn -B -ntp --file internal-tooling/arturito/pom.xml package
     - name: Run arturito release tooling
       run: >-
-        cd archetypes/archetype-quickstart-jdk8 && java -jar ../../internal-tooling/arturito/target/arturito-1.0-SNAPSHOT.jar
+        cd $path && java -jar ../../internal-tooling/arturito/target/arturito-1.0-SNAPSHOT.jar
         ${{ secrets.GPG_KEY }}
         ${{ secrets.GPG_PASSPHRASE }}
         ${{ secrets.OSSRH_USERNAME }}

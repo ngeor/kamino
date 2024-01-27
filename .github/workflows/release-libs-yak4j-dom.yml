@@ -1,4 +1,4 @@
-name: Release
+name: Release yak4j-dom
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build arturito release tooling
-      run: mvn -B --file internal-tooling/arturito/pom.xml package
+      run: mvn -B -ntp --file internal-tooling/arturito/pom.xml package
     - name: Run arturito release tooling
       run: >-
         cd libs/yak4j-dom && java -jar ../../internal-tooling/arturito/target/arturito-1.0-SNAPSHOT.jar

@@ -2,9 +2,10 @@ package com.github.ngeor;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,32 +25,48 @@ public final class App {
             throw new IllegalStateException("Could not find .github folder");
         }
 
-        for (File typeLevel : root.listFiles(pathname -> pathname.isDirectory()
-                && !pathname.isHidden()
-                && !pathname.getName().startsWith("."))) {
-            for (File projectLevel : typeLevel.listFiles(pathname -> pathname.isDirectory())) {
+        StringTemplate buildTemplate = StringTemplate.ofResource("/build-template.yml");
+        StringTemplate releaseTemplate = StringTemplate.ofResource("/release-template.yml");
+
+        for (File typeLevel : getDirectories(root)) {
+            for (File projectLevel : getDirectories(typeLevel)) {
                 File pomFile = new File(projectLevel, "pom.xml");
                 if (pomFile.isFile()) {
                     System.out.println(projectLevel);
                     String javaVersion = Objects.requireNonNullElse(calculateJavaVersion(pomFile), "11");
-                    String template = new String(
-                                    App.class
-                                            .getResourceAsStream("/build-template.yml")
-                                            .readAllBytes(),
-                                    StandardCharsets.UTF_8)
-                            .replaceAll("\\$name", projectLevel.getName())
-                            .replaceAll("\\$group", typeLevel.getName())
-                            .replaceAll("\\$path", typeLevel.getName() + "/" + projectLevel.getName())
-                            .replaceAll("\\$javaVersion", javaVersion);
+                    Map<String, String> variables = Map.of(
+                            "name",
+                            projectLevel.getName(),
+                            "group",
+                            typeLevel.getName(),
+                            "path",
+                            typeLevel.getName() + "/" + projectLevel.getName(),
+                            "javaVersion",
+                            javaVersion);
+
                     Files.writeString(
                             root.toPath()
                                     .resolve(".github")
                                     .resolve("workflows")
                                     .resolve("build-" + typeLevel.getName() + "-" + projectLevel.getName() + ".yml"),
-                            template);
+                            buildTemplate.render(variables));
+
+                    if (Set.of("archetypes", "libs").contains(typeLevel.getName())) {
+                        Files.writeString(
+                                root.toPath()
+                                        .resolve(".github")
+                                        .resolve("workflows")
+                                        .resolve("release-" + typeLevel.getName() + "-" + projectLevel.getName()
+                                                + ".yml"),
+                                releaseTemplate.render(variables));
+                    }
                 }
             }
         }
+    }
+
+    private static File[] getDirectories(File file) {
+        return file.listFiles(new DirectoryFileFilter());
     }
 
     private static String calculateJavaVersion(File pomFile) throws IOException {
