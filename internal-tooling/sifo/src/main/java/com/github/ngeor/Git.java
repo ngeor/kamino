@@ -59,4 +59,8 @@ public final class Git {
         String output = processHelper.run("tag", "-l", prefix + "*", "--sort=-version:refname");
         return output.lines().findFirst().orElseThrow();
     }
+
+    public void add(String file) throws IOException, InterruptedException {
+        processHelper.run("add", file);
+    }
 }

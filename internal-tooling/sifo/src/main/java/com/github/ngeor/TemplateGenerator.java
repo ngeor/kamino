@@ -3,6 +3,7 @@ package com.github.ngeor;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -114,7 +115,7 @@ public final class TemplateGenerator {
         String groupId = GROUP_ID;
         String artifactId = projectLevel.getName();
         boolean foundBadges = false;
-        List<String> lines = Files.readAllLines(readmeFile.toPath());
+        List<String> lines = new ArrayList<>(Files.readAllLines(readmeFile.toPath()));
         for (int i = 0; i < lines.size(); i++) {
             String line = lines.get(i);
             if (line.startsWith("[![")) {

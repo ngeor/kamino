@@ -13,11 +13,13 @@ public class ProjectImporter {
     private final File monorepoRoot;
     private final File oldRepoRoot;
     private final String typeName;
+    private final String githubToken;
 
-    public ProjectImporter(File monorepoRoot, File oldRepoRoot, String typeName) {
+    public ProjectImporter(File monorepoRoot, File oldRepoRoot, String typeName, String githubToken) {
         this.monorepoRoot = monorepoRoot;
         this.oldRepoRoot = oldRepoRoot;
         this.typeName = typeName;
+        this.githubToken = githubToken;
     }
 
     public void run()
@@ -27,7 +29,6 @@ public class ProjectImporter {
         adjustImportedCode();
         performPatchRelease();
         archiveImportedRepo();
-        deleteLocalFolderOfImportedRepo();
     }
 
     private void ensureGitLatest() throws IOException, InterruptedException {
@@ -74,7 +75,12 @@ public class ProjectImporter {
         new ReleasePerformer(monorepoRoot, typeName, oldRepoRoot.getName()).performPatchRelease(maxReleaseVersion);
     }
 
-    private void archiveImportedRepo() {}
-
-    private void deleteLocalFolderOfImportedRepo() {}
+    private void archiveImportedRepo() throws IOException, InterruptedException {
+        new ProjectArchiver(
+                        oldRepoRoot,
+                        String.format(
+                                "https://github.com/ngeor/kamino/tree/master/%s/%s", typeName, oldRepoRoot.getName()),
+                        githubToken)
+                .run();
+    }
 }

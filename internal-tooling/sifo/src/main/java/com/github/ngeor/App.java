@@ -18,14 +18,17 @@ public final class App {
             throws IOException, InterruptedException, ParserConfigurationException, SAXException, TransformerException {
         // new TemplateGenerator(detectRootDirectory()).regenerateAllTemplates();
 
-        //        new ProjectImporter(
-        //            detectRootDirectory(),
-        //            new File("C:\\Users\\ngeor\\Projects\\github\\yak4j-spring-test-utils"),
-        //            "libs"
-        //        ).run();
+        String githubToken = System.getenv("GITHUB_TOKEN");
+        if (githubToken == null || githubToken.isBlank()) {
+            throw new IllegalStateException("GITHUB_TOKEN env variable is not configured");
+        }
 
-        new ReleasePerformer(detectRootDirectory(), "libs", "yak4j-spring-test-utils")
-                .performPatchRelease(SemVer.parse("0.21.1"));
+        new ProjectImporter(
+                        detectRootDirectory(),
+                        new File("C:\\Users\\ngeor\\Projects\\github\\yak4j-utc-time-zone-mapper"),
+                        "libs",
+                        githubToken)
+                .run();
     }
 
     private static File detectRootDirectory() {
