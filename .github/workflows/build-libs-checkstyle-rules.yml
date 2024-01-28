@@ -1,0 +1,29 @@
+name: Build checkstyle-rules
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - libs/checkstyle-rules/**
+      - .github/workflows/build-libs-checkstyle-rules.yml
+  pull_request:
+    branches: [ master ]
+    paths:
+      - libs/checkstyle-rules/**
+      - .github/workflows/build-libs-checkstyle-rules.yml
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+        distribution: 'zulu'
+        cache: maven
+    - name: Build with Maven
+      run: mvn -B -ntp verify --file libs/checkstyle-rules/pom.xml

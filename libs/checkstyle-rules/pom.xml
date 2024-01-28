@@ -1,11 +1,12 @@
-<?xml version="1.0"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.ngeor</groupId>
   <artifactId>checkstyle-rules</artifactId>
   <version>6.8.0-SNAPSHOT</version>
   <name>checkstyle-rules</name>
   <description>Rules for checkstyle</description>
-  <url>https://github.com/ngeor/checkstyle-rules</url>
+  <url>https://github.com/ngeor/kamino/tree/master/libs/checkstyle-rules</url>
   <licenses>
     <license>
       <name>MIT</name>
@@ -19,10 +20,10 @@
     </developer>
   </developers>
   <scm>
-    <connection>scm:git:https://github.com/ngeor/checkstyle-rules.git</connection>
-    <developerConnection>scm:git:git@github.com:ngeor/checkstyle-rules.git</developerConnection>
+    <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
+    <developerConnection>scm:git:git@github.com:ngeor/kamino.git</developerConnection>
     <tag>HEAD</tag>
-    <url>https://github.com/ngeor/checkstyle-rules</url>
+    <url>https://github.com/ngeor/kamino/tree/master/libs/checkstyle-rules</url>
   </scm>
   <distributionManagement>
     <repository>
