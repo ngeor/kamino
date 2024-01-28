@@ -64,7 +64,7 @@ public final class TemplateGenerator {
                         .resolve("build-" + typeLevel.getName() + "-" + projectLevel.getName() + ".yml"),
                 buildTemplate.render(variables));
 
-        if (Set.of("archetypes", "libs").contains(typeLevel.getName())) {
+        if (requiresReleaseWorkflow(typeLevel.getName())) {
             Files.writeString(
                     root.toPath()
                             .resolve(".github")
@@ -77,6 +77,10 @@ public final class TemplateGenerator {
         sortPom(pomFile);
 
         fixProjectBadges(typeLevel, projectLevel, pomFile);
+    }
+
+    private static boolean requiresReleaseWorkflow(String typeName) {
+        return Set.of("archetypes", "libs", "plugins").contains(typeName);
     }
 
     private void fixProjectUrls(File typeLevel, File projectLevel, File pomFile)
