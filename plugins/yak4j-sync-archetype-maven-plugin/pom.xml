@@ -6,17 +6,18 @@
     <artifactId>java</artifactId>
     <version>3.3.0</version>
   </parent>
+  <groupId>com.github.ngeor</groupId>
   <artifactId>yak4j-sync-archetype-maven-plugin</artifactId>
   <version>0.18.0-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
   <name>yak4j-sync-archetype-maven-plugin</name>
   <description>yak shaving for Java: A Maven plugin which updates your project from its archetype, replacing only the files that you want.</description>
-  <url>https://github.com/ngeor/yak4j-sync-archetype-maven-plugin</url>
+  <url>https://github.com/ngeor/kamino/tree/master/plugins/yak4j-sync-archetype-maven-plugin</url>
   <scm>
-    <connection>scm:git:https://github.com/ngeor/yak4j-sync-archetype-maven-plugin.git</connection>
-    <developerConnection>scm:git:git@github.com:ngeor/yak4j-sync-archetype-maven-plugin.git</developerConnection>
+    <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
+    <developerConnection>scm:git:git@github.com:ngeor/kamino.git</developerConnection>
     <tag>HEAD</tag>
-    <url>https://github.com/ngeor/yak4j-sync-archetype-maven-plugin</url>
+    <url>https://github.com/ngeor/kamino/tree/master/plugins/yak4j-sync-archetype-maven-plugin</url>
   </scm>
   <properties>
     <!--
