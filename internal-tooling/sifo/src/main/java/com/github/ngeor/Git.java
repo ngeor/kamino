@@ -50,4 +50,9 @@ public final class Git {
     public void push() throws IOException, InterruptedException {
         processHelper.run("push");
     }
+
+    public String getMostRecentTag(String prefix) throws IOException, InterruptedException {
+        String output = processHelper.run("tag", "-l", prefix + "*", "--sort=-version:refname");
+        return output.lines().findFirst().orElseThrow();
+    }
 }

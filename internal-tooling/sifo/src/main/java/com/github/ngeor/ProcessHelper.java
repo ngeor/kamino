@@ -15,6 +15,7 @@ public class ProcessHelper {
         this.command = command;
     }
 
+    // TODO micro-optimisation: do not return the entire String but a stream (with a completed future approach)
     public String run(String... args) throws IOException, InterruptedException {
         List<String> command = createArgs(args);
         Process process =

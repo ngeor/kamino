@@ -16,7 +16,12 @@ public final class App {
      */
     public static void main(String[] args)
             throws IOException, InterruptedException, ParserConfigurationException, SAXException, TransformerException {
-        new TemplateGenerator(detectRootDirectory()).regenerateAllTemplates();
+        // new TemplateGenerator(detectRootDirectory()).regenerateAllTemplates();
+        new ProjectImporter(
+            detectRootDirectory(),
+            new File("C:\\Users\\ngeor\\Projects\\github\\yak4j-spring-test-utils"),
+            "libs"
+        ).run();
     }
 
     private static File detectRootDirectory() {

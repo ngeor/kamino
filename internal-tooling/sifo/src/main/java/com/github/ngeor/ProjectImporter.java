@@ -73,10 +73,11 @@ public class ProjectImporter {
                 .resolve(oldRepoRoot.getName())
                 .toFile());
         maven.cleanRelease();
-        String currentVersion = "";
-        String maxReleaseVersion = "";
-        String nextVersion = "";
-        String developmentVersion = "";
+
+        Git git = new Git(oldRepoRoot);
+        SemVer maxReleaseVersion = SemVer.parse(git.getMostRecentTag("v").replace("v", ""));
+        String nextVersion = maxReleaseVersion.increasePatch().toString();
+        String developmentVersion = maxReleaseVersion.increaseMinor().toString() + "-SNAPSHOT";
         String tag = typeName + "/" + oldRepoRoot.getName() + "/v" + nextVersion;
         maven.prepareRelease(tag, nextVersion, developmentVersion);
         maven.cleanRelease();
