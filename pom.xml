@@ -22,12 +22,12 @@
     <!--
     plugins
     -->
-    <maven-invoker-plugin.version>3.3.0</maven-invoker-plugin.version>
+    <maven-invoker-plugin.version>3.6.0</maven-invoker-plugin.version>
     <!--
     dependencies for maven plugins
     -->
-    <maven-core.version>3.8.6</maven-core.version>
-    <maven-plugin-plugin.version>3.6.4</maven-plugin-plugin.version>
+    <maven-core.version>3.9.6</maven-core.version>
+    <maven-plugin-plugin.version>3.11.0</maven-plugin-plugin.version>
     <!--
     jacoco thresholds
     -->
@@ -152,10 +152,11 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.11</version>
         <configuration>
           <excludes>
             <!-- generated file -->
-            <exclude>com/github/ngeor/yak4j/HelpMojo.class</exclude>
+            <exclude>**/HelpMojo.class</exclude>
           </excludes>
         </configuration>
         <executions>
