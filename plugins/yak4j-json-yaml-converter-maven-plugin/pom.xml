@@ -8,7 +8,7 @@
   </parent>
   <groupId>com.github.ngeor</groupId>
   <artifactId>yak4j-json-yaml-converter-maven-plugin</artifactId>
-  <version>0.9.0-SNAPSHOT</version>
+  <version>0.8.2</version>
   <packaging>maven-plugin</packaging>
   <name>yak4j-json-yaml-converter-maven-plugin</name>
   <description>yak shaving for Java: A Maven plugin which converts between JSON and YAML formats</description>
@@ -16,7 +16,7 @@
   <scm>
     <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
     <developerConnection>scm:git:git@github.com:ngeor/kamino.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>plugins/yak4j-json-yaml-converter-maven-plugin/v0.8.2</tag>
     <url>https://github.com/ngeor/kamino/tree/master/plugins/yak4j-json-yaml-converter-maven-plugin</url>
   </scm>
   <properties>
