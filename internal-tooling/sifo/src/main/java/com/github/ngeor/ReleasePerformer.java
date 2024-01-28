@@ -21,8 +21,10 @@ public final class ReleasePerformer {
 
         Maven maven = new Maven(
                 monorepoRoot.toPath().resolve(typeName).resolve(projectName).toFile());
+        maven.clean();
         maven.cleanRelease();
         maven.prepareRelease(tag, nextVersion, developmentVersion);
         maven.cleanRelease();
+        maven.clean();
     }
 }
