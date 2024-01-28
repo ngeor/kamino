@@ -2,8 +2,8 @@
 
 A Maven plugin which converts between JSON and YAML formats.
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.github.ngeor/yak4j-json-yaml-converter-maven-plugin.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.ngeor%22%20AND%20a:%22yak4j-json-yaml-converter-maven-plugin%22)
-[![Java CI with Maven](https://github.com/ngeor/yak4j-json-yaml-converter-maven-plugin/actions/workflows/maven.yml/badge.svg)](https://github.com/ngeor/yak4j-json-yaml-converter-maven-plugin/actions/workflows/maven.yml)
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.ngeor/yak4j-json-yaml-converter-maven-plugin.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/com.github.ngeor/yak4j-json-yaml-converter-maven-plugin/overview)
+[![Build yak4j-json-yaml-converter-maven-plugin](https://github.com/ngeor/kamino/actions/workflows/build-plugins-yak4j-json-yaml-converter-maven-plugin.yml/badge.svg)](https://github.com/ngeor/kamino/actions/workflows/build-plugins-yak4j-json-yaml-converter-maven-plugin.yml)
 [![javadoc](https://javadoc.io/badge2/com.github.ngeor/yak4j-json-yaml-converter-maven-plugin/javadoc.svg)](https://javadoc.io/doc/com.github.ngeor/yak4j-json-yaml-converter-maven-plugin)
 
 ## Example
