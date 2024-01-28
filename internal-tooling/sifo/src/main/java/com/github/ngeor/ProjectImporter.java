@@ -25,22 +25,52 @@ public class ProjectImporter {
     public void run()
             throws IOException, InterruptedException, ParserConfigurationException, TransformerException, SAXException {
         ensureGitLatest();
+        ensureOldProjectBuilds();
         importGitSubtree();
+        ensureImportedProjectBuilds();
         adjustImportedCode();
         performPatchRelease();
         archiveImportedRepo();
     }
 
     private void ensureGitLatest() throws IOException, InterruptedException {
-        for (Git git : new Git[] {new Git(monorepoRoot), new Git(oldRepoRoot)}) {
+        System.out.println("Ensure git is on default branch and has latest");
+        for (File projectDirectory : new File[] {monorepoRoot, oldRepoRoot}) {
+            Git git = new Git(projectDirectory);
             git.checkout(git.getDefaultBranch());
             git.pull();
         }
     }
 
+    private void ensureOldProjectBuilds() throws IOException, InterruptedException {
+        System.out.println("Ensure project to be imported builds");
+        ensureProjectBuilds(oldRepoRoot);
+    }
+
+    private void ensureImportedProjectBuilds() throws IOException, InterruptedException {
+        System.out.println("Ensure imported project builds from new location");
+        ensureProjectBuilds(monorepoRoot
+                .toPath()
+                .resolve(typeName)
+                .resolve(oldRepoRoot.getName())
+                .toFile());
+    }
+
+    private void ensureProjectBuilds(File file) throws IOException, InterruptedException {
+        Maven maven = new Maven(file);
+        maven.clean();
+        maven.verify();
+        maven.clean();
+    }
+
     private void importGitSubtree() throws IOException, InterruptedException {
         // git subtree add -P packages/foo ../source master
-        if (monorepoRoot.toPath().resolve(typeName).resolve(oldRepoRoot.getName()).toFile().isDirectory()) {
+        if (monorepoRoot
+                .toPath()
+                .resolve(typeName)
+                .resolve(oldRepoRoot.getName())
+                .toFile()
+                .isDirectory()) {
             System.out.println("git subtree already imported");
             return;
         }

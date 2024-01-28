@@ -29,4 +29,12 @@ public final class Maven {
                 "-DreleaseVersion=" + releaseVersion,
                 "-DdevelopmentVersion=" + developmentVersion);
     }
+
+    public void clean() throws IOException, InterruptedException {
+        processHelper.runInheritIO("clean");
+    }
+
+    public void verify() throws IOException, InterruptedException {
+        processHelper.runInheritIO("verify");
+    }
 }
