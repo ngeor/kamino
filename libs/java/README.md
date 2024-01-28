@@ -1,7 +1,7 @@
 # java
 
-[![Java CI with Maven](https://github.com/ngeor/java/actions/workflows/maven.yml/badge.svg)](https://github.com/ngeor/java/actions/workflows/maven.yml)
-[![Maven Central](https://img.shields.io/maven-central/v/com.github.ngeor/java.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.ngeor%22%20AND%20a:%22java%22)
+[![Build java](https://github.com/ngeor/kamino/actions/workflows/build-libs-java.yml/badge.svg)](https://github.com/ngeor/kamino/actions/workflows/build-libs-java.yml)
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.ngeor/java.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/com.github.ngeor/java/overview)
 
 Parent pom for Java projects
 
