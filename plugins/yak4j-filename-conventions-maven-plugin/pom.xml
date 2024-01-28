@@ -39,9 +39,9 @@
   </properties>
   <dependencies>
     <dependency>
-        <groupId>org.codehaus.plexus</groupId>
-        <artifactId>plexus-utils</artifactId>
-        <version>4.0.0</version>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-utils</artifactId>
+      <version>4.0.0</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
