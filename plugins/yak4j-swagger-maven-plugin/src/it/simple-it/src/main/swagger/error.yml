@@ -1,0 +1,38 @@
+ErrorInfo:
+  type: object
+  description: An error thrown by the API # compatible with Spring default errors
+  properties:
+    timestamp:
+      type: string
+      description: The date-time when the error occurred
+    status:
+      type: number
+      format: int32
+      description: The status code of the error
+    error:
+      type: string
+      description: The type of the error
+    message:
+      type: string
+      description: A message describing the error
+    path:
+      type: string
+      description: The URL path where the error occurred
+    errors:
+      type: array
+      description: A collection of details about the errors
+      items:
+        $ref: './error.yml#/ErrorDetail'
+ErrorDetail:
+  type: object
+  description: Details about an error, usually specific to a field.
+  properties:
+    defaultMessage:
+      type: string
+      description: A detailed error message
+    objectName:
+      type: string
+      description: The name of the object that caused the error
+    code:
+      type: string
+      description: A code for the specific error
