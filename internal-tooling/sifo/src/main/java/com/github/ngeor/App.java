@@ -23,12 +23,12 @@ public final class App {
             throw new IllegalStateException("GITHUB_TOKEN env variable is not configured");
         }
 
-        new ProjectImporter(
-                        detectRootDirectory(),
-                        new File("C:\\Users\\ngeor\\Projects\\github\\yak4j-utc-time-zone-mapper"),
-                        "libs",
-                        githubToken)
-                .run();
+        File monorepoRoot = detectRootDirectory();
+        String typeName = args[0];
+        String projectName = args[1];
+        File oldRepo =
+                detectRootDirectory().toPath().resolveSibling(projectName).toFile().getAbsoluteFile();
+        new ProjectImporter(monorepoRoot, oldRepo, typeName, githubToken).run();
     }
 
     private static File detectRootDirectory() {
