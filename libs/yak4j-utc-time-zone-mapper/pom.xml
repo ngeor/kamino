@@ -8,7 +8,7 @@
   </parent>
   <groupId>com.github.ngeor</groupId>
   <artifactId>yak4j-utc-time-zone-mapper</artifactId>
-  <version>0.18.0-SNAPSHOT</version>
+  <version>0.17.2</version>
   <packaging>jar</packaging>
   <name>yak4j-utc-time-zone-mapper</name>
   <description>yak shaving for Java: utility library to map between OffsetDateTime and LocalDateTime in UTC</description>
@@ -16,7 +16,7 @@
   <scm>
     <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
     <developerConnection>scm:git:git@github.com:ngeor/kamino.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>libs/yak4j-utc-time-zone-mapper/v0.17.2</tag>
     <url>https://github.com/ngeor/kamino/tree/master/libs/yak4j-utc-time-zone-mapper</url>
   </scm>
   <properties>
