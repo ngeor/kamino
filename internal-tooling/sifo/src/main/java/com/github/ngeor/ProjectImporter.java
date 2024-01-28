@@ -25,9 +25,7 @@ public class ProjectImporter {
     public void run()
             throws IOException, InterruptedException, ParserConfigurationException, TransformerException, SAXException {
         ensureGitLatest();
-        ensureOldProjectBuilds();
         importGitSubtree();
-        ensureImportedProjectBuilds();
         adjustImportedCode();
         performPatchRelease();
         archiveImportedRepo();
@@ -74,6 +72,7 @@ public class ProjectImporter {
             System.out.println("git subtree already imported");
             return;
         }
+        ensureOldProjectBuilds();
         System.out.println("Importing git subtree");
         Git monorepo = new Git(monorepoRoot);
         Git oldRepo = new Git(oldRepoRoot);
@@ -104,6 +103,8 @@ public class ProjectImporter {
     }
 
     private void performPatchRelease() throws IOException, InterruptedException {
+        ensureImportedProjectBuilds();
+
         Git git = new Git(oldRepoRoot);
         SemVer maxReleaseVersion = SemVer.parse(git.getMostRecentTag("v").replace("v", ""));
 
