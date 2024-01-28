@@ -40,6 +40,11 @@ public class ProjectImporter {
 
     private void importGitSubtree() throws IOException, InterruptedException {
         // git subtree add -P packages/foo ../source master
+        if (monorepoRoot.toPath().resolve(typeName).resolve(oldRepoRoot.getName()).toFile().isDirectory()) {
+            System.out.println("git subtree already imported");
+            return;
+        }
+        System.out.println("Importing git subtree");
         Git monorepo = new Git(monorepoRoot);
         Git oldRepo = new Git(oldRepoRoot);
         monorepo.subTreeAdd(typeName + "/" + oldRepoRoot.getName(), oldRepoRoot, oldRepo.getDefaultBranch());
