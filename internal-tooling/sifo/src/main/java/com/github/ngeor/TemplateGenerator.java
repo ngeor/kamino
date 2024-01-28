@@ -42,7 +42,7 @@ public final class TemplateGenerator {
         }
     }
 
-    private void regenerateAllTemplates(File typeLevel, File projectLevel, File pomFile)
+    public void regenerateAllTemplates(File typeLevel, File projectLevel, File pomFile)
             throws IOException, InterruptedException, ParserConfigurationException, SAXException, TransformerException {
         System.out.println(projectLevel);
         String javaVersion = Objects.requireNonNullElse(calculateJavaVersion(pomFile), "11");
@@ -100,15 +100,8 @@ public final class TemplateGenerator {
     }
 
     private void sortPom(File pomFile) throws IOException, InterruptedException {
-        String cmd = System.getProperty("os.name").contains("Windows") ? "mvn.cmd" : "mvn";
-        int status = new ProcessBuilder(cmd, "-B", "-ntp", "-q", "com.github.ekryd.sortpom:sortpom-maven-plugin:sort")
-                .redirectOutput(ProcessBuilder.Redirect.INHERIT)
-                .directory(pomFile.getParentFile())
-                .start()
-                .waitFor();
-        if (status != 0) {
-            throw new IllegalStateException("sort pom failed");
-        }
+        Maven maven = new Maven(pomFile.getParentFile());
+        maven.sortPom();
     }
 
     private void fixProjectBadges(File typeLevel, File projectLevel, File pomFile) throws IOException {

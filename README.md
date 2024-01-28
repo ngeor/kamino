@@ -33,7 +33,7 @@ Example:
 
 ```sh
 mvn -B -Dtag=libs/yak4j-dom/v1.9.7 release:prepare -DreleaseVersion=1.9.7 -DdevelopmentVersion=1.10.0-SNAPSHOT
-mvn release:clear
+mvn release:clean
 ```
 
 Normally apps aren't released to Nexus.
