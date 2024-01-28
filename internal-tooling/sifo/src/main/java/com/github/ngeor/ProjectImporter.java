@@ -62,25 +62,16 @@ public class ProjectImporter {
                                 .toFile());
 
         Git monorepo = new Git(monorepoRoot);
-        monorepo.commitAll("chore: Adjusted imported code");
+        monorepo.addAll();
+        monorepo.commit("chore: Adjusted imported code");
         monorepo.push();
     }
 
     private void performPatchRelease() throws IOException, InterruptedException {
-        Maven maven = new Maven(monorepoRoot
-                .toPath()
-                .resolve(typeName)
-                .resolve(oldRepoRoot.getName())
-                .toFile());
-        maven.cleanRelease();
-
         Git git = new Git(oldRepoRoot);
         SemVer maxReleaseVersion = SemVer.parse(git.getMostRecentTag("v").replace("v", ""));
-        String nextVersion = maxReleaseVersion.increasePatch().toString();
-        String developmentVersion = maxReleaseVersion.increaseMinor().toString() + "-SNAPSHOT";
-        String tag = typeName + "/" + oldRepoRoot.getName() + "/v" + nextVersion;
-        maven.prepareRelease(tag, nextVersion, developmentVersion);
-        maven.cleanRelease();
+
+        new ReleasePerformer(monorepoRoot, typeName, oldRepoRoot.getName()).performPatchRelease(maxReleaseVersion);
     }
 
     private void archiveImportedRepo() {}

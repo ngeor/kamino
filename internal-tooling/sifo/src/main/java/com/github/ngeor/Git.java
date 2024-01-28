@@ -43,8 +43,12 @@ public final class Git {
         processHelper.run("subtree", "add", "-P", destination, oldRepoRoot.getAbsolutePath(), oldRepoBranch);
     }
 
-    public void commitAll(String message) throws IOException, InterruptedException {
-        processHelper.run("commit", "-a", "-m", message);
+    public void addAll() throws IOException, InterruptedException {
+        processHelper.run("add", "-A");
+    }
+
+    public void commit(String message) throws IOException, InterruptedException {
+        processHelper.run("commit", "-m", message);
     }
 
     public void push() throws IOException, InterruptedException {

@@ -17,11 +17,15 @@ public final class App {
     public static void main(String[] args)
             throws IOException, InterruptedException, ParserConfigurationException, SAXException, TransformerException {
         // new TemplateGenerator(detectRootDirectory()).regenerateAllTemplates();
-        new ProjectImporter(
-            detectRootDirectory(),
-            new File("C:\\Users\\ngeor\\Projects\\github\\yak4j-spring-test-utils"),
-            "libs"
-        ).run();
+
+        //        new ProjectImporter(
+        //            detectRootDirectory(),
+        //            new File("C:\\Users\\ngeor\\Projects\\github\\yak4j-spring-test-utils"),
+        //            "libs"
+        //        ).run();
+
+        new ReleasePerformer(detectRootDirectory(), "libs", "yak4j-spring-test-utils")
+                .performPatchRelease(SemVer.parse("0.21.1"));
     }
 
     private static File detectRootDirectory() {

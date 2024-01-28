@@ -21,7 +21,7 @@ public final class Maven {
 
     public void prepareRelease(String tag, String releaseVersion, String developmentVersion)
             throws IOException, InterruptedException {
-        processHelper.run(
+        processHelper.runInheritIO(
                 "-B",
                 "-ntp",
                 "-Dtag=" + tag,
