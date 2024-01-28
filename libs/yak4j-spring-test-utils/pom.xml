@@ -8,7 +8,7 @@
   </parent>
   <groupId>com.github.ngeor</groupId>
   <artifactId>yak4j-spring-test-utils</artifactId>
-  <version>0.22.0-SNAPSHOT</version>
+  <version>0.21.2</version>
   <packaging>jar</packaging>
   <name>yak4j-spring-test-utils</name>
   <description>yak shaving for Java: Testing utilities for Spring</description>
@@ -16,7 +16,7 @@
   <scm>
     <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
     <developerConnection>scm:git:git@github.com:ngeor/kamino.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>libs/yak4j-spring-test-utils/v0.21.2</tag>
     <url>https://github.com/ngeor/kamino/tree/master/libs/yak4j-spring-test-utils</url>
   </scm>
   <properties>
