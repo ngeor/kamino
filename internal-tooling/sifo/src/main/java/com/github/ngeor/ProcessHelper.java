@@ -33,14 +33,23 @@ public class ProcessHelper {
 
     public void runInheritIO(String... args) throws IOException, InterruptedException {
         List<String> command = createArgs(args);
-        Process process =
-            new ProcessBuilder(command).directory(workingDirectory).inheritIO().start();
+        Process process = new ProcessBuilder(command)
+                .directory(workingDirectory)
+                .inheritIO()
+                .start();
         int exitCode = process.waitFor();
         if (exitCode != 0) {
             String commandAsString = String.join(" ", command);
-            throw new IllegalStateException(
-                String.format("Error running %s in %s", commandAsString, workingDirectory));
+            throw new IllegalStateException(String.format("Error running %s in %s", commandAsString, workingDirectory));
         }
+    }
+
+    public boolean tryRun(String... args) throws IOException, InterruptedException {
+        List<String> command = createArgs(args);
+        Process process =
+                new ProcessBuilder(command).directory(workingDirectory).start();
+        int exitCode = process.waitFor();
+        return exitCode == 0;
     }
 
     private List<String> createArgs(String... args) {

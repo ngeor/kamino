@@ -98,8 +98,10 @@ public class ProjectImporter {
 
         Git monorepo = new Git(monorepoRoot);
         monorepo.addAll();
-        monorepo.commit("chore: Adjusted imported code");
-        monorepo.push();
+        if (monorepo.hasStagedChanges()) {
+            monorepo.commit("chore: Adjusted imported code");
+            monorepo.push();
+        }
     }
 
     private void performPatchRelease() throws IOException, InterruptedException {

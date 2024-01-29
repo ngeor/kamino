@@ -63,4 +63,8 @@ public final class Git {
     public void add(String file) throws IOException, InterruptedException {
         processHelper.run("add", file);
     }
+
+    public boolean hasStagedChanges() throws IOException, InterruptedException {
+        return !processHelper.tryRun("diff", "--cached", "--quiet");
+    }
 }
