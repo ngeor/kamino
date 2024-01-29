@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:xml="http://www.w3.org/XML/1998/namespace"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://inkscape.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:export-ydpi="96.000000"
+   inkscape:export-xdpi="96.000000"
+   inkscape:export-filename="e:\MyProjects\jCalendar\docs\jCalendar.png"
+   sodipodi:docbase="E:\MYPROJ~1\JCALEN~1\docs"
+   sodipodi:docname="JCALEN~1.SVG"
+   width="210mm"
+   height="297mm"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.40+cvs">
+  <defs
+     id="defs3">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient2066">
+      <stop
+         style="stop-color:#007000;stop-opacity:1;"
+         offset="0"
+         id="stop2068" />
+      <stop
+         style="stop-color:#007000;stop-opacity:0;"
+         offset="1"
+         id="stop2070" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2066"
+       id="linearGradient2072"
+       gradientTransform="matrix(2.395912,0.000000,0.000000,0.247024,-238.1972,-28.23971)"
+       x1="103.49971"
+       y1="368.98274"
+       x2="404.57025"
+       y2="368.98274"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     inkscape:window-y="-4"
+     inkscape:window-x="-4"
+     inkscape:window-height="712"
+     inkscape:window-width="1024"
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.0000000"
+     inkscape:cx="375.00000"
+     inkscape:cy="800.00000"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showguides="true"
+     inkscape:guide-bbox="true" />
+  <metadata
+     id="metadata4">
+    <rdf:RDF
+       id="RDF5">
+      <cc:Work
+         rdf:about=""
+         id="Work6">
+        <dc:format
+           id="format7">image/svg+xml</dc:format>
+        <dc:type
+           id="type9"
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:url(#linearGradient2072);fill-opacity:1.0000000;stroke:#000000;stroke-width:0.15386325;stroke-miterlimit:4.0000000;stroke-opacity:1.0000000"
+       id="rect1291"
+       width="721.01056"
+       height="74.299400"
+       x="9.9428720"
+       y="25.758142"
+       ry="3.4545457"
+       rx="3.4545455" />
+    <text
+       xml:space="preserve"
+       style="font-size:48.000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;fill-opacity:1.0000000;stroke:none;stroke-width:1.0000000px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1.0000000;font-family:Trebuchet MS;text-anchor:start;writing-mode:lr-tb"
+       x="16.307461"
+       y="82.019897"
+       id="text2074"
+       sodipodi:linespacing="100%"><tspan
+         sodipodi:role="line"
+         id="tspan2076"
+         x="16.307461"
+         y="82.019897">jCalendar</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12.000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1.0000000;stroke:none;stroke-width:1.0000000px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1.0000000;font-family:Trebuchet MS;text-anchor:start;writing-mode:lr-tb"
+       x="10"
+       y="119.36218"
+       id="text2836"
+       sodipodi:linespacing="100%"><tspan
+         sodipodi:role="line"
+         id="tspan2838"
+         x="10.000000"
+         y="119.36218">Open source calendar component written in Java</tspan></text>
+    <rect
+       style="fill:#005400;fill-opacity:1.0000000;stroke:#000000;stroke-width:0.16843276;stroke-miterlimit:4.0000000;stroke-opacity:1.0000000"
+       id="rect2840"
+       width="718.00153"
+       height="4.3502579"
+       x="11.099216"
+       y="128.68706"
+       rx="0.00000000"
+       ry="0.00000000" />
+    <rect
+       y="146.36218"
+       x="11.000000"
+       height="231.00000"
+       width="195.00000"
+       id="rect2097"
+       style="fill:#005400;fill-opacity:1.0000000;stroke:#000000;stroke-width:0.20000000;stroke-miterlimit:4.0000000;stroke-opacity:1.0000000" />
+    <text
+       sodipodi:linespacing="100%"
+       id="text2099"
+       y="192.15906"
+       x="23.989258"
+       style="font-size:12.000000;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#ffffff;fill-opacity:1.0000000;stroke:none;stroke-width:1.0000000px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1.0000000;font-family:Tahoma;text-anchor:start;writing-mode:lr-tb"
+       xml:space="preserve"><tspan
+         y="192.15906"
+         x="23.989258"
+         id="tspan2101"
+         sodipodi:role="line">Java Docs</tspan></text>
+    <text
+       sodipodi:linespacing="100%"
+       id="text2861"
+       y="213.89246"
+       x="23.12207"
+       style="font-size:12.000000;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#ffffff;fill-opacity:1.0000000;stroke:none;stroke-width:1.0000000px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1.0000000;font-family:Tahoma;text-anchor:start;writing-mode:lr-tb"
+       xml:space="preserve"><tspan
+         y="213.89246"
+         x="23.122070"
+         id="tspan2863"
+         sodipodi:role="line">Download</tspan></text>
+    <text
+       sodipodi:linespacing="100%"
+       id="text2869"
+       y="234.32507"
+       x="23.12207"
+       style="font-size:12.000000;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#ffffff;fill-opacity:1.0000000;stroke:none;stroke-width:1.0000000px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1.0000000;font-family:Tahoma;text-anchor:start;writing-mode:lr-tb"
+       xml:space="preserve"><tspan
+         y="234.32507"
+         x="23.122070"
+         id="tspan2871"
+         sodipodi:role="line">Examples</tspan></text>
+    <text
+       sodipodi:linespacing="100%"
+       id="text2873"
+       y="255.82996"
+       x="23.59668"
+       style="font-size:12.000000;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#ffffff;fill-opacity:1.0000000;stroke:none;stroke-width:1.0000000px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1.0000000;font-family:Tahoma;text-anchor:start;writing-mode:lr-tb"
+       xml:space="preserve"><tspan
+         y="255.82996"
+         x="23.596680"
+         id="tspan2875"
+         sodipodi:role="line">SourceForge Project Page</tspan></text>
+    <text
+       sodipodi:linespacing="100%"
+       id="text2881"
+       y="169.68152"
+       x="24.05957"
+       style="font-size:12.000000;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#ffffff;fill-opacity:1.0000000;stroke:none;stroke-width:1.0000000px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1.0000000;font-family:Tahoma;text-anchor:start;writing-mode:lr-tb"
+       xml:space="preserve"><tspan
+         y="169.68152"
+         x="24.059570"
+         id="tspan2883"
+         sodipodi:role="line">About jCalendar</tspan></text>
+    <text
+       sodipodi:linespacing="100%"
+       id="text2885"
+       y="164.36218"
+       x="220"
+       style="font-size:18.000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1.0000000;stroke:none;stroke-width:1.0000000px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1.0000000;font-family:Trebuchet MS;text-anchor:start;writing-mode:lr-tb"
+       xml:space="preserve"><tspan
+         y="164.36218"
+         x="220.00000"
+         id="tspan2887"
+         sodipodi:role="line">About jCalendar</tspan></text>
+    <text
+       id="text2889"
+       y="184.36218"
+       x="221"
+       style="font-size:12.000000;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1.0000000;stroke:none;stroke-width:1.0000000px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1.0000000;font-family:Bitstream Vera Sans"
+       xml:space="preserve"><tspan
+         y="184.36218"
+         x="221.00000"
+         id="tspan2891"
+         sodipodi:role="line">jCalendar rules</tspan><tspan
+         y="196.36218"
+         x="221.00000"
+         id="tspan2893"
+         sodipodi:role="line">See the following screenshot and see for yourself.</tspan></text>
+  </g>
+</svg>
