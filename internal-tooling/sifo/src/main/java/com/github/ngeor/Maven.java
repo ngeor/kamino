@@ -8,22 +8,20 @@ public final class Maven {
 
     public Maven(File workingDirectory) {
         String cmd = System.getProperty("os.name").contains("Windows") ? "mvn.cmd" : "mvn";
-        this.processHelper = new ProcessHelper(workingDirectory, cmd);
+        this.processHelper = new ProcessHelper(workingDirectory, cmd, "-B", "-ntp");
     }
 
     public void sortPom() throws IOException, InterruptedException {
-        processHelper.run("-B", "-ntp", "-q", "com.github.ekryd.sortpom:sortpom-maven-plugin:sort");
+        processHelper.run("-q", "com.github.ekryd.sortpom:sortpom-maven-plugin:sort");
     }
 
     public void cleanRelease() throws IOException, InterruptedException {
-        processHelper.run("-B", "-ntp", "release:clean");
+        processHelper.run("release:clean");
     }
 
     public void prepareRelease(String tag, String releaseVersion, String developmentVersion)
             throws IOException, InterruptedException {
         processHelper.runInheritIO(
-                "-B",
-                "-ntp",
                 "-Dtag=" + tag,
                 "release:prepare",
                 "-DreleaseVersion=" + releaseVersion,
