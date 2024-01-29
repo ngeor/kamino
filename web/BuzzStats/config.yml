@@ -1,0 +1,12 @@
+logging:
+  level: INFO
+  loggers:
+    buzzstats: DEBUG
+database:
+  driverClass: org.h2.Driver
+  url: jdbc:h2:~/buzzstats
+crawlerInterval: 53
+oldestCheckedStoryInterval: 31
+views:
+  mustache:
+    cache: false
