@@ -18,6 +18,7 @@ import org.xml.sax.SAXException;
 
 public final class TemplateGenerator {
     private static final String GROUP_ID = "com.github.ngeor";
+    private static final String DEFAULT_JAVA_VERSION = "11";
 
     private final StringTemplate buildTemplate = StringTemplate.ofResource("/build-template.yml");
     private final StringTemplate releaseTemplate = StringTemplate.ofResource("/release-template.yml");
@@ -46,7 +47,7 @@ public final class TemplateGenerator {
     public void regenerateAllTemplates(File typeLevel, File projectLevel, File pomFile)
             throws IOException, InterruptedException, ParserConfigurationException, SAXException, TransformerException {
         System.out.println("Regenerating templates for " + projectLevel);
-        String javaVersion = Objects.requireNonNullElse(calculateJavaVersion(pomFile), "11");
+        String javaVersion = Objects.requireNonNullElse(calculateJavaVersion(pomFile), DEFAULT_JAVA_VERSION);
         Map<String, String> variables = Map.of(
                 "name",
                 projectLevel.getName(),
