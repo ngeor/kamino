@@ -4,17 +4,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.Objects;
 
-public final class StringTemplate {
+public final class SimpleStringTemplate {
     private final String template;
 
-    public StringTemplate(String template) {
+    public SimpleStringTemplate(String template) {
         this.template = template;
     }
 
-    public static StringTemplate ofResource(String resourceName) throws IOException {
-        try (InputStream is = StringTemplate.class.getResourceAsStream(resourceName)) {
-            return new StringTemplate(new String(is.readAllBytes(), StandardCharsets.UTF_8));
+    public static SimpleStringTemplate ofResource(String resourceName) throws IOException {
+        try (InputStream is = Objects.requireNonNull(
+                SimpleStringTemplate.class.getResourceAsStream(resourceName),
+                "Could not load resource: " + resourceName)) {
+            return new SimpleStringTemplate(new String(is.readAllBytes(), StandardCharsets.UTF_8));
         }
     }
 

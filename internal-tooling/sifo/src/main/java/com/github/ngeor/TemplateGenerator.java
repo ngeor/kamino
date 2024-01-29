@@ -20,8 +20,8 @@ public final class TemplateGenerator {
     private static final String GROUP_ID = "com.github.ngeor";
     private static final String DEFAULT_JAVA_VERSION = "11";
 
-    private final StringTemplate buildTemplate = StringTemplate.ofResource("/build-template.yml");
-    private final StringTemplate releaseTemplate = StringTemplate.ofResource("/release-template.yml");
+    private final SimpleStringTemplate buildTemplate = SimpleStringTemplate.ofResource("/build-template.yml");
+    private final SimpleStringTemplate releaseTemplate = SimpleStringTemplate.ofResource("/release-template.yml");
     private final File root;
 
     public TemplateGenerator(File root) throws IOException {
@@ -92,8 +92,8 @@ public final class TemplateGenerator {
         XmlUtils.setChildText(document.getDocumentElement(), "artifactId", projectDirectory.getName());
 
         // TODO do not hardcode the github URL
-        String url =
-                "https://github.com/ngeor/kamino/tree/master/" + typeDirectory.getName() + "/" + projectDirectory.getName();
+        String url = "https://github.com/ngeor/kamino/tree/master/" + typeDirectory.getName() + "/"
+                + projectDirectory.getName();
         XmlUtils.setChildText(document.getDocumentElement(), "url", url);
 
         Element scm = XmlUtils.ensureChild(document.getDocumentElement(), "scm");
@@ -133,8 +133,8 @@ public final class TemplateGenerator {
                             + artifactId + "/overview)";
                     lines.set(i, line);
                 } else if (line.startsWith("[![Java CI") || line.startsWith("[![Build")) {
-                    String url = "https://github.com/ngeor/kamino/actions/workflows/build-" + typeDirectory.getName() + "-"
-                            + projectDirectory.getName() + ".yml";
+                    String url = "https://github.com/ngeor/kamino/actions/workflows/build-" + typeDirectory.getName()
+                            + "-" + projectDirectory.getName() + ".yml";
                     line = String.format("[![Build %s](%s/badge.svg)](%s)", projectDirectory.getName(), url, url);
                     lines.set(i, line);
                 } else if (line.startsWith("[![javadoc")) {
