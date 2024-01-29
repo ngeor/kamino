@@ -6,17 +6,17 @@
     <artifactId>java</artifactId>
     <version>3.3.0</version>
   </parent>
-  <groupId>net.ngeor.icqfriends</groupId>
+  <groupId>com.github.ngeor</groupId>
   <artifactId>icqfriends</artifactId>
   <version>1.8.0-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>icqfriends Maven Webapp</name>
-  <url>https://github.com/ngeor/icqfriends</url>
+  <url>https://github.com/ngeor/kamino/tree/master/web/icqfriends</url>
   <scm>
-    <connection>scm:git:https://github.com/ngeor/icqfriends.git</connection>
-    <developerConnection>scm:git:git@github.com:ngeor/icqfriends.git</developerConnection>
+    <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
+    <developerConnection>scm:git:git@github.com:ngeor/kamino.git</developerConnection>
     <tag>HEAD</tag>
-    <url>https://github.com/ngeor/icqfriends</url>
+    <url>https://github.com/ngeor/kamino/tree/master/web/icqfriends</url>
   </scm>
   <properties>
     <maven.deploy.skip>true</maven.deploy.skip>

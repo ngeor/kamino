@@ -1,6 +1,6 @@
 # icqfriends
 
-[![Java CI with Maven](https://github.com/ngeor/icqfriends/actions/workflows/maven.yml/badge.svg)](https://github.com/ngeor/icqfriends/actions/workflows/maven.yml)
+[![Build icqfriends](https://github.com/ngeor/kamino/actions/workflows/build-web-icqfriends.yml/badge.svg)](https://github.com/ngeor/kamino/actions/workflows/build-web-icqfriends.yml)
 
 A JSP web app managing ICQ friends list (legacy project)
 
