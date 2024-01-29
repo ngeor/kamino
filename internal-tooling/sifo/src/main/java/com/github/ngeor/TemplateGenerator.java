@@ -34,27 +34,27 @@ public final class TemplateGenerator {
 
     public void regenerateAllTemplates()
             throws IOException, InterruptedException, ParserConfigurationException, SAXException, TransformerException {
-        for (File typeLevel : getDirectories(root)) {
-            for (File projectLevel : getDirectories(typeLevel)) {
-                File pomFile = new File(projectLevel, "pom.xml");
+        for (File typeDirectory : getDirectories(root)) {
+            for (File projectDirectory : getDirectories(typeDirectory)) {
+                File pomFile = new File(projectDirectory, "pom.xml");
                 if (pomFile.isFile()) {
-                    regenerateAllTemplates(typeLevel, projectLevel, pomFile);
+                    regenerateAllTemplates(typeDirectory, projectDirectory, pomFile);
                 }
             }
         }
     }
 
-    public void regenerateAllTemplates(File typeLevel, File projectLevel, File pomFile)
+    public void regenerateAllTemplates(File typeDirectory, File projectDirectory, File pomFile)
             throws IOException, InterruptedException, ParserConfigurationException, SAXException, TransformerException {
-        System.out.println("Regenerating templates for " + projectLevel);
-        String javaVersion = Objects.requireNonNullElse(calculateJavaVersion(pomFile), DEFAULT_JAVA_VERSION);
+        System.out.println("Regenerating templates for " + projectDirectory);
+        String javaVersion = Objects.requireNonNullElse(calculateJavaVersion(projectDirectory), DEFAULT_JAVA_VERSION);
         Map<String, String> variables = Map.of(
                 "name",
-                projectLevel.getName(),
+                projectDirectory.getName(),
                 "group",
-                typeLevel.getName(),
+                typeDirectory.getName(),
                 "path",
-                typeLevel.getName() + "/" + projectLevel.getName(),
+                typeDirectory.getName() + "/" + projectDirectory.getName(),
                 "javaVersion",
                 javaVersion);
 
@@ -62,38 +62,38 @@ public final class TemplateGenerator {
                 root.toPath()
                         .resolve(".github")
                         .resolve("workflows")
-                        .resolve("build-" + typeLevel.getName() + "-" + projectLevel.getName() + ".yml"),
+                        .resolve("build-" + typeDirectory.getName() + "-" + projectDirectory.getName() + ".yml"),
                 buildTemplate.render(variables));
 
-        if (requiresReleaseWorkflow(typeLevel.getName())) {
+        if (requiresReleaseWorkflow(typeDirectory.getName())) {
             Files.writeString(
                     root.toPath()
                             .resolve(".github")
                             .resolve("workflows")
-                            .resolve("release-" + typeLevel.getName() + "-" + projectLevel.getName() + ".yml"),
+                            .resolve("release-" + typeDirectory.getName() + "-" + projectDirectory.getName() + ".yml"),
                     releaseTemplate.render(variables));
         }
 
-        fixProjectUrls(typeLevel, projectLevel, pomFile);
-        sortPom(pomFile);
+        fixProjectUrls(typeDirectory, projectDirectory, pomFile);
+        sortPom(projectDirectory);
 
-        fixProjectBadges(typeLevel, projectLevel, pomFile);
+        fixProjectBadges(typeDirectory, projectDirectory);
     }
 
     public static boolean requiresReleaseWorkflow(String typeName) {
         return Set.of("archetypes", "libs", "plugins").contains(typeName);
     }
 
-    private void fixProjectUrls(File typeLevel, File projectLevel, File pomFile)
+    private void fixProjectUrls(File typeDirectory, File projectDirectory, File pomFile)
             throws ParserConfigurationException, IOException, SAXException, TransformerException {
         Document document = XmlUtils.parse(pomFile);
 
         XmlUtils.setChildText(document.getDocumentElement(), "groupId", GROUP_ID);
-        XmlUtils.setChildText(document.getDocumentElement(), "artifactId", projectLevel.getName());
+        XmlUtils.setChildText(document.getDocumentElement(), "artifactId", projectDirectory.getName());
 
         // TODO do not hardcode the github URL
         String url =
-                "https://github.com/ngeor/kamino/tree/master/" + typeLevel.getName() + "/" + projectLevel.getName();
+                "https://github.com/ngeor/kamino/tree/master/" + typeDirectory.getName() + "/" + projectDirectory.getName();
         XmlUtils.setChildText(document.getDocumentElement(), "url", url);
 
         Element scm = XmlUtils.ensureChild(document.getDocumentElement(), "scm");
@@ -105,20 +105,20 @@ public final class TemplateGenerator {
         XmlUtils.write(document, pomFile);
     }
 
-    private void sortPom(File pomFile) throws IOException, InterruptedException {
-        Maven maven = new Maven(pomFile.getParentFile());
+    private void sortPom(File projectDirectory) throws IOException, InterruptedException {
+        Maven maven = new Maven(projectDirectory);
         maven.sortPom();
     }
 
-    private void fixProjectBadges(File typeLevel, File projectLevel, File pomFile) throws IOException {
-        File readmeFile = pomFile.toPath().resolveSibling("README.md").toFile();
+    private void fixProjectBadges(File typeDirectory, File projectDirectory) throws IOException {
+        File readmeFile = projectDirectory.toPath().resolve("README.md").toFile();
         if (!readmeFile.exists()) {
             // TODO create if it does not exist
             return;
         }
 
         String groupId = GROUP_ID;
-        String artifactId = projectLevel.getName();
+        String artifactId = projectDirectory.getName();
         boolean foundBadges = false;
         List<String> lines = new ArrayList<>(Files.readAllLines(readmeFile.toPath()));
         for (int i = 0; i < lines.size(); i++) {
@@ -133,9 +133,9 @@ public final class TemplateGenerator {
                             + artifactId + "/overview)";
                     lines.set(i, line);
                 } else if (line.startsWith("[![Java CI") || line.startsWith("[![Build")) {
-                    String url = "https://github.com/ngeor/kamino/actions/workflows/build-" + typeLevel.getName() + "-"
-                            + projectLevel.getName() + ".yml";
-                    line = String.format("[![Build %s](%s/badge.svg)](%s)", projectLevel.getName(), url, url);
+                    String url = "https://github.com/ngeor/kamino/actions/workflows/build-" + typeDirectory.getName() + "-"
+                            + projectDirectory.getName() + ".yml";
+                    line = String.format("[![Build %s](%s/badge.svg)](%s)", projectDirectory.getName(), url, url);
                     lines.set(i, line);
                 } else if (line.startsWith("[![javadoc")) {
                     String badgeUrl = String.format("https://javadoc.io/badge2/%s/%s/javadoc.svg", groupId, artifactId);
@@ -156,11 +156,11 @@ public final class TemplateGenerator {
         return file.listFiles(new DirectoryFileFilter());
     }
 
-    private static String calculateJavaVersion(File pomFile) throws IOException, InterruptedException {
+    private static String calculateJavaVersion(File projectDirectory) throws IOException, InterruptedException {
         File tempFile = File.createTempFile("pom", ".xml");
         tempFile.deleteOnExit();
 
-        Maven maven = new Maven(pomFile.getParentFile());
+        Maven maven = new Maven(projectDirectory);
         maven.effectivePom(tempFile);
 
         Pattern pattern = Pattern.compile("<maven.compiler.source>([0-9]+)</maven.compiler.source>");
