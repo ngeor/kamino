@@ -1,5 +1,5 @@
 # jTetris
 
-[![Java CI with Maven](https://github.com/ngeor/jTetris/actions/workflows/maven.yml/badge.svg)](https://github.com/ngeor/jTetris/actions/workflows/maven.yml)
+[![Build jTetris](https://github.com/ngeor/kamino/actions/workflows/build-gui-jTetris.yml/badge.svg)](https://github.com/ngeor/kamino/actions/workflows/build-gui-jTetris.yml)
 
 Tetris clone written in Java
