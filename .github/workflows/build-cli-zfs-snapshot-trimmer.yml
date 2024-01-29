@@ -1,0 +1,29 @@
+name: Build zfs-snapshot-trimmer
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - cli/zfs-snapshot-trimmer/**
+      - .github/workflows/build-cli-zfs-snapshot-trimmer.yml
+  pull_request:
+    branches: [ master ]
+    paths:
+      - cli/zfs-snapshot-trimmer/**
+      - .github/workflows/build-cli-zfs-snapshot-trimmer.yml
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'zulu'
+        cache: maven
+    - name: Build with Maven
+      run: mvn -B -ntp verify --file cli/zfs-snapshot-trimmer/pom.xml
