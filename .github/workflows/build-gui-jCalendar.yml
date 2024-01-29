@@ -1,0 +1,29 @@
+name: Build jCalendar
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - gui/jCalendar/**
+      - .github/workflows/build-gui-jCalendar.yml
+  pull_request:
+    branches: [ master ]
+    paths:
+      - gui/jCalendar/**
+      - .github/workflows/build-gui-jCalendar.yml
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'zulu'
+        cache: maven
+    - name: Build with Maven
+      run: mvn -B -ntp verify --file gui/jCalendar/pom.xml
