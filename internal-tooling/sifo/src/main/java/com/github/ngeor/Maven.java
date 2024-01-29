@@ -37,4 +37,8 @@ public final class Maven {
     public void verify() throws IOException, InterruptedException {
         processHelper.runInheritIO("verify");
     }
+
+    public void effectivePom(File output) throws IOException, InterruptedException {
+        processHelper.run("help:effective-pom", "-Doutput=" + output.getAbsolutePath());
+    }
 }

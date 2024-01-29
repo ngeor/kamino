@@ -66,8 +66,8 @@
               </goals>
               <configuration>
                 <rules>
-                  <banDuplicatePomDependencyVersions />
-                  <dependencyConvergence />
+                  <banDuplicatePomDependencyVersions></banDuplicatePomDependencyVersions>
+                  <dependencyConvergence></dependencyConvergence>
                   <requireMavenVersion>
                     <version>3.6.3</version>
                   </requireMavenVersion>

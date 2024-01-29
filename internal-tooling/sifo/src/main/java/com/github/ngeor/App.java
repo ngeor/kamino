@@ -16,7 +16,10 @@ public final class App {
      */
     public static void main(String[] args)
             throws IOException, InterruptedException, ParserConfigurationException, SAXException, TransformerException {
-        // new TemplateGenerator(detectRootDirectory()).regenerateAllTemplates();
+        if (args == null || args.length == 0) {
+            new TemplateGenerator(detectRootDirectory()).regenerateAllTemplates();
+            return;
+        }
 
         String githubToken = System.getenv("GITHUB_TOKEN");
         if (githubToken == null || githubToken.isBlank()) {

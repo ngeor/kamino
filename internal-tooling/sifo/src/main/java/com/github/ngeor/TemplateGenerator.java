@@ -45,7 +45,7 @@ public final class TemplateGenerator {
 
     public void regenerateAllTemplates(File typeLevel, File projectLevel, File pomFile)
             throws IOException, InterruptedException, ParserConfigurationException, SAXException, TransformerException {
-        System.out.println(projectLevel);
+        System.out.println("Regenerating templates for " + projectLevel);
         String javaVersion = Objects.requireNonNullElse(calculateJavaVersion(pomFile), "11");
         Map<String, String> variables = Map.of(
                 "name",
@@ -155,10 +155,15 @@ public final class TemplateGenerator {
         return file.listFiles(new DirectoryFileFilter());
     }
 
-    private static String calculateJavaVersion(File pomFile) throws IOException {
-        // TODO use effective pom command instead
-        Pattern pattern = Pattern.compile("<java.version>([0-9]+)</java.version>");
-        for (String line : Files.readAllLines(pomFile.toPath())) {
+    private static String calculateJavaVersion(File pomFile) throws IOException, InterruptedException {
+        File tempFile = File.createTempFile("pom", ".xml");
+        tempFile.deleteOnExit();
+
+        Maven maven = new Maven(pomFile.getParentFile());
+        maven.effectivePom(tempFile);
+
+        Pattern pattern = Pattern.compile("<maven.compiler.source>([0-9]+)</maven.compiler.source>");
+        for (String line : Files.readAllLines(tempFile.toPath())) {
             Matcher matcher = pattern.matcher(line);
             if (matcher.find()) {
                 return matcher.group(1);
