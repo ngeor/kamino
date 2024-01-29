@@ -79,7 +79,7 @@ public final class TemplateGenerator {
         fixProjectBadges(typeLevel, projectLevel, pomFile);
     }
 
-    private static boolean requiresReleaseWorkflow(String typeName) {
+    public static boolean requiresReleaseWorkflow(String typeName) {
         return Set.of("archetypes", "libs", "plugins").contains(typeName);
     }
 

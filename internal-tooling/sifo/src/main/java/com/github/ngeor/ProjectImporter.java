@@ -105,10 +105,11 @@ public class ProjectImporter {
     private void performPatchRelease() throws IOException, InterruptedException {
         ensureImportedProjectBuilds();
 
-        Git git = new Git(oldRepoRoot);
-        SemVer maxReleaseVersion = SemVer.parse(git.getMostRecentTag("v").replace("v", ""));
-
-        new ReleasePerformer(monorepoRoot, typeName, oldRepoRoot.getName()).performPatchRelease(maxReleaseVersion);
+        if (TemplateGenerator.requiresReleaseWorkflow(typeName)) {
+            Git git = new Git(oldRepoRoot);
+            SemVer maxReleaseVersion = SemVer.parse(git.getMostRecentTag("v").replace("v", ""));
+            new ReleasePerformer(monorepoRoot, typeName, oldRepoRoot.getName()).performPatchRelease(maxReleaseVersion);
+        }
     }
 
     private void archiveImportedRepo() throws IOException, InterruptedException {
