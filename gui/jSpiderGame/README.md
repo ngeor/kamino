@@ -1,5 +1,5 @@
 # jSpiderGame
 
-[![Java CI with Maven](https://github.com/ngeor/jSpiderGame/actions/workflows/maven.yml/badge.svg)](https://github.com/ngeor/jSpiderGame/actions/workflows/maven.yml)
+[![Build jSpiderGame](https://github.com/ngeor/kamino/actions/workflows/build-gui-jSpiderGame.yml/badge.svg)](https://github.com/ngeor/kamino/actions/workflows/build-gui-jSpiderGame.yml)
 
 Shooting game in Java (legacy project)
