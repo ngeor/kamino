@@ -3,18 +3,18 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>buzzstats</groupId>
-  <artifactId>buzzstats</artifactId>
+  <groupId>com.github.ngeor</groupId>
+  <artifactId>BuzzStats</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>buzzstats</name>
-  <url>https://github.com/ngeor/BuzzStats</url>
+  <url>https://github.com/ngeor/kamino/tree/master/web/BuzzStats</url>
   <scm>
-    <connection>scm:git:https://github.com/ngeor/BuzzStats.git</connection>
-    <developerConnection>scm:git:git@github.com:ngeor/BuzzStats.git</developerConnection>
+    <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
+    <developerConnection>scm:git:git@github.com:ngeor/kamino.git</developerConnection>
     <tag>HEAD</tag>
-    <url>https://github.com/ngeor/BuzzStats</url>
+    <url>https://github.com/ngeor/kamino/tree/master/web/BuzzStats</url>
   </scm>
 
   <properties>

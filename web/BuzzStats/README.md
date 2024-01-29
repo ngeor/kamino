@@ -1,6 +1,6 @@
 # buzzstats
 
-[![Java CI with Maven](https://github.com/ngeor/BuzzStats/actions/workflows/maven.yml/badge.svg)](https://github.com/ngeor/BuzzStats/actions/workflows/maven.yml)
+[![Build BuzzStats](https://github.com/ngeor/kamino/actions/workflows/build-web-BuzzStats.yml/badge.svg)](https://github.com/ngeor/kamino/actions/workflows/build-web-BuzzStats.yml)
 
 Monitors web pages for changes.
 
