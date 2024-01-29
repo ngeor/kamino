@@ -1,6 +1,6 @@
 # krt
 
-[![Java CI with Maven](https://github.com/ngeor/krt/actions/workflows/maven.yml/badge.svg)](https://github.com/ngeor/krt/actions/workflows/maven.yml)
+[![Build krt](https://github.com/ngeor/kamino/actions/workflows/build-cli-krt.yml/badge.svg)](https://github.com/ngeor/kamino/actions/workflows/build-cli-krt.yml)
 
 > Kamino Release Tool
 

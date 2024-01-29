@@ -4,12 +4,12 @@
   <groupId>com.github.ngeor</groupId>
   <artifactId>krt</artifactId>
   <version>0.6.0-SNAPSHOT</version>
-  <url>https://github.com/ngeor/krt</url>
+  <url>https://github.com/ngeor/kamino/tree/master/cli/krt</url>
   <scm>
-    <connection>scm:git:https://github.com/ngeor/krt.git</connection>
-    <developerConnection>scm:git:git@github.com:ngeor/krt.git</developerConnection>
+    <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
+    <developerConnection>scm:git:git@github.com:ngeor/kamino.git</developerConnection>
     <tag>HEAD</tag>
-    <url>https://github.com/ngeor/krt</url>
+    <url>https://github.com/ngeor/kamino/tree/master/cli/krt</url>
   </scm>
   <properties>
     <maven.compiler.source>11</maven.compiler.source>
