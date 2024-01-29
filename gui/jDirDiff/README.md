@@ -1,5 +1,5 @@
 # jDirDiff
 
-[![Java CI with Maven](https://github.com/ngeor/jDirDiff/actions/workflows/maven.yml/badge.svg)](https://github.com/ngeor/jDirDiff/actions/workflows/maven.yml)
+[![Build jDirDiff](https://github.com/ngeor/kamino/actions/workflows/build-gui-jDirDiff.yml/badge.svg)](https://github.com/ngeor/kamino/actions/workflows/build-gui-jDirDiff.yml)
 
 Java application to compare two directories (legacy project)

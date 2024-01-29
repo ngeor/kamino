@@ -6,17 +6,17 @@
     <artifactId>java</artifactId>
     <version>3.3.0</version>
   </parent>
-  <groupId>org.ngss.jdirdiff</groupId>
-  <artifactId>jdirdiff</artifactId>
+  <groupId>com.github.ngeor</groupId>
+  <artifactId>jDirDiff</artifactId>
   <version>1.8.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>jdirdiff</name>
-  <url>https://github.com/ngeor/jDirDiff</url>
+  <url>https://github.com/ngeor/kamino/tree/master/gui/jDirDiff</url>
   <scm>
-    <connection>scm:git:https://github.com/ngeor/jDirDiff.git</connection>
-    <developerConnection>scm:git:git@github.com:ngeor/jDirDiff.git</developerConnection>
+    <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
+    <developerConnection>scm:git:git@github.com:ngeor/kamino.git</developerConnection>
     <tag>HEAD</tag>
-    <url>https://github.com/ngeor/jDirDiff</url>
+    <url>https://github.com/ngeor/kamino/tree/master/gui/jDirDiff</url>
   </scm>
   <properties>
     <jacoco.unit-tests.limit.instruction-ratio>1%</jacoco.unit-tests.limit.instruction-ratio>
