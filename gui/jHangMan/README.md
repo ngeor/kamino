@@ -1,6 +1,6 @@
 # jHangMan
 
-[![Java CI with Maven](https://github.com/ngeor/jHangMan/actions/workflows/maven.yml/badge.svg)](https://github.com/ngeor/jHangMan/actions/workflows/maven.yml)
+[![Build jHangMan](https://github.com/ngeor/kamino/actions/workflows/build-gui-jHangMan.yml/badge.svg)](https://github.com/ngeor/kamino/actions/workflows/build-gui-jHangMan.yml)
 
 Hangman game as a Java applet (legacy project)
 
