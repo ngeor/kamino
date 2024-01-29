@@ -9,7 +9,8 @@ public final class Parsers {
 
     public static Parser<Token> symbol(char ch) {
         return anyToken()
-            .filter(token -> token.kind() == TokenKind.SYMBOL && token.value().equals(String.valueOf(ch)));
+                .filter(token ->
+                        token.kind() == TokenKind.SYMBOL && token.value().equals(String.valueOf(ch)));
     }
 
     public static Parser<Token> kind(TokenKind kind) {

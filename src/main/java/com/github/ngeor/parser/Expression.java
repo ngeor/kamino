@@ -17,21 +17,19 @@ public sealed interface Expression {
 
     record BinaryExpression(Expression left, String operator, Expression right) implements Expression {
         private static final Map<String, Integer> precedence = Map.of(
-            "+", 1,
-            "-", 1,
-            "*", 2,
-            "/", 2
-        );
+                "+", 1,
+                "-", 1,
+                "*", 2,
+                "/", 2);
 
         @Override
         public Expression toBinary(String operator, Expression right) {
             if (precedence.get(this.operator) < precedence.get(operator)) {
                 return new BinaryExpression(
-                    left,
-                    this.operator,
-                    // recursion
-                    this.right.toBinary(operator, right)
-                );
+                        left,
+                        this.operator,
+                        // recursion
+                        this.right.toBinary(operator, right));
             } else {
                 return Expression.super.toBinary(operator, right);
             }

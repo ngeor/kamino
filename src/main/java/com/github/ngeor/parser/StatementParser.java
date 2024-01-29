@@ -13,8 +13,7 @@ public class StatementParser implements Parser<Statement> {
     }
 
     private Parser<String> name() {
-        return Parsers.kind(TokenKind.LETTER)
-                .map(Token::value);
+        return Parsers.kind(TokenKind.LETTER).map(Token::value);
     }
 
     private Parser<Token> equals() {

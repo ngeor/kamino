@@ -35,14 +35,15 @@ public class Tokenizer {
             while (!eligible.isEmpty()) {
                 TokenKind kind = eligible.remove(0);
 
-                boolean matches = switch (kind) {
-                    case LETTER -> isAlpha(ch) || (!isFirst && isDigit(ch));
-                    case DIGIT -> isDigit(ch);
-                    case SPACE -> isSpace(ch);
-                    case NEW_LINE -> isNewLine(ch);
-                    case SYMBOL -> isFirst;
-                    default -> false;
-                };
+                boolean matches =
+                        switch (kind) {
+                            case LETTER -> isAlpha(ch) || (!isFirst && isDigit(ch));
+                            case DIGIT -> isDigit(ch);
+                            case SPACE -> isSpace(ch);
+                            case NEW_LINE -> isNewLine(ch);
+                            case SYMBOL -> isFirst;
+                            default -> false;
+                        };
 
                 if (matches) {
                     pass.add(kind);

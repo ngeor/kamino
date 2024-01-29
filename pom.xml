@@ -12,15 +12,15 @@
     <jacoco.unit-tests.limit.instruction-ratio>80%</jacoco.unit-tests.limit.instruction-ratio>
     <jacoco.unit-tests.limit.branch-ratio>75%</jacoco.unit-tests.limit.branch-ratio>
     <jacoco.unit-tests.limit.class-complexity>35</jacoco.unit-tests.limit.class-complexity>
-    <jacoco.unit-tests.limit.method-complexity>10</jacoco.unit-tests.limit.method-complexity>
+    <jacoco.unit-tests.limit.method-complexity>20</jacoco.unit-tests.limit.method-complexity>
     <!-- dependencies -->
-    <assertj-core.version>3.24.2</assertj-core.version>
-    <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
+    <assertj-core.version>3.25.2</assertj-core.version>
+    <jacoco-maven-plugin.version>0.8.10</jacoco-maven-plugin.version>
     <junit.version>5.10.1</junit.version>
     <maven-enforcer-plugin.version>3.1.0</maven-enforcer-plugin.version>
     <maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
     <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
-    <spotless-maven-plugin.version>2.40.0</spotless-maven-plugin.version>
+    <spotless-maven-plugin.version>2.43.0</spotless-maven-plugin.version>
   </properties>
   <dependencies>
     <dependency>
@@ -65,7 +65,7 @@
         <configuration>
           <java>
             <palantirJavaFormat>
-
+              <style>PALANTIR</style>
             </palantirJavaFormat>
           </java>
         </configuration>

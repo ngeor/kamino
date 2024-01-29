@@ -6,10 +6,7 @@ import java.util.stream.Collectors;
 public class ExpressionParser implements Parser<Expression> {
 
     private Parser<Expression> nonBinaryParser() {
-        return integerLiteral()
-            .or(stringLiteral())
-            .or(name())
-            .or(unaryExpression());
+        return integerLiteral().or(stringLiteral()).or(name()).or(unaryExpression());
     }
 
     @Override
@@ -23,10 +20,8 @@ public class ExpressionParser implements Parser<Expression> {
         boolean goOn = true;
         while (goOn) {
             // try if there is a binary operator next
-            ParseResult<String> opResult = binaryOperator()
-                .surroundedByOptionalSpace()
-                .rollingBack()
-                .parse(tokenizer);
+            ParseResult<String> opResult =
+                    binaryOperator().surroundedByOptionalSpace().rollingBack().parse(tokenizer);
 
             switch (opResult) {
                 case ParseResult.Ok<String> opOk:
@@ -34,12 +29,7 @@ public class ExpressionParser implements Parser<Expression> {
                     switch (rightResult) {
                         case ParseResult.Ok<Expression> rightOk:
                             // combine
-                            leftResult = leftResult.map(
-                                leftValue -> leftValue.toBinary(
-                                    opOk.value(),
-                                    rightOk.value()
-                                )
-                            );
+                            leftResult = leftResult.map(leftValue -> leftValue.toBinary(opOk.value(), rightOk.value()));
                             break;
                         case ParseResult.None<Expression> ignored:
                             return ParseResult.err();
@@ -66,11 +56,10 @@ public class ExpressionParser implements Parser<Expression> {
     }
 
     private Parser<Expression> stringLiteral() {
-        return quote()
-            .andKeepingRight(innerStringToken().many())
-            .andKeepingLeft(quote().orThrow())
-            .map(tokens -> tokens.stream().map(Token::value).collect(Collectors.joining()))
-            .map(Expression.StringLiteral::new);
+        return quote().andKeepingRight(innerStringToken().many())
+                .andKeepingLeft(quote().orThrow())
+                .map(tokens -> tokens.stream().map(Token::value).collect(Collectors.joining()))
+                .map(Expression.StringLiteral::new);
     }
 
     private Parser<Token> quote() {
@@ -78,14 +67,11 @@ public class ExpressionParser implements Parser<Expression> {
     }
 
     private Parser<Token> innerStringToken() {
-        return new TokenParser()
-            .filter(token -> token.kind() != TokenKind.NEW_LINE && !"\"".equals(token.value()));
+        return new TokenParser().filter(token -> token.kind() != TokenKind.NEW_LINE && !"\"".equals(token.value()));
     }
 
     private Parser<Expression> name() {
-        return Parsers.kind(TokenKind.LETTER)
-                .map(Token::value)
-                .map(Expression.Name::new);
+        return Parsers.kind(TokenKind.LETTER).map(Token::value).map(Expression.Name::new);
     }
 
     private Parser<Expression> unaryExpression() {
@@ -95,13 +81,13 @@ public class ExpressionParser implements Parser<Expression> {
     }
 
     private Parser<String> unaryOperator() {
-        return Parsers.symbol('-')
-                .map(Token::value);
+        return Parsers.symbol('-').map(Token::value);
     }
 
     private Parser<String> binaryOperator() {
         return new TokenParser()
-            .filter(token -> token.kind() == TokenKind.SYMBOL && Set.of("+", "-", "*", "/").contains(token.value()))
-            .map(Token::value);
+                .filter(token -> token.kind() == TokenKind.SYMBOL
+                        && Set.of("+", "-", "*", "/").contains(token.value()))
+                .map(Token::value);
     }
 }

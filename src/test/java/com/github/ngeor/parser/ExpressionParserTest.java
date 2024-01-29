@@ -52,63 +52,37 @@ class ExpressionParserTest {
     void minusIntegerLiteral() {
         input = "-42";
         act();
-        assertThat(value)
-                .isEqualTo(new Expression.UnaryExpression("-", new Expression.IntegerLiteral(42)));
+        assertThat(value).isEqualTo(new Expression.UnaryExpression("-", new Expression.IntegerLiteral(42)));
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {
-        "1+2",
-        "1 +2",
-        "1+ 2",
-        "1 + 2"
-    })
+    @ValueSource(strings = {"1+2", "1 +2", "1+ 2", "1 + 2"})
     void integerLiteralPlusIntegerLiteral(String input) {
         this.input = input;
         act();
-        assertThat(value).isEqualTo(
-            new Expression.BinaryExpression(
-                new Expression.IntegerLiteral(1),
-                "+",
-                new Expression.IntegerLiteral(2)
-            )
-        );
+        assertThat(value)
+                .isEqualTo(new Expression.BinaryExpression(
+                        new Expression.IntegerLiteral(1), "+", new Expression.IntegerLiteral(2)));
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {
-        "1-2",
-        "1 -2",
-        "1- 2",
-        "1 - 2"
-    })
+    @ValueSource(strings = {"1-2", "1 -2", "1- 2", "1 - 2"})
     void integerLiteralMinusIntegerLiteral(String input) {
         this.input = input;
         act();
-        assertThat(value).isEqualTo(
-            new Expression.BinaryExpression(
-                new Expression.IntegerLiteral(1),
-                "-",
-                new Expression.IntegerLiteral(2)
-            )
-        );
+        assertThat(value)
+                .isEqualTo(new Expression.BinaryExpression(
+                        new Expression.IntegerLiteral(1), "-", new Expression.IntegerLiteral(2)));
     }
 
     @ParameterizedTest
-    @CsvSource({
-        "1 + 4, 1, +, 4",
-        "42 - 10, 42, -, 10",
-        "5 * 7, 5, *, 7",
-        "8 / 2, 8, /, 2"
-    })
+    @CsvSource({"1 + 4, 1, +, 4", "42 - 10, 42, -, 10", "5 * 7, 5, *, 7", "8 / 2, 8, /, 2"})
     void mathBinary(String expression, int left, String operator, int right) {
         this.input = expression;
         act();
-        assertThat(value).isEqualTo(new Expression.BinaryExpression(
-            new Expression.IntegerLiteral(left),
-            operator,
-            new Expression.IntegerLiteral(right)
-        ));
+        assertThat(value)
+                .isEqualTo(new Expression.BinaryExpression(
+                        new Expression.IntegerLiteral(left), operator, new Expression.IntegerLiteral(right)));
     }
 
     @ParameterizedTest
@@ -119,49 +93,33 @@ class ExpressionParserTest {
         "1 / 2 * 3, 1, /, 2, *, 3",
     })
     void mathBinaryUnchangedPriority(
-        String expression,
-        int innerLeft,
-        String innerOp,
-        int innerRight,
-        String outerOp,
-        int outerRight
-    ) {
+            String expression, int innerLeft, String innerOp, int innerRight, String outerOp, int outerRight) {
         this.input = expression;
         act();
-        assertThat(value).isEqualTo(
-            new Expression.BinaryExpression(
-                new Expression.BinaryExpression(
-                    new Expression.IntegerLiteral(innerLeft),
-                    innerOp,
-                    new Expression.IntegerLiteral(innerRight)
-                ),
-                outerOp,
-                new Expression.IntegerLiteral(outerRight)
-            )
-        );
+        assertThat(value)
+                .isEqualTo(new Expression.BinaryExpression(
+                        new Expression.BinaryExpression(
+                                new Expression.IntegerLiteral(innerLeft),
+                                innerOp,
+                                new Expression.IntegerLiteral(innerRight)),
+                        outerOp,
+                        new Expression.IntegerLiteral(outerRight)));
     }
 
     @Test
     void fourMemberAddition() {
         this.input = "1 + 2 + 3 + 4";
         act();
-        assertThat(value).isEqualTo(
-            new Expression.BinaryExpression(
-                new Expression.BinaryExpression(
-                    new Expression.BinaryExpression(
-                        new Expression.IntegerLiteral(1),
+        assertThat(value)
+                .isEqualTo(new Expression.BinaryExpression(
+                        new Expression.BinaryExpression(
+                                new Expression.BinaryExpression(
+                                        new Expression.IntegerLiteral(1), "+", new Expression.IntegerLiteral(2)),
+                                "+",
+                                new Expression.IntegerLiteral(3)),
                         "+",
-                        new Expression.IntegerLiteral(2)
-                    ),
-                    "+",
-                    new Expression.IntegerLiteral(3)
-                ),
-                "+",
-                new Expression.IntegerLiteral(4)
-            )
-        );
+                        new Expression.IntegerLiteral(4)));
     }
-
 
     @ParameterizedTest
     @CsvSource({
@@ -169,83 +127,54 @@ class ExpressionParserTest {
         "1 - 2 / 3, 1, -, 2, /, 3",
     })
     void mathBinaryChangedPriority(
-        String expression,
-        int outerLeft,
-        String outerOp,
-        int innerLeft,
-        String innerOp,
-        int innerRight
-    ) {
+            String expression, int outerLeft, String outerOp, int innerLeft, String innerOp, int innerRight) {
         this.input = expression;
         act();
-        assertThat(value).isEqualTo(
-            new Expression.BinaryExpression(
-                new Expression.IntegerLiteral(outerLeft),
-                outerOp,
-                new Expression.BinaryExpression(
-                    new Expression.IntegerLiteral(innerLeft),
-                    innerOp,
-                    new Expression.IntegerLiteral(innerRight)
-                )
-            )
-        );
+        assertThat(value)
+                .isEqualTo(new Expression.BinaryExpression(
+                        new Expression.IntegerLiteral(outerLeft),
+                        outerOp,
+                        new Expression.BinaryExpression(
+                                new Expression.IntegerLiteral(innerLeft),
+                                innerOp,
+                                new Expression.IntegerLiteral(innerRight))));
     }
 
     @Test
     void fourMemberChangedPriority() {
         input = "1 + 2 + 3 * 4";
         act();
-        assertThat(value).isEqualTo(
-            new Expression.BinaryExpression(
-                new Expression.BinaryExpression(
-                    new Expression.IntegerLiteral(1),
-                    "+",
-                    new Expression.IntegerLiteral(2)
-                ),
-                "+",
-                new Expression.BinaryExpression(
-                    new Expression.IntegerLiteral(3),
-                    "*",
-                    new Expression.IntegerLiteral(4)
-                )
-            )
-        );
+        assertThat(value)
+                .isEqualTo(new Expression.BinaryExpression(
+                        new Expression.BinaryExpression(
+                                new Expression.IntegerLiteral(1), "+", new Expression.IntegerLiteral(2)),
+                        "+",
+                        new Expression.BinaryExpression(
+                                new Expression.IntegerLiteral(3), "*", new Expression.IntegerLiteral(4))));
 
         input = "1 + 2 * 3 + 4";
         act();
-        assertThat(value).isEqualTo(
-            new Expression.BinaryExpression(
-                new Expression.BinaryExpression(
-                    new Expression.IntegerLiteral(1),
-                    "+",
-                    new Expression.BinaryExpression(
-                        new Expression.IntegerLiteral(2),
-                        "*",
-                        new Expression.IntegerLiteral(3)
-                    )
-                ),
-                "+",
-                new Expression.IntegerLiteral(4)
-            )
-        );
+        assertThat(value)
+                .isEqualTo(new Expression.BinaryExpression(
+                        new Expression.BinaryExpression(
+                                new Expression.IntegerLiteral(1),
+                                "+",
+                                new Expression.BinaryExpression(
+                                        new Expression.IntegerLiteral(2), "*", new Expression.IntegerLiteral(3))),
+                        "+",
+                        new Expression.IntegerLiteral(4)));
 
         input = "1 * 2 + 3 + 4";
         act();
-        assertThat(value).isEqualTo(
-            new Expression.BinaryExpression(
-                new Expression.BinaryExpression(
-                    new Expression.BinaryExpression(
-                        new Expression.IntegerLiteral(1),
-                        "*",
-                        new Expression.IntegerLiteral(2)
-                    ),
-                    "+",
-                    new Expression.IntegerLiteral(3)
-                ),
-                "+",
-                new Expression.IntegerLiteral(4)
-            )
-        );
+        assertThat(value)
+                .isEqualTo(new Expression.BinaryExpression(
+                        new Expression.BinaryExpression(
+                                new Expression.BinaryExpression(
+                                        new Expression.IntegerLiteral(1), "*", new Expression.IntegerLiteral(2)),
+                                "+",
+                                new Expression.IntegerLiteral(3)),
+                        "+",
+                        new Expression.IntegerLiteral(4)));
     }
 
     private void act() {
