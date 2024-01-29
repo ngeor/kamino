@@ -1,0 +1,29 @@
+name: Build duke-basic
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - cli/duke-basic/**
+      - .github/workflows/build-cli-duke-basic.yml
+  pull_request:
+    branches: [ master ]
+    paths:
+      - cli/duke-basic/**
+      - .github/workflows/build-cli-duke-basic.yml
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 21
+      uses: actions/setup-java@v2
+      with:
+        java-version: '21'
+        distribution: 'zulu'
+        cache: maven
+    - name: Build with Maven
+      run: mvn -B -ntp verify --file cli/duke-basic/pom.xml
