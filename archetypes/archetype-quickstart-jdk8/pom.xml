@@ -8,7 +8,7 @@
   </parent>
   <groupId>com.github.ngeor</groupId>
   <artifactId>archetype-quickstart-jdk8</artifactId>
-  <version>2.9.0</version>
+  <version>2.10.0-SNAPSHOT</version>
   <packaging>maven-archetype</packaging>
   <name>archetype-quickstart-jdk8</name>
   <description>A Maven archetype for a simple Java app, updated for Java 8</description>
@@ -16,7 +16,7 @@
   <scm>
     <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
     <developerConnection>scm:git:git@github.com:ngeor/kamino.git</developerConnection>
-    <tag>archetypes/archetype-quickstart-jdk8/v2.9.0</tag>
+    <tag>HEAD</tag>
     <url>https://github.com/ngeor/kamino/tree/master/archetypes/archetype-quickstart-jdk8</url>
   </scm>
   <build>
