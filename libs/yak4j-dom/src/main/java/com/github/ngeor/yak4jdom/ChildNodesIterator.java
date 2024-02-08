@@ -12,7 +12,7 @@ class ChildNodesIterator implements Iterator<Node> {
     private final Node parentNode;
     private int index;
     private NodeList nodeList;
-    private Node nextToReturn;
+    private final Box<Node> nextToReturn = new Box<>();
 
     ChildNodesIterator(Node parentNode) {
         this.parentNode = parentNode;
@@ -21,29 +21,24 @@ class ChildNodesIterator implements Iterator<Node> {
     @Override
     public boolean hasNext() {
         doNext();
-        return nextToReturn != null;
+        return nextToReturn.isPresent();
     }
 
     @Override
     public Node next() {
         doNext();
-        Node result = nextToReturn;
-        nextToReturn = null;
-        return result;
+        return nextToReturn.take();
     }
 
     private void doNext() {
-        if (nextToReturn != null || seenEof()) {
+        if (nextToReturn.isPresent() || seenEof()) {
             return;
         }
         if (index == 0) {
             nodeList = parentNode.getChildNodes();
-            if (nodeList == null) {
-                throw new IllegalStateException("Got null nodeList");
-            }
         }
         if (index < nodeList.getLength()) {
-            nextToReturn = nodeList.item(index);
+            nextToReturn.set(nodeList.item(index));
             index++;
         }
     }
