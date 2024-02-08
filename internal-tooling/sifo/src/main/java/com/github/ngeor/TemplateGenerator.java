@@ -1,15 +1,17 @@
 package com.github.ngeor;
 
+import com.github.ngeor.yak4jdom.XmlUtils;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import org.w3c.dom.Document;
@@ -24,6 +26,7 @@ public final class TemplateGenerator {
     private final SimpleStringTemplate releaseTemplate = SimpleStringTemplate.ofResource("/release-template.yml");
     private final SimpleStringTemplate rootPomTemplate = SimpleStringTemplate.ofResource("/root-pom-template.xml");
     private final File root;
+    private List<MavenModule> modules;
 
     public TemplateGenerator(File root) throws IOException {
         if (!root.toPath().resolve(".github").toFile().isDirectory()) {
@@ -33,36 +36,57 @@ public final class TemplateGenerator {
         this.root = root;
     }
 
+    private List<MavenModule> getModules() {
+        if (modules == null) {
+            modules = collectModules();
+        }
+        return modules;
+    }
+
     public void regenerateAllTemplates()
             throws IOException, InterruptedException, ParserConfigurationException, SAXException, TransformerException {
-        String modules = "";
+        for (MavenModule module : getModules()) {
+            regenerateAllTemplates(module);
+        }
+        regenerateRootPom();
+    }
 
+    private List<MavenModule> collectModules() {
+        List<MavenModule> modules = new ArrayList<>();
         for (File typeDirectory : getDirectories(root)) {
             for (File projectDirectory : getDirectories(typeDirectory)) {
                 File pomFile = new File(projectDirectory, "pom.xml");
                 if (pomFile.isFile()) {
                     MavenModule module = new MavenModule(typeDirectory, projectDirectory, pomFile);
-                    regenerateAllTemplates(module);
-
-                    modules += "    <module>" + module.path() + "</module>\n";
+                    modules.add(module);
                 }
             }
         }
+        return modules;
+    }
+
+    private void regenerateRootPom() throws IOException {
+        StringBuilder builder = new StringBuilder();
+        for (MavenModule module : getModules()) {
+            if (!builder.isEmpty()) {
+                builder.append("\n").append("    ");
+            }
+            builder.append("<module>").append(module.path()).append("</module>");
+        }
 
         // regenerate root pom
-        Files.writeString(root.toPath().resolve("pom.xml"), rootPomTemplate.render(Map.of("modules", modules)));
+        Files.writeString(
+                root.toPath().resolve("pom.xml"), rootPomTemplate.render(Map.of("modules", builder.toString())));
     }
 
     public void regenerateAllTemplates(MavenModule module)
             throws IOException, InterruptedException, ParserConfigurationException, SAXException, TransformerException {
         System.out.println("Regenerating templates for " + module.projectDirectory());
-        String javaVersion =
-                Objects.requireNonNullElse(calculateJavaVersion(module.projectDirectory()), DEFAULT_JAVA_VERSION);
+        String javaVersion = calculateJavaVersion(module).orElse(DEFAULT_JAVA_VERSION);
         // TODO detect monorepo dependencies of project and update the build template's paths so that the upstream
         // projects build
         String buildCommand;
-        // TODO detect intelligently if the project has internal dependencies or not
-        if (module.typeDirectory().getName().equals("internal-tooling")) {
+        if (usesInternalDependencies(module)) {
             buildCommand = "mvn -B -ntp -pl " + module.path() + " -am clean verify";
         } else {
             buildCommand = "mvn -B -ntp clean verify --file " + module.path() + "/"
@@ -95,6 +119,21 @@ public final class TemplateGenerator {
         sortPom(module.projectDirectory());
 
         fixProjectBadges(module.typeDirectory(), module.projectDirectory());
+    }
+
+    private boolean usesInternalDependencies(MavenModule module)
+            throws IOException, ParserConfigurationException, InterruptedException, SAXException {
+        Set<MavenCoordinates> internalDependencies = getModules().stream()
+                .map(m -> {
+                    try {
+                        return m.coordinates();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toSet());
+
+        return module.dependencies().anyMatch(internalDependencies::contains);
     }
 
     public static boolean requiresReleaseWorkflow(String typeName) {
@@ -175,20 +214,15 @@ public final class TemplateGenerator {
         return file.listFiles(new DirectoryFileFilter());
     }
 
-    private static String calculateJavaVersion(File projectDirectory) throws IOException, InterruptedException {
-        File tempFile = File.createTempFile("pom", ".xml");
-        tempFile.deleteOnExit();
-
-        Maven maven = new Maven(projectDirectory);
-        maven.effectivePom(tempFile);
+    private static Optional<String> calculateJavaVersion(MavenModule module) throws IOException, InterruptedException {
+        String effectivePom = module.effectivePom();
 
         Pattern pattern = Pattern.compile("<maven.compiler.source>([0-9]+)</maven.compiler.source>");
-        for (String line : Files.readAllLines(tempFile.toPath())) {
-            Matcher matcher = pattern.matcher(line);
-            if (matcher.find()) {
-                return matcher.group(1);
-            }
-        }
-        return null;
+        return effectivePom
+                .lines()
+                .map(pattern::matcher)
+                .filter(Matcher::find)
+                .map(matcher -> matcher.group(1))
+                .findFirst();
     }
 }
