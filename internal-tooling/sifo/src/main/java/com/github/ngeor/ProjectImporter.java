@@ -82,7 +82,7 @@ public class ProjectImporter {
     private void adjustImportedCode()
             throws IOException, ParserConfigurationException, InterruptedException, TransformerException, SAXException {
         new TemplateGenerator(monorepoRoot)
-                .regenerateAllTemplates(
+                .regenerateAllTemplates(new MavenModule(
                         monorepoRoot.toPath().resolve(typeName).toFile(),
                         monorepoRoot
                                 .toPath()
@@ -94,7 +94,7 @@ public class ProjectImporter {
                                 .resolve(typeName)
                                 .resolve(oldRepoRoot.getName())
                                 .resolve("pom.xml")
-                                .toFile());
+                                .toFile()));
 
         Git monorepo = new Git(monorepoRoot);
         monorepo.addAll();

@@ -41,81 +41,78 @@ public final class TemplateGenerator {
             for (File projectDirectory : getDirectories(typeDirectory)) {
                 File pomFile = new File(projectDirectory, "pom.xml");
                 if (pomFile.isFile()) {
-                    regenerateAllTemplates(typeDirectory, projectDirectory, pomFile);
+                    MavenModule module = new MavenModule(typeDirectory, projectDirectory, pomFile);
+                    regenerateAllTemplates(module);
 
-                    modules += "    <module>" + typeDirectory.getName() + "/" + projectDirectory.getName() + "</module>\n";
+                    modules += "    <module>" + module.path() + "</module>\n";
                 }
             }
         }
 
         // regenerate root pom
-        Files.writeString(
-            root.toPath()
-                .resolve("pom.xml"),
-            rootPomTemplate.render(Map.of("modules", modules)));
+        Files.writeString(root.toPath().resolve("pom.xml"), rootPomTemplate.render(Map.of("modules", modules)));
     }
 
-    public void regenerateAllTemplates(File typeDirectory, File projectDirectory, File pomFile)
+    public void regenerateAllTemplates(MavenModule module)
             throws IOException, InterruptedException, ParserConfigurationException, SAXException, TransformerException {
-        System.out.println("Regenerating templates for " + projectDirectory);
-        String javaVersion = Objects.requireNonNullElse(calculateJavaVersion(projectDirectory), DEFAULT_JAVA_VERSION);
-        // TODO detect monorepo dependencies of project and update the build template's paths so that the upstream projects build
+        System.out.println("Regenerating templates for " + module.projectDirectory());
+        String javaVersion =
+                Objects.requireNonNullElse(calculateJavaVersion(module.projectDirectory()), DEFAULT_JAVA_VERSION);
+        // TODO detect monorepo dependencies of project and update the build template's paths so that the upstream
+        // projects build
         String buildCommand;
-        if (typeDirectory.getName().equals("internal-tooling")) {
-            buildCommand =
-                    "mvn -B -ntp -pl " + typeDirectory.getName() + "/" + projectDirectory.getName() + " -am clean verify";
+        // TODO detect intelligently if the project has internal dependencies or not
+        if (module.typeDirectory().getName().equals("internal-tooling")) {
+            buildCommand = "mvn -B -ntp -pl " + module.path() + " -am clean verify";
         } else {
-            buildCommand = "mvn -B -ntp clean verify --file " + typeDirectory.getName() + "/"
-                    + projectDirectory.getName() + "/pom.xml";
+            buildCommand = "mvn -B -ntp clean verify --file " + module.path() + "/"
+                    + module.pomFile().getName();
         }
         Map<String, String> variables = Map.of(
                 "name",
-                projectDirectory.getName(),
+                module.projectDirectory().getName(),
                 "group",
-                typeDirectory.getName(),
+                module.typeDirectory().getName(),
                 "path",
-                typeDirectory.getName() + "/" + projectDirectory.getName(),
+                module.path(),
                 "javaVersion",
                 javaVersion,
                 "buildCommand",
                 buildCommand);
 
+        String workflowId = module.path().replace('/', '-');
         Files.writeString(
-                root.toPath()
-                        .resolve(".github")
-                        .resolve("workflows")
-                        .resolve("build-" + typeDirectory.getName() + "-" + projectDirectory.getName() + ".yml"),
+                root.toPath().resolve(".github").resolve("workflows").resolve("build-" + workflowId + ".yml"),
                 buildTemplate.render(variables));
 
-        if (requiresReleaseWorkflow(typeDirectory.getName())) {
+        if (requiresReleaseWorkflow(module.typeDirectory().getName())) {
             Files.writeString(
-                    root.toPath()
-                            .resolve(".github")
-                            .resolve("workflows")
-                            .resolve("release-" + typeDirectory.getName() + "-" + projectDirectory.getName() + ".yml"),
+                    root.toPath().resolve(".github").resolve("workflows").resolve("release-" + workflowId + ".yml"),
                     releaseTemplate.render(variables));
         }
 
-        fixProjectUrls(typeDirectory, projectDirectory, pomFile);
-        sortPom(projectDirectory);
+        fixProjectUrls(module);
+        sortPom(module.projectDirectory());
 
-        fixProjectBadges(typeDirectory, projectDirectory);
+        fixProjectBadges(module.typeDirectory(), module.projectDirectory());
     }
 
     public static boolean requiresReleaseWorkflow(String typeName) {
         return Set.of("archetypes", "libs", "plugins").contains(typeName);
     }
 
-    private void fixProjectUrls(File typeDirectory, File projectDirectory, File pomFile)
+    private void fixProjectUrls(MavenModule module)
             throws ParserConfigurationException, IOException, SAXException, TransformerException {
-        Document document = XmlUtils.parse(pomFile);
+        Document document = XmlUtils.parse(module.pomFile());
 
         XmlUtils.setChildText(document.getDocumentElement(), "groupId", GROUP_ID);
-        XmlUtils.setChildText(document.getDocumentElement(), "artifactId", projectDirectory.getName());
+        XmlUtils.setChildText(
+                document.getDocumentElement(),
+                "artifactId",
+                module.projectDirectory().getName());
 
         // TODO do not hardcode the github URL
-        String url = "https://github.com/ngeor/kamino/tree/master/" + typeDirectory.getName() + "/"
-                + projectDirectory.getName();
+        String url = "https://github.com/ngeor/kamino/tree/master/" + module.path();
         XmlUtils.setChildText(document.getDocumentElement(), "url", url);
 
         Element scm = XmlUtils.ensureChild(document.getDocumentElement(), "scm");
@@ -124,7 +121,7 @@ public final class TemplateGenerator {
         XmlUtils.setChildText(scm, "tag", "HEAD");
         XmlUtils.setChildText(scm, "url", url);
 
-        XmlUtils.write(document, pomFile);
+        XmlUtils.write(document, module.pomFile());
     }
 
     private void sortPom(File projectDirectory) throws IOException, InterruptedException {
