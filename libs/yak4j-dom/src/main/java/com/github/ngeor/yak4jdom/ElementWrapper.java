@@ -49,6 +49,23 @@ public class ElementWrapper {
         return firstElement(childElementName).map(ElementWrapper::getTextContent).orElse(null);
     }
 
+    public ElementWrapper ensureChild(String childElementName) {
+        return firstElement(childElementName).orElseGet(() -> {
+            Element newChild = element.getOwnerDocument().createElement(childElementName);
+            element.appendChild(newChild);
+            return new ElementWrapper(newChild);
+        });
+    }
+
+    public boolean ensureChildText(String childElementName, String text) {
+        ElementWrapper child = ensureChild(childElementName);
+        if (text.equals(child.getTextContent())) {
+            return false;
+        }
+        child.setTextContent(text);
+        return true;
+    }
+
     public void setTextContent(String textContent) {
         this.element.setTextContent(textContent);
     }

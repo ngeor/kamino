@@ -6,11 +6,13 @@ on:
     paths:
       - $path/**
       - .github/workflows/build-$group-$name.yml
+      - pom.xml$extraPaths
   pull_request:
     branches: [ master ]
     paths:
       - $path/**
       - .github/workflows/build-$group-$name.yml
+      - pom.xml$extraPaths
 
 jobs:
   build:
@@ -26,4 +28,4 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build with Maven
-      run: mvn -B -ntp verify --file $path/pom.xml
+      run: $buildCommand

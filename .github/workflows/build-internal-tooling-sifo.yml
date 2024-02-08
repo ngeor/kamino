@@ -6,11 +6,15 @@ on:
     paths:
       - internal-tooling/sifo/**
       - .github/workflows/build-internal-tooling-sifo.yml
+      - pom.xml
+      - libs/yak4j-dom/**
   pull_request:
     branches: [ master ]
     paths:
       - internal-tooling/sifo/**
       - .github/workflows/build-internal-tooling-sifo.yml
+      - pom.xml
+      - libs/yak4j-dom/**
 
 jobs:
   build:
@@ -26,4 +30,4 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build with Maven
-      run: mvn -B -ntp verify --file internal-tooling/sifo/pom.xml
+      run: mvn -B -ntp -pl internal-tooling/sifo -am clean verify
