@@ -42,6 +42,8 @@ public final class TemplateGenerator {
                 }
             }
         }
+
+        // TODO regenerate root pom
     }
 
     public void regenerateAllTemplates(File typeDirectory, File projectDirectory, File pomFile)
@@ -52,7 +54,7 @@ public final class TemplateGenerator {
         String buildCommand;
         if (typeDirectory.getName().equals("internal-tooling")) {
             buildCommand =
-                    "mvn -B -ntp -pl " + typeDirectory.getName() + "/" + projectDirectory.getName() + " clean verify";
+                    "mvn -B -ntp -pl " + typeDirectory.getName() + "/" + projectDirectory.getName() + " -am clean verify";
         } else {
             buildCommand = "mvn -B -ntp clean verify --file " + typeDirectory.getName() + "/"
                     + projectDirectory.getName() + "/pom.xml";

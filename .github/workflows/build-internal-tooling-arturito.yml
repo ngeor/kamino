@@ -28,4 +28,4 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build with Maven
-      run: mvn -B -ntp -pl internal-tooling/arturito clean verify
+      run: mvn -B -ntp -pl internal-tooling/arturito -am clean verify

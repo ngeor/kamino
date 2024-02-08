@@ -28,4 +28,4 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build with Maven
-      run: mvn -B -ntp -pl internal-tooling/sifo clean verify
+      run: mvn -B -ntp -pl internal-tooling/sifo -am clean verify
