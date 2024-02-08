@@ -22,6 +22,7 @@ public final class TemplateGenerator {
 
     private final SimpleStringTemplate buildTemplate = SimpleStringTemplate.ofResource("/build-template.yml");
     private final SimpleStringTemplate releaseTemplate = SimpleStringTemplate.ofResource("/release-template.yml");
+    private final SimpleStringTemplate rootPomTemplate = SimpleStringTemplate.ofResource("/root-pom-template.xml");
     private final File root;
 
     public TemplateGenerator(File root) throws IOException {
@@ -34,16 +35,24 @@ public final class TemplateGenerator {
 
     public void regenerateAllTemplates()
             throws IOException, InterruptedException, ParserConfigurationException, SAXException, TransformerException {
+        String modules = "";
+
         for (File typeDirectory : getDirectories(root)) {
             for (File projectDirectory : getDirectories(typeDirectory)) {
                 File pomFile = new File(projectDirectory, "pom.xml");
                 if (pomFile.isFile()) {
                     regenerateAllTemplates(typeDirectory, projectDirectory, pomFile);
+
+                    modules += "    <module>" + typeDirectory.getName() + "/" + projectDirectory.getName() + "</module>\n";
                 }
             }
         }
 
-        // TODO regenerate root pom
+        // regenerate root pom
+        Files.writeString(
+            root.toPath()
+                .resolve("pom.xml"),
+            rootPomTemplate.render(Map.of("modules", modules)));
     }
 
     public void regenerateAllTemplates(File typeDirectory, File projectDirectory, File pomFile)
