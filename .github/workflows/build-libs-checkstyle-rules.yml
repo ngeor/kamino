@@ -6,11 +6,13 @@ on:
     paths:
       - libs/checkstyle-rules/**
       - .github/workflows/build-libs-checkstyle-rules.yml
+      - pom.xml
   pull_request:
     branches: [ master ]
     paths:
       - libs/checkstyle-rules/**
       - .github/workflows/build-libs-checkstyle-rules.yml
+      - pom.xml
 
 jobs:
   build:
@@ -26,4 +28,4 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build with Maven
-      run: mvn -B -ntp verify --file libs/checkstyle-rules/pom.xml
+      run: mvn -B -ntp clean verify --file libs/checkstyle-rules/pom.xml

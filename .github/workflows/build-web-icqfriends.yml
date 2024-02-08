@@ -6,11 +6,13 @@ on:
     paths:
       - web/icqfriends/**
       - .github/workflows/build-web-icqfriends.yml
+      - pom.xml
   pull_request:
     branches: [ master ]
     paths:
       - web/icqfriends/**
       - .github/workflows/build-web-icqfriends.yml
+      - pom.xml
 
 jobs:
   build:
@@ -26,4 +28,4 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build with Maven
-      run: mvn -B -ntp verify --file web/icqfriends/pom.xml
+      run: mvn -B -ntp clean verify --file web/icqfriends/pom.xml

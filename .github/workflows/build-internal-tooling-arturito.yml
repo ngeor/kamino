@@ -6,11 +6,13 @@ on:
     paths:
       - internal-tooling/arturito/**
       - .github/workflows/build-internal-tooling-arturito.yml
+      - pom.xml
   pull_request:
     branches: [ master ]
     paths:
       - internal-tooling/arturito/**
       - .github/workflows/build-internal-tooling-arturito.yml
+      - pom.xml
 
 jobs:
   build:
@@ -26,4 +28,4 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build with Maven
-      run: mvn -B -ntp verify --file internal-tooling/arturito/pom.xml
+      run: mvn -B -ntp clean verify --file internal-tooling/arturito/pom.xml

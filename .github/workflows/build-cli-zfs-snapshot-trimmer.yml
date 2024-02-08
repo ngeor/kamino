@@ -6,11 +6,13 @@ on:
     paths:
       - cli/zfs-snapshot-trimmer/**
       - .github/workflows/build-cli-zfs-snapshot-trimmer.yml
+      - pom.xml
   pull_request:
     branches: [ master ]
     paths:
       - cli/zfs-snapshot-trimmer/**
       - .github/workflows/build-cli-zfs-snapshot-trimmer.yml
+      - pom.xml
 
 jobs:
   build:
@@ -26,4 +28,4 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build with Maven
-      run: mvn -B -ntp verify --file cli/zfs-snapshot-trimmer/pom.xml
+      run: mvn -B -ntp clean verify --file cli/zfs-snapshot-trimmer/pom.xml

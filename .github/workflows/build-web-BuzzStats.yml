@@ -6,11 +6,13 @@ on:
     paths:
       - web/BuzzStats/**
       - .github/workflows/build-web-BuzzStats.yml
+      - pom.xml
   pull_request:
     branches: [ master ]
     paths:
       - web/BuzzStats/**
       - .github/workflows/build-web-BuzzStats.yml
+      - pom.xml
 
 jobs:
   build:
@@ -26,4 +28,4 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build with Maven
-      run: mvn -B -ntp verify --file web/BuzzStats/pom.xml
+      run: mvn -B -ntp clean verify --file web/BuzzStats/pom.xml

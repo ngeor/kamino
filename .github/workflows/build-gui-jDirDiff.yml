@@ -6,11 +6,13 @@ on:
     paths:
       - gui/jDirDiff/**
       - .github/workflows/build-gui-jDirDiff.yml
+      - pom.xml
   pull_request:
     branches: [ master ]
     paths:
       - gui/jDirDiff/**
       - .github/workflows/build-gui-jDirDiff.yml
+      - pom.xml
 
 jobs:
   build:
@@ -26,4 +28,4 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build with Maven
-      run: mvn -B -ntp verify --file gui/jDirDiff/pom.xml
+      run: mvn -B -ntp clean verify --file gui/jDirDiff/pom.xml

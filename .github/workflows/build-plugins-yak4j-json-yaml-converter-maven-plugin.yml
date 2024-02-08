@@ -6,11 +6,13 @@ on:
     paths:
       - plugins/yak4j-json-yaml-converter-maven-plugin/**
       - .github/workflows/build-plugins-yak4j-json-yaml-converter-maven-plugin.yml
+      - pom.xml
   pull_request:
     branches: [ master ]
     paths:
       - plugins/yak4j-json-yaml-converter-maven-plugin/**
       - .github/workflows/build-plugins-yak4j-json-yaml-converter-maven-plugin.yml
+      - pom.xml
 
 jobs:
   build:
@@ -26,4 +28,4 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build with Maven
-      run: mvn -B -ntp verify --file plugins/yak4j-json-yaml-converter-maven-plugin/pom.xml
+      run: mvn -B -ntp clean verify --file plugins/yak4j-json-yaml-converter-maven-plugin/pom.xml

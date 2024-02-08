@@ -48,6 +48,10 @@ public final class TemplateGenerator {
             throws IOException, InterruptedException, ParserConfigurationException, SAXException, TransformerException {
         System.out.println("Regenerating templates for " + projectDirectory);
         String javaVersion = Objects.requireNonNullElse(calculateJavaVersion(projectDirectory), DEFAULT_JAVA_VERSION);
+        String buildCommand = "mvn -B -ntp clean verify --file " + typeDirectory.getName() + "/" + projectDirectory.getName() + "/pom.xml";
+        if (projectDirectory.getName().equals("internal-tooling")) {
+            buildCommand = "mvn -B -ntp -pl " + typeDirectory.getName() + "/" + projectDirectory.getName() + " clean verify";
+        }
         Map<String, String> variables = Map.of(
                 "name",
                 projectDirectory.getName(),
@@ -56,7 +60,9 @@ public final class TemplateGenerator {
                 "path",
                 typeDirectory.getName() + "/" + projectDirectory.getName(),
                 "javaVersion",
-                javaVersion);
+                javaVersion,
+            "buildCommand",
+            buildCommand);
 
         Files.writeString(
                 root.toPath()
