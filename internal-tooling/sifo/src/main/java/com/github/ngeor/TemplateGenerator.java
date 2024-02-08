@@ -48,9 +48,14 @@ public final class TemplateGenerator {
             throws IOException, InterruptedException, ParserConfigurationException, SAXException, TransformerException {
         System.out.println("Regenerating templates for " + projectDirectory);
         String javaVersion = Objects.requireNonNullElse(calculateJavaVersion(projectDirectory), DEFAULT_JAVA_VERSION);
-        String buildCommand = "mvn -B -ntp clean verify --file " + typeDirectory.getName() + "/" + projectDirectory.getName() + "/pom.xml";
-        if (projectDirectory.getName().equals("internal-tooling")) {
-            buildCommand = "mvn -B -ntp -pl " + typeDirectory.getName() + "/" + projectDirectory.getName() + " clean verify";
+        // TODO detect monorepo dependencies of project and update the build template's paths so that the upstream projects build
+        String buildCommand;
+        if (typeDirectory.getName().equals("internal-tooling")) {
+            buildCommand =
+                    "mvn -B -ntp -pl " + typeDirectory.getName() + "/" + projectDirectory.getName() + " clean verify";
+        } else {
+            buildCommand = "mvn -B -ntp clean verify --file " + typeDirectory.getName() + "/"
+                    + projectDirectory.getName() + "/pom.xml";
         }
         Map<String, String> variables = Map.of(
                 "name",
@@ -61,8 +66,8 @@ public final class TemplateGenerator {
                 typeDirectory.getName() + "/" + projectDirectory.getName(),
                 "javaVersion",
                 javaVersion,
-            "buildCommand",
-            buildCommand);
+                "buildCommand",
+                buildCommand);
 
         Files.writeString(
                 root.toPath()
