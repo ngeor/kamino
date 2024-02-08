@@ -1,6 +1,7 @@
 package com.github.ngeor;
 
-import com.github.ngeor.yak4jdom.XmlUtils;
+import com.github.ngeor.yak4jdom.DocumentWrapper;
+import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,8 +15,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 public final class TemplateGenerator {
@@ -26,7 +25,7 @@ public final class TemplateGenerator {
     private final SimpleStringTemplate releaseTemplate = SimpleStringTemplate.ofResource("/release-template.yml");
     private final SimpleStringTemplate rootPomTemplate = SimpleStringTemplate.ofResource("/root-pom-template.xml");
     private final File root;
-    private List<MavenModule> modules;
+    private final MavenModules modules;
 
     public TemplateGenerator(File root) throws IOException {
         if (!root.toPath().resolve(".github").toFile().isDirectory()) {
@@ -34,13 +33,11 @@ public final class TemplateGenerator {
         }
 
         this.root = root;
+        this.modules = new MavenModules(root);
     }
 
     private List<MavenModule> getModules() {
-        if (modules == null) {
-            modules = collectModules();
-        }
-        return modules;
+        return modules.getModules();
     }
 
     public void regenerateAllTemplates()
@@ -49,20 +46,6 @@ public final class TemplateGenerator {
             regenerateAllTemplates(module);
         }
         regenerateRootPom();
-    }
-
-    private List<MavenModule> collectModules() {
-        List<MavenModule> modules = new ArrayList<>();
-        for (File typeDirectory : getDirectories(root)) {
-            for (File projectDirectory : getDirectories(typeDirectory)) {
-                File pomFile = new File(projectDirectory, "pom.xml");
-                if (pomFile.isFile()) {
-                    MavenModule module = new MavenModule(typeDirectory, projectDirectory, pomFile);
-                    modules.add(module);
-                }
-            }
-        }
-        return modules;
     }
 
     private void regenerateRootPom() throws IOException {
@@ -83,14 +66,19 @@ public final class TemplateGenerator {
             throws IOException, InterruptedException, ParserConfigurationException, SAXException, TransformerException {
         System.out.println("Regenerating templates for " + module.projectDirectory());
         String javaVersion = calculateJavaVersion(module).orElse(DEFAULT_JAVA_VERSION);
-        // TODO detect monorepo dependencies of project and update the build template's paths so that the upstream
-        // projects build
         String buildCommand;
-        if (usesInternalDependencies(module)) {
-            buildCommand = "mvn -B -ntp -pl " + module.path() + " -am clean verify";
-        } else {
+        String extraPaths;
+        List<MavenModule> internalDependencies =
+                modules.internalDependencies(module).toList();
+        if (internalDependencies.isEmpty()) {
             buildCommand = "mvn -B -ntp clean verify --file " + module.path() + "/"
                     + module.pomFile().getName();
+            extraPaths = "";
+        } else {
+            buildCommand = "mvn -B -ntp -pl " + module.path() + " -am clean verify";
+            extraPaths = internalDependencies.stream()
+                    .map(dep -> System.lineSeparator() + "      - " + dep.path() + "/**")
+                    .collect(Collectors.joining(System.lineSeparator()));
         }
         Map<String, String> variables = Map.of(
                 "name",
@@ -102,7 +90,9 @@ public final class TemplateGenerator {
                 "javaVersion",
                 javaVersion,
                 "buildCommand",
-                buildCommand);
+                buildCommand,
+                "extraPaths",
+                extraPaths);
 
         String workflowId = module.path().replace('/', '-');
         Files.writeString(
@@ -116,56 +106,37 @@ public final class TemplateGenerator {
         }
 
         fixProjectUrls(module);
-        sortPom(module.projectDirectory());
 
         fixProjectBadges(module.typeDirectory(), module.projectDirectory());
-    }
-
-    private boolean usesInternalDependencies(MavenModule module)
-            throws IOException, ParserConfigurationException, InterruptedException, SAXException {
-        Set<MavenCoordinates> internalDependencies = getModules().stream()
-                .map(m -> {
-                    try {
-                        return m.coordinates();
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .collect(Collectors.toSet());
-
-        return module.dependencies().anyMatch(internalDependencies::contains);
     }
 
     public static boolean requiresReleaseWorkflow(String typeName) {
         return Set.of("archetypes", "libs", "plugins").contains(typeName);
     }
 
-    private void fixProjectUrls(MavenModule module)
-            throws ParserConfigurationException, IOException, SAXException, TransformerException {
-        Document document = XmlUtils.parse(module.pomFile());
+    private void fixProjectUrls(MavenModule module) throws IOException, InterruptedException {
+        boolean hadChanges = false;
+        DocumentWrapper document = DocumentWrapper.parse(module.pomFile());
 
-        XmlUtils.setChildText(document.getDocumentElement(), "groupId", GROUP_ID);
-        XmlUtils.setChildText(
-                document.getDocumentElement(),
-                "artifactId",
-                module.projectDirectory().getName());
+        hadChanges |= document.getDocumentElement().ensureChildText("groupId", GROUP_ID);
+        hadChanges |= document.getDocumentElement()
+                .ensureChildText("artifactId", module.projectDirectory().getName());
 
         // TODO do not hardcode the github URL
         String url = "https://github.com/ngeor/kamino/tree/master/" + module.path();
-        XmlUtils.setChildText(document.getDocumentElement(), "url", url);
+        hadChanges |= document.getDocumentElement().ensureChildText("url", url);
 
-        Element scm = XmlUtils.ensureChild(document.getDocumentElement(), "scm");
-        XmlUtils.setChildText(scm, "connection", "scm:git:https://github.com/ngeor/kamino.git");
-        XmlUtils.setChildText(scm, "developerConnection", "scm:git:git@github.com:ngeor/kamino.git");
-        XmlUtils.setChildText(scm, "tag", "HEAD");
-        XmlUtils.setChildText(scm, "url", url);
+        ElementWrapper scm = document.getDocumentElement().ensureChild("scm");
+        hadChanges |= scm.ensureChildText("connection", "scm:git:https://github.com/ngeor/kamino.git");
+        hadChanges |= scm.ensureChildText("developerConnection", "scm:git:git@github.com:ngeor/kamino.git");
+        hadChanges |= scm.ensureChildText("tag", "HEAD");
+        hadChanges |= scm.ensureChildText("url", url);
 
-        XmlUtils.write(document, module.pomFile());
-    }
-
-    private void sortPom(File projectDirectory) throws IOException, InterruptedException {
-        Maven maven = new Maven(projectDirectory);
-        maven.sortPom();
+        if (hadChanges) {
+            document.write(module.pomFile());
+            Maven maven = new Maven(module.projectDirectory());
+            maven.sortPom();
+        }
     }
 
     private void fixProjectBadges(File typeDirectory, File projectDirectory) throws IOException {
@@ -208,10 +179,6 @@ public final class TemplateGenerator {
             }
         }
         Files.writeString(readmeFile.toPath(), String.join(System.lineSeparator(), lines) + System.lineSeparator());
-    }
-
-    private static File[] getDirectories(File file) {
-        return file.listFiles(new DirectoryFileFilter());
     }
 
     private static Optional<String> calculateJavaVersion(MavenModule module) throws IOException, InterruptedException {

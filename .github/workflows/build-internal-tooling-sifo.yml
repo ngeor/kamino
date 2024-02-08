@@ -7,12 +7,14 @@ on:
       - internal-tooling/sifo/**
       - .github/workflows/build-internal-tooling-sifo.yml
       - pom.xml
+      - libs/yak4j-dom/**
   pull_request:
     branches: [ master ]
     paths:
       - internal-tooling/sifo/**
       - .github/workflows/build-internal-tooling-sifo.yml
       - pom.xml
+      - libs/yak4j-dom/**
 
 jobs:
   build:

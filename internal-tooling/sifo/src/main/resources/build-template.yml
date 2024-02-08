@@ -6,13 +6,13 @@ on:
     paths:
       - $path/**
       - .github/workflows/build-$group-$name.yml
-      - pom.xml
+      - pom.xml$extraPaths
   pull_request:
     branches: [ master ]
     paths:
       - $path/**
       - .github/workflows/build-$group-$name.yml
-      - pom.xml
+      - pom.xml$extraPaths
 
 jobs:
   build:
