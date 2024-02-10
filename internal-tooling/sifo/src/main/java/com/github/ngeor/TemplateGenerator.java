@@ -5,6 +5,7 @@ import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -62,13 +63,13 @@ public final class TemplateGenerator {
     }
 
     public void regenerateAllTemplates(MavenModule module)
-            throws IOException, InterruptedException, ParserConfigurationException, SAXException, TransformerException {
+            throws IOException, InterruptedException, ParserConfigurationException, SAXException {
         System.out.println("Regenerating templates for " + module.projectDirectory());
         String javaVersion = calculateJavaVersion(module).orElse(DEFAULT_JAVA_VERSION);
         String buildCommand;
         String extraPaths;
-        List<MavenModule> internalDependencies =
-                modules.internalDependencies(module).toList();
+        List<MavenModule> internalDependencies = new ArrayList<>();
+        modules.visitDependenciesRecursively(module, internalDependencies::add);
         if (internalDependencies.isEmpty()) {
             buildCommand = "mvn -B -ntp clean verify --file " + module.path() + "/"
                     + module.pomFile().getName();
@@ -77,6 +78,7 @@ public final class TemplateGenerator {
             buildCommand = "mvn -B -ntp -pl " + module.path() + " -am clean verify";
             extraPaths = internalDependencies.stream()
                     .map(dep -> System.lineSeparator() + "      - " + dep.path() + "/**")
+                    .sorted()
                     .collect(Collectors.joining());
         }
         Map<String, String> variables = Map.of(

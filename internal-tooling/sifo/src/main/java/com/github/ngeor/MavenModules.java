@@ -3,8 +3,12 @@ package com.github.ngeor;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
@@ -57,5 +61,25 @@ public final class MavenModules {
                     }
                 })
                 .findFirst();
+    }
+
+    public void visitDependenciesRecursively(MavenModule module, Consumer<MavenModule> visitor)
+            throws IOException, ParserConfigurationException, InterruptedException, SAXException {
+        MavenCoordinates ownCoordinates = module.coordinates();
+        Set<MavenCoordinates> seen = new HashSet<>();
+        LinkedList<MavenModule> remaining = new LinkedList<>(List.of(module));
+        while (!remaining.isEmpty()) {
+            MavenModule next = remaining.removeFirst();
+            MavenCoordinates nextCoordinates = next.coordinates();
+            if (seen.add(nextCoordinates)) {
+                // visit
+                if (!nextCoordinates.equals(ownCoordinates)) {
+                    visitor.accept(next);
+                }
+
+                // get dependencies
+                internalDependencies(next).forEach(remaining::addLast);
+            }
+        }
     }
 }
