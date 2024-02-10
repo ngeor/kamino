@@ -110,8 +110,9 @@ public class ProjectImporter {
 
         if (TemplateGenerator.requiresReleaseWorkflow(typeName)) {
             Git git = new Git(oldRepoRoot);
-            SemVer maxReleaseVersion = SemVer.parse(git.getMostRecentTag("v").replace("v", ""));
-            new ReleasePerformer(monorepoRoot, typeName, oldRepoRoot.getName()).performPatchRelease(maxReleaseVersion);
+            SemVer maxReleaseVersion = SemVer.parse(git.getMostRecentTag("v"));
+            SemVer nextVersion = maxReleaseVersion.increasePatch();
+            new ReleasePerformer(monorepoRoot, typeName, oldRepoRoot.getName()).performRelease(nextVersion);
         }
     }
 

@@ -14,6 +14,10 @@ public record SemVer(int major, int minor, int patch) {
         return new SemVer(major, minor + 1, 0);
     }
 
+    public SemVer increaseMajor() {
+        return new SemVer(major + 1, 0, 0);
+    }
+
     @Override
     public String toString() {
         return String.format("%d.%d.%d", major, minor, patch);

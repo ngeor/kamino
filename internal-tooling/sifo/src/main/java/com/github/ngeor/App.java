@@ -21,6 +21,29 @@ public final class App {
             return;
         }
 
+        if ("release".equals(args[0])) {
+            prepareRelease(args);
+            return;
+        }
+
+        importOldProject(args);
+    }
+
+    private static void prepareRelease(String[] args) throws IOException, InterruptedException {
+        if (args.length < 3) {
+            throw new IllegalStateException("Expected at least 3 arguments");
+        }
+
+        File monorepoRoot = detectRootDirectory();
+        String project = args[1];
+        String bump = args[2];
+        String[] parts = project.split("/");
+        boolean dryRun = args.length >= 4 && args[3].contains("dry");
+        new ReleasePerformer(monorepoRoot, parts[0], parts[1]).performRelease(bump, dryRun);
+    }
+
+    private static void importOldProject(String[] args)
+            throws IOException, InterruptedException, ParserConfigurationException, TransformerException, SAXException {
         String githubToken = System.getenv("GITHUB_TOKEN");
         if (githubToken == null || githubToken.isBlank()) {
             throw new IllegalStateException("GITHUB_TOKEN env variable is not configured");
@@ -29,8 +52,11 @@ public final class App {
         File monorepoRoot = detectRootDirectory();
         String typeName = args[0];
         String projectName = args[1];
-        File oldRepo =
-                detectRootDirectory().toPath().resolveSibling(projectName).toFile().getAbsoluteFile();
+        File oldRepo = detectRootDirectory()
+                .toPath()
+                .resolveSibling(projectName)
+                .toFile()
+                .getAbsoluteFile();
         new ProjectImporter(monorepoRoot, oldRepo, typeName, githubToken).run();
     }
 

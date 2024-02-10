@@ -14,9 +14,38 @@ public final class ReleasePerformer {
         this.projectName = projectName;
     }
 
-    public void performPatchRelease(SemVer maxReleaseVersion) throws IOException, InterruptedException {
-        String nextVersion = maxReleaseVersion.increasePatch().toString();
-        String developmentVersion = maxReleaseVersion.increaseMinor().toString() + "-SNAPSHOT";
+    public void performRelease(String bump, boolean dryRun) throws IOException, InterruptedException {
+        Git git = new Git(monorepoRoot);
+
+        // TODO ensure no pending changes
+
+        // TODO ensure on default branch and on latest
+
+        // TODO ensure no internal dependencies are on SNAPSHOT
+
+        // TODO convert pom to effective pom and remove parent before publishing (and restore afterwards)
+
+        SemVer maxReleaseVersion = SemVer.parse(git.getMostRecentTag(typeName + "/" + projectName + "/v"));
+        final SemVer nextVersion;
+        if ("major".equalsIgnoreCase(bump)) {
+            nextVersion = maxReleaseVersion.increaseMajor();
+        } else if ("minor".equalsIgnoreCase(bump)) {
+            nextVersion = maxReleaseVersion.increaseMinor();
+        } else if ("patch".equalsIgnoreCase(bump)) {
+            nextVersion = maxReleaseVersion.increasePatch();
+        } else {
+            throw new IllegalArgumentException("bump not supported");
+        }
+
+        performRelease(nextVersion, dryRun);
+    }
+
+    public void performRelease(SemVer nextVersion) throws IOException, InterruptedException {
+        performRelease(nextVersion, false);
+    }
+
+    public void performRelease(SemVer nextVersion, boolean dryRun) throws IOException, InterruptedException {
+        String developmentVersion = nextVersion.increaseMinor() + "-SNAPSHOT";
         String tag = typeName + "/" + projectName + "/v" + nextVersion;
 
         Maven maven = new Maven(monorepoRoot
@@ -27,7 +56,13 @@ public final class ReleasePerformer {
                 .toFile());
         maven.clean();
         maven.cleanRelease();
-        maven.prepareRelease(tag, nextVersion, developmentVersion);
+        if (dryRun) {
+            System.out.printf(
+                    "Would have prepared release tag=%s, nextVersion=%s, developmentVersion=%s%n",
+                    tag, nextVersion, developmentVersion);
+        } else {
+            maven.prepareRelease(tag, nextVersion.toString(), developmentVersion);
+        }
         maven.cleanRelease();
         maven.clean();
     }

@@ -58,7 +58,9 @@ public final class Git {
 
     public String getMostRecentTag(String prefix) throws IOException, InterruptedException {
         String output = processHelper.run("tag", "-l", prefix + "*", "--sort=-version:refname");
-        return output.lines().findFirst().orElseThrow();
+        return output.lines().map(s -> s.substring(prefix.length())).findFirst().orElseThrow(
+            () -> new IllegalStateException(String.format("Could not find any git tags starting with %s", prefix))
+        );
     }
 
     public void add(String file) throws IOException, InterruptedException {
