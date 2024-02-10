@@ -42,7 +42,7 @@ public final class MavenModule {
         if (effectivePomContents == null) {
             File tempFile = File.createTempFile("pom", ".xml");
             try {
-                Maven maven = new Maven(projectDirectory);
+                Maven maven = new Maven(pomFile);
                 maven.effectivePom(tempFile);
                 effectivePomContents = Files.readString(tempFile.toPath());
             } finally {

@@ -51,6 +51,7 @@ public class ProjectImporter {
                 .toPath()
                 .resolve(typeName)
                 .resolve(oldRepoRoot.getName())
+                .resolve("pom.xml")
                 .toFile());
     }
 

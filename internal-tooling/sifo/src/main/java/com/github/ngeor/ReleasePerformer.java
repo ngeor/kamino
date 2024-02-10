@@ -19,8 +19,12 @@ public final class ReleasePerformer {
         String developmentVersion = maxReleaseVersion.increaseMinor().toString() + "-SNAPSHOT";
         String tag = typeName + "/" + projectName + "/v" + nextVersion;
 
-        Maven maven = new Maven(
-                monorepoRoot.toPath().resolve(typeName).resolve(projectName).toFile());
+        Maven maven = new Maven(monorepoRoot
+                .toPath()
+                .resolve(typeName)
+                .resolve(projectName)
+                .resolve("pom.xml")
+                .toFile());
         maven.clean();
         maven.cleanRelease();
         maven.prepareRelease(tag, nextVersion, developmentVersion);

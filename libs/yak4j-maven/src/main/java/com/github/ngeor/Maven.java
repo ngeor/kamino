@@ -6,9 +6,9 @@ import java.io.IOException;
 public final class Maven {
     private final ProcessHelper processHelper;
 
-    public Maven(File workingDirectory) {
+    public Maven(File pomFile) {
         String cmd = System.getProperty("os.name").contains("Windows") ? "mvn.cmd" : "mvn";
-        this.processHelper = new ProcessHelper(workingDirectory, cmd, "-B", "-ntp");
+        this.processHelper = new ProcessHelper(pomFile.getParentFile(), cmd, "-B", "-ntp", "--file", pomFile.getName());
     }
 
     public void sortPom() throws IOException, InterruptedException {

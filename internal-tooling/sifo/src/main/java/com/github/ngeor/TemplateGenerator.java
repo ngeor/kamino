@@ -135,7 +135,7 @@ public final class TemplateGenerator {
 
         if (hadChanges) {
             document.write(module.pomFile());
-            Maven maven = new Maven(module.projectDirectory());
+            Maven maven = new Maven(module.pomFile());
             maven.sortPom();
         }
     }
