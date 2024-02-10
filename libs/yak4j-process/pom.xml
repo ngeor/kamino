@@ -12,7 +12,7 @@
     <url>https://github.com/ngeor/kamino/tree/master/libs/yak4j-process</url>
   </scm>
   <properties>
-    <java.version>11</java.version>
+    <java.version>17</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
 
