@@ -47,7 +47,7 @@ public final class Maven {
         processHelper.runInheritIO("verify");
     }
 
-    public DocumentWrapper effectivePom() throws IOException, InterruptedException {
+    public DocumentWrapper effectivePomViaMaven() throws IOException, InterruptedException {
         File output = File.createTempFile("pom", ".xml");
         try {
             processHelper.run("help:effective-pom", "-Doutput=" + output.getAbsolutePath());
@@ -57,7 +57,7 @@ public final class Maven {
         }
     }
 
-    public DocumentWrapper effectivePomNg() {
+    public DocumentWrapper effectivePom() {
         final DocumentWrapper document = effectivePomNgResolveParent();
 
         // resolve properties
@@ -98,6 +98,11 @@ public final class Maven {
                     .resolve(version)
                     .resolve(artifactId + "-" + version + ".pom")
                     .toFile();
+
+            if (!parentPomFile.isFile()) {
+                throw new UnsupportedOperationException("Installing missing Maven pom not supported: " + parentPomFile);
+            }
+
             Maven parentMaven = new Maven(parentPomFile);
             DocumentWrapper parentResolved = parentMaven.effectivePomNgResolveParent();
 

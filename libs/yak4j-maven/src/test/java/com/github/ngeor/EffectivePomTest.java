@@ -95,7 +95,7 @@ class EffectivePomTest {
     }
 
     private void verifyEffectivePom(Consumer<ElementWrapper> assertions) throws IOException, InterruptedException {
+        assertions.accept(maven.effectivePomViaMaven().getDocumentElement());
         assertions.accept(maven.effectivePom().getDocumentElement());
-        assertions.accept(maven.effectivePomNg().getDocumentElement());
     }
 }
