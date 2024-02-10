@@ -7,6 +7,7 @@
   <description>kamino monorepo</description>
   <packaging>pom</packaging>
   <modules>
+    <module>archetypes/archetype-kamino-cli</module>
     <module>archetypes/archetype-quickstart-jdk8</module>
     <module>cli/duke-basic</module>
     <module>cli/krt</module>
