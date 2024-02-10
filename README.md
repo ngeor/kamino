@@ -29,6 +29,8 @@ Each project's folder should have a README file and a CHANGELOG (if applicable).
 
 Releasing is tag based. The tag format is the folder structure,
 followed by the version, e.g.: `apps/app1/v1.2.3`, `libs/lib1/v.1.2.3`, etc.
+Only the `release:prepare` step is done on the local machine.
+The (equivalent of) the `release:perform` is done on the CI server.
 
 Example:
 

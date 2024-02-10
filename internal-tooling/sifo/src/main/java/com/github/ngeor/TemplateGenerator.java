@@ -5,7 +5,6 @@ import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -107,7 +106,7 @@ public final class TemplateGenerator {
 
         fixProjectUrls(module);
 
-        fixProjectBadges(module.typeDirectory(), module.projectDirectory());
+        new ReadmeGenerator().fixProjectBadges(module.projectDirectory(), GROUP_ID, workflowId);
     }
 
     public static boolean requiresReleaseWorkflow(String typeName) {
@@ -137,48 +136,6 @@ public final class TemplateGenerator {
             Maven maven = new Maven(module.projectDirectory());
             maven.sortPom();
         }
-    }
-
-    private void fixProjectBadges(File typeDirectory, File projectDirectory) throws IOException {
-        File readmeFile = projectDirectory.toPath().resolve("README.md").toFile();
-        if (!readmeFile.exists()) {
-            // TODO create if it does not exist
-            return;
-        }
-
-        String groupId = GROUP_ID;
-        String artifactId = projectDirectory.getName();
-        boolean foundBadges = false;
-        List<String> lines = new ArrayList<>(Files.readAllLines(readmeFile.toPath()));
-        for (int i = 0; i < lines.size(); i++) {
-            String line = lines.get(i);
-            if (line.startsWith("[![")) {
-                foundBadges = true;
-
-                // TODO add missing badges
-                if (line.startsWith("[![Maven Central")) {
-                    line = "[![Maven Central](https://img.shields.io/maven-central/v/" + groupId + "/" + artifactId
-                            + ".svg?label=Maven%20Central)](https://central.sonatype.com/artifact/" + groupId + "/"
-                            + artifactId + "/overview)";
-                    lines.set(i, line);
-                } else if (line.startsWith("[![Java CI") || line.startsWith("[![Build")) {
-                    String url = "https://github.com/ngeor/kamino/actions/workflows/build-" + typeDirectory.getName()
-                            + "-" + projectDirectory.getName() + ".yml";
-                    line = String.format("[![Build %s](%s/badge.svg)](%s)", projectDirectory.getName(), url, url);
-                    lines.set(i, line);
-                } else if (line.startsWith("[![javadoc")) {
-                    String badgeUrl = String.format("https://javadoc.io/badge2/%s/%s/javadoc.svg", groupId, artifactId);
-                    String url = String.format("https://javadoc.io/doc/%s/%s", groupId, artifactId);
-                    line = String.format("[![javadoc](%s)](%s)", badgeUrl, url);
-                    lines.set(i, line);
-                }
-            } else {
-                if (foundBadges) {
-                    break;
-                }
-            }
-        }
-        Files.writeString(readmeFile.toPath(), String.join(System.lineSeparator(), lines) + System.lineSeparator());
     }
 
     private static Optional<String> calculateJavaVersion(MavenModule module) throws IOException, InterruptedException {
