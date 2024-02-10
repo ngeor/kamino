@@ -55,8 +55,10 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <mockito.version>5.4.0</mockito.version>
     <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
+    <palantir.version>2.39.0</palantir.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <sortpom-maven-plugin.version>3.3.0</sortpom-maven-plugin.version>
+    <spotless-maven-plugin.version>2.43.0</spotless-maven-plugin.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -140,6 +142,21 @@
           </executions>
         </plugin>
         <plugin>
+          <groupId>com.diffplug.spotless</groupId>
+          <artifactId>spotless-maven-plugin</artifactId>
+          <version>${spotless-maven-plugin.version}</version>
+          <configuration>
+            <ratchetFrom>origin/master</ratchetFrom>
+            <java>
+              <palantirJavaFormat>
+                <version>${palantir.version}</version>
+                <style>PALANTIR</style>
+              </palantirJavaFormat>
+              <removeUnusedImports/>
+            </java>
+          </configuration>
+        </plugin>
+        <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>${maven-compiler-plugin.version}</version>
@@ -171,6 +188,14 @@
             <sortProperties>true</sortProperties>
             <sortDependencies>scope</sortDependencies>
           </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>sort</goal>
+              </goals>
+              <phase>validate</phase>
+            </execution>
+          </executions>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -209,7 +234,7 @@
   <profiles>
     <profile>
       <!-- https://github.com/Ekryd/sortpom -->
-      <!-- mvn -Psortpom sortpom:sort -->
+      <!-- mvn -Psortpom validate -->
       <id>sortpom</id>
       <build>
         <plugins>
