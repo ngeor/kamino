@@ -5,20 +5,21 @@ A monorepo for my hobby Java projects
 ## Folder structure
 
 ```txt
-apps
-  app1
 archetypes
   archetype1
+cli
+  cli1
+gui
+  gui1    
 internal-tooling
   tool1
 libs
   lib1
 plugins
   plugin1
+web
+  web1  
 ```
-
-Each project is independent. There is no root parent pom for the entire monorepo.
-It might even be in the future that some projects are not using Maven.
 
 Each project's folder should have a README file and a CHANGELOG (if applicable).
 
@@ -36,4 +37,4 @@ mvn -B -Dtag=libs/yak4j-dom/v1.9.7 release:prepare -DreleaseVersion=1.9.7 -Ddeve
 mvn release:clean
 ```
 
-Normally apps aren't released to Nexus.
+Normally, apps aren't released to Nexus.
