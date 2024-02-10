@@ -2,15 +2,15 @@ package com.github.ngeor;
 
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 public final class Maven {
     private final ProcessHelper processHelper;
@@ -58,7 +58,7 @@ public final class Maven {
     }
 
     public DocumentWrapper effectivePomNg() {
-        DocumentWrapper document = DocumentWrapper.parse(pomFile);
+        final DocumentWrapper document = effectivePomNgResolveParent();
 
         // resolve properties
         ElementWrapper properties =
@@ -79,16 +79,82 @@ public final class Maven {
         return document;
     }
 
+    private DocumentWrapper effectivePomNgResolveParent() {
+        final DocumentWrapper document = DocumentWrapper.parse(pomFile);
+
+        // any parent pom?
+        ElementWrapper parent =
+                document.getDocumentElement().firstElement("parent").orElse(null);
+        if (parent != null) {
+            String groupId = parent.firstElementText("groupId");
+            String artifactId = parent.firstElementText("artifactId");
+            String version = parent.firstElementText("version");
+            File parentPomFile = new File(System.getProperty("user.home"))
+                    .toPath()
+                    .resolve(".m2")
+                    .resolve("repository")
+                    .resolve(groupId.replace('.', '/'))
+                    .resolve(artifactId)
+                    .resolve(version)
+                    .resolve(artifactId + "-" + version + ".pom")
+                    .toFile();
+            Maven parentMaven = new Maven(parentPomFile);
+            DocumentWrapper parentResolved = parentMaven.effectivePomNgResolveParent();
+
+            merge(parentResolved, document);
+        }
+
+        return document;
+    }
+
     private void resolveProperties(ElementWrapper element, Map<String, String> resolvedProperties) {
         for (Iterator<Node> it = element.getChildNodesAsIterator(); it.hasNext(); ) {
             Node node = it.next();
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 resolveProperties(new ElementWrapper((Element) node), resolvedProperties);
             } else if (node.getNodeType() == Node.TEXT_NODE) {
-                node.setTextContent(
-                    PropertyResolver.resolve(node.getTextContent(), resolvedProperties::get)
-                );
+                node.setTextContent(PropertyResolver.resolve(node.getTextContent(), resolvedProperties::get));
             }
         }
+    }
+
+    public void install() throws IOException, InterruptedException {
+        processHelper.runInheritIO("install");
+    }
+
+    private void merge(DocumentWrapper parent, DocumentWrapper child) {
+        mergeProject(parent.getDocumentElement(), child.getDocumentElement());
+    }
+
+    private void mergeProject(ElementWrapper parent, ElementWrapper child) {
+        mergeProperties(parent, child);
+        List.of("modelVersion", "groupId", "artifactId", "version", "packaging")
+                .forEach(name -> mergeSingleOccurringPlainTextElement(parent, child, name));
+    }
+
+    private void mergeProperties(ElementWrapper parent, ElementWrapper child) {
+        parent.findChildElements("properties")
+                .flatMap(ElementWrapper::getChildElements)
+                .forEach(p -> {
+                    ElementWrapper childProperties = child.ensureChild("properties");
+                    if (childProperties
+                            .findChildElements(p.getNodeName())
+                            .findAny()
+                            .isPresent()) {
+                        // child property already exists, so it wins
+                    } else {
+                        childProperties.ensureChildText(p.getNodeName(), p.getTextContent());
+                    }
+                });
+    }
+
+    private void mergeSingleOccurringPlainTextElement(ElementWrapper parent, ElementWrapper child, String nodeName) {
+        if (child.firstElement(nodeName).isPresent()) {
+            // child wins
+            return;
+        }
+        parent.findChildElements(nodeName).forEach(p -> {
+            child.ensureChildText(nodeName, p.getTextContent());
+        });
     }
 }

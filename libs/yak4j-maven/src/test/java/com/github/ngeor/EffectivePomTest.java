@@ -42,6 +42,58 @@ class EffectivePomTest {
         });
     }
 
+    @Test
+    void testParentPom() throws IOException, InterruptedException {
+        String pom1 =
+                """
+        <project>
+          <modelVersion>4.0.0</modelVersion>
+          <groupId>com.acme</groupId>
+          <artifactId>parent</artifactId>
+          <version>1.0-SNAPSHOT</version>
+          <packaging>pom</packaging>
+          <properties>
+            <foo>123</foo>
+            <bar>test-${foo}</bar>
+          </properties>
+      </project>""";
+        File file1 = File.createTempFile("pom", ".xml");
+        file1.deleteOnExit();
+        Files.writeString(file1.toPath(), pom1);
+
+        new Maven(file1).install();
+
+        String pom =
+                """
+        <project>
+          <modelVersion>4.0.0</modelVersion>
+          <artifactId>dummy</artifactId>
+          <version>1.0-SNAPSHOT</version>
+          <parent>
+              <groupId>com.acme</groupId>
+              <artifactId>parent</artifactId>
+              <version>1.0-SNAPSHOT</version>
+          </parent>
+          <properties>
+            <foo>456</foo>
+          </properties>
+      </project>""";
+        File file = File.createTempFile("pom", ".xml");
+        file.deleteOnExit();
+        Files.writeString(file.toPath(), pom);
+
+        maven = new Maven(file);
+
+        verifyEffectivePom(project -> {
+            assertThat(project.firstElementText("groupId")).isEqualTo("com.acme");
+            assertThat(project.firstElementText("artifactId")).isEqualTo("dummy");
+            assertThat(project.firstElement("properties").orElseThrow().firstElementText("foo"))
+                    .isEqualTo("456");
+            assertThat(project.firstElement("properties").orElseThrow().firstElementText("bar"))
+                    .isEqualTo("test-456");
+        });
+    }
+
     private void verifyEffectivePom(Consumer<ElementWrapper> assertions) throws IOException, InterruptedException {
         assertions.accept(maven.effectivePom().getDocumentElement());
         assertions.accept(maven.effectivePomNg().getDocumentElement());
