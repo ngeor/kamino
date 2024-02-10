@@ -8,6 +8,7 @@ on:
       - .github/workflows/build-internal-tooling-sifo.yml
       - pom.xml
       - libs/yak4j-dom/**
+      - libs/yak4j-process/**
   pull_request:
     branches: [ master ]
     paths:
@@ -15,6 +16,7 @@ on:
       - .github/workflows/build-internal-tooling-sifo.yml
       - pom.xml
       - libs/yak4j-dom/**
+      - libs/yak4j-process/**
 
 jobs:
   build:

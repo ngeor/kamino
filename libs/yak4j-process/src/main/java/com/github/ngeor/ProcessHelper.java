@@ -8,11 +8,11 @@ import java.util.List;
 
 public class ProcessHelper {
     private final File workingDirectory;
-    private final List<String> command;
+    private final List<String> baseCommand;
 
-    public ProcessHelper(File workingDirectory, String... command) {
+    public ProcessHelper(File workingDirectory, String... baseCommand) {
         this.workingDirectory = workingDirectory;
-        this.command = Arrays.asList(command);
+        this.baseCommand = Arrays.asList(baseCommand);
     }
 
     // TODO micro-optimisation: do not return the entire String but a stream (with a completed future approach)
@@ -53,8 +53,8 @@ public class ProcessHelper {
     }
 
     private List<String> createArgs(String... args) {
-        List<String> result = new ArrayList<>(command.size() + args.length);
-        result.addAll(command);
+        List<String> result = new ArrayList<>(baseCommand.size() + args.length);
+        result.addAll(baseCommand);
         result.addAll(Arrays.asList(args));
         return result;
     }
