@@ -9,6 +9,7 @@ on:
       - pom.xml
       - libs/yak4j-dom/**
       - libs/yak4j-process/**
+      - libs/yak4j-git/**
   pull_request:
     branches: [ master ]
     paths:
@@ -17,6 +18,7 @@ on:
       - pom.xml
       - libs/yak4j-dom/**
       - libs/yak4j-process/**
+      - libs/yak4j-git/**
 
 jobs:
   build:

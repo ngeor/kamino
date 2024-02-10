@@ -3,6 +3,7 @@ package com.github.ngeor;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class Git {
     private final ProcessHelper processHelper;
@@ -23,11 +24,11 @@ public final class Git {
             throw new IllegalStateException("Multiple remotes found");
         }
 
-        return remotes.getFirst();
+        return remotes.get(0);
     }
 
     public List<String> getRemotes() throws IOException, InterruptedException {
-        return processHelper.run("remote").lines().toList();
+        return processHelper.run("remote").lines().collect(Collectors.toList());
     }
 
     public void checkout(String branch) throws IOException, InterruptedException {
