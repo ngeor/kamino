@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.ngeor</groupId>
   <artifactId>java</artifactId>
-  <version>4.5.0-SNAPSHOT</version>
+  <version>4.5.0</version>
   <packaging>pom</packaging>
   <name>java</name>
   <description>Parent pom for Java repository</description>
@@ -23,7 +23,7 @@
   <scm>
     <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
     <developerConnection>scm:git:git@github.com:ngeor/kamino.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>libs/java/v4.5.0</tag>
     <url>https://github.com/ngeor/kamino/tree/master/libs/java</url>
   </scm>
   <distributionManagement>
@@ -98,8 +98,8 @@
               </goals>
               <configuration>
                 <rules>
-                  <banDuplicatePomDependencyVersions/>
-                  <dependencyConvergence/>
+                  <banDuplicatePomDependencyVersions />
+                  <dependencyConvergence />
                   <requireMavenVersion>
                     <version>3.6.3</version>
                   </requireMavenVersion>
@@ -152,7 +152,7 @@
                 <version>${palantir.version}</version>
                 <style>PALANTIR</style>
               </palantirJavaFormat>
-              <removeUnusedImports/>
+              <removeUnusedImports />
             </java>
           </configuration>
         </plugin>
