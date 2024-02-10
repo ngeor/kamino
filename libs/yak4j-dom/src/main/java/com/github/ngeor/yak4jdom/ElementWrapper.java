@@ -5,6 +5,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -17,6 +18,10 @@ public class ElementWrapper {
 
     public ElementWrapper(Element element) {
         this.element = element;
+    }
+
+    public String getNodeName() {
+        return this.element.getNodeName();
     }
 
     public String getTextContent() {
@@ -32,13 +37,18 @@ public class ElementWrapper {
         return StreamSupport.stream(iterable.spliterator(), false);
     }
 
+    public Stream<ElementWrapper> getChildElements() {
+        return getChildNodesAsStream()
+            .filter(node -> node.getNodeType() == Node.ELEMENT_NODE && node instanceof Element)
+            .map(node -> new ElementWrapper((Element) node));
+    }
+
     /**
      * Gets the child elements of the given name.
      */
     public Stream<ElementWrapper> findChildElements(String childElementName) {
-        return getChildNodesAsStream()
-            .filter(node -> node.getNodeType() == Node.ELEMENT_NODE && childElementName.equals(node.getNodeName()))
-            .map(node -> new ElementWrapper((Element) node));
+        return getChildElements()
+            .filter(element -> Objects.equals(element.getNodeName(), childElementName));
     }
 
     public Optional<ElementWrapper> firstElement(String childElementName) {

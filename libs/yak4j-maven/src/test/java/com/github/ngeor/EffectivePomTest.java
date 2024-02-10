@@ -1,32 +1,49 @@
 package com.github.ngeor;
 
-import com.github.ngeor.yak4jdom.DocumentWrapper;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
+import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import java.util.function.Consumer;
+import org.junit.jupiter.api.Test;
 
 class EffectivePomTest {
+    private Maven maven;
+
     @Test
     void test() throws IOException, InterruptedException {
-        String pom = """
+        String pom =
+                """
             <project>
               <modelVersion>4.0.0</modelVersion>
               <groupId>com.acme</groupId>
               <artifactId>dummy</artifactId>
               <version>1.0-SNAPSHOT</version>
+              <properties>
+                <foo>123</foo>
+                <bar>test-${foo}</bar>
+              </properties>
           </project>""";
         File file = File.createTempFile("pom", ".xml");
         file.deleteOnExit();
         Files.writeString(file.toPath(), pom);
 
-        Maven maven = new Maven(file);
-        DocumentWrapper document = maven.effectivePom();
+        maven = new Maven(file);
 
-        assertThat(document.getDocumentElement().firstElementText("groupId")).isEqualTo("com.acme");
-        assertThat(document.getDocumentElement().firstElementText("artifactId")).isEqualTo("dummy");
+        verifyEffectivePom(project -> {
+            assertThat(project.firstElementText("groupId")).isEqualTo("com.acme");
+            assertThat(project.firstElementText("artifactId")).isEqualTo("dummy");
+            assertThat(project.firstElement("properties").orElseThrow().firstElementText("foo"))
+                    .isEqualTo("123");
+            assertThat(project.firstElement("properties").orElseThrow().firstElementText("bar"))
+                    .isEqualTo("test-123");
+        });
+    }
+
+    private void verifyEffectivePom(Consumer<ElementWrapper> assertions) throws IOException, InterruptedException {
+        assertions.accept(maven.effectivePom().getDocumentElement());
+        assertions.accept(maven.effectivePomNg().getDocumentElement());
     }
 }
