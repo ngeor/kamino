@@ -77,7 +77,7 @@ public final class TemplateGenerator {
             buildCommand = "mvn -B -ntp -pl " + module.path() + " -am clean verify";
             extraPaths = internalDependencies.stream()
                     .map(dep -> System.lineSeparator() + "      - " + dep.path() + "/**")
-                    .collect(Collectors.joining(System.lineSeparator()));
+                    .collect(Collectors.joining());
         }
         Map<String, String> variables = Map.of(
                 "name",
