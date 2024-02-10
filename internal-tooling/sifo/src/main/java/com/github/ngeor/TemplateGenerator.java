@@ -8,10 +8,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -65,7 +62,7 @@ public final class TemplateGenerator {
     public void regenerateAllTemplates(MavenModule module)
             throws IOException, InterruptedException, ParserConfigurationException, SAXException {
         System.out.println("Regenerating templates for " + module.projectDirectory());
-        String javaVersion = calculateJavaVersion(module).orElse(DEFAULT_JAVA_VERSION);
+        String javaVersion = module.calculateJavaVersion().orElse(DEFAULT_JAVA_VERSION);
         String buildCommand;
         String extraPaths;
         List<MavenModule> internalDependencies = new ArrayList<>();
@@ -138,17 +135,5 @@ public final class TemplateGenerator {
             Maven maven = new Maven(module.pomFile());
             maven.sortPom();
         }
-    }
-
-    private static Optional<String> calculateJavaVersion(MavenModule module) throws IOException, InterruptedException {
-        String effectivePom = module.effectivePom();
-
-        Pattern pattern = Pattern.compile("<maven.compiler.source>([0-9]+)</maven.compiler.source>");
-        return effectivePom
-                .lines()
-                .map(pattern::matcher)
-                .filter(Matcher::find)
-                .map(matcher -> matcher.group(1))
-                .findFirst();
     }
 }

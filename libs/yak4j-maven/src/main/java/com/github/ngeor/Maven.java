@@ -1,5 +1,7 @@
 package com.github.ngeor;
 
+import com.github.ngeor.yak4jdom.DocumentWrapper;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -36,7 +38,13 @@ public final class Maven {
         processHelper.runInheritIO("verify");
     }
 
-    public void effectivePom(File output) throws IOException, InterruptedException {
-        processHelper.run("help:effective-pom", "-Doutput=" + output.getAbsolutePath());
+    public DocumentWrapper effectivePom() throws IOException, InterruptedException {
+        File output = File.createTempFile("pom", ".xml");
+        try {
+            processHelper.run("help:effective-pom", "-Doutput=" + output.getAbsolutePath());
+            return DocumentWrapper.parse(output);
+        } finally {
+            output.delete();
+        }
     }
 }

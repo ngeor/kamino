@@ -24,13 +24,8 @@ class EffectivePomTest {
         Files.writeString(file.toPath(), pom);
 
         Maven maven = new Maven(file);
-        File outputFile = File.createTempFile("pom", ".xml");
-        outputFile.deleteOnExit();
-        maven.effectivePom(outputFile);
+        DocumentWrapper document = maven.effectivePom();
 
-        // System.out.println(Files.readString(outputFile.toPath()));
-
-        DocumentWrapper document = DocumentWrapper.parse(outputFile);
         assertThat(document.getDocumentElement().firstElementText("groupId")).isEqualTo("com.acme");
         assertThat(document.getDocumentElement().firstElementText("artifactId")).isEqualTo("dummy");
     }
