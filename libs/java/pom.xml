@@ -37,9 +37,11 @@
     </snapshotRepository>
   </distributionManagement>
   <properties>
+    <assertj-bom.version>3.24.2</assertj-bom.version>
     <checkstyle-rules.version>6.7.0</checkstyle-rules.version>
     <checkstyle.version>10.12.7</checkstyle.version>
     <java.version>17</java.version>
+    <junit.version>5.10.1</junit.version>
     <maven-checkstyle-plugin.version>3.3.1</maven-checkstyle-plugin.version>
     <maven-compiler-plugin.version>3.12.1</maven-compiler-plugin.version>
     <maven-deploy-plugin.version>3.1.1</maven-deploy-plugin.version>
@@ -51,12 +53,10 @@
     <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
+    <mockito.version>5.4.0</mockito.version>
     <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <sortpom-maven-plugin.version>3.3.0</sortpom-maven-plugin.version>
-    <assertj-bom.version>3.24.2</assertj-bom.version>
-    <junit.version>5.10.1</junit.version>
-    <mockito.version>5.4.0</mockito.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -96,8 +96,8 @@
               </goals>
               <configuration>
                 <rules>
-                  <banDuplicatePomDependencyVersions />
-                  <dependencyConvergence />
+                  <banDuplicatePomDependencyVersions/>
+                  <dependencyConvergence/>
                   <requireMavenVersion>
                     <version>3.6.3</version>
                   </requireMavenVersion>
@@ -167,6 +167,7 @@
           <artifactId>sortpom-maven-plugin</artifactId>
           <version>${sortpom-maven-plugin.version}</version>
           <configuration>
+            <expandEmptyElements>false</expandEmptyElements>
             <sortProperties>true</sortProperties>
             <sortDependencies>scope</sortDependencies>
           </configuration>
