@@ -70,6 +70,7 @@ public final class MavenModule {
         return effectivePom()
                 .getDocumentElement()
                 .firstElement("properties")
-                .map(p -> p.firstElementText("maven.compiler.source"));
+                .map(p -> p.firstElementText("maven.compiler.source"))
+                .map(v -> "1.8".equals(v) ? "8" : v);
     }
 }
