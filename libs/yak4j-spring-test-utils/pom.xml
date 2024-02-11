@@ -21,16 +21,16 @@
   </scm>
   <properties>
     <!--
+    jacoco thresholds
+    -->
+    <jacoco.unit-tests.limit.branch-ratio>74%</jacoco.unit-tests.limit.branch-ratio>
+    <jacoco.unit-tests.limit.class-complexity>20</jacoco.unit-tests.limit.class-complexity>
+    <jacoco.unit-tests.limit.instruction-ratio>96%</jacoco.unit-tests.limit.instruction-ratio>
+    <jacoco.unit-tests.limit.method-complexity>5</jacoco.unit-tests.limit.method-complexity>
+    <!--
     dependencies
     -->
     <spring.version>5.3.23</spring.version>
-    <!--
-    jacoco thresholds
-    -->
-    <jacoco.unit-tests.limit.instruction-ratio>96%</jacoco.unit-tests.limit.instruction-ratio>
-    <jacoco.unit-tests.limit.branch-ratio>74%</jacoco.unit-tests.limit.branch-ratio>
-    <jacoco.unit-tests.limit.class-complexity>20</jacoco.unit-tests.limit.class-complexity>
-    <jacoco.unit-tests.limit.method-complexity>5</jacoco.unit-tests.limit.method-complexity>
   </properties>
   <dependencies>
     <dependency>

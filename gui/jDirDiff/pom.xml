@@ -19,9 +19,9 @@
     <url>https://github.com/ngeor/kamino/tree/master/gui/jDirDiff</url>
   </scm>
   <properties>
-    <jacoco.unit-tests.limit.instruction-ratio>1%</jacoco.unit-tests.limit.instruction-ratio>
     <jacoco.unit-tests.limit.branch-ratio>0%</jacoco.unit-tests.limit.branch-ratio>
     <jacoco.unit-tests.limit.class-complexity>35</jacoco.unit-tests.limit.class-complexity>
+    <jacoco.unit-tests.limit.instruction-ratio>1%</jacoco.unit-tests.limit.instruction-ratio>
     <jacoco.unit-tests.limit.method-complexity>12</jacoco.unit-tests.limit.method-complexity>
     <maven.deploy.skip>true</maven.deploy.skip>
   </properties>

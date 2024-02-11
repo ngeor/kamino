@@ -20,22 +20,22 @@
     <url>https://github.com/ngeor/kamino/tree/master/plugins/yak4j-filename-conventions-maven-plugin</url>
   </scm>
   <properties>
-    <!--
-    plugins
-    -->
-    <maven-invoker-plugin.version>3.6.0</maven-invoker-plugin.version>
-    <!--
-    dependencies for maven plugins
-    -->
-    <maven-core.version>3.9.6</maven-core.version>
-    <maven-plugin-plugin.version>3.11.0</maven-plugin-plugin.version>
+    <jacoco.it-tests.limit.branch-ratio>89%</jacoco.it-tests.limit.branch-ratio>
+    <jacoco.it-tests.limit.class-complexity>16</jacoco.it-tests.limit.class-complexity>
     <!--
     jacoco thresholds
     -->
     <jacoco.it-tests.limit.instruction-ratio>95%</jacoco.it-tests.limit.instruction-ratio>
-    <jacoco.it-tests.limit.branch-ratio>89%</jacoco.it-tests.limit.branch-ratio>
-    <jacoco.it-tests.limit.class-complexity>16</jacoco.it-tests.limit.class-complexity>
     <jacoco.it-tests.limit.method-complexity>5</jacoco.it-tests.limit.method-complexity>
+    <!--
+    dependencies for maven plugins
+    -->
+    <maven-core.version>3.9.6</maven-core.version>
+    <!--
+    plugins
+    -->
+    <maven-invoker-plugin.version>3.6.0</maven-invoker-plugin.version>
+    <maven-plugin-plugin.version>3.11.0</maven-plugin-plugin.version>
   </properties>
   <dependencies>
     <dependency>

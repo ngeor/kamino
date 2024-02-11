@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.github.ngeor</groupId>
+    <artifactId>java</artifactId>
+    <version>4.5.0</version>
+  </parent>
   <groupId>com.github.ngeor</groupId>
   <artifactId>arturito</artifactId>
   <version>1.0-SNAPSHOT</version>
@@ -13,29 +18,9 @@
     <url>https://github.com/ngeor/kamino/tree/master/internal-tooling/arturito</url>
   </scm>
   <properties>
-    <java.version>11</java.version>
-    <maven.compiler.source>${java.version}</maven.compiler.source>
-    <maven.compiler.target>${java.version}</maven.compiler.target>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <assertj-core.version>3.25.2</assertj-core.version>
     <commons-io.version>2.15.1</commons-io.version>
-    <junit-bom.version>5.10.1</junit-bom.version>
     <maven-shade-plugin.version>3.5.1</maven-shade-plugin.version>
-    <maven-surefire-plugin.version>3.2.1</maven-surefire-plugin.version>
-    <palantir.version>2.39.0</palantir.version>
-    <spotless-maven-plugin.version>2.43.0</spotless-maven-plugin.version>
   </properties>
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.junit</groupId>
-        <artifactId>junit-bom</artifactId>
-        <version>${junit-bom.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>commons-io</groupId>
@@ -50,7 +35,6 @@
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
-      <version>${assertj-core.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -59,21 +43,10 @@
       <plugin>
         <groupId>com.diffplug.spotless</groupId>
         <artifactId>spotless-maven-plugin</artifactId>
-        <version>${spotless-maven-plugin.version}</version>
-        <configuration>
-          <ratchetFrom>origin/master</ratchetFrom>
-          <java>
-            <palantirJavaFormat>
-              <version>${palantir.version}</version>
-              <style>PALANTIR</style>
-            </palantirJavaFormat>
-            <removeUnusedImports></removeUnusedImports>
-          </java>
-        </configuration>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>${maven-surefire-plugin.version}</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

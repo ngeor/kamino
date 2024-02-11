@@ -20,12 +20,12 @@
     <url>https://github.com/ngeor/kamino/tree/master/libs/yak4j-xml</url>
   </scm>
   <properties>
+    <jacoco.unit-tests.limit.branch-ratio>99%</jacoco.unit-tests.limit.branch-ratio>
+    <jacoco.unit-tests.limit.class-complexity>10</jacoco.unit-tests.limit.class-complexity>
     <!--
     jacoco thresholds
     -->
     <jacoco.unit-tests.limit.instruction-ratio>99%</jacoco.unit-tests.limit.instruction-ratio>
-    <jacoco.unit-tests.limit.branch-ratio>99%</jacoco.unit-tests.limit.branch-ratio>
-    <jacoco.unit-tests.limit.class-complexity>10</jacoco.unit-tests.limit.class-complexity>
     <jacoco.unit-tests.limit.method-complexity>5</jacoco.unit-tests.limit.method-complexity>
   </properties>
   <dependencies>

@@ -20,26 +20,26 @@
     <url>https://github.com/ngeor/kamino/tree/master/plugins/yak4j-sync-archetype-maven-plugin</url>
   </scm>
   <properties>
+    <jacoco.aggregate.limit.branch-ratio>77%</jacoco.aggregate.limit.branch-ratio>
+    <jacoco.aggregate.limit.class-complexity>11</jacoco.aggregate.limit.class-complexity>
+    <jacoco.aggregate.limit.instruction-ratio>92%</jacoco.aggregate.limit.instruction-ratio>
+    <jacoco.aggregate.limit.method-complexity>5</jacoco.aggregate.limit.method-complexity>
     <!--
-    plugins
+    jacoco thresholds
     -->
-    <maven-invoker-plugin.version>3.6.0</maven-invoker-plugin.version>
+    <jacoco.unit-tests.limit.branch-ratio>42%</jacoco.unit-tests.limit.branch-ratio>
+    <jacoco.unit-tests.limit.class-complexity>11</jacoco.unit-tests.limit.class-complexity>
+    <jacoco.unit-tests.limit.instruction-ratio>18%</jacoco.unit-tests.limit.instruction-ratio>
+    <jacoco.unit-tests.limit.method-complexity>5</jacoco.unit-tests.limit.method-complexity>
     <!--
     dependencies for maven plugins
     -->
     <maven-core.version>3.9.6</maven-core.version>
-    <maven-plugin-plugin.version>3.11.0</maven-plugin-plugin.version>
     <!--
-    jacoco thresholds
+    plugins
     -->
-    <jacoco.unit-tests.limit.instruction-ratio>18%</jacoco.unit-tests.limit.instruction-ratio>
-    <jacoco.unit-tests.limit.branch-ratio>42%</jacoco.unit-tests.limit.branch-ratio>
-    <jacoco.unit-tests.limit.class-complexity>11</jacoco.unit-tests.limit.class-complexity>
-    <jacoco.unit-tests.limit.method-complexity>5</jacoco.unit-tests.limit.method-complexity>
-    <jacoco.aggregate.limit.instruction-ratio>92%</jacoco.aggregate.limit.instruction-ratio>
-    <jacoco.aggregate.limit.branch-ratio>77%</jacoco.aggregate.limit.branch-ratio>
-    <jacoco.aggregate.limit.class-complexity>11</jacoco.aggregate.limit.class-complexity>
-    <jacoco.aggregate.limit.method-complexity>5</jacoco.aggregate.limit.method-complexity>
+    <maven-invoker-plugin.version>3.6.0</maven-invoker-plugin.version>
+    <maven-plugin-plugin.version>3.11.0</maven-plugin-plugin.version>
   </properties>
   <dependencies>
     <dependency>
