@@ -7,12 +7,16 @@ on:
       - internal-tooling/changes/**
       - .github/workflows/build-internal-tooling-changes.yml
       - pom.xml
+      - libs/yak4j-git/**
+      - libs/yak4j-process/**
   pull_request:
     branches: [ master ]
     paths:
       - internal-tooling/changes/**
       - .github/workflows/build-internal-tooling-changes.yml
       - pom.xml
+      - libs/yak4j-git/**
+      - libs/yak4j-process/**
 
 jobs:
   build:
@@ -21,11 +25,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up JDK 17
+    - name: Set up JDK 21
       uses: actions/setup-java@v2
       with:
-        java-version: '17'
+        java-version: '21'
         distribution: 'zulu'
         cache: maven
     - name: Build with Maven
-      run: mvn -B -ntp clean verify --file internal-tooling/changes/pom.xml
+      run: mvn -B -ntp -pl internal-tooling/changes -am clean verify
