@@ -19,6 +19,7 @@
     <module>gui/jSpiderGame</module>
     <module>gui/jTetris</module>
     <module>internal-tooling/arturito</module>
+    <module>internal-tooling/changes</module>
     <module>internal-tooling/sifo</module>
     <module>libs/checkstyle-rules</module>
     <module>libs/java</module>

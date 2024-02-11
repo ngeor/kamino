@@ -1,0 +1,31 @@
+name: Build changes
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - internal-tooling/changes/**
+      - .github/workflows/build-internal-tooling-changes.yml
+      - pom.xml
+  pull_request:
+    branches: [ master ]
+    paths:
+      - internal-tooling/changes/**
+      - .github/workflows/build-internal-tooling-changes.yml
+      - pom.xml
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+        distribution: 'zulu'
+        cache: maven
+    - name: Build with Maven
+      run: mvn -B -ntp clean verify --file internal-tooling/changes/pom.xml
