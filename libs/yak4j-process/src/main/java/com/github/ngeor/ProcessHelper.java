@@ -20,8 +20,8 @@ public class ProcessHelper {
         List<String> command = createArgs(args);
         Process process =
                 new ProcessBuilder(command).directory(workingDirectory).start();
-        int exitCode = process.waitFor();
         String output = new String(process.getInputStream().readAllBytes());
+        int exitCode = process.waitFor();
         if (exitCode != 0) {
             String commandAsString = String.join(" ", command);
             String error = new String(process.getErrorStream().readAllBytes());
