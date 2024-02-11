@@ -3,7 +3,9 @@ package com.github.ngeor;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public final class Git {
     private final ProcessHelper processHelper;
@@ -58,9 +60,11 @@ public final class Git {
 
     public String getMostRecentTag(String prefix) throws IOException, InterruptedException {
         String output = processHelper.run("tag", "-l", prefix + "*", "--sort=-version:refname");
-        return output.lines().map(s -> s.substring(prefix.length())).findFirst().orElseThrow(
-            () -> new IllegalStateException(String.format("Could not find any git tags starting with %s", prefix))
-        );
+        return output.lines()
+                .map(s -> s.substring(prefix.length()))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException(
+                        String.format("Could not find any git tags starting with %s", prefix)));
     }
 
     public void add(String file) throws IOException, InterruptedException {
@@ -69,5 +73,23 @@ public final class Git {
 
     public boolean hasStagedChanges() throws IOException, InterruptedException {
         return !processHelper.tryRun("diff", "--cached", "--quiet");
+    }
+
+    /**
+     * Returns the output of {@code git rev-list --all --format=%H|%as|%D|%s}.
+     * <p>
+     * The output consists of lines that are in the format
+     * {@code commit SHA}
+     * alternating with lines that are in the format
+     * {@code SHA|yyyy-MM-dd|object|summary}
+     * where "object" can be in the form {@code tag: tagname} for tags.
+     */
+    public Stream<Commit> revList(String commit, String path) throws IOException, InterruptedException {
+        return processHelper
+                .run(Stream.of("rev-list", "--all", "--format=%H|%as|%D|%s", commit, path)
+                        .filter(Objects::nonNull)
+                        .toArray(String[]::new))
+                .lines()
+                .flatMap(line -> Commit.parse(line).stream());
     }
 }
