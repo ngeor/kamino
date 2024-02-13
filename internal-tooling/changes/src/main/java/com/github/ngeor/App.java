@@ -3,9 +3,12 @@ package com.github.ngeor;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Hello world!
@@ -26,7 +29,7 @@ public final class App {
 
         String path = "libs/java";
         String tagPrefix = path + "/v";
-        String version = null; //"4.2.1";
+        String version = null; // "4.2.1";
         String sinceCommit = version != null ? tagPrefix + version + "..HEAD" : null;
 
         Git git = new Git(rootDirectory);
@@ -40,6 +43,11 @@ public final class App {
                         "Unreleased",
                         Map.of("feat", "Features", "fix", "Fixes", "chore", "Miscellaneous Tasks")));
 
+        File changeLog =
+                rootDirectory.toPath().resolve(path).resolve("CHANGELOG.md").toFile();
+        Readme readme = changeLog.isFile() ? ReadmeReader.read(changeLog) : new Readme("# Changelog", List.of());
+        readme = merge(readme, formattedRelease);
+        ReadmeWriter.write(readme, changeLog);
         print(formattedRelease, new PrintWriter(System.out, true));
     }
 
@@ -58,7 +66,6 @@ public final class App {
         } else {
             title = options.defaultTag();
         }
-        title = "## " + title;
 
         return new FormattedRelease.Group(
                 title, group.subGroups().stream().map(g -> format(g, options)).toList());
@@ -80,7 +87,7 @@ public final class App {
     void print(FormattedRelease formattedRelease, PrintWriter writer) {
         for (var it = formattedRelease.groups().iterator(); it.hasNext(); ) {
             var formattedGroup = it.next();
-            writer.printf("%s%n%n", formattedGroup.title());
+            writer.printf("## %s%n%n", formattedGroup.title());
             for (var itChild = formattedGroup.subGroups().iterator(); itChild.hasNext(); ) {
                 var childGroup = itChild.next();
                 writer.printf("### %s%n%n", childGroup.title());
@@ -95,5 +102,30 @@ public final class App {
                 writer.println();
             }
         }
+    }
+
+    Readme merge(Readme readme, FormattedRelease formattedRelease) {
+        List<Readme.Section> sections = new ArrayList<>();
+        Set<String> seenTitles = new HashSet<>();
+        for (FormattedRelease.Group formattedGroup : formattedRelease.groups()) {
+            StringBuilder body = new StringBuilder();
+            for (var itChild = formattedGroup.subGroups().iterator(); itChild.hasNext(); ) {
+                var childGroup = itChild.next();
+                body.append(String.format("### %s%n%n", childGroup.title()));
+                for (String item : childGroup.items()) {
+                    body.append(String.format("* %s%n", item));
+                }
+                if (itChild.hasNext()) {
+                    body.append(System.lineSeparator());
+                }
+            }
+            sections.add(new Readme.Section(formattedGroup.title(), body.toString()));
+            seenTitles.add(formattedGroup.title());
+        }
+        sections.addAll(readme.sections().stream()
+                .filter(s -> !seenTitles.contains(s.title()))
+                .toList());
+
+        return new Readme(readme.header(), sections);
     }
 }

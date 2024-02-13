@@ -42,12 +42,12 @@ class AppTest {
                 .hasSize(2)
                 .contains(
                         new FormattedRelease.Group(
-                                "## Unreleased",
+                                "Unreleased",
                                 List.of(
                                         new FormattedRelease.SubGroup("Fixes", List.of("Something")),
                                         new FormattedRelease.SubGroup("Miscellaneous Tasks", List.of("Whatever")))),
                         new FormattedRelease.Group(
-                                "## [1.0] - 2024-02-09",
+                                "[1.0] - 2024-02-09",
                                 List.of(
                                         new FormattedRelease.SubGroup("Miscellaneous Tasks", List.of("Initial commit")),
                                         new FormattedRelease.SubGroup("Release", List.of("New version")))));
