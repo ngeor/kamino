@@ -48,7 +48,6 @@ public final class App {
         Readme readme = changeLog.isFile() ? ReadmeReader.read(changeLog) : new Readme("# Changelog", List.of());
         readme = merge(readme, formattedRelease);
         ReadmeWriter.write(readme, changeLog);
-        print(formattedRelease, new PrintWriter(System.out, true));
     }
 
     FormattedRelease format(Release release, FormatOptions options) {
@@ -84,31 +83,13 @@ public final class App {
                         .toList());
     }
 
-    void print(FormattedRelease formattedRelease, PrintWriter writer) {
-        for (var it = formattedRelease.groups().iterator(); it.hasNext(); ) {
-            var formattedGroup = it.next();
-            writer.printf("## %s%n%n", formattedGroup.title());
-            for (var itChild = formattedGroup.subGroups().iterator(); itChild.hasNext(); ) {
-                var childGroup = itChild.next();
-                writer.printf("### %s%n%n", childGroup.title());
-                for (String item : childGroup.items()) {
-                    writer.printf("* %s%n", item);
-                }
-                if (itChild.hasNext()) {
-                    writer.println();
-                }
-            }
-            if (it.hasNext()) {
-                writer.println();
-            }
-        }
-    }
-
     Readme merge(Readme readme, FormattedRelease formattedRelease) {
         List<Readme.Section> sections = new ArrayList<>();
         Set<String> seenTitles = new HashSet<>();
-        for (FormattedRelease.Group formattedGroup : formattedRelease.groups()) {
+        for (var it = formattedRelease.groups().iterator(); it.hasNext(); ) {
+            var formattedGroup = it.next();
             StringBuilder body = new StringBuilder();
+            body.append(System.lineSeparator());
             for (var itChild = formattedGroup.subGroups().iterator(); itChild.hasNext(); ) {
                 var childGroup = itChild.next();
                 body.append(String.format("### %s%n%n", childGroup.title()));
@@ -118,6 +99,9 @@ public final class App {
                 if (itChild.hasNext()) {
                     body.append(System.lineSeparator());
                 }
+            }
+            if (it.hasNext() || readme.sections().stream().anyMatch(s -> !seenTitles.contains(s.title()))) {
+                body.append(System.lineSeparator());
             }
             sections.add(new Readme.Section(formattedGroup.title(), body.toString()));
             seenTitles.add(formattedGroup.title());
