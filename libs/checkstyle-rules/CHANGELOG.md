@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Miscellaneous Tasks
+
+* Delete old .github and scripts folders
+* Keeping only root .editorconfig, deleting the rest
+* Keeping only root .gitignore, deleting the rest
+* Use `com.github.ngeor:java` as the parent pom everywhere
+
+## [6.7.2] - 2024-01-28
+
+### Miscellaneous Tasks
+
+* Add 'libs/checkstyle-rules/' from commit '74846dda76da8720c827a565802fe9021307b599'
+* Adjusted imported code
+
 ## [6.7.0] - 2024-01-23
 
 ### Miscellaneous Tasks
