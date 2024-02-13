@@ -2,6 +2,53 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Miscellaneous Tasks
+
+* Use `com.github.ngeor:java` as the parent pom everywhere
+
+## [4.5.0] - 2024-02-10
+
+### Features
+
+* Added spotless plugin management
+
+### Miscellaneous Tasks
+
+* Configure `sortpom` to not expand empty elements
+
+## [4.4.0] - 2024-02-10
+
+### Features
+
+* Adding root pom (#11)
+* Add dependency management for common test libraries
+
+### Miscellaneous Tasks
+
+* Delete old `.github` and `scripts` folders
+* Keeping only root `.editorconfig`, deleting the rest
+* Keeping only root `.gitignore`, deleting the rest
+* Moved `.gitattributes` to the root folder
+
+## [4.3.0] - 2024-01-30
+
+### Features
+
+* Added plugin management for maven source, javadoc and deploy plugins
+
+### Fixes
+
+* use maven effective pom to determine java version
+
+## [4.2.1] - 2024-01-28
+
+### Miscellaneous Tasks
+
+* Add 'libs/java/' from commit '4247ca588e52b464446404a234665da63205ee88'
+* Adjusted imported code
+
 ## [4.2.0] - 2024-01-26
 
 ### Miscellaneous Tasks
