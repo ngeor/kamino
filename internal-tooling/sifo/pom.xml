@@ -108,6 +108,10 @@
             <extensions>true</extensions>
             <configuration>
               <mainClass>${mainClass}</mainClass>
+              <buildArgs>
+                <buildArg>-H:Log=registerResource:3</buildArg>
+                <buildArg>-H:IncludeResources=".+ml$"</buildArg>
+              </buildArgs>
             </configuration>
             <executions>
               <execution>
