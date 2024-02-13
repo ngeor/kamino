@@ -6,21 +6,21 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReadmeReader {
-    public static Readme read(File file) throws IOException {
+public class MarkdownReader {
+    public static Markdown read(File file) throws IOException {
         return read(new String(Files.readAllBytes(file.toPath())), System.lineSeparator());
     }
 
-    public static Readme read(String input, String lineSeparator) {
+    public static Markdown read(String input, String lineSeparator) {
         String header = "";
-        List<Readme.Section> sections = new ArrayList<>();
+        List<Markdown.Section> sections = new ArrayList<>();
         String sectionTile = null;
         String sectionBody = "";
         for (String line : input.lines().toList()) {
             if (line.startsWith("## ")) {
                 // finish previous section
                 if (sectionTile != null) {
-                    sections.add(new Readme.Section(sectionTile, sectionBody));
+                    sections.add(new Markdown.Section(sectionTile, sectionBody));
                 }
 
                 sectionTile = line.substring("## ".length());
@@ -36,9 +36,9 @@ public class ReadmeReader {
 
         // finish last section
         if (sectionTile != null) {
-            sections.add(new Readme.Section(sectionTile, sectionBody));
+            sections.add(new Markdown.Section(sectionTile, sectionBody));
         }
 
-        return new Readme(header, sections);
+        return new Markdown(header, sections);
     }
 }

@@ -2,7 +2,6 @@ package com.github.ngeor;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -45,9 +44,9 @@ public final class App {
 
         File changeLog =
                 rootDirectory.toPath().resolve(path).resolve("CHANGELOG.md").toFile();
-        Readme readme = changeLog.isFile() ? ReadmeReader.read(changeLog) : new Readme("# Changelog", List.of());
-        readme = merge(readme, formattedRelease);
-        ReadmeWriter.write(readme, changeLog);
+        Markdown markdown = changeLog.isFile() ? MarkdownReader.read(changeLog) : new Markdown("# Changelog", List.of());
+        markdown = merge(markdown, formattedRelease);
+        MarkdownWriter.write(markdown, changeLog);
     }
 
     FormattedRelease format(Release release, FormatOptions options) {
@@ -83,8 +82,8 @@ public final class App {
                         .toList());
     }
 
-    Readme merge(Readme readme, FormattedRelease formattedRelease) {
-        List<Readme.Section> sections = new ArrayList<>();
+    Markdown merge(Markdown markdown, FormattedRelease formattedRelease) {
+        List<Markdown.Section> sections = new ArrayList<>();
         Set<String> seenTitles = new HashSet<>();
         for (var it = formattedRelease.groups().iterator(); it.hasNext(); ) {
             var formattedGroup = it.next();
@@ -100,16 +99,16 @@ public final class App {
                     body.append(System.lineSeparator());
                 }
             }
-            if (it.hasNext() || readme.sections().stream().anyMatch(s -> !seenTitles.contains(s.title()))) {
+            if (it.hasNext() || markdown.sections().stream().anyMatch(s -> !seenTitles.contains(s.title()))) {
                 body.append(System.lineSeparator());
             }
-            sections.add(new Readme.Section(formattedGroup.title(), body.toString()));
+            sections.add(new Markdown.Section(formattedGroup.title(), body.toString()));
             seenTitles.add(formattedGroup.title());
         }
-        sections.addAll(readme.sections().stream()
+        sections.addAll(markdown.sections().stream()
                 .filter(s -> !seenTitles.contains(s.title()))
                 .toList());
 
-        return new Readme(readme.header(), sections);
+        return new Markdown(markdown.header(), sections);
     }
 }

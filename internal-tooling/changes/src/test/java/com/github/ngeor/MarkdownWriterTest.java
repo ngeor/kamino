@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.io.IOException;
 import org.junit.jupiter.api.Test;
 
-class ReadmeWriterTest {
+class MarkdownWriterTest {
     @Test
     void testWrite() throws IOException {
         String input =
@@ -22,8 +22,8 @@ class ReadmeWriterTest {
 
             something else
             """;
-        Readme readme = ReadmeReader.read(input, "\n");
-        String output = ReadmeWriter.write(readme, "\n");
+        Markdown markdown = MarkdownReader.read(input, "\n");
+        String output = MarkdownWriter.write(markdown, "\n");
         assertThat(output).isEqualTo(input);
     }
 }

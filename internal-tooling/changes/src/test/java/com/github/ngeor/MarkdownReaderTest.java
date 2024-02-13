@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-class ReadmeReaderTest {
+class MarkdownReaderTest {
     @Test
     void testRead() {
         String input =
@@ -23,8 +23,8 @@ class ReadmeReaderTest {
             something else
             """;
 
-        assertThat(ReadmeReader.read(input, "\n"))
-                .isEqualTo(new Readme(
+        assertThat(MarkdownReader.read(input, "\n"))
+                .isEqualTo(new Markdown(
                         """
                     # Changelog
 
@@ -32,14 +32,14 @@ class ReadmeReaderTest {
 
                     """,
                         List.of(
-                                new Readme.Section(
+                                new Markdown.Section(
                                         "Unreleased",
                                         """
 
                         something
 
                         """),
-                                new Readme.Section(
+                                new Markdown.Section(
                                         "v1",
                                         """
 
