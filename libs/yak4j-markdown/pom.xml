@@ -7,29 +7,16 @@
     <version>4.5.0</version>
   </parent>
   <groupId>com.github.ngeor</groupId>
-  <artifactId>changes</artifactId>
+  <artifactId>yak4j-markdown</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <url>https://github.com/ngeor/kamino/tree/master/internal-tooling/changes</url>
+  <url>https://github.com/ngeor/kamino/tree/master/libs/yak4j-markdown</url>
   <scm>
     <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
     <developerConnection>scm:git:git@github.com:ngeor/kamino.git</developerConnection>
     <tag>HEAD</tag>
-    <url>https://github.com/ngeor/kamino/tree/master/internal-tooling/changes</url>
+    <url>https://github.com/ngeor/kamino/tree/master/libs/yak4j-markdown</url>
   </scm>
-  <properties>
-    <java.version>21</java.version>
-  </properties>
   <dependencies>
-    <dependency>
-      <groupId>com.github.ngeor</groupId>
-      <artifactId>yak4j-git</artifactId>
-      <version>1.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>com.github.ngeor</groupId>
-      <artifactId>yak4j-markdown</artifactId>
-      <version>1.0-SNAPSHOT</version>
-    </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>

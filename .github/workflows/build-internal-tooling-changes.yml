@@ -8,6 +8,7 @@ on:
       - .github/workflows/build-internal-tooling-changes.yml
       - pom.xml
       - libs/yak4j-git/**
+      - libs/yak4j-markdown/**
       - libs/yak4j-process/**
   pull_request:
     branches: [ master ]
@@ -16,6 +17,7 @@ on:
       - .github/workflows/build-internal-tooling-changes.yml
       - pom.xml
       - libs/yak4j-git/**
+      - libs/yak4j-markdown/**
       - libs/yak4j-process/**
 
 jobs:
