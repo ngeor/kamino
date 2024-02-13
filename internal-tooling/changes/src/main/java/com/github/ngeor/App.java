@@ -20,22 +20,24 @@ public final class App {
      * @param args The arguments of the program.
      */
     public static void main(String[] args) throws IOException, InterruptedException {
-        new App().run();
+        // e.g. libs/java
+        String path = args[0];
+        // e.g. 4.2.1
+        String version = args.length >= 2 ? args[1] : null;
+        new App().run(path, version);
     }
 
-    void run() throws IOException, InterruptedException {
+    void run(String path, String version) throws IOException, InterruptedException {
         File rootDirectory = new File(".");
 
-        String path = "libs/java";
         String tagPrefix = path + "/v";
-        String version = null; // "4.2.1";
         String sinceCommit = version != null ? tagPrefix + version + "..HEAD" : null;
 
         Git git = new Git(rootDirectory);
 
         FormattedRelease formattedRelease = format(
                 Release.create(git.revList(sinceCommit, path))
-                        .filter(c -> !c.summary().contains("maven-release-plugin"))
+                        .filter(this::isRelevantToChangelog)
                         .makeSubGroups(new Release.SubGroupOptions("chore", List.of("feat", "fix"))),
                 new FormatOptions(
                         tagPrefix,
@@ -47,6 +49,11 @@ public final class App {
         Markdown markdown = changeLog.isFile() ? MarkdownReader.read(changeLog) : new Markdown("# Changelog", List.of());
         markdown = merge(markdown, formattedRelease);
         MarkdownWriter.write(markdown, changeLog);
+    }
+
+    boolean isRelevantToChangelog(Commit commit) {
+        List<String> needles = List.of("maven-release-plugin", "changelog");
+        return needles.stream().noneMatch(needle -> commit.summary().contains(needle));
     }
 
     FormattedRelease format(Release release, FormatOptions options) {
