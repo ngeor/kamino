@@ -25,12 +25,11 @@ class AppTest {
 
         List<Commit> commits =
                 input.lines().map(line -> Commit.parse(line).orElseThrow()).toList();
-        App app = new App();
         Release release = Release.create(commits.stream())
                 .makeSubGroups(new Release.SubGroupOptions("chore", List.of("fix", "chore", "release")));
 
         // act
-        FormattedRelease result = app.format(
+        FormattedRelease result = App.format(
                 release,
                 new FormatOptions(
                         "v",

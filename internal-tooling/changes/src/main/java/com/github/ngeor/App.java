@@ -136,12 +136,12 @@ public final class App {
         return needles.stream().noneMatch(needle -> commit.summary().contains(needle));
     }
 
-    FormattedRelease format(Release release, FormatOptions options) {
+    static FormattedRelease format(Release release, FormatOptions options) {
         return new FormattedRelease(
                 release.groups().stream().map(g -> format(g, options)).toList());
     }
 
-    private FormattedRelease.Group format(Release.Group group, FormatOptions options) {
+    private static FormattedRelease.Group format(Release.Group group, FormatOptions options) {
         String title = group.tag().tag();
         if (title != null) {
             if (title.startsWith(options.tagPrefix())) {
@@ -156,7 +156,7 @@ public final class App {
                 title, group.subGroups().stream().map(g -> format(g, options)).toList());
     }
 
-    private FormattedRelease.SubGroup format(Release.SubGroup subGroup, FormatOptions options) {
+    private static FormattedRelease.SubGroup format(Release.SubGroup subGroup, FormatOptions options) {
         String title = options.subGroupNames().getOrDefault(subGroup.name(), subGroup.name());
         return new FormattedRelease.SubGroup(
                 title,
