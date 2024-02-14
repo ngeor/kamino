@@ -28,6 +28,7 @@
     <module>libs/yak4j-markdown</module>
     <module>libs/yak4j-maven</module>
     <module>libs/yak4j-process</module>
+    <module>libs/yak4j-semver</module>
     <module>libs/yak4j-spring-test-utils</module>
     <module>libs/yak4j-utc-time-zone-mapper</module>
     <module>libs/yak4j-xml</module>

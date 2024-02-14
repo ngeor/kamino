@@ -14,7 +14,7 @@ public final class ReleasePerformer {
         this.projectName = projectName;
     }
 
-    public void performRelease(String bump, boolean dryRun) throws IOException, InterruptedException {
+    public void performRelease(SemVerBump bump, boolean dryRun) throws IOException, InterruptedException {
         Git git = new Git(monorepoRoot);
 
         // TODO ensure no pending changes
@@ -26,17 +26,7 @@ public final class ReleasePerformer {
         // TODO convert pom to effective pom and remove parent before publishing (and restore afterwards)
 
         SemVer maxReleaseVersion = SemVer.parse(git.getMostRecentTag(typeName + "/" + projectName + "/v"));
-        final SemVer nextVersion;
-        if ("major".equalsIgnoreCase(bump)) {
-            nextVersion = maxReleaseVersion.increaseMajor();
-        } else if ("minor".equalsIgnoreCase(bump)) {
-            nextVersion = maxReleaseVersion.increaseMinor();
-        } else if ("patch".equalsIgnoreCase(bump)) {
-            nextVersion = maxReleaseVersion.increasePatch();
-        } else {
-            throw new IllegalArgumentException("bump not supported");
-        }
-
+        final SemVer nextVersion = maxReleaseVersion.bump(bump);
         performRelease(nextVersion, dryRun);
     }
 
@@ -45,7 +35,7 @@ public final class ReleasePerformer {
     }
 
     public void performRelease(SemVer nextVersion, boolean dryRun) throws IOException, InterruptedException {
-        String developmentVersion = nextVersion.increaseMinor() + "-SNAPSHOT";
+        String developmentVersion = nextVersion.bump(SemVerBump.MINOR).preRelease("SNAPSHOT").toString();
         String tag = typeName + "/" + projectName + "/v" + nextVersion;
 
         Maven maven = new Maven(monorepoRoot
