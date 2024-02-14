@@ -7,6 +7,7 @@ on:
       - internal-tooling/changes/**
       - .github/workflows/build-internal-tooling-changes.yml
       - pom.xml
+      - libs/yak4j-argparse/**
       - libs/yak4j-git/**
       - libs/yak4j-markdown/**
       - libs/yak4j-process/**
@@ -17,6 +18,7 @@ on:
       - internal-tooling/changes/**
       - .github/workflows/build-internal-tooling-changes.yml
       - pom.xml
+      - libs/yak4j-argparse/**
       - libs/yak4j-git/**
       - libs/yak4j-markdown/**
       - libs/yak4j-process/**

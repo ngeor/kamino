@@ -101,8 +101,8 @@
               </goals>
               <configuration>
                 <rules>
-                  <banDuplicatePomDependencyVersions />
-                  <dependencyConvergence />
+                  <banDuplicatePomDependencyVersions/>
+                  <dependencyConvergence/>
                   <requireMavenVersion>
                     <version>3.6.3</version>
                   </requireMavenVersion>
@@ -155,7 +155,7 @@
                 <version>${palantir.version}</version>
                 <style>PALANTIR</style>
               </palantirJavaFormat>
-              <removeUnusedImports />
+              <removeUnusedImports/>
             </java>
           </configuration>
         </plugin>

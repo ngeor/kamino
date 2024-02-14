@@ -1,0 +1,31 @@
+name: Build yak4j-argparse
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - libs/yak4j-argparse/**
+      - .github/workflows/build-libs-yak4j-argparse.yml
+      - pom.xml
+  pull_request:
+    branches: [ master ]
+    paths:
+      - libs/yak4j-argparse/**
+      - .github/workflows/build-libs-yak4j-argparse.yml
+      - pom.xml
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+        distribution: 'zulu'
+        cache: maven
+    - name: Build with Maven
+      run: mvn -B -ntp clean verify --file libs/yak4j-argparse/pom.xml

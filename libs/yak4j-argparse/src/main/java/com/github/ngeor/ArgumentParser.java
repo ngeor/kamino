@@ -52,7 +52,7 @@ public class ArgumentParser {
                     }
                 }
             } else {
-                ArgSpec argSpec = extract(candidates, a -> a.kind == SpecKind.POSITIONAL).orElseThrow(() -> new IllegalArgumentException("Unexpected argument " + arg));
+                ArgSpec argSpec = extract(candidates, a -> a.kind() == SpecKind.POSITIONAL).orElseThrow(() -> new IllegalArgumentException("Unexpected argument " + arg));
                 result.put(argSpec.name(), arg);
             }
 
@@ -74,10 +74,4 @@ public class ArgumentParser {
     }
 
 
-    public enum SpecKind {
-        POSITIONAL,
-        NAMED,
-        FLAG
-    }
-    public record ArgSpec(String name, boolean required, SpecKind kind) {}
 }
