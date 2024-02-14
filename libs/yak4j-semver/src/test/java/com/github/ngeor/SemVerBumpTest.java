@@ -2,6 +2,7 @@ package com.github.ngeor;
 
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SemVerBumpTest {
@@ -14,5 +15,17 @@ class SemVerBumpTest {
         assertEquals(SemVerBump.PATCH, SemVerBump.parse("PATCH"));
         assertEquals(SemVerBump.PATCH, SemVerBump.parse("patch"));
         assertNull(SemVerBump.parse("unknown"));
+    }
+
+    @Test
+    void compare() {
+        assertThat(SemVerBump.MAJOR).isGreaterThan(SemVerBump.MINOR);
+        assertThat(SemVerBump.MAJOR).isGreaterThan(SemVerBump.PATCH);
+
+        assertThat(SemVerBump.MINOR).isGreaterThan(SemVerBump.PATCH);
+        assertThat(SemVerBump.MINOR).isLessThan(SemVerBump.MAJOR);
+
+        assertThat(SemVerBump.PATCH).isLessThan(SemVerBump.MINOR);
+        assertThat(SemVerBump.PATCH).isLessThan(SemVerBump.MAJOR);
     }
 }

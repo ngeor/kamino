@@ -1,9 +1,9 @@
 package com.github.ngeor;
 
 public enum SemVerBump {
-    MAJOR,
+    PATCH,
     MINOR,
-    PATCH;
+    MAJOR;
 
     public static SemVerBump parse(String value) {
         for (SemVerBump bump : values()) {
