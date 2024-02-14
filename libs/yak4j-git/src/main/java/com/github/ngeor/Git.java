@@ -58,6 +58,12 @@ public final class Git {
         processHelper.run("push");
     }
 
+    /**
+     * Gets the most recent tag that starts with the given prefix.
+     * The prefix is stripped from the returned value.
+     * @param prefix The prefix of the tag.
+     * @return The most recent tag, stripped of the given prefix.
+     */
     public String getMostRecentTag(String prefix) throws IOException, InterruptedException {
         String output = processHelper.run("tag", "-l", prefix + "*", "--sort=-version:refname");
         return output.lines()
