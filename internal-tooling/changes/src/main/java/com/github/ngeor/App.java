@@ -10,30 +10,48 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Hello world!
+ * Changelog and semantic version calculator.
  */
 public final class App {
-    App() {}
+    private final File rootDirectory;
+    private final String path;
+    private final String tagPrefix;
+    private final Git git;
 
-    /**
-     * Says hello to the world.
-     * @param args The arguments of the program.
-     */
-    public static void main(String[] args) throws IOException, InterruptedException {
-        // e.g. libs/java
-        String path = args[0];
-        // e.g. 4.2.1
-        String version = args.length >= 2 ? args[1] : null;
-        new App().run(path, version);
+    App(String path) {
+        this.rootDirectory = new File(".").toPath().toAbsolutePath().toFile();
+
+        // ensure given path exists
+        if (!new File(rootDirectory, path).isDirectory()) {
+            throw new IllegalArgumentException("path " + path + " not found");
+        }
+
+        this.path = path;
+        this.tagPrefix = path + "/v";
+        this.git = new Git(rootDirectory);
     }
 
-    void run(String path, String version) throws IOException, InterruptedException {
-        File rootDirectory = new File(".");
+    public static void main(String[] args) throws IOException, InterruptedException {
+        ArgumentParser parser = new ArgumentParser();
+        parser.addPositionalArgument("path", true);
+        parser.addPositionalArgument("version", false);
+        parser.addFlagArgument("git-version");
+        Map<String, Object> parsedArgs = parser.parse(args);
+        // e.g. libs/java
+        // ensure path does not end in slashes and is not blank
+        String path = sanitize((String) parsedArgs.get("path"));
+        // e.g. 4.2.1
+        String version = (String) parsedArgs.get("version");
+        App app = new App(path);
+        if (parsedArgs.containsKey("git-version")) {
+            app.calculateGitVersion();
+        } else {
+            app.updateChangeLog(version);
+        }
+    }
 
-        String tagPrefix = path + "/v";
+    void updateChangeLog(String version) throws IOException, InterruptedException {
         String sinceCommit = version != null ? tagPrefix + version + "..HEAD" : null;
-
-        Git git = new Git(rootDirectory);
 
         FormattedRelease formattedRelease = format(
                 Release.create(git.revList(sinceCommit, path))
@@ -49,6 +67,56 @@ public final class App {
         Markdown markdown = changeLog.isFile() ? MarkdownReader.read(changeLog) : new Markdown("# Changelog", List.of());
         markdown = merge(markdown, formattedRelease);
         MarkdownWriter.write(markdown, changeLog);
+    }
+
+    private void calculateGitVersion() throws IOException, InterruptedException {
+        SemVer tag = SemVer.parse(git.getMostRecentTag(tagPrefix));
+        String sinceCommit = tagPrefix + tag + "..HEAD";
+
+        List<Commit> commits = git.revList(sinceCommit, path).toList();
+        if (commits.isEmpty()) {
+            System.out.printf("No commits to %s since %s%n", path, tag);
+            return;
+        }
+
+        SemVerBump bump = commits.stream()
+            .filter(this::isRelevantToChangelog)
+            .map(Commit::summary)
+            .map(this::calculateBump)
+            .max(Enum::compareTo)
+            .orElse(SemVerBump.MINOR);
+
+        SemVer nextTag = tag.bump(bump);
+        System.out.printf("The next version of %s should be %s (%s)%n", path, nextTag, bump);
+    }
+
+    private static String sanitize(String path) {
+        if (path == null) {
+            throw new IllegalArgumentException("path is mandatory");
+        }
+
+        // ensure path does not end in slash
+        while (path.endsWith("\\") || path.endsWith("/")) {
+            path = path.substring(0, path.length() - 1);
+        }
+
+        if (path.isBlank()) {
+            throw new IllegalArgumentException("path is mandatory");
+        }
+
+        return path;
+    }
+
+    SemVerBump calculateBump(String message) {
+        if (message.startsWith("fix:")) {
+            return SemVerBump.PATCH;
+        }
+
+        if (message.matches("^[a-z]+!:.+$")) {
+            return SemVerBump.MAJOR;
+        }
+
+        return SemVerBump.MINOR;
     }
 
     boolean isRelevantToChangelog(Commit commit) {

@@ -4,7 +4,7 @@
   <parent>
     <groupId>com.github.ngeor</groupId>
     <artifactId>java</artifactId>
-    <version>4.5.0</version>
+    <version>4.6.0</version>
   </parent>
   <groupId>com.github.ngeor</groupId>
   <artifactId>changes</artifactId>
@@ -28,6 +28,11 @@
     <dependency>
       <groupId>com.github.ngeor</groupId>
       <artifactId>yak4j-markdown</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.github.ngeor</groupId>
+      <artifactId>yak4j-semver</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
     <dependency>

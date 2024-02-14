@@ -1,19 +1,29 @@
 package com.github.ngeor;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class ArgumentParser {
     private final List<ArgSpec> argSpecs = new ArrayList<>();
 
     public void addPositionalArgument(String name, boolean required) {
-        argSpecs.add(new ArgSpec(name, required, true));
+        add(new ArgSpec(name, required, SpecKind.POSITIONAL));
+    }
+
+    public void addNamedArgument(String name, boolean required) {
+        add(new ArgSpec(name, required, SpecKind.NAMED));
+    }
+
+    public void addFlagArgument(String name) {
+        add(new ArgSpec(name, false, SpecKind.FLAG));
+    }
+
+    public void add(ArgSpec argSpec) {
+        argSpecs.add(argSpec);
     }
 
     public Map<String, Object> parse(String[] args) {
@@ -23,9 +33,26 @@ public class ArgumentParser {
         while (i < args.length) {
             String arg = args[i];
             if (arg.startsWith("--")) {
+                String argName = arg.substring(2);
+                if (argName.isBlank()) {
+                    throw new IllegalArgumentException("Unsupported -- argument");
+                }
+                ArgSpec argSpec = extract(candidates, a -> a.kind() != SpecKind.POSITIONAL && argName.equalsIgnoreCase(a.name())).orElseThrow(() -> new IllegalArgumentException("Unexpected argument " + arg));
 
+                if (argSpec.kind() == SpecKind.FLAG) {
+                    result.put(argSpec.name(), Boolean.TRUE);
+                } else {
+                    i++;
+
+                    if (i < args.length) {
+                        String value = args[i];
+                        result.put(argSpec.name(), value);
+                    } else {
+                        throw new IllegalStateException("No value for named argument " + argName);
+                    }
+                }
             } else {
-                ArgSpec argSpec = extract(candidates, ArgSpec::positional).orElseThrow(() -> new IllegalArgumentException("Unexpected argument " + arg));
+                ArgSpec argSpec = extract(candidates, a -> a.kind == SpecKind.POSITIONAL).orElseThrow(() -> new IllegalArgumentException("Unexpected argument " + arg));
                 result.put(argSpec.name(), arg);
             }
 
@@ -46,5 +73,11 @@ public class ArgumentParser {
         return Optional.empty();
     }
 
-    public record ArgSpec(String name, boolean required, boolean positional) {}
+
+    public enum SpecKind {
+        POSITIONAL,
+        NAMED,
+        FLAG
+    }
+    public record ArgSpec(String name, boolean required, SpecKind kind) {}
 }

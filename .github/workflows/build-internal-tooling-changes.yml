@@ -10,6 +10,7 @@ on:
       - libs/yak4j-git/**
       - libs/yak4j-markdown/**
       - libs/yak4j-process/**
+      - libs/yak4j-semver/**
   pull_request:
     branches: [ master ]
     paths:
@@ -19,6 +20,7 @@ on:
       - libs/yak4j-git/**
       - libs/yak4j-markdown/**
       - libs/yak4j-process/**
+      - libs/yak4j-semver/**
 
 jobs:
   build:
