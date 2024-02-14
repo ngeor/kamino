@@ -2,7 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## [4.6.0] - 2024-02-13
+
+### Features
+
+* Using native image plugin
 
 ### Miscellaneous Tasks
 
