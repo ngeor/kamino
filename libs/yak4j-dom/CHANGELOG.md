@@ -1,14 +1,66 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## Unreleased
+
+### Features
+
+* Adding root pom (#11)
+* Resolve properties in custom effective pom resolver
+
+### Fixes
+
+* Upgrading libraries to Java 17
 
 ### Miscellaneous Tasks
 
-- Update release script
-- Updated copyright year in LICENSE
-- Updating parent from 2.1.0 to 2.4.0
-- Updating parent from 2.4.0 to 3.1.1
+* fix badge URLs
+* Add groupId in all pom files
+* Keeping only root .editorconfig, deleting the rest
+* Keeping only root .gitignore, deleting the rest
+* Upgrade to latest parent pom
+* Upgraded to latest parent pom
+* Use `com.github.ngeor:java` as the parent pom everywhere
+
+### refactor
+
+* Add Box class
+
+## [1.9.7] - 2024-01-27
+
+### Fixes
+
+* Fix URLs in pom.xml, added description
+
+### Miscellaneous Tasks
+
+* Deleted old release scripts
+
+## [1.9.6] - 2024-01-26
+
+### Miscellaneous Tasks
+
+* Update URL for Maven Central badge
+
+## [1.9.5] - 2024-01-26
+
+
+## [1.9.4] - 2024-01-26
+
+
+## [1.9.3] - 2024-01-26
+
+
+## [1.9.2] - 2024-01-26
+
+### Miscellaneous Tasks
+
+* Add 'libs/yak4j-dom/' from commit '835c3837644c8bcdb063d411b995c331ac9ebae2'
+* Adding workflows for libs/yak4j-dom
+* Update release script
+* Updated copyright year in LICENSE
+* Updating parent from 2.1.0 to 2.4.0
+* Updating parent from 2.4.0 to 3.1.1
 
 ## [1.9.1] - 2022-01-26
 
