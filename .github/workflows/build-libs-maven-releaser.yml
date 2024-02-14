@@ -1,31 +1,23 @@
-name: Build changes
+name: Build maven-releaser
 
 on:
   push:
     branches: [ master ]
     paths:
-      - internal-tooling/changes/**
-      - .github/workflows/build-internal-tooling-changes.yml
-      - pom.xml
       - libs/maven-releaser/**
-      - libs/yak4j-argparse/**
+      - .github/workflows/build-libs-maven-releaser.yml
+      - pom.xml
       - libs/yak4j-dom/**
-      - libs/yak4j-git/**
-      - libs/yak4j-markdown/**
       - libs/yak4j-maven/**
       - libs/yak4j-process/**
       - libs/yak4j-semver/**
   pull_request:
     branches: [ master ]
     paths:
-      - internal-tooling/changes/**
-      - .github/workflows/build-internal-tooling-changes.yml
-      - pom.xml
       - libs/maven-releaser/**
-      - libs/yak4j-argparse/**
+      - .github/workflows/build-libs-maven-releaser.yml
+      - pom.xml
       - libs/yak4j-dom/**
-      - libs/yak4j-git/**
-      - libs/yak4j-markdown/**
       - libs/yak4j-maven/**
       - libs/yak4j-process/**
       - libs/yak4j-semver/**
@@ -37,11 +29,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up JDK 21
+    - name: Set up JDK 17
       uses: actions/setup-java@v2
       with:
-        java-version: '21'
+        java-version: '17'
         distribution: 'zulu'
         cache: maven
     - name: Build with Maven
-      run: mvn -B -ntp -pl internal-tooling/changes -am clean verify
+      run: mvn -B -ntp -pl libs/maven-releaser -am clean verify

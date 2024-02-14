@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -36,6 +37,8 @@ public final class App {
         parser.addPositionalArgument("path", true);
         parser.addPositionalArgument("version", false);
         parser.addFlagArgument("git-version");
+        parser.addFlagArgument("release");
+        parser.addFlagArgument("dry-run");
         Map<String, Object> parsedArgs = parser.parse(args);
         // e.g. libs/java
         // ensure path does not end in slashes and is not blank
@@ -45,12 +48,14 @@ public final class App {
         App app = new App(path);
         if (parsedArgs.containsKey("git-version")) {
             app.calculateGitVersion();
+        } else if (parsedArgs.containsKey("release")) {
+            app.release(parsedArgs.containsKey("dry-run"));
         } else {
             app.updateChangeLog(version);
         }
     }
 
-    void updateChangeLog(String version) throws IOException, InterruptedException {
+    private void updateChangeLog(String version) throws IOException, InterruptedException {
         String sinceCommit = version != null ? tagPrefix + version + "..HEAD" : null;
 
         FormattedRelease formattedRelease = format(
@@ -70,14 +75,14 @@ public final class App {
         MarkdownWriter.write(markdown, changeLog);
     }
 
-    private void calculateGitVersion() throws IOException, InterruptedException {
-        SemVer tag = SemVer.parse(git.getMostRecentTag(tagPrefix));
-        String sinceCommit = tagPrefix + tag + "..HEAD";
+    private SemVer calculateGitVersion() throws IOException, InterruptedException {
+        SemVer mostRecentVersion = SemVer.parse(git.getMostRecentTag(tagPrefix));
+        String sinceCommit = tagPrefix + mostRecentVersion + "..HEAD";
 
         List<Commit> commits = git.revList(sinceCommit, path).toList();
         if (commits.isEmpty()) {
-            System.out.printf("No commits to %s since %s%n", path, tag);
-            return;
+            System.out.printf("No commits to %s since %s%n", path, mostRecentVersion);
+            return null;
         }
 
         SemVerBump bump = commits.stream()
@@ -87,8 +92,14 @@ public final class App {
                 .max(Enum::compareTo)
                 .orElse(SemVerBump.MINOR);
 
-        SemVer nextTag = tag.bump(bump);
-        System.out.printf("The next version of %s should be %s (%s)%n", path, nextTag, bump);
+        SemVer nextVersion = mostRecentVersion.bump(bump);
+        System.out.printf("The next version of %s should be %s (%s)%n", path, nextVersion, bump);
+        return nextVersion;
+    }
+
+    private void release(boolean dryRun) throws IOException, InterruptedException {
+        SemVer nextVersion = Objects.requireNonNull(calculateGitVersion());
+        MavenReleaser.prepareRelease(rootDirectory, path, nextVersion, dryRun);
     }
 
     private static String sanitize(String path) {

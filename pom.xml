@@ -23,6 +23,7 @@
     <module>internal-tooling/sifo</module>
     <module>libs/checkstyle-rules</module>
     <module>libs/java</module>
+    <module>libs/maven-releaser</module>
     <module>libs/yak4j-argparse</module>
     <module>libs/yak4j-dom</module>
     <module>libs/yak4j-git</module>
