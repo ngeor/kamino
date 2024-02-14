@@ -37,7 +37,9 @@ public class ArgumentParser {
                 if (argName.isBlank()) {
                     throw new IllegalArgumentException("Unsupported -- argument");
                 }
-                ArgSpec argSpec = extract(candidates, a -> a.kind() != SpecKind.POSITIONAL && argName.equalsIgnoreCase(a.name())).orElseThrow(() -> new IllegalArgumentException("Unexpected argument " + arg));
+                ArgSpec argSpec = extract(
+                                candidates, a -> a.kind() != SpecKind.POSITIONAL && argName.equalsIgnoreCase(a.name()))
+                        .orElseThrow(() -> new IllegalArgumentException("Unexpected argument " + arg));
 
                 if (argSpec.kind() == SpecKind.FLAG) {
                     result.put(argSpec.name(), Boolean.TRUE);
@@ -52,14 +54,21 @@ public class ArgumentParser {
                     }
                 }
             } else {
-                ArgSpec argSpec = extract(candidates, a -> a.kind() == SpecKind.POSITIONAL).orElseThrow(() -> new IllegalArgumentException("Unexpected argument " + arg));
+                ArgSpec argSpec = extract(candidates, a -> a.kind() == SpecKind.POSITIONAL)
+                        .orElseThrow(() -> new IllegalArgumentException("Unexpected argument " + arg));
                 result.put(argSpec.name(), arg);
             }
 
             i++;
         }
 
-        candidates.stream().filter(ArgSpec::required).map(ArgSpec::name).map(s -> String.format("%s is required", s)).forEach(s -> { throw new IllegalArgumentException(s); });
+        candidates.stream()
+                .filter(ArgSpec::required)
+                .map(ArgSpec::name)
+                .map(s -> String.format("%s is required", s))
+                .forEach(s -> {
+                    throw new IllegalArgumentException(s);
+                });
 
         return result;
     }
@@ -72,6 +81,4 @@ public class ArgumentParser {
         }
         return Optional.empty();
     }
-
-
 }

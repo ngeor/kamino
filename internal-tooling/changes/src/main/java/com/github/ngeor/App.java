@@ -64,7 +64,8 @@ public final class App {
 
         File changeLog =
                 rootDirectory.toPath().resolve(path).resolve("CHANGELOG.md").toFile();
-        Markdown markdown = changeLog.isFile() ? MarkdownReader.read(changeLog) : new Markdown("# Changelog", List.of());
+        Markdown markdown =
+                changeLog.isFile() ? MarkdownReader.read(changeLog) : new Markdown("# Changelog", List.of());
         markdown = merge(markdown, formattedRelease);
         MarkdownWriter.write(markdown, changeLog);
     }
@@ -80,11 +81,11 @@ public final class App {
         }
 
         SemVerBump bump = commits.stream()
-            .filter(this::isRelevantToChangelog)
-            .map(Commit::summary)
-            .map(this::calculateBump)
-            .max(Enum::compareTo)
-            .orElse(SemVerBump.MINOR);
+                .filter(this::isRelevantToChangelog)
+                .map(Commit::summary)
+                .map(this::calculateBump)
+                .max(Enum::compareTo)
+                .orElse(SemVerBump.MINOR);
 
         SemVer nextTag = tag.bump(bump);
         System.out.printf("The next version of %s should be %s (%s)%n", path, nextTag, bump);
