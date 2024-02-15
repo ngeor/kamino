@@ -67,6 +67,20 @@ public final class TemplateGenerator {
         String extraPaths;
         List<MavenModule> internalDependencies = new ArrayList<>();
         modules.visitDependenciesRecursively(module, internalDependencies::add);
+
+        // register also any internal snapshot parent poms as dependencies for this purpose
+        for (ParentPom p : module.parentPoms()) {
+            if (p.relativePath() != null && p.coordinates().version().endsWith("SNAPSHOT")) {
+                modules.getModules().stream().filter(m -> {
+                    try {
+                        return m.coordinates().equals(p.coordinates());
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }).forEach(internalDependencies::add);
+            }
+        }
+
         if (internalDependencies.isEmpty()) {
             buildCommand = "mvn -B -ntp clean verify --file " + module.path() + "/"
                     + module.pomFile().getName();

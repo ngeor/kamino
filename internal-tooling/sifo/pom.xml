@@ -3,8 +3,9 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.github.ngeor</groupId>
-    <artifactId>java</artifactId>
-    <version>4.7.1</version>
+    <artifactId>cli-parent-pom</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>../../libs/cli-parent-pom</relativePath>
   </parent>
   <groupId>com.github.ngeor</groupId>
   <artifactId>sifo</artifactId>
@@ -78,35 +79,6 @@
     </plugins>
   </build>
   <profiles>
-    <profile>
-      <id>shade</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-shade-plugin</artifactId>
-            <version>${maven-shade-plugin.version}</version>
-            <configuration>
-              <transformers>
-                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <manifestEntries>
-                    <Main-Class>${mainClass}</Main-Class>
-                  </manifestEntries>
-                </transformer>
-              </transformers>
-            </configuration>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>shade</goal>
-                </goals>
-                <phase>package</phase>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
     <profile>
       <id>native</id>
       <build>
