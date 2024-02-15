@@ -23,7 +23,6 @@
     <commons-io.version>2.15.1</commons-io.version>
     <java.version>21</java.version>
     <mainClass>com.github.ngeor.App</mainClass>
-    <maven-shade-plugin.version>3.5.1</maven-shade-plugin.version>
   </properties>
   <dependencies>
     <dependency>
@@ -67,18 +66,6 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>com.diffplug.spotless</groupId>
-        <artifactId>spotless-maven-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </build>
   <profiles>
     <profile>
       <id>native</id>
@@ -87,31 +74,12 @@
           <plugin>
             <groupId>org.graalvm.buildtools</groupId>
             <artifactId>native-maven-plugin</artifactId>
-            <version>0.10.0</version>
-            <extensions>true</extensions>
             <configuration>
-              <mainClass>${mainClass}</mainClass>
               <buildArgs>
                 <buildArg>-H:Log=registerResource:3</buildArg>
                 <buildArg>-H:IncludeResources=".+ml$"</buildArg>
               </buildArgs>
             </configuration>
-            <executions>
-              <execution>
-                <id>build-native</id>
-                <goals>
-                  <goal>compile-no-fork</goal>
-                </goals>
-                <phase>package</phase>
-              </execution>
-              <execution>
-                <id>test-native</id>
-                <goals>
-                  <goal>test</goal>
-                </goals>
-                <phase>test</phase>
-              </execution>
-            </executions>
           </plugin>
         </plugins>
       </build>
