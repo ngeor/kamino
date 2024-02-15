@@ -3,8 +3,9 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.github.ngeor</groupId>
-    <artifactId>java</artifactId>
-    <version>4.7.1</version>
+    <artifactId>cli-parent-pom</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>../../libs/cli-parent-pom</relativePath>
   </parent>
   <groupId>com.github.ngeor</groupId>
   <artifactId>changes</artifactId>

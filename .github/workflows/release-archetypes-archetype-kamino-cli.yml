@@ -16,7 +16,7 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build arturito release tooling
-      run: mvn -B -ntp --file internal-tooling/arturito/pom.xml package
+      run: mvn -Pshade -B -ntp --file internal-tooling/arturito/pom.xml package
     - name: Run arturito release tooling
       run: >-
         cd archetypes/archetype-kamino-cli && java -jar ../../internal-tooling/arturito/target/arturito-1.0-SNAPSHOT.jar

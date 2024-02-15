@@ -3,8 +3,9 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.github.ngeor</groupId>
-    <artifactId>java</artifactId>
-    <version>4.7.1</version>
+    <artifactId>cli-parent-pom</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>../../libs/cli-parent-pom</relativePath>
   </parent>
   <groupId>com.github.ngeor</groupId>
   <artifactId>arturito</artifactId>
@@ -19,7 +20,8 @@
   </scm>
   <properties>
     <commons-io.version>2.15.1</commons-io.version>
-    <maven-shade-plugin.version>3.5.1</maven-shade-plugin.version>
+    <java.version>1.8</java.version>
+    <mainClass>com.github.ngeor.App</mainClass>
   </properties>
   <dependencies>
     <dependency>
@@ -47,28 +49,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-shade-plugin</artifactId>
-        <version>${maven-shade-plugin.version}</version>
-        <configuration>
-          <transformers>
-            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-              <manifestEntries>
-                <Main-Class>com.github.ngeor.App</Main-Class>
-              </manifestEntries>
-            </transformer>
-          </transformers>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-            <phase>package</phase>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
