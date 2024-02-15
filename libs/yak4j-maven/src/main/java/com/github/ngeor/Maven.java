@@ -3,7 +3,9 @@ package com.github.ngeor;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -57,8 +59,8 @@ public final class Maven {
         }
     }
 
-    public DocumentWrapper effectivePom() {
-        final DocumentWrapper document = effectivePomNgResolveParent();
+    public DocumentWrapper effectivePom(List<ParentPom> parentPoms) {
+        final DocumentWrapper document = effectivePomNgResolveParent(parentPoms);
 
         // resolve properties
         ElementWrapper properties =
@@ -79,7 +81,7 @@ public final class Maven {
         return document;
     }
 
-    private DocumentWrapper effectivePomNgResolveParent() {
+    private DocumentWrapper effectivePomNgResolveParent(List<ParentPom> parentPoms) {
         final DocumentWrapper document = DocumentWrapper.parse(pomFile);
 
         // any parent pom?
@@ -89,7 +91,10 @@ public final class Maven {
             String groupId = parent.firstElementText("groupId");
             String artifactId = parent.firstElementText("artifactId");
             String version = parent.firstElementText("version");
-            File parentPomFile = new File(System.getProperty("user.home"))
+            String relativePath = parent.firstElementText("relativePath");
+            final File parentPomFile;
+            if (relativePath == null) {
+                parentPomFile = new File(System.getProperty("user.home"))
                     .toPath()
                     .resolve(".m2")
                     .resolve("repository")
@@ -99,12 +104,24 @@ public final class Maven {
                     .resolve(artifactId + "-" + version + ".pom")
                     .toFile();
 
-            if (!parentPomFile.isFile()) {
-                throw new UnsupportedOperationException("Installing missing Maven pom not supported: " + parentPomFile);
+                if (!parentPomFile.isFile()) {
+                    throw new UnsupportedOperationException("Installing missing Maven pom not supported: " + parentPomFile);
+                }
+            } else {
+                parentPomFile = pomFile.toPath().getParent().resolve(relativePath).resolve("pom.xml").toFile();
+                if (!parentPomFile.isFile()) {
+                    throw new UncheckedIOException(new FileNotFoundException("Parent pom not found at " + relativePath));
+                }
             }
 
+            ParentPom parentPom = new ParentPom(
+                new MavenCoordinates(groupId, artifactId, version),
+                relativePath
+            );
+            parentPoms.add(parentPom);
+
             Maven parentMaven = new Maven(parentPomFile);
-            DocumentWrapper parentResolved = parentMaven.effectivePomNgResolveParent();
+            DocumentWrapper parentResolved = parentMaven.effectivePomNgResolveParent(parentPoms);
 
             merge(parentResolved, document);
         }

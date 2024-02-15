@@ -6,6 +6,7 @@ import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.function.Consumer;
 import org.junit.jupiter.api.Test;
 
@@ -96,6 +97,6 @@ class EffectivePomTest {
 
     private void verifyEffectivePom(Consumer<ElementWrapper> assertions) throws IOException, InterruptedException {
         assertions.accept(maven.effectivePomViaMaven().getDocumentElement());
-        assertions.accept(maven.effectivePom().getDocumentElement());
+        assertions.accept(maven.effectivePom(new ArrayList<>()).getDocumentElement());
     }
 }
