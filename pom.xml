@@ -40,5 +40,6 @@
     <module>plugins/yak4j-sync-archetype-maven-plugin</module>
     <module>web/BuzzStats</module>
     <module>web/icqfriends</module>
+      <module>libs/cli-parent-pom</module>
   </modules>
 </project>
