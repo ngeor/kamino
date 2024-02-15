@@ -92,6 +92,28 @@ public final class TemplateGenerator {
                     .sorted()
                     .collect(Collectors.joining());
         }
+        Map<String, String> buildVariables = createTemplateVariables(module, javaVersion, buildCommand, extraPaths);
+
+        String workflowId = module.path().replace('/', '-');
+        Files.writeString(
+                root.toPath().resolve(".github").resolve("workflows").resolve("build-" + workflowId + ".yml"),
+                buildTemplate.render(buildVariables));
+
+        if (requiresReleaseWorkflow(module.typeDirectory().getName())) {
+            // needs to align with "arturito" release tooling
+            final String releaseWorkflowJavaVersion = "17";
+            Map<String, String> releaseVariables = createTemplateVariables(module, releaseWorkflowJavaVersion, buildCommand, extraPaths);
+            Files.writeString(
+                    root.toPath().resolve(".github").resolve("workflows").resolve("release-" + workflowId + ".yml"),
+                    releaseTemplate.render(releaseVariables));
+        }
+
+        fixProjectUrls(module);
+
+        new ReadmeGenerator().fixProjectBadges(module.projectDirectory(), GROUP_ID, workflowId);
+    }
+
+    private static Map<String, String> createTemplateVariables(MavenModule module, String javaVersion, String buildCommand, String extraPaths) {
         Map<String, String> variables = Map.of(
                 "name",
                 module.projectDirectory().getName(),
@@ -100,26 +122,12 @@ public final class TemplateGenerator {
                 "path",
                 module.path(),
                 "javaVersion",
-                javaVersion,
+            javaVersion,
                 "buildCommand",
-                buildCommand,
+            buildCommand,
                 "extraPaths",
-                extraPaths);
-
-        String workflowId = module.path().replace('/', '-');
-        Files.writeString(
-                root.toPath().resolve(".github").resolve("workflows").resolve("build-" + workflowId + ".yml"),
-                buildTemplate.render(variables));
-
-        if (requiresReleaseWorkflow(module.typeDirectory().getName())) {
-            Files.writeString(
-                    root.toPath().resolve(".github").resolve("workflows").resolve("release-" + workflowId + ".yml"),
-                    releaseTemplate.render(variables));
-        }
-
-        fixProjectUrls(module);
-
-        new ReadmeGenerator().fixProjectBadges(module.projectDirectory(), GROUP_ID, workflowId);
+            extraPaths);
+        return variables;
     }
 
     public static boolean requiresReleaseWorkflow(String typeName) {

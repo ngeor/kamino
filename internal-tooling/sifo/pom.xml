@@ -10,6 +10,7 @@
   <groupId>com.github.ngeor</groupId>
   <artifactId>sifo</artifactId>
   <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
   <description>Template manager, named after Sifo Dyas</description>
   <url>https://github.com/ngeor/kamino/tree/master/internal-tooling/sifo</url>
   <scm>

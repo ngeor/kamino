@@ -10,6 +10,7 @@
   <groupId>com.github.ngeor</groupId>
   <artifactId>arturito</artifactId>
   <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
   <description>Release tooling for the kamino monorepo</description>
   <url>https://github.com/ngeor/kamino/tree/master/internal-tooling/arturito</url>
   <scm>
@@ -20,7 +21,6 @@
   </scm>
   <properties>
     <commons-io.version>2.15.1</commons-io.version>
-    <java.version>1.8</java.version>
     <mainClass>com.github.ngeor.App</mainClass>
   </properties>
   <dependencies>

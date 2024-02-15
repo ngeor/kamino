@@ -10,6 +10,7 @@
   <groupId>com.github.ngeor</groupId>
   <artifactId>changes</artifactId>
   <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
   <url>https://github.com/ngeor/kamino/tree/master/internal-tooling/changes</url>
   <scm>
     <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
