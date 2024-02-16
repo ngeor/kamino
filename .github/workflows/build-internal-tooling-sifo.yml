@@ -8,6 +8,7 @@ on:
       - .github/workflows/build-internal-tooling-sifo.yml
       - pom.xml
       - libs/cli-parent-pom/**
+      - libs/java/**
       - libs/maven-releaser/**
       - libs/yak4j-dom/**
       - libs/yak4j-git/**
@@ -21,6 +22,7 @@ on:
       - .github/workflows/build-internal-tooling-sifo.yml
       - pom.xml
       - libs/cli-parent-pom/**
+      - libs/java/**
       - libs/maven-releaser/**
       - libs/yak4j-dom/**
       - libs/yak4j-git/**

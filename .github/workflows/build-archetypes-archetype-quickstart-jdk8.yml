@@ -7,12 +7,14 @@ on:
       - archetypes/archetype-quickstart-jdk8/**
       - .github/workflows/build-archetypes-archetype-quickstart-jdk8.yml
       - pom.xml
+      - libs/java/**
   pull_request:
     branches: [ master ]
     paths:
       - archetypes/archetype-quickstart-jdk8/**
       - .github/workflows/build-archetypes-archetype-quickstart-jdk8.yml
       - pom.xml
+      - libs/java/**
 
 jobs:
   build:
@@ -28,4 +30,4 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build with Maven
-      run: mvn -B -ntp clean verify --file archetypes/archetype-quickstart-jdk8/pom.xml
+      run: mvn -B -ntp -pl archetypes/archetype-quickstart-jdk8 -am clean verify

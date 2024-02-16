@@ -7,12 +7,14 @@ on:
       - gui/jSpiderGame/**
       - .github/workflows/build-gui-jSpiderGame.yml
       - pom.xml
+      - libs/java/**
   pull_request:
     branches: [ master ]
     paths:
       - gui/jSpiderGame/**
       - .github/workflows/build-gui-jSpiderGame.yml
       - pom.xml
+      - libs/java/**
 
 jobs:
   build:
@@ -28,4 +30,4 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build with Maven
-      run: mvn -B -ntp clean verify --file gui/jSpiderGame/pom.xml
+      run: mvn -B -ntp -pl gui/jSpiderGame -am clean verify

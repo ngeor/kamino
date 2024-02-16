@@ -7,12 +7,14 @@ on:
       - cli/zfs-snapshot-trimmer/**
       - .github/workflows/build-cli-zfs-snapshot-trimmer.yml
       - pom.xml
+      - libs/java/**
   pull_request:
     branches: [ master ]
     paths:
       - cli/zfs-snapshot-trimmer/**
       - .github/workflows/build-cli-zfs-snapshot-trimmer.yml
       - pom.xml
+      - libs/java/**
 
 jobs:
   build:
@@ -28,4 +30,4 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build with Maven
-      run: mvn -B -ntp clean verify --file cli/zfs-snapshot-trimmer/pom.xml
+      run: mvn -B -ntp -pl cli/zfs-snapshot-trimmer -am clean verify

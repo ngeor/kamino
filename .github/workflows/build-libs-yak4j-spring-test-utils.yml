@@ -7,12 +7,14 @@ on:
       - libs/yak4j-spring-test-utils/**
       - .github/workflows/build-libs-yak4j-spring-test-utils.yml
       - pom.xml
+      - libs/java/**
   pull_request:
     branches: [ master ]
     paths:
       - libs/yak4j-spring-test-utils/**
       - .github/workflows/build-libs-yak4j-spring-test-utils.yml
       - pom.xml
+      - libs/java/**
 
 jobs:
   build:
@@ -28,4 +30,4 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build with Maven
-      run: mvn -B -ntp clean verify --file libs/yak4j-spring-test-utils/pom.xml
+      run: mvn -B -ntp -pl libs/yak4j-spring-test-utils -am clean verify

@@ -7,12 +7,14 @@ on:
       - cli/duke-basic/**
       - .github/workflows/build-cli-duke-basic.yml
       - pom.xml
+      - libs/java/**
   pull_request:
     branches: [ master ]
     paths:
       - cli/duke-basic/**
       - .github/workflows/build-cli-duke-basic.yml
       - pom.xml
+      - libs/java/**
 
 jobs:
   build:
@@ -28,4 +30,4 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build with Maven
-      run: mvn -B -ntp clean verify --file cli/duke-basic/pom.xml
+      run: mvn -B -ntp -pl cli/duke-basic -am clean verify

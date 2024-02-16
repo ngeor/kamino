@@ -7,12 +7,14 @@ on:
       - libs/cli-parent-pom/**
       - .github/workflows/build-libs-cli-parent-pom.yml
       - pom.xml
+      - libs/java/**
   pull_request:
     branches: [ master ]
     paths:
       - libs/cli-parent-pom/**
       - .github/workflows/build-libs-cli-parent-pom.yml
       - pom.xml
+      - libs/java/**
 
 jobs:
   build:
@@ -28,4 +30,4 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build with Maven
-      run: mvn -B -ntp clean verify --file libs/cli-parent-pom/pom.xml
+      run: mvn -B -ntp -pl libs/cli-parent-pom -am clean verify

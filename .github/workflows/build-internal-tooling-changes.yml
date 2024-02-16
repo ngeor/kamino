@@ -8,6 +8,7 @@ on:
       - .github/workflows/build-internal-tooling-changes.yml
       - pom.xml
       - libs/cli-parent-pom/**
+      - libs/java/**
       - libs/maven-releaser/**
       - libs/yak4j-argparse/**
       - libs/yak4j-dom/**
@@ -23,6 +24,7 @@ on:
       - .github/workflows/build-internal-tooling-changes.yml
       - pom.xml
       - libs/cli-parent-pom/**
+      - libs/java/**
       - libs/maven-releaser/**
       - libs/yak4j-argparse/**
       - libs/yak4j-dom/**

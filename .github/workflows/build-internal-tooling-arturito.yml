@@ -8,6 +8,7 @@ on:
       - .github/workflows/build-internal-tooling-arturito.yml
       - pom.xml
       - libs/cli-parent-pom/**
+      - libs/java/**
   pull_request:
     branches: [ master ]
     paths:
@@ -15,6 +16,7 @@ on:
       - .github/workflows/build-internal-tooling-arturito.yml
       - pom.xml
       - libs/cli-parent-pom/**
+      - libs/java/**
 
 jobs:
   build:

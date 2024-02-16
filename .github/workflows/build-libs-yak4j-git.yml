@@ -7,6 +7,7 @@ on:
       - libs/yak4j-git/**
       - .github/workflows/build-libs-yak4j-git.yml
       - pom.xml
+      - libs/java/**
       - libs/yak4j-process/**
   pull_request:
     branches: [ master ]
@@ -14,6 +15,7 @@ on:
       - libs/yak4j-git/**
       - .github/workflows/build-libs-yak4j-git.yml
       - pom.xml
+      - libs/java/**
       - libs/yak4j-process/**
 
 jobs:

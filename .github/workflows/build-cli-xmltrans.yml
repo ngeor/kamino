@@ -7,12 +7,14 @@ on:
       - cli/xmltrans/**
       - .github/workflows/build-cli-xmltrans.yml
       - pom.xml
+      - libs/java/**
   pull_request:
     branches: [ master ]
     paths:
       - cli/xmltrans/**
       - .github/workflows/build-cli-xmltrans.yml
       - pom.xml
+      - libs/java/**
 
 jobs:
   build:
@@ -28,4 +30,4 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build with Maven
-      run: mvn -B -ntp clean verify --file cli/xmltrans/pom.xml
+      run: mvn -B -ntp -pl cli/xmltrans -am clean verify
