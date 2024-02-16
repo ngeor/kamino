@@ -40,3 +40,7 @@ mvn release:clean
 ```
 
 Normally, apps aren't released to Nexus.
+
+## Tips
+
+- Upgrade the parent pom of all modules with `mvn versions:update-parent -DallowSnapshots`
