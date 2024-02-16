@@ -31,7 +31,7 @@
     <!--
     dependencies
     -->
-    <spring.version>5.3.23</spring.version>
+    <spring.version>5.3.32</spring.version>
   </properties>
   <dependencies>
     <dependency>
@@ -107,7 +107,6 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.11</version>
         <executions>
           <execution>
             <id>pre-unit-test</id>
