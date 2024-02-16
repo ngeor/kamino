@@ -25,10 +25,11 @@ import static org.mockito.Mockito.when;
 class ResultActionsAssertTest {
 
     private static ResultActions withStatus(HttpStatus httpStatus) throws Exception {
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        response.setStatus(httpStatus.value());
+
         MvcResult mvcResult = mock(MvcResult.class);
-        MockHttpServletResponse response = mock(MockHttpServletResponse.class);
         when(mvcResult.getResponse()).thenReturn(response);
-        when(response.getStatus()).thenReturn(httpStatus.value());
 
         return getResultActions(mvcResult);
     }
