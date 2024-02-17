@@ -32,9 +32,9 @@ public final class App {
         this.git = new Git(rootDirectory);
     }
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws IOException, InterruptedException, ProcessFailedException {
         ArgumentParser parser = new ArgumentParser();
-        parser.addPositionalArgument("path", true);
+        parser.addPositionalArgument("path", false);
         parser.addPositionalArgument("version", false);
         parser.addFlagArgument("git-version");
         parser.addFlagArgument("release");
@@ -45,22 +45,26 @@ public final class App {
         String path = sanitize((String) parsedArgs.get("path"));
         // e.g. 4.2.1
         String version = (String) parsedArgs.get("version");
-        App app = new App(path);
-        if (parsedArgs.containsKey("git-version")) {
-            app.calculateGitVersion();
-        } else if (parsedArgs.containsKey("release")) {
-            app.release(parsedArgs.containsKey("dry-run"));
+        if (path != null) {
+            App app = new App(path);
+            if (parsedArgs.containsKey("git-version")) {
+                app.calculateGitVersion();
+            } else if (parsedArgs.containsKey("release")) {
+                app.release(parsedArgs.containsKey("dry-run"));
+            } else {
+                app.updateChangeLog(version);
+            }
         } else {
-            app.updateChangeLog(version);
+            new ChangesOverviewCommand().run();
         }
     }
 
-    private void updateChangeLog(String version) throws IOException, InterruptedException {
-        String sinceCommit = version != null ? tagPrefix + version + "..HEAD" : null;
+    private void updateChangeLog(String version) throws IOException, InterruptedException, ProcessFailedException {
+        String sinceCommit = version != null ? tagPrefix + version : null;
 
         FormattedRelease formattedRelease = format(
                 Release.create(git.revList(sinceCommit, path))
-                        .filter(this::isRelevantToChangelog)
+                        .filter(new CommitFilter())
                         .makeSubGroups(new Release.SubGroupOptions("chore", List.of("feat", "fix"))),
                 new FormatOptions(
                         tagPrefix,
@@ -75,9 +79,9 @@ public final class App {
         MarkdownWriter.write(markdown, changeLog);
     }
 
-    private SemVer calculateGitVersion() throws IOException, InterruptedException {
-        SemVer mostRecentVersion = SemVer.parse(git.getMostRecentTag(tagPrefix));
-        String sinceCommit = tagPrefix + mostRecentVersion + "..HEAD";
+    private SemVer calculateGitVersion() throws IOException, InterruptedException, ProcessFailedException {
+        SemVer mostRecentVersion = SemVer.parse(git.getMostRecentTag(tagPrefix).orElseThrow());
+        String sinceCommit = tagPrefix + mostRecentVersion;
 
         List<Commit> commits = git.revList(sinceCommit, path).toList();
         if (commits.isEmpty()) {
@@ -86,7 +90,7 @@ public final class App {
         }
 
         SemVerBump bump = commits.stream()
-                .filter(this::isRelevantToChangelog)
+                .filter(new CommitFilter())
                 .map(Commit::summary)
                 .map(this::calculateBump)
                 .max(Enum::compareTo)
@@ -97,14 +101,14 @@ public final class App {
         return nextVersion;
     }
 
-    private void release(boolean dryRun) throws IOException, InterruptedException {
+    private void release(boolean dryRun) throws IOException, InterruptedException, ProcessFailedException {
         SemVer nextVersion = Objects.requireNonNull(calculateGitVersion());
         MavenReleaser.prepareRelease(rootDirectory, path, nextVersion, dryRun);
     }
 
-    private static String sanitize(String path) {
+    static String sanitize(String path) {
         if (path == null) {
-            throw new IllegalArgumentException("path is mandatory");
+            return null;
         }
 
         // ensure path does not end in slash
@@ -112,11 +116,7 @@ public final class App {
             path = path.substring(0, path.length() - 1);
         }
 
-        if (path.isBlank()) {
-            throw new IllegalArgumentException("path is mandatory");
-        }
-
-        return path;
+        return path.isBlank() ? null : path;
     }
 
     SemVerBump calculateBump(String message) {
@@ -129,11 +129,6 @@ public final class App {
         }
 
         return SemVerBump.MINOR;
-    }
-
-    boolean isRelevantToChangelog(Commit commit) {
-        List<String> needles = List.of("maven-release-plugin", "changelog");
-        return needles.stream().noneMatch(needle -> commit.summary().contains(needle));
     }
 
     static FormattedRelease format(Release release, FormatOptions options) {

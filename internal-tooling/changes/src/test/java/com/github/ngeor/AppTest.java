@@ -2,8 +2,6 @@ package com.github.ngeor;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -50,5 +48,13 @@ class AppTest {
                                 List.of(
                                         new FormattedRelease.SubGroup("Miscellaneous Tasks", List.of("Initial commit")),
                                         new FormattedRelease.SubGroup("Release", List.of("New version")))));
+    }
+
+    @Test
+    void testSanitizePath() {
+        assertThat(App.sanitize(null)).isNull();
+        assertThat(App.sanitize("")).isNull();
+        assertThat(App.sanitize("libs/hello")).isEqualTo("libs/hello");
+        assertThat(App.sanitize("libs/foo/")).isEqualTo("libs/foo");
     }
 }
