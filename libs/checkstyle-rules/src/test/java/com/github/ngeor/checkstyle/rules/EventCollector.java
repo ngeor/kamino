@@ -2,7 +2,6 @@ package com.github.ngeor.checkstyle.rules;
 
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import com.puppycrawl.tools.checkstyle.api.AuditListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,19 +17,13 @@ class EventCollector implements AuditListener {
     }
 
     @Override
-    public void auditFinished(AuditEvent event) {
-
-    }
+    public void auditFinished(AuditEvent event) {}
 
     @Override
-    public void fileStarted(AuditEvent event) {
-
-    }
+    public void fileStarted(AuditEvent event) {}
 
     @Override
-    public void fileFinished(AuditEvent event) {
-
-    }
+    public void fileFinished(AuditEvent event) {}
 
     @Override
     public void addError(AuditEvent event) {

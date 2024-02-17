@@ -170,15 +170,11 @@ Allows magic numbers in hash code, field declarations and annotations.
 
 #### ImportOrder
 
-Approximately matches default IntelliJ behavior:
+Matches [Palantir](https://github.com/palantir/palantir-java-format) style:
 
-- All non Java imports in one group, alphabetically sorted
-- One line separator
-- All javax imports in one group, alphabetically sorted
-- One line separator
-- All java imports in one group, alphabetically sorted
-- One line separator
 - All static imports in one group, alphabetically sorted
+- One line separator
+- All non-static imports in one group, alphabetically sorted
 
 ### [Javadoc Comments](https://checkstyle.sourceforge.io/config_javadoc.html)
 

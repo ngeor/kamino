@@ -1,15 +1,14 @@
 package com.github.ngeor.checkstyle.rules;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.puppycrawl.tools.checkstyle.Checker;
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
+import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests the ImportOrder check.
@@ -36,8 +35,7 @@ class ImportOrderTest {
         Utils.process(checker, file);
         List<AuditEvent> auditEvents = eventCollector.getAuditEvents();
         auditEvents.removeIf(
-            a -> "com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck".equals(a.getSourceName())
-        );
+                a -> "com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck".equals(a.getSourceName()));
         assertThat(auditEvents).as("filtered audit events").hasSize(0);
     }
 }
