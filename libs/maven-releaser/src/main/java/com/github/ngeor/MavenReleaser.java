@@ -1,5 +1,7 @@
 package com.github.ngeor;
 
+import com.github.ngeor.yak4jdom.DocumentWrapper;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -25,5 +27,11 @@ public final class MavenReleaser {
         }
         maven.cleanRelease();
         maven.clean();
+    }
+
+    public static String updateVersion(String input, String version) {
+        DocumentWrapper document = DocumentWrapper.parseString(input);
+        document.getDocumentElement().firstElement("version").ifPresent(e -> e.setTextContent(version));
+        return document.writeToString();
     }
 }
