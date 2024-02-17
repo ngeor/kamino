@@ -38,7 +38,7 @@
   </distributionManagement>
   <properties>
     <assertj-bom.version>3.24.2</assertj-bom.version>
-    <checkstyle-rules.version>6.7.0</checkstyle-rules.version>
+    <checkstyle-rules.version>6.8.0-SNAPSHOT</checkstyle-rules.version>
     <checkstyle.version>10.12.7</checkstyle.version>
     <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
     <java.version>17</java.version>
@@ -149,7 +149,8 @@
           <artifactId>spotless-maven-plugin</artifactId>
           <version>${spotless-maven-plugin.version}</version>
           <configuration>
-            <ratchetFrom>origin/master</ratchetFrom>
+            <!-- TODO set to origin/master once spotless is configured to break the build -->
+            <ratchetFrom>NONE</ratchetFrom>
             <java>
               <palantirJavaFormat>
                 <version>${palantir.version}</version>
