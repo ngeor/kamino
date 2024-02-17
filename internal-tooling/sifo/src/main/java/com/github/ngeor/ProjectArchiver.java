@@ -26,13 +26,13 @@ public class ProjectArchiver {
         this.githubToken = githubToken;
     }
 
-    public void run() throws IOException, InterruptedException {
+    public void run() throws IOException, InterruptedException, ProcessFailedException {
         addArchivalNoticeToReadmeFile();
         deleteLocalFolder();
         archiveProjectInGitHub();
     }
 
-    private void addArchivalNoticeToReadmeFile() throws IOException, InterruptedException {
+    private void addArchivalNoticeToReadmeFile() throws IOException, InterruptedException, ProcessFailedException {
         // add archival notice if it does not exist,
         // either after the badges or before the first second level header
         File readmeFile = new File(projectDirectory, "README.md");

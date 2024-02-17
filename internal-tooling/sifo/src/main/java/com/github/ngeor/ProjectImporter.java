@@ -23,7 +23,8 @@ public class ProjectImporter {
     }
 
     public void run()
-            throws IOException, InterruptedException, ParserConfigurationException, TransformerException, SAXException {
+            throws IOException, InterruptedException, ParserConfigurationException, TransformerException, SAXException,
+                    ProcessFailedException {
         ensureGitLatest();
         importGitSubtree();
         adjustImportedCode();
@@ -31,7 +32,7 @@ public class ProjectImporter {
         archiveImportedRepo();
     }
 
-    private void ensureGitLatest() throws IOException, InterruptedException {
+    private void ensureGitLatest() throws IOException, InterruptedException, ProcessFailedException {
         System.out.println("Ensure git is on default branch and has latest");
         for (File projectDirectory : new File[] {monorepoRoot, oldRepoRoot}) {
             Git git = new Git(projectDirectory);
@@ -40,12 +41,12 @@ public class ProjectImporter {
         }
     }
 
-    private void ensureOldProjectBuilds() throws IOException, InterruptedException {
+    private void ensureOldProjectBuilds() throws IOException, InterruptedException, ProcessFailedException {
         System.out.println("Ensure project to be imported builds");
         ensureProjectBuilds(oldRepoRoot);
     }
 
-    private void ensureImportedProjectBuilds() throws IOException, InterruptedException {
+    private void ensureImportedProjectBuilds() throws IOException, InterruptedException, ProcessFailedException {
         System.out.println("Ensure imported project builds from new location");
         ensureProjectBuilds(monorepoRoot
                 .toPath()
@@ -55,14 +56,14 @@ public class ProjectImporter {
                 .toFile());
     }
 
-    private void ensureProjectBuilds(File file) throws IOException, InterruptedException {
+    private void ensureProjectBuilds(File file) throws IOException, InterruptedException, ProcessFailedException {
         Maven maven = new Maven(file);
         maven.clean();
         maven.verify();
         maven.clean();
     }
 
-    private void importGitSubtree() throws IOException, InterruptedException {
+    private void importGitSubtree() throws IOException, InterruptedException, ProcessFailedException {
         // git subtree add -P packages/foo ../source master
         if (monorepoRoot
                 .toPath()
@@ -81,7 +82,8 @@ public class ProjectImporter {
     }
 
     private void adjustImportedCode()
-            throws IOException, ParserConfigurationException, InterruptedException, TransformerException, SAXException {
+            throws IOException, ParserConfigurationException, InterruptedException, TransformerException, SAXException,
+                    ProcessFailedException {
         new TemplateGenerator(monorepoRoot)
                 .regenerateAllTemplates(new MavenModule(
                         monorepoRoot.toPath().resolve(typeName).toFile(),
@@ -105,19 +107,19 @@ public class ProjectImporter {
         }
     }
 
-    private void performPatchRelease() throws IOException, InterruptedException {
+    private void performPatchRelease() throws IOException, InterruptedException, ProcessFailedException {
         ensureImportedProjectBuilds();
 
         if (TemplateGenerator.requiresReleaseWorkflow(typeName)) {
             Git git = new Git(oldRepoRoot);
-            SemVer maxReleaseVersion = SemVer.parse(git.getMostRecentTag("v"));
+            SemVer maxReleaseVersion = SemVer.parse(git.getMostRecentTag("v").orElseThrow());
             SemVer nextVersion = maxReleaseVersion.bump(SemVerBump.PATCH);
 
             MavenReleaser.prepareRelease(monorepoRoot, typeName + "/" + oldRepoRoot.getName(), nextVersion, false);
         }
     }
 
-    private void archiveImportedRepo() throws IOException, InterruptedException {
+    private void archiveImportedRepo() throws IOException, InterruptedException, ProcessFailedException {
         new ProjectArchiver(
                         oldRepoRoot,
                         String.format(

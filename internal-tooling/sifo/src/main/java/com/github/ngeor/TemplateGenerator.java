@@ -38,7 +38,8 @@ public final class TemplateGenerator {
     }
 
     public void regenerateAllTemplates()
-            throws IOException, InterruptedException, ParserConfigurationException, SAXException, TransformerException {
+            throws IOException, InterruptedException, ParserConfigurationException, SAXException, TransformerException,
+                    ProcessFailedException {
         for (MavenModule module : getModules()) {
             regenerateAllTemplates(module);
         }
@@ -60,7 +61,8 @@ public final class TemplateGenerator {
     }
 
     public void regenerateAllTemplates(MavenModule module)
-            throws IOException, InterruptedException, ParserConfigurationException, SAXException {
+            throws IOException, InterruptedException, ParserConfigurationException, SAXException,
+                    ProcessFailedException {
         System.out.println("Regenerating templates for " + module.projectDirectory());
         String javaVersion = module.calculateJavaVersion().orElse(DEFAULT_JAVA_VERSION);
         String buildCommand;
@@ -71,13 +73,15 @@ public final class TemplateGenerator {
         // register also any internal snapshot parent poms as dependencies for this purpose
         for (ParentPom p : module.parentPoms()) {
             if (p.relativePath() != null && p.coordinates().version().endsWith("SNAPSHOT")) {
-                modules.getModules().stream().filter(m -> {
-                    try {
-                        return m.coordinates().equals(p.coordinates());
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }).forEach(internalDependencies::add);
+                modules.getModules().stream()
+                        .filter(m -> {
+                            try {
+                                return m.coordinates().equals(p.coordinates());
+                            } catch (Exception ex) {
+                                throw new RuntimeException(ex);
+                            }
+                        })
+                        .forEach(internalDependencies::add);
             }
         }
 
@@ -102,7 +106,8 @@ public final class TemplateGenerator {
         if (requiresReleaseWorkflow(module.typeDirectory().getName())) {
             // needs to align with "arturito" release tooling
             final String releaseWorkflowJavaVersion = "17";
-            Map<String, String> releaseVariables = createTemplateVariables(module, releaseWorkflowJavaVersion, buildCommand, extraPaths);
+            Map<String, String> releaseVariables =
+                    createTemplateVariables(module, releaseWorkflowJavaVersion, buildCommand, extraPaths);
             Files.writeString(
                     root.toPath().resolve(".github").resolve("workflows").resolve("release-" + workflowId + ".yml"),
                     releaseTemplate.render(releaseVariables));
@@ -113,7 +118,8 @@ public final class TemplateGenerator {
         new ReadmeGenerator().fixProjectBadges(module.projectDirectory(), GROUP_ID, workflowId);
     }
 
-    private static Map<String, String> createTemplateVariables(MavenModule module, String javaVersion, String buildCommand, String extraPaths) {
+    private static Map<String, String> createTemplateVariables(
+            MavenModule module, String javaVersion, String buildCommand, String extraPaths) {
         Map<String, String> variables = Map.of(
                 "name",
                 module.projectDirectory().getName(),
@@ -122,11 +128,11 @@ public final class TemplateGenerator {
                 "path",
                 module.path(),
                 "javaVersion",
-            javaVersion,
+                javaVersion,
                 "buildCommand",
-            buildCommand,
+                buildCommand,
                 "extraPaths",
-            extraPaths);
+                extraPaths);
         return variables;
     }
 
@@ -134,7 +140,7 @@ public final class TemplateGenerator {
         return Set.of("archetypes", "libs", "plugins").contains(typeName);
     }
 
-    private void fixProjectUrls(MavenModule module) throws IOException, InterruptedException {
+    private void fixProjectUrls(MavenModule module) throws IOException, InterruptedException, ProcessFailedException {
         boolean hadChanges = false;
         DocumentWrapper document = DocumentWrapper.parse(module.pomFile());
 
