@@ -2,14 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## [7.0.0] - 2024-02-17
 
-### Miscellaneous Tasks
+### Features
 
-* Delete old .github and scripts folders
-* Keeping only root .editorconfig, deleting the rest
-* Keeping only root .gitignore, deleting the rest
-* Use `com.github.ngeor:java` as the parent pom everywhere
+* **Breaking**: Changed import order to align with palantir
 
 ## [6.7.2] - 2024-01-28
 
