@@ -11,7 +11,7 @@ public final class LShape extends ShapeWithEmptyBlocks {
      * Creates an instance of this class.
      */
     public LShape() {
-        super(BlockType.L, new char[][]{
+        super(BlockType.L, new char[][] {
             {'L', ' '},
             {'L', ' '},
             {'L', 'L'}

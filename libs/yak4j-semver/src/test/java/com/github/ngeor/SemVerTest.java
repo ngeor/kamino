@@ -1,14 +1,13 @@
 package com.github.ngeor;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
-
-import java.util.Arrays;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SuppressWarnings("checkstyle:MagicNumber")
 class SemVerTest {
@@ -50,26 +49,13 @@ class SemVerTest {
 
     @Test
     void testParse() {
-        assertEquals(
-            new SemVer(1, 2, 3),
-            SemVer.parse("1.2.3")
-        );
-        assertEquals(
-            new SemVer(3, 2, 1, "alpha"),
-            SemVer.parse("3.2.1-alpha")
-        );
-        assertEquals(
-            new SemVer(11, 12, 31, "alpha-beta"),
-            SemVer.parse("11.12.31-alpha-beta")
-        );
+        assertEquals(new SemVer(1, 2, 3), SemVer.parse("1.2.3"));
+        assertEquals(new SemVer(3, 2, 1, "alpha"), SemVer.parse("3.2.1-alpha"));
+        assertEquals(new SemVer(11, 12, 31, "alpha-beta"), SemVer.parse("11.12.31-alpha-beta"));
     }
 
     @ParameterizedTest
-    @CsvSource({
-        "1.2.3, major, 2.0.0",
-        "0.4.5, minor, 0.5.0",
-        "1.3.4, patch, 1.3.5"
-    })
+    @CsvSource({"1.2.3, major, 2.0.0", "0.4.5, minor, 0.5.0", "1.3.4, patch, 1.3.5"})
     void testBump(String version, String bump, String expected) {
         // arrange
         SemVer original = SemVer.parse(version);

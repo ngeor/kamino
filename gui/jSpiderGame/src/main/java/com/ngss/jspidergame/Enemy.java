@@ -30,18 +30,18 @@ public class Enemy extends GameAIEntity {
     }
 
     /*
-     *  Level 1: Horizontal only
-     *  Level 2: Vertical too
-     *  Level 3 : fire
-     *  Level 4: fire vertical
-     *  Level 5: take short pause horizontal only
-     *  Level 6: take short pause vertical
+    *  Level 1: Horizontal only
+    *  Level 2: Vertical too
+    *  Level 3 : fire
+    *  Level 4: fire vertical
+    *  Level 5: take short pause horizontal only
+    *  Level 6: take short pause vertical
 
-     * Level 7: faster Horizontal only
-     * Level 8: faster vertical only
-     * Level 9: faster take short pause horizontal only
-     * Level 10: faster take short pause vertical
-     */
+    * Level 7: faster Horizontal only
+    * Level 8: faster vertical only
+    * Level 9: faster take short pause horizontal only
+    * Level 10: faster take short pause vertical
+    */
 
     private boolean canFire() {
         return getGame().getLevel() > 2;

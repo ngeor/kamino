@@ -34,4 +34,3 @@ public abstract class ShapeWithoutEmptyBlocks extends ShapeBase {
         return blockType;
     }
 }
-

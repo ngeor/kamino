@@ -6,13 +6,11 @@
 
 package com.ngss.jspidergame;
 
-import javax.sound.sampled.*;
-import javax.swing.*;
-
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
-
+import javax.sound.sampled.*;
+import javax.swing.*;
 
 /**
  * @author ngeor
@@ -114,8 +112,7 @@ public class GameComponent extends JComponent {
                 }
             }
 
-            public void levelChanged(int value) {
-            }
+            public void levelChanged(int value) {}
         });
     }
 
@@ -190,5 +187,4 @@ public class GameComponent extends JComponent {
             System.err.println(ex.getMessage());
         }
     }
-
 }

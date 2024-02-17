@@ -25,15 +25,11 @@ public class VersionResolver {
             }
 
             SemVer latest = versions.last();
-            Set<SemVer> allowed = Set.of(
-                latest.bump(SemVerBump.MAJOR),
-                latest.bump(SemVerBump.MINOR),
-                latest.bump(SemVerBump.PATCH)
-            );
+            Set<SemVer> allowed =
+                    Set.of(latest.bump(SemVerBump.MAJOR), latest.bump(SemVerBump.MINOR), latest.bump(SemVerBump.PATCH));
             if (!allowed.contains(result)) {
-                throw new IllegalArgumentException(String.format(
-                    "No sem ver gaps allowed. Allowed versions are: %s", allowed
-                ));
+                throw new IllegalArgumentException(
+                        String.format("No sem ver gaps allowed. Allowed versions are: %s", allowed));
             }
         }
 

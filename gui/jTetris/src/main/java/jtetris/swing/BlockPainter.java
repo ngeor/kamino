@@ -1,11 +1,10 @@
 package jtetris.swing;
 
+import java.awt.*;
 import jtetris.common.BlockComposite;
 import jtetris.common.BlockType;
 import jtetris.common.GameMap;
 import jtetris.common.MovingShape;
-
-import java.awt.*;
 
 /**
  * Handles rendering of blocks.
@@ -14,9 +13,7 @@ final class BlockPainter {
     private static final BlockPainter INSTANCE = new BlockPainter();
     private final ColorMapper colorMapper = new ColorMapper();
 
-    private BlockPainter() {
-
-    }
+    private BlockPainter() {}
 
     public static BlockPainter instance() {
         return INSTANCE;

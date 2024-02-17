@@ -1,9 +1,8 @@
 package jtetris.swing;
 
-import jtetris.common.BlockType;
-
 import java.awt.*;
 import java.util.EnumMap;
+import jtetris.common.BlockType;
 
 /**
  * Associates blocks with colors.

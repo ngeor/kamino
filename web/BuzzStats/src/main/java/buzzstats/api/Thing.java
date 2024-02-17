@@ -1,8 +1,7 @@
 package buzzstats.api;
 
-import org.immutables.value.Value;
-
 import java.time.LocalDateTime;
+import org.immutables.value.Value;
 
 /** Thing model. */
 @Value.Immutable

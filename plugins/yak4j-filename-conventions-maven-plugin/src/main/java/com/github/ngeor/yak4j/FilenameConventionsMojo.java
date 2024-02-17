@@ -1,5 +1,11 @@
 package com.github.ngeor.yak4j;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -8,13 +14,6 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.codehaus.plexus.util.FileUtils;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * A mojo that checks filename conventions.
@@ -42,18 +41,14 @@ public class FilenameConventionsMojo extends AbstractMojo {
 
             log.debug("Getting filenames");
             final List<String> fileNames = FileUtils.getFileNames(
-                directory,
-                String.join(",", includes),
-                excludes != null ? String.join(",", excludes) : null,
-                false
-            );
+                    directory, String.join(",", includes), excludes != null ? String.join(",", excludes) : null, false);
 
             for (String fileName : fileNames) {
                 log.debug(String.format("Testing filename %s", fileName));
                 final boolean matches = testFileName(log, compiledPatterns, fileName);
                 if (!matches) {
                     throw new MojoFailureException(
-                        String.format("Filename %s did not match any of the given patterns", fileName));
+                            String.format("Filename %s did not match any of the given patterns", fileName));
                 }
             }
 

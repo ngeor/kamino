@@ -36,8 +36,7 @@ public class Game {
     /**
      * Creates a new instance of Game.
      */
-    public Game() {
-    }
+    public Game() {}
 
     public synchronized int getLevel() {
         return level;
@@ -57,14 +56,12 @@ public class Game {
         bullets.clear();
 
         spider = new Spider(
-            this, (DIMENSION.width - Spider.DIMENSION.width) / 2, DIMENSION.height - Spider.DIMENSION.height);
+                this, (DIMENSION.width - Spider.DIMENSION.width) / 2, DIMENSION.height - Spider.DIMENSION.height);
         fireGameEventsEntityCreated(spider);
-
 
         for (int i = 0; i < 10; i++) {
             addEnemy((int) (i * Enemy.DIMENSION.width * 1.5), 0);
         }
-
     }
 
     /**
@@ -279,7 +276,7 @@ public class Game {
 
         if (enemyBullets <= 0) {
             Bullet bullet = new Bullet(
-                this, enemy.x + enemy.width / 2, enemy.y + Bullet.DIMENSION.height + 1, Bullet.STEP, true);
+                    this, enemy.x + enemy.width / 2, enemy.y + Bullet.DIMENSION.height + 1, Bullet.STEP, true);
             bullets.add(bullet);
             fireGameEventsEntityCreated(bullet);
         }

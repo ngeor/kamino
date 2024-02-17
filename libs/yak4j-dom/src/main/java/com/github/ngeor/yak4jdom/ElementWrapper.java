@@ -1,14 +1,13 @@
 package com.github.ngeor.yak4jdom;
 
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * A wrapper for a DOM Element.
@@ -39,16 +38,15 @@ public class ElementWrapper {
 
     public Stream<ElementWrapper> getChildElements() {
         return getChildNodesAsStream()
-            .filter(node -> node.getNodeType() == Node.ELEMENT_NODE && node instanceof Element)
-            .map(node -> new ElementWrapper((Element) node));
+                .filter(node -> node.getNodeType() == Node.ELEMENT_NODE && node instanceof Element)
+                .map(node -> new ElementWrapper((Element) node));
     }
 
     /**
      * Gets the child elements of the given name.
      */
     public Stream<ElementWrapper> findChildElements(String childElementName) {
-        return getChildElements()
-            .filter(element -> Objects.equals(element.getNodeName(), childElementName));
+        return getChildElements().filter(element -> Objects.equals(element.getNodeName(), childElementName));
     }
 
     public Optional<ElementWrapper> firstElement(String childElementName) {
@@ -56,7 +54,9 @@ public class ElementWrapper {
     }
 
     public String firstElementText(String childElementName) {
-        return firstElement(childElementName).map(ElementWrapper::getTextContent).orElse(null);
+        return firstElement(childElementName)
+                .map(ElementWrapper::getTextContent)
+                .orElse(null);
     }
 
     public ElementWrapper ensureChild(String childElementName) {

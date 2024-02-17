@@ -1,5 +1,9 @@
 package buzzstats;
 
+import static org.quartz.JobBuilder.newJob;
+import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
+import static org.quartz.TriggerBuilder.newTrigger;
+
 import buzzstats.jobs.CrawlerJob;
 import buzzstats.jobs.OldestCheckedStoryJob;
 import buzzstats.resources.IndexResource;
@@ -14,15 +18,10 @@ import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
+import java.util.Map;
 import org.jdbi.v3.core.Jdbi;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
-
-import java.util.Map;
-
-import static org.quartz.JobBuilder.newJob;
-import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
-import static org.quartz.TriggerBuilder.newTrigger;
 
 /** Main application. */
 public class BuzzstatsApplication extends Application<BuzzstatsConfiguration> {
@@ -61,11 +60,11 @@ public class BuzzstatsApplication extends Application<BuzzstatsConfiguration> {
 
     @Override
     public void run(final BuzzstatsConfiguration configuration, final Environment environment)
-        throws SchedulerException {
+            throws SchedulerException {
 
         // register db
         final JdbiFactory jdbiFactory = new JdbiFactory();
-        final Jdbi jdbi               = jdbiFactory.build(environment, configuration.getDataSourceFactory(), "h2");
+        final Jdbi jdbi = jdbiFactory.build(environment, configuration.getDataSourceFactory(), "h2");
 
         // register resources
         registerResources(environment, jdbi);
@@ -77,22 +76,24 @@ public class BuzzstatsApplication extends Application<BuzzstatsConfiguration> {
 
         scheduleJob(scheduler, "crawler", configuration.getCrawlerInterval(), CrawlerJob.class);
         scheduleJob(
-            scheduler,
-            "oldestCheckedStory",
-            configuration.getOldestCheckedStoryInterval(),
-            OldestCheckedStoryJob.class);
+                scheduler,
+                "oldestCheckedStory",
+                configuration.getOldestCheckedStoryInterval(),
+                OldestCheckedStoryJob.class);
         // scheduler.shutdown();
     }
 
     private void scheduleJob(Scheduler scheduler, String name, int intervalInSeconds, Class<? extends Job> jobClass)
-        throws SchedulerException {
+            throws SchedulerException {
         JobDetail job = newJob(jobClass).withIdentity(name).build();
 
         Trigger trigger = newTrigger()
-                              .withIdentity(name + "Trigger")
-                              .startNow()
-                              .withSchedule(simpleSchedule().withIntervalInSeconds(intervalInSeconds).repeatForever())
-                              .build();
+                .withIdentity(name + "Trigger")
+                .startNow()
+                .withSchedule(simpleSchedule()
+                        .withIntervalInSeconds(intervalInSeconds)
+                        .repeatForever())
+                .build();
 
         scheduler.scheduleJob(job, trigger);
     }

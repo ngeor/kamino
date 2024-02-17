@@ -1,12 +1,11 @@
 package com.github.ngeor.xml;
 
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("MagicNumber")
 class XmlParserTest {
@@ -23,11 +22,11 @@ class XmlParserTest {
         String input = "<p>hello</p>";
         XmlParser parser = new XmlParser(input);
         List<XmlEvent> result = parse(parser);
-        assertThat(result).containsExactly(
-            new XmlEvent("<p>", XmlEventType.BEGIN_ELEMENT),
-            new XmlEvent("hello", XmlEventType.TEXT),
-            new XmlEvent("</p>", XmlEventType.END_ELEMENT)
-        );
+        assertThat(result)
+                .containsExactly(
+                        new XmlEvent("<p>", XmlEventType.BEGIN_ELEMENT),
+                        new XmlEvent("hello", XmlEventType.TEXT),
+                        new XmlEvent("</p>", XmlEventType.END_ELEMENT));
     }
 
     @Test
@@ -35,10 +34,10 @@ class XmlParserTest {
         String input = "<node color='blue' off></node>";
         XmlParser parser = new XmlParser(input);
         List<XmlEvent> result = parse(parser);
-        assertThat(result).containsExactly(
-            new XmlEvent("<node color='blue' off>", XmlEventType.BEGIN_ELEMENT),
-            new XmlEvent("</node>", XmlEventType.END_ELEMENT)
-        );
+        assertThat(result)
+                .containsExactly(
+                        new XmlEvent("<node color='blue' off>", XmlEventType.BEGIN_ELEMENT),
+                        new XmlEvent("</node>", XmlEventType.END_ELEMENT));
     }
 
     @Test
@@ -46,10 +45,10 @@ class XmlParserTest {
         String input = "<node />";
         XmlParser parser = new XmlParser(input);
         List<XmlEvent> result = parse(parser);
-        assertThat(result).containsExactly(
-            new XmlEvent("<node />", XmlEventType.BEGIN_ELEMENT),
-            new XmlEvent("", XmlEventType.END_ELEMENT)
-        );
+        assertThat(result)
+                .containsExactly(
+                        new XmlEvent("<node />", XmlEventType.BEGIN_ELEMENT),
+                        new XmlEvent("", XmlEventType.END_ELEMENT));
     }
 
     @Test
@@ -57,9 +56,7 @@ class XmlParserTest {
         String input = "<!-- <p> -->";
         XmlParser parser = new XmlParser(input);
         List<XmlEvent> result = parse(parser);
-        assertThat(result).containsExactly(
-            new XmlEvent(input, XmlEventType.COMMENT)
-        );
+        assertThat(result).containsExactly(new XmlEvent(input, XmlEventType.COMMENT));
     }
 
     private List<XmlEvent> parse(XmlParser parser) throws IOException {

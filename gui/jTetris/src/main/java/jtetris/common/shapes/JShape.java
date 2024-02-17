@@ -11,7 +11,7 @@ public final class JShape extends ShapeWithEmptyBlocks {
      * Creates an instance of this class.
      */
     public JShape() {
-        super(BlockType.J, new char[][]{
+        super(BlockType.J, new char[][] {
             {' ', 'J'},
             {' ', 'J'},
             {'J', 'J'}

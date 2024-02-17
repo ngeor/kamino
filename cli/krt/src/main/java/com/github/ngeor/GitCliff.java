@@ -7,11 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 
 public class GitCliff {
-    public void run(
-        DirContext dirContext,
-        String version,
-        Path cliffTomlPath
-    ) throws IOException, InterruptedException {
+    public void run(DirContext dirContext, String version, Path cliffTomlPath)
+            throws IOException, InterruptedException {
         String[] args = buildArgs(dirContext, version, cliffTomlPath);
         ProcessBuilder processBuilder = new ProcessBuilder(args);
         Process process = processBuilder.start();

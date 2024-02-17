@@ -1,11 +1,10 @@
 package jtetris.swing;
 
-import javax.sound.sampled.*;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.sound.sampled.*;
 
 /**
  * Audio helper plays sounds.
@@ -15,8 +14,7 @@ final class AudioHelper {
     private static final Logger LOGGER = Logger.getLogger("AudioHelper");
     private static boolean muted;
 
-    private AudioHelper() {
-    }
+    private AudioHelper() {}
 
     /**
      * Plays an audio file.
@@ -65,7 +63,6 @@ final class AudioHelper {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             }
         }
     }

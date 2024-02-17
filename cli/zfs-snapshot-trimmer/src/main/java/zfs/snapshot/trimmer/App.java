@@ -25,15 +25,13 @@ public class App {
      * @throws java.lang.InterruptedException if any.
      */
     private void run() throws IOException, InterruptedException {
-        List<String> inputLines = processRunner.run(
-                ZFS_EXECUTABLE, "list", "-t", "snapshot", "-H", "-p");
+        List<String> inputLines = processRunner.run(ZFS_EXECUTABLE, "list", "-t", "snapshot", "-H", "-p");
         if (isDryRun()) {
             inputLines.forEach(System.out::println);
         }
 
-        List<SnapshotLine> snapshotLines = inputLines.stream()
-                .map(SnapshotLine::new)
-                .collect(Collectors.toList());
+        List<SnapshotLine> snapshotLines =
+                inputLines.stream().map(SnapshotLine::new).collect(Collectors.toList());
         List<SnapshotLine> snapshotsToTrim = snapshotTrimmer.trim(snapshotLines);
         for (SnapshotLine snapshotToTrim : snapshotsToTrim) {
             if (isDryRun()) {

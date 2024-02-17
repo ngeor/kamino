@@ -1,25 +1,20 @@
 package com.github.ngeor.yak4j;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import static com.github.ngeor.yak4j.Util.loadSwaggerDocument;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-
-import static com.github.ngeor.yak4j.Util.loadSwaggerDocument;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * Unit tests for {@link SwaggerWriter}.
  */
 class SwaggerWriterTest {
     @ParameterizedTest
-    @ValueSource(strings = {
-        "/address-book.yml",
-        "/auth.yml",
-        "/pricing.yml"
-    })
+    @ValueSource(strings = {"/address-book.yml", "/auth.yml", "/pricing.yml"})
     void test(String resourceName) throws IOException {
         // arrange
         SwaggerDocument swaggerDocument = loadSwaggerDocument(resourceName);

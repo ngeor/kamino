@@ -18,8 +18,7 @@ public class SimpleCalendarModel implements CalendarModel {
     /**
      * Creates a new instance of SimpleCalendarModel.
      */
-    public SimpleCalendarModel() {
-    }
+    public SimpleCalendarModel() {}
 
     private Date hashDate(Date date) {
         cal.setTime(date);

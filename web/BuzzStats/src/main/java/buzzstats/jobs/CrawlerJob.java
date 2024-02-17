@@ -4,6 +4,7 @@ import buzzstats.db.ScanEntity;
 import buzzstats.db.ScansDao;
 import buzzstats.db.ThingEntity;
 import buzzstats.db.ThingsDao;
+import java.io.IOException;
 import org.jdbi.v3.core.Jdbi;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -16,13 +17,11 @@ import org.quartz.SchedulerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-
 /** A job that crawls the homepage of HackerNews. */
 public class CrawlerJob implements Job {
     private static final Logger LOGGER = LoggerFactory.getLogger(CrawlerJob.class);
-    private final Parser parser        = new Parser();
-    private final Updater updater      = new Updater();
+    private final Parser parser = new Parser();
+    private final Updater updater = new Updater();
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
@@ -36,16 +35,17 @@ public class CrawlerJob implements Job {
         }
 
         ThingsDao thingsDao = jdbi.onDemand(ThingsDao.class);
-        ScansDao scansDao   = jdbi.onDemand(ScansDao.class);
+        ScansDao scansDao = jdbi.onDemand(ScansDao.class);
 
         try {
             Document document = Jsoup.connect("https://news.ycombinator.com/").get();
-            Elements things   = document.select("tr.athing");
+            Elements things = document.select("tr.athing");
             for (Element thingElement : things) {
                 ThingEntity parsed = parser.parse(thingElement);
                 if (parsed != null) {
-                    ThingEntity existing =
-                        thingsDao.findByInternalUrl(parsed.getInternalUrl()).stream().findFirst().orElse(null);
+                    ThingEntity existing = thingsDao.findByInternalUrl(parsed.getInternalUrl()).stream()
+                            .findFirst()
+                            .orElse(null);
 
                     if (existing == null) {
                         LOGGER.info("new story {} {}", parsed.getInternalUrl(), parsed.getTitle());

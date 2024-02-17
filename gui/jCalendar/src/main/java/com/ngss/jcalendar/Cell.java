@@ -17,8 +17,7 @@ public class Cell {
     /**
      * Creates a new instance of Cell.
      */
-    public Cell() {
-    }
+    public Cell() {}
 
     public Cell(int row, int col) {
         this.row = row;

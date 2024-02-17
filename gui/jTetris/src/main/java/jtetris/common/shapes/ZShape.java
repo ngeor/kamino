@@ -11,7 +11,7 @@ public final class ZShape extends ShapeWithEmptyBlocks {
      * Creates an instance of this class.
      */
     public ZShape() {
-        super(BlockType.Z, new char[][]{
+        super(BlockType.Z, new char[][] {
             {'Z', 'Z', ' '},
             {' ', 'Z', 'Z'}
         });

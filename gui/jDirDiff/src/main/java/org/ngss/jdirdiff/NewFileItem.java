@@ -23,5 +23,4 @@ public class NewFileItem extends OneFileItem {
     public String toString() {
         return "New File: " + getFile().toString();
     }
-
 }

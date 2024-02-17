@@ -5,8 +5,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 public final class ProcessUtils {
-    private ProcessUtils() {
-    }
+    private ProcessUtils() {}
 
     public static void waitForSuccess(Process process) throws InterruptedException, IOException {
         int exitCode = process.waitFor();

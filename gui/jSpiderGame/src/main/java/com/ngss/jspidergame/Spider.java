@@ -33,5 +33,4 @@ public class Spider extends GameEntity {
         g.setColor(Color.BLUE);
         g.fillOval(this.x, this.y, this.width, this.height);
     }
-
 }

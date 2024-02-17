@@ -1,13 +1,12 @@
 package com.github.ngeor.yak4j;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import javax.xml.bind.JAXBException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-
-import javax.xml.bind.JAXBException;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * Unit tests for {@link XmlSerializer}.
@@ -30,8 +29,9 @@ class XmlSerializerTest {
             Info info = new Info();
             info.setName("Nikolaos");
             String result = xmlSerializer.serialize(info, Info.class);
-            assertThat(result).isEqualTo("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
-                    + "<info><name>Nikolaos</name></info>");
+            assertThat(result)
+                    .isEqualTo("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
+                            + "<info><name>Nikolaos</name></info>");
         }
 
         /**
@@ -41,7 +41,8 @@ class XmlSerializerTest {
         @Test
         void cannotSerializeThisTest() {
             assertThatThrownBy(() -> xmlSerializer.serialize(this, Serialize.class))
-                    .isInstanceOf(XmlRuntimeException.class).hasCauseInstanceOf(JAXBException.class);
+                    .isInstanceOf(XmlRuntimeException.class)
+                    .hasCauseInstanceOf(JAXBException.class);
         }
     }
 
@@ -61,7 +62,8 @@ class XmlSerializerTest {
         @Test
         void cannotDeserializeInvalidXml() {
             assertThatThrownBy(() -> xmlSerializer.deserialize("oops", Info.class))
-                    .isInstanceOf(XmlRuntimeException.class).hasCauseInstanceOf(JAXBException.class);
+                    .isInstanceOf(XmlRuntimeException.class)
+                    .hasCauseInstanceOf(JAXBException.class);
         }
     }
 
@@ -89,7 +91,8 @@ class XmlSerializerTest {
         @Test
         void cannotDeserializeInvalidXml() {
             assertThatThrownBy(() -> xmlSerializer.deserializeAny("oops", Info.class, Info2.class))
-                    .isInstanceOf(XmlRuntimeException.class).hasCauseInstanceOf(JAXBException.class);
+                    .isInstanceOf(XmlRuntimeException.class)
+                    .hasCauseInstanceOf(JAXBException.class);
         }
     }
 }

@@ -15,6 +15,7 @@ public class Note implements Cloneable, Comparable<Note> {
      * Holds value of property text.
      */
     private String text;
+
     private Object value;
 
     /**
@@ -75,5 +76,4 @@ public class Note implements Cloneable, Comparable<Note> {
     public String toString() {
         return text;
     }
-
 }

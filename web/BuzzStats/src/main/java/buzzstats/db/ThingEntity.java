@@ -2,7 +2,6 @@ package buzzstats.db;
 
 import buzzstats.api.ImmutableThing;
 import buzzstats.api.Thing;
-
 import java.time.LocalDateTime;
 
 /** Thing db model. */
@@ -114,17 +113,17 @@ public class ThingEntity {
      */
     public Thing toThing() {
         return ImmutableThing.builder()
-            .id(getId())
-            .title(getTitle())
-            .url(getUrl())
-            .score(getScore())
-            .username(getUsername())
-            .publishedAt(getPublishedAt())
-            .comments(getComments())
-            .internalUrl(getInternalUrl())
-            .createdAt(getCreatedAt())
-            .lastModifiedAt(getLastModifiedAt())
-            .lastCheckedAt(getLastCheckedAt())
-            .build();
+                .id(getId())
+                .title(getTitle())
+                .url(getUrl())
+                .score(getScore())
+                .username(getUsername())
+                .publishedAt(getPublishedAt())
+                .comments(getComments())
+                .internalUrl(getInternalUrl())
+                .createdAt(getCreatedAt())
+                .lastModifiedAt(getLastModifiedAt())
+                .lastCheckedAt(getLastCheckedAt())
+                .build();
     }
 }

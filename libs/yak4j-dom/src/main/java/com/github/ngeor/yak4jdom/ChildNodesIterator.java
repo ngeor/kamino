@@ -1,9 +1,8 @@
 package com.github.ngeor.yak4jdom;
 
+import java.util.Iterator;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import java.util.Iterator;
 
 /**
  * An iterator over child nodes.

@@ -3,7 +3,6 @@ package com.github.ngeor;
 import com.github.ngeor.xml.XmlEvent;
 import com.github.ngeor.xml.XmlEventType;
 import com.github.ngeor.xml.XmlParser;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -25,10 +24,8 @@ public class MavenVersionSetter implements VersionSetter {
         File pomXml = currentDirectory.resolve("pom.xml").toFile();
         File newPomXml = Files.createTempFile("pom", ".xml").toFile();
         PathStack path = new PathStack();
-        try (
-            FileInputStream fis = new FileInputStream(pomXml);
-            OutputStreamWriter fos = new OutputStreamWriter(new FileOutputStream(newPomXml))
-        ) {
+        try (FileInputStream fis = new FileInputStream(pomXml);
+                OutputStreamWriter fos = new OutputStreamWriter(new FileOutputStream(newPomXml))) {
             XmlParser parser = new XmlParser(fis);
             var iterator = parser.iterator();
             while (iterator.hasNext()) {
@@ -38,9 +35,7 @@ public class MavenVersionSetter implements VersionSetter {
                     path.pop();
                 } else if (xmlEvent.isStartElement()) {
                     path.add(xmlEvent.getNodeName());
-                } else if (
-                    xmlEvent.isCharacters()
-                        && path.isAtProjectVersion()) {
+                } else if (xmlEvent.isCharacters() && path.isAtProjectVersion()) {
                     xmlWriteEvent = new XmlEvent(version, XmlEventType.TEXT);
                 }
                 fos.write(xmlWriteEvent.getText());
@@ -66,9 +61,7 @@ public class MavenVersionSetter implements VersionSetter {
         }
 
         public boolean isAtProjectVersion() {
-            return path.size() == 2
-                && "project".equals(path.getFirst())
-                && "version".equals(path.getLast());
+            return path.size() == 2 && "project".equals(path.getFirst()) && "version".equals(path.getLast());
         }
     }
 }

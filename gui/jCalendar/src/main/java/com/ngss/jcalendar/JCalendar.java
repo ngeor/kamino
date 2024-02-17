@@ -1,16 +1,13 @@
 package com.ngss.jcalendar;
 
-import javax.swing.*;
-import javax.swing.event.MouseInputListener;
-
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
-
-
+import javax.swing.*;
+import javax.swing.event.MouseInputListener;
 
 /*
  * JCalendar.java
@@ -112,7 +109,6 @@ public class JCalendar extends JComponent implements MouseInputListener {
         g.fillRect(0, 0, r.width, r.height);
         g.setColor(Color.BLACK);
 
-
         Calendar cal = firstDayOfMonthCalendar();
         int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
         int row = 1;
@@ -134,7 +130,6 @@ public class JCalendar extends JComponent implements MouseInputListener {
             g.drawRect(x, 0, columnWidth, columnHeight);
 
             temp.set(Calendar.DAY_OF_WEEK, i);
-
 
             g.drawString(sdf.format(temp.getTime()), x + 2, columnHeight - 2);
         }
@@ -246,27 +241,23 @@ public class JCalendar extends JComponent implements MouseInputListener {
         if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
             int x = e.getX();
             int y = e.getY();
-            //JOptionPane.showMessageDialog(this, "Double click at " + x + " - " + y);
+            // JOptionPane.showMessageDialog(this, "Double click at " + x + " - " + y);
             Date d = dateAtPos(x, y);
-            //JOptionPane.showMessageDialog(this, d);
+            // JOptionPane.showMessageDialog(this, d);
         }
     }
 
     @Override
-    public void mouseDragged(MouseEvent e) {
-    }
+    public void mouseDragged(MouseEvent e) {}
 
     @Override
-    public void mouseEntered(MouseEvent e) {
-    }
+    public void mouseEntered(MouseEvent e) {}
 
     @Override
-    public void mouseExited(MouseEvent e) {
-    }
+    public void mouseExited(MouseEvent e) {}
 
     @Override
-    public void mouseMoved(MouseEvent e) {
-    }
+    public void mouseMoved(MouseEvent e) {}
 
     @Override
     public void mousePressed(MouseEvent e) {
@@ -277,8 +268,7 @@ public class JCalendar extends JComponent implements MouseInputListener {
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) {
-    }
+    public void mouseReleased(MouseEvent e) {}
 
     /**
      * Getter for property selectedBackgroundColor.
@@ -298,5 +288,4 @@ public class JCalendar extends JComponent implements MouseInputListener {
         this.selectedBackgroundColor = selectedBackgroundColor;
         this.repaint();
     }
-
 }

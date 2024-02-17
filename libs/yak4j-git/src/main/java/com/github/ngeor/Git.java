@@ -75,9 +75,8 @@ public final class Git {
 
     public Optional<String[]> getMostRecentTagWithDate(String prefix)
             throws IOException, InterruptedException, ProcessFailedException {
-        return getMostRecentTag(
-                prefix, "--format=%(refname:strip=2),%(creatordate)", s -> s.substring(prefix.length())
-                        .split(","));
+        return getMostRecentTag(prefix, "--format=%(refname:strip=2),%(creatordate)", s -> s.substring(prefix.length())
+                .split(","));
     }
 
     private <E> Optional<E> getMostRecentTag(String prefix, String format, Function<String, E> mapper)

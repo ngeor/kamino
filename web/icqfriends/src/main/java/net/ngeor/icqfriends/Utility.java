@@ -1,7 +1,8 @@
 package net.ngeor.icqfriends;
 
-import org.w3c.dom.*;
-
+import java.io.File;
+import java.io.StringReader;
+import java.io.Writer;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Result;
@@ -11,18 +12,13 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-
-import java.io.File;
-import java.io.StringReader;
-import java.io.Writer;
+import org.w3c.dom.*;
 
 /**
  * Utility class for manipulating XML files.
  */
 public final class Utility {
-    private Utility() {
-
-    }
+    private Utility() {}
 
     private static Document getDocument(String szFile) throws Exception {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -155,16 +151,15 @@ public final class Utility {
      * @throws Exception
      */
     public static void transformFile(String source, Writer dest, String xslFile) throws Exception {
-        Transformer t = TransformerFactory.newInstance().newTransformer(
-                new StreamSource(new File(xslFile)));
+        Transformer t = TransformerFactory.newInstance().newTransformer(new StreamSource(new File(xslFile)));
         Source s = new StreamSource(new File(source));
         Result r = new StreamResult(dest);
         t.transform(s, r);
     }
 
-    public static void sendRedirect(
-        String sURL, String message, String goback, Writer dest, String xslFile) throws Exception {
-        transformString("<page url=\"" + sURL + "\" message=\"" + message + "\" goback=\"" + goback + "\" />",
-                dest, xslFile);
+    public static void sendRedirect(String sURL, String message, String goback, Writer dest, String xslFile)
+            throws Exception {
+        transformString(
+                "<page url=\"" + sURL + "\" message=\"" + message + "\" goback=\"" + goback + "\" />", dest, xslFile);
     }
 }

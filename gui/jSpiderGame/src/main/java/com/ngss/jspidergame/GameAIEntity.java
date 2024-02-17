@@ -22,5 +22,4 @@ public abstract class GameAIEntity extends GameEntity {
      * must not be placed in this method
      */
     public abstract void move();
-
 }

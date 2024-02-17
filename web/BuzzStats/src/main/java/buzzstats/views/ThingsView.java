@@ -3,7 +3,6 @@ package buzzstats.views;
 import buzzstats.api.Thing;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.views.View;
-
 import java.util.List;
 
 /** The view for the things resource. */

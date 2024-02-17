@@ -11,7 +11,7 @@ public final class TShape extends ShapeWithEmptyBlocks {
      * Creates an instance of this class.
      */
     public TShape() {
-        super(BlockType.T, new char[][]{
+        super(BlockType.T, new char[][] {
             {'T', 'T', 'T'},
             {' ', 'T', ' '}
         });

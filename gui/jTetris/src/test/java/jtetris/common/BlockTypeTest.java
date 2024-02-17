@@ -1,11 +1,10 @@
 package jtetris.common;
 
-import org.junit.Test;
-
-import java.util.EnumSet;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import java.util.EnumSet;
+import org.junit.Test;
 
 /**
  * Unit test for {@link BlockType}.

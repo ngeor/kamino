@@ -18,7 +18,9 @@ public class UtcTimeZoneMapper {
      */
     @SuppressWarnings("WeakerAccess")
     public LocalDateTime asLocalDateTime(OffsetDateTime offsetDateTime) {
-        return offsetDateTime != null ? offsetDateTime.atZoneSameInstant(ZoneId.of("UTC")).toLocalDateTime() : null;
+        return offsetDateTime != null
+                ? offsetDateTime.atZoneSameInstant(ZoneId.of("UTC")).toLocalDateTime()
+                : null;
     }
 
     /**

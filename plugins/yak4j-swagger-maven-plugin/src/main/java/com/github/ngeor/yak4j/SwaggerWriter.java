@@ -3,7 +3,6 @@ package com.github.ngeor.yak4j;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;

@@ -18,8 +18,6 @@
     <url>https://github.com/ngeor/kamino/tree/master/cli/krt</url>
   </scm>
   <properties>
-    <checkstyle-rules.version>6.6.0-32</checkstyle-rules.version>
-    <checkstyle.version>10.12.7</checkstyle.version>
     <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
     <!-- JaCoCo thresholds. Increase gradually as you add tests. -->
     <jacoco.unit-tests.limit.branch-ratio>67%</jacoco.unit-tests.limit.branch-ratio>

@@ -27,8 +27,7 @@ public class MainForm extends javax.swing.JFrame {
     @SuppressWarnings("checkstyle:MagicNumber")
     public MainForm() {
         game.addGameEvents(new GameEvents() {
-            public void entityCreated(GameEntity ge) {
-            }
+            public void entityCreated(GameEntity ge) {}
 
             public void entityDestroyed(GameEntity ge) {
                 if (ge instanceof Enemy) {
@@ -37,23 +36,18 @@ public class MainForm extends javax.swing.JFrame {
                 }
             }
 
-            public void spiderHit() {
-            }
+            public void spiderHit() {}
 
-            public void aliveChanged(boolean value) {
-            }
+            public void aliveChanged(boolean value) {}
 
             public void levelChanged(int value) {
                 lblLevel.setText("Level " + value);
             }
-
         });
-
 
         initComponents();
 
         game.init(game.getLevel() + 1);
-
 
         getContentPane().add(gc);
         gc.setBounds(0, 40, 640, 480);

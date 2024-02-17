@@ -1,12 +1,12 @@
 package com.github.ngeor;
 
+import static com.github.ngeor.ProcessUtils.waitForSuccess;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static com.github.ngeor.ProcessUtils.waitForSuccess;
 
 /**
  * Encapsulates git operations.
@@ -88,7 +88,8 @@ public class Git {
     }
 
     public boolean hasPendingChanges() throws IOException, InterruptedException {
-        Process process = createProcessBuilder("diff-index", "--quiet", "HEAD", "--").start();
+        Process process =
+                createProcessBuilder("diff-index", "--quiet", "HEAD", "--").start();
         int exitCode = process.waitFor();
         return exitCode != 0;
     }

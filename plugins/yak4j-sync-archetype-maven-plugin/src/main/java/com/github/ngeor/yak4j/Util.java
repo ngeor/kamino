@@ -47,9 +47,8 @@ final class Util {
             return Collections.emptyList();
         }
 
-        return parameters.entrySet()
-            .stream()
-            .map(x -> String.format("-D%s=%s", x.getKey(), x.getValue()))
-            .collect(Collectors.toList());
+        return parameters.entrySet().stream()
+                .map(x -> String.format("-D%s=%s", x.getKey(), x.getValue()))
+                .collect(Collectors.toList());
     }
 }

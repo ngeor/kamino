@@ -243,7 +243,7 @@ public class Game {
 
     private boolean canChangeCurrent(MovingShape newShape) {
         return state == GameState.Started
-            && gameMap.canMoveTo(newShape.getShapeDefinition(), newShape.getRow(), newShape.getColumn());
+                && gameMap.canMoveTo(newShape.getShapeDefinition(), newShape.getRow(), newShape.getColumn());
     }
 
     private void changeCurrentShape(MovingShape newShape) {

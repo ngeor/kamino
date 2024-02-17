@@ -24,5 +24,4 @@ public final class DateUtil {
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.HOUR_OF_DAY, 0);
     }
-
 }

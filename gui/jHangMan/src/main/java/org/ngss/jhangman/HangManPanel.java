@@ -6,10 +6,9 @@
 
 package org.ngss.jhangman;
 
-import javax.swing.*;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.*;
 
 /**
  * @author ngeor
@@ -168,7 +167,6 @@ public class HangManPanel extends JPanel {
                 System.out.println(e.getActionCommand());
             }
         }
-
     }
 
     private void createLetterControls(String letters) {
@@ -211,7 +209,7 @@ public class HangManPanel extends JPanel {
 
         lblFace.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/ngss/jhangman/img/face.png")));
         lblFace.setText("\u0391\u03c2 \u03c0\u03b1\u03af\u03be\u03bf\u03c5\u03bc\u03b5 "
-            + "\u03ba\u03c1\u03b5\u03bc\u03ac\u03bb\u03b1!");
+                + "\u03ba\u03c1\u03b5\u03bc\u03ac\u03bb\u03b1!");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
@@ -222,9 +220,9 @@ public class HangManPanel extends JPanel {
         txtQuestion.setFont(new java.awt.Font("Dialog", 0, 24));
         txtQuestion.setLineWrap(true);
         txtQuestion.setText("\u03a0\u03ce\u03c2 \u03bb\u03ad\u03b3\u03b5\u03c4\u03b1\u03b9 "
-            + "\u03c4\u03bf \u03c3\u03cd\u03c3\u03c4\u03b7\u03bc\u03b1 \u03c0\u03bf\u03c5 "
-            + "\u03b1\u03c0\u03bf\u03b8\u03b7\u03ba\u03b5\u03cd\u03b5\u03b9 \u03c4\u03b1 "
-            + "\u03b4\u03b9\u03ac\u03c6\u03bf\u03c1\u03b1 \u03b4\u03b5\u03b4\u03bf\u03bc\u03ad\u03bd\u03b1;");
+                + "\u03c4\u03bf \u03c3\u03cd\u03c3\u03c4\u03b7\u03bc\u03b1 \u03c0\u03bf\u03c5 "
+                + "\u03b1\u03c0\u03bf\u03b8\u03b7\u03ba\u03b5\u03cd\u03b5\u03b9 \u03c4\u03b1 "
+                + "\u03b4\u03b9\u03ac\u03c6\u03bf\u03c1\u03b1 \u03b4\u03b5\u03b4\u03bf\u03bc\u03ad\u03bd\u03b1;");
         txtQuestion.setWrapStyleWord(true);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
@@ -247,6 +245,5 @@ public class HangManPanel extends JPanel {
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         add(panLetters, gridBagConstraints);
-
     }
 }

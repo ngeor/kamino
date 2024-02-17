@@ -22,4 +22,3 @@ public final class EmptyShape extends ShapeBase {
         throw new IndexOutOfBoundsException();
     }
 }
-

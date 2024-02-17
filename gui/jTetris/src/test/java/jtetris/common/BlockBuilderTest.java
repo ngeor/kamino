@@ -1,13 +1,13 @@
 package jtetris.common;
 
-import jtetris.common.shapes.*;
-import org.junit.Before;
-import org.junit.Test;
-
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+
+import jtetris.common.shapes.*;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Unit test for {@link BlockBuilder}.

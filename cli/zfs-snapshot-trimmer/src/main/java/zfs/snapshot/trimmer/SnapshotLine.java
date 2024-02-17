@@ -106,10 +106,7 @@ public class SnapshotLine {
      */
     @Override
     public String toString() {
-        return String.format(
-                "SnapshotLine{fileSystem='%s', snapshotName='%s'}",
-                fileSystem,
-                snapshotName);
+        return String.format("SnapshotLine{fileSystem='%s', snapshotName='%s'}", fileSystem, snapshotName);
     }
 
     /**

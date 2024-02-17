@@ -1,9 +1,9 @@
 package jtetris.common.graphics.swing;
 
+import static org.junit.Assert.assertEquals;
+
 import jtetris.common.graphics.Color;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * Unit test for {@link ColorToSwing}.

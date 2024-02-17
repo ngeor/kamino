@@ -1,5 +1,7 @@
 package com.github.ngeor;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -7,11 +9,8 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 public final class IOUtils {
-    private IOUtils() {
-    }
+    private IOUtils() {}
 
     public static Path createDirectory(Path parent, String name) {
         Path result = parent.resolve(name);

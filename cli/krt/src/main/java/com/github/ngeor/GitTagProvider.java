@@ -20,8 +20,8 @@ public class GitTagProvider {
         String tagPattern = tagPrefix + "*";
         List<String> tags = git.listTags(tagPattern);
         return tags.stream()
-            .map(tag -> tag.substring(tagPrefix.length()))
-            .map(SemVer::parse)
-            .collect(Collectors.toCollection(TreeSet::new));
+                .map(tag -> tag.substring(tagPrefix.length()))
+                .map(SemVer::parse)
+                .collect(Collectors.toCollection(TreeSet::new));
     }
 }

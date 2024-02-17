@@ -1,14 +1,13 @@
 package com.github.ngeor;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.SortedSet;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.jupiter.api.Test;
 
 class GitTagProviderTest {
     @Test
@@ -25,9 +24,7 @@ class GitTagProviderTest {
 
         // assert
         assertArrayEquals(
-            new SemVer[] {SemVer.parse("1.0.1"), SemVer.parse("1.2.3"), SemVer.parse("1.2.4")},
-            versions.toArray()
-        );
+                new SemVer[] {SemVer.parse("1.0.1"), SemVer.parse("1.2.3"), SemVer.parse("1.2.4")}, versions.toArray());
         assertEquals(SemVer.parse("1.2.4"), versions.last());
     }
 }

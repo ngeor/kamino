@@ -25,9 +25,10 @@ public class PipVersionSetter implements VersionSetter {
 
     private String getModuleNameFromSetupCfg(List<String> setupCfgContents) {
         String prefix = "version = attr: ";
-        String versionLine = setupCfgContents.stream().filter(line -> line.startsWith(prefix))
-            .findFirst()
-            .orElseThrow();
+        String versionLine = setupCfgContents.stream()
+                .filter(line -> line.startsWith(prefix))
+                .findFirst()
+                .orElseThrow();
         String versionSource = versionLine.substring(prefix.length());
         String postfix = ".__version__";
         if (versionSource.endsWith(postfix)) {
@@ -39,7 +40,7 @@ public class PipVersionSetter implements VersionSetter {
     private List<String> updateVersion(List<String> moduleContents, String version) {
         final String newVersionLine = String.format("__version__ = \"%s\"", version);
         return moduleContents.stream()
-            .map(line -> line.startsWith("__version__") ? newVersionLine : line)
-            .collect(Collectors.toList());
+                .map(line -> line.startsWith("__version__") ? newVersionLine : line)
+                .collect(Collectors.toList());
     }
 }

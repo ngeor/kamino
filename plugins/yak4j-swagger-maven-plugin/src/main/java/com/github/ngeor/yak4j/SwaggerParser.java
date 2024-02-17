@@ -3,7 +3,6 @@ package com.github.ngeor.yak4j;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLParser;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;

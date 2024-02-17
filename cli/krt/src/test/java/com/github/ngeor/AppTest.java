@@ -1,9 +1,9 @@
 package com.github.ngeor;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit test for simple App.

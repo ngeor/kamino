@@ -1,15 +1,14 @@
 package com.github.ngeor.yak4j;
 
+import static com.github.ngeor.yak4j.Util.loadSwaggerDocument;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.io.IOException;
+import java.util.List;
 import org.assertj.core.data.Percentage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
-import java.util.List;
-
-import static com.github.ngeor.yak4j.Util.loadSwaggerDocument;
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Unit tests for {@link SwaggerParser}.

@@ -1,10 +1,8 @@
 package jtetris.swing;
 
-import jtetris.common.MovingShape;
-
-import javax.swing.*;
-
 import java.awt.*;
+import javax.swing.*;
+import jtetris.common.MovingShape;
 
 /**
  * Represents a shape.

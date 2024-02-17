@@ -37,8 +37,8 @@ class SnapshotTrimmer {
      * @return a {@link java.util.List} object.
      */
     List<SnapshotLine> trim(final List<SnapshotLine> snapshotLines) {
-        Map<String, List<SnapshotLine>> perFileSystem = snapshotLines.stream()
-                .collect(Collectors.groupingBy(SnapshotLine::getFileSystem));
+        Map<String, List<SnapshotLine>> perFileSystem =
+                snapshotLines.stream().collect(Collectors.groupingBy(SnapshotLine::getFileSystem));
 
         return perFileSystem.values().stream()
                 .map(this::trimOneFileSystem)
@@ -53,8 +53,8 @@ class SnapshotTrimmer {
      * @return The filtered snapshot lines.
      */
     private List<SnapshotLine> trimOneFileSystem(final List<SnapshotLine> snapshotLines) {
-        Map<Integer, List<SnapshotLine>> perYear = snapshotLines.stream()
-                .collect(Collectors.groupingBy(SnapshotLine::getYear));
+        Map<Integer, List<SnapshotLine>> perYear =
+                snapshotLines.stream().collect(Collectors.groupingBy(SnapshotLine::getYear));
         return perYear.values().stream()
                 .map(this::trimOneYear)
                 .flatMap(Collection::stream)
@@ -112,8 +112,8 @@ class SnapshotTrimmer {
      * @return The filtered snapshot lines.
      */
     private List<SnapshotLine> trimCurrentYear(final List<SnapshotLine> snapshotLines) {
-        Map<Integer, List<SnapshotLine>> perMonth = snapshotLines.stream()
-                .collect(Collectors.groupingBy(SnapshotLine::getMonth));
+        Map<Integer, List<SnapshotLine>> perMonth =
+                snapshotLines.stream().collect(Collectors.groupingBy(SnapshotLine::getMonth));
 
         return perMonth.values().stream()
                 .map(this::trimOneMonth)

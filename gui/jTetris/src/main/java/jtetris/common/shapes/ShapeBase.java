@@ -23,4 +23,3 @@ public abstract class ShapeBase implements Shape {
 
     protected abstract BlockType safeBlockAt(int row, int col);
 }
-

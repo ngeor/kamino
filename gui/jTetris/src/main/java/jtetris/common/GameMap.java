@@ -101,7 +101,6 @@ public class GameMap implements BlockComposite {
 
     private boolean isMapNonEmpty(int row, int col) {
         return row >= 0 && map[row][col].isNonEmpty();
-
     }
 
     private boolean isRowFull(int row) {

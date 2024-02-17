@@ -1,10 +1,9 @@
 package buzzstats.jobs;
 
 import buzzstats.db.ThingEntity;
-import org.jsoup.nodes.Element;
-
 import java.time.Clock;
 import java.time.LocalDateTime;
+import org.jsoup.nodes.Element;
 
 /** Parses the HTML of a page. */
 public class Parser {
@@ -18,10 +17,10 @@ public class Parser {
         Element storyLink = thingElement.selectFirst("a.storylink");
 
         String title = storyLink.text();
-        String url   = storyLink.attr("href");
+        String url = storyLink.attr("href");
 
-        Element nextRow      = thingElement.nextElementSibling();
-        Element subText      = nextRow.selectFirst("td.subtext");
+        Element nextRow = thingElement.nextElementSibling();
+        Element subText = nextRow.selectFirst("td.subtext");
         Element scoreElement = subText.selectFirst(".score"); // 100 points
         if (scoreElement == null) {
             // if the score is null, it is most likely an ad
@@ -30,15 +29,15 @@ public class Parser {
 
         int score = parseScore(scoreElement.text());
 
-        Element byUser  = subText.selectFirst(".hnuser");
+        Element byUser = subText.selectFirst(".hnuser");
         String username = byUser.text();
 
         Element ageElement = subText.selectFirst(".age a"); // 2 hours ago, 55 minutes ago
-        LocalDateTime age  = parseAge(ageElement.text());
+        LocalDateTime age = parseAge(ageElement.text());
         String internalUrl = ageElement.attr("href");
 
         Element commentsElement = subText.children().last(); // 181 comments, discuss
-        int comments            = parseComments(commentsElement.text());
+        int comments = parseComments(commentsElement.text());
 
         ThingEntity thingEntity = new ThingEntity();
         thingEntity.setTitle(title);
@@ -65,7 +64,7 @@ public class Parser {
 
     private LocalDateTime parseAge(String age) {
         String[] parts = age.split(" ");
-        int amount     = Integer.parseInt(parts[0]);
+        int amount = Integer.parseInt(parts[0]);
         if ("minutes".equals(parts[1]) || "minute".equals(parts[1])) {
             return LocalDateTime.now(Clock.systemUTC()).minusMinutes(amount);
         } else if ("hours".equals(parts[1]) || "hour".equals(parts[1])) {

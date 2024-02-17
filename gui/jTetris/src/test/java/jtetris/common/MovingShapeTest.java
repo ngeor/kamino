@@ -1,12 +1,12 @@
 package jtetris.common;
 
-import org.junit.Test;
-
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
+
+import org.junit.Test;
 
 /**
  * Unit test for {@link MovingShape}.

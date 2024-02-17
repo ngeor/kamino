@@ -1,7 +1,6 @@
 package zfs.snapshot.trimmer;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.Clock;
 import java.time.Instant;
@@ -9,8 +8,8 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for SnapshotTrimmer class.
@@ -33,8 +32,8 @@ public class SnapshotTrimmerTest {
 
     @BeforeEach
     public void before() {
-        snapshotTrimmer = new SnapshotTrimmer(
-                Clock.fixed(Instant.parse("2016-10-08T00:00:00.00Z"), ZoneId.systemDefault()));
+        snapshotTrimmer =
+                new SnapshotTrimmer(Clock.fixed(Instant.parse("2016-10-08T00:00:00.00Z"), ZoneId.systemDefault()));
     }
 
     @Test
@@ -46,9 +45,8 @@ public class SnapshotTrimmerTest {
 
     @Test
     public void shouldKeepEverythingOfTheCurrentMonth() {
-        List<SnapshotLine> input = Arrays.asList(
-                new SnapshotLine(TANK_MEDIA_20161001),
-                new SnapshotLine(TANK_MEDIA_20161002));
+        List<SnapshotLine> input =
+                Arrays.asList(new SnapshotLine(TANK_MEDIA_20161001), new SnapshotLine(TANK_MEDIA_20161002));
 
         List<SnapshotLine> result = snapshotTrimmer.trim(input);
 
@@ -57,9 +55,8 @@ public class SnapshotTrimmerTest {
 
     @Test
     public void shouldKeepFirstSnapshotOfMonthOfCurrentYear() {
-        List<SnapshotLine> input = Arrays.asList(
-                new SnapshotLine(TANK_MEDIA_20160901),
-                new SnapshotLine(TANK_MEDIA_20160902));
+        List<SnapshotLine> input =
+                Arrays.asList(new SnapshotLine(TANK_MEDIA_20160901), new SnapshotLine(TANK_MEDIA_20160902));
 
         List<SnapshotLine> result = snapshotTrimmer.trim(input);
 
@@ -76,10 +73,11 @@ public class SnapshotTrimmerTest {
 
         List<SnapshotLine> result = snapshotTrimmer.trim(input);
 
-        assertThat(result).containsExactly(
-                new SnapshotLine(TANK_MEDIA_20150902),
-                new SnapshotLine(TANK_MEDIA_20151001),
-                new SnapshotLine(TANK_MEDIA_20151002));
+        assertThat(result)
+                .containsExactly(
+                        new SnapshotLine(TANK_MEDIA_20150902),
+                        new SnapshotLine(TANK_MEDIA_20151001),
+                        new SnapshotLine(TANK_MEDIA_20151002));
     }
 
     @Test
@@ -92,8 +90,6 @@ public class SnapshotTrimmerTest {
 
         List<SnapshotLine> result = snapshotTrimmer.trim(input);
 
-        assertThat(result).containsExactly(
-                new SnapshotLine(TANK_A_20150902),
-                new SnapshotLine(TANK_B_20151002));
+        assertThat(result).containsExactly(new SnapshotLine(TANK_A_20150902), new SnapshotLine(TANK_B_20151002));
     }
 }

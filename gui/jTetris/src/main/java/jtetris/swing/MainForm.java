@@ -1,13 +1,11 @@
 package jtetris.swing;
 
+import java.awt.*;
+import javax.swing.*;
 import jtetris.common.Game;
 import jtetris.common.GameListener;
 import jtetris.common.GameState;
 import jtetris.common.MovingShape;
-
-import javax.swing.*;
-
-import java.awt.*;
 
 /**
  * MainForm.java.
@@ -54,9 +52,7 @@ public final class MainForm extends javax.swing.JFrame {
             }
 
             @Override
-            public void moved(MovingShape old, MovingShape current) {
-
-            }
+            public void moved(MovingShape old, MovingShape current) {}
 
             @Override
             public void shapeChanged(MovingShape nextBlock) {

@@ -1,19 +1,17 @@
 package jtetris.swing;
 
-import jtetris.common.Game;
-import jtetris.common.GameListener;
-import jtetris.common.GameState;
-import jtetris.common.MovingShape;
-import jtetris.common.Shape;
-
-import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import javax.swing.*;
+import jtetris.common.Game;
+import jtetris.common.GameListener;
+import jtetris.common.GameState;
+import jtetris.common.MovingShape;
+import jtetris.common.Shape;
 
 /**
  * @author ngeor
@@ -62,9 +60,7 @@ public class GameComponent extends JPanel implements KeyListener {
             }
 
             @Override
-            public void stateChanged() {
-
-            }
+            public void stateChanged() {}
 
             @Override
             public void moved(MovingShape old, MovingShape current) {
@@ -102,7 +98,6 @@ public class GameComponent extends JPanel implements KeyListener {
                 // TODO Auto-generated method stub
 
             }
-
         });
     }
 
@@ -160,9 +155,7 @@ public class GameComponent extends JPanel implements KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
+    public void keyTyped(KeyEvent e) {}
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -214,7 +207,5 @@ public class GameComponent extends JPanel implements KeyListener {
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
-
-    }
+    public void keyReleased(KeyEvent e) {}
 }

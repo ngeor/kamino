@@ -23,5 +23,4 @@ public class OldFileItem extends OneFileItem {
     public String toString() {
         return "Deleted File: " + getFile().toString();
     }
-
 }

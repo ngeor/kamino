@@ -1,15 +1,14 @@
 package com.github.ngeor;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.Stream;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class GitCliffTest {
     private final GitCliff gitCliff = new GitCliff();
@@ -28,11 +27,9 @@ class GitCliffTest {
     @Test
     void testBuildArgsSameDirectory() {
         DirContext dirContext = new DirContext(Path.of("."), Path.of("."));
-        String[] args = replaceWindowsPaths(gitCliff.buildArgs(
-            dirContext, "1.2.3", Path.of("/tmp/cliff.toml")));
+        String[] args = replaceWindowsPaths(gitCliff.buildArgs(dirContext, "1.2.3", Path.of("/tmp/cliff.toml")));
         assertArrayEquals(
-            new String[] {"git-cliff", "-o", "CHANGELOG.md", "-t", "1.2.3", "-c", "/tmp/cliff.toml"},
-            args);
+                new String[] {"git-cliff", "-o", "CHANGELOG.md", "-t", "1.2.3", "-c", "/tmp/cliff.toml"}, args);
     }
 
     @Test
@@ -40,26 +37,22 @@ class GitCliffTest {
         Path currentDirectory = projectDirectory.resolve("child");
         assertTrue(currentDirectory.toFile().mkdir());
         String[] args = replaceWindowsPaths(gitCliff.buildArgs(
-            new DirContext(currentDirectory, projectDirectory),
-            "2.1.0",
-            Path.of("/tmp/cliff.toml")
-        ));
+                new DirContext(currentDirectory, projectDirectory), "2.1.0", Path.of("/tmp/cliff.toml")));
         assertArrayEquals(
-            new String[] {
-                "git-cliff",
-                "--include-path",
-                "child/*",
-                "-r",
-                "..",
-                "-o",
-                "CHANGELOG.md",
-                "-t",
-                "2.1.0",
-                "-c",
-                "/tmp/cliff.toml"
-            },
-            args
-        );
+                new String[] {
+                    "git-cliff",
+                    "--include-path",
+                    "child/*",
+                    "-r",
+                    "..",
+                    "-o",
+                    "CHANGELOG.md",
+                    "-t",
+                    "2.1.0",
+                    "-c",
+                    "/tmp/cliff.toml"
+                },
+                args);
     }
 
     @Test
@@ -69,31 +62,25 @@ class GitCliffTest {
         Path grandChildDirectory = childDirectory.resolve("grand-child");
         assertTrue(grandChildDirectory.toFile().mkdir());
         String[] args = replaceWindowsPaths(gitCliff.buildArgs(
-            new DirContext(grandChildDirectory, projectDirectory),
-            "0.4.1",
-            Path.of("/tmp/cliff2.toml")
-        ));
+                new DirContext(grandChildDirectory, projectDirectory), "0.4.1", Path.of("/tmp/cliff2.toml")));
         assertArrayEquals(
-            new String[] {
-                "git-cliff",
-                "--include-path",
-                "child/grand-child/*",
-                "-r",
-                "../..",
-                "-o",
-                "CHANGELOG.md",
-                "-t",
-                "0.4.1",
-                "-c",
-                "/tmp/cliff2.toml"
-            },
-            args
-        );
+                new String[] {
+                    "git-cliff",
+                    "--include-path",
+                    "child/grand-child/*",
+                    "-r",
+                    "../..",
+                    "-o",
+                    "CHANGELOG.md",
+                    "-t",
+                    "0.4.1",
+                    "-c",
+                    "/tmp/cliff2.toml"
+                },
+                args);
     }
 
     private static String[] replaceWindowsPaths(String[] args) {
-        return Stream.of(args)
-            .map(s -> s.replace('\\', '/'))
-            .toArray(String[]::new);
+        return Stream.of(args).map(s -> s.replace('\\', '/')).toArray(String[]::new);
     }
 }
