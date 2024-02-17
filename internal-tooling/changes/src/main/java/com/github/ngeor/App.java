@@ -102,7 +102,8 @@ public final class App {
         return nextVersion;
     }
 
-    private void release(boolean dryRun, boolean push) throws IOException, InterruptedException, ProcessFailedException {
+    private void release(boolean dryRun, boolean push)
+            throws IOException, InterruptedException, ProcessFailedException {
         SemVer nextVersion = Objects.requireNonNull(calculateGitVersion());
         MavenReleaser.prepareRelease(rootDirectory, path, nextVersion, dryRun, push);
     }

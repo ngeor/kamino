@@ -1,7 +1,6 @@
 package com.github.ngeor;
 
 import com.github.ngeor.yak4jdom.DocumentWrapper;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;

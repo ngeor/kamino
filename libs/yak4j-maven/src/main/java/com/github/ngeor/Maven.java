@@ -33,16 +33,16 @@ public final class Maven {
         processHelper.run("release:clean");
     }
 
-    public void prepareRelease(String tag, String releaseVersion, String developmentVersion, boolean dryRun, boolean push)
+    public void prepareRelease(
+            String tag, String releaseVersion, String developmentVersion, boolean dryRun, boolean push)
             throws IOException, InterruptedException, ProcessFailedException {
         List<String> args = new ArrayList<>(List.of(
-            "-Dtag=" + tag,
-            "release:prepare",
-            "-DreleaseVersion=" + releaseVersion,
-            "-DdevelopmentVersion=" + developmentVersion,
-            "-Dresume=false",
-            "-DcheckModificationExcludeList=pom.xml"
-        ));
+                "-Dtag=" + tag,
+                "release:prepare",
+                "-DreleaseVersion=" + releaseVersion,
+                "-DdevelopmentVersion=" + developmentVersion,
+                "-Dresume=false",
+                "-DcheckModificationExcludeList=pom.xml"));
         if (dryRun) {
             args.add("-DdryRun=true");
         }
