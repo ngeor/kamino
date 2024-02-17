@@ -87,10 +87,20 @@ public class ElementWrapper {
     /**
      * Removes all child nodes of this element.
      */
-    public void removeChildNodes() {
+    public void removeAllChildNodes() {
         NodeList childNodes = this.element.getChildNodes();
         for (int i = childNodes.getLength() - 1; i >= 0; i--) {
             this.element.removeChild(childNodes.item(i));
+        }
+    }
+
+    public void removeChildNodesByName(String name) {
+        NodeList childNodes = this.element.getChildNodes();
+        for (int i = childNodes.getLength() - 1; i >= 0; i--) {
+            Node item = childNodes.item(i);
+            if (item.getNodeType() == Node.ELEMENT_NODE && name.equals(item.getNodeName())) {
+                this.element.removeChild(item);
+            }
         }
     }
 }
