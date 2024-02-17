@@ -23,6 +23,7 @@ public class ProcessHelper {
                 .redirectErrorStream(true)
                 .start();
         String output = new String(process.getInputStream().readAllBytes());
+        System.out.println(output);
         int exitCode = process.waitFor();
         if (exitCode != 0) {
             String commandAsString = String.join(" ", command);
