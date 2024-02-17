@@ -44,3 +44,4 @@ Normally, apps aren't released to Nexus.
 ## Tips
 
 - Upgrade the parent pom of all modules with `mvn versions:update-parent -DallowSnapshots`
+- Build native image of internal tools with `mvn -Pnative -am -pl internal-tooling/changes/ package -DskipTests`
