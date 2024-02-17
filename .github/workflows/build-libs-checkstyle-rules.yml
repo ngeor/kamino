@@ -7,14 +7,12 @@ on:
       - libs/checkstyle-rules/**
       - .github/workflows/build-libs-checkstyle-rules.yml
       - pom.xml
-      - libs/java/**
   pull_request:
     branches: [ master ]
     paths:
       - libs/checkstyle-rules/**
       - .github/workflows/build-libs-checkstyle-rules.yml
       - pom.xml
-      - libs/java/**
 
 jobs:
   build:
@@ -30,4 +28,4 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build with Maven
-      run: mvn -B -ntp -pl libs/checkstyle-rules -am clean verify
+      run: mvn -B -ntp clean verify --file libs/checkstyle-rules/pom.xml
