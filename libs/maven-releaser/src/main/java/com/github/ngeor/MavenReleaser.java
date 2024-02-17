@@ -21,10 +21,11 @@ public final class MavenReleaser {
         Path pomPath = modulePath.resolve("pom.xml");
 
         // make a backup of the pom file
-        Files.copy(pomPath, modulePath.resolve("pom.xml.bak1"), StandardCopyOption.REPLACE_EXISTING);
+        File backupPom = File.createTempFile("pom", ".xml");
+        backupPom.deleteOnExit();
+        Files.copy(pomPath, backupPom.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
-        Maven maven =
-                new Maven(pomPath.toFile());
+        Maven maven = new Maven(pomPath.toFile());
 
         // overwrite pom.xml with effective pom
         File output = File.createTempFile("pom", ".xml");
@@ -40,7 +41,7 @@ public final class MavenReleaser {
         maven.prepareRelease(tag, nextVersion.toString(), developmentVersion, dryRun, false);
 
         if (dryRun) {
-            Files.copy(modulePath.resolve("pom.xml.bak1"), pomPath, StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(backupPom.toPath(), pomPath, StandardCopyOption.REPLACE_EXISTING);
             return;
         }
 
@@ -63,7 +64,7 @@ public final class MavenReleaser {
         // TODO changelog
 
         // restore original pom
-        Files.copy(modulePath.resolve("pom.xml.bak1"), pomPath, StandardCopyOption.REPLACE_EXISTING);
+        Files.copy(backupPom.toPath(), pomPath, StandardCopyOption.REPLACE_EXISTING);
 
         // switch to the development version
         updateVersion(pomPath.toFile(), developmentVersion);
