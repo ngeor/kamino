@@ -59,7 +59,15 @@ public final class Git {
     }
 
     public void push() throws IOException, InterruptedException, ProcessFailedException {
-        processHelper.run("push");
+        push(false);
+    }
+
+    public void push(boolean followTags) throws IOException, ProcessFailedException, InterruptedException {
+        List<String> args = new ArrayList<>(List.of("push"));
+        if (followTags) {
+            args.add("--follow-tags");
+        }
+        processHelper.run(args.toArray(String[]::new));
     }
 
     /**
@@ -127,5 +135,13 @@ public final class Git {
 
     public void config(String key, String value) throws IOException, ProcessFailedException, InterruptedException {
         processHelper.run("config", key, value);
+    }
+
+    public void resetOne(ResetMode mode) throws IOException, ProcessFailedException, InterruptedException {
+        processHelper.run("reset", "--" + mode.toString().toLowerCase(), "HEAD~1");
+    }
+
+    public void deleteTag(String tag) throws IOException, ProcessFailedException, InterruptedException {
+        processHelper.run("tag", "-d", tag);
     }
 }
