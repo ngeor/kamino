@@ -1,12 +1,18 @@
 package com.github.ngeor.yak4jdom;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
@@ -51,6 +57,14 @@ public class DocumentWrapper {
         }
     }
 
+    public static DocumentWrapper parseString(String input) {
+        try (ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8))) {
+            return parse(inputStream);
+        } catch (IOException ex) {
+            throw new DomRuntimeException(ex);
+        }
+    }
+
     public ElementWrapper getDocumentElement() {
         return new ElementWrapper(document.getDocumentElement());
     }
@@ -63,15 +77,31 @@ public class DocumentWrapper {
      * Writes the document to a file.
      */
     public void write(File file) {
+        try (FileWriter fileWriter = new FileWriter(file)) {
+            write(fileWriter);
+        } catch (IOException ex) {
+            throw new DomRuntimeException(ex);
+        }
+    }
+
+    public void write(Writer writer) {
         try {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
             DOMSource domSource = new DOMSource(document);
-            try (FileWriter fileWriter = new FileWriter(file)) {
-                StreamResult streamResult = new StreamResult(fileWriter);
-                transformer.transform(domSource, streamResult);
-            }
-        } catch (IOException | TransformerException ex) {
+            StreamResult streamResult = new StreamResult(writer);
+            transformer.transform(domSource, streamResult);
+        } catch (TransformerException ex) {
+            throw new DomRuntimeException(ex);
+        }
+    }
+
+    public String writeToString() {
+        try (StringWriter writer = new StringWriter()) {
+            write(writer);
+            return writer.toString() + System.lineSeparator();
+        } catch (IOException ex) {
             throw new DomRuntimeException(ex);
         }
     }
