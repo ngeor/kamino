@@ -16,11 +16,12 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build arturito release tooling
-      run: mvn -Pshade -B -ntp --file internal-tooling/arturito/pom.xml package
+      run: mvn -Pshade -B -ntp --file internal-tooling/arturito/pom.xml clean package
     - name: Run arturito release tooling
       run: >-
-        cd $path && java -jar ../../internal-tooling/arturito/target/arturito-1.0-SNAPSHOT.jar
+        java -jar internal-tooling/arturito/target/arturito-1.0-SNAPSHOT.jar
         ${{ secrets.GPG_KEY }}
         ${{ secrets.GPG_PASSPHRASE }}
         ${{ secrets.OSSRH_USERNAME }}
         ${{ secrets.OSSRH_PASSWORD }}
+        $path

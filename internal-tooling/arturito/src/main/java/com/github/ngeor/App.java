@@ -20,14 +20,15 @@ public final class App {
      * @param args The arguments of the program.
      */
     public static void main(String[] args) throws IOException, InterruptedException {
-        if (args.length != 4) {
-            throw new IllegalArgumentException("Expected exactly 4 arguments");
+        if (args.length != 5) {
+            throw new IllegalArgumentException("Expected exactly 5 arguments");
         }
 
         String gpgKey = args[0];
         String gpgPassphrase = args[1];
         String nexusUsername = args[2];
         String nexusPassword = args[3];
+        String path = args[4];
 
         try {
             // create GPG key file
@@ -68,7 +69,7 @@ public final class App {
             File settingsFile = createMavenSettingsFile(nexusUsername, nexusPassword, gpgKey, gpgPassphrase);
 
             // maven deploy
-            runMavenDeploy(settingsFile);
+            runMavenDeploy(settingsFile, path);
 
         } finally {
 
@@ -104,8 +105,8 @@ public final class App {
         return settingsFile;
     }
 
-    private static void runMavenDeploy(File settingsFile) throws InterruptedException, IOException {
-        int exitCode = new ProcessBuilder("mvn", "-B", "-ntp", "-s", settingsFile.toString(), "-Pgpg", "deploy")
+    private static void runMavenDeploy(File settingsFile, String path) throws InterruptedException, IOException {
+        int exitCode = new ProcessBuilder("mvn", "-B", "-ntp", "-s", settingsFile.toString(), "-Pgpg", "-am", "-pl", path, "deploy")
                 .inheritIO()
                 .start()
                 .waitFor();
