@@ -7,7 +7,7 @@ public final class MavenReleaser {
     private MavenReleaser() {}
 
     public static void prepareRelease(File monorepoRoot, String path, SemVer nextVersion, boolean dryRun)
-            throws IOException, InterruptedException {
+            throws IOException, InterruptedException, ProcessFailedException {
         String developmentVersion =
                 nextVersion.bump(SemVerBump.MINOR).preRelease("SNAPSHOT").toString();
         String tag = path + "/v" + nextVersion;
