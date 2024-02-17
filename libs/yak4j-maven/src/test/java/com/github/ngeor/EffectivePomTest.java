@@ -14,7 +14,7 @@ class EffectivePomTest {
     private Maven maven;
 
     @Test
-    void test() throws IOException, InterruptedException {
+    void test() throws IOException, InterruptedException, ProcessFailedException {
         String pom =
                 """
             <project>
@@ -44,7 +44,7 @@ class EffectivePomTest {
     }
 
     @Test
-    void testParentPom() throws IOException, InterruptedException {
+    void testParentPom() throws IOException, InterruptedException, ProcessFailedException {
         String pom1 =
                 """
         <project>
@@ -95,7 +95,8 @@ class EffectivePomTest {
         });
     }
 
-    private void verifyEffectivePom(Consumer<ElementWrapper> assertions) throws IOException, InterruptedException {
+    private void verifyEffectivePom(Consumer<ElementWrapper> assertions)
+            throws IOException, InterruptedException, ProcessFailedException {
         assertions.accept(maven.effectivePomViaMaven().getDocumentElement());
         assertions.accept(maven.effectivePom(new ArrayList<>()).getDocumentElement());
     }

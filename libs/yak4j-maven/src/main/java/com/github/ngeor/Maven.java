@@ -24,16 +24,16 @@ public final class Maven {
         this.processHelper = new ProcessHelper(pomFile.getParentFile(), cmd, "-B", "-ntp", "--file", pomFile.getName());
     }
 
-    public void sortPom() throws IOException, InterruptedException {
+    public void sortPom() throws IOException, InterruptedException, ProcessFailedException {
         processHelper.run("-q", "com.github.ekryd.sortpom:sortpom-maven-plugin:sort");
     }
 
-    public void cleanRelease() throws IOException, InterruptedException {
+    public void cleanRelease() throws IOException, InterruptedException, ProcessFailedException {
         processHelper.run("release:clean");
     }
 
     public void prepareRelease(String tag, String releaseVersion, String developmentVersion)
-            throws IOException, InterruptedException {
+            throws IOException, InterruptedException, ProcessFailedException {
         processHelper.runInheritIO(
                 "-Dtag=" + tag,
                 "release:prepare",
@@ -41,15 +41,15 @@ public final class Maven {
                 "-DdevelopmentVersion=" + developmentVersion);
     }
 
-    public void clean() throws IOException, InterruptedException {
+    public void clean() throws IOException, InterruptedException, ProcessFailedException {
         processHelper.runInheritIO("clean");
     }
 
-    public void verify() throws IOException, InterruptedException {
+    public void verify() throws IOException, InterruptedException, ProcessFailedException {
         processHelper.runInheritIO("verify");
     }
 
-    public DocumentWrapper effectivePomViaMaven() throws IOException, InterruptedException {
+    public DocumentWrapper effectivePomViaMaven() throws IOException, InterruptedException, ProcessFailedException {
         File output = File.createTempFile("pom", ".xml");
         try {
             processHelper.run("help:effective-pom", "-Doutput=" + output.getAbsolutePath());
@@ -95,29 +95,32 @@ public final class Maven {
             final File parentPomFile;
             if (relativePath == null) {
                 parentPomFile = new File(System.getProperty("user.home"))
-                    .toPath()
-                    .resolve(".m2")
-                    .resolve("repository")
-                    .resolve(groupId.replace('.', '/'))
-                    .resolve(artifactId)
-                    .resolve(version)
-                    .resolve(artifactId + "-" + version + ".pom")
-                    .toFile();
+                        .toPath()
+                        .resolve(".m2")
+                        .resolve("repository")
+                        .resolve(groupId.replace('.', '/'))
+                        .resolve(artifactId)
+                        .resolve(version)
+                        .resolve(artifactId + "-" + version + ".pom")
+                        .toFile();
 
                 if (!parentPomFile.isFile()) {
-                    throw new UnsupportedOperationException("Installing missing Maven pom not supported: " + parentPomFile);
+                    throw new UnsupportedOperationException(
+                            "Installing missing Maven pom not supported: " + parentPomFile);
                 }
             } else {
-                parentPomFile = pomFile.toPath().getParent().resolve(relativePath).resolve("pom.xml").toFile();
+                parentPomFile = pomFile.toPath()
+                        .getParent()
+                        .resolve(relativePath)
+                        .resolve("pom.xml")
+                        .toFile();
                 if (!parentPomFile.isFile()) {
-                    throw new UncheckedIOException(new FileNotFoundException("Parent pom not found at " + relativePath));
+                    throw new UncheckedIOException(
+                            new FileNotFoundException("Parent pom not found at " + relativePath));
                 }
             }
 
-            ParentPom parentPom = new ParentPom(
-                new MavenCoordinates(groupId, artifactId, version),
-                relativePath
-            );
+            ParentPom parentPom = new ParentPom(new MavenCoordinates(groupId, artifactId, version), relativePath);
             parentPoms.add(parentPom);
 
             Maven parentMaven = new Maven(parentPomFile);
@@ -140,7 +143,7 @@ public final class Maven {
         }
     }
 
-    public void install() throws IOException, InterruptedException {
+    public void install() throws IOException, InterruptedException, ProcessFailedException {
         processHelper.runInheritIO("install");
     }
 
