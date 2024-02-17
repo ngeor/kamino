@@ -38,7 +38,7 @@
   </distributionManagement>
   <properties>
     <assertj-bom.version>3.24.2</assertj-bom.version>
-    <checkstyle-rules.version>6.8.0-SNAPSHOT</checkstyle-rules.version>
+    <checkstyle-rules.version>7.1.0-SNAPSHOT</checkstyle-rules.version>
     <checkstyle.version>10.12.7</checkstyle.version>
     <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
     <java.version>17</java.version>
