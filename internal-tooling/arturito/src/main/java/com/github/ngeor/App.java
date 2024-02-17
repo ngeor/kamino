@@ -106,7 +106,8 @@ public final class App {
     }
 
     private static void runMavenDeploy(File settingsFile, String path) throws InterruptedException, IOException {
-        int exitCode = new ProcessBuilder("mvn", "-B", "-ntp", "-s", settingsFile.toString(), "-Pgpg", "-am", "-pl", path, "deploy")
+        int exitCode = new ProcessBuilder("mvn", "-B", "-ntp", "-s", settingsFile.toString(), "-Pgpg", "deploy")
+                .directory(new File(".").toPath().resolve(path).toFile())
                 .inheritIO()
                 .start()
                 .waitFor();
