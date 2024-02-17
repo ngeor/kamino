@@ -40,7 +40,8 @@ public final class Maven {
             "release:prepare",
             "-DreleaseVersion=" + releaseVersion,
             "-DdevelopmentVersion=" + developmentVersion,
-            "-Dresume=false"
+            "-Dresume=false",
+            "-DcheckModificationExcludeList=pom.xml"
         ));
         if (dryRun) {
             args.add("-DdryRun=true");
@@ -62,11 +63,15 @@ public final class Maven {
     public DocumentWrapper effectivePomViaMaven() throws IOException, InterruptedException, ProcessFailedException {
         File output = File.createTempFile("pom", ".xml");
         try {
-            processHelper.run("help:effective-pom", "-Doutput=" + output.getAbsolutePath());
+            effectivePomViaMaven(output);
             return DocumentWrapper.parse(output);
         } finally {
             output.delete();
         }
+    }
+
+    public void effectivePomViaMaven(File output) throws IOException, ProcessFailedException, InterruptedException {
+        processHelper.run("help:effective-pom", "-Doutput=" + output.getAbsolutePath());
     }
 
     public DocumentWrapper effectivePom(List<ParentPom> parentPoms) {
