@@ -39,6 +39,7 @@ public final class App {
         parser.addFlagArgument("git-version");
         parser.addFlagArgument("release");
         parser.addFlagArgument("dry-run");
+        parser.addFlagArgument("push");
         Map<String, Object> parsedArgs = parser.parse(args);
         // e.g. libs/java
         // ensure path does not end in slashes and is not blank
@@ -50,7 +51,7 @@ public final class App {
             if (parsedArgs.containsKey("git-version")) {
                 app.calculateGitVersion();
             } else if (parsedArgs.containsKey("release")) {
-                app.release(parsedArgs.containsKey("dry-run"));
+                app.release(parsedArgs.containsKey("dry-run"), parsedArgs.containsKey("push"));
             } else {
                 app.updateChangeLog(version);
             }
@@ -101,9 +102,9 @@ public final class App {
         return nextVersion;
     }
 
-    private void release(boolean dryRun) throws IOException, InterruptedException, ProcessFailedException {
+    private void release(boolean dryRun, boolean push) throws IOException, InterruptedException, ProcessFailedException {
         SemVer nextVersion = Objects.requireNonNull(calculateGitVersion());
-        MavenReleaser.prepareRelease(rootDirectory, path, nextVersion, dryRun);
+        MavenReleaser.prepareRelease(rootDirectory, path, nextVersion, dryRun, push);
     }
 
     static String sanitize(String path) {

@@ -8,7 +8,7 @@ import java.io.IOException;
 public final class MavenReleaser {
     private MavenReleaser() {}
 
-    public static void prepareRelease(File monorepoRoot, String path, SemVer nextVersion, boolean dryRun)
+    public static void prepareRelease(File monorepoRoot, String path, SemVer nextVersion, boolean dryRun, boolean push)
             throws IOException, InterruptedException, ProcessFailedException {
         String developmentVersion =
                 nextVersion.bump(SemVerBump.MINOR).preRelease("SNAPSHOT").toString();
@@ -16,17 +16,7 @@ public final class MavenReleaser {
 
         Maven maven =
                 new Maven(monorepoRoot.toPath().resolve(path).resolve("pom.xml").toFile());
-        maven.clean();
-        maven.cleanRelease();
-        if (dryRun) {
-            System.out.printf(
-                    "Would have prepared release tag=%s, nextVersion=%s, developmentVersion=%s%n",
-                    tag, nextVersion, developmentVersion);
-        } else {
-            maven.prepareRelease(tag, nextVersion.toString(), developmentVersion);
-        }
-        maven.cleanRelease();
-        maven.clean();
+        maven.prepareRelease(tag, nextVersion.toString(), developmentVersion, dryRun, push);
     }
 
     public static String updateVersion(String input, String version) {

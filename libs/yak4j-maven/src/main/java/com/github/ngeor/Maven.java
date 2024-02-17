@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -32,13 +33,22 @@ public final class Maven {
         processHelper.run("release:clean");
     }
 
-    public void prepareRelease(String tag, String releaseVersion, String developmentVersion)
+    public void prepareRelease(String tag, String releaseVersion, String developmentVersion, boolean dryRun, boolean push)
             throws IOException, InterruptedException, ProcessFailedException {
-        processHelper.runInheritIO(
-                "-Dtag=" + tag,
-                "release:prepare",
-                "-DreleaseVersion=" + releaseVersion,
-                "-DdevelopmentVersion=" + developmentVersion);
+        List<String> args = new ArrayList<>(List.of(
+            "-Dtag=" + tag,
+            "release:prepare",
+            "-DreleaseVersion=" + releaseVersion,
+            "-DdevelopmentVersion=" + developmentVersion,
+            "-Dresume=false"
+        ));
+        if (dryRun) {
+            args.add("-DdryRun=true");
+        }
+        if (!push) {
+            args.add("-DpushChanges=false");
+        }
+        processHelper.runInheritIO(args.toArray(String[]::new));
     }
 
     public void clean() throws IOException, InterruptedException, ProcessFailedException {
