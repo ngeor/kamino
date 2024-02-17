@@ -46,14 +46,14 @@ public class ProcessHelper {
         }
     }
 
-    public boolean tryRun(String... args) throws IOException {
+    public boolean tryRun(String... args) throws IOException, InterruptedException {
         List<String> command = createArgs(args);
         Process process = new ProcessBuilder(command)
                 .directory(workingDirectory)
                 .redirectErrorStream(true)
                 .start();
         process.getInputStream().readAllBytes();
-        return process.exitValue() == 0;
+        return process.waitFor() == 0;
     }
 
     private List<String> createArgs(String... args) {

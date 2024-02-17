@@ -94,7 +94,7 @@ public final class Git {
         processHelper.run("add", file);
     }
 
-    public boolean hasStagedChanges() throws IOException {
+    public boolean hasStagedChanges() throws IOException, InterruptedException {
         return !processHelper.tryRun("diff", "--cached", "--quiet");
     }
 
