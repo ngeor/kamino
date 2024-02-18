@@ -9,6 +9,7 @@ on:
       - pom.xml
       - libs/java/**
       - libs/yak4j-dom/**
+      - libs/yak4j-git/**
       - libs/yak4j-maven/**
       - libs/yak4j-process/**
       - libs/yak4j-semver/**
@@ -20,6 +21,7 @@ on:
       - pom.xml
       - libs/java/**
       - libs/yak4j-dom/**
+      - libs/yak4j-git/**
       - libs/yak4j-maven/**
       - libs/yak4j-process/**
       - libs/yak4j-semver/**
