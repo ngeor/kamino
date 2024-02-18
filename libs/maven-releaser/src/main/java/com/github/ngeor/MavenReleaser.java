@@ -18,7 +18,7 @@ public record MavenReleaser(File monorepoRoot, String path) {
         MavenCoordinates moduleCoordinates = calcModuleCoordinates();
 
         // switch to release version (fixes all usages in the monorepo)
-        setVersion(moduleCoordinates.withVersion(nextVersion.toString()));
+        setVersion(moduleCoordinates, nextVersion.toString());
 
         // make a backup of the pom file
         File backupPom = createBackupOfModulePomFile();
@@ -41,7 +41,7 @@ public record MavenReleaser(File monorepoRoot, String path) {
         // switch to development version
         String developmentVersion =
             nextVersion.bump(SemVerBump.MINOR).preRelease("SNAPSHOT").toString();
-        setVersion(moduleCoordinates.withVersion(developmentVersion));
+        setVersion(moduleCoordinates.withVersion(nextVersion.toString()), developmentVersion);
         git.addAll();
         git.commit(String.format("release(%s): switching to development version %s", path, developmentVersion));
 
@@ -58,10 +58,10 @@ public record MavenReleaser(File monorepoRoot, String path) {
         return result.requireAllFields();
     }
 
-    private void setVersion(MavenCoordinates moduleCoordinates) throws IOException, ProcessFailedException, InterruptedException {
+    private void setVersion(MavenCoordinates moduleCoordinates, String newVersion) throws IOException, ProcessFailedException, InterruptedException {
         // maven at monorepo root
         Maven maven = new Maven(monorepoPomFile());
-        maven.setVersion(moduleCoordinates);
+        maven.setVersion(moduleCoordinates, newVersion);
     }
 
     private File createBackupOfModulePomFile() throws IOException {
