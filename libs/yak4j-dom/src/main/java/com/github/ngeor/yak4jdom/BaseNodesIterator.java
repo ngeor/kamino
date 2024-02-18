@@ -1,10 +1,9 @@
 package com.github.ngeor.yak4jdom;
 
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import java.util.Iterator;
 import java.util.Objects;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public abstract class BaseNodesIterator<E> implements Iterator<E> {
     private final Node parentNode;
