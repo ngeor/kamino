@@ -62,7 +62,7 @@ public class ElementWrapper {
 
     public String firstElementText(String childElementName) {
         return firstElement(childElementName)
-                .map(ElementWrapper::getTextContent)
+                .flatMap(ElementWrapper::getTextContentOptional)
                 .orElse(null);
     }
 
@@ -241,5 +241,14 @@ public class ElementWrapper {
                 }
             }
         }
+    }
+
+    public String path() {
+        Node parentNode = element.getParentNode();
+        if (parentNode == null || parentNode.getNodeType() == Node.DOCUMENT_NODE || (!(parentNode instanceof Element)) || parentNode == element) {
+            return getNodeName();
+        }
+
+        return new ElementWrapper((Element) parentNode).path() + "/" + getNodeName();
     }
 }
