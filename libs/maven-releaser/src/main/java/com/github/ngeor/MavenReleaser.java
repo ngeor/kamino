@@ -67,7 +67,7 @@ public final class MavenReleaser {
         git.commit("[maven-release-plugin] prepare for next development iteration");
 
         if (push) {
-            git.push(true);
+            git.push(PushOption.TAGS);
         }
     }
 
