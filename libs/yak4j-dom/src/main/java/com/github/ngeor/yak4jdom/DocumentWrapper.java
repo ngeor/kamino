@@ -104,4 +104,8 @@ public class DocumentWrapper {
             throw new DomRuntimeException(ex);
         }
     }
+
+    public void indent() {
+        getDocumentElement().indent();
+    }
 }

@@ -27,6 +27,10 @@ public class ElementWrapper {
         return this.element.getTextContent();
     }
 
+    public Optional<String> getTextContentOptional() {
+        return Optional.ofNullable(getTextContent()).map(String::trim).filter(s -> !s.isEmpty());
+    }
+
     public Iterator<Node> getChildNodesAsIterator() {
         return new ChildNodesIterator(this.element);
     }
@@ -60,11 +64,7 @@ public class ElementWrapper {
     }
 
     public ElementWrapper ensureChild(String childElementName) {
-        return firstElement(childElementName).orElseGet(() -> {
-            Element newChild = element.getOwnerDocument().createElement(childElementName);
-            element.appendChild(newChild);
-            return new ElementWrapper(newChild);
-        });
+        return firstElement(childElementName).orElseGet(() -> append(childElementName));
     }
 
     public boolean ensureChildText(String childElementName, String text) {
@@ -78,10 +78,6 @@ public class ElementWrapper {
 
     public void setTextContent(String textContent) {
         this.element.setTextContent(textContent);
-    }
-
-    public void appendChild(ElementWrapper childElement) {
-        this.element.appendChild(childElement.element);
     }
 
     /**
@@ -102,5 +98,87 @@ public class ElementWrapper {
                 this.element.removeChild(item);
             }
         }
+    }
+
+    public ElementWrapper appendText(String text) {
+        appendChild(element.getOwnerDocument().createTextNode(text));
+        return this;
+    }
+
+    public Node importNode(Node node, boolean deep) {
+        return element.getOwnerDocument().importNode(node, deep);
+    }
+
+    public void appendChild(Node newChild) {
+        element.appendChild(newChild);
+    }
+
+    public void indent() {
+        indent(1);
+    }
+
+    public boolean hasChildElements() {
+        return getChildElements().findAny().isPresent();
+    }
+
+    private void indent(int level) {
+        if (!hasChildElements()) {
+            return;
+        }
+
+        Node node = element.getFirstChild();
+        boolean isFirst = true;
+        while (node != null) {
+            if (node.getNodeType() == Node.TEXT_NODE) {
+                if (node.getNodeValue() == null || node.getNodeValue().trim().isEmpty()) {
+                    Node temp = node.getNextSibling();
+                    element.removeChild(node);
+                    node = temp;
+                } else {
+                    // found text with content?
+                    node = node.getNextSibling();
+                }
+            } else if (node.getNodeType() == Node.ELEMENT_NODE) {
+                Node temp = node.getNextSibling();
+
+                if (isFirst) {
+                    element.insertBefore(element.getOwnerDocument().createTextNode("\n"), node);
+                    isFirst = false;
+                }
+
+                element.insertBefore(indentationNode(level), node);
+
+                new ElementWrapper((Element) node).indent(level + 1);
+
+                element.insertBefore(element.getOwnerDocument().createTextNode("\n"), temp);
+
+                node = temp;
+            } else {
+                node = node.getNextSibling();
+            }
+        }
+        element.appendChild(indentationNode(level - 1));
+    }
+
+    private Node indentationNode(int level) {
+        String text = "";
+        for (int i = 1; i <= level; i++) {
+            text += "    ";
+        }
+        return element.getOwnerDocument().createTextNode(text);
+    }
+
+    public Optional<ElementWrapper> appendIfMissing(String childElementName) {
+        if (firstElement(childElementName).isPresent()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(append(childElementName));
+    }
+
+    public ElementWrapper append(String childElementName) {
+        Element newChild = element.getOwnerDocument().createElement(childElementName);
+        element.appendChild(newChild);
+        return new ElementWrapper(newChild);
     }
 }
