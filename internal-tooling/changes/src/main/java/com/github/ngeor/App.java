@@ -4,6 +4,7 @@ import com.github.ngeor.versions.SemVer;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Changelog and semantic version calculator.
@@ -26,8 +27,8 @@ public final class App {
         parser.addFlagArgument("git-version");
         parser.addFlagArgument("release");
         parser.addFlagArgument("changelog");
-        parser.addFlagArgument("dry-run");
         parser.addFlagArgument("push");
+        parser.addNamedArgument("initial-version", false);
 
         Map<String, Object> parsedArgs = parser.parse(args);
         // e.g. libs/java
@@ -59,7 +60,7 @@ public final class App {
         if (parsedArgs.containsKey("release")) {
             if (path != null) {
                 App app = new App(rootDirectory, path, git);
-                app.release(parsedArgs.containsKey("dry-run"), parsedArgs.containsKey("push"));
+                app.release(parsedArgs.containsKey("push"), (String) parsedArgs.get("initial-version"));
                 return;
             } else {
                 throw new IllegalStateException("path is required for --release command");
@@ -75,13 +76,14 @@ public final class App {
         }
     }
 
-    private void release(boolean dryRun, boolean push)
+    private void release(boolean push, String initialVersion)
             throws IOException, InterruptedException, ProcessFailedException {
         SemVer nextVersion = new GitVersionCalculator(git, path)
                 .calculateGitVersion()
                 .map(GitVersionCalculator.Result::nextVersion)
+                .or(() -> Optional.ofNullable(initialVersion).map(SemVer::parse))
                 .orElseThrow();
-        MavenReleaser.prepareRelease(rootDirectory, path, nextVersion, dryRun, push);
+        new MavenReleaser(rootDirectory, path).prepareRelease(nextVersion, push);
     }
 
     static String sanitize(String path) {

@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -27,29 +26,6 @@ public final class Maven {
 
     public void sortPom() throws IOException, InterruptedException, ProcessFailedException {
         processHelper.run("-q", "com.github.ekryd.sortpom:sortpom-maven-plugin:sort");
-    }
-
-    public void cleanRelease() throws IOException, InterruptedException, ProcessFailedException {
-        processHelper.run("release:clean");
-    }
-
-    public void prepareRelease(
-            String tag, String releaseVersion, String developmentVersion, boolean dryRun, boolean push)
-            throws IOException, InterruptedException, ProcessFailedException {
-        List<String> args = new ArrayList<>(List.of(
-                "-Dtag=" + tag,
-                "release:prepare",
-                "-DreleaseVersion=" + releaseVersion,
-                "-DdevelopmentVersion=" + developmentVersion,
-                "-Dresume=false",
-                "-DcheckModificationExcludeList=pom.xml"));
-        if (dryRun) {
-            args.add("-DdryRun=true");
-        }
-        if (!push) {
-            args.add("-DpushChanges=false");
-        }
-        processHelper.runInheritIO(args);
     }
 
     public void clean() throws IOException, InterruptedException, ProcessFailedException {
@@ -164,5 +140,14 @@ public final class Maven {
 
     public void install() throws IOException, InterruptedException, ProcessFailedException {
         processHelper.runInheritIO("install");
+    }
+
+    public void setVersion(MavenCoordinates moduleCoordinates) throws IOException, ProcessFailedException, InterruptedException {
+        processHelper.run(
+            "versions:set",
+            String.format("-DgroupId=%s", moduleCoordinates.groupId()),
+            String.format("-DartifactId=%s", moduleCoordinates.artifactId()),
+            String.format("-DnewVersion=%s", moduleCoordinates.version())
+        );
     }
 }
