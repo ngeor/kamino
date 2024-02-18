@@ -58,14 +58,13 @@ public final class Git {
         processHelper.run("commit", "-m", message);
     }
 
-    public void push() throws IOException, InterruptedException, ProcessFailedException {
-        push(false);
-    }
-
-    public void push(boolean followTags) throws IOException, ProcessFailedException, InterruptedException {
+    public void push(PushOption... pushOptions) throws IOException, InterruptedException, ProcessFailedException {
         List<String> args = new ArrayList<>(List.of("push"));
-        if (followTags) {
-            args.add("--follow-tags");
+        for (PushOption pushOption : pushOptions) {
+            switch (pushOption) {
+                case FOLLOW_TAGS -> args.add("--follow-tags");
+                case TAGS -> args.add("--tags");
+            }
         }
         processHelper.run(args.toArray(String[]::new));
     }
