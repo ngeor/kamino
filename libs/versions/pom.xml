@@ -10,6 +10,8 @@
   <groupId>com.github.ngeor</groupId>
   <artifactId>versions</artifactId>
   <version>1.1.0-SNAPSHOT</version>
+  <name>versions</name>
+  <description>A library that helps with parsing versions, such as semantic versions</description>
   <url>https://github.com/ngeor/kamino/tree/master/libs/versions</url>
   <scm>
     <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
