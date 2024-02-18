@@ -109,7 +109,9 @@ public final class Maven {
         Maven parentMaven = new Maven(parentPomFile);
         // recursion
         DocumentWrapper parentResolved = parentMaven.effectivePomNgResolveParent(parentPoms);
-        return new PomMerger().merge(parentResolved, document);
+        // remove parent element from document
+        document.getDocumentElement().removeChildNodesByName("parent");
+        return new PomMerger().withParent(parentResolved).mergeChild(document);
     }
 
     private File resolveParentPomFile(ParentPom parentPom) {

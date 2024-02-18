@@ -183,10 +183,10 @@ class PomMergerTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    private static String merge(String source, String target) {
-        DocumentWrapper sourceDoc = DocumentWrapper.parseString(source);
-        DocumentWrapper targetDoc = DocumentWrapper.parseString(target);
-        DocumentWrapper result = new PomMerger().merge(sourceDoc, targetDoc);
+    private static String merge(String parent, String child) {
+        DocumentWrapper parentDoc = DocumentWrapper.parseString(parent);
+        DocumentWrapper childDoc = DocumentWrapper.parseString(child);
+        DocumentWrapper result = new PomMerger().withParent(parentDoc).mergeChild(childDoc);
         result.indent();
         return result.writeToString().replace(System.lineSeparator(), "\n");
     }

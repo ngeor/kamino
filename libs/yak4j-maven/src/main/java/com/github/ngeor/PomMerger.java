@@ -6,62 +6,78 @@ import java.util.Set;
 import org.w3c.dom.Node;
 
 // Notable elements which are not inherited include: artifactId; name; prerequisites; profiles
-public class PomMerger {
+public final class PomMerger {
+    public final class Parent {
+        private final DocumentWrapper parent;
+
+        public Parent(DocumentWrapper parent) {
+            this.parent = parent;
+        }
+
+        public DocumentWrapper mergeChild(DocumentWrapper child) {
+            return merge(parent, child);
+        }
+    }
+
+    public Parent withParent(DocumentWrapper parent) {
+        return new Parent(parent);
+    }
+
     /**
      * Merges the parent pom into the child.
-     * @param source The parent pom (should be resolved)
-     * @param target The child pom
+     * @param parentPom The parent pom (should be resolved)
+     * @param childPom The child pom
      */
-    public DocumentWrapper merge(DocumentWrapper source, DocumentWrapper target) {
-        mergeProject(source.getDocumentElement(), target.getDocumentElement());
-        return target;
+    private DocumentWrapper merge(DocumentWrapper parentPom, DocumentWrapper childPom) {
+        mergeProject(parentPom.getDocumentElement(), childPom.getDocumentElement());
+        return childPom;
     }
 
-    private void mergeProject(ElementWrapper source, ElementWrapper target) {
-        source.getChildElements().forEach(sourceChildElement -> mergeProjectChildElement(sourceChildElement, target));
+    private void mergeProject(ElementWrapper parentPomProject, ElementWrapper childPomProject) {
+        parentPomProject.getChildElements().forEach(e -> mergeProjectChildElement(e, childPomProject));
     }
 
-    private void mergeProjectChildElement(ElementWrapper sourceChildElement, ElementWrapper target) {
-        String name = sourceChildElement.getNodeName();
+    private void mergeProjectChildElement(ElementWrapper parentPomProjectChild, ElementWrapper childPomProject) {
+        String name = parentPomProjectChild.getNodeName();
         if ("properties".equals(name)) {
-            mergeProperties(sourceChildElement, target);
+            mergeProperties(parentPomProjectChild, childPomProject);
         } else if (Set.of("modelVersion", "groupId", "version", "packaging", "description", "url", "scm")
                 .contains(name)) {
-            mergeSingleOccurringPlainTextElementRecursively(sourceChildElement, target);
+            mergeSingleOccurringPlainTextElementRecursively(parentPomProjectChild, childPomProject);
         } else if (Set.of("artifactId", "name").contains(name)) {
             // Notable elements which are not inherited include: artifactId; name; prerequisites; profiles
             // ignore
         } else if (Set.of("licenses", "developers", "distributionManagement").contains(name)) {
-            mergeDeepImport(sourceChildElement, target);
+            mergeDeepImport(parentPomProjectChild, childPomProject);
         } else {
             throw new UnsupportedOperationException(String.format("Not implemented merging %s", name));
         }
     }
 
-    private void mergeDeepImport(ElementWrapper sourceChildElement, ElementWrapper target) {
-        String name = sourceChildElement.getNodeName();
-        if (target.firstElement(name).isPresent()) {
+    private void mergeDeepImport(ElementWrapper parentPomChildElement, ElementWrapper childPomElement) {
+        String name = parentPomChildElement.getNodeName();
+        if (childPomElement.firstElement(name).isPresent()) {
             throw new UnsupportedOperationException(String.format("Cannot merge %s when it already exists", name));
         }
 
-        ElementWrapper targetChildElement = target.ensureChild(name);
-        for (var it = sourceChildElement.getChildNodesAsIterator(); it.hasNext(); ) {
+        ElementWrapper childPomChildElement = childPomElement.ensureChild(name);
+        for (var it = parentPomChildElement.getChildNodesAsIterator(); it.hasNext(); ) {
             Node node = it.next();
-            targetChildElement.appendChild(targetChildElement.importNode(node, true));
+            childPomChildElement.appendChild(childPomChildElement.importNode(node, true));
         }
     }
 
     private void mergeSingleOccurringPlainTextElementRecursively(
-            ElementWrapper sourceChildElement, ElementWrapper target) {
-        String name = sourceChildElement.getNodeName();
-        if (sourceChildElement.hasChildElements()) {
-            ElementWrapper targetChildElement = target.ensureChild(name);
-            sourceChildElement
+            ElementWrapper parentPomChildElement, ElementWrapper childPomElement) {
+        String name = parentPomChildElement.getNodeName();
+        if (parentPomChildElement.hasChildElements()) {
+            ElementWrapper targetChildElement = childPomElement.ensureChild(name);
+            parentPomChildElement
                     .getChildElements()
                     .forEach(x -> mergeSingleOccurringPlainTextElementRecursively(x, targetChildElement));
         } else {
-            sourceChildElement.getTextContentOptional().ifPresent(text -> {
-                target.appendIfMissing(name).ifPresent(newChildElement -> newChildElement.setTextContent(text));
+            parentPomChildElement.getTextContentOptional().ifPresent(text -> {
+                childPomElement.appendIfMissing(name).ifPresent(newChildElement -> newChildElement.setTextContent(text));
             });
         }
     }
@@ -76,14 +92,5 @@ public class PomMerger {
                 childProperties.ensureChildText(p.getNodeName(), p.getTextContent());
             }
         });
-    }
-
-    private void mergeSingleOccurringPlainTextElement(ElementWrapper sourceChildElement, ElementWrapper target) {
-        String name = sourceChildElement.getNodeName();
-        if (target.firstElement(name).isPresent()) {
-            // target wins
-            return;
-        }
-        target.ensureChildText(name, sourceChildElement.getTextContent());
     }
 }
