@@ -79,6 +79,10 @@ public class ElementWrapper {
         return true;
     }
 
+    public boolean ensureChildText(ElementWrapper element) {
+        return ensureChildText(element.getNodeName(), element.getTextContent());
+    }
+
     public void setTextContent(String textContent) {
         this.element.setTextContent(textContent);
     }
@@ -126,6 +130,8 @@ public class ElementWrapper {
 
     private void indent(int level) {
         if (!hasChildElements()) {
+            trimLeft();
+            trimRight();
             return;
         }
 
@@ -183,5 +189,57 @@ public class ElementWrapper {
         Element newChild = element.getOwnerDocument().createElement(childElementName);
         element.appendChild(newChild);
         return new ElementWrapper(newChild);
+    }
+
+    public void trimLeft() {
+        Node node = element.getFirstChild();
+        while (node != null && node.getNodeType() == Node.TEXT_NODE) {
+            String text = node.getNodeValue();
+            if (text == null) {
+                // remove node with null text
+                Node temp = node.getNextSibling();
+                element.removeChild(node);
+                node = temp;
+            } else {
+                // trim left
+                text = text.stripLeading();
+                if (text.isEmpty()) {
+                    // remove node with empty text
+                    Node temp = node.getNextSibling();
+                    element.removeChild(node);
+                    node = temp;
+                } else {
+                    // replace text with trimmed value and stop loop
+                    node.setNodeValue(text);
+                    node = null;
+                }
+            }
+        }
+    }
+
+    public void trimRight() {
+        Node node = element.getLastChild();
+        while (node != null && node.getNodeType() == Node.TEXT_NODE) {
+            String text = node.getNodeValue();
+            if (text == null) {
+                // remove node with null text
+                Node temp = node.getPreviousSibling();
+                element.removeChild(node);
+                node = temp;
+            } else {
+                // trim left
+                text = text.stripLeading();
+                if (text.isEmpty()) {
+                    // remove node with empty text
+                    Node temp = node.getPreviousSibling();
+                    element.removeChild(node);
+                    node = temp;
+                } else {
+                    // replace text with trimmed value and stop loop
+                    node.setNodeValue(text);
+                    node = null;
+                }
+            }
+        }
     }
 }
