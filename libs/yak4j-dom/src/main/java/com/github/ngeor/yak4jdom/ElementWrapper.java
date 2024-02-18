@@ -23,30 +23,18 @@ public class ElementWrapper {
         return this.element.getNodeName();
     }
 
-    public String getTextContent() {
-        return this.element.getTextContent();
-    }
-
-    public Optional<String> getTextContentOptional() {
-        return Optional.ofNullable(getTextContent()).map(String::trim).filter(s -> !s.isEmpty());
-    }
-
+    @Deprecated
     public Iterator<Node> getChildNodesAsIterator() {
         return new ChildNodesIterator(this.element);
     }
 
-    public Stream<Node> getChildNodesAsStream() {
-        Iterable<Node> iterable = this::getChildNodesAsIterator;
-        return StreamSupport.stream(iterable.spliterator(), false);
+    public Iterator<ElementWrapper> getChildElementsAsIterator() {
+        return new ChildElementWrapperIterator(element);
     }
 
     public Stream<ElementWrapper> getChildElements() {
         Iterable<ElementWrapper> iterable = this::getChildElementsAsIterator;
         return StreamSupport.stream(iterable.spliterator(), false);
-    }
-
-    public Iterator<ElementWrapper> getChildElementsAsIterator() {
-        return new ChildElementWrapperIterator(element);
     }
 
     /**
@@ -60,41 +48,45 @@ public class ElementWrapper {
         return findChildElements(childElementName).findFirst();
     }
 
-    public String firstElementText(String childElementName) {
-        return firstElement(childElementName)
-                .flatMap(ElementWrapper::getTextContentOptional)
-                .orElse(null);
-    }
-
     public ElementWrapper ensureChild(String childElementName) {
         return firstElement(childElementName).orElseGet(() -> append(childElementName));
     }
 
-    public boolean ensureChildText(String childElementName, String text) {
-        ElementWrapper child = ensureChild(childElementName);
-        if (text.equals(child.getTextContent())) {
-            return false;
-        }
-        child.setTextContent(text);
-        return true;
+    public ElementWrapper append(String childElementName) {
+        Element newChild = element.getOwnerDocument().createElement(childElementName);
+        element.appendChild(newChild);
+        return new ElementWrapper(newChild);
     }
 
-    public boolean ensureChildText(ElementWrapper element) {
-        return ensureChildText(element.getNodeName(), element.getTextContent());
+    public String getTextContent() {
+        return this.element.getTextContent();
     }
 
     public void setTextContent(String textContent) {
         this.element.setTextContent(textContent);
     }
 
-    /**
-     * Removes all child nodes of this element.
-     */
-    public void removeAllChildNodes() {
-        NodeList childNodes = this.element.getChildNodes();
-        for (int i = childNodes.getLength() - 1; i >= 0; i--) {
-            this.element.removeChild(childNodes.item(i));
+    public Optional<String> getTextContentTrimmed() {
+        return Optional.ofNullable(getTextContent()).map(String::trim).filter(s -> !s.isEmpty());
+    }
+
+    public Stream<String> childTextContentsTrimmed(String childElementName) {
+        return findChildElements(childElementName).flatMap(e -> e.getTextContentTrimmed().stream());
+    }
+
+    public String firstElementText(String... childElementNames) {
+        if (childElementNames == null || childElementNames.length == 0) {
+            throw new IllegalArgumentException();
         }
+
+        ElementWrapper e = this;
+        for (int i = 0; i < childElementNames.length - 1 && e != null; i++) {
+            e = e.firstElement(childElementNames[i]).orElse(null);
+        }
+        return Optional.ofNullable(e).stream()
+                .flatMap(x -> x.childTextContentsTrimmed(childElementNames[childElementNames.length - 1]))
+                .findFirst()
+                .orElse(null);
     }
 
     public void removeChildNodesByName(String name) {
@@ -105,19 +97,6 @@ public class ElementWrapper {
                 this.element.removeChild(item);
             }
         }
-    }
-
-    public ElementWrapper appendText(String text) {
-        appendChild(element.getOwnerDocument().createTextNode(text));
-        return this;
-    }
-
-    public Node importNode(Node node, boolean deep) {
-        return element.getOwnerDocument().importNode(node, deep);
-    }
-
-    public void appendChild(Node newChild) {
-        element.appendChild(newChild);
     }
 
     public void indent() {
@@ -177,20 +156,6 @@ public class ElementWrapper {
         return element.getOwnerDocument().createTextNode(text);
     }
 
-    public Optional<ElementWrapper> appendIfMissing(String childElementName) {
-        if (firstElement(childElementName).isPresent()) {
-            return Optional.empty();
-        }
-
-        return Optional.of(append(childElementName));
-    }
-
-    public ElementWrapper append(String childElementName) {
-        Element newChild = element.getOwnerDocument().createElement(childElementName);
-        element.appendChild(newChild);
-        return new ElementWrapper(newChild);
-    }
-
     public void trimLeft() {
         Node node = element.getFirstChild();
         while (node != null && node.getNodeType() == Node.TEXT_NODE) {
@@ -245,7 +210,10 @@ public class ElementWrapper {
 
     public String path() {
         Node parentNode = element.getParentNode();
-        if (parentNode == null || parentNode.getNodeType() == Node.DOCUMENT_NODE || (!(parentNode instanceof Element)) || parentNode == element) {
+        if (parentNode == null
+                || parentNode.getNodeType() == Node.DOCUMENT_NODE
+                || (!(parentNode instanceof Element))
+                || parentNode == element) {
             return getNodeName();
         }
 
