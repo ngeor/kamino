@@ -8,14 +8,14 @@
     <relativePath>../../libs/java</relativePath>
   </parent>
   <groupId>com.github.ngeor</groupId>
-  <artifactId>yak4j-semver</artifactId>
+  <artifactId>versions</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <url>https://github.com/ngeor/kamino/tree/master/libs/yak4j-semver</url>
+  <url>https://github.com/ngeor/kamino/tree/master/libs/versions</url>
   <scm>
     <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
     <developerConnection>scm:git:git@github.com:ngeor/kamino.git</developerConnection>
     <tag>HEAD</tag>
-    <url>https://github.com/ngeor/kamino/tree/master/libs/yak4j-semver</url>
+    <url>https://github.com/ngeor/kamino/tree/master/libs/versions</url>
   </scm>
   <dependencies>
     <dependency>

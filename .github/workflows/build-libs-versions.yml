@@ -1,18 +1,18 @@
-name: Build yak4j-semver
+name: Build versions
 
 on:
   push:
     branches: [ master ]
     paths:
-      - libs/yak4j-semver/**
-      - .github/workflows/build-libs-yak4j-semver.yml
+      - libs/versions/**
+      - .github/workflows/build-libs-versions.yml
       - pom.xml
       - libs/java/**
   pull_request:
     branches: [ master ]
     paths:
-      - libs/yak4j-semver/**
-      - .github/workflows/build-libs-yak4j-semver.yml
+      - libs/versions/**
+      - .github/workflows/build-libs-versions.yml
       - pom.xml
       - libs/java/**
 
@@ -30,4 +30,4 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build with Maven
-      run: mvn -B -ntp -pl libs/yak4j-semver -am clean verify
+      run: mvn -B -ntp -pl libs/versions -am clean verify

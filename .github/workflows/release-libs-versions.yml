@@ -1,8 +1,8 @@
-name: Release yak4j-semver
+name: Release versions
 
 on:
   push:
-    tags: [ "libs/yak4j-semver/v*" ]
+    tags: [ "libs/versions/v*" ]
 
 jobs:
   build:
@@ -24,4 +24,4 @@ jobs:
         ${{ secrets.GPG_PASSPHRASE }}
         ${{ secrets.OSSRH_USERNAME }}
         ${{ secrets.OSSRH_PASSWORD }}
-        libs/yak4j-semver
+        libs/versions

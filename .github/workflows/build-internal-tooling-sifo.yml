@@ -10,11 +10,11 @@ on:
       - libs/cli-parent-pom/**
       - libs/java/**
       - libs/maven-releaser/**
+      - libs/versions/**
       - libs/yak4j-dom/**
       - libs/yak4j-git/**
       - libs/yak4j-maven/**
       - libs/yak4j-process/**
-      - libs/yak4j-semver/**
   pull_request:
     branches: [ master ]
     paths:
@@ -24,11 +24,11 @@ on:
       - libs/cli-parent-pom/**
       - libs/java/**
       - libs/maven-releaser/**
+      - libs/versions/**
       - libs/yak4j-dom/**
       - libs/yak4j-git/**
       - libs/yak4j-maven/**
       - libs/yak4j-process/**
-      - libs/yak4j-semver/**
 
 jobs:
   build:

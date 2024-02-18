@@ -47,7 +47,7 @@
     </dependency>
     <dependency>
       <groupId>com.github.ngeor</groupId>
-      <artifactId>yak4j-semver</artifactId>
+      <artifactId>versions</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
     <dependency>

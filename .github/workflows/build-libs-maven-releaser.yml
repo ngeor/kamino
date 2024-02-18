@@ -8,11 +8,11 @@ on:
       - .github/workflows/build-libs-maven-releaser.yml
       - pom.xml
       - libs/java/**
+      - libs/versions/**
       - libs/yak4j-dom/**
       - libs/yak4j-git/**
       - libs/yak4j-maven/**
       - libs/yak4j-process/**
-      - libs/yak4j-semver/**
   pull_request:
     branches: [ master ]
     paths:
@@ -20,11 +20,11 @@ on:
       - .github/workflows/build-libs-maven-releaser.yml
       - pom.xml
       - libs/java/**
+      - libs/versions/**
       - libs/yak4j-dom/**
       - libs/yak4j-git/**
       - libs/yak4j-maven/**
       - libs/yak4j-process/**
-      - libs/yak4j-semver/**
 
 jobs:
   build:

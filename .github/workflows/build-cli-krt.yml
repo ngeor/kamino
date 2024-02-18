@@ -8,7 +8,7 @@ on:
       - .github/workflows/build-cli-krt.yml
       - pom.xml
       - libs/java/**
-      - libs/yak4j-semver/**
+      - libs/versions/**
   pull_request:
     branches: [ master ]
     paths:
@@ -16,7 +16,7 @@ on:
       - .github/workflows/build-cli-krt.yml
       - pom.xml
       - libs/java/**
-      - libs/yak4j-semver/**
+      - libs/versions/**
 
 jobs:
   build:
