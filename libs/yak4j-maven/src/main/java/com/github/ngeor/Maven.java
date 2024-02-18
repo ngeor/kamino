@@ -141,7 +141,7 @@ public final class Maven {
             Maven parentMaven = new Maven(parentPomFile);
             DocumentWrapper parentResolved = parentMaven.effectivePomNgResolveParent(parentPoms);
 
-            merge(parentResolved, document);
+            new PomMerger().merge(parentResolved, document);
         }
 
         return document;
@@ -160,41 +160,5 @@ public final class Maven {
 
     public void install() throws IOException, InterruptedException, ProcessFailedException {
         processHelper.runInheritIO("install");
-    }
-
-    private void merge(DocumentWrapper parent, DocumentWrapper child) {
-        mergeProject(parent.getDocumentElement(), child.getDocumentElement());
-    }
-
-    private void mergeProject(ElementWrapper parent, ElementWrapper child) {
-        mergeProperties(parent, child);
-        List.of("modelVersion", "groupId", "artifactId", "version", "packaging")
-                .forEach(name -> mergeSingleOccurringPlainTextElement(parent, child, name));
-    }
-
-    private void mergeProperties(ElementWrapper parent, ElementWrapper child) {
-        parent.findChildElements("properties")
-                .flatMap(ElementWrapper::getChildElements)
-                .forEach(p -> {
-                    ElementWrapper childProperties = child.ensureChild("properties");
-                    if (childProperties
-                            .findChildElements(p.getNodeName())
-                            .findAny()
-                            .isPresent()) {
-                        // child property already exists, so it wins
-                    } else {
-                        childProperties.ensureChildText(p.getNodeName(), p.getTextContent());
-                    }
-                });
-    }
-
-    private void mergeSingleOccurringPlainTextElement(ElementWrapper parent, ElementWrapper child, String nodeName) {
-        if (child.firstElement(nodeName).isPresent()) {
-            // child wins
-            return;
-        }
-        parent.findChildElements(nodeName).forEach(p -> {
-            child.ensureChildText(nodeName, p.getTextContent());
-        });
     }
 }
