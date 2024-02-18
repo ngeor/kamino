@@ -1,13 +1,14 @@
 package com.github.ngeor;
 
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Test;
 
 class PomMergerTest {
     @Test
     void testMergeProperties() {
-        String parent = """
+        String parent =
+                """
         <project>
             <properties>
                 <bar>abc</bar>
@@ -15,7 +16,8 @@ class PomMergerTest {
             </properties>
         </project>
         """;
-        String child = """
+        String child =
+                """
         <project>
             <properties>
                 <foo>123</foo>
@@ -23,7 +25,8 @@ class PomMergerTest {
             </properties>
         </project>
         """;
-        String expected = """
+        String expected =
+                """
         <project>
             <properties>
                 <foo>123</foo>
@@ -38,7 +41,8 @@ class PomMergerTest {
 
     @Test
     void testMergePropertiesChildHasNoProperties() {
-        String parent = """
+        String parent =
+                """
         <project>
             <properties>
                 <foo>bar</foo>
@@ -49,7 +53,8 @@ class PomMergerTest {
         <project>
         </project>
         """;
-        String expected = """
+        String expected =
+                """
         <project>
             <properties>
                 <foo>bar</foo>
@@ -122,7 +127,8 @@ class PomMergerTest {
 
     @Test
     void testMergeLicenses() {
-        String parent = """
+        String parent =
+                """
         <project>
             <licenses>
                 <license>
@@ -142,7 +148,8 @@ class PomMergerTest {
 
     @Test
     void testMergeScm() {
-        String parent = """
+        String parent =
+                """
         <project>
             <scm>
                 <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
@@ -152,14 +159,16 @@ class PomMergerTest {
             </scm>
         </project>
         """;
-        String child = """
+        String child =
+                """
         <project>
             <scm>
                 <url>https://github.com/ngeor/kamino/tree/master/libs/java</url>
             </scm>
         </project>
         """;
-        String expected = """
+        String expected =
+                """
         <project>
             <scm>
                 <url>https://github.com/ngeor/kamino/tree/master/libs/java</url>

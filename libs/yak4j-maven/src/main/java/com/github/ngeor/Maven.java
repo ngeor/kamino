@@ -98,53 +98,54 @@ public final class Maven {
 
     private DocumentWrapper effectivePomNgResolveParent(List<ParentPom> parentPoms) {
         final DocumentWrapper document = DocumentWrapper.parse(pomFile);
-
-        // any parent pom?
-        ElementWrapper parent =
-                document.getDocumentElement().firstElement("parent").orElse(null);
-        if (parent != null) {
-            String groupId = parent.firstElementText("groupId");
-            String artifactId = parent.firstElementText("artifactId");
-            String version = parent.firstElementText("version");
-            String relativePath = parent.firstElementText("relativePath");
-            final File parentPomFile;
-            if (relativePath == null) {
-                parentPomFile = new File(System.getProperty("user.home"))
-                        .toPath()
-                        .resolve(".m2")
-                        .resolve("repository")
-                        .resolve(groupId.replace('.', '/'))
-                        .resolve(artifactId)
-                        .resolve(version)
-                        .resolve(artifactId + "-" + version + ".pom")
-                        .toFile();
-
-                if (!parentPomFile.isFile()) {
-                    throw new UnsupportedOperationException(
-                            "Installing missing Maven pom not supported: " + parentPomFile);
-                }
-            } else {
-                parentPomFile = pomFile.toPath()
-                        .getParent()
-                        .resolve(relativePath)
-                        .resolve("pom.xml")
-                        .toFile();
-                if (!parentPomFile.isFile()) {
-                    throw new UncheckedIOException(
-                            new FileNotFoundException("Parent pom not found at " + relativePath));
-                }
-            }
-
-            ParentPom parentPom = new ParentPom(new MavenCoordinates(groupId, artifactId, version), relativePath);
+        final ParentPom parentPom = ParentPom.fromDocument(document).orElse(null);
+        if (parentPom != null) {
             parentPoms.add(parentPom);
 
+            final File parentPomFile = resolveParentPomFile(parentPom);
             Maven parentMaven = new Maven(parentPomFile);
             DocumentWrapper parentResolved = parentMaven.effectivePomNgResolveParent(parentPoms);
-
             new PomMerger().merge(parentResolved, document);
         }
 
         return document;
+    }
+
+    private File resolveParentPomFile(ParentPom parentPom) {
+        return parentPom.relativePath() == null
+                ? parentPomFileFromLocalRepository(parentPom)
+                : parentPomFileFromRelativePath(parentPom);
+    }
+
+    private File parentPomFileFromLocalRepository(ParentPom parentPom) {
+        File parentPomFile = new File(System.getProperty("user.home"))
+                .toPath()
+                .resolve(".m2")
+                .resolve("repository")
+                .resolve(parentPom.coordinates().groupId().replace('.', '/'))
+                .resolve(parentPom.coordinates().artifactId())
+                .resolve(parentPom.coordinates().version())
+                .resolve(parentPom.coordinates().artifactId() + "-"
+                        + parentPom.coordinates().version() + ".pom")
+                .toFile();
+
+        if (!parentPomFile.isFile()) {
+            throw new UnsupportedOperationException("Installing missing Maven pom not supported: " + parentPomFile);
+        }
+        return parentPomFile;
+    }
+
+    private File parentPomFileFromRelativePath(ParentPom parentPom) {
+        File parentPomFile = pomFile.toPath()
+                .getParent()
+                .resolve(parentPom.relativePath())
+                .resolve("pom.xml")
+                .toFile();
+        if (!parentPomFile.isFile()) {
+            throw new UncheckedIOException(
+                    new FileNotFoundException("Parent pom not found at " + parentPom.relativePath()));
+        }
+        return parentPomFile;
     }
 
     private void resolveProperties(ElementWrapper element, Map<String, String> resolvedProperties) {
