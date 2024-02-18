@@ -33,8 +33,12 @@ public final class PomMerger {
         ElementWrapper leftDocumentElement = left.getDocumentElement();
         leftDocumentElement.removeChildNodesByName("artifactId");
         leftDocumentElement.removeChildNodesByName("name");
-        mergeIntoLeft(leftDocumentElement, right.getDocumentElement(), this::mergeProjectChildIntoLeft);
+        mergeProjectIntoLeft(leftDocumentElement, right.getDocumentElement());
         return left;
+    }
+
+    private void mergeProjectIntoLeft(ElementWrapper left, ElementWrapper right) {
+        mergeIntoLeft(left, right, this::mergeProjectChildIntoLeft);
     }
 
     private void mergeIntoLeft(
@@ -78,9 +82,46 @@ public final class PomMerger {
             mergeDependenciesInfoLeft(left, right);
         } else if ("profiles".equals(name)) {
             mergeProfilesIntoLeft(left, right);
+        } else if ("reporting".equals(name)) {
+            mergeReportingIntoLeft(left, right);
+        } else if ("licenses".equals(name)) {
+            mergeLicensesIntoLeft(left, right);
+        } else if ("developers".equals(name)) {
+            mergeDevelopersIntoLeft(left, right);
+        } else if ("distributionManagement".equals(name)) {
+            mergeDistributionManagementIntoLeft(left, right);
+        } else if ("dependencyManagement".equals(name)) {
+            mergeDependencyManagementIntoLeft(left, right);
         } else {
             throw new MergeNotImplementedException(right);
         }
+    }
+
+    private void mergeProfileChildIntoLeft(ElementWrapper left, ElementWrapper right) {
+        String name = right.getNodeName();
+        if (Set.of("properties", "id", "activation").contains(name)) {
+            mergeRecursivelyIntoLeft(left, right);
+        } else if ("build".equals(name)) {
+            mergeBuildIntoLeft(left, right);
+        } else if ("dependencies".equals(name)) {
+            mergeDependenciesInfoLeft(left, right);
+        } else if ("reporting".equals(name)) {
+            mergeReportingIntoLeft(left, right);
+        } else if ("licenses".equals(name)) {
+            mergeLicensesIntoLeft(left, right);
+        } else if ("developers".equals(name)) {
+            mergeDevelopersIntoLeft(left, right);
+        } else if ("distributionManagement".equals(name)) {
+            mergeDistributionManagementIntoLeft(left, right);
+        } else if ("dependencyManagement".equals(name)) {
+            mergeDependencyManagementIntoLeft(left, right);
+        } else {
+            throw new MergeNotImplementedException(right);
+        }
+    }
+
+    private void mergeReportingIntoLeft(ElementWrapper left, ElementWrapper right) {
+        mergeBuildIntoLeft(left, right);
     }
 
     private void mergeBuildIntoLeft(ElementWrapper left, ElementWrapper right) {
@@ -90,6 +131,32 @@ public final class PomMerger {
                 mergeBuildPluginsIntoLeft(leftChild, rightChild);
             } else if ("extensions".equals(name)) {
                 mergeBuildExtensionsIntoLeft(leftChild, rightChild);
+            } else if ("pluginManagement".equals(name)) {
+                mergeBuildPluginManagementInfoLeft(leftChild, rightChild);
+            } else if ("finalName".equals(name)) {
+                mergeRecursivelyIntoLeft(leftChild, rightChild);
+            } else {
+                throw new MergeNotImplementedException(rightChild);
+            }
+        });
+    }
+
+    private void mergeDependencyManagementIntoLeft(ElementWrapper left, ElementWrapper right) {
+        mergeIntoLeft(left, right, (leftChild, rightChild) -> {
+            String name = rightChild.getNodeName();
+            if ("dependencies".equals(name)) {
+                mergeDependenciesInfoLeft(leftChild, rightChild);
+            } else {
+                throw new MergeNotImplementedException(rightChild);
+            }
+        });
+    }
+
+    private void mergeBuildPluginManagementInfoLeft(ElementWrapper left, ElementWrapper right) {
+        mergeIntoLeft(left, right, (leftChild, rightChild) -> {
+            String name = rightChild.getNodeName();
+            if ("plugins".equals(name)) {
+                mergeBuildPluginsIntoLeft(leftChild, rightChild);
             } else {
                 throw new MergeNotImplementedException(rightChild);
             }
@@ -132,6 +199,63 @@ public final class PomMerger {
             String name = rightChild.getNodeName();
             if ("profile".equals(name)) {
                 String id = requireChildText(rightChild, "id");
+                ElementWrapper leftChild = left.getChildElements()
+                        .filter(x -> name.equals(x.getNodeName()))
+                        .filter(x -> hasChildText(x, "id", id))
+                        .findFirst()
+                        .orElseGet(() -> left.append(name));
+                mergeIntoLeft(leftChild, rightChild, this::mergeProfileChildIntoLeft);
+            } else {
+                throw new MergeNotImplementedException(rightChild);
+            }
+        });
+    }
+
+    private void mergeLicensesIntoLeft(ElementWrapper left, ElementWrapper right) {
+        right.getChildElements().forEach(rightChild -> {
+            String name = rightChild.getNodeName();
+            if ("license".equals(name)) {
+                String id = requireChildText(rightChild, "name");
+                ElementWrapper leftChild = left.getChildElements()
+                        .filter(x -> name.equals(x.getNodeName()))
+                        .filter(x -> hasChildText(x, "name", id))
+                        .findFirst()
+                        .orElseGet(() -> left.append(name));
+                mergeRecursivelyIntoLeft(leftChild, rightChild);
+            } else {
+                throw new MergeNotImplementedException(rightChild);
+            }
+        });
+    }
+
+    private void mergeDevelopersIntoLeft(ElementWrapper left, ElementWrapper right) {
+        right.getChildElements().forEach(rightChild -> {
+            String name = rightChild.getNodeName();
+            if ("developer".equals(name)) {
+                String id = requireChildText(rightChild, "name");
+                ElementWrapper leftChild = left.getChildElements()
+                        .filter(x -> name.equals(x.getNodeName()))
+                        .filter(x -> hasChildText(x, "name", id))
+                        .findFirst()
+                        .orElseGet(() -> left.append(name));
+                mergeRecursivelyIntoLeft(leftChild, rightChild);
+            } else {
+                throw new MergeNotImplementedException(rightChild);
+            }
+        });
+    }
+
+    private void mergeDistributionManagementIntoLeft(ElementWrapper left, ElementWrapper right) {
+        right.getChildElements().forEach(rightChild -> {
+            String name = rightChild.getNodeName();
+            if ("repository".equals(name) || "snapshotRepository".equals(name)) {
+                String id = requireChildText(rightChild, "id");
+                ElementWrapper leftChild = left.getChildElements()
+                        .filter(x -> name.equals(x.getNodeName()))
+                        .filter(x -> hasChildText(x, "id", id))
+                        .findFirst()
+                        .orElseGet(() -> left.append(name));
+                mergeRecursivelyIntoLeft(leftChild, rightChild);
             } else {
                 throw new MergeNotImplementedException(rightChild);
             }
