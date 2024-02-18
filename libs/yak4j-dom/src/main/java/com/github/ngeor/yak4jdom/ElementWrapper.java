@@ -41,9 +41,12 @@ public class ElementWrapper {
     }
 
     public Stream<ElementWrapper> getChildElements() {
-        return getChildNodesAsStream()
-                .filter(node -> node.getNodeType() == Node.ELEMENT_NODE && node instanceof Element)
-                .map(node -> new ElementWrapper((Element) node));
+        Iterable<ElementWrapper> iterable = this::getChildElementsAsIterator;
+        return StreamSupport.stream(iterable.spliterator(), false);
+    }
+
+    public Iterator<ElementWrapper> getChildElementsAsIterator() {
+        return new ChildElementWrapperIterator(element);
     }
 
     /**
