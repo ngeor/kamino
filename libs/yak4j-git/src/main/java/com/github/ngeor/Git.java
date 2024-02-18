@@ -66,7 +66,7 @@ public final class Git {
                 case TAGS -> args.add("--tags");
             }
         }
-        processHelper.run(args.toArray(String[]::new));
+        processHelper.run(args);
     }
 
     /**
@@ -92,7 +92,7 @@ public final class Git {
         if (format != null) {
             args.add(format);
         }
-        String output = processHelper.run(args.toArray(String[]::new));
+        String output = processHelper.run(args);
         return output.lines().map(mapper).findFirst();
     }
 
@@ -119,7 +119,7 @@ public final class Git {
         return processHelper
                 .run(Stream.of("rev-list", "--all", "--format=%H|%as|%D|%s", commit, path)
                         .filter(Objects::nonNull)
-                        .toArray(String[]::new))
+                        .toList())
                 .lines()
                 .flatMap(line -> Commit.parse(line).stream());
     }

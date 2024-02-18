@@ -49,7 +49,7 @@ public final class Maven {
         if (!push) {
             args.add("-DpushChanges=false");
         }
-        processHelper.runInheritIO(args.toArray(String[]::new));
+        processHelper.runInheritIO(args);
     }
 
     public void clean() throws IOException, InterruptedException, ProcessFailedException {
