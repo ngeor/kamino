@@ -96,7 +96,7 @@ public final class Maven {
         return document;
     }
 
-    private DocumentWrapper effectivePomNgResolveParent(List<ParentPom> parentPoms) {
+    public DocumentWrapper effectivePomNgResolveParent(List<ParentPom> parentPoms) {
         final DocumentWrapper document = DocumentWrapper.parse(pomFile);
         final ParentPom parentPom = ParentPom.fromDocument(document).orElse(null);
         if (parentPom == null) {
