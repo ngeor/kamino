@@ -22,29 +22,26 @@ class CommitFilterTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {
-        "[maven-release-plugin] updated version",
-        "chore: Apply spotless",
-        "chore: Fix build",
-        "chore: Fixing build",
-        "chore: Updated changelog",
-        "chore: changelog",
-        "chore: fixed build",
-        "chore: spotless",
-        "chore: updated changelog",
-        "fix: Fix build",
-        "fix: Fix failing tests",
-    })
+    @ValueSource(
+            strings = {
+                "[maven-release-plugin] updated version",
+                "chore: Apply spotless",
+                "chore: Fix build",
+                "chore: Fixing build",
+                "chore: Updated changelog",
+                "chore: changelog",
+                "chore: fixed build",
+                "chore: spotless",
+                "chore: updated changelog",
+                "fix: Fix build",
+                "fix: Fix failing tests",
+            })
     void testExcludedCommits(String subject) {
         assertThat(test(subject)).isFalse();
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {
-        "fix: Something important",
-        "chore: Something interesting",
-        "chore: fixed building"
-    })
+    @ValueSource(strings = {"fix: Something important", "chore: Something interesting", "chore: fixed building"})
     void testIncludedCommits(String subject) {
         assertThat(test(subject)).isTrue();
     }

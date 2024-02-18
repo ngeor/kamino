@@ -2,9 +2,7 @@ package com.github.ngeor;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Changelog and semantic version calculator.
@@ -12,13 +10,11 @@ import java.util.Objects;
 public final class App {
     private final File rootDirectory;
     private final String path;
-    private final String tagPrefix;
     private final Git git;
 
-    App(File rootDirectory, String path, String tagPrefix, Git git) {
+    App(File rootDirectory, String path, Git git) {
         this.rootDirectory = rootDirectory;
         this.path = path;
-        this.tagPrefix = tagPrefix;
         this.git = git;
     }
 
@@ -28,64 +24,62 @@ public final class App {
         parser.addPositionalArgument("version", false);
         parser.addFlagArgument("git-version");
         parser.addFlagArgument("release");
+        parser.addFlagArgument("changelog");
         parser.addFlagArgument("dry-run");
         parser.addFlagArgument("push");
+
         Map<String, Object> parsedArgs = parser.parse(args);
         // e.g. libs/java
         // ensure path does not end in slashes and is not blank
         String path = sanitize((String) parsedArgs.get("path"));
-        // e.g. 4.2.1
-        String version = (String) parsedArgs.get("version");
+        File rootDirectory = new File(".").toPath().toAbsolutePath().toFile();
+        Git git = new Git(rootDirectory);
         if (path != null) {
-            File rootDirectory = new File(".").toPath().toAbsolutePath().toFile();
 
             // ensure given path exists
             if (!new File(rootDirectory, path).isDirectory()) {
                 throw new IllegalArgumentException("path " + path + " not found");
             }
+        }
 
-            Git git = new Git(rootDirectory);
+        // e.g. 4.2.1
+        String version = (String) parsedArgs.get("version");
 
-            String tagPrefix = path + "/v";
+        if (parsedArgs.containsKey("git-version")) {
+            new GitVersionCommand(rootDirectory, path).run();
+            return;
+        }
 
-            App app = new App(rootDirectory, path, tagPrefix, git);
-            if (parsedArgs.containsKey("git-version")) {
-                app.calculateGitVersion();
-            } else if (parsedArgs.containsKey("release")) {
+        if (parsedArgs.containsKey("changelog")) {
+            new ChangeLogUpdaterCommand(rootDirectory, path, version).run();
+            return;
+        }
+
+        if (parsedArgs.containsKey("release")) {
+            if (path != null) {
+                App app = new App(rootDirectory, path, git);
                 app.release(parsedArgs.containsKey("dry-run"), parsedArgs.containsKey("push"));
+                return;
             } else {
-                new ChangeLogUpdater(rootDirectory, path, tagPrefix, git).updateChangeLog(version);
+                throw new IllegalStateException("path is required for --release command");
             }
+        }
+
+        if (path != null) {
+            // default with path == changelog
+            new ChangeLogUpdaterCommand(rootDirectory, path, version).run();
         } else {
+            // default without path == overview
             new ChangesOverviewCommand().run();
         }
     }
 
-    private SemVer calculateGitVersion() throws IOException, InterruptedException, ProcessFailedException {
-        SemVer mostRecentVersion = SemVer.parse(git.getMostRecentTag(tagPrefix).orElseThrow());
-        String sinceCommit = tagPrefix + mostRecentVersion;
-
-        List<Commit> commits = git.revList(sinceCommit, path).toList();
-        if (commits.isEmpty()) {
-            System.out.printf("No commits to %s since %s%n", path, mostRecentVersion);
-            return null;
-        }
-
-        SemVerBump bump = commits.stream()
-                .filter(new CommitFilter())
-                .map(Commit::summary)
-                .map(this::calculateBump)
-                .max(Enum::compareTo)
-                .orElse(SemVerBump.MINOR);
-
-        SemVer nextVersion = mostRecentVersion.bump(bump);
-        System.out.printf("The next version of %s should be %s (%s)%n", path, nextVersion, bump);
-        return nextVersion;
-    }
-
     private void release(boolean dryRun, boolean push)
             throws IOException, InterruptedException, ProcessFailedException {
-        SemVer nextVersion = Objects.requireNonNull(calculateGitVersion());
+        SemVer nextVersion = new GitVersionCalculator(git, path)
+                .calculateGitVersion()
+                .map(GitVersionCalculator.Result::nextVersion)
+                .orElseThrow();
         MavenReleaser.prepareRelease(rootDirectory, path, nextVersion, dryRun, push);
     }
 
@@ -101,17 +95,4 @@ public final class App {
 
         return path.isBlank() ? null : path;
     }
-
-    SemVerBump calculateBump(String message) {
-        if (message.startsWith("fix:")) {
-            return SemVerBump.PATCH;
-        }
-
-        if (message.matches("^[a-z]+!:.+$")) {
-            return SemVerBump.MAJOR;
-        }
-
-        return SemVerBump.MINOR;
-    }
-
 }

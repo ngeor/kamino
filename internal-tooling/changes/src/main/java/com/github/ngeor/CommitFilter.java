@@ -6,12 +6,11 @@ import java.util.regex.Pattern;
 
 public class CommitFilter implements Predicate<Commit> {
     private static final List<Pattern> needles = List.of(
-        Pattern.compile("^\\[maven-release-plugin]"),
-        Pattern.compile("\\bfix(ed|ing)? build\\b", Pattern.CASE_INSENSITIVE),
-        Pattern.compile("\\b(Updat(e|ed|ign) )?changelog\\b", Pattern.CASE_INSENSITIVE),
-        Pattern.compile("^(chore|fix):( apply)? spotless$", Pattern.CASE_INSENSITIVE),
-        Pattern.compile("^(chore|fix): fix failing tests$", Pattern.CASE_INSENSITIVE)
-    );
+            Pattern.compile("^\\[maven-release-plugin]"),
+            Pattern.compile("\\bfix(ed|ing)? build\\b", Pattern.CASE_INSENSITIVE),
+            Pattern.compile("\\b(Updat(e|ed|ign) )?changelog\\b", Pattern.CASE_INSENSITIVE),
+            Pattern.compile("^(chore|fix):( apply)? spotless$", Pattern.CASE_INSENSITIVE),
+            Pattern.compile("^(chore|fix): fix failing tests$", Pattern.CASE_INSENSITIVE));
 
     @Override
     public boolean test(Commit commit) {

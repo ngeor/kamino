@@ -10,14 +10,14 @@ public class ModuleFinder {
         Maven maven = new Maven(rootDirectory.toPath().resolve("pom.xml").toFile());
         DocumentWrapper document = maven.effectivePomNgResolveParent(new ArrayList<>());
         return document.getDocumentElement()
-            .findChildElements("modules")
-            .flatMap(e -> e.findChildElements("module"))
-            .flatMap(e -> e.getTextContentTrimmed().stream())
-            .filter(this::isEligible);
+                .findChildElements("modules")
+                .flatMap(e -> e.findChildElements("module"))
+                .flatMap(e -> e.getTextContentTrimmed().stream())
+                .filter(this::isEligible);
     }
 
     private boolean isEligible(String module) {
         return module != null
-            && (module.startsWith("archetypes/") || module.startsWith("libs/") || module.startsWith("plugins/"));
+                && (module.startsWith("archetypes/") || module.startsWith("libs/") || module.startsWith("plugins/"));
     }
 }

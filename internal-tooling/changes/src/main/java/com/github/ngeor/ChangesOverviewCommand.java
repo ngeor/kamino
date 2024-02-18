@@ -11,7 +11,8 @@ public class ChangesOverviewCommand {
     public void run() {
         System.out.println("Release status");
         System.out.println("Module\tLatest version\tDate\tNumber of unreleased commits");
-        new ModuleFinder().eligibleModules(rootDirectory)
+        new ModuleFinder()
+                .eligibleModules(rootDirectory)
                 .map(this::buildOverview)
                 .forEach(System.out::println);
     }
@@ -30,13 +31,13 @@ public class ChangesOverviewCommand {
     private Optional<String[]> recentTagWithDate(String module)
             throws IOException, InterruptedException, ProcessFailedException {
         // TODO make function for the tag prefix and ensure no duplicate trailing slash
-        return git.getMostRecentTagWithDate(module + "/v");
+        return git.getMostRecentTagWithDate(TagPrefix.tagPrefix(module));
     }
 
     private String buildExtraInfo(String module, String version, String date) {
         String count;
         try {
-            count = String.valueOf(git.revList(module + "/v" + version, module)
+            count = String.valueOf(git.revList(TagPrefix.tagPrefix(module) + version, module)
                     .filter(new CommitFilter())
                     .count());
         } catch (Exception ex) {
