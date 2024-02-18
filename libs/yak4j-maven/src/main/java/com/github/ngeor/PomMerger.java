@@ -7,21 +7,14 @@ import org.w3c.dom.Node;
 
 // Notable elements which are not inherited include: artifactId; name; prerequisites; profiles
 public class PomMerger {
-    public String merge(String source, String target) {
-        DocumentWrapper sourceDoc = DocumentWrapper.parseString(source);
-        DocumentWrapper targetDoc = DocumentWrapper.parseString(target);
-        merge(sourceDoc, targetDoc);
-        targetDoc.indent();
-        return targetDoc.writeToString();
-    }
-
     /**
      * Merges the parent pom into the child.
      * @param source The parent pom (should be resolved)
      * @param target The child pom
      */
-    public void merge(DocumentWrapper source, DocumentWrapper target) {
+    public DocumentWrapper merge(DocumentWrapper source, DocumentWrapper target) {
         mergeProject(source.getDocumentElement(), target.getDocumentElement());
+        return target;
     }
 
     private void mergeProject(ElementWrapper source, ElementWrapper target) {

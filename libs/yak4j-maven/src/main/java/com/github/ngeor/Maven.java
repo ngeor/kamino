@@ -99,16 +99,17 @@ public final class Maven {
     private DocumentWrapper effectivePomNgResolveParent(List<ParentPom> parentPoms) {
         final DocumentWrapper document = DocumentWrapper.parse(pomFile);
         final ParentPom parentPom = ParentPom.fromDocument(document).orElse(null);
-        if (parentPom != null) {
-            parentPoms.add(parentPom);
-
-            final File parentPomFile = resolveParentPomFile(parentPom);
-            Maven parentMaven = new Maven(parentPomFile);
-            DocumentWrapper parentResolved = parentMaven.effectivePomNgResolveParent(parentPoms);
-            new PomMerger().merge(parentResolved, document);
+        if (parentPom == null) {
+            return document;
         }
 
-        return document;
+        parentPoms.add(parentPom);
+
+        final File parentPomFile = resolveParentPomFile(parentPom);
+        Maven parentMaven = new Maven(parentPomFile);
+        // recursion
+        DocumentWrapper parentResolved = parentMaven.effectivePomNgResolveParent(parentPoms);
+        return new PomMerger().merge(parentResolved, document);
     }
 
     private File resolveParentPomFile(ParentPom parentPom) {

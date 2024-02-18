@@ -2,6 +2,7 @@ package com.github.ngeor;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.github.ngeor.yak4jdom.DocumentWrapper;
 import org.junit.jupiter.api.Test;
 
 class PomMergerTest {
@@ -182,7 +183,11 @@ class PomMergerTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    private static String merge(String parent, String child) {
-        return new PomMerger().merge(parent, child).replace(System.lineSeparator(), "\n");
+    private static String merge(String source, String target) {
+        DocumentWrapper sourceDoc = DocumentWrapper.parseString(source);
+        DocumentWrapper targetDoc = DocumentWrapper.parseString(target);
+        DocumentWrapper result = new PomMerger().merge(sourceDoc, targetDoc);
+        result.indent();
+        return result.writeToString().replace(System.lineSeparator(), "\n");
     }
 }
