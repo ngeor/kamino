@@ -61,7 +61,7 @@ class PomMergerTest {
     @Test
     void testMergePropertiesParentHasNoProperties() {
         String child =
-            """
+                """
     <project>
         <properties>
             <foo>bar</foo>
@@ -172,6 +172,66 @@ class PomMergerTest {
                 <tag>HEAD</tag>
                 <url>https://github.com/ngeor/kamino/tree/master/libs/java</url>
             </scm>
+        </project>
+        """;
+        String actual = merge(parent, child);
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    void testMergeBuildPlugins() {
+        String parent =
+                """
+        <project>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.acme</groupId>
+                        <artifactId>foo</artifactId>
+                        <version>1.0</version>
+                        <scope>test</scope>
+                    </plugin>
+                </plugins>
+            </build>
+        </project>
+        """;
+
+        String child =
+                """
+        <project>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.acme</groupId>
+                        <artifactId>foo</artifactId>
+                        <scope>compile</scope>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.acme</groupId>
+                        <artifactId>bar</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </project>
+        """;
+
+        String expected =
+                """
+        <project>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.acme</groupId>
+                        <artifactId>foo</artifactId>
+                        <version>1.0</version>
+                        <scope>compile</scope>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.acme</groupId>
+                        <artifactId>bar</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
         </project>
         """;
         String actual = merge(parent, child);

@@ -25,16 +25,16 @@ public record ParentPom(MavenCoordinates coordinates, String relativePath) {
             var node = it.next();
             switch (node.getNodeName()) {
                 case "groupId":
-                    groupId = node.getTextContentOptional().orElse(null);
+                    groupId = node.getTextContentTrimmed().orElse(null);
                     break;
                 case "artifactId":
-                    artifactId = node.getTextContentOptional().orElse(null);
+                    artifactId = node.getTextContentTrimmed().orElse(null);
                     break;
                 case "version":
-                    version = node.getTextContentOptional().orElse(null);
+                    version = node.getTextContentTrimmed().orElse(null);
                     break;
                 case "relativePath":
-                    relativePath = node.getTextContentOptional().orElse(null);
+                    relativePath = node.getTextContentTrimmed().orElse(null);
                     break;
                 default:
                     break;

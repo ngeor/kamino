@@ -1,7 +1,6 @@
 package com.github.ngeor;
 
 import com.github.ngeor.yak4jdom.DocumentWrapper;
-import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ public class ChangesOverviewCommand {
         document.getDocumentElement()
                 .findChildElements("modules")
                 .flatMap(e -> e.findChildElements("module"))
-                .map(ElementWrapper::getTextContent)
+                .flatMap(e -> e.getTextContentTrimmed().stream())
                 .filter(this::isEligible)
                 .map(this::buildOverview)
                 .forEach(System.out::println);

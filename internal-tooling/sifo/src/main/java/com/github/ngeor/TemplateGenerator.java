@@ -143,25 +143,38 @@ public final class TemplateGenerator {
     private void fixProjectUrls(MavenModule module) throws IOException, InterruptedException, ProcessFailedException {
         boolean hadChanges = false;
         DocumentWrapper document = DocumentWrapper.parse(module.pomFile());
-
-        hadChanges |= document.getDocumentElement().ensureChildText("groupId", GROUP_ID);
-        hadChanges |= document.getDocumentElement()
-                .ensureChildText("artifactId", module.projectDirectory().getName());
+        ElementWrapper documentElement = document.getDocumentElement();
+        hadChanges |= ensureChildText(documentElement, "groupId", GROUP_ID);
+        hadChanges |= ensureChildText(
+                documentElement, "artifactId", module.projectDirectory().getName());
 
         // TODO do not hardcode the github URL
         String url = "https://github.com/ngeor/kamino/tree/master/" + module.path();
-        hadChanges |= document.getDocumentElement().ensureChildText("url", url);
+        hadChanges |= ensureChildText(documentElement, "url", url);
 
-        ElementWrapper scm = document.getDocumentElement().ensureChild("scm");
-        hadChanges |= scm.ensureChildText("connection", "scm:git:https://github.com/ngeor/kamino.git");
-        hadChanges |= scm.ensureChildText("developerConnection", "scm:git:git@github.com:ngeor/kamino.git");
-        hadChanges |= scm.ensureChildText("tag", "HEAD");
-        hadChanges |= scm.ensureChildText("url", url);
+        ElementWrapper scm = documentElement.ensureChild("scm");
+        hadChanges |= ensureChildText(scm, "connection", "scm:git:https://github.com/ngeor/kamino.git");
+        hadChanges |= ensureChildText(scm, "developerConnection", "scm:git:git@github.com:ngeor/kamino.git");
+        hadChanges |= ensureChildText(scm, "tag", "HEAD");
+        hadChanges |= ensureChildText(scm, "url", url);
 
         if (hadChanges) {
             document.write(module.pomFile());
             Maven maven = new Maven(module.pomFile());
             maven.sortPom();
         }
+    }
+
+    private static boolean ensureChildText(ElementWrapper parent, String elementName, String text) {
+        ElementWrapper child = parent.firstElement(elementName).orElse(null);
+        boolean hadToCreate = child == null;
+        if (hadToCreate) {
+            child = parent.append(elementName);
+        }
+        if (text.trim().equals(child.getTextContentTrimmed().orElse(""))) {
+            return hadToCreate;
+        }
+        child.setTextContent(text.trim());
+        return true;
     }
 }

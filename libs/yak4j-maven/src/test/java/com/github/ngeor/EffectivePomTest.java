@@ -36,10 +36,8 @@ class EffectivePomTest {
         verifyEffectivePom(project -> {
             assertThat(project.firstElementText("groupId")).isEqualTo("com.acme");
             assertThat(project.firstElementText("artifactId")).isEqualTo("dummy");
-            assertThat(project.firstElement("properties").orElseThrow().firstElementText("foo"))
-                    .isEqualTo("123");
-            assertThat(project.firstElement("properties").orElseThrow().firstElementText("bar"))
-                    .isEqualTo("test-123");
+            assertThat(project.firstElementText("properties", "foo")).isEqualTo("123");
+            assertThat(project.firstElementText("properties", "bar")).isEqualTo("test-123");
         });
     }
 
