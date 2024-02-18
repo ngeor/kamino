@@ -1,5 +1,7 @@
 package com.github.ngeor;
 
+import com.github.ngeor.versions.SemVer;
+
 public final class TagPrefix {
     private TagPrefix() {}
 

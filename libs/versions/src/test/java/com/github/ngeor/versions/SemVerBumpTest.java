@@ -1,4 +1,4 @@
-package com.github.ngeor;
+package com.github.ngeor.versions;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;

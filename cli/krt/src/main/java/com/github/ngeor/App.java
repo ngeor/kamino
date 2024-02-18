@@ -1,5 +1,7 @@
 package com.github.ngeor;
 
+import com.github.ngeor.versions.SemVer;
+import com.github.ngeor.versions.SemVerBump;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;

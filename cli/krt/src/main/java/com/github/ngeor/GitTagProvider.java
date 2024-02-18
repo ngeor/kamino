@@ -1,5 +1,6 @@
 package com.github.ngeor;
 
+import com.github.ngeor.versions.SemVer;
 import java.io.IOException;
 import java.util.List;
 import java.util.SortedSet;

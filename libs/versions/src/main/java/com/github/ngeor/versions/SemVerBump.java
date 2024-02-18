@@ -1,4 +1,4 @@
-package com.github.ngeor;
+package com.github.ngeor.versions;
 
 public enum SemVerBump {
     PATCH,

@@ -1,5 +1,7 @@
 package com.github.ngeor;
 
+import com.github.ngeor.versions.SemVer;
+import com.github.ngeor.versions.SemVerBump;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.File;
 import java.io.IOException;
