@@ -238,6 +238,103 @@ class PomMergerTest {
         assertThat(actual).isEqualTo(expected);
     }
 
+    @Test
+    void testMergeBuildPluginExecutions() {
+        String parent =
+                """
+        <project>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.acme</groupId>
+                        <artifactId>foo</artifactId>
+                        <version>1.0</version>
+                        <executions>
+                            <execution>
+                                <id>pre-test</id>
+                                <goals>
+                                    <goal>test</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>test</id>
+                                <goals>
+                                    <goal>verify</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </project>
+        """;
+
+        String child =
+                """
+        <project>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.acme</groupId>
+                        <artifactId>foo</artifactId>
+                        <executions>
+                            <execution>
+                                <id>pre-test</id>
+                                <goals>
+                                    <goal>validate</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>post-test</id>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </project>
+        """;
+
+        String expected =
+                """
+        <project>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.acme</groupId>
+                        <artifactId>foo</artifactId>
+                        <version>1.0</version>
+                        <executions>
+                            <execution>
+                                <id>pre-test</id>
+                                <goals>
+                                    <goal>validate</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>test</id>
+                                <goals>
+                                    <goal>verify</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>post-test</id>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </project>
+        """;
+        String actual = merge(parent, child);
+        assertThat(actual).isEqualTo(expected);
+    }
+
     private static String merge(String parent, String child) {
         DocumentWrapper parentDoc = DocumentWrapper.parseString(parent);
         DocumentWrapper childDoc = DocumentWrapper.parseString(child);
