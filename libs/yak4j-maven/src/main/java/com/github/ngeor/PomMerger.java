@@ -223,10 +223,15 @@ public final class PomMerger {
         }
     }
 
-    private static class ConfigurationMerge extends BasicRecursiveMerger {
+    private static class ConfigurationMerge extends BasicMerger {
         @Override
         protected Optional<ElementWrapper> locateExistingChild(ElementWrapper left, ElementWrapper rightChild) {
             return Optional.empty();
+        }
+
+        @Override
+        protected Merge<ElementWrapper> createMerger(ElementWrapper rightChild) {
+            return new ConfigurationMerge();
         }
     }
 

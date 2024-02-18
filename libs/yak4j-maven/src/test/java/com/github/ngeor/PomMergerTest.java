@@ -338,7 +338,7 @@ class PomMergerTest {
     @Test
     void testMergeBuildPluginConfiguration() {
         String parent =
-            """
+                """
         <project>
             <build>
                 <plugins>
@@ -376,7 +376,7 @@ class PomMergerTest {
         """;
 
         String child =
-            """
+                """
         <project>
             <build>
                 <plugins>
@@ -403,6 +403,10 @@ class PomMergerTest {
                                 </goals>
                                 <configuration>
                                     <foo>6</foo>
+                                    <rules>
+                                        <rule>6.a</rule>
+                                        <rule>6.b</rule>
+                                    </rules>
                                 </configuration>
                             </execution>
                         </executions>
@@ -413,7 +417,7 @@ class PomMergerTest {
         """;
 
         String expected =
-            """
+                """
         <project>
             <build>
                 <plugins>
@@ -452,6 +456,10 @@ class PomMergerTest {
                                 </goals>
                                 <configuration>
                                     <foo>6</foo>
+                                    <rules>
+                                        <rule>6.a</rule>
+                                        <rule>6.b</rule>
+                                    </rules>
                                 </configuration>
                             </execution>
                         </executions>
