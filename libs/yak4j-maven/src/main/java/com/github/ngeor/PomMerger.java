@@ -165,6 +165,8 @@ public final class PomMerger {
             String name = rightChild.getNodeName();
             if ("executions".equals(name)) {
                 return new ExecutionsMerge();
+            } else if ("configuration".equals(name)) {
+                return new ConfigurationMerge();
             } else {
                 return super.createMerger(rightChild);
             }
@@ -201,6 +203,30 @@ public final class PomMerger {
             } else {
                 return super.locateExistingChild(left, rightChild);
             }
+        }
+
+        @Override
+        protected Merge<ElementWrapper> createMerger(ElementWrapper rightChild) {
+            return new ExecutionMerge();
+        }
+    }
+
+    private static class ExecutionMerge extends BasicRecursiveMerger {
+        @Override
+        protected Merge<ElementWrapper> createMerger(ElementWrapper rightChild) {
+            String name = rightChild.getNodeName();
+            if ("configuration".equals(name)) {
+                return new ConfigurationMerge();
+            } else {
+                return super.createMerger(rightChild);
+            }
+        }
+    }
+
+    private static class ConfigurationMerge extends BasicRecursiveMerger {
+        @Override
+        protected Optional<ElementWrapper> locateExistingChild(ElementWrapper left, ElementWrapper rightChild) {
+            return Optional.empty();
         }
     }
 

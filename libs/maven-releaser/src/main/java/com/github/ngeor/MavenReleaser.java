@@ -28,6 +28,7 @@ public final class MavenReleaser {
         // overwrite pom.xml with effective pom
         Maven maven = new Maven(pomPath.toFile());
         DocumentWrapper document = maven.effectivePomNgResolveParent(new ArrayList<>());
+        document.indent();
         document.write(pomPath.toFile());
 
         maven.prepareRelease(tag, nextVersion.toString(), developmentVersion, dryRun, false);
