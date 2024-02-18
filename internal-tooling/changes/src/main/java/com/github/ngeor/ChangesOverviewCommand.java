@@ -21,27 +21,26 @@ public class ChangesOverviewCommand {
         try {
             return module + "\t"
                     + recentTagWithDate(module)
-                            .map(versionWithDate -> buildExtraInfo(module, versionWithDate[0], versionWithDate[1]))
+                            .map(tag -> buildExtraInfo(module, tag))
                             .orElse("N/A");
         } catch (IOException | InterruptedException | ProcessFailedException e) {
             return module + "\t" + e.getMessage();
         }
     }
 
-    private Optional<String[]> recentTagWithDate(String module)
+    private Optional<Tag> recentTagWithDate(String module)
             throws IOException, InterruptedException, ProcessFailedException {
         return git.getMostRecentTagWithDate(TagPrefix.tagPrefix(module));
     }
 
-    private String buildExtraInfo(String module, String version, String date) {
+    private String buildExtraInfo(String module, Tag tag) {
         String count;
         try {
-            count = String.valueOf(git.revList(TagPrefix.tag(module, SemVer.parse(version)), module)
-                    .filter(new CommitFilter())
-                    .count());
+            count = String.valueOf(
+                    git.revList(tag, module).filter(new CommitFilter()).count());
         } catch (Exception ex) {
             count = ex.getMessage();
         }
-        return version + "\t" + date + "\t" + count;
+        return TagPrefix.version(module, tag) + "\t" + tag.date() + "\t" + count;
     }
 }

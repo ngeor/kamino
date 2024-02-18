@@ -55,7 +55,7 @@ class GitIT {
         git.commit("Adding changelog file");
         git.tag("v1.1.0");
 
-        assertThat(git.getMostRecentTag("v")).contains("1.1.0");
+        assertThat(git.getMostRecentTag("v")).contains(new Tag("v1.1.0", null));
     }
 
     @Test
@@ -70,10 +70,10 @@ class GitIT {
         git.commit("Adding changelog file");
         git.tag("v10.0.0");
 
-        String[] parts = git.getMostRecentTagWithDate("v").orElseThrow();
+        Tag tag = git.getMostRecentTagWithDate("v").orElseThrow();
 
-        assertThat(parts[0]).isEqualTo("10.0.0");
-        assertThat(OffsetDateTime.parse(parts[1], DateTimeFormatter.ofPattern("E MMM d HH:mm:ss yyyy Z", Locale.US)))
+        assertThat(tag.name()).isEqualTo("v10.0.0");
+        assertThat(OffsetDateTime.parse(tag.date(), DateTimeFormatter.ofPattern("E MMM d HH:mm:ss yyyy Z", Locale.US)))
                 .isCloseToUtcNow(within(2, ChronoUnit.SECONDS));
     }
 
@@ -89,7 +89,7 @@ class GitIT {
         git.commit("Adding changelog file");
         git.tag("v10.0.0");
 
-        assertThat(git.revList(null, ".").map(Commit::summary))
+        assertThat(git.revList(".").map(Commit::summary))
                 .containsExactly("Adding changelog file", "Adding readme file");
         assertThat(git.revList("v9.0.0", ".").map(Commit::summary)).containsExactly("Adding changelog file");
     }

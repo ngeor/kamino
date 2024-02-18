@@ -11,6 +11,10 @@ public final class TagPrefix {
         return validate(path) + "/v" + version;
     }
 
+    public static SemVer version(String path, Tag tag) {
+        return SemVer.parse(tag.name().substring(tagPrefix(path).length()));
+    }
+
     private static String validate(String path) {
         if (path.isBlank() || path.endsWith("/") || path.endsWith("\\")) {
             throw new IllegalArgumentException();

@@ -71,22 +71,24 @@ public final class Git {
 
     /**
      * Gets the most recent tag that starts with the given prefix.
-     * The prefix is stripped from the returned value.
+     * The prefix is not stripped from the returned value.
      * @param prefix The prefix of the tag.
-     * @return The most recent tag, stripped of the given prefix.
+     * @return The most recent tag.
      */
-    public Optional<String> getMostRecentTag(String prefix)
+    public Optional<Tag> getMostRecentTag(String prefix)
             throws IOException, InterruptedException, ProcessFailedException {
-        return getMostRecentTag(prefix, null, s -> s.substring(prefix.length()));
+        return getMostRecentTag(prefix, null, s -> new Tag(s, null));
     }
 
-    public Optional<String[]> getMostRecentTagWithDate(String prefix)
+    public Optional<Tag> getMostRecentTagWithDate(String prefix)
             throws IOException, InterruptedException, ProcessFailedException {
-        return getMostRecentTag(prefix, "--format=%(refname:strip=2),%(creatordate)", s -> s.substring(prefix.length())
-                .split(","));
+        return getMostRecentTag(prefix, "--format=%(refname:strip=2),%(creatordate)", s -> {
+            String[] parts = s.split(",");
+            return new Tag(parts[0], parts[1]);
+        });
     }
 
-    private <E> Optional<E> getMostRecentTag(String prefix, String format, Function<String, E> mapper)
+    private Optional<Tag> getMostRecentTag(String prefix, String format, Function<String, Tag> mapper)
             throws IOException, InterruptedException, ProcessFailedException {
         List<String> args = new ArrayList<>(Arrays.asList("tag", "-l", prefix + "*", "--sort=-version:refname"));
         if (format != null) {
@@ -122,6 +124,15 @@ public final class Git {
                         .toList())
                 .lines()
                 .flatMap(line -> Commit.parse(line).stream());
+    }
+
+    public Stream<Commit> revList(Tag since, String path)
+            throws IOException, ProcessFailedException, InterruptedException {
+        return revList(since.name(), path);
+    }
+
+    public Stream<Commit> revList(String path) throws IOException, ProcessFailedException, InterruptedException {
+        return revList((String) null, path);
     }
 
     public void init() throws IOException, InterruptedException, ProcessFailedException {

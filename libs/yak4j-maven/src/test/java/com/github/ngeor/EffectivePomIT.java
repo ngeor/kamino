@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 import org.junit.jupiter.api.Test;
 
-class EffectivePomTest {
+class EffectivePomIT {
     private Maven maven;
 
     @Test

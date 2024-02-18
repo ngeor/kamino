@@ -3,7 +3,6 @@ package com.github.ngeor;
 import java.io.File;
 import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import org.xml.sax.SAXException;
 
 /**
@@ -23,7 +22,7 @@ public class ProjectImporter {
     }
 
     public void run()
-            throws IOException, InterruptedException, ParserConfigurationException, TransformerException, SAXException,
+            throws IOException, InterruptedException, ParserConfigurationException, SAXException,
                     ProcessFailedException {
         ensureGitLatest();
         importGitSubtree();
@@ -82,7 +81,7 @@ public class ProjectImporter {
     }
 
     private void adjustImportedCode()
-            throws IOException, ParserConfigurationException, InterruptedException, TransformerException, SAXException,
+            throws IOException, ParserConfigurationException, InterruptedException, SAXException,
                     ProcessFailedException {
         new TemplateGenerator(monorepoRoot)
                 .regenerateAllTemplates(new MavenModule(
@@ -112,7 +111,10 @@ public class ProjectImporter {
 
         if (TemplateGenerator.requiresReleaseWorkflow(typeName)) {
             Git git = new Git(oldRepoRoot);
-            SemVer maxReleaseVersion = SemVer.parse(git.getMostRecentTag("v").orElseThrow());
+            SemVer maxReleaseVersion = git.getMostRecentTag("v")
+                    .map(tag -> tag.name().substring(1))
+                    .map(SemVer::parse)
+                    .orElseThrow();
             SemVer nextVersion = maxReleaseVersion.bump(SemVerBump.PATCH);
 
             MavenReleaser.prepareRelease(

@@ -16,8 +16,9 @@ public class GitVersionCalculator {
     }
 
     public Optional<Result> calculateGitVersion() throws IOException, InterruptedException, ProcessFailedException {
-        SemVer mostRecentVersion =
-                git.getMostRecentTag(tagPrefix).map(SemVer::parse).orElse(null);
+        SemVer mostRecentVersion = git.getMostRecentTag(tagPrefix)
+                .map(tag -> TagPrefix.version(path, tag))
+                .orElse(null);
         return mostRecentVersion != null ? Optional.of(calculateGitVersion(mostRecentVersion)) : Optional.empty();
     }
 
