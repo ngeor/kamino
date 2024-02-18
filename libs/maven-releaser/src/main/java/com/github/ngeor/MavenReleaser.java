@@ -15,7 +15,7 @@ public final class MavenReleaser {
             throws IOException, InterruptedException, ProcessFailedException {
         String developmentVersion =
                 nextVersion.bump(SemVerBump.MINOR).preRelease("SNAPSHOT").toString();
-        String tag = path + "/v" + nextVersion;
+        String tag = TagPrefix.tag(path, nextVersion);
 
         Path modulePath = monorepoRoot.toPath().resolve(path);
         Path pomPath = modulePath.resolve("pom.xml");

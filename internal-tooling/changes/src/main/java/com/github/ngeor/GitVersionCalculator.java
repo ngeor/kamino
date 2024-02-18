@@ -23,7 +23,7 @@ public class GitVersionCalculator {
 
     private Result calculateGitVersion(SemVer mostRecentVersion)
             throws IOException, ProcessFailedException, InterruptedException {
-        String sinceCommit = tagPrefix + mostRecentVersion;
+        String sinceCommit = TagPrefix.tag(path, mostRecentVersion);
 
         List<Commit> commits = git.revList(sinceCommit, path).toList();
         if (commits.isEmpty()) {

@@ -30,14 +30,13 @@ public class ChangesOverviewCommand {
 
     private Optional<String[]> recentTagWithDate(String module)
             throws IOException, InterruptedException, ProcessFailedException {
-        // TODO make function for the tag prefix and ensure no duplicate trailing slash
         return git.getMostRecentTagWithDate(TagPrefix.tagPrefix(module));
     }
 
     private String buildExtraInfo(String module, String version, String date) {
         String count;
         try {
-            count = String.valueOf(git.revList(TagPrefix.tagPrefix(module) + version, module)
+            count = String.valueOf(git.revList(TagPrefix.tag(module, SemVer.parse(version)), module)
                     .filter(new CommitFilter())
                     .count());
         } catch (Exception ex) {

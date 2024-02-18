@@ -23,7 +23,7 @@ public class ChangeLogUpdater {
     }
 
     public void updateChangeLog(String version) throws IOException, InterruptedException, ProcessFailedException {
-        String sinceCommit = version != null ? tagPrefix + version : null;
+        String sinceCommit = version != null ? TagPrefix.tag(path, SemVer.parse(version)) : null;
 
         FormattedRelease formattedRelease = format(
                 Release.create(git.revList(sinceCommit, path))
