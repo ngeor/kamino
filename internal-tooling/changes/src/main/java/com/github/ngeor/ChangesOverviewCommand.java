@@ -1,9 +1,7 @@
 package com.github.ngeor;
 
-import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Optional;
 
 public class ChangesOverviewCommand {
@@ -13,20 +11,9 @@ public class ChangesOverviewCommand {
     public void run() {
         System.out.println("Release status");
         System.out.println("Module\tLatest version\tDate\tNumber of unreleased commits");
-        Maven maven = new Maven(rootDirectory.toPath().resolve("pom.xml").toFile());
-        DocumentWrapper document = maven.effectivePom(new ArrayList<>());
-        document.getDocumentElement()
-                .findChildElements("modules")
-                .flatMap(e -> e.findChildElements("module"))
-                .flatMap(e -> e.getTextContentTrimmed().stream())
-                .filter(this::isEligible)
+        new ModuleFinder().eligibleModules(rootDirectory)
                 .map(this::buildOverview)
                 .forEach(System.out::println);
-    }
-
-    private boolean isEligible(String module) {
-        return module != null
-                && (module.startsWith("archetypes/") || module.startsWith("libs/") || module.startsWith("plugins/"));
     }
 
     private String buildOverview(String module) {
