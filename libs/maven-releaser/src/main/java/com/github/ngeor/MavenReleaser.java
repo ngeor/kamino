@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 
 public final class MavenReleaser {
     private MavenReleaser() {}
@@ -24,17 +25,9 @@ public final class MavenReleaser {
         backupPom.deleteOnExit();
         Files.copy(pomPath, backupPom.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
-        Maven maven = new Maven(pomPath.toFile());
-
         // overwrite pom.xml with effective pom
-        File output = File.createTempFile("pom", ".xml");
-        output.deleteOnExit();
-        maven.effectivePomViaMaven(output);
-        Files.copy(output.toPath(), pomPath, StandardCopyOption.REPLACE_EXISTING);
-
-        // remove parent element
-        DocumentWrapper document = DocumentWrapper.parse(pomPath.toFile());
-        document.getDocumentElement().removeChildNodesByName("parent");
+        Maven maven = new Maven(pomPath.toFile());
+        DocumentWrapper document = maven.effectivePom(new ArrayList<>());
         document.write(pomPath.toFile());
 
         maven.prepareRelease(tag, nextVersion.toString(), developmentVersion, dryRun, false);
