@@ -30,9 +30,9 @@ class PomMergerTest {
                 """
         <project>
             <properties>
-                <foo>123</foo>
                 <bar>hello</bar>
                 <name>test</name>
+                <foo>123</foo>
             </properties>
         </project>
         """;
@@ -54,16 +54,26 @@ class PomMergerTest {
         <project>
         </project>
         """;
-        String expected =
-                """
+        String actual = merge(parent, child);
+        assertThat(actual).isEqualTo(parent);
+    }
+
+    @Test
+    void testMergePropertiesParentHasNoProperties() {
+        String child =
+            """
+    <project>
+        <properties>
+            <foo>bar</foo>
+        </properties>
+    </project>
+    """;
+        String parent = """
         <project>
-            <properties>
-                <foo>bar</foo>
-            </properties>
         </project>
         """;
         String actual = merge(parent, child);
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isEqualTo(child);
     }
 
     @Test
@@ -77,13 +87,8 @@ class PomMergerTest {
         <project>
         </project>
         """;
-        String expected = """
-        <project>
-            <groupId>com.acme</groupId>
-        </project>
-        """;
         String actual = merge(parent, child);
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isEqualTo(parent);
     }
 
     @Test
@@ -98,32 +103,22 @@ class PomMergerTest {
             <groupId>com.foo</groupId>
         </project>
         """;
-        String expected = """
-        <project>
-            <groupId>com.foo</groupId>
-        </project>
-        """;
         String actual = merge(parent, child);
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isEqualTo(child);
     }
 
     @Test
-    void testDoNotMergeName() {
+    void testDoNotInheritName() {
         String parent = """
         <project>
             <name>com.acme</name>
         </project>
         """;
         String child = """
-        <project>
-        </project>
-        """;
-        String expected = """
-        <project>
-        </project>
+        <project/>
         """;
         String actual = merge(parent, child);
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isEqualTo(child);
     }
 
     @Test
@@ -172,10 +167,10 @@ class PomMergerTest {
                 """
         <project>
             <scm>
-                <url>https://github.com/ngeor/kamino/tree/master/libs/java</url>
                 <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
                 <developerConnection>scm:git:git@github.com:ngeor/kamino.git</developerConnection>
                 <tag>HEAD</tag>
+                <url>https://github.com/ngeor/kamino/tree/master/libs/java</url>
             </scm>
         </project>
         """;
