@@ -78,7 +78,8 @@ public final class TemplateGenerator {
                             try {
                                 return m.coordinates().equals(p.coordinates());
                             } catch (Exception ex) {
-                                throw new RuntimeException(ex);
+                                throw new RuntimeException(
+                                        String.format("Error processing %s and %s", module.path(), m.path()), ex);
                             }
                         })
                         .forEach(internalDependencies::add);
