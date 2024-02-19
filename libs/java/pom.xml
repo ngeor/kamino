@@ -66,16 +66,16 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>org.junit</groupId>
-        <artifactId>junit-bom</artifactId>
-        <version>${junit.version}</version>
+        <groupId>org.assertj</groupId>
+        <artifactId>assertj-bom</artifactId>
+        <version>${assertj-bom.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
-        <groupId>org.assertj</groupId>
-        <artifactId>assertj-bom</artifactId>
-        <version>${assertj-bom.version}</version>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>${junit.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -124,14 +124,14 @@
           </configuration>
           <dependencies>
             <dependency>
-              <groupId>com.puppycrawl.tools</groupId>
-              <artifactId>checkstyle</artifactId>
-              <version>${checkstyle.version}</version>
-            </dependency>
-            <dependency>
               <groupId>com.github.ngeor</groupId>
               <artifactId>checkstyle-rules</artifactId>
               <version>${checkstyle-rules.version}</version>
+            </dependency>
+            <dependency>
+              <groupId>com.puppycrawl.tools</groupId>
+              <artifactId>checkstyle</artifactId>
+              <version>${checkstyle.version}</version>
             </dependency>
           </dependencies>
           <executions>
@@ -188,9 +188,10 @@
           <artifactId>sortpom-maven-plugin</artifactId>
           <version>${sortpom-maven-plugin.version}</version>
           <configuration>
+            <createBackupFile>false</createBackupFile>
             <expandEmptyElements>false</expandEmptyElements>
             <sortProperties>true</sortProperties>
-            <sortDependencies>scope</sortDependencies>
+            <sortDependencies>scope,groupId,artifactId</sortDependencies>
           </configuration>
           <executions>
             <execution>
