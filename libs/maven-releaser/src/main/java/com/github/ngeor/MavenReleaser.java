@@ -40,7 +40,7 @@ public record MavenReleaser(File monorepoRoot, String path) {
 
         // switch to development version
         String developmentVersion =
-            nextVersion.bump(SemVerBump.MINOR).preRelease("SNAPSHOT").toString();
+                nextVersion.bump(SemVerBump.MINOR).preRelease("SNAPSHOT").toString();
         setVersion(moduleCoordinates.withVersion(nextVersion.toString()), developmentVersion);
         git.addAll();
         git.commit(String.format("release(%s): switching to development version %s", path, developmentVersion));
@@ -54,11 +54,13 @@ public record MavenReleaser(File monorepoRoot, String path) {
         // maven at module
         Maven maven = new Maven(modulePomFile());
         DocumentWrapper documentWrapper = maven.effectivePomNgResolveParent(new ArrayList<>());
-        MavenCoordinates result = MavenCoordinates.fromElement(documentWrapper.getDocumentElement()).orElseThrow();
+        MavenCoordinates result = MavenCoordinates.fromElement(documentWrapper.getDocumentElement())
+                .orElseThrow();
         return result.requireAllFields();
     }
 
-    private void setVersion(MavenCoordinates moduleCoordinates, String newVersion) throws IOException, ProcessFailedException, InterruptedException {
+    private void setVersion(MavenCoordinates moduleCoordinates, String newVersion)
+            throws IOException, ProcessFailedException, InterruptedException {
         // maven at monorepo root
         Maven maven = new Maven(monorepoPomFile());
         maven.setVersion(moduleCoordinates, newVersion);

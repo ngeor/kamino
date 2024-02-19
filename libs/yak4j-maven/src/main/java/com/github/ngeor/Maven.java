@@ -142,13 +142,13 @@ public final class Maven {
         processHelper.runInheritIO("install");
     }
 
-    public void setVersion(MavenCoordinates moduleCoordinates, String newVersion) throws IOException, ProcessFailedException, InterruptedException {
+    public void setVersion(MavenCoordinates moduleCoordinates, String newVersion)
+            throws IOException, ProcessFailedException, InterruptedException {
         processHelper.run(
-            "versions:set",
-            String.format("-DgroupId=%s", moduleCoordinates.groupId()),
-            String.format("-DartifactId=%s", moduleCoordinates.artifactId()),
-            String.format("-DoldVersion=%s", moduleCoordinates.version()),
-            String.format("-DnewVersion=%s", newVersion)
-        );
+                "versions:set",
+                String.format("-DgroupId=%s", moduleCoordinates.groupId()),
+                String.format("-DartifactId=%s", moduleCoordinates.artifactId()),
+                String.format("-DoldVersion=%s", moduleCoordinates.version()),
+                String.format("-DnewVersion=%s", newVersion));
     }
 }

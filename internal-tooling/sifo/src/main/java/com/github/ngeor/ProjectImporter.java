@@ -119,8 +119,7 @@ public class ProjectImporter {
                     .orElseThrow();
             SemVer nextVersion = maxReleaseVersion.bump(SemVerBump.PATCH);
 
-            new MavenReleaser(
-                    monorepoRoot, typeName + "/" + oldRepoRoot.getName()).prepareRelease(nextVersion, true);
+            new MavenReleaser(monorepoRoot, typeName + "/" + oldRepoRoot.getName()).prepareRelease(nextVersion, true);
         }
     }
 

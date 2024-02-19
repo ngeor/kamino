@@ -15,7 +15,7 @@ public record MavenCoordinates(String groupId, String artifactId, String version
 
         // break the loop if all elements have been found
         for (var it = element.getChildElementsAsIterator();
-             it.hasNext() && (groupId == null || artifactId == null || version == null); ) {
+                it.hasNext() && (groupId == null || artifactId == null || version == null); ) {
             var node = it.next();
             switch (node.getNodeName()) {
                 case "groupId":
@@ -36,7 +36,12 @@ public record MavenCoordinates(String groupId, String artifactId, String version
     }
 
     public MavenCoordinates requireAllFields() {
-        if (groupId == null || groupId.isBlank() || artifactId == null || artifactId.isBlank() || version == null || version.isBlank()) {
+        if (groupId == null
+                || groupId.isBlank()
+                || artifactId == null
+                || artifactId.isBlank()
+                || version == null
+                || version.isBlank()) {
             throw new IllegalStateException();
         }
 
