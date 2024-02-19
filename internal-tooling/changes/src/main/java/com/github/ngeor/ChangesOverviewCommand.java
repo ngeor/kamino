@@ -36,8 +36,10 @@ public class ChangesOverviewCommand {
     private String buildExtraInfo(String module, Tag tag) {
         String count;
         try {
-            count = String.valueOf(
-                    git.revList(tag, module).filter(new CommitFilter()).count());
+            count = String.valueOf(git.revList(tag, module)
+                    .map(Commit::summary)
+                    .filter(new CommitFilter())
+                    .count());
         } catch (Exception ex) {
             count = ex.getMessage();
         }

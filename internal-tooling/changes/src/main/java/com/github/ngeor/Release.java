@@ -8,22 +8,40 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
+import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public record Release(List<Group> groups) {
+public final class Release {
+    private static final Pattern conventionalCommitPattern = Pattern.compile(
+            "^(?<type>[a-z]+)(\\((?<scope>[a-z]+)\\))?(?<breaking>!)?:\\s*(?<description>.+)$",
+            Pattern.CASE_INSENSITIVE);
+
+    private final List<Group> groups;
+
+    private Release(List<Group> groups) {
+        this.groups = groups;
+    }
+
+    public List<Group> groups() {
+        return groups;
+    }
 
     public static Release create(Stream<Commit> commits) {
         List<Group> result = new ArrayList<>();
         for (var it = commits.iterator(); it.hasNext(); ) {
             Commit commit = it.next();
+            CommitInfo.UntypedCommit untypedCommit = new CommitInfo.UntypedCommit(commit);
             if (result.isEmpty() || commit.tag() != null) {
-                result.add(new Group(CommitInfo.fromCommit(commit)));
+                result.add(new Group(untypedCommit));
             } else {
                 // addFirst, so that each group shows commits from the oldest to the newest
-                result.getLast().addFirst(CommitInfo.fromCommit(commit));
+                result.getLast().addFirst(untypedCommit);
             }
         }
         return new Release(result);
@@ -61,6 +79,7 @@ public record Release(List<Group> groups) {
     }
 
     public record SubGroup(String name, LinkedList<CommitInfo> commits) {
+
         public SubGroup(List<CommitInfo> commits) {
             this(null, new LinkedList<>(commits));
         }
@@ -104,49 +123,82 @@ public record Release(List<Group> groups) {
                 }
             });
             for (CommitInfo commit : commits) {
-                CommitInfo n = commit.regroup(options);
-                String prefix = n.group();
-                map.computeIfAbsent(prefix, ignored -> new LinkedList<>()).add(n);
+                CommitInfo conventionalCommit = toConventionalCommit(commit);
+                String type = Objects.requireNonNullElse(
+                        options.scopeOverrider().apply(conventionalCommit), options.defaultGroup());
+                map.computeIfAbsent(type, ignored -> new LinkedList<>()).add(conventionalCommit);
             }
 
             return map.entrySet().stream()
                     .map(e -> new SubGroup(e.getKey(), e.getValue()))
                     .toList();
         }
-    }
 
-    public record CommitInfo(Commit commit, String group, boolean isBreaking) {
-        public static CommitInfo fromCommit(Commit commit) {
-            return new CommitInfo(commit, null, false);
-        }
-
-        public CommitInfo regroup(SubGroupOptions options) {
-            String summary = commit.summary();
-            String[] parts = summary.split(":", 2);
-            String prefix = parts.length == 2 ? parts[0] : options.defaultGroup();
-            boolean isBreaking = prefix.endsWith("!");
-            if (isBreaking) {
-                prefix = prefix.substring(0, prefix.length() - 1);
+        private CommitInfo toConventionalCommit(CommitInfo commit) {
+            Matcher matcher = conventionalCommitPattern.matcher(commit.description());
+            if (matcher.matches()) {
+                String type = matcher.group("type");
+                String description = matcher.group("description");
+                String scope = matcher.group("scope");
+                boolean isBreaking = matcher.group("breaking") != null;
+                return new CommitInfo.ConventionalCommit(
+                        type, scope, description, isBreaking, commit.tag(), commit.authorDate());
             }
-            return new CommitInfo(commit, prefix, isBreaking);
-        }
 
-        public String summary() {
-            return commit.summary();
-        }
-
-        public String summaryWithoutPrefix() {
-            return Arrays.asList(summary().split(":", 2)).reversed().getFirst().trim();
-        }
-
-        public String tag() {
-            return commit.tag();
-        }
-
-        public LocalDate authorDate() {
-            return commit.authorDate();
+            return commit;
         }
     }
 
-    public record SubGroupOptions(String defaultGroup, List<String> order) {}
+    public sealed interface CommitInfo {
+        String type();
+
+        String scope();
+
+        String description();
+
+        boolean isBreaking();
+
+        String tag();
+
+        LocalDate authorDate();
+
+        record UntypedCommit(Commit commit) implements CommitInfo {
+            @Override
+            public String type() {
+                return null;
+            }
+
+            @Override
+            public String scope() {
+                return null;
+            }
+
+            @Override
+            public String description() {
+                return commit.summary();
+            }
+
+            @Override
+            public boolean isBreaking() {
+                return false;
+            }
+
+            @Override
+            public String tag() {
+                return commit.tag();
+            }
+
+            @Override
+            public LocalDate authorDate() {
+                return commit.authorDate();
+            }
+        }
+
+        record ConventionalCommit(
+                String type, String scope, String description, boolean isBreaking, String tag, LocalDate authorDate)
+                implements CommitInfo {}
+    }
+
+    public record SubGroupOptions(
+            String defaultGroup, List<String> order, Function<CommitInfo, String> scopeOverrider) {}
 }

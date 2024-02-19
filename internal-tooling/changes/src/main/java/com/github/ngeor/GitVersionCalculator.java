@@ -35,8 +35,8 @@ public class GitVersionCalculator {
         }
 
         SemVerBump bump = commits.stream()
-                .filter(new CommitFilter())
                 .map(Commit::summary)
+                .filter(new CommitFilter())
                 .map(this::calculateBump)
                 .max(Enum::compareTo)
                 .orElse(null);

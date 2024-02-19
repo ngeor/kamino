@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 
 public class ChangeLogUpdater {
     private final File rootDirectory;
@@ -50,13 +51,25 @@ public class ChangeLogUpdater {
         String sinceCommit = version != null ? TagPrefix.tag(modulePath, SemVer.parse(version)) : null;
 
         FormattedRelease formattedRelease = format(
-                Release.create(git.revList(sinceCommit, modulePath))
-                        .filter(new CommitInfoFilter())
-                        .makeSubGroups(new Release.SubGroupOptions("chore", List.of("feat", "fix"))),
+                Release.create(getEligibleCommits(sinceCommit))
+                        .makeSubGroups(new Release.SubGroupOptions(
+                                "chore",
+                                List.of("feat", "fix", "chore", "deps"),
+                                commitInfo -> "chore".equals(commitInfo.type()) && "deps".equals(commitInfo.scope())
+                                        ? "deps"
+                                        : commitInfo.type())),
                 new FormatOptions(
                         tagPrefix,
                         "Unreleased",
-                        Map.of("feat", "Features", "fix", "Fixes", "chore", "Miscellaneous Tasks")));
+                        Map.of(
+                                "feat",
+                                "Features",
+                                "fix",
+                                "Fixes",
+                                "chore",
+                                "Miscellaneous Tasks",
+                                "deps",
+                                "Dependencies")));
 
         File changeLog = getChangeLog();
         Markdown markdown = changeLog.isFile()
@@ -64,6 +77,11 @@ public class ChangeLogUpdater {
                 : new Markdown(String.format("# Changelog%n%n"), List.of());
         markdown = merge(markdown, formattedRelease);
         return markdown;
+    }
+
+    private Stream<Commit> getEligibleCommits(String sinceCommit)
+            throws IOException, InterruptedException, ProcessFailedException {
+        return git.revList(sinceCommit, modulePath).filter(c -> new CommitFilter().test(c.summary()));
     }
 
     private static FormattedRelease format(Release release, FormatOptions options) {
@@ -95,10 +113,10 @@ public class ChangeLogUpdater {
 
     private static String formatCommit(Release.CommitInfo commit) {
         if (commit.isBreaking()) {
-            return String.format("**Breaking** %s", commit.summaryWithoutPrefix());
+            return String.format("**Breaking**: %s", commit.description());
         }
 
-        return commit.summaryWithoutPrefix();
+        return commit.description();
     }
 
     private Markdown merge(Markdown markdown, FormattedRelease formattedRelease) {

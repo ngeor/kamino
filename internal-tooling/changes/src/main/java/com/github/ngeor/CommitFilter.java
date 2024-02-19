@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
-public class CommitFilter implements Predicate<Commit> {
+public class CommitFilter implements Predicate<String> {
     private static final List<Pattern> needles = List.of(
             Pattern.compile("^\\[maven-release-plugin]"),
             Pattern.compile("\\bfix(ed|ing)? build\\b", Pattern.CASE_INSENSITIVE),
@@ -15,15 +15,7 @@ public class CommitFilter implements Predicate<Commit> {
             Pattern.compile("^chore: sort( )?pom$", Pattern.CASE_INSENSITIVE));
 
     @Override
-    public boolean test(Commit commit) {
-        if (commit == null) {
-            return false;
-        }
-
-        return test(commit.summary());
-    }
-
-    private boolean test(String summary) {
+    public boolean test(String summary) {
         if (summary == null || summary.isBlank()) {
             return false;
         }

@@ -90,12 +90,40 @@ class ChangeLogUpdaterIT {
 
                 ### Fixes
 
-                * **Breaking** Adjusted readme
+                * **Breaking**: Adjusted readme
 
                 ### Miscellaneous Tasks
 
                 * Initial commit
                 """);
+    }
+
+    @Test
+    void testDepsScope() throws IOException, ProcessFailedException, InterruptedException {
+        // arrange
+        addCommits("chore: Added something", "deps: Upgraded mockito", "chore(deps): Upgraded jUnit");
+
+        // act
+        changeLogUpdater.updateChangeLog(null);
+
+        // assert
+        String contents = Files.readString(rootDirectory.toPath().resolve("CHANGELOG.md"));
+        assertThat(contents)
+                .isEqualToNormalizingNewlines(
+                        """
+        # Changelog
+
+        ## Unreleased
+
+        ### Miscellaneous Tasks
+
+        * Added something
+
+        ### Dependencies
+
+        * Upgraded mockito
+        * Upgraded jUnit
+        """);
     }
 
     private void addCommits(String... subjects) throws IOException, ProcessFailedException, InterruptedException {

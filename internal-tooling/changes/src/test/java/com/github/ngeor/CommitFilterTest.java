@@ -50,6 +50,6 @@ class CommitFilterTest {
     }
 
     private boolean test(String subject) {
-        return filter.test(new Commit(null, null, null, subject));
+        return filter.test(subject);
     }
 }
