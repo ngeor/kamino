@@ -22,8 +22,8 @@ class MarkdownWriterTest {
 
             something else
             """;
-        Markdown markdown = MarkdownReader.read(input, "\n");
-        String output = MarkdownWriter.write(markdown, "\n");
-        assertThat(output).isEqualTo(input);
+        Markdown markdown = MarkdownReader.read(input);
+        String output = MarkdownWriter.write(markdown);
+        assertThat(output).isEqualToNormalizingNewlines(input);
     }
 }

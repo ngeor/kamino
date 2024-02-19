@@ -8,10 +8,10 @@ import java.util.List;
 
 public class MarkdownReader {
     public static Markdown read(File file) throws IOException {
-        return read(new String(Files.readAllBytes(file.toPath())), System.lineSeparator());
+        return read(new String(Files.readAllBytes(file.toPath())));
     }
 
-    public static Markdown read(String input, String lineSeparator) {
+    public static Markdown read(String input) {
         String header = "";
         List<Markdown.Section> sections = new ArrayList<>();
         String sectionTile = null;
@@ -27,9 +27,9 @@ public class MarkdownReader {
                 sectionBody = "";
             } else {
                 if (sectionTile == null) {
-                    header += line + lineSeparator;
+                    header += line + System.lineSeparator();
                 } else {
-                    sectionBody += line + lineSeparator;
+                    sectionBody += line + System.lineSeparator();
                 }
             }
         }

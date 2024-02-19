@@ -37,7 +37,7 @@ class PomMergerTest {
         </project>
         """;
         String actual = merge(parent, child);
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isEqualToNormalizingNewlines(expected);
     }
 
     @Test
@@ -55,7 +55,7 @@ class PomMergerTest {
         </project>
         """;
         String actual = merge(parent, child);
-        assertThat(actual).isEqualTo(parent);
+        assertThat(actual).isEqualToNormalizingNewlines(parent);
     }
 
     @Test
@@ -73,7 +73,7 @@ class PomMergerTest {
         </project>
         """;
         String actual = merge(parent, child);
-        assertThat(actual).isEqualTo(child);
+        assertThat(actual).isEqualToNormalizingNewlines(child);
     }
 
     @Test
@@ -88,7 +88,7 @@ class PomMergerTest {
         </project>
         """;
         String actual = merge(parent, child);
-        assertThat(actual).isEqualTo(parent);
+        assertThat(actual).isEqualToNormalizingNewlines(parent);
     }
 
     @Test
@@ -104,7 +104,7 @@ class PomMergerTest {
         </project>
         """;
         String actual = merge(parent, child);
-        assertThat(actual).isEqualTo(child);
+        assertThat(actual).isEqualToNormalizingNewlines(child);
     }
 
     @Test
@@ -118,7 +118,7 @@ class PomMergerTest {
         <project/>
         """;
         String actual = merge(parent, child);
-        assertThat(actual).isEqualTo(child);
+        assertThat(actual).isEqualToNormalizingNewlines(child);
     }
 
     @Test
@@ -139,7 +139,7 @@ class PomMergerTest {
         </project>
         """;
         String actual = merge(parent, child);
-        assertThat(actual).isEqualTo(parent);
+        assertThat(actual).isEqualToNormalizingNewlines(parent);
     }
 
     @Test
@@ -175,7 +175,7 @@ class PomMergerTest {
         </project>
         """;
         String actual = merge(parent, child);
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isEqualToNormalizingNewlines(expected);
     }
 
     @Test
@@ -235,7 +235,7 @@ class PomMergerTest {
         </project>
         """;
         String actual = merge(parent, child);
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isEqualToNormalizingNewlines(expected);
     }
 
     @Test
@@ -332,7 +332,7 @@ class PomMergerTest {
         </project>
         """;
         String actual = merge(parent, child);
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isEqualToNormalizingNewlines(expected);
     }
 
     @Test
@@ -469,7 +469,7 @@ class PomMergerTest {
         </project>
         """;
         String actual = merge(parent, child);
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isEqualToNormalizingNewlines(expected);
     }
 
     private static String merge(String parent, String child) {
@@ -477,6 +477,6 @@ class PomMergerTest {
         DocumentWrapper childDoc = DocumentWrapper.parseString(child);
         DocumentWrapper result = new PomMerger().withParent(parentDoc).mergeChild(childDoc);
         result.indent();
-        return result.writeToString().replace(System.lineSeparator(), "\n");
+        return result.writeToString();
     }
 }

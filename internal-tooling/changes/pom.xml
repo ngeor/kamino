@@ -21,8 +21,15 @@
   <properties>
     <java.version>21</java.version>
     <mainClass>com.github.ngeor.App</mainClass>
+    <commons-io.version>2.15.1</commons-io.version>
   </properties>
   <dependencies>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>${commons-io.version}</version>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>com.github.ngeor</groupId>
       <artifactId>maven-releaser</artifactId>
@@ -64,6 +71,14 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
   <profiles>
     <profile>
       <id>native</id>

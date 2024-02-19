@@ -6,6 +6,7 @@ import com.github.ngeor.markdown.MarkdownWriter;
 import com.github.ngeor.versions.SemVer;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -15,27 +16,29 @@ import java.util.Set;
 
 public class ChangeLogUpdater {
     private final File rootDirectory;
-    private final String path;
+    private final String modulePath;
     private final String tagPrefix;
     private final Git git;
 
-    public ChangeLogUpdater(File rootDirectory, String path) {
-        this(rootDirectory, path, new Git(rootDirectory));
+    public ChangeLogUpdater(File rootDirectory, String modulePath) {
+        this(rootDirectory, modulePath, new Git(rootDirectory));
     }
 
-    public ChangeLogUpdater(File rootDirectory, String path, Git git) {
-        this(rootDirectory, path, TagPrefix.tagPrefix(path), git);
+    public ChangeLogUpdater(File rootDirectory, String modulePath, Git git) {
+        this(rootDirectory, modulePath, TagPrefix.tagPrefix(modulePath), git);
     }
 
-    public ChangeLogUpdater(File rootDirectory, String path, String tagPrefix, Git git) {
+    public ChangeLogUpdater(File rootDirectory, String modulePath, String tagPrefix, Git git) {
         this.rootDirectory = rootDirectory;
-        this.path = path;
+        this.modulePath = modulePath;
         this.tagPrefix = tagPrefix;
         this.git = git;
     }
 
     private File getChangeLog() {
-        return rootDirectory.toPath().resolve(path).resolve("CHANGELOG.md").toFile();
+        Path rootPath = rootDirectory.toPath();
+        Path projectPath = modulePath == null ? rootPath : rootPath.resolve(modulePath);
+        return projectPath.resolve("CHANGELOG.md").toFile();
     }
 
     public void updateChangeLog(String version) throws IOException, InterruptedException, ProcessFailedException {
@@ -43,11 +46,12 @@ public class ChangeLogUpdater {
         MarkdownWriter.write(markdown, getChangeLog());
     }
 
-    Markdown generateChangeLog(String version) throws IOException, ProcessFailedException, InterruptedException {
-        String sinceCommit = version != null ? TagPrefix.tag(path, SemVer.parse(version)) : null;
+    private Markdown generateChangeLog(String version)
+            throws IOException, ProcessFailedException, InterruptedException {
+        String sinceCommit = version != null ? TagPrefix.tag(modulePath, SemVer.parse(version)) : null;
 
         FormattedRelease formattedRelease = format(
-                Release.create(git.revList(sinceCommit, path))
+                Release.create(git.revList(sinceCommit, modulePath))
                         .filter(new CommitFilter())
                         .makeSubGroups(new Release.SubGroupOptions("chore", List.of("feat", "fix"))),
                 new FormatOptions(
@@ -56,13 +60,14 @@ public class ChangeLogUpdater {
                         Map.of("feat", "Features", "fix", "Fixes", "chore", "Miscellaneous Tasks")));
 
         File changeLog = getChangeLog();
-        Markdown markdown =
-                changeLog.isFile() ? MarkdownReader.read(changeLog) : new Markdown("# Changelog", List.of());
+        Markdown markdown = changeLog.isFile()
+                ? MarkdownReader.read(changeLog)
+                : new Markdown(String.format("# Changelog%n%n"), List.of());
         markdown = merge(markdown, formattedRelease);
         return markdown;
     }
 
-    static FormattedRelease format(Release release, FormatOptions options) {
+    private static FormattedRelease format(Release release, FormatOptions options) {
         return new FormattedRelease(
                 release.groups().stream().map(g -> format(g, options)).toList());
     }
@@ -95,7 +100,7 @@ public class ChangeLogUpdater {
                         .toList());
     }
 
-    Markdown merge(Markdown markdown, FormattedRelease formattedRelease) {
+    private Markdown merge(Markdown markdown, FormattedRelease formattedRelease) {
         List<Markdown.Section> sections = new ArrayList<>();
         Set<String> seenTitles = new HashSet<>();
         for (var it = formattedRelease.groups().iterator(); it.hasNext(); ) {
