@@ -1,6 +1,8 @@
 package com.github.ngeor;
 
-public class GitTagPrefix {
+import java.util.function.Supplier;
+
+public class GitTagPrefix implements Supplier<String> {
     private final DirContext dirContext;
 
     public GitTagPrefix(DirContext dirContext) {
@@ -13,5 +15,10 @@ public class GitTagPrefix {
         }
 
         return dirContext.getProjectName() + "/";
+    }
+
+    @Override
+    public String get() {
+        return getPrefix();
     }
 }

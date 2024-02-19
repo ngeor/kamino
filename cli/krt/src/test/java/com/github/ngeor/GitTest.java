@@ -19,7 +19,7 @@ class GitTest {
         @BeforeEach
         void setup() throws IOException, InterruptedException {
             directory = Files.createTempDirectory("no-remote").toFile();
-            git = new Git(directory);
+            git = new GitImpl(directory);
             git.init();
             git.config("user.name", "John Doe");
             git.config("user.email", "john.doe@noreply.com");
@@ -81,11 +81,11 @@ class GitTest {
         @BeforeEach
         void setup() throws IOException, InterruptedException {
             remoteDirectory = Files.createTempDirectory("remote").toFile();
-            remoteGit = new Git(remoteDirectory);
+            remoteGit = new GitImpl(remoteDirectory);
             remoteGit.initBare();
 
             bootstrapDirectory = Files.createTempDirectory("bootstrap").toFile();
-            bootstrapGit = new Git(bootstrapDirectory);
+            bootstrapGit = new GitImpl(bootstrapDirectory);
             bootstrapGit.clone(remoteDirectory.getAbsolutePath());
             bootstrapGit.config("user.name", "John Doe");
             bootstrapGit.config("user.email", "john.doe@noreply.com");
@@ -95,7 +95,7 @@ class GitTest {
             bootstrapGit.push();
 
             workingDirectory = Files.createTempDirectory("work").toFile();
-            git = new Git(workingDirectory);
+            git = new GitImpl(workingDirectory);
             git.clone(remoteDirectory.getAbsolutePath());
             git.config("user.name", "John Doe");
             git.config("user.email", "john.doe@noreply.com");

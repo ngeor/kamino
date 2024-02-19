@@ -7,14 +7,14 @@ import java.util.Set;
 import java.util.SortedSet;
 
 public class VersionResolver {
-    private final GitTagProvider gitTagProvider;
+    private final VersionsProvider versionsProvider;
 
-    public VersionResolver(GitTagProvider gitTagProvider) {
-        this.gitTagProvider = gitTagProvider;
+    public VersionResolver(VersionsProvider versionsProvider) {
+        this.versionsProvider = versionsProvider;
     }
 
     public SemVer resolve(String version) throws IOException, InterruptedException {
-        SortedSet<SemVer> versions = gitTagProvider.listVersions();
+        SortedSet<SemVer> versions = versionsProvider.listVersions();
         SemVerBump bump = SemVerBump.parse(version);
         if (bump != null) {
             return versions.last().bump(bump);

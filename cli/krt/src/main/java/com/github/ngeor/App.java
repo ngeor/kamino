@@ -69,7 +69,7 @@ public final class App implements Callable<Integer> {
     @Override
     public Integer call() throws Exception {
         DirContext dirContext = DirContext.build();
-        Git git = new Git(dirContext.getRepoDir().toFile());
+        GitImpl git = new GitImpl(dirContext.getRepoDir().toFile());
         validateGitPreconditions(git);
         fetchAndPull(git);
 

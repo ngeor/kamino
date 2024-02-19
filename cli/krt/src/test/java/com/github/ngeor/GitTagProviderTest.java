@@ -8,6 +8,7 @@ import com.github.ngeor.versions.SemVer;
 import java.io.IOException;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.function.Supplier;
 import org.junit.jupiter.api.Test;
 
 class GitTagProviderTest {
@@ -15,10 +16,9 @@ class GitTagProviderTest {
     void listVersions() throws IOException, InterruptedException {
         // arrange
         Git git = mock(Git.class);
-        GitTagPrefix gitTagPrefix = mock(GitTagPrefix.class);
+        Supplier<String> gitTagPrefix = () -> "v";
         GitTagProvider gitTagProvider = new GitTagProvider(git, gitTagPrefix);
         when(git.listTags("v*")).thenReturn(List.of("v1.2.3", "v1.2.4", "v1.0.1"));
-        when(gitTagPrefix.getPrefix()).thenReturn("v");
 
         // act
         SortedSet<SemVer> versions = gitTagProvider.listVersions();

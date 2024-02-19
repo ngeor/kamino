@@ -3,9 +3,9 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.github.ngeor</groupId>
-    <artifactId>java</artifactId>
-    <version>4.8.0-SNAPSHOT</version>
-    <relativePath>../../libs/java</relativePath>
+    <artifactId>cli-parent-pom</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>../../libs/cli-parent-pom</relativePath>
   </parent>
   <groupId>com.github.ngeor</groupId>
   <artifactId>krt</artifactId>
@@ -18,25 +18,29 @@
     <url>https://github.com/ngeor/kamino/tree/master/cli/krt</url>
   </scm>
   <properties>
-    <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
+    <mainClass>com.github.ngeor.App</mainClass>
     <!-- JaCoCo thresholds. Increase gradually as you add tests. -->
     <jacoco.unit-tests.limit.branch-ratio>67%</jacoco.unit-tests.limit.branch-ratio>
     <jacoco.unit-tests.limit.class-complexity>40</jacoco.unit-tests.limit.class-complexity>
     <jacoco.unit-tests.limit.instruction-ratio>66%</jacoco.unit-tests.limit.instruction-ratio>
     <jacoco.unit-tests.limit.method-complexity>10</jacoco.unit-tests.limit.method-complexity>
-    <native-maven-plugin.version>0.9.17</native-maven-plugin.version>
     <picocli.version>4.7.5</picocli.version>
   </properties>
   <dependencies>
+    <dependency>
+      <groupId>com.github.ngeor</groupId>
+      <artifactId>versions</artifactId>
+      <version>1.1.0-SNAPSHOT</version>
+    </dependency>
     <dependency>
       <groupId>info.picocli</groupId>
       <artifactId>picocli</artifactId>
       <version>${picocli.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.github.ngeor</groupId>
-      <artifactId>versions</artifactId>
-      <version>1.1.0-SNAPSHOT</version>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -48,18 +52,9 @@
       <artifactId>mockito-core</artifactId>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.assertj</groupId>
-      <artifactId>assertj-core</artifactId>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-enforcer-plugin</artifactId>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
@@ -67,7 +62,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.10.1</version>
         <configuration>
           <annotationProcessorPaths>
             <path>
@@ -82,13 +76,8 @@
         </configuration>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-      </plugin>
-      <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>${jacoco-maven-plugin.version}</version>
         <executions>
           <execution>
             <id>pre-unit-test</id>
@@ -152,37 +141,6 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>3.3.0</version>
-        <configuration>
-          <archive>
-            <manifest>
-              <addClasspath>true</addClasspath>
-              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-              <mainClass>com.github.ngeor.App</mainClass>
-            </manifest>
-          </archive>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <version>3.3.0</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>copy-dependencies</goal>
-            </goals>
-            <phase>package</phase>
-            <configuration>
-              <outputDirectory>${project.build.directory}</outputDirectory>
-              <includeScope>compile</includeScope>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
     </plugins>
   </build>
   <profiles>
@@ -193,28 +151,11 @@
           <plugin>
             <groupId>org.graalvm.buildtools</groupId>
             <artifactId>native-maven-plugin</artifactId>
-            <version>${native-maven-plugin.version}</version>
             <extensions>true</extensions>
             <configuration>
               <!-- revisit if this is fixed https://github.com/graalvm/native-build-tools/issues/180 -->
               <buildArgs>-H:IncludeResources='.*toml$' -H:IncludeResources='.*MANIFEST.MF$'</buildArgs>
             </configuration>
-            <executions>
-              <execution>
-                <id>build-native</id>
-                <goals>
-                  <goal>build</goal>
-                </goals>
-                <phase>package</phase>
-              </execution>
-              <execution>
-                <id>test-native</id>
-                <goals>
-                  <goal>test</goal>
-                </goals>
-                <phase>test</phase>
-              </execution>
-            </executions>
           </plugin>
         </plugins>
       </build>

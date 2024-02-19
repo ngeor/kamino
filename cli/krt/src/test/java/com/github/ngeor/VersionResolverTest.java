@@ -14,14 +14,14 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class VersionResolverTest {
-    private final GitTagProvider gitTagProvider = mock(GitTagProvider.class);
-    private final VersionResolver versionResolver = new VersionResolver(gitTagProvider);
+    private final VersionsProvider versionsProvider = mock(VersionsProvider.class);
+    private final VersionResolver versionResolver = new VersionResolver(versionsProvider);
 
     @ParameterizedTest
     @CsvSource({"major, 2.0.0", "minor, 1.4.0", "patch, 1.3.1"})
     void testBump(String bump, String expectedVersion) throws IOException, InterruptedException {
         // arrange
-        when(gitTagProvider.listVersions())
+        when(versionsProvider.listVersions())
                 .thenReturn(new TreeSet<>(Set.of(SemVer.parse("1.2.3"), SemVer.parse("1.3.0"))));
 
         // act
@@ -34,7 +34,7 @@ class VersionResolverTest {
     @Test
     void testExplicitVersionHappyFlow() throws IOException, InterruptedException {
         // arrange
-        when(gitTagProvider.listVersions())
+        when(versionsProvider.listVersions())
                 .thenReturn(new TreeSet<>(Set.of(SemVer.parse("1.2.3"), SemVer.parse("1.3.0"))));
 
         // act
@@ -47,7 +47,7 @@ class VersionResolverTest {
     @Test
     void testAlreadyExists() throws IOException, InterruptedException {
         // arrange
-        when(gitTagProvider.listVersions())
+        when(versionsProvider.listVersions())
                 .thenReturn(new TreeSet<>(Set.of(SemVer.parse("1.2.3"), SemVer.parse("1.3.0"))));
 
         // act and assert
@@ -58,7 +58,7 @@ class VersionResolverTest {
     @ValueSource(strings = {"1.3.2", "1.4.1", "1.5.0", "2.0.1", "2.1.0", "3.0.0"})
     void testSemVerGap(String version) throws IOException, InterruptedException {
         // arrange
-        when(gitTagProvider.listVersions())
+        when(versionsProvider.listVersions())
                 .thenReturn(new TreeSet<>(Set.of(SemVer.parse("1.2.3"), SemVer.parse("1.3.0"))));
 
         // act and assert
