@@ -3,49 +3,46 @@ package com.github.ngeor.markdown;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class MarkdownReaderTest {
     @Test
-    @Disabled("Line terminator issues")
     void testRead() {
         String input =
                 """
-            # Changelog
+                # Changelog
 
-            whatever
+                whatever
 
-            ## Unreleased
+                ## Unreleased
 
-            something
+                something
 
-            ## v1
+                ## v1
 
-            something else
-            """;
+                something else
+                """;
 
+        String header = """
+        # Changelog
+
+        whatever
+
+        """;
+        String firstSectionBody = """
+
+        something
+
+        """;
+        String secondSectionBody = """
+
+        something else
+        """;
         assertThat(MarkdownReader.read(input))
                 .isEqualTo(new Markdown(
-                        """
-                    # Changelog
-
-                    whatever
-
-                    """,
+                        header,
                         List.of(
-                                new Markdown.Section(
-                                        "Unreleased",
-                                        """
-
-                        something
-
-                        """),
-                                new Markdown.Section(
-                                        "v1",
-                                        """
-
-                        something else
-                        """))));
+                                new Markdown.Section("Unreleased", firstSectionBody),
+                                new Markdown.Section("v1", secondSectionBody))));
     }
 }
