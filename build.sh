@@ -11,8 +11,10 @@ mvn spotless:apply || true
 # build internal tools
 mvn -Pshade -am -pl internal-tooling/changes package -DskipTests
 mvn -Pshade -am -pl internal-tooling/sifo package -DskipTests
-mvn -Pnative -am -pl internal-tooling/changes package -DskipTests
-mvn -Pnative -am -pl internal-tooling/sifo package -DskipTests
+if [[ "$1" == "--native" ]]; then
+    mvn -Pnative -am -pl internal-tooling/changes package -DskipTests
+    mvn -Pnative -am -pl internal-tooling/sifo package -DskipTests
+fi
 # generate templates
 java -jar internal-tooling/sifo/target/sifo-1.0-SNAPSHOT.jar
 # print what is unreleased
