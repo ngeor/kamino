@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -52,7 +51,7 @@ public class ChangeLogUpdater {
 
         FormattedRelease formattedRelease = format(
                 Release.create(git.revList(sinceCommit, modulePath))
-                        .filter(new CommitFilter())
+                        .filter(new CommitInfoFilter())
                         .makeSubGroups(new Release.SubGroupOptions("chore", List.of("feat", "fix"))),
                 new FormatOptions(
                         tagPrefix,
@@ -91,13 +90,15 @@ public class ChangeLogUpdater {
         String title = options.subGroupNames().getOrDefault(subGroup.name(), subGroup.name());
         return new FormattedRelease.SubGroup(
                 title,
-                subGroup.commits().stream()
-                        .map(Commit::summary)
-                        .map(s -> Arrays.asList(s.split(":", 2))
-                                .reversed()
-                                .getFirst()
-                                .trim())
-                        .toList());
+                subGroup.commits().stream().map(ChangeLogUpdater::formatCommit).toList());
+    }
+
+    private static String formatCommit(Release.CommitInfo commit) {
+        if (commit.isBreaking()) {
+            return String.format("**Breaking** %s", commit.summaryWithoutPrefix());
+        }
+
+        return commit.summaryWithoutPrefix();
     }
 
     private Markdown merge(Markdown markdown, FormattedRelease formattedRelease) {

@@ -1,5 +1,6 @@
 package com.github.ngeor;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,16 +20,16 @@ public record Release(List<Group> groups) {
         for (var it = commits.iterator(); it.hasNext(); ) {
             Commit commit = it.next();
             if (result.isEmpty() || commit.tag() != null) {
-                result.add(new Group(commit));
+                result.add(new Group(CommitInfo.fromCommit(commit)));
             } else {
-                // so that each group shows commits from the oldest to the newest
-                result.getLast().addFirst(commit);
+                // addFirst, so that each group shows commits from the oldest to the newest
+                result.getLast().addFirst(CommitInfo.fromCommit(commit));
             }
         }
         return new Release(result);
     }
 
-    public Release filter(Predicate<Commit> predicate) {
+    public Release filter(Predicate<CommitInfo> predicate) {
         return new Release(groups.stream().map(g -> g.filter(predicate)).toList());
     }
 
@@ -36,20 +37,16 @@ public record Release(List<Group> groups) {
         return new Release(groups.stream().map(g -> g.makeSubGroups(options)).toList());
     }
 
-    public record Group(Commit tag, List<SubGroup> subGroups) {
-        public Group(Commit tag) {
+    public record Group(CommitInfo tag, List<SubGroup> subGroups) {
+        public Group(CommitInfo tag) {
             this(tag, Collections.singletonList(new SubGroup(tag)));
         }
 
-        public Group(List<Commit> commits) {
-            this(commits.getFirst(), Collections.singletonList(new SubGroup(commits.reversed())));
-        }
-
-        public void addFirst(Commit commit) {
+        public void addFirst(CommitInfo commit) {
             subGroups.getLast().addFirst(commit);
         }
 
-        public Group filter(Predicate<Commit> predicate) {
+        public Group filter(Predicate<CommitInfo> predicate) {
             return new Group(
                     tag, subGroups.stream().map(g -> g.filter(predicate)).toList());
         }
@@ -63,20 +60,20 @@ public record Release(List<Group> groups) {
         }
     }
 
-    public record SubGroup(String name, LinkedList<Commit> commits) {
-        public SubGroup(List<Commit> commits) {
+    public record SubGroup(String name, LinkedList<CommitInfo> commits) {
+        public SubGroup(List<CommitInfo> commits) {
             this(null, new LinkedList<>(commits));
         }
 
-        public SubGroup(Commit... commits) {
+        public SubGroup(CommitInfo... commits) {
             this(Arrays.asList(commits));
         }
 
-        public void addFirst(Commit commit) {
+        public void addFirst(CommitInfo commit) {
             commits.addFirst(commit);
         }
 
-        public SubGroup filter(Predicate<Commit> predicate) {
+        public SubGroup filter(Predicate<CommitInfo> predicate) {
             return new SubGroup(
                     name, commits.stream().filter(predicate).collect(Collectors.toCollection(LinkedList::new)));
         }
@@ -91,7 +88,7 @@ public record Release(List<Group> groups) {
                 orders.put(options.order().get(i), i);
             }
 
-            Map<String, LinkedList<Commit>> map = new TreeMap<>((o1, o2) -> {
+            Map<String, LinkedList<CommitInfo>> map = new TreeMap<>((o1, o2) -> {
                 if (orders.containsKey(o1)) {
                     if (orders.containsKey(o2)) {
                         return orders.get(o1) - orders.get(o2);
@@ -106,16 +103,48 @@ public record Release(List<Group> groups) {
                     }
                 }
             });
-            for (Commit commit : commits) {
-                String summary = commit.summary();
-                String[] parts = summary.split(":", 2);
-                String prefix = parts.length == 2 ? parts[0] : options.defaultGroup();
-                map.computeIfAbsent(prefix, ignored -> new LinkedList<>()).add(commit);
+            for (CommitInfo commit : commits) {
+                CommitInfo n = commit.regroup(options);
+                String prefix = n.group();
+                map.computeIfAbsent(prefix, ignored -> new LinkedList<>()).add(n);
             }
 
             return map.entrySet().stream()
                     .map(e -> new SubGroup(e.getKey(), e.getValue()))
                     .toList();
+        }
+    }
+
+    public record CommitInfo(Commit commit, String group, boolean isBreaking) {
+        public static CommitInfo fromCommit(Commit commit) {
+            return new CommitInfo(commit, null, false);
+        }
+
+        public CommitInfo regroup(SubGroupOptions options) {
+            String summary = commit.summary();
+            String[] parts = summary.split(":", 2);
+            String prefix = parts.length == 2 ? parts[0] : options.defaultGroup();
+            boolean isBreaking = prefix.endsWith("!");
+            if (isBreaking) {
+                prefix = prefix.substring(0, prefix.length() - 1);
+            }
+            return new CommitInfo(commit, prefix, isBreaking);
+        }
+
+        public String summary() {
+            return commit.summary();
+        }
+
+        public String summaryWithoutPrefix() {
+            return Arrays.asList(summary().split(":", 2)).reversed().getFirst().trim();
+        }
+
+        public String tag() {
+            return commit.tag();
+        }
+
+        public LocalDate authorDate() {
+            return commit.authorDate();
         }
     }
 

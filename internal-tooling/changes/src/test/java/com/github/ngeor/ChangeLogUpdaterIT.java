@@ -32,7 +32,7 @@ class ChangeLogUpdaterIT {
     }
 
     @Test
-    void test() throws IOException, ProcessFailedException, InterruptedException {
+    void testWithoutExistingChangelog() throws IOException, ProcessFailedException, InterruptedException {
         // arrange
         addCommits("Initial commit", "fix: Adjusted readme", "feat: New version");
         git.tag("v1.0");
@@ -69,6 +69,33 @@ class ChangeLogUpdaterIT {
             * Initial commit
             """
                                 .replace("$now", LocalDate.now().toString()));
+    }
+
+    @Test
+    void testBreakingChanges() throws IOException, ProcessFailedException, InterruptedException {
+        // arrange
+        addCommits("Initial commit", "fix!: Adjusted readme");
+
+        // act
+        changeLogUpdater.updateChangeLog(null);
+
+        // assert
+        String contents = Files.readString(rootDirectory.toPath().resolve("CHANGELOG.md"));
+        assertThat(contents)
+                .isEqualToNormalizingNewlines(
+                        """
+                # Changelog
+
+                ## Unreleased
+
+                ### Fixes
+
+                * **Breaking** Adjusted readme
+
+                ### Miscellaneous Tasks
+
+                * Initial commit
+                """);
     }
 
     private void addCommits(String... subjects) throws IOException, ProcessFailedException, InterruptedException {
