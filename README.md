@@ -29,15 +29,12 @@ Each project's folder should have a README file and a CHANGELOG (if applicable).
 
 Releasing is tag based. The tag format is the folder structure,
 followed by the version, e.g.: `apps/app1/v1.2.3`, `libs/lib1/v.1.2.3`, etc.
-Only the `release:prepare` step is done on the local machine.
+Only the (equivalent of the ) `release:prepare` step is done on the local machine.
 The (equivalent of) the `release:perform` is done on the CI server.
 
-Example:
-
-```sh
-mvn -B -Dtag=libs/yak4j-dom/v1.9.7 release:prepare -DreleaseVersion=1.9.7 -DdevelopmentVersion=1.10.0-SNAPSHOT
-mvn release:clean
-```
+The `maven-release-plugin` is not used. The custom tooling that is used
+lives in `internal-tooling/changes` and uses the `maven-versions-plugin`
+under the hood.
 
 Normally, apps aren't released to Nexus.
 

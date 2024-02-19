@@ -1,5 +1,8 @@
 package com.github.ngeor;
 
+import com.github.ngeor.markdown.Markdown;
+import com.github.ngeor.markdown.MarkdownReader;
+import com.github.ngeor.markdown.MarkdownWriter;
 import com.github.ngeor.versions.SemVer;
 import java.io.File;
 import java.io.IOException;
@@ -17,13 +20,30 @@ public class ChangeLogUpdater {
     private final Git git;
 
     public ChangeLogUpdater(File rootDirectory, String path) {
+        this(rootDirectory, path, new Git(rootDirectory));
+    }
+
+    public ChangeLogUpdater(File rootDirectory, String path, Git git) {
+        this(rootDirectory, path, TagPrefix.tagPrefix(path), git);
+    }
+
+    public ChangeLogUpdater(File rootDirectory, String path, String tagPrefix, Git git) {
         this.rootDirectory = rootDirectory;
         this.path = path;
-        this.tagPrefix = TagPrefix.tagPrefix(path);
-        this.git = new Git(rootDirectory);
+        this.tagPrefix = tagPrefix;
+        this.git = git;
+    }
+
+    private File getChangeLog() {
+        return rootDirectory.toPath().resolve(path).resolve("CHANGELOG.md").toFile();
     }
 
     public void updateChangeLog(String version) throws IOException, InterruptedException, ProcessFailedException {
+        Markdown markdown = generateChangeLog(version);
+        MarkdownWriter.write(markdown, getChangeLog());
+    }
+
+    Markdown generateChangeLog(String version) throws IOException, ProcessFailedException, InterruptedException {
         String sinceCommit = version != null ? TagPrefix.tag(path, SemVer.parse(version)) : null;
 
         FormattedRelease formattedRelease = format(
@@ -35,12 +55,11 @@ public class ChangeLogUpdater {
                         "Unreleased",
                         Map.of("feat", "Features", "fix", "Fixes", "chore", "Miscellaneous Tasks")));
 
-        File changeLog =
-                rootDirectory.toPath().resolve(path).resolve("CHANGELOG.md").toFile();
+        File changeLog = getChangeLog();
         Markdown markdown =
                 changeLog.isFile() ? MarkdownReader.read(changeLog) : new Markdown("# Changelog", List.of());
         markdown = merge(markdown, formattedRelease);
-        MarkdownWriter.write(markdown, changeLog);
+        return markdown;
     }
 
     static FormattedRelease format(Release release, FormatOptions options) {

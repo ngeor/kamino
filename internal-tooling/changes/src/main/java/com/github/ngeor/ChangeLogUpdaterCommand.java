@@ -18,10 +18,6 @@ public class ChangeLogUpdaterCommand {
         this.version = version;
     }
 
-    public ChangeLogUpdaterCommand(File rootDirectory) {
-        this(rootDirectory, null, null);
-    }
-
     public void run() throws IOException, ProcessFailedException, InterruptedException {
         List<String> paths =
                 path == null ? new ModuleFinder().eligibleModules(rootDirectory).toList() : List.of(path);

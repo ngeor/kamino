@@ -1,4 +1,4 @@
-package com.github.ngeor;
+package com.github.ngeor.markdown;
 
 import java.io.File;
 import java.io.IOException;
