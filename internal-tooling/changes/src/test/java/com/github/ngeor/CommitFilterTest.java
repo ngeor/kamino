@@ -35,6 +35,9 @@ class CommitFilterTest {
                 "chore: updated changelog",
                 "fix: Fix build",
                 "fix: Fix failing tests",
+                "release(java): Releasing 1.2",
+                "chore: sort pom",
+                "chore: sortpom"
             })
     void testExcludedCommits(String subject) {
         assertThat(test(subject)).isFalse();

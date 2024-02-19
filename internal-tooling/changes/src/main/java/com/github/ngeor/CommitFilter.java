@@ -11,7 +11,8 @@ public class CommitFilter implements Predicate<Commit> {
             Pattern.compile("\\b(Updat(e|ed|ign) )?changelog\\b", Pattern.CASE_INSENSITIVE),
             Pattern.compile("^(chore|fix):( apply)? spotless$", Pattern.CASE_INSENSITIVE),
             Pattern.compile("^(chore|fix): fix failing tests$", Pattern.CASE_INSENSITIVE),
-            Pattern.compile("^release\\("));
+            Pattern.compile("^release\\("),
+            Pattern.compile("^chore: sort( )?pom$", Pattern.CASE_INSENSITIVE));
 
     @Override
     public boolean test(Commit commit) {
