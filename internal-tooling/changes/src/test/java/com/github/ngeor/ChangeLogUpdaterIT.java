@@ -40,7 +40,7 @@ class ChangeLogUpdaterIT {
         addCommits("chore: Adding homepage");
 
         // act
-        changeLogUpdater.updateChangeLog(null);
+        changeLogUpdater.updateChangeLog();
 
         // assert
         assertThat(readChangeLog())
@@ -77,7 +77,7 @@ class ChangeLogUpdaterIT {
         addCommits("Initial commit", "fix!: Adjusted readme");
 
         // act
-        changeLogUpdater.updateChangeLog(null);
+        changeLogUpdater.updateChangeLog();
 
         // assert
         assertThat(readChangeLog())
@@ -103,7 +103,7 @@ class ChangeLogUpdaterIT {
         addCommits("chore: Added something", "deps: Upgraded mockito", "chore(deps): Upgraded jUnit");
 
         // act
-        changeLogUpdater.updateChangeLog(null);
+        changeLogUpdater.updateChangeLog();
 
         // assert
         assertThat(readChangeLog())
@@ -131,7 +131,7 @@ class ChangeLogUpdaterIT {
         git.tag("v1.0");
 
         // act
-        changeLogUpdater.updateChangeLog(null);
+        changeLogUpdater.updateChangeLog();
 
         // assert
         assertThat(readChangeLog())
@@ -161,7 +161,7 @@ class ChangeLogUpdaterIT {
         addCommits("[maven-release-plugin]: prepare for next development iteration");
 
         // act
-        changeLogUpdater.updateChangeLog(null);
+        changeLogUpdater.updateChangeLog();
 
         // assert
         assertThat(readChangeLog())
@@ -189,8 +189,7 @@ class ChangeLogUpdaterIT {
         addCommits("chore: Added something", "deps: Upgraded mockito");
         git.tag("v1.0");
 
-        writeChangeLog(
-                """
+        writeChangeLog("""
         # My changelog
 
         ## Unreleased
@@ -199,7 +198,7 @@ class ChangeLogUpdaterIT {
         """);
 
         // act
-        changeLogUpdater.updateChangeLog(null);
+        changeLogUpdater.updateChangeLog();
 
         // assert
         assertThat(readChangeLog())
@@ -224,11 +223,11 @@ class ChangeLogUpdaterIT {
     void testGenerateChangelogTwiceWithoutTags() throws IOException, ProcessFailedException, InterruptedException {
         // arrange
         addCommits("chore: Added something", "deps: Upgraded mockito");
-        changeLogUpdater.updateChangeLog(null);
+        changeLogUpdater.updateChangeLog();
         String contents = readChangeLog();
 
         // act
-        changeLogUpdater.updateChangeLog(null);
+        changeLogUpdater.updateChangeLog();
 
         // assert
         String contents2 = readChangeLog();
@@ -240,11 +239,11 @@ class ChangeLogUpdaterIT {
         // arrange
         addCommits("chore: Added something", "deps: Upgraded mockito");
         git.tag("v1.0");
-        changeLogUpdater.updateChangeLog(null);
+        changeLogUpdater.updateChangeLog();
         String contents = readChangeLog();
 
         // act
-        changeLogUpdater.updateChangeLog(null);
+        changeLogUpdater.updateChangeLog();
 
         // assert
         String contents2 = readChangeLog();
@@ -258,11 +257,11 @@ class ChangeLogUpdaterIT {
         addCommits("chore: Added something", "deps: Upgraded mockito");
         git.tag("v1.0");
         addCommits("fix: Important hotfix");
-        changeLogUpdater.updateChangeLog(null);
+        changeLogUpdater.updateChangeLog();
         String contents = readChangeLog();
 
         // act
-        changeLogUpdater.updateChangeLog(null);
+        changeLogUpdater.updateChangeLog();
 
         // assert
         String contents2 = readChangeLog();
@@ -276,7 +275,7 @@ class ChangeLogUpdaterIT {
         git.tag("v1.0");
 
         // act
-        changeLogUpdater.updateChangeLog(null);
+        changeLogUpdater.updateChangeLog();
 
         // assert
         assertThat(readChangeLog())
@@ -298,15 +297,16 @@ class ChangeLogUpdaterIT {
         // arrange
         addCommits("chore: Added something", "[maven-release-plugin]: release 1.0");
         git.tag("v1.0");
-        changeLogUpdater.updateChangeLog(null);
+        changeLogUpdater.updateChangeLog();
         writeChangeLog(readChangeLog().replace("something", "oops"));
 
         // act
-        changeLogUpdater.updateChangeLog(null);
+        changeLogUpdater.updateChangeLog(true);
 
         // assert
-        assertThat(readChangeLog()).isEqualToNormalizingNewlines(
-            """
+        assertThat(readChangeLog())
+                .isEqualToNormalizingNewlines(
+                        """
                 # Changelog
 
                 ## [1.0] - $now
@@ -315,7 +315,7 @@ class ChangeLogUpdaterIT {
 
                 * Added something
                 """
-                .replace("$now", LocalDate.now().toString()));
+                                .replace("$now", LocalDate.now().toString()));
     }
 
     @Test
@@ -323,15 +323,16 @@ class ChangeLogUpdaterIT {
         // arrange
         addCommits("chore: Added something", "[maven-release-plugin]: release 1.0");
         git.tag("v1.0");
-        changeLogUpdater.updateChangeLog(null, false);
+        changeLogUpdater.updateChangeLog();
         writeChangeLog(readChangeLog().replace("something", "oops"));
 
         // act
-        changeLogUpdater.updateChangeLog(null, false);
+        changeLogUpdater.updateChangeLog();
 
         // assert
-        assertThat(readChangeLog()).isEqualToNormalizingNewlines(
-            """
+        assertThat(readChangeLog())
+                .isEqualToNormalizingNewlines(
+                        """
                 # Changelog
 
                 ## [1.0] - $now
@@ -340,24 +341,26 @@ class ChangeLogUpdaterIT {
 
                 * Added oops
                 """
-                .replace("$now", LocalDate.now().toString()));
+                                .replace("$now", LocalDate.now().toString()));
     }
 
     @Test
-    void testDoNotOverwriteUnreleasedAlwaysGetsOverwritten() throws IOException, ProcessFailedException, InterruptedException {
+    void testDoNotOverwriteUnreleasedAlwaysGetsOverwritten()
+            throws IOException, ProcessFailedException, InterruptedException {
         // arrange
         addCommits("chore: Added something", "[maven-release-plugin]: release 1.0");
         git.tag("v1.0");
         addCommits("fix: Various fixes");
-        changeLogUpdater.updateChangeLog(null, false);
+        changeLogUpdater.updateChangeLog();
         writeChangeLog(readChangeLog().replace("something", "oops").replace("Various", "Hilarious"));
 
         // act
-        changeLogUpdater.updateChangeLog(null, false);
+        changeLogUpdater.updateChangeLog();
 
         // assert
-        assertThat(readChangeLog()).isEqualToNormalizingNewlines(
-            """
+        assertThat(readChangeLog())
+                .isEqualToNormalizingNewlines(
+                        """
                 # Changelog
 
                 ## Unreleased
@@ -372,7 +375,7 @@ class ChangeLogUpdaterIT {
 
                 * Added oops
                 """
-                .replace("$now", LocalDate.now().toString()));
+                                .replace("$now", LocalDate.now().toString()));
     }
 
     private void addCommits(String... subjects) throws IOException, ProcessFailedException, InterruptedException {

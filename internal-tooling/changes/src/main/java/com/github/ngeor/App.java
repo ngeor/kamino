@@ -47,7 +47,6 @@ public final class App {
                         "The path of the module. If not provided, the command will run for all modules, if applicable.")
                 .normalizer(App::sanitizePath)
                 .build());
-        parser.addPositionalArgument("version", false, "The version after which changelog should be generated.");
         parser.addFlagArgument("git-version", "Evaluate the next release version based on git history.");
         parser.addFlagArgument("release", "Release the given module.");
         parser.addFlagArgument("changelog", "Update the changelog files.");

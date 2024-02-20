@@ -5,7 +5,6 @@ import com.github.ngeor.markdown.Line;
 import com.github.ngeor.markdown.MarkdownReader;
 import com.github.ngeor.markdown.MarkdownWriter;
 import com.github.ngeor.markdown.Section;
-import com.github.ngeor.versions.SemVer;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -45,18 +44,17 @@ public class ChangeLogUpdater {
         return projectPath.resolve("CHANGELOG.md").toFile();
     }
 
-    public void updateChangeLog(String version) throws IOException, InterruptedException, ProcessFailedException {
-        updateChangeLog(version, true);
+    void updateChangeLog() throws IOException, InterruptedException, ProcessFailedException {
+        updateChangeLog(false);
     }
 
-    public void updateChangeLog(String version, boolean overwrite) throws IOException, InterruptedException, ProcessFailedException {
-        List<Item> markdown = generateChangeLog(version, overwrite);
+    public void updateChangeLog(boolean overwrite) throws IOException, InterruptedException, ProcessFailedException {
+        List<Item> markdown = generateChangeLog(overwrite);
         new MarkdownWriter().write(markdown, getChangeLog());
     }
 
-    private List<Item> generateChangeLog(String version, boolean overwrite)
+    private List<Item> generateChangeLog(boolean overwrite)
             throws IOException, ProcessFailedException, InterruptedException {
-        String sinceCommit = version != null ? TagPrefix.tag(modulePath, SemVer.parse(version)) : null;
 
         Release.SubGroupOptions subGroupOptions = new Release.SubGroupOptions(
                 "chore",
@@ -69,7 +67,7 @@ public class ChangeLogUpdater {
                 "Unreleased",
                 Map.of("feat", "Features", "fix", "Fixes", "chore", "Miscellaneous Tasks", "deps", "Dependencies"));
         FormattedRelease formattedRelease =
-                format(Release.create(getCommits(sinceCommit)).makeSubGroups(subGroupOptions), formatOptions);
+                format(Release.create(getCommits()).makeSubGroups(subGroupOptions), formatOptions);
 
         File changeLog = getChangeLog();
         List<Item> markdown = changeLog.isFile()
@@ -79,9 +77,8 @@ public class ChangeLogUpdater {
         return markdown;
     }
 
-    private Stream<Commit> getCommits(String sinceCommit)
-            throws IOException, InterruptedException, ProcessFailedException {
-        return git.revList(sinceCommit, modulePath);
+    private Stream<Commit> getCommits() throws IOException, InterruptedException, ProcessFailedException {
+        return git.revList((String) null, modulePath);
     }
 
     private static FormattedRelease format(Release release, FormatOptions options) {
@@ -119,7 +116,8 @@ public class ChangeLogUpdater {
         return commit.description();
     }
 
-    private void merge(List<Item> markdown, FormattedRelease formattedRelease, FormatOptions formatOptions, boolean overwrite) {
+    private void merge(
+            List<Item> markdown, FormattedRelease formattedRelease, FormatOptions formatOptions, boolean overwrite) {
         // generate the new Markdown sections based on the formatted release
         Map<String, Section> generatedSections = new LinkedHashMap<>();
         for (FormattedRelease.Group formattedGroup : formattedRelease.groups()) {
