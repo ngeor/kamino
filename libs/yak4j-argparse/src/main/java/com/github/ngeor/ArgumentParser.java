@@ -10,16 +10,16 @@ import java.util.function.Predicate;
 public class ArgumentParser {
     private final List<ArgSpec> argSpecs = new ArrayList<>();
 
-    public void addPositionalArgument(String name, boolean required) {
-        add(new ArgSpec(name, required, SpecKind.POSITIONAL));
+    public void addPositionalArgument(String name, boolean required, String description) {
+        add(new ArgSpec(name, required, SpecKind.POSITIONAL, description));
     }
 
-    public void addNamedArgument(String name, boolean required) {
-        add(new ArgSpec(name, required, SpecKind.NAMED));
+    public void addNamedArgument(String name, boolean required, String description) {
+        add(new ArgSpec(name, required, SpecKind.NAMED, description));
     }
 
-    public void addFlagArgument(String name) {
-        add(new ArgSpec(name, false, SpecKind.FLAG));
+    public void addFlagArgument(String name, String description) {
+        add(new ArgSpec(name, false, SpecKind.FLAG, description));
     }
 
     public void add(ArgSpec argSpec) {
@@ -80,5 +80,19 @@ public class ArgumentParser {
             }
         }
         return Optional.empty();
+    }
+
+    public void printHelp() {
+        for (ArgSpec argSpec : argSpecs) {
+            printHelp(argSpec);
+        }
+    }
+
+    private void printHelp(ArgSpec argSpec) {
+        switch (argSpec.kind()) {
+            case FLAG -> System.out.printf("[--%s] %s%n", argSpec.name(), argSpec.description());
+            case NAMED -> System.out.printf(argSpec.required() ? "--%s VALUE %s%n" : "[--%s VALUE] %s%n", argSpec.name(), argSpec.description());
+            case POSITIONAL -> System.out.printf(argSpec.required() ? "%s %s%n" : "[%s] %s%n", argSpec.name(), argSpec.description());
+        }
     }
 }
