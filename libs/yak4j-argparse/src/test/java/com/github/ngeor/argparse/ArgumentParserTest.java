@@ -1,4 +1,4 @@
-package com.github.ngeor;
+package com.github.ngeor.argparse;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

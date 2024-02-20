@@ -1,5 +1,6 @@
 package com.github.ngeor;
 
+import com.github.ngeor.argparse.ArgumentParser;
 import com.github.ngeor.versions.SemVer;
 import java.io.File;
 import java.io.IOException;
@@ -22,13 +23,19 @@ public final class App {
 
     public static void main(String[] args) throws IOException, InterruptedException, ProcessFailedException {
         ArgumentParser parser = new ArgumentParser();
-        parser.addPositionalArgument("path", false, "The path of the module. If not provided, the command will run for all modules, if applicable.");
+        parser.addPositionalArgument(
+                "path",
+                false,
+                "The path of the module. If not provided, the command will run for all modules, if applicable.");
         parser.addPositionalArgument("version", false, "The version after which changelog should be generated.");
         parser.addFlagArgument("git-version", "Evaluate the next release version based on git history.");
         parser.addFlagArgument("release", "Release the given module.");
         parser.addFlagArgument("changelog", "Update the changelog files.");
         parser.addFlagArgument("push", "Should the release operation push git changes upstream or not.");
-        parser.addNamedArgument("initial-version", false, "If releasing a previously unreleased module, use this as the first release version.");
+        parser.addNamedArgument(
+                "initial-version",
+                false,
+                "If releasing a previously unreleased module, use this as the first release version.");
         parser.addFlagArgument("help", "Prints help for the possible flags and exits.");
 
         Map<String, Object> parsedArgs = parser.parse(args);

@@ -1,4 +1,4 @@
-package com.github.ngeor;
+package com.github.ngeor.argparse;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -91,8 +91,12 @@ public class ArgumentParser {
     private void printHelp(ArgSpec argSpec) {
         switch (argSpec.kind()) {
             case FLAG -> System.out.printf("[--%s] %s%n", argSpec.name(), argSpec.description());
-            case NAMED -> System.out.printf(argSpec.required() ? "--%s VALUE %s%n" : "[--%s VALUE] %s%n", argSpec.name(), argSpec.description());
-            case POSITIONAL -> System.out.printf(argSpec.required() ? "%s %s%n" : "[%s] %s%n", argSpec.name(), argSpec.description());
+            case NAMED -> System.out.printf(
+                    argSpec.required() ? "--%s VALUE %s%n" : "[--%s VALUE] %s%n",
+                    argSpec.name(),
+                    argSpec.description());
+            case POSITIONAL -> System.out.printf(
+                    argSpec.required() ? "%s %s%n" : "[%s] %s%n", argSpec.name(), argSpec.description());
         }
     }
 }
