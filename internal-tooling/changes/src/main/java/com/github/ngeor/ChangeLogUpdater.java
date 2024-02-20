@@ -56,16 +56,16 @@ public class ChangeLogUpdater {
     private List<Item> generateChangeLog(boolean overwrite)
             throws IOException, ProcessFailedException, InterruptedException {
 
-        Release.SubGroupOptions subGroupOptions = new Release.SubGroupOptions(
-                "chore",
-                List.of("feat", "fix", "chore", "deps"),
-                this::remapType);
+        Release.SubGroupOptions subGroupOptions =
+                new Release.SubGroupOptions("chore", List.of("feat", "fix", "chore", "deps"), this::remapType);
         FormatOptions formatOptions = new FormatOptions(
                 tagPrefix,
                 "Unreleased",
                 Map.of("feat", "Features", "fix", "Fixes", "chore", "Miscellaneous Tasks", "deps", "Dependencies"));
-        FormattedRelease formattedRelease =
-                format(Release.create(getCommits()).makeSubGroups(subGroupOptions), formatOptions);
+
+        ReleaseGrouper releaseGrouper = new ReleaseGrouper(subGroupOptions);
+        Release release = releaseGrouper.toRelease(getCommits());
+        FormattedRelease formattedRelease = format(release, formatOptions);
 
         File changeLog = getChangeLog();
         List<Item> markdown = changeLog.isFile()
@@ -77,8 +77,8 @@ public class ChangeLogUpdater {
 
     private String remapType(Release.CommitInfo commitInfo) {
         return "chore".equals(commitInfo.type()) && "deps".equals(commitInfo.scope())
-            ? "deps"
-            : ("refactor".equals(commitInfo.type()) ? "chore" : commitInfo.type());
+                ? "deps"
+                : ("refactor".equals(commitInfo.type()) ? "chore" : commitInfo.type());
     }
 
     private Stream<Commit> getCommits() throws IOException, InterruptedException, ProcessFailedException {
@@ -91,12 +91,12 @@ public class ChangeLogUpdater {
     }
 
     private static FormattedRelease.Group format(Release.Group group, FormatOptions options) {
-        String title = group.tag().tag();
+        String title = group.tag();
         if (title != null) {
             if (title.startsWith(options.tagPrefix())) {
                 title = title.substring(options.tagPrefix().length());
             }
-            title = "[" + title + "] - " + group.tag().authorDate();
+            title = "[" + title + "] - " + group.authorDate();
         } else {
             title = options.defaultTag();
         }
