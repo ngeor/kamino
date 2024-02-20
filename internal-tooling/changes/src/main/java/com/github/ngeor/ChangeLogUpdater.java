@@ -59,9 +59,7 @@ public class ChangeLogUpdater {
         Release.SubGroupOptions subGroupOptions = new Release.SubGroupOptions(
                 "chore",
                 List.of("feat", "fix", "chore", "deps"),
-                commitInfo -> "chore".equals(commitInfo.type()) && "deps".equals(commitInfo.scope())
-                        ? "deps"
-                        : commitInfo.type());
+                this::remapType);
         FormatOptions formatOptions = new FormatOptions(
                 tagPrefix,
                 "Unreleased",
@@ -75,6 +73,12 @@ public class ChangeLogUpdater {
                 : new ArrayList<>(List.of(new Section(1, "Changelog")));
         merge(markdown, formattedRelease, formatOptions, overwrite);
         return markdown;
+    }
+
+    private String remapType(Release.CommitInfo commitInfo) {
+        return "chore".equals(commitInfo.type()) && "deps".equals(commitInfo.scope())
+            ? "deps"
+            : ("refactor".equals(commitInfo.type()) ? "chore" : commitInfo.type());
     }
 
     private Stream<Commit> getCommits() throws IOException, InterruptedException, ProcessFailedException {
