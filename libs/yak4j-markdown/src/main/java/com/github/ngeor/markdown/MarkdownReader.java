@@ -4,47 +4,69 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 
 public class MarkdownReader {
-    public static Markdown read(File file) throws IOException {
+    public List<Item> read(File file) throws IOException {
         return read(new String(Files.readAllBytes(file.toPath())));
     }
 
-    public static Markdown read(String input) {
-        String header = "";
-        List<Markdown.Section> sections = new ArrayList<>();
-        String sectionTile = null;
-        String sectionBody = "";
+    public List<Item> read(String input) {
+        State state = new State();
+        input.lines().forEach(state::visit);
+        return state.toItems();
+    }
 
-        int i = 0;
-        while (i < input.length()) {
-            int newLineIndex = input.indexOf('\n', i);
-            String line = newLineIndex >= i ? input.substring(i, newLineIndex + 1) : input.substring(i);
-            i = newLineIndex >= i ? newLineIndex + 1 : input.length();
+    private static final class State {
+        private Deque<Section> stack = new LinkedList<>(List.of(new Section(0, null, new ArrayList<>()))) {};
 
-            if (line.startsWith("## ")) {
-                // finish previous section
-                if (sectionTile != null) {
-                    sections.add(new Markdown.Section(sectionTile, sectionBody));
+        private List<Item> current() {
+            return stack.getLast().contents();
+        }
+
+        private void trimTrailingEmptyLinesInCurrent() {
+            List<Item> current = current();
+            int i = current.size() - 1;
+            while (i >= 0 && current.get(i) instanceof Line l && l.line().isBlank()) {
+                current.remove(i);
+                i--;
+            }
+        }
+
+        public void visit(String line) {
+            Section section = parseSection(line);
+            if (section != null) {
+                trimTrailingEmptyLinesInCurrent();
+                while (stack.getLast().level() >= section.level()) {
+                    stack.removeLast();
                 }
-
-                sectionTile = line.substring("## ".length()).stripTrailing();
-                sectionBody = "";
+                current().add(section);
+                stack.addLast(section);
             } else {
-                if (sectionTile == null) {
-                    header += line;
+                if (current().isEmpty() && line.isBlank()) {
+                    // ignore leading empty lines
                 } else {
-                    sectionBody += line;
+                    current().add(new Line(line));
                 }
             }
         }
 
-        // finish last section
-        if (sectionTile != null) {
-            sections.add(new Markdown.Section(sectionTile, sectionBody));
+        public List<Item> toItems() {
+            return stack.getFirst().contents();
         }
 
-        return new Markdown(header, sections);
+        private Section parseSection(String line) {
+            int i = 0;
+            while (i < line.length() && line.charAt(i) == '#') {
+                i++;
+            }
+            if (i > 0) {
+                return new Section(i, line.substring(i).trim(), new ArrayList<>());
+            }
+
+            return null;
+        }
     }
 }
