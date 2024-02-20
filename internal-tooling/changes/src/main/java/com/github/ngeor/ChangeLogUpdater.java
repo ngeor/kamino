@@ -65,7 +65,7 @@ public class ChangeLogUpdater {
                 "Unreleased",
                 Map.of("feat", "Features", "fix", "Fixes", "chore", "Miscellaneous Tasks", "deps", "Dependencies"));
         FormattedRelease formattedRelease =
-                format(Release.create(getEligibleCommits(sinceCommit)).makeSubGroups(subGroupOptions), formatOptions);
+                format(Release.create(getCommits(sinceCommit)).makeSubGroups(subGroupOptions), formatOptions);
 
         File changeLog = getChangeLog();
         List<Item> markdown = changeLog.isFile()
@@ -75,9 +75,9 @@ public class ChangeLogUpdater {
         return markdown;
     }
 
-    private Stream<Commit> getEligibleCommits(String sinceCommit)
+    private Stream<Commit> getCommits(String sinceCommit)
             throws IOException, InterruptedException, ProcessFailedException {
-        return git.revList(sinceCommit, modulePath).filter(c -> new CommitFilter().test(c.summary()));
+        return git.revList(sinceCommit, modulePath);
     }
 
     private static FormattedRelease format(Release release, FormatOptions options) {

@@ -107,10 +107,12 @@ public final class Release {
                 }
             });
             for (CommitInfo commit : commits) {
-                CommitInfo conventionalCommit = toConventionalCommit(commit);
-                String type = Objects.requireNonNullElse(
-                        options.scopeOverrider().apply(conventionalCommit), options.defaultGroup());
-                map.computeIfAbsent(type, ignored -> new LinkedList<>()).add(conventionalCommit);
+                if (new CommitFilter().test(commit.description())) {
+                    CommitInfo conventionalCommit = toConventionalCommit(commit);
+                    String type = Objects.requireNonNullElse(
+                            options.scopeOverrider().apply(conventionalCommit), options.defaultGroup());
+                    map.computeIfAbsent(type, ignored -> new LinkedList<>()).add(conventionalCommit);
+                }
             }
 
             return map.entrySet().stream()

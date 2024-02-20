@@ -196,8 +196,7 @@ class ChangeLogUpdaterIT {
     }
 
     @Test
-    void testGenerateChangelogTwiceWithoutTags()
-        throws IOException, ProcessFailedException, InterruptedException {
+    void testGenerateChangelogTwiceWithoutTags() throws IOException, ProcessFailedException, InterruptedException {
         // arrange
         addCommits("chore: Added something", "deps: Upgraded mockito");
         changeLogUpdater.updateChangeLog(null);
@@ -212,8 +211,7 @@ class ChangeLogUpdaterIT {
     }
 
     @Test
-    void testGenerateChangelogTwiceWithTagAtLatest()
-        throws IOException, ProcessFailedException, InterruptedException {
+    void testGenerateChangelogTwiceWithTagAtLatest() throws IOException, ProcessFailedException, InterruptedException {
         // arrange
         addCommits("chore: Added something", "deps: Upgraded mockito");
         git.tag("v1.0");
@@ -230,7 +228,7 @@ class ChangeLogUpdaterIT {
 
     @Test
     void testGenerateChangelogTwiceWithTagAndUnreleasedChanges()
-        throws IOException, ProcessFailedException, InterruptedException {
+            throws IOException, ProcessFailedException, InterruptedException {
         // arrange
         addCommits("chore: Added something", "deps: Upgraded mockito");
         git.tag("v1.0");
@@ -244,6 +242,31 @@ class ChangeLogUpdaterIT {
         // assert
         String contents2 = Files.readString(rootDirectory.toPath().resolve("CHANGELOG.md"));
         assertThat(contents2).isEqualToNormalizingNewlines(contents);
+    }
+
+    @Test
+    void testTagOnIgnoredCommit() throws IOException, ProcessFailedException, InterruptedException {
+        // arrange
+        addCommits("chore: Added something", "[maven-release-plugin]: release 1.0");
+        git.tag("v1.0");
+
+        // act
+        changeLogUpdater.updateChangeLog(null);
+
+        // assert
+        String contents = Files.readString(rootDirectory.toPath().resolve("CHANGELOG.md"));
+        assertThat(contents)
+                .isEqualToNormalizingNewlines(
+                        """
+                # Changelog
+
+                ## [1.0] - $now
+
+                ### Miscellaneous Tasks
+
+                * Added something
+                """
+                                .replace("$now", LocalDate.now().toString()));
     }
 
     private void addCommits(String... subjects) throws IOException, ProcessFailedException, InterruptedException {
