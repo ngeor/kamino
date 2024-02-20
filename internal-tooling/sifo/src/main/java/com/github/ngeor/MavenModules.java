@@ -2,12 +2,13 @@ package com.github.ngeor;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 import javax.xml.parsers.ParserConfigurationException;
@@ -15,21 +16,21 @@ import org.xml.sax.SAXException;
 
 public final class MavenModules {
     private final File root;
-    private List<MavenModule> modules;
+    private SortedSet<MavenModule> modules;
 
     public MavenModules(File root) {
         this.root = root;
     }
 
-    public List<MavenModule> getModules() {
+    public SortedSet<MavenModule> getModules() {
         if (modules == null) {
             modules = collectModules();
         }
         return modules;
     }
 
-    private List<MavenModule> collectModules() {
-        List<MavenModule> modules = new ArrayList<>();
+    private SortedSet<MavenModule> collectModules() {
+        SortedSet<MavenModule> modules = new TreeSet<>();
         for (File typeDirectory : getDirectories(root)) {
             for (File projectDirectory : getDirectories(typeDirectory)) {
                 File pomFile = new File(projectDirectory, "pom.xml");
@@ -53,13 +54,7 @@ public final class MavenModules {
 
     private Optional<MavenModule> internalDependency(MavenCoordinates coordinates) {
         return getModules().stream()
-                .filter(m -> {
-                    try {
-                        return coordinates.equals(m.coordinates());
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                })
+                .filter(m -> coordinates.equals(m.coordinates()))
                 .findFirst();
     }
 

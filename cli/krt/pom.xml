@@ -18,12 +18,12 @@
     <url>https://github.com/ngeor/kamino/tree/master/cli/krt</url>
   </scm>
   <properties>
-    <mainClass>com.github.ngeor.App</mainClass>
     <!-- JaCoCo thresholds. Increase gradually as you add tests. -->
     <jacoco.unit-tests.limit.branch-ratio>67%</jacoco.unit-tests.limit.branch-ratio>
     <jacoco.unit-tests.limit.class-complexity>40</jacoco.unit-tests.limit.class-complexity>
     <jacoco.unit-tests.limit.instruction-ratio>66%</jacoco.unit-tests.limit.instruction-ratio>
     <jacoco.unit-tests.limit.method-complexity>10</jacoco.unit-tests.limit.method-complexity>
+    <mainClass>com.github.ngeor.App</mainClass>
     <picocli.version>4.7.5</picocli.version>
   </properties>
   <dependencies>

@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.stream.Collectors;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import org.xml.sax.SAXException;
 
 public final class TemplateGenerator {
@@ -33,12 +33,12 @@ public final class TemplateGenerator {
         this.modules = new MavenModules(root);
     }
 
-    private List<MavenModule> getModules() {
+    private SortedSet<MavenModule> getModules() {
         return modules.getModules();
     }
 
     public void regenerateAllTemplates()
-            throws IOException, InterruptedException, ParserConfigurationException, SAXException, TransformerException,
+            throws IOException, InterruptedException, ParserConfigurationException, SAXException,
                     ProcessFailedException {
         for (MavenModule module : getModules()) {
             regenerateAllTemplates(module);

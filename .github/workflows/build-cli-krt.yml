@@ -7,6 +7,7 @@ on:
       - cli/krt/**
       - .github/workflows/build-cli-krt.yml
       - pom.xml
+      - libs/cli-parent-pom/**
       - libs/java/**
       - libs/versions/**
   pull_request:
@@ -15,6 +16,7 @@ on:
       - cli/krt/**
       - .github/workflows/build-cli-krt.yml
       - pom.xml
+      - libs/cli-parent-pom/**
       - libs/java/**
       - libs/versions/**
 

@@ -2,6 +2,8 @@
 set -e
 # sort pom
 mvn -Psortpom validate
+# sort root pom file (does not currently have a sortpom configuration)
+mvn -N com.github.ekryd.sortpom:sortpom-maven-plugin:sort -Dsort.sortModules=true -Dsort.createBackupFile=false
 # remove pom.bak files etc
 git clean -f -X
 # build

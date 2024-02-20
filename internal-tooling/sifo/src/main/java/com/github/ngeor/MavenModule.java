@@ -2,16 +2,14 @@ package com.github.ngeor;
 
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
-import javax.xml.parsers.ParserConfigurationException;
-import org.xml.sax.SAXException;
 
-public final class MavenModule {
+public final class MavenModule implements Comparable<MavenModule> {
     private final File typeDirectory;
     private final File projectDirectory;
     private final File pomFile;
@@ -40,7 +38,7 @@ public final class MavenModule {
         return pomFile;
     }
 
-    public DocumentWrapper effectivePom() throws IOException, InterruptedException {
+    public DocumentWrapper effectivePom() {
         if (effectivePom == null) {
             parentPoms.clear();
             Maven maven = new Maven(pomFile);
@@ -54,8 +52,7 @@ public final class MavenModule {
         return Collections.unmodifiableList(parentPoms);
     }
 
-    public MavenCoordinates coordinates()
-            throws IOException, ParserConfigurationException, InterruptedException, SAXException {
+    public MavenCoordinates coordinates() {
         DocumentWrapper document = effectivePom();
         return new MavenCoordinates(
                 document.getDocumentElement().firstElementText("groupId"),
@@ -63,8 +60,7 @@ public final class MavenModule {
                 document.getDocumentElement().firstElementText("version"));
     }
 
-    public Stream<MavenCoordinates> dependencies()
-            throws IOException, ParserConfigurationException, InterruptedException, SAXException {
+    public Stream<MavenCoordinates> dependencies() {
         return effectivePom()
                 .getDocumentElement()
                 .findChildElements("dependencies")
@@ -75,11 +71,36 @@ public final class MavenModule {
                         dependency.firstElementText("version")));
     }
 
-    public Optional<String> calculateJavaVersion() throws IOException, InterruptedException {
+    public Optional<String> calculateJavaVersion() {
         return effectivePom()
                 .getDocumentElement()
                 .firstElement("properties")
                 .map(p -> p.firstElementText("maven.compiler.source"))
                 .map(v -> "1.8".equals(v) ? "8" : v);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s { path=%s }", MavenModule.class.getName(), path());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof MavenModule m && compareTo(m) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(typeDirectory.getName(), projectDirectory.getName());
+    }
+
+    @Override
+    public int compareTo(MavenModule other) {
+        int cmp = this.typeDirectory.getName().compareTo(other.typeDirectory.getName());
+        if (cmp == 0) {
+            return this.projectDirectory.getName().compareTo(other.projectDirectory.getName());
+        } else {
+            return cmp;
+        }
     }
 }

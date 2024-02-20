@@ -4,8 +4,8 @@
   <groupId>com.github.ngeor</groupId>
   <artifactId>kamino</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <description>kamino monorepo</description>
   <packaging>pom</packaging>
+  <description>kamino monorepo</description>
   <modules>
     <module>archetypes/archetype-kamino-cli</module>
     <module>archetypes/archetype-quickstart-jdk8</module>
