@@ -85,4 +85,11 @@ class ArgumentParserTest {
         Map<String, Object> result = parser.parse(new String[0]);
         assertThat(result).isEmpty();
     }
+
+    @Test
+    void normalizeArgument() {
+        parser.add(new ArgSpecBuilder("path", SpecKind.POSITIONAL).normalizer(String::toLowerCase).build());
+        Map<String, Object> result = parser.parse(new String[] { "Hello" });
+        assertThat(result).containsEntry("path", "hello");
+    }
 }

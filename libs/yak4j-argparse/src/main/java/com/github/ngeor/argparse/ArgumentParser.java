@@ -11,15 +11,15 @@ public class ArgumentParser {
     private final List<ArgSpec> argSpecs = new ArrayList<>();
 
     public void addPositionalArgument(String name, boolean required, String description) {
-        add(new ArgSpec(name, required, SpecKind.POSITIONAL, description));
+        add(new ArgSpecBuilder(name, SpecKind.POSITIONAL).required(required).description(description).build());
     }
 
     public void addNamedArgument(String name, boolean required, String description) {
-        add(new ArgSpec(name, required, SpecKind.NAMED, description));
+        add(new ArgSpecBuilder(name, SpecKind.NAMED).required(required).description(description).build());
     }
 
     public void addFlagArgument(String name, String description) {
-        add(new ArgSpec(name, false, SpecKind.FLAG, description));
+        add(new ArgSpecBuilder(name, SpecKind.FLAG).description(description).build());
     }
 
     public void add(ArgSpec argSpec) {
@@ -48,7 +48,7 @@ public class ArgumentParser {
 
                     if (i < args.length) {
                         String value = args[i];
-                        result.put(argSpec.name(), value);
+                        result.put(argSpec.name(), argSpec.normalize(value));
                     } else {
                         throw new IllegalStateException("No value for named argument " + argName);
                     }
@@ -56,7 +56,7 @@ public class ArgumentParser {
             } else {
                 ArgSpec argSpec = extract(candidates, a -> a.kind() == SpecKind.POSITIONAL)
                         .orElseThrow(() -> new IllegalArgumentException("Unexpected argument " + arg));
-                result.put(argSpec.name(), arg);
+                result.put(argSpec.name(), argSpec.normalize(arg));
             }
 
             i++;
