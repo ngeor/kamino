@@ -2,12 +2,20 @@ package com.github.ngeor;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Optional;
 
-public class ChangesOverviewCommand {
-    private final File rootDirectory = new File(".");
-    private final Git git = new Git(rootDirectory);
+public class ChangesOverviewCommand extends BaseCommand {
+    private final File rootDirectory;
+    private final Git git;
 
+    public ChangesOverviewCommand(File rootDirectory, Map<String, Object> args) {
+        super(rootDirectory, args);
+        this.rootDirectory = rootDirectory;
+        this.git = new Git(rootDirectory);
+    }
+
+    @Override
     public void run() {
         System.out.println("Release status");
         System.out.println("Module\tLatest version\tDate\tNumber of unreleased commits");

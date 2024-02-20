@@ -3,21 +3,24 @@ package com.github.ngeor;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
-public class ChangeLogUpdaterCommand {
+public class ChangeLogUpdaterCommand extends BaseCommand {
     private final File rootDirectory;
     private final String path;
     private final String version;
 
-    public ChangeLogUpdaterCommand(File rootDirectory, String path, String version) {
+    public ChangeLogUpdaterCommand(File rootDirectory, Map<String, Object> args) {
+        super(rootDirectory, args);
         this.rootDirectory = rootDirectory;
-        this.path = path;
+        this.path = (String) args.get("path");
+        this.version = (String) args.get("version");
         if (path == null && version != null) {
             throw new IllegalArgumentException("version must be null when path is null");
         }
-        this.version = version;
     }
 
+    @Override
     public void run() throws IOException, ProcessFailedException, InterruptedException {
         List<String> paths =
                 path == null ? new ModuleFinder().eligibleModules(rootDirectory).toList() : List.of(path);

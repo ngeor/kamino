@@ -3,18 +3,21 @@ package com.github.ngeor;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
-public class GitVersionCommand {
+public class GitVersionCommand extends BaseCommand {
     private final File rootDirectory;
     private final Git git;
     private final String path;
 
-    public GitVersionCommand(File rootDirectory, String path) {
+    public GitVersionCommand(File rootDirectory, Map<String, Object> args) {
+        super(rootDirectory, args);
         this.rootDirectory = rootDirectory;
         this.git = new Git(rootDirectory);
-        this.path = path;
+        this.path = (String) args.get("path");
     }
 
+    @Override
     public void run() throws IOException, ProcessFailedException, InterruptedException {
         List<String> paths =
                 path == null ? new ModuleFinder().eligibleModules(rootDirectory).toList() : List.of(path);
