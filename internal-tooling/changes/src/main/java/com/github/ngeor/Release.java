@@ -46,7 +46,10 @@ public final class Release {
     }
 
     public Release makeSubGroups(SubGroupOptions options) {
-        return new Release(groups.stream().map(g -> g.makeSubGroups(options)).toList());
+        return new Release(groups.stream()
+                .map(g -> g.makeSubGroups(options))
+                .filter(Group::hasCommits)
+                .toList());
     }
 
     public record Group(CommitInfo tag, List<SubGroup> subGroups) {
@@ -65,6 +68,10 @@ public final class Release {
 
             return new Group(tag, subGroups.getFirst().makeSubGroups(options));
         }
+
+        public boolean hasCommits() {
+            return subGroups != null && subGroups.stream().anyMatch(SubGroup::hasCommits);
+        }
     }
 
     public record SubGroup(String name, LinkedList<CommitInfo> commits) {
@@ -79,6 +86,10 @@ public final class Release {
 
         public void addFirst(CommitInfo commit) {
             commits.addFirst(commit);
+        }
+
+        public boolean hasCommits() {
+            return commits != null && !commits.isEmpty();
         }
 
         public List<SubGroup> makeSubGroups(SubGroupOptions options) {

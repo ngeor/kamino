@@ -156,6 +156,37 @@ class ChangeLogUpdaterIT {
     }
 
     @Test
+    void testDoNotGenerateUnreleasedSectionIfOnlyIgnoredCommits()
+            throws IOException, ProcessFailedException, InterruptedException {
+        // arrange
+        addCommits("chore: Added something", "deps: Upgraded mockito");
+        git.tag("v1.0");
+        addCommits("[maven-release-plugin]: prepare for next development iteration");
+
+        // act
+        changeLogUpdater.updateChangeLog(null);
+
+        // assert
+        String contents = Files.readString(rootDirectory.toPath().resolve("CHANGELOG.md"));
+        assertThat(contents)
+                .isEqualToNormalizingNewlines(
+                        """
+                # Changelog
+
+                ## [1.0] - $now
+
+                ### Miscellaneous Tasks
+
+                * Added something
+
+                ### Dependencies
+
+                * Upgraded mockito
+                """
+                                .replace("$now", LocalDate.now().toString()));
+    }
+
+    @Test
     void testDoNotGenerateUnreleasedSectionIfEmptyWithExistingChangeLog()
             throws IOException, ProcessFailedException, InterruptedException {
         // arrange
