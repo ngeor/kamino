@@ -46,11 +46,15 @@ public class ChangeLogUpdater {
     }
 
     public void updateChangeLog(String version) throws IOException, InterruptedException, ProcessFailedException {
-        List<Item> markdown = generateChangeLog(version);
+        updateChangeLog(version, true);
+    }
+
+    public void updateChangeLog(String version, boolean overwrite) throws IOException, InterruptedException, ProcessFailedException {
+        List<Item> markdown = generateChangeLog(version, overwrite);
         new MarkdownWriter().write(markdown, getChangeLog());
     }
 
-    private List<Item> generateChangeLog(String version)
+    private List<Item> generateChangeLog(String version, boolean overwrite)
             throws IOException, ProcessFailedException, InterruptedException {
         String sinceCommit = version != null ? TagPrefix.tag(modulePath, SemVer.parse(version)) : null;
 
@@ -71,7 +75,7 @@ public class ChangeLogUpdater {
         List<Item> markdown = changeLog.isFile()
                 ? new MarkdownReader().read(changeLog)
                 : new ArrayList<>(List.of(new Section(1, "Changelog")));
-        merge(markdown, formattedRelease, formatOptions);
+        merge(markdown, formattedRelease, formatOptions, overwrite);
         return markdown;
     }
 
@@ -115,7 +119,7 @@ public class ChangeLogUpdater {
         return commit.description();
     }
 
-    private void merge(List<Item> markdown, FormattedRelease formattedRelease, FormatOptions formatOptions) {
+    private void merge(List<Item> markdown, FormattedRelease formattedRelease, FormatOptions formatOptions, boolean overwrite) {
         // generate the new Markdown sections based on the formatted release
         Map<String, Section> generatedSections = new LinkedHashMap<>();
         for (FormattedRelease.Group formattedGroup : formattedRelease.groups()) {
@@ -162,8 +166,10 @@ public class ChangeLogUpdater {
                     Optional.ofNullable(generatedSections.get(existingSection.title()))
                             .map(Section::contents)
                             .ifPresent(newContents -> {
-                                existingSection.contents().clear();
-                                existingSection.contents().addAll(newContents);
+                                if (overwrite || existingSection.title().equalsIgnoreCase(formatOptions.defaultTag())) {
+                                    existingSection.contents().clear();
+                                    existingSection.contents().addAll(newContents);
+                                }
                             });
                     i++;
                 }

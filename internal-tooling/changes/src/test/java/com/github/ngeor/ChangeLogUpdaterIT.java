@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterEach;
@@ -42,8 +43,7 @@ class ChangeLogUpdaterIT {
         changeLogUpdater.updateChangeLog(null);
 
         // assert
-        String contents = Files.readString(rootDirectory.toPath().resolve("CHANGELOG.md"));
-        assertThat(contents)
+        assertThat(readChangeLog())
                 .isEqualToNormalizingNewlines(
                         """
             # Changelog
@@ -80,8 +80,7 @@ class ChangeLogUpdaterIT {
         changeLogUpdater.updateChangeLog(null);
 
         // assert
-        String contents = Files.readString(rootDirectory.toPath().resolve("CHANGELOG.md"));
-        assertThat(contents)
+        assertThat(readChangeLog())
                 .isEqualToNormalizingNewlines(
                         """
                 # Changelog
@@ -107,8 +106,7 @@ class ChangeLogUpdaterIT {
         changeLogUpdater.updateChangeLog(null);
 
         // assert
-        String contents = Files.readString(rootDirectory.toPath().resolve("CHANGELOG.md"));
-        assertThat(contents)
+        assertThat(readChangeLog())
                 .isEqualToNormalizingNewlines(
                         """
         # Changelog
@@ -136,8 +134,7 @@ class ChangeLogUpdaterIT {
         changeLogUpdater.updateChangeLog(null);
 
         // assert
-        String contents = Files.readString(rootDirectory.toPath().resolve("CHANGELOG.md"));
-        assertThat(contents)
+        assertThat(readChangeLog())
                 .isEqualToNormalizingNewlines(
                         """
             # Changelog
@@ -167,8 +164,7 @@ class ChangeLogUpdaterIT {
         changeLogUpdater.updateChangeLog(null);
 
         // assert
-        String contents = Files.readString(rootDirectory.toPath().resolve("CHANGELOG.md"));
-        assertThat(contents)
+        assertThat(readChangeLog())
                 .isEqualToNormalizingNewlines(
                         """
                 # Changelog
@@ -193,8 +189,7 @@ class ChangeLogUpdaterIT {
         addCommits("chore: Added something", "deps: Upgraded mockito");
         git.tag("v1.0");
 
-        Files.writeString(
-                rootDirectory.toPath().resolve("CHANGELOG.md"),
+        writeChangeLog(
                 """
         # My changelog
 
@@ -207,8 +202,7 @@ class ChangeLogUpdaterIT {
         changeLogUpdater.updateChangeLog(null);
 
         // assert
-        String contents = Files.readString(rootDirectory.toPath().resolve("CHANGELOG.md"));
-        assertThat(contents)
+        assertThat(readChangeLog())
                 .isEqualToNormalizingNewlines(
                         """
             # My changelog
@@ -231,13 +225,13 @@ class ChangeLogUpdaterIT {
         // arrange
         addCommits("chore: Added something", "deps: Upgraded mockito");
         changeLogUpdater.updateChangeLog(null);
-        String contents = Files.readString(rootDirectory.toPath().resolve("CHANGELOG.md"));
+        String contents = readChangeLog();
 
         // act
         changeLogUpdater.updateChangeLog(null);
 
         // assert
-        String contents2 = Files.readString(rootDirectory.toPath().resolve("CHANGELOG.md"));
+        String contents2 = readChangeLog();
         assertThat(contents2).isEqualToNormalizingNewlines(contents);
     }
 
@@ -247,13 +241,13 @@ class ChangeLogUpdaterIT {
         addCommits("chore: Added something", "deps: Upgraded mockito");
         git.tag("v1.0");
         changeLogUpdater.updateChangeLog(null);
-        String contents = Files.readString(rootDirectory.toPath().resolve("CHANGELOG.md"));
+        String contents = readChangeLog();
 
         // act
         changeLogUpdater.updateChangeLog(null);
 
         // assert
-        String contents2 = Files.readString(rootDirectory.toPath().resolve("CHANGELOG.md"));
+        String contents2 = readChangeLog();
         assertThat(contents2).isEqualToNormalizingNewlines(contents);
     }
 
@@ -265,13 +259,13 @@ class ChangeLogUpdaterIT {
         git.tag("v1.0");
         addCommits("fix: Important hotfix");
         changeLogUpdater.updateChangeLog(null);
-        String contents = Files.readString(rootDirectory.toPath().resolve("CHANGELOG.md"));
+        String contents = readChangeLog();
 
         // act
         changeLogUpdater.updateChangeLog(null);
 
         // assert
-        String contents2 = Files.readString(rootDirectory.toPath().resolve("CHANGELOG.md"));
+        String contents2 = readChangeLog();
         assertThat(contents2).isEqualToNormalizingNewlines(contents);
     }
 
@@ -285,8 +279,7 @@ class ChangeLogUpdaterIT {
         changeLogUpdater.updateChangeLog(null);
 
         // assert
-        String contents = Files.readString(rootDirectory.toPath().resolve("CHANGELOG.md"));
-        assertThat(contents)
+        assertThat(readChangeLog())
                 .isEqualToNormalizingNewlines(
                         """
                 # Changelog
@@ -300,6 +293,88 @@ class ChangeLogUpdaterIT {
                                 .replace("$now", LocalDate.now().toString()));
     }
 
+    @Test
+    void testOverwrite() throws IOException, ProcessFailedException, InterruptedException {
+        // arrange
+        addCommits("chore: Added something", "[maven-release-plugin]: release 1.0");
+        git.tag("v1.0");
+        changeLogUpdater.updateChangeLog(null);
+        writeChangeLog(readChangeLog().replace("something", "oops"));
+
+        // act
+        changeLogUpdater.updateChangeLog(null);
+
+        // assert
+        assertThat(readChangeLog()).isEqualToNormalizingNewlines(
+            """
+                # Changelog
+
+                ## [1.0] - $now
+
+                ### Miscellaneous Tasks
+
+                * Added something
+                """
+                .replace("$now", LocalDate.now().toString()));
+    }
+
+    @Test
+    void testDoNotOverwrite() throws IOException, ProcessFailedException, InterruptedException {
+        // arrange
+        addCommits("chore: Added something", "[maven-release-plugin]: release 1.0");
+        git.tag("v1.0");
+        changeLogUpdater.updateChangeLog(null, false);
+        writeChangeLog(readChangeLog().replace("something", "oops"));
+
+        // act
+        changeLogUpdater.updateChangeLog(null, false);
+
+        // assert
+        assertThat(readChangeLog()).isEqualToNormalizingNewlines(
+            """
+                # Changelog
+
+                ## [1.0] - $now
+
+                ### Miscellaneous Tasks
+
+                * Added oops
+                """
+                .replace("$now", LocalDate.now().toString()));
+    }
+
+    @Test
+    void testDoNotOverwriteUnreleasedAlwaysGetsOverwritten() throws IOException, ProcessFailedException, InterruptedException {
+        // arrange
+        addCommits("chore: Added something", "[maven-release-plugin]: release 1.0");
+        git.tag("v1.0");
+        addCommits("fix: Various fixes");
+        changeLogUpdater.updateChangeLog(null, false);
+        writeChangeLog(readChangeLog().replace("something", "oops").replace("Various", "Hilarious"));
+
+        // act
+        changeLogUpdater.updateChangeLog(null, false);
+
+        // assert
+        assertThat(readChangeLog()).isEqualToNormalizingNewlines(
+            """
+                # Changelog
+
+                ## Unreleased
+
+                ### Fixes
+
+                * Various fixes
+
+                ## [1.0] - $now
+
+                ### Miscellaneous Tasks
+
+                * Added oops
+                """
+                .replace("$now", LocalDate.now().toString()));
+    }
+
     private void addCommits(String... subjects) throws IOException, ProcessFailedException, InterruptedException {
         for (String subject : subjects) {
             addCommit(subject);
@@ -310,5 +385,17 @@ class ChangeLogUpdaterIT {
         Files.writeString(rootDirectory.toPath().resolve("README.md"), subject);
         git.addAll();
         git.commit(subject);
+    }
+
+    private String readChangeLog() throws IOException {
+        return Files.readString(changeLogPath());
+    }
+
+    private void writeChangeLog(String contents) throws IOException {
+        Files.writeString(changeLogPath(), contents);
+    }
+
+    private Path changeLogPath() {
+        return rootDirectory.toPath().resolve("CHANGELOG.md");
     }
 }
