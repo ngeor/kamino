@@ -11,10 +11,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public final class Release {
@@ -47,10 +45,6 @@ public final class Release {
         return new Release(result);
     }
 
-    public Release filter(Predicate<CommitInfo> predicate) {
-        return new Release(groups.stream().map(g -> g.filter(predicate)).toList());
-    }
-
     public Release makeSubGroups(SubGroupOptions options) {
         return new Release(groups.stream().map(g -> g.makeSubGroups(options)).toList());
     }
@@ -62,11 +56,6 @@ public final class Release {
 
         public void addFirst(CommitInfo commit) {
             subGroups.getLast().addFirst(commit);
-        }
-
-        public Group filter(Predicate<CommitInfo> predicate) {
-            return new Group(
-                    tag, subGroups.stream().map(g -> g.filter(predicate)).toList());
         }
 
         public Group makeSubGroups(SubGroupOptions options) {
@@ -90,11 +79,6 @@ public final class Release {
 
         public void addFirst(CommitInfo commit) {
             commits.addFirst(commit);
-        }
-
-        public SubGroup filter(Predicate<CommitInfo> predicate) {
-            return new SubGroup(
-                    name, commits.stream().filter(predicate).collect(Collectors.toCollection(LinkedList::new)));
         }
 
         public List<SubGroup> makeSubGroups(SubGroupOptions options) {

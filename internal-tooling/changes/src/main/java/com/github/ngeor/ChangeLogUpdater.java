@@ -1,17 +1,21 @@
 package com.github.ngeor;
 
-import com.github.ngeor.markdown.Markdown;
+import com.github.ngeor.markdown.Item;
+import com.github.ngeor.markdown.Line;
 import com.github.ngeor.markdown.MarkdownReader;
 import com.github.ngeor.markdown.MarkdownWriter;
+import com.github.ngeor.markdown.Section;
 import com.github.ngeor.versions.SemVer;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ChangeLogUpdater {
@@ -42,40 +46,32 @@ public class ChangeLogUpdater {
     }
 
     public void updateChangeLog(String version) throws IOException, InterruptedException, ProcessFailedException {
-        Markdown markdown = generateChangeLog(version);
-        MarkdownWriter.write(markdown, getChangeLog());
+        List<Item> markdown = generateChangeLog(version);
+        new MarkdownWriter().write(markdown, getChangeLog());
     }
 
-    private Markdown generateChangeLog(String version)
+    private List<Item> generateChangeLog(String version)
             throws IOException, ProcessFailedException, InterruptedException {
         String sinceCommit = version != null ? TagPrefix.tag(modulePath, SemVer.parse(version)) : null;
 
-        FormattedRelease formattedRelease = format(
-                Release.create(getEligibleCommits(sinceCommit))
-                        .makeSubGroups(new Release.SubGroupOptions(
-                                "chore",
-                                List.of("feat", "fix", "chore", "deps"),
-                                commitInfo -> "chore".equals(commitInfo.type()) && "deps".equals(commitInfo.scope())
-                                        ? "deps"
-                                        : commitInfo.type())),
-                new FormatOptions(
-                        tagPrefix,
-                        "Unreleased",
-                        Map.of(
-                                "feat",
-                                "Features",
-                                "fix",
-                                "Fixes",
-                                "chore",
-                                "Miscellaneous Tasks",
-                                "deps",
-                                "Dependencies")));
+        Release.SubGroupOptions subGroupOptions = new Release.SubGroupOptions(
+                "chore",
+                List.of("feat", "fix", "chore", "deps"),
+                commitInfo -> "chore".equals(commitInfo.type()) && "deps".equals(commitInfo.scope())
+                        ? "deps"
+                        : commitInfo.type());
+        FormatOptions formatOptions = new FormatOptions(
+                tagPrefix,
+                "Unreleased",
+                Map.of("feat", "Features", "fix", "Fixes", "chore", "Miscellaneous Tasks", "deps", "Dependencies"));
+        FormattedRelease formattedRelease =
+                format(Release.create(getEligibleCommits(sinceCommit)).makeSubGroups(subGroupOptions), formatOptions);
 
         File changeLog = getChangeLog();
-        Markdown markdown = changeLog.isFile()
-                ? MarkdownReader.read(changeLog)
-                : new Markdown(String.format("# Changelog%n%n"), List.of());
-        markdown = merge(markdown, formattedRelease);
+        List<Item> markdown = changeLog.isFile()
+                ? new MarkdownReader().read(changeLog)
+                : new ArrayList<>(List.of(new Section(1, "Changelog")));
+        merge(markdown, formattedRelease, formatOptions);
         return markdown;
     }
 
@@ -119,33 +115,83 @@ public class ChangeLogUpdater {
         return commit.description();
     }
 
-    private Markdown merge(Markdown markdown, FormattedRelease formattedRelease) {
-        List<Markdown.Section> sections = new ArrayList<>();
-        Set<String> seenTitles = new HashSet<>();
-        for (var it = formattedRelease.groups().iterator(); it.hasNext(); ) {
-            var formattedGroup = it.next();
-            StringBuilder body = new StringBuilder();
-            body.append(System.lineSeparator());
-            for (var itChild = formattedGroup.subGroups().iterator(); itChild.hasNext(); ) {
-                var childGroup = itChild.next();
-                body.append(String.format("### %s%n%n", childGroup.title()));
-                for (String item : childGroup.items()) {
-                    body.append(String.format("* %s%n", item));
-                }
-                if (itChild.hasNext()) {
-                    body.append(System.lineSeparator());
-                }
-            }
-            if (it.hasNext() || markdown.sections().stream().anyMatch(s -> !seenTitles.contains(s.title()))) {
-                body.append(System.lineSeparator());
-            }
-            sections.add(new Markdown.Section(formattedGroup.title(), body.toString()));
-            seenTitles.add(formattedGroup.title());
+    private void merge(List<Item> markdown, FormattedRelease formattedRelease, FormatOptions formatOptions) {
+        // generate the new Markdown sections based on the formatted release
+        Map<String, Section> generatedSections = new LinkedHashMap<>();
+        for (FormattedRelease.Group formattedGroup : formattedRelease.groups()) {
+            String title = formattedGroup.title();
+            Section newSection = new Section(2, title, formatSectionBody(formattedGroup));
+            generatedSections.put(title, newSection);
         }
-        sections.addAll(markdown.sections().stream()
-                .filter(s -> !seenTitles.contains(s.title()))
-                .toList());
+        boolean hasUnreleasedSection = generatedSections.containsKey(formatOptions.defaultTag());
 
-        return new Markdown(markdown.header(), sections);
+        // get the top level Markdown section of the existing changelog
+        Section topLevelSection = markdown.stream()
+                .filter(Section.class::isInstance)
+                .map(Section.class::cast)
+                .filter(s -> s.level() == 1)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Changelog must have a top level heading"));
+
+        Set<String> existingTitles = topLevelSection.contents().stream()
+                .filter(Section.class::isInstance)
+                .map(Section.class::cast)
+                .map(Section::title)
+                .collect(Collectors.toSet());
+
+        int i = 0;
+        boolean isFirstTime = true;
+        while (i < topLevelSection.contents().size()) {
+            if (topLevelSection.contents().get(i) instanceof Section existingSection) {
+                if (!hasUnreleasedSection && existingSection.title().equalsIgnoreCase(formatOptions.defaultTag())) {
+                    // remove existing unreleased section
+                    topLevelSection.contents().remove(i);
+                } else {
+                    if (isFirstTime) {
+                        isFirstTime = false;
+
+                        // insert all new sections before the current position
+                        for (Section newSection : generatedSections.values()) {
+                            if (!existingTitles.contains(newSection.title())) {
+                                topLevelSection.contents().add(i, newSection);
+                                i++;
+                            }
+                        }
+                    }
+                    // replace contents if new section exists, let it be otherwise
+                    Optional.ofNullable(generatedSections.get(existingSection.title()))
+                            .map(Section::contents)
+                            .ifPresent(newContents -> {
+                                existingSection.contents().clear();
+                                existingSection.contents().addAll(newContents);
+                            });
+                    i++;
+                }
+            } else {
+                // skip over text content
+                i++;
+            }
+        }
+
+        if (isFirstTime) {
+            // the changelog did not have any existing sections, so just add all new sections
+            for (Section newSection : generatedSections.values()) {
+                topLevelSection.contents().add(newSection);
+            }
+        }
+    }
+
+    private static List<Item> formatSectionBody(FormattedRelease.Group formattedGroup) {
+        return formattedGroup.subGroups().stream()
+                .map(childGroup -> {
+                    List<Item> body = childGroup.items().stream()
+                            .map(item -> String.format("* %s", item))
+                            .map(Line::new)
+                            .map(Item.class::cast)
+                            .toList();
+                    return new Section(3, childGroup.title(), body);
+                })
+                .map(Item.class::cast)
+                .toList();
     }
 }

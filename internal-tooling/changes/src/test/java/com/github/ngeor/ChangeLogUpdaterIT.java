@@ -126,6 +126,75 @@ class ChangeLogUpdaterIT {
         """);
     }
 
+    @Test
+    void testDoNotGenerateUnreleasedSectionIfEmpty() throws IOException, ProcessFailedException, InterruptedException {
+        // arrange
+        addCommits("chore: Added something", "deps: Upgraded mockito");
+        git.tag("v1.0");
+
+        // act
+        changeLogUpdater.updateChangeLog(null);
+
+        // assert
+        String contents = Files.readString(rootDirectory.toPath().resolve("CHANGELOG.md"));
+        assertThat(contents)
+                .isEqualToNormalizingNewlines(
+                        """
+            # Changelog
+
+            ## [1.0] - $now
+
+            ### Miscellaneous Tasks
+
+            * Added something
+
+            ### Dependencies
+
+            * Upgraded mockito
+            """
+                                .replace("$now", LocalDate.now().toString()));
+    }
+
+    @Test
+    void testDoNotGenerateUnreleasedSectionIfEmptyWithExistingChangeLog()
+            throws IOException, ProcessFailedException, InterruptedException {
+        // arrange
+        addCommits("chore: Added something", "deps: Upgraded mockito");
+        git.tag("v1.0");
+
+        Files.writeString(
+                rootDirectory.toPath().resolve("CHANGELOG.md"),
+                """
+        # My changelog
+
+        ## Unreleased
+
+        * Whatever
+        """);
+
+        // act
+        changeLogUpdater.updateChangeLog(null);
+
+        // assert
+        String contents = Files.readString(rootDirectory.toPath().resolve("CHANGELOG.md"));
+        assertThat(contents)
+                .isEqualToNormalizingNewlines(
+                        """
+            # My changelog
+
+            ## [1.0] - $now
+
+            ### Miscellaneous Tasks
+
+            * Added something
+
+            ### Dependencies
+
+            * Upgraded mockito
+            """
+                                .replace("$now", LocalDate.now().toString()));
+    }
+
     private void addCommits(String... subjects) throws IOException, ProcessFailedException, InterruptedException {
         for (String subject : subjects) {
             addCommit(subject);
