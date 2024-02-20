@@ -88,8 +88,10 @@ class ArgumentParserTest {
 
     @Test
     void normalizeArgument() {
-        parser.add(new ArgSpecBuilder("path", SpecKind.POSITIONAL).normalizer(String::toLowerCase).build());
-        Map<String, Object> result = parser.parse(new String[] { "Hello" });
+        parser.add(new ArgSpecBuilder("path", SpecKind.POSITIONAL)
+                .normalizer(String::toLowerCase)
+                .build());
+        Map<String, Object> result = parser.parse(new String[] {"Hello"});
         assertThat(result).containsEntry("path", "hello");
     }
 }

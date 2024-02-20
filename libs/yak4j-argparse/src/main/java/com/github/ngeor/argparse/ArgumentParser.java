@@ -11,11 +11,17 @@ public class ArgumentParser {
     private final List<ArgSpec> argSpecs = new ArrayList<>();
 
     public void addPositionalArgument(String name, boolean required, String description) {
-        add(new ArgSpecBuilder(name, SpecKind.POSITIONAL).required(required).description(description).build());
+        add(new ArgSpecBuilder(name, SpecKind.POSITIONAL)
+                .required(required)
+                .description(description)
+                .build());
     }
 
     public void addNamedArgument(String name, boolean required, String description) {
-        add(new ArgSpecBuilder(name, SpecKind.NAMED).required(required).description(description).build());
+        add(new ArgSpecBuilder(name, SpecKind.NAMED)
+                .required(required)
+                .description(description)
+                .build());
     }
 
     public void addFlagArgument(String name, String description) {
