@@ -195,6 +195,57 @@ class ChangeLogUpdaterIT {
                                 .replace("$now", LocalDate.now().toString()));
     }
 
+    @Test
+    void testGenerateChangelogTwiceWithoutTags()
+        throws IOException, ProcessFailedException, InterruptedException {
+        // arrange
+        addCommits("chore: Added something", "deps: Upgraded mockito");
+        changeLogUpdater.updateChangeLog(null);
+        String contents = Files.readString(rootDirectory.toPath().resolve("CHANGELOG.md"));
+
+        // act
+        changeLogUpdater.updateChangeLog(null);
+
+        // assert
+        String contents2 = Files.readString(rootDirectory.toPath().resolve("CHANGELOG.md"));
+        assertThat(contents2).isEqualToNormalizingNewlines(contents);
+    }
+
+    @Test
+    void testGenerateChangelogTwiceWithTagAtLatest()
+        throws IOException, ProcessFailedException, InterruptedException {
+        // arrange
+        addCommits("chore: Added something", "deps: Upgraded mockito");
+        git.tag("v1.0");
+        changeLogUpdater.updateChangeLog(null);
+        String contents = Files.readString(rootDirectory.toPath().resolve("CHANGELOG.md"));
+
+        // act
+        changeLogUpdater.updateChangeLog(null);
+
+        // assert
+        String contents2 = Files.readString(rootDirectory.toPath().resolve("CHANGELOG.md"));
+        assertThat(contents2).isEqualToNormalizingNewlines(contents);
+    }
+
+    @Test
+    void testGenerateChangelogTwiceWithTagAndUnreleasedChanges()
+        throws IOException, ProcessFailedException, InterruptedException {
+        // arrange
+        addCommits("chore: Added something", "deps: Upgraded mockito");
+        git.tag("v1.0");
+        addCommits("fix: Important hotfix");
+        changeLogUpdater.updateChangeLog(null);
+        String contents = Files.readString(rootDirectory.toPath().resolve("CHANGELOG.md"));
+
+        // act
+        changeLogUpdater.updateChangeLog(null);
+
+        // assert
+        String contents2 = Files.readString(rootDirectory.toPath().resolve("CHANGELOG.md"));
+        assertThat(contents2).isEqualToNormalizingNewlines(contents);
+    }
+
     private void addCommits(String... subjects) throws IOException, ProcessFailedException, InterruptedException {
         for (String subject : subjects) {
             addCommit(subject);
