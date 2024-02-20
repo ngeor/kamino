@@ -1,6 +1,8 @@
 package com.github.ngeor;
 
+import com.github.ngeor.argparse.ArgSpecBuilder;
 import com.github.ngeor.argparse.ArgumentParser;
+import com.github.ngeor.argparse.SpecKind;
 import com.github.ngeor.versions.SemVer;
 import java.io.File;
 import java.io.IOException;
@@ -22,34 +24,19 @@ public final class App {
     }
 
     public static void main(String[] args) throws IOException, InterruptedException, ProcessFailedException {
-        ArgumentParser parser = new ArgumentParser();
-        parser.addPositionalArgument(
-                "path",
-                false,
-                "The path of the module. If not provided, the command will run for all modules, if applicable.");
-        parser.addPositionalArgument("version", false, "The version after which changelog should be generated.");
-        parser.addFlagArgument("git-version", "Evaluate the next release version based on git history.");
-        parser.addFlagArgument("release", "Release the given module.");
-        parser.addFlagArgument("changelog", "Update the changelog files.");
-        parser.addFlagArgument("push", "Should the release operation push git changes upstream or not.");
-        parser.addNamedArgument(
-                "initial-version",
-                false,
-                "If releasing a previously unreleased module, use this as the first release version.");
-        parser.addFlagArgument("help", "Prints help for the possible flags and exits.");
-
+        ArgumentParser parser = createArgumentParser();
         Map<String, Object> parsedArgs = parser.parse(args);
         if (parsedArgs.containsKey("help")) {
             parser.printHelp();
             return;
         }
-        // e.g. libs/java
-        // ensure path does not end in slashes and is not blank
-        String path = sanitize((String) parsedArgs.get("path"));
+
         File rootDirectory = new File(".").toPath().toAbsolutePath().toFile();
         Git git = new Git(rootDirectory);
-        if (path != null) {
 
+        // e.g. libs/java
+        String path = (String) parsedArgs.get("path");
+        if (path != null) {
             // ensure given path exists
             if (!new File(rootDirectory, path).isDirectory()) {
                 throw new IllegalArgumentException("path " + path + " not found");
@@ -59,33 +46,43 @@ public final class App {
         // e.g. 4.2.1
         String version = (String) parsedArgs.get("version");
 
-        if (parsedArgs.containsKey("git-version")) {
-            new GitVersionCommand(rootDirectory, path).run();
-            return;
-        }
-
-        if (parsedArgs.containsKey("changelog")) {
-            new ChangeLogUpdaterCommand(rootDirectory, path, version).run();
-            return;
-        }
-
-        if (parsedArgs.containsKey("release")) {
-            if (path != null) {
-                App app = new App(rootDirectory, path, git);
-                app.release(parsedArgs.containsKey("push"), (String) parsedArgs.get("initial-version"));
-                return;
-            } else {
-                throw new IllegalStateException("path is required for --release command");
+        switch (determineCommand(parsedArgs)) {
+            case GIT_VERSION -> new GitVersionCommand(rootDirectory, path).run();
+            case CHANGELOG -> new ChangeLogUpdaterCommand(rootDirectory, path, version).run();
+            case RELEASE -> {
+                if (path != null) {
+                    App app = new App(rootDirectory, path, git);
+                    app.release(parsedArgs.containsKey("push"), (String) parsedArgs.get("initial-version"));
+                    return;
+                } else {
+                    throw new IllegalStateException("path is required for --release command");
+                }
             }
+            case OVERVIEW -> new ChangesOverviewCommand().run();
         }
+    }
 
-        if (path != null) {
-            // default with path == changelog
-            new ChangeLogUpdaterCommand(rootDirectory, path, version).run();
-        } else {
-            // default without path == overview
-            new ChangesOverviewCommand().run();
-        }
+    private static ArgumentParser createArgumentParser() {
+        ArgumentParser parser = new ArgumentParser();
+        parser.addFlagArgument("help", "Prints help for the possible flags and exits.");
+        parser.add(new ArgSpecBuilder("path", SpecKind.POSITIONAL)
+                .description(
+                        "The path of the module. If not provided, the command will run for all modules, if applicable.")
+                .normalizer(App::sanitizePath)
+                .build());
+        parser.addPositionalArgument("version", false, "The version after which changelog should be generated.");
+        parser.addFlagArgument("git-version", "Evaluate the next release version based on git history.");
+        parser.addFlagArgument("release", "Release the given module.");
+        parser.addFlagArgument("changelog", "Update the changelog files.");
+        parser.addFlagArgument("push", "Should the release operation push git changes upstream or not.");
+        parser.addNamedArgument(
+                "initial-version",
+                false,
+                "If releasing a previously unreleased module, use this as the first release version.");
+        parser.addFlagArgument(
+                "overwrite",
+                "If specified, the full changelog will be re-generated, overwriting the existing matching entries. By default, only missing entries (and the unreleased) will be written.");
+        return parser;
     }
 
     private void release(boolean push, String initialVersion)
@@ -98,7 +95,7 @@ public final class App {
         new MavenReleaser(rootDirectory, path).prepareRelease(nextVersion, push);
     }
 
-    static String sanitize(String path) {
+    static String sanitizePath(String path) {
         if (path == null) {
             return null;
         }
@@ -109,5 +106,28 @@ public final class App {
         }
 
         return path.isBlank() ? null : path;
+    }
+
+    private static Command determineCommand(Map<String, Object> args) {
+        if (args.containsKey("git-version")) {
+            return Command.GIT_VERSION;
+        }
+
+        if (args.containsKey("release")) {
+            return Command.RELEASE;
+        }
+
+        if (args.containsKey("changelog")) {
+            return Command.CHANGELOG;
+        }
+
+        return args.containsKey("path") ? Command.CHANGELOG : Command.OVERVIEW;
+    }
+
+    private enum Command {
+        OVERVIEW,
+        CHANGELOG,
+        RELEASE,
+        GIT_VERSION
     }
 }

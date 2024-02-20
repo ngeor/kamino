@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Test;
 class AppTest {
     @Test
     void testSanitizePath() {
-        assertThat(App.sanitize(null)).isNull();
-        assertThat(App.sanitize("")).isNull();
-        assertThat(App.sanitize("libs/hello")).isEqualTo("libs/hello");
-        assertThat(App.sanitize("libs/foo/")).isEqualTo("libs/foo");
+        assertThat(App.sanitizePath(null)).isNull();
+        assertThat(App.sanitizePath("")).isNull();
+        assertThat(App.sanitizePath("libs/hello")).isEqualTo("libs/hello");
+        assertThat(App.sanitizePath("libs/foo/")).isEqualTo("libs/foo");
     }
 }
