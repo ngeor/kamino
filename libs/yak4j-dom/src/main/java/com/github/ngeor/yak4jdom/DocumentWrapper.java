@@ -7,11 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.RecordComponent;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -111,55 +107,5 @@ public class DocumentWrapper {
 
     public void indent() {
         getDocumentElement().indent();
-    }
-
-    public <E> E asTyped(Class<E> clazz)
-            throws InvocationTargetException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-        return asTyped(getDocumentElement(), clazz);
-    }
-
-    private static <E> E asTyped(ElementWrapper element, Class<E> clazz)
-            throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        RecordComponent[] recordComponents = clazz.getRecordComponents();
-        Constructor<?> declaredConstructor = clazz.getDeclaredConstructors()[0];
-        Object[] args = new Object[recordComponents.length];
-        for (int i = 0; i < recordComponents.length; i++) {
-            RecordComponent component = recordComponents[i];
-            String name = component.getName();
-
-            if (component.getType() == String.class) {
-                String value = element.firstElementText(name);
-                args[i] = value;
-            } else if (component.getType() == List.class) {
-                String typeName = component.getGenericType().getTypeName().split("[<>]")[1];
-                if (typeName.equals(String.class.getName())) {
-                    List<String> value = element.findChildElements(name)
-                            .flatMap(ElementWrapper::getChildElements)
-                            .flatMap(ElementWrapper::getTextContentTrimmedAsStream)
-                            .toList();
-                    args[i] = value;
-                } else {
-                    Class<?> childClazz = Class.forName(typeName);
-                    List<?> value = element.findChildElements(name)
-                            .flatMap(ElementWrapper::getChildElements)
-                            .map(childElement -> {
-                                try {
-                                    return asTyped(childElement, childClazz);
-                                } catch (ClassNotFoundException
-                                        | InvocationTargetException
-                                        | IllegalAccessException
-                                        | InstantiationException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            })
-                            .toList();
-                    args[i] = value;
-                }
-            } else {
-                ElementWrapper childElement = element.firstElement(name).orElse(null);
-                args[i] = childElement == null ? null : asTyped(childElement, component.getType());
-            }
-        }
-        return (E) declaredConstructor.newInstance(args);
     }
 }
