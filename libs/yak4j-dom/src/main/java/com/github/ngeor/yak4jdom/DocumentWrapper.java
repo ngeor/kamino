@@ -156,7 +156,8 @@ public class DocumentWrapper {
                     args[i] = value;
                 }
             } else {
-                throw new UnsupportedOperationException();
+                ElementWrapper childElement = element.firstElement(name).orElse(null);
+                args[i] = childElement == null ? null : asTyped(childElement, component.getType());
             }
         }
         return (E) declaredConstructor.newInstance(args);

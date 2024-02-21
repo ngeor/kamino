@@ -8,8 +8,7 @@ import org.junit.jupiter.api.Test;
 class TypedMavenDocumentTest {
     @Test
     void test()
-            throws InvocationTargetException, InstantiationException, IllegalAccessException,
-                    ClassNotFoundException {
+            throws InvocationTargetException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         String pom =
                 """
         <project>
