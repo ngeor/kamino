@@ -1,4 +1,4 @@
-package com.github.ngeor;
+package com.github.ngeor.maven;
 
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;

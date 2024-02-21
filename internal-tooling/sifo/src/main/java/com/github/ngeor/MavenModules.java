@@ -1,5 +1,6 @@
 package com.github.ngeor;
 
+import com.github.ngeor.maven.MavenCoordinates;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;

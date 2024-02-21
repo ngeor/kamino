@@ -1,8 +1,8 @@
 package com.github.ngeor.mr;
 
 import com.github.ngeor.Git;
-import com.github.ngeor.Maven;
-import com.github.ngeor.MavenCoordinates;
+import com.github.ngeor.maven.Maven;
+import com.github.ngeor.maven.MavenCoordinates;
 import com.github.ngeor.ProcessFailedException;
 import com.github.ngeor.PushOption;
 import com.github.ngeor.versions.SemVer;

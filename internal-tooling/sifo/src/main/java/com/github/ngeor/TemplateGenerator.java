@@ -1,5 +1,7 @@
 package com.github.ngeor;
 
+import com.github.ngeor.maven.Maven;
+import com.github.ngeor.maven.ParentPom;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.File;

@@ -1,5 +1,6 @@
 package com.github.ngeor;
 
+import com.github.ngeor.maven.Maven;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.File;
 import java.util.ArrayList;

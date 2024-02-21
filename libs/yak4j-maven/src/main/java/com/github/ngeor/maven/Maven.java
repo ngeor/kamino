@@ -1,5 +1,7 @@
-package com.github.ngeor;
+package com.github.ngeor.maven;
 
+import com.github.ngeor.ProcessFailedException;
+import com.github.ngeor.ProcessHelper;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.File;
