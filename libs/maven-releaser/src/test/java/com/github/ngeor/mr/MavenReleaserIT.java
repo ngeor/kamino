@@ -62,6 +62,24 @@ class MavenReleaserIT {
                 <version>1.0-SNAPSHOT</version>
                 <name>foo</name>
                 <description>The library</description>
+                <licenses>
+                    <license>
+                        <name>MIT</name>
+                        <url>https://opensource.org/licenses/MIT</url>
+                    </license>
+                </licenses>
+                <developers>
+                    <developer>
+                        <name>Nikolaos Georgiou</name>
+                        <email>nikolaos.georgiou@gmail.com</email>
+                    </developer>
+                </developers>
+                <scm>
+                    <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
+                    <developerConnection>scm:git:git@github.com:ngeor/kamino.git</developerConnection>
+                    <tag>HEAD</tag>
+                    <url>https://github.com/ngeor/kamino/tree/master/libs/java</url>
+                </scm>
             </project>
             """);
         git.addAll();
@@ -262,7 +280,7 @@ class MavenReleaserIT {
 
         // act and assert
         assertThatThrownBy(() -> releaser.prepareRelease(new SemVer(1, 0, 0), false))
-                .hasMessageContaining("Cannot release com.acme:foo without name element");
+                .hasMessageContaining("name");
     }
 
     @Test
@@ -300,6 +318,6 @@ class MavenReleaserIT {
 
         // act and assert
         assertThatThrownBy(() -> releaser.prepareRelease(new SemVer(1, 0, 0), false))
-                .hasMessageContaining("Cannot release com.acme:foo without description element");
+                .hasMessageContaining("description");
     }
 }

@@ -13,6 +13,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
+import java.util.Objects;
 
 public record MavenReleaser(File monorepoRoot, String path) {
 
@@ -56,22 +58,67 @@ public record MavenReleaser(File monorepoRoot, String path) {
     }
 
     private MavenCoordinates calcModuleCoordinatesAndDoSanityChecks() {
-        // maven at module
         MavenDocument mavenDocument = MavenDocument.effectivePomWithoutResolvingProperties(modulePomFile());
         MavenCoordinates result = mavenDocument.coordinates().requireAllFields();
-        if (mavenDocument.modelVersion().isEmpty()) {
-            throw new IllegalStateException("Cannot release %s:%s without modelVersion element"
-                    .formatted(result.groupId(), result.artifactId()));
-        }
-        if (mavenDocument.name().isEmpty()) {
-            throw new IllegalStateException(
-                    "Cannot release %s:%s without name element".formatted(result.groupId(), result.artifactId()));
-        }
-        if (mavenDocument.description().isEmpty()) {
-            throw new IllegalStateException("Cannot release %s:%s without description element"
-                    .formatted(result.groupId(), result.artifactId()));
+        RequiredProperties requiredProperties;
+        try {
+            requiredProperties = mavenDocument.getDocument().asTyped(RequiredProperties.class);
+        } catch (Exception ex) {
+            if (ex.getCause() instanceof NullPointerException nullPointerException) {
+                throw nullPointerException;
+            } else if (ex.getCause() instanceof IllegalArgumentException illegalArgumentException) {
+                throw illegalArgumentException;
+            } else {
+                throw new RuntimeException(ex);
+            }
         }
         return result;
+    }
+
+    public record RequiredProperties(
+            String modelVersion,
+            String name,
+            String description,
+            List<License> licenses,
+            List<Developer> developers,
+            Scm scm) {
+        public RequiredProperties {
+            Objects.requireNonNull(modelVersion, "modelVersion is required");
+            Objects.requireNonNull(name, "name is required");
+            Objects.requireNonNull(description, "description is required");
+            Objects.requireNonNull(licenses, "licenses is required");
+            if (licenses.isEmpty()) {
+                throw new IllegalArgumentException("licenses cannot be empty");
+            }
+            Objects.requireNonNull(developers, "developers is required");
+            if (developers.isEmpty()) {
+                throw new IllegalArgumentException("developers cannot be empty");
+            }
+            Objects.requireNonNull(scm, "scm is required");
+        }
+    }
+
+    public record License(String name, String url) {
+        public License {
+            Objects.requireNonNull(name, "name is required");
+            Objects.requireNonNull(url, "url is required");
+        }
+    }
+
+    public record Developer(String name, String email) {
+        public Developer {
+            Objects.requireNonNull(name, "name is required");
+            Objects.requireNonNull(email, "email is required");
+        }
+    }
+
+    public record Scm(String connection, String developerConnection, String url, String tag) {
+        public Scm {
+            Objects.requireNonNull(connection, "connection is required");
+            Objects.requireNonNull(developerConnection, "developerConnection is required");
+            Objects.requireNonNull(url, "url is required");
+            Objects.requireNonNull(tag, "tag is required");
+        }
     }
 
     private void setVersion(MavenCoordinates moduleCoordinates, String newVersion)
