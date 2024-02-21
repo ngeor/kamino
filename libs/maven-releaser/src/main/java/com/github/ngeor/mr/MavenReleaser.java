@@ -1,5 +1,10 @@
-package com.github.ngeor;
+package com.github.ngeor.mr;
 
+import com.github.ngeor.Git;
+import com.github.ngeor.Maven;
+import com.github.ngeor.MavenCoordinates;
+import com.github.ngeor.ProcessFailedException;
+import com.github.ngeor.PushOption;
 import com.github.ngeor.versions.SemVer;
 import com.github.ngeor.versions.SemVerBump;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
