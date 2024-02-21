@@ -3,11 +3,30 @@ package com.github.ngeor.maven;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.ngeor.yak4jdom.DocumentWrapper;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import org.apache.commons.io.FileUtils;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class PomMergerTest {
+class PomMergerIT {
+    Path tempDirectory;
+
+    @BeforeEach
+    void beforeEach() throws IOException {
+        tempDirectory = Files.createTempDirectory("test");
+        Files.createDirectory(tempDirectory.resolve("lib"));
+    }
+
+    @AfterEach
+    void afterEach() throws IOException {
+        FileUtils.deleteDirectory(tempDirectory.toFile());
+    }
+
     @Test
-    void testMergeProperties() {
+    void testMergeProperties() throws IOException {
         String parent =
                 """
         <project>
@@ -41,7 +60,7 @@ class PomMergerTest {
     }
 
     @Test
-    void testMergePropertiesChildHasNoProperties() {
+    void testMergePropertiesChildHasNoProperties() throws IOException {
         String parent =
                 """
         <project>
@@ -59,7 +78,7 @@ class PomMergerTest {
     }
 
     @Test
-    void testMergePropertiesParentHasNoProperties() {
+    void testMergePropertiesParentHasNoProperties() throws IOException {
         String child =
                 """
     <project>
@@ -77,7 +96,7 @@ class PomMergerTest {
     }
 
     @Test
-    void testMergeGroupId() {
+    void testMergeGroupId() throws IOException {
         String parent = """
         <project>
             <groupId>com.acme</groupId>
@@ -92,7 +111,7 @@ class PomMergerTest {
     }
 
     @Test
-    void testMergeGroupIdOverride() {
+    void testMergeGroupIdOverride() throws IOException {
         String parent = """
         <project>
             <groupId>com.acme</groupId>
@@ -108,7 +127,7 @@ class PomMergerTest {
     }
 
     @Test
-    void testDoNotInheritName() {
+    void testDoNotInheritName() throws IOException {
         String parent = """
         <project>
             <name>com.acme</name>
@@ -122,7 +141,7 @@ class PomMergerTest {
     }
 
     @Test
-    void testMergeLicenses() {
+    void testMergeLicenses() throws IOException {
         String parent =
                 """
         <project>
@@ -143,7 +162,7 @@ class PomMergerTest {
     }
 
     @Test
-    void testMergeScm() {
+    void testMergeScm() throws IOException {
         String parent =
                 """
         <project>
@@ -179,7 +198,7 @@ class PomMergerTest {
     }
 
     @Test
-    void testMergeBuildPlugins() {
+    void testMergeBuildPlugins() throws IOException {
         String parent =
                 """
         <project>
@@ -239,7 +258,7 @@ class PomMergerTest {
     }
 
     @Test
-    void testMergeBuildPluginExecutions() {
+    void testMergeBuildPluginExecutions() throws IOException {
         String parent =
                 """
         <project>
@@ -336,7 +355,7 @@ class PomMergerTest {
     }
 
     @Test
-    void testMergeBuildPluginConfiguration() {
+    void testMergeBuildPluginConfiguration() throws IOException {
         String parent =
                 """
         <project>
@@ -472,11 +491,24 @@ class PomMergerTest {
         assertThat(actual).isEqualToNormalizingNewlines(expected);
     }
 
-    private static String merge(String parent, String child) {
-        MavenDocument parentDoc = new MavenDocument(parent);
-        MavenDocument childDoc = new MavenDocument(child);
-        DocumentWrapper result =
-                new PomMerger().withParent(parentDoc).mergeChild(childDoc).getDocument();
+    private String merge(String parent, String child) throws IOException {
+        Files.writeString(tempDirectory.resolve("pom.xml"), parent);
+        Files.writeString(
+                tempDirectory.resolve("lib").resolve("pom.xml"),
+                child.replace(
+                        "<project>",
+                        """
+            <project>
+                <parent>
+                    <relativePath>..</relativePath>
+                    <artifactId>whatever</artifactId>
+                </parent>
+            """));
+
+        MavenDocument childDoc = new MavenDocument(
+                tempDirectory.resolve("lib").resolve("pom.xml").toFile());
+        MavenDocument effectiveChild = childDoc.effectivePom();
+        DocumentWrapper result = effectiveChild.getDocument();
         result.indent();
         return result.writeToString();
     }

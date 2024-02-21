@@ -7,12 +7,12 @@ import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.function.Consumer;
 import org.junit.jupiter.api.Test;
 
 class EffectivePomIT {
     private Maven maven;
+    private File file;
 
     @Test
     void test() throws IOException, InterruptedException, ProcessFailedException {
@@ -28,7 +28,7 @@ class EffectivePomIT {
                 <bar>test-${foo}</bar>
               </properties>
           </project>""";
-        File file = File.createTempFile("pom", ".xml");
+        file = File.createTempFile("pom", ".xml");
         file.deleteOnExit();
         Files.writeString(file.toPath(), pom);
 
@@ -78,7 +78,7 @@ class EffectivePomIT {
             <foo>456</foo>
           </properties>
       </project>""";
-        File file = File.createTempFile("pom", ".xml");
+        file = File.createTempFile("pom", ".xml");
         file.deleteOnExit();
         Files.writeString(file.toPath(), pom);
 
@@ -97,6 +97,6 @@ class EffectivePomIT {
     private void verifyEffectivePom(Consumer<ElementWrapper> assertions)
             throws IOException, InterruptedException, ProcessFailedException {
         assertions.accept(maven.effectivePomViaMaven().getDocumentElement());
-        assertions.accept(maven.effectivePom(new ArrayList<>()).getDocumentElement());
+        assertions.accept(new MavenDocument(file).effectivePom().getDocumentElement());
     }
 }

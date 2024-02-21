@@ -1,6 +1,5 @@
 package com.github.ngeor;
 
-import com.github.ngeor.maven.Maven;
 import com.github.ngeor.maven.MavenCoordinates;
 import com.github.ngeor.maven.MavenDocument;
 import com.github.ngeor.maven.ParentPom;
@@ -44,8 +43,7 @@ public final class MavenModule implements Comparable<MavenModule> {
     public MavenDocument effectivePom() {
         if (effectivePom == null) {
             parentPoms.clear();
-            Maven maven = new Maven(pomFile);
-            effectivePom = maven.effectivePom(parentPoms);
+            effectivePom = new MavenDocument(pomFile).effectivePom(parentPoms);
         }
 
         return effectivePom;

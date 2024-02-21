@@ -6,14 +6,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import com.github.ngeor.Commit;
 import com.github.ngeor.Git;
 import com.github.ngeor.ProcessFailedException;
-import com.github.ngeor.maven.Maven;
 import com.github.ngeor.maven.MavenCoordinates;
 import com.github.ngeor.maven.MavenDocument;
 import com.github.ngeor.versions.SemVer;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterEach;
@@ -75,8 +73,8 @@ class MavenReleaserIT {
         releaser.prepareRelease(new SemVer(1, 0, 0), false);
 
         // assert
-        Maven maven = new Maven(monorepoRoot.resolve("lib").resolve("pom.xml").toFile());
-        MavenDocument mavenDocument = maven.effectivePomNgResolveParent(new ArrayList<>());
+        MavenDocument mavenDocument = MavenDocument.effectivePomWithoutResolvingProperties(
+                monorepoRoot.resolve("lib").resolve("pom.xml"));
         assertThat(mavenDocument.coordinates()).isEqualTo(new MavenCoordinates("com.acme", "foo", "1.1.0-SNAPSHOT"));
         List<Commit> commits = git.revList(null).toList();
         assertThat(commits.stream().map(Commit::summary))

@@ -13,7 +13,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
 
 public record MavenReleaser(File monorepoRoot, String path) {
 
@@ -58,8 +57,7 @@ public record MavenReleaser(File monorepoRoot, String path) {
 
     private MavenCoordinates calcModuleCoordinatesAndDoSanityChecks() {
         // maven at module
-        Maven maven = new Maven(modulePomFile());
-        MavenDocument mavenDocument = maven.effectivePomNgResolveParent(new ArrayList<>());
+        MavenDocument mavenDocument = MavenDocument.effectivePomWithoutResolvingProperties(modulePomFile());
         MavenCoordinates result = mavenDocument.coordinates().requireAllFields();
         if (mavenDocument.modelVersion().isEmpty()) {
             throw new IllegalStateException("Cannot release %s:%s without modelVersion element"
@@ -93,9 +91,8 @@ public record MavenReleaser(File monorepoRoot, String path) {
 
     private void replacePomWithEffectivePom() {
         File pomFile = modulePomFile();
-        Maven maven = new Maven(pomFile);
-        DocumentWrapper document =
-                maven.effectivePomNgResolveParent(new ArrayList<>()).getDocument();
+        MavenDocument mavenDocument = MavenDocument.effectivePomWithoutResolvingProperties(pomFile);
+        DocumentWrapper document = mavenDocument.getDocument();
         document.indent();
         document.write(pomFile);
     }
