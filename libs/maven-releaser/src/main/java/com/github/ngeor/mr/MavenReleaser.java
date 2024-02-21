@@ -21,7 +21,7 @@ public record MavenReleaser(File monorepoRoot, String path) {
             throws IOException, InterruptedException, ProcessFailedException {
 
         // calculate the groupId / artifactId of the module
-        MavenCoordinates moduleCoordinates = calcModuleCoordinates();
+        MavenCoordinates moduleCoordinates = calcModuleCoordinatesAndDoSanityChecks();
 
         // switch to release version (fixes all usages in the monorepo)
         setVersion(moduleCoordinates, nextVersion.toString());
@@ -56,11 +56,24 @@ public record MavenReleaser(File monorepoRoot, String path) {
         }
     }
 
-    private MavenCoordinates calcModuleCoordinates() {
+    private MavenCoordinates calcModuleCoordinatesAndDoSanityChecks() {
         // maven at module
         Maven maven = new Maven(modulePomFile());
         MavenDocument mavenDocument = maven.effectivePomNgResolveParent(new ArrayList<>());
-        return mavenDocument.coordinates().requireAllFields();
+        MavenCoordinates result = mavenDocument.coordinates().requireAllFields();
+        if (mavenDocument.modelVersion().isEmpty()) {
+            throw new IllegalStateException("Cannot release %s:%s without modelVersion element"
+                    .formatted(result.groupId(), result.artifactId()));
+        }
+        if (mavenDocument.name().isEmpty()) {
+            throw new IllegalStateException(
+                    "Cannot release %s:%s without name element".formatted(result.groupId(), result.artifactId()));
+        }
+        if (mavenDocument.description().isEmpty()) {
+            throw new IllegalStateException("Cannot release %s:%s without description element"
+                    .formatted(result.groupId(), result.artifactId()));
+        }
+        return result;
     }
 
     private void setVersion(MavenCoordinates moduleCoordinates, String newVersion)
