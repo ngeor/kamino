@@ -3,18 +3,13 @@ package com.github.ngeor.maven;
 import com.github.ngeor.ProcessFailedException;
 import com.github.ngeor.ProcessHelper;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
-import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 public final class Maven {
     private final ProcessHelper processHelper;
@@ -52,31 +47,27 @@ public final class Maven {
         processHelper.run("help:effective-pom", "-Doutput=" + output.getAbsolutePath());
     }
 
-    public DocumentWrapper effectivePom(List<ParentPom> parentPoms) {
-        final DocumentWrapper document = effectivePomNgResolveParent(parentPoms);
+    public MavenDocument effectivePom(List<ParentPom> parentPoms) {
+        final MavenDocument document = effectivePomNgResolveParent(parentPoms);
 
         // resolve properties
-        ElementWrapper properties =
-                document.getDocumentElement().firstElement("properties").orElse(null);
-        if (properties != null) {
-            // collect unresolved properties
-            Map<String, String> unresolvedProperties = properties
-                    .getChildElements()
-                    .collect(Collectors.toMap(ElementWrapper::getNodeName, ElementWrapper::getTextContent));
-
+        // collect unresolved properties
+        Map<String, String> unresolvedProperties = document.properties();
+        if (!unresolvedProperties.isEmpty()) {
             // resolve them
             Map<String, String> resolvedProperties = PropertyResolver.resolve(unresolvedProperties);
 
             // update the DOM recursively
-            resolveProperties(document.getDocumentElement(), resolvedProperties);
+            document.resolveProperties(resolvedProperties);
         }
 
         return document;
     }
 
-    public DocumentWrapper effectivePomNgResolveParent(List<ParentPom> parentPoms) {
-        final DocumentWrapper document = DocumentWrapper.parse(pomFile);
-        final ParentPom parentPom = ParentPom.fromDocument(document).orElse(null);
+    // TODO move to MavenDocument
+    public MavenDocument effectivePomNgResolveParent(List<ParentPom> parentPoms) {
+        final MavenDocument document = new MavenDocument(pomFile);
+        final ParentPom parentPom = document.parentPom();
         if (parentPom == null) {
             return document;
         }
@@ -86,9 +77,9 @@ public final class Maven {
         final File parentPomFile = resolveParentPomFile(parentPom);
         Maven parentMaven = new Maven(parentPomFile);
         // recursion
-        DocumentWrapper parentResolved = parentMaven.effectivePomNgResolveParent(parentPoms);
+        MavenDocument parentResolved = parentMaven.effectivePomNgResolveParent(parentPoms);
         // remove parent element from document
-        document.getDocumentElement().removeChildNodesByName("parent");
+        document.removeParentPom();
         return new PomMerger().withParent(parentResolved).mergeChild(document);
     }
 
@@ -127,17 +118,6 @@ public final class Maven {
                     new FileNotFoundException("Parent pom not found at " + parentPom.relativePath()));
         }
         return parentPomFile;
-    }
-
-    private void resolveProperties(ElementWrapper element, Map<String, String> resolvedProperties) {
-        for (Iterator<Node> it = element.getChildNodesAsIterator(); it.hasNext(); ) {
-            Node node = it.next();
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
-                resolveProperties(new ElementWrapper((Element) node), resolvedProperties);
-            } else if (node.getNodeType() == Node.TEXT_NODE) {
-                node.setTextContent(PropertyResolver.resolve(node.getTextContent(), resolvedProperties::get));
-            }
-        }
     }
 
     public void install() throws IOException, InterruptedException, ProcessFailedException {

@@ -2,7 +2,6 @@ package com.github.ngeor.maven;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.github.ngeor.maven.PomMerger;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import org.junit.jupiter.api.Test;
 
@@ -474,9 +473,10 @@ class PomMergerTest {
     }
 
     private static String merge(String parent, String child) {
-        DocumentWrapper parentDoc = DocumentWrapper.parseString(parent);
-        DocumentWrapper childDoc = DocumentWrapper.parseString(child);
-        DocumentWrapper result = new PomMerger().withParent(parentDoc).mergeChild(childDoc);
+        MavenDocument parentDoc = new MavenDocument(parent);
+        MavenDocument childDoc = new MavenDocument(child);
+        DocumentWrapper result =
+                new PomMerger().withParent(parentDoc).mergeChild(childDoc).getDocument();
         result.indent();
         return result.writeToString();
     }

@@ -3,7 +3,6 @@ package com.github.ngeor.maven;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.ngeor.ProcessFailedException;
-import com.github.ngeor.maven.Maven;
 import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.File;
 import java.io.IOException;

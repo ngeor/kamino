@@ -2,8 +2,8 @@ package com.github.ngeor;
 
 import com.github.ngeor.maven.Maven;
 import com.github.ngeor.maven.MavenCoordinates;
+import com.github.ngeor.maven.MavenDocument;
 import com.github.ngeor.maven.ParentPom;
-import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,7 +16,7 @@ public final class MavenModule implements Comparable<MavenModule> {
     private final File typeDirectory;
     private final File projectDirectory;
     private final File pomFile;
-    private DocumentWrapper effectivePom;
+    private MavenDocument effectivePom;
     private final List<ParentPom> parentPoms = new ArrayList<>();
 
     public MavenModule(File typeDirectory, File projectDirectory, File pomFile) {
@@ -41,7 +41,7 @@ public final class MavenModule implements Comparable<MavenModule> {
         return pomFile;
     }
 
-    public DocumentWrapper effectivePom() {
+    public MavenDocument effectivePom() {
         if (effectivePom == null) {
             parentPoms.clear();
             Maven maven = new Maven(pomFile);
@@ -56,30 +56,15 @@ public final class MavenModule implements Comparable<MavenModule> {
     }
 
     public MavenCoordinates coordinates() {
-        DocumentWrapper document = effectivePom();
-        return new MavenCoordinates(
-                document.getDocumentElement().firstElementText("groupId"),
-                document.getDocumentElement().firstElementText("artifactId"),
-                document.getDocumentElement().firstElementText("version"));
+        return effectivePom().coordinates();
     }
 
     public Stream<MavenCoordinates> dependencies() {
-        return effectivePom()
-                .getDocumentElement()
-                .findChildElements("dependencies")
-                .flatMap(dependencies -> dependencies.findChildElements("dependency"))
-                .map(dependency -> new MavenCoordinates(
-                        dependency.firstElementText("groupId"),
-                        dependency.firstElementText("artifactId"),
-                        dependency.firstElementText("version")));
+        return effectivePom().dependencies();
     }
 
     public Optional<String> calculateJavaVersion() {
-        return effectivePom()
-                .getDocumentElement()
-                .firstElement("properties")
-                .map(p -> p.firstElementText("maven.compiler.source"))
-                .map(v -> "1.8".equals(v) ? "8" : v);
+        return effectivePom().property("maven.compiler.source").map(v -> "1.8".equals(v) ? "8" : v);
     }
 
     @Override

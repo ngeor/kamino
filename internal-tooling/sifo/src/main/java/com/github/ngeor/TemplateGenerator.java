@@ -76,14 +76,7 @@ public final class TemplateGenerator {
         for (ParentPom p : module.parentPoms()) {
             if (p.relativePath() != null && p.coordinates().version().endsWith("SNAPSHOT")) {
                 modules.getModules().stream()
-                        .filter(m -> {
-                            try {
-                                return m.coordinates().equals(p.coordinates());
-                            } catch (Exception ex) {
-                                throw new RuntimeException(
-                                        String.format("Error processing %s and %s", module.path(), m.path()), ex);
-                            }
-                        })
+                        .filter(m -> m.coordinates().equals(p.coordinates()))
                         .forEach(internalDependencies::add);
             }
         }

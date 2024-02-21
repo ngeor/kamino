@@ -1,12 +1,17 @@
 package com.github.ngeor.maven;
 
 import com.github.ngeor.yak4jdom.ElementWrapper;
-import java.util.Optional;
 
 public record MavenCoordinates(String groupId, String artifactId, String version) {
-    public static Optional<MavenCoordinates> fromElement(ElementWrapper element) {
+    public MavenCoordinates {
+        if (artifactId == null || artifactId.isBlank()) {
+            throw new IllegalArgumentException("artifactId can never be null or blank, as it cannot be inherited");
+        }
+    }
+
+    public static MavenCoordinates fromElement(ElementWrapper element) {
         if (element == null) {
-            return Optional.empty();
+            throw new IllegalArgumentException("element cannot be null");
         }
 
         String groupId = null;
@@ -32,17 +37,18 @@ public record MavenCoordinates(String groupId, String artifactId, String version
             }
         }
 
-        return Optional.of(new MavenCoordinates(groupId, artifactId, version));
+        return new MavenCoordinates(groupId, artifactId, version);
     }
 
     public MavenCoordinates requireAllFields() {
-        if (groupId == null
-                || groupId.isBlank()
-                || artifactId == null
-                || artifactId.isBlank()
-                || version == null
-                || version.isBlank()) {
-            throw new IllegalStateException();
+        // artifactId is checked at the constructor
+
+        if (groupId == null || groupId.isBlank()) {
+            throw new IllegalStateException(String.format("groupId is missing (artifactId=%s)", artifactId));
+        }
+
+        if (version == null || version.isBlank()) {
+            throw new IllegalStateException(String.format("version is missing %s:%s", groupId, artifactId));
         }
 
         return this;

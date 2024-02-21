@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.util.Optional;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ParentPomTest {
@@ -23,7 +22,8 @@ class ParentPomTest {
         """;
         DocumentWrapper document = DocumentWrapper.parseString(input);
         Optional<ParentPom> result = ParentPom.fromDocument(document);
-        Assertions.assertThat(result).contains(new ParentPom(new MavenCoordinates("com.acme", "foo", "1.0-SNAPSHOT"), "../libs"));
+        assertThat(result)
+                .contains(new ParentPom(new MavenCoordinates("com.acme", "foo", "1.0-SNAPSHOT"), "../libs"));
     }
 
     @Test
@@ -34,7 +34,7 @@ class ParentPomTest {
         """;
         DocumentWrapper document = DocumentWrapper.parseString(input);
         Optional<ParentPom> result = ParentPom.fromDocument(document);
-        Assertions.assertThat(result).isEmpty();
+        assertThat(result).isEmpty();
     }
 
     @Test
@@ -57,6 +57,7 @@ class ParentPomTest {
         """;
         DocumentWrapper document = DocumentWrapper.parseString(input);
         Optional<ParentPom> result = ParentPom.fromDocument(document);
-        Assertions.assertThat(result).contains(new ParentPom(new MavenCoordinates("com.acme", "foo", "1.0-SNAPSHOT"), null));
+        assertThat(result)
+                .contains(new ParentPom(new MavenCoordinates("com.acme", "foo", "1.0-SNAPSHOT"), null));
     }
 }

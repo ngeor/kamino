@@ -1,10 +1,11 @@
 package com.github.ngeor.mr;
 
 import com.github.ngeor.Git;
-import com.github.ngeor.maven.Maven;
-import com.github.ngeor.maven.MavenCoordinates;
 import com.github.ngeor.ProcessFailedException;
 import com.github.ngeor.PushOption;
+import com.github.ngeor.maven.Maven;
+import com.github.ngeor.maven.MavenCoordinates;
+import com.github.ngeor.maven.MavenDocument;
 import com.github.ngeor.versions.SemVer;
 import com.github.ngeor.versions.SemVerBump;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
@@ -58,10 +59,8 @@ public record MavenReleaser(File monorepoRoot, String path) {
     private MavenCoordinates calcModuleCoordinates() {
         // maven at module
         Maven maven = new Maven(modulePomFile());
-        DocumentWrapper documentWrapper = maven.effectivePomNgResolveParent(new ArrayList<>());
-        MavenCoordinates result = MavenCoordinates.fromElement(documentWrapper.getDocumentElement())
-                .orElseThrow();
-        return result.requireAllFields();
+        MavenDocument mavenDocument = maven.effectivePomNgResolveParent(new ArrayList<>());
+        return mavenDocument.coordinates().requireAllFields();
     }
 
     private void setVersion(MavenCoordinates moduleCoordinates, String newVersion)
@@ -82,7 +81,8 @@ public record MavenReleaser(File monorepoRoot, String path) {
     private void replacePomWithEffectivePom() {
         File pomFile = modulePomFile();
         Maven maven = new Maven(pomFile);
-        DocumentWrapper document = maven.effectivePomNgResolveParent(new ArrayList<>());
+        DocumentWrapper document =
+                maven.effectivePomNgResolveParent(new ArrayList<>()).getDocument();
         document.indent();
         document.write(pomFile);
     }
