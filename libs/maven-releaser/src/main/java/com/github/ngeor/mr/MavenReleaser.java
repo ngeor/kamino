@@ -9,12 +9,11 @@ import com.github.ngeor.maven.MavenDocument;
 import com.github.ngeor.versions.SemVer;
 import com.github.ngeor.versions.SemVerBump;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
+import com.github.ngeor.yak4jdom.Preconditions;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.List;
-import java.util.Objects;
 
 public record MavenReleaser(File monorepoRoot, String path) {
 
@@ -60,65 +59,29 @@ public record MavenReleaser(File monorepoRoot, String path) {
     private MavenCoordinates calcModuleCoordinatesAndDoSanityChecks() {
         MavenDocument mavenDocument = MavenDocument.effectivePomWithoutResolvingProperties(modulePomFile());
         MavenCoordinates result = mavenDocument.coordinates().requireAllFields();
-        RequiredProperties requiredProperties;
-        try {
-            requiredProperties = mavenDocument.getDocument().asTyped(RequiredProperties.class);
-        } catch (Exception ex) {
-            if (ex.getCause() instanceof NullPointerException nullPointerException) {
-                throw nullPointerException;
-            } else if (ex.getCause() instanceof IllegalArgumentException illegalArgumentException) {
-                throw illegalArgumentException;
-            } else {
-                throw new RuntimeException(ex);
-            }
-        }
+        // ensure modelVersion, name, description exist
+        // ensure licenses/license/name and url
+        // ensure developers/developer/name and email
+        // ensure scm and related properties
+        Preconditions.check(mavenDocument.getDocument())
+                .hasChildWithTextContent("modelVersion")
+                .hasChildWithTextContent("name")
+                .hasChildWithTextContent("description")
+                .hasChild("licenses")
+                .forEachChild("licenses", licenses -> licenses.hasChild("license")
+                        .forEachChild("license", license -> license.hasChildWithTextContent("name")
+                                .hasChildWithTextContent("url")))
+                .hasChild("developers")
+                .forEachChild(
+                        "developers",
+                        developers -> developers.hasChild("developer").forEachChild("developer", developer -> developer
+                                .hasChildWithTextContent("name")
+                                .hasChildWithTextContent("email")))
+                .hasChildThat("scm", scm -> scm.hasChildWithTextContent("connection")
+                        .hasChildWithTextContent("developerConnection")
+                        .hasChildWithTextContent("tag")
+                        .hasChildWithTextContent("url"));
         return result;
-    }
-
-    public record RequiredProperties(
-            String modelVersion,
-            String name,
-            String description,
-            List<License> licenses,
-            List<Developer> developers,
-            Scm scm) {
-        public RequiredProperties {
-            Objects.requireNonNull(modelVersion, "modelVersion is required");
-            Objects.requireNonNull(name, "name is required");
-            Objects.requireNonNull(description, "description is required");
-            Objects.requireNonNull(licenses, "licenses is required");
-            if (licenses.isEmpty()) {
-                throw new IllegalArgumentException("licenses cannot be empty");
-            }
-            Objects.requireNonNull(developers, "developers is required");
-            if (developers.isEmpty()) {
-                throw new IllegalArgumentException("developers cannot be empty");
-            }
-            Objects.requireNonNull(scm, "scm is required");
-        }
-    }
-
-    public record License(String name, String url) {
-        public License {
-            Objects.requireNonNull(name, "name is required");
-            Objects.requireNonNull(url, "url is required");
-        }
-    }
-
-    public record Developer(String name, String email) {
-        public Developer {
-            Objects.requireNonNull(name, "name is required");
-            Objects.requireNonNull(email, "email is required");
-        }
-    }
-
-    public record Scm(String connection, String developerConnection, String url, String tag) {
-        public Scm {
-            Objects.requireNonNull(connection, "connection is required");
-            Objects.requireNonNull(developerConnection, "developerConnection is required");
-            Objects.requireNonNull(url, "url is required");
-            Objects.requireNonNull(tag, "tag is required");
-        }
     }
 
     private void setVersion(MavenCoordinates moduleCoordinates, String newVersion)
