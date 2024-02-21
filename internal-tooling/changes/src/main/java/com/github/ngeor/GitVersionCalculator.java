@@ -10,24 +10,24 @@ import java.util.Optional;
 public class GitVersionCalculator {
     private final Git git;
     private final String path;
-    private final String tagPrefix;
+    private final TagPrefix tagPrefix;
 
     public GitVersionCalculator(Git git, String path) {
         this.git = git;
         this.path = path;
-        this.tagPrefix = TagPrefix.tagPrefix(path);
+        this.tagPrefix = TagPrefix.forPath(path);
     }
 
     public Optional<Result> calculateGitVersion() throws IOException, InterruptedException, ProcessFailedException {
-        SemVer mostRecentVersion = git.getMostRecentTag(tagPrefix)
-                .map(tag -> TagPrefix.version(path, tag))
+        SemVer mostRecentVersion = git.getMostRecentTag(tagPrefix.tagPrefix())
+                .map(tagPrefix::stripTagPrefix)
                 .orElse(null);
         return mostRecentVersion != null ? Optional.of(calculateGitVersion(mostRecentVersion)) : Optional.empty();
     }
 
     private Result calculateGitVersion(SemVer mostRecentVersion)
             throws IOException, ProcessFailedException, InterruptedException {
-        String sinceCommit = TagPrefix.tag(path, mostRecentVersion);
+        String sinceCommit = tagPrefix.addTagPrefix(mostRecentVersion);
 
         List<Commit> commits = git.revList(sinceCommit, path).toList();
         if (commits.isEmpty()) {

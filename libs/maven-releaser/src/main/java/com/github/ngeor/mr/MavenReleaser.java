@@ -37,7 +37,7 @@ public record MavenReleaser(File monorepoRoot, String path) {
         Git git = new Git(monorepoRoot);
         git.addAll();
         git.commit(String.format("release(%s): releasing %s", path, nextVersion));
-        String tag = TagPrefix.tag(path, nextVersion);
+        String tag = TagPrefix.forPath(path).addTagPrefix(nextVersion);
         git.tag(tag);
 
         // restore original pom

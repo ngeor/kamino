@@ -4,25 +4,56 @@ import com.github.ngeor.Tag;
 import com.github.ngeor.versions.SemVer;
 
 public final class TagPrefix {
-    private TagPrefix() {}
+    private final String tagPrefix;
 
-    public static String tagPrefix(String path) {
-        return validate(path) + "/v";
+    private TagPrefix(String tagPrefix) {
+        this.tagPrefix = tagPrefix;
     }
 
-    public static String tag(String path, SemVer version) {
-        return validate(path) + "/v" + version;
-    }
-
-    public static SemVer version(String path, Tag tag) {
-        return SemVer.parse(tag.name().substring(tagPrefix(path).length()));
-    }
-
-    private static String validate(String path) {
-        if (path.isBlank() || path.endsWith("/") || path.endsWith("\\")) {
-            throw new IllegalArgumentException();
+    public static TagPrefix forPath(String path) {
+        String tagPrefix;
+        if (path == null || path.isBlank()) {
+            tagPrefix = "v";
+        } else {
+            if (path.endsWith("/") || path.endsWith("\\")) {
+                throw new IllegalArgumentException("path must not end with path separator");
+            }
+            tagPrefix = path + "/v";
         }
+        return new TagPrefix(tagPrefix);
+    }
 
-        return path;
+    public String tagPrefix() {
+        return tagPrefix;
+    }
+
+    public String addTagPrefix(SemVer version) {
+        if (version == null) {
+            throw new IllegalArgumentException("version cannot be null");
+        }
+        return tagPrefix() + version;
+    }
+
+    public SemVer stripTagPrefix(Tag tag) {
+        if (tag == null) {
+            throw new IllegalArgumentException("tag cannot be null");
+        }
+        String name = tag.name();
+        if (name == null) {
+            throw new IllegalArgumentException("tag name cannot be null");
+        }
+        String prefix = tagPrefix();
+        if (!name.startsWith(prefix)) {
+            throw new IllegalArgumentException(String.format("tag %s does not start with prefix %s", name, prefix));
+        }
+        return SemVer.parse(name.substring(prefix.length()));
+    }
+
+    public String stripTagPrefixIfPresent(String input) {
+        String prefix = tagPrefix();
+        if (input.startsWith(prefix)) {
+            return input.substring(prefix.length());
+        }
+        return input;
     }
 }

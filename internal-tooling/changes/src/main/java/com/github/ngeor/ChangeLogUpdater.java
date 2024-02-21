@@ -6,7 +6,6 @@ import com.github.ngeor.markdown.MarkdownReader;
 import com.github.ngeor.markdown.MarkdownWriter;
 import com.github.ngeor.markdown.Section;
 import com.github.ngeor.mr.TagPrefix;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -22,22 +21,12 @@ import java.util.stream.Stream;
 public class ChangeLogUpdater {
     private final File rootDirectory;
     private final String modulePath;
-    private final String tagPrefix;
     private final Git git;
 
     public ChangeLogUpdater(File rootDirectory, String modulePath) {
-        this(rootDirectory, modulePath, new Git(rootDirectory));
-    }
-
-    public ChangeLogUpdater(File rootDirectory, String modulePath, Git git) {
-        this(rootDirectory, modulePath, TagPrefix.tagPrefix(modulePath), git);
-    }
-
-    public ChangeLogUpdater(File rootDirectory, String modulePath, String tagPrefix, Git git) {
         this.rootDirectory = rootDirectory;
         this.modulePath = modulePath;
-        this.tagPrefix = tagPrefix;
-        this.git = git;
+        this.git = new Git(rootDirectory);
     }
 
     private File getChangeLog() {
@@ -61,7 +50,6 @@ public class ChangeLogUpdater {
         Release.SubGroupOptions subGroupOptions =
                 new Release.SubGroupOptions("chore", List.of("feat", "fix", "chore", "deps"), this::remapType);
         FormatOptions formatOptions = new FormatOptions(
-                tagPrefix,
                 "Unreleased",
                 Map.of("feat", "Features", "fix", "Fixes", "chore", "Miscellaneous Tasks", "deps", "Dependencies"));
 
@@ -87,17 +75,15 @@ public class ChangeLogUpdater {
         return git.revList((String) null, modulePath);
     }
 
-    private static FormattedRelease format(Release release, FormatOptions options) {
+    private FormattedRelease format(Release release, FormatOptions options) {
         return new FormattedRelease(
                 release.groups().stream().map(g -> format(g, options)).toList());
     }
 
-    private static FormattedRelease.Group format(Release.Group group, FormatOptions options) {
+    private FormattedRelease.Group format(Release.Group group, FormatOptions options) {
         String title = group.tag();
         if (title != null) {
-            if (title.startsWith(options.tagPrefix())) {
-                title = title.substring(options.tagPrefix().length());
-            }
+            title = TagPrefix.forPath(modulePath).stripTagPrefixIfPresent(title);
             title = "[" + title + "] - " + group.authorDate();
         } else {
             title = options.defaultTag();

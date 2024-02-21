@@ -24,7 +24,7 @@ class ChangeLogUpdaterIT {
         git.init();
         git.config("user.name", "John Doe");
         git.config("user.email", "no-reply@acme.com");
-        changeLogUpdater = new ChangeLogUpdater(rootDirectory, null, "v", git);
+        changeLogUpdater = new ChangeLogUpdater(rootDirectory, null);
     }
 
     @AfterEach

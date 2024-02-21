@@ -1,7 +1,6 @@
 package com.github.ngeor;
 
 import com.github.ngeor.mr.TagPrefix;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
@@ -40,7 +39,7 @@ public class ChangesOverviewCommand extends BaseCommand {
 
     private Optional<Tag> recentTagWithDate(String module)
             throws IOException, InterruptedException, ProcessFailedException {
-        return git.getMostRecentTagWithDate(TagPrefix.tagPrefix(module));
+        return git.getMostRecentTagWithDate(TagPrefix.forPath(module).tagPrefix());
     }
 
     private String buildExtraInfo(String module, Tag tag) {
@@ -53,6 +52,6 @@ public class ChangesOverviewCommand extends BaseCommand {
         } catch (Exception ex) {
             count = ex.getMessage();
         }
-        return TagPrefix.version(module, tag) + "\t" + tag.date() + "\t" + count;
+        return TagPrefix.forPath(module).stripTagPrefix(tag) + "\t" + tag.date() + "\t" + count;
     }
 }
