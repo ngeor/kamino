@@ -91,4 +91,23 @@ public class MavenDocument {
             }
         }
     }
+
+    public Optional<String> modelVersion() {
+        return topLevelElement("modelVersion");
+    }
+
+    public Optional<String> name() {
+        return topLevelElement("name");
+    }
+
+    public Optional<String> description() {
+        return topLevelElement("description");
+    }
+
+    private Optional<String> topLevelElement(String childElementName) {
+        return document.getDocumentElement()
+                .findChildElements(childElementName)
+                .flatMap(p -> p.getTextContentTrimmed().stream())
+                .findFirst();
+    }
 }
