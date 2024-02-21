@@ -62,7 +62,7 @@ public class MavenDocument {
         return document.getDocumentElement()
                 .findChildElements("modules")
                 .flatMap(e -> e.findChildElements("module"))
-                .flatMap(e -> e.getTextContentTrimmed().stream());
+                .flatMap(ElementWrapper::getTextContentTrimmedAsStream);
     }
 
     private void removeParentPom() {
@@ -80,7 +80,7 @@ public class MavenDocument {
         return document.getDocumentElement()
                 .findChildElements("properties")
                 .flatMap(p -> p.findChildElements(name))
-                .flatMap(p -> p.getTextContentTrimmed().stream())
+                .flatMap(ElementWrapper::getTextContentTrimmedAsStream)
                 .findFirst();
     }
 
@@ -114,7 +114,7 @@ public class MavenDocument {
     private Optional<String> topLevelElement(String childElementName) {
         return document.getDocumentElement()
                 .findChildElements(childElementName)
-                .flatMap(p -> p.getTextContentTrimmed().stream())
+                .flatMap(ElementWrapper::getTextContentTrimmedAsStream)
                 .findFirst();
     }
 
