@@ -74,7 +74,6 @@ public class ElementWrapper {
         return getTextContentTrimmed().stream();
     }
 
-
     public Stream<String> childTextContentsTrimmed(String childElementName) {
         return findChildElements(childElementName).flatMap(ElementWrapper::getTextContentTrimmedAsStream);
     }
