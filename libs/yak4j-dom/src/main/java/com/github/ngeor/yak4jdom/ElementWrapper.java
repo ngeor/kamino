@@ -70,8 +70,13 @@ public class ElementWrapper {
         return Optional.ofNullable(getTextContent()).map(String::trim).filter(s -> !s.isEmpty());
     }
 
+    public Stream<String> getTextContentTrimmedAsStream() {
+        return getTextContentTrimmed().stream();
+    }
+
+
     public Stream<String> childTextContentsTrimmed(String childElementName) {
-        return findChildElements(childElementName).flatMap(e -> e.getTextContentTrimmed().stream());
+        return findChildElements(childElementName).flatMap(ElementWrapper::getTextContentTrimmedAsStream);
     }
 
     public String firstElementText(String... childElementNames) {
