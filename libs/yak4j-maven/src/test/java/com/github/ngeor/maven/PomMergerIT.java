@@ -6,23 +6,17 @@ import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import org.apache.commons.io.FileUtils;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 class PomMergerIT {
-    Path tempDirectory;
+    @TempDir
+    private Path tempDirectory;
 
     @BeforeEach
     void beforeEach() throws IOException {
-        tempDirectory = Files.createTempDirectory("test");
         Files.createDirectory(tempDirectory.resolve("lib"));
-    }
-
-    @AfterEach
-    void afterEach() throws IOException {
-        FileUtils.deleteDirectory(tempDirectory.toFile());
     }
 
     @Test

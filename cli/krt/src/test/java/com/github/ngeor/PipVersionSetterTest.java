@@ -7,23 +7,19 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 class PipVersionSetterTest {
+    @TempDir
     private Path tempDirectory;
+
     private PipVersionSetter pipVersionSetter;
 
     @BeforeEach
     void setup() throws IOException {
-        tempDirectory = Files.createTempDirectory("pip");
         pipVersionSetter = new PipVersionSetter(tempDirectory);
-    }
-
-    @AfterEach
-    void tearDown() throws IOException {
-        IOUtils.deleteDirectory(tempDirectory);
     }
 
     @Test

@@ -2,27 +2,16 @@ package com.github.ngeor;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 class GitCliffTest {
     private final GitCliff gitCliff = new GitCliff();
+
+    @TempDir
     private Path projectDirectory;
-
-    @BeforeEach
-    void beforeEach() throws IOException {
-        projectDirectory = Files.createTempDirectory("cliff");
-    }
-
-    @AfterEach
-    void afterEach() throws IOException {
-        IOUtils.deleteDirectory(projectDirectory);
-    }
 
     @Test
     void testBuildArgsSameDirectory() {

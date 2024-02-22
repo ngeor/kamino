@@ -20,6 +20,7 @@ public final class IOUtils {
         return result;
     }
 
+    @Deprecated
     public static void deleteDirectory(Path directory) throws IOException {
         List<Path> paths = Files.walk(directory).collect(Collectors.toList());
         for (Path path : paths) {

@@ -7,29 +7,24 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
-import org.apache.commons.io.FileUtils;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 class ChangeLogUpdaterIT {
+    @TempDir
     private File rootDirectory;
+
     private Git git;
     private ChangeLogUpdater changeLogUpdater;
 
     @BeforeEach
     void beforeEach() throws IOException, ProcessFailedException, InterruptedException {
-        rootDirectory = Files.createTempDirectory("test").toFile();
         git = new Git(rootDirectory);
         git.init();
         git.config("user.name", "John Doe");
         git.config("user.email", "no-reply@acme.com");
         changeLogUpdater = new ChangeLogUpdater(rootDirectory, null);
-    }
-
-    @AfterEach
-    void afterEach() throws IOException {
-        FileUtils.deleteDirectory(rootDirectory);
     }
 
     @Test

@@ -8,26 +8,22 @@ import java.nio.file.Path;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 class MavenVersionSetterTest {
+    @TempDir
     private Path tempDirectory;
+
     private MavenVersionSetter mavenVersionSetter;
 
     @BeforeEach
     void setup() throws IOException {
-        tempDirectory = Files.createTempDirectory("mvn");
         mavenVersionSetter = new MavenVersionSetter(tempDirectory);
-    }
-
-    @AfterEach
-    void tearDown() throws IOException {
-        IOUtils.deleteDirectory(tempDirectory);
     }
 
     @Test

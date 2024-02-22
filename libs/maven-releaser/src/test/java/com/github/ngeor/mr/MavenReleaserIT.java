@@ -14,16 +14,19 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import org.apache.commons.io.FileUtils;
 import org.assertj.core.api.AbstractThrowableAssert;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 class MavenReleaserIT {
+    @TempDir
     private Path remoteRoot;
+
+    @TempDir
     private Path monorepoRoot;
+
     private Git git;
     private MavenReleaser releaser;
     private final String validParentPomContents =
@@ -72,12 +75,10 @@ class MavenReleaserIT {
     @BeforeEach
     void beforeEach() throws IOException, ProcessFailedException, InterruptedException {
         // create remote git
-        remoteRoot = Files.createTempDirectory("remote");
         Git remoteGit = new Git(remoteRoot.toFile());
         remoteGit.init(InitOption.BARE);
 
         // clone local git
-        monorepoRoot = Files.createTempDirectory("test");
         git = new Git(monorepoRoot.toFile());
         git.clone("file://" + remoteRoot.toAbsolutePath());
 
@@ -86,12 +87,6 @@ class MavenReleaserIT {
 
         Files.createDirectory(monorepoRoot.resolve("lib"));
         releaser = new MavenReleaser(monorepoRoot.toFile(), "lib");
-    }
-
-    @AfterEach
-    void afterEach() throws IOException {
-        FileUtils.deleteDirectory(monorepoRoot.toFile());
-        FileUtils.deleteDirectory(remoteRoot.toFile());
     }
 
     @Test

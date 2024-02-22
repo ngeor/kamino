@@ -10,27 +10,22 @@ import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Locale;
-import org.apache.commons.io.FileUtils;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 class GitIT {
+    @TempDir
     private File directory;
+
     private Git git;
 
     @BeforeEach
     void beforeEach() throws IOException, ProcessFailedException, InterruptedException {
-        directory = Files.createTempDirectory("git").toFile();
         git = new Git(directory);
         git.init();
         git.config("user.name", "John Doe");
         git.config("user.email", "no-reply@acme.com");
-    }
-
-    @AfterEach
-    void afterEach() throws IOException {
-        FileUtils.deleteDirectory(directory);
     }
 
     @Test

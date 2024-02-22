@@ -5,29 +5,25 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 class GitTest {
     @Nested
     class NoRemoteTest {
+        @TempDir
         private File directory;
+
         private Git git;
 
         @BeforeEach
         void setup() throws IOException, InterruptedException {
-            directory = Files.createTempDirectory("no-remote").toFile();
             git = new GitImpl(directory);
             git.init();
             git.config("user.name", "John Doe");
             git.config("user.email", "john.doe@noreply.com");
-        }
-
-        @AfterEach
-        void tearDown() throws IOException {
-            IOUtils.deleteDirectory(directory.toPath());
         }
 
         @Test
@@ -71,20 +67,24 @@ class GitTest {
 
     @Nested
     class NonEmptyRemoteTest {
+        @TempDir
         private File remoteDirectory;
+
+        @TempDir
         private File bootstrapDirectory;
+
+        @TempDir
         private File workingDirectory;
+
         private Git remoteGit;
         private Git bootstrapGit;
         private Git git;
 
         @BeforeEach
         void setup() throws IOException, InterruptedException {
-            remoteDirectory = Files.createTempDirectory("remote").toFile();
             remoteGit = new GitImpl(remoteDirectory);
             remoteGit.initBare();
 
-            bootstrapDirectory = Files.createTempDirectory("bootstrap").toFile();
             bootstrapGit = new GitImpl(bootstrapDirectory);
             bootstrapGit.clone(remoteDirectory.getAbsolutePath());
             bootstrapGit.config("user.name", "John Doe");
@@ -94,18 +94,10 @@ class GitTest {
             bootstrapGit.commit("Initial commit");
             bootstrapGit.push();
 
-            workingDirectory = Files.createTempDirectory("work").toFile();
             git = new GitImpl(workingDirectory);
             git.clone(remoteDirectory.getAbsolutePath());
             git.config("user.name", "John Doe");
             git.config("user.email", "john.doe@noreply.com");
-        }
-
-        @AfterEach
-        void tearDown() throws IOException {
-            IOUtils.deleteDirectory(workingDirectory.toPath());
-            IOUtils.deleteDirectory(bootstrapDirectory.toPath());
-            IOUtils.deleteDirectory(remoteDirectory.toPath());
         }
 
         @Test

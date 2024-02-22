@@ -2,21 +2,15 @@ package com.github.ngeor;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 class GitDirFinderTest {
     private final GitDirFinder gitDirFinder = new GitDirFinder();
-    private Path tempDirectory;
 
-    @BeforeEach
-    void setup() throws IOException {
-        tempDirectory = Files.createTempDirectory("prefix");
-        tempDirectory.toFile().deleteOnExit();
-    }
+    @TempDir
+    private Path tempDirectory;
 
     @Test
     void testNotInGitDir() {
