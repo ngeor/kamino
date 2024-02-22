@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.apache.commons.lang3.Validate;
 
 public final class Git {
     private final ProcessHelper processHelper;
@@ -18,18 +19,38 @@ public final class Git {
         this.processHelper = new ProcessHelper(workingDirectory, "git");
     }
 
+    /**
+     * Gets the default branch of the git repo.
+     * The method will return a non-blank value or throw an exception.
+     * @return The default branch.
+     * @throws IOException
+     * @throws InterruptedException
+     * @throws ProcessFailedException
+     */
     public String getDefaultBranch() throws IOException, InterruptedException, ProcessFailedException {
         String remote = getOnlyRemote();
         String output = processHelper.run("symbolic-ref", "refs/remotes/" + remote + "/HEAD", "--short");
-        return output.replace(remote + "/", "").trim();
+        return Validate.notBlank(output.replace(remote + "/", "").trim());
+    }
+
+    /**
+     * Gets the current branch of the git repo.
+     * The method will return a non-blank value or throw an exception.
+     * @return The current branch
+     * @throws IOException
+     * @throws ProcessFailedException
+     * @throws InterruptedException
+     */
+    public String getCurrentBranch() throws IOException, ProcessFailedException, InterruptedException {
+        return Validate.notBlank(
+                processHelper.run("rev-parse", "--abbrev-ref", "HEAD").trim());
     }
 
     public String getOnlyRemote() throws IOException, InterruptedException, ProcessFailedException {
         List<String> remotes = getRemotes();
-        if (remotes.size() != 1) {
-            throw new IllegalStateException("Multiple remotes found");
-        }
-
+        Validate.noNullElements(remotes);
+        Validate.notEmpty(remotes, "No remotes found");
+        Validate.isTrue(remotes.size() == 1, "Multiple remotes found");
         return remotes.get(0);
     }
 
@@ -38,7 +59,13 @@ public final class Git {
     }
 
     public void checkout(String branch) throws IOException, InterruptedException, ProcessFailedException {
+        Validate.notBlank(branch);
         processHelper.run("checkout", branch);
+    }
+
+    public void checkoutNewBranch(String branch) throws IOException, ProcessFailedException, InterruptedException {
+        Validate.notBlank(branch);
+        processHelper.run("checkout", "-b", branch);
     }
 
     public void pull() throws IOException, InterruptedException, ProcessFailedException {
@@ -55,6 +82,7 @@ public final class Git {
     }
 
     public void commit(String message) throws IOException, InterruptedException, ProcessFailedException {
+        Validate.notBlank(message);
         processHelper.run("commit", "-m", message);
     }
 
@@ -99,6 +127,7 @@ public final class Git {
     }
 
     public void add(String file) throws IOException, InterruptedException, ProcessFailedException {
+        Validate.notBlank(file);
         processHelper.run("add", file);
     }
 
@@ -135,8 +164,14 @@ public final class Git {
         return revList((String) null, path);
     }
 
-    public void init() throws IOException, InterruptedException, ProcessFailedException {
-        processHelper.run("init");
+    public void init(InitOption... initOptions) throws IOException, InterruptedException, ProcessFailedException {
+        List<String> args = new ArrayList<>(List.of("init"));
+        Arrays.stream(initOptions)
+                .map(initOption -> switch (initOption) {
+                    case BARE -> "--bare";
+                })
+                .forEach(args::add);
+        processHelper.run(args);
     }
 
     public void tag(String tag) throws IOException, ProcessFailedException, InterruptedException {
@@ -147,11 +182,21 @@ public final class Git {
         processHelper.run("config", key, value);
     }
 
-    public void resetOne(ResetMode mode) throws IOException, ProcessFailedException, InterruptedException {
-        processHelper.run("reset", "--" + mode.toString().toLowerCase(), "HEAD~1");
+    public void ensureOnDefaultBranch() throws IOException, ProcessFailedException, InterruptedException {
+        String defaultBranch = getDefaultBranch();
+        String currentBranch = getCurrentBranch();
+        Validate.isTrue(
+                defaultBranch.equals(currentBranch),
+                "repo was not on default branch (expected %s, found %s)",
+                defaultBranch,
+                currentBranch);
     }
 
-    public void deleteTag(String tag) throws IOException, ProcessFailedException, InterruptedException {
-        processHelper.run("tag", "-d", tag);
+    public void clone(String url) throws IOException, ProcessFailedException, InterruptedException {
+        processHelper.run("clone", Validate.notBlank(url), ".");
+    }
+
+    public void symbolicRef(String name, String ref) throws IOException, ProcessFailedException, InterruptedException {
+        processHelper.run("symbolic-ref", Validate.notBlank(name), Validate.notBlank(ref));
     }
 }
