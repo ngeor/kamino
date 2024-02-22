@@ -81,6 +81,7 @@ class MavenReleaserIT {
         // clone local git
         git = new Git(monorepoRoot.toFile());
         git.clone("file://" + remoteRoot.toAbsolutePath());
+        git.configureIdentity("John Doe", "no-reply@acme.com");
 
         // so that the default branch can be determined
         git.symbolicRef("refs/remotes/origin/HEAD", "refs/remotes/origin/master");

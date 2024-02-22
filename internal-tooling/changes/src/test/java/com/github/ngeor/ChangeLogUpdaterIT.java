@@ -21,9 +21,7 @@ class ChangeLogUpdaterIT {
     @BeforeEach
     void beforeEach() throws IOException, ProcessFailedException, InterruptedException {
         git = new Git(rootDirectory);
-        git.init();
-        git.config("user.name", "John Doe");
-        git.config("user.email", "no-reply@acme.com");
+        git.initAndConfigureIdentity("John Doe", "no-reply@acme.com");
         changeLogUpdater = new ChangeLogUpdater(rootDirectory, null);
     }
 
