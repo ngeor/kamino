@@ -13,6 +13,8 @@ import java.util.stream.Stream;
 import org.apache.commons.lang3.Validate;
 
 public final class Git {
+    public static final String CONFIG_USER_NAME = "user.name";
+    public static final String CONFIG_USER_EMAIL = "user.email";
     private final ProcessHelper processHelper;
 
     public Git(File workingDirectory) {
@@ -192,12 +194,24 @@ public final class Git {
         processHelper.run(args);
     }
 
+    public void initAndConfigureIdentity(String name, String email, InitOption... initOptions)
+            throws IOException, ProcessFailedException, InterruptedException {
+        init(initOptions);
+        configureIdentity(name, email);
+    }
+
     public void tag(String tag) throws IOException, ProcessFailedException, InterruptedException {
         processHelper.run("tag", tag);
     }
 
     public void config(String key, String value) throws IOException, ProcessFailedException, InterruptedException {
-        processHelper.run("config", key, value);
+        processHelper.run("config", Validate.notBlank(key), value);
+    }
+
+    public void configureIdentity(String name, String email)
+            throws IOException, ProcessFailedException, InterruptedException {
+        config(CONFIG_USER_NAME, Validate.notBlank(name));
+        config(CONFIG_USER_EMAIL, Validate.notBlank(email));
     }
 
     public void ensureOnDefaultBranch() throws IOException, ProcessFailedException, InterruptedException {

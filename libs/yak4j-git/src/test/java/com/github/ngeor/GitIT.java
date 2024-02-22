@@ -23,9 +23,7 @@ class GitIT {
     @BeforeEach
     void beforeEach() throws IOException, ProcessFailedException, InterruptedException {
         git = new Git(directory);
-        git.init();
-        git.config("user.name", "John Doe");
-        git.config("user.email", "no-reply@acme.com");
+        git.initAndConfigureIdentity("John Doe", "no-reply@acme.com");
     }
 
     @Test
