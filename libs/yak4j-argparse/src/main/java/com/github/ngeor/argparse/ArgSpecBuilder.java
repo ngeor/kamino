@@ -1,22 +1,19 @@
 package com.github.ngeor.argparse;
 
+import java.util.Objects;
 import java.util.function.UnaryOperator;
+import org.apache.commons.lang3.Validate;
 
 public class ArgSpecBuilder {
-    private String name;
+    private final String name;
+    private final SpecKind kind;
     private boolean required;
-    private SpecKind kind;
     private String description;
     private UnaryOperator<String> normalizer;
 
     public ArgSpecBuilder(String name, SpecKind kind) {
-        this.name = name;
-        this.kind = kind;
-    }
-
-    public ArgSpecBuilder name(String name) {
-        this.name = name;
-        return this;
+        this.name = Validate.notBlank(name);
+        this.kind = Objects.requireNonNull(kind);
     }
 
     public ArgSpecBuilder required() {
@@ -25,11 +22,6 @@ public class ArgSpecBuilder {
 
     public ArgSpecBuilder required(boolean required) {
         this.required = required;
-        return this;
-    }
-
-    public ArgSpecBuilder kind(SpecKind kind) {
-        this.kind = kind;
         return this;
     }
 
