@@ -68,6 +68,19 @@ public final class Git {
         processHelper.run("checkout", "-b", branch);
     }
 
+    public void fetch(FetchOption... options) throws IOException, ProcessFailedException, InterruptedException {
+        List<String> args = new ArrayList<>(List.of("fetch"));
+        for (FetchOption option : options) {
+            args.add(
+                    switch (option) {
+                        case PRUNE -> "-p";
+                        case PRUNE_TAGS -> "-P";
+                        case TAGS -> "-t";
+                    });
+        }
+        processHelper.run(args);
+    }
+
     public void pull() throws IOException, InterruptedException, ProcessFailedException {
         processHelper.run("pull");
     }
@@ -89,10 +102,11 @@ public final class Git {
     public void push(PushOption... pushOptions) throws IOException, InterruptedException, ProcessFailedException {
         List<String> args = new ArrayList<>(List.of("push"));
         for (PushOption pushOption : pushOptions) {
-            switch (pushOption) {
-                case FOLLOW_TAGS -> args.add("--follow-tags");
-                case TAGS -> args.add("--tags");
-            }
+            args.add(
+                    switch (pushOption) {
+                        case FOLLOW_TAGS -> "--follow-tags";
+                        case TAGS -> "--tags";
+                    });
         }
         processHelper.run(args);
     }
