@@ -1,6 +1,8 @@
 package com.github.ngeor.mr;
 
+import com.github.ngeor.FetchOption;
 import com.github.ngeor.Git;
+import com.github.ngeor.LsFilesOption;
 import com.github.ngeor.ProcessFailedException;
 import com.github.ngeor.PushOption;
 import com.github.ngeor.maven.Maven;
@@ -14,14 +16,27 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import org.apache.commons.lang3.Validate;
 
 public record MavenReleaser(File monorepoRoot, String path) {
 
     public void prepareRelease(SemVer nextVersion, boolean push)
             throws IOException, InterruptedException, ProcessFailedException {
-
-        // calculate the groupId / artifactId of the module
+        // calculate the groupId / artifactId of the module, do maven sanity checks
         MavenCoordinates moduleCoordinates = calcModuleCoordinatesAndDoSanityChecks();
+
+        // do git sanity checks, pull latest
+        Git git = new Git(monorepoRoot);
+        git.ensureOnDefaultBranch();
+        Validate.isTrue(!git.hasStagedChanges(), "repo has staged files");
+        Validate.isTrue(!git.hasNonStagedChanges(), "repo has modified files");
+        Validate.isTrue(
+                git.lsFiles(LsFilesOption.OTHER, LsFilesOption.EXCLUDE_STANDARD)
+                        .findFirst()
+                        .isEmpty(),
+                "repo has untracked files");
+        git.fetch(FetchOption.PRUNE, FetchOption.PRUNE_TAGS, FetchOption.TAGS);
+        git.pull();
 
         // switch to release version (fixes all usages in the monorepo)
         setVersion(moduleCoordinates, nextVersion.toString());
@@ -35,7 +50,6 @@ public record MavenReleaser(File monorepoRoot, String path) {
         // TODO changelog
 
         // commit and tag
-        Git git = new Git(monorepoRoot);
         git.addAll();
         git.commit(String.format("release(%s): releasing %s", path, nextVersion));
         String tag = TagPrefix.forPath(path).addTagPrefix(nextVersion);
