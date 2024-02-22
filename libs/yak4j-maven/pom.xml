@@ -17,9 +17,6 @@
     <tag>HEAD</tag>
     <url>https://github.com/ngeor/kamino/tree/master/libs/yak4j-maven</url>
   </scm>
-  <properties>
-    <commons-io.version>2.15.1</commons-io.version>
-  </properties>
   <dependencies>
     <dependency>
       <groupId>com.github.ngeor</groupId>
@@ -34,7 +31,6 @@
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
-      <version>${commons-io.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>

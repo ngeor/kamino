@@ -20,14 +20,12 @@
     <url>https://github.com/ngeor/kamino/tree/master/internal-tooling/arturito</url>
   </scm>
   <properties>
-    <commons-io.version>2.15.1</commons-io.version>
     <mainClass>com.github.ngeor.App</mainClass>
   </properties>
   <dependencies>
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
-      <version>${commons-io.version}</version>
     </dependency>
     <dependency>
       <groupId>org.assertj</groupId>
