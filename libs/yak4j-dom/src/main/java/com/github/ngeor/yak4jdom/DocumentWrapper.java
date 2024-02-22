@@ -68,10 +68,6 @@ public class DocumentWrapper {
         return new ElementWrapper(document.getDocumentElement());
     }
 
-    public ElementWrapper createElement(String elementName) {
-        return new ElementWrapper(document.createElement(elementName));
-    }
-
     /**
      * Writes the document to a file.
      */
@@ -99,7 +95,7 @@ public class DocumentWrapper {
     public String writeToString() {
         try (StringWriter writer = new StringWriter()) {
             write(writer);
-            return writer.toString() + System.lineSeparator();
+            return writer + System.lineSeparator();
         } catch (IOException ex) {
             throw new DomRuntimeException(ex);
         }

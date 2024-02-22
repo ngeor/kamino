@@ -5,6 +5,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -67,7 +69,7 @@ public class ElementWrapper {
     }
 
     public Optional<String> getTextContentTrimmed() {
-        return Optional.ofNullable(getTextContent()).map(String::trim).filter(s -> !s.isEmpty());
+        return Optional.ofNullable(getTextContent()).map(String::trim).filter(StringUtils::isNotEmpty);
     }
 
     public Stream<String> getTextContentTrimmedAsStream() {
@@ -79,10 +81,7 @@ public class ElementWrapper {
     }
 
     public String firstElementText(String... childElementNames) {
-        if (childElementNames == null || childElementNames.length == 0) {
-            throw new IllegalArgumentException();
-        }
-
+        Validate.notEmpty(childElementNames);
         ElementWrapper e = this;
         for (int i = 0; i < childElementNames.length - 1 && e != null; i++) {
             e = e.firstElement(childElementNames[i]).orElse(null);
@@ -153,11 +152,10 @@ public class ElementWrapper {
     }
 
     private Node indentationNode(int level) {
-        String text = "";
-        for (int i = 1; i <= level; i++) {
-            text += "    ";
-        }
-        return element.getOwnerDocument().createTextNode(text);
+        Validate.isTrue(level >= 0);
+        String oneLevelIndentation = "    ";
+        String textContents = oneLevelIndentation.repeat(level);
+        return element.getOwnerDocument().createTextNode(textContents);
     }
 
     public void trimLeft() {
