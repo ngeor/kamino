@@ -135,6 +135,10 @@ public final class Git {
         return !processHelper.tryRun("diff", "--cached", "--quiet");
     }
 
+    public boolean hasNonStagedChanges() throws IOException, InterruptedException {
+        return !processHelper.tryRun("diff", "--quiet");
+    }
+
     /**
      * Returns the output of {@code git rev-list --all --format=%H|%as|%D|%s}.
      * <p>
@@ -198,5 +202,17 @@ public final class Git {
 
     public void symbolicRef(String name, String ref) throws IOException, ProcessFailedException, InterruptedException {
         processHelper.run("symbolic-ref", Validate.notBlank(name), Validate.notBlank(ref));
+    }
+
+    public Stream<String> lsFiles(LsFilesOption... options)
+            throws IOException, ProcessFailedException, InterruptedException {
+        List<String> args = new ArrayList<>(List.of("ls-files"));
+        Arrays.stream(options)
+                .map(option -> switch (option) {
+                    case OTHER -> "--other";
+                    case EXCLUDE_STANDARD -> "--exclude-standard";
+                })
+                .forEach(args::add);
+        return processHelper.run(args).lines();
     }
 }
