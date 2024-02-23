@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.8.0] - 2024-02-22
+
+### Features
+
+* sortpom tweaks
+* Add dependency management for commons-io, commons-lang3, jsr305
+
+### Miscellaneous Tasks
+
+* Regenerate templates
+* Use snapshot version of checkstyle rules, apply spotless to all files for now
+* Switch to latest snapshot version of checkstyle-rules
+* Switch to checkstyle rules 7.0.0
+
+### Dependencies
+
+* Upgrade to Mockito 5.10.0
+
+## [4.7.1] - 2024-02-15
+
+### Fixes
+
+* Removed shade and native profiles from parent pom, broke libs
+
+## [4.7.0] - 2024-02-14
+
+### Features
+
+* Introducing yak4j-argparse library
+
 ## [4.6.0] - 2024-02-13
 
 ### Features
