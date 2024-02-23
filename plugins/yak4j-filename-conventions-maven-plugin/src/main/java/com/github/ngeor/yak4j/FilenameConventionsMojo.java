@@ -75,7 +75,7 @@ public class FilenameConventionsMojo extends AbstractMojo {
         return matches;
     }
 
-    private List<Pattern> compilePatterns() throws MojoFailureException {
+    private List<Pattern> compilePatterns() {
         assertNotEmpty(pattern, "No patterns were specified");
 
         List<Pattern> result = new ArrayList<>();
