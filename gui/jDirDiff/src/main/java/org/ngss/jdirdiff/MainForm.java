@@ -45,6 +45,7 @@ public class MainForm extends JFrame {
 
         setTitle("jDirDiff");
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 exitForm(evt);
             }
@@ -52,6 +53,7 @@ public class MainForm extends JFrame {
 
         btnCompare.setText("Compare");
         btnCompare.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCompareActionPerformed(evt);
             }
@@ -61,6 +63,7 @@ public class MainForm extends JFrame {
 
         btnMakeZip.setText("Make Zip");
         btnMakeZip.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMakeZipActionPerformed(evt);
             }

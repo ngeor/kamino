@@ -20,6 +20,7 @@ public class ChangedFileItem extends OneFileItem {
         super(file);
     }
 
+    @Override
     public String toString() {
         return "Changed File: " + getFile().toString();
     }

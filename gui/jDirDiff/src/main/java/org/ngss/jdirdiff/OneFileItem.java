@@ -25,6 +25,7 @@ public class OneFileItem {
         return file;
     }
 
+    @Override
     public String toString() {
         return file.toString();
     }
