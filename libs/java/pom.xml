@@ -39,7 +39,7 @@
   <properties>
     <assertj-bom.version>3.25.3</assertj-bom.version>
     <checkstyle-rules.version>7.0.0</checkstyle-rules.version>
-    <checkstyle.version>10.12.7</checkstyle.version>
+    <checkstyle.version>10.13.0</checkstyle.version>
     <commons-io.version>2.15.1</commons-io.version>
     <commons-lang3.version>3.14.0</commons-lang3.version>
     <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
