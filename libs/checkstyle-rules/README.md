@@ -4,6 +4,7 @@ Rules for [checkstyle]. Share rules among projects.
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.ngeor/checkstyle-rules.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/com.github.ngeor/checkstyle-rules/overview)
 [![Build checkstyle-rules](https://github.com/ngeor/kamino/actions/workflows/build-libs-checkstyle-rules.yml/badge.svg)](https://github.com/ngeor/kamino/actions/workflows/build-libs-checkstyle-rules.yml)
+[![javadoc](https://javadoc.io/badge2/com.github.ngeor/checkstyle-rules/javadoc.svg)](https://javadoc.io/doc/com.github.ngeor/checkstyle-rules)
 
 ## Overview
 

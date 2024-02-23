@@ -2,6 +2,7 @@
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.ngeor/archetype-quickstart-jdk8.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/com.github.ngeor/archetype-quickstart-jdk8/overview)
 [![Build archetype-quickstart-jdk8](https://github.com/ngeor/kamino/actions/workflows/build-archetypes-archetype-quickstart-jdk8.yml/badge.svg)](https://github.com/ngeor/kamino/actions/workflows/build-archetypes-archetype-quickstart-jdk8.yml)
+[![javadoc](https://javadoc.io/badge2/com.github.ngeor/archetype-quickstart-jdk8/javadoc.svg)](https://javadoc.io/doc/com.github.ngeor/archetype-quickstart-jdk8)
 
 A Maven archetype for a simple Java app, updated for Java 8.
 
