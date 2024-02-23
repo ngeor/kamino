@@ -8,6 +8,7 @@ import com.github.ngeor.markdown.MarkdownReader;
 import com.github.ngeor.markdown.MarkdownWriter;
 import com.github.ngeor.markdown.Section;
 import com.github.ngeor.process.ProcessFailedException;
+import com.github.ngeor.versions.SemVer;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -42,17 +43,23 @@ public class ChangeLogUpdater {
     }
 
     public void updateChangeLog(boolean overwrite) throws IOException, InterruptedException, ProcessFailedException {
-        List<Item> markdown = generateChangeLog(overwrite);
+        updateChangeLog(overwrite, null);
+    }
+
+    public void updateChangeLog(boolean overwrite, SemVer nextVersion)
+            throws IOException, ProcessFailedException, InterruptedException {
+        List<Item> markdown = generateChangeLog(overwrite, nextVersion);
         new MarkdownWriter().write(markdown, getChangeLog());
     }
 
-    private List<Item> generateChangeLog(boolean overwrite)
+    private List<Item> generateChangeLog(boolean overwrite, SemVer nextVersion)
             throws IOException, ProcessFailedException, InterruptedException {
 
         Release.SubGroupOptions subGroupOptions =
                 new Release.SubGroupOptions("chore", List.of("feat", "fix", "chore", "deps"), this::remapType);
         FormatOptions formatOptions = new FormatOptions(
                 "Unreleased",
+                nextVersion,
                 Map.of("feat", "Features", "fix", "Fixes", "chore", "Miscellaneous Tasks", "deps", "Dependencies"));
 
         ReleaseGrouper releaseGrouper = new ReleaseGrouper(subGroupOptions);
@@ -86,9 +93,11 @@ public class ChangeLogUpdater {
         String title = group.tag();
         if (title != null) {
             title = TagPrefix.forPath(modulePath).stripTagPrefixIfPresent(title);
-            title = "[" + title + "] - " + group.authorDate();
+            title = String.format("[%s] - %s", title, group.authorDate());
+        } else if (options.futureVersion() != null) {
+            title = String.format("[%s] - %s", options.futureVersion(), group.authorDate());
         } else {
-            title = options.defaultTag();
+            title = options.unreleasedTitle();
         }
 
         return new FormattedRelease.Group(
@@ -119,7 +128,7 @@ public class ChangeLogUpdater {
             Section newSection = new Section(2, title, formatSectionBody(formattedGroup));
             generatedSections.put(title, newSection);
         }
-        boolean hasUnreleasedSection = generatedSections.containsKey(formatOptions.defaultTag());
+        boolean hasUnreleasedSection = generatedSections.containsKey(formatOptions.unreleasedTitle());
 
         // get the top level Markdown section of the existing changelog
         Section topLevelSection = markdown.stream()
@@ -139,7 +148,8 @@ public class ChangeLogUpdater {
         boolean isFirstTime = true;
         while (i < topLevelSection.contents().size()) {
             if (topLevelSection.contents().get(i) instanceof Section existingSection) {
-                if (!hasUnreleasedSection && existingSection.title().equalsIgnoreCase(formatOptions.defaultTag())) {
+                if (!hasUnreleasedSection
+                        && existingSection.title().equalsIgnoreCase(formatOptions.unreleasedTitle())) {
                     // remove existing unreleased section
                     topLevelSection.contents().remove(i);
                 } else {
@@ -158,7 +168,8 @@ public class ChangeLogUpdater {
                     Optional.ofNullable(generatedSections.get(existingSection.title()))
                             .map(Section::contents)
                             .ifPresent(newContents -> {
-                                if (overwrite || existingSection.title().equalsIgnoreCase(formatOptions.defaultTag())) {
+                                if (overwrite
+                                        || existingSection.title().equalsIgnoreCase(formatOptions.unreleasedTitle())) {
                                     existingSection.contents().clear();
                                     existingSection.contents().addAll(newContents);
                                 }

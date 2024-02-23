@@ -3,9 +3,18 @@ package com.github.ngeor.changelog;
 import com.github.ngeor.git.Commit;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
+import org.apache.commons.lang3.Validate;
 
 public record Release(List<Group> groups) {
+    public Release {
+        Objects.requireNonNull(groups);
+        long numberOfGroupsWithoutTag =
+                groups.stream().filter(g -> g.tag() == null).count();
+        Validate.isTrue(numberOfGroupsWithoutTag <= 1, "Found more than one group without a tag");
+    }
+
     public record Group(Commit mostRecentCommit, List<SubGroup> subGroups) {
         public String tag() {
             return mostRecentCommit.tag();

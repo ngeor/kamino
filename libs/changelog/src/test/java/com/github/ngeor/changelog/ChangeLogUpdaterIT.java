@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.ngeor.git.Git;
 import com.github.ngeor.process.ProcessFailedException;
+import com.github.ngeor.versions.SemVer;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -370,6 +371,29 @@ class ChangeLogUpdaterIT {
 
                 * Added oops
                 """
+                                .replace("$now", LocalDate.now().toString()));
+    }
+
+    @Test
+    void testAssumeFutureRelease() throws IOException, ProcessFailedException, InterruptedException {
+        // arrange
+        addCommits("chore: Added something", "[maven-release-plugin]: release 1.0");
+
+        // act
+        changeLogUpdater.updateChangeLog(false, new SemVer(1, 0, 0));
+
+        // assert
+        assertThat(readChangeLog())
+                .isEqualToNormalizingNewlines(
+                        """
+        # Changelog
+
+        ## [1.0.0] - $now
+
+        ### Miscellaneous Tasks
+
+        * Added something
+        """
                                 .replace("$now", LocalDate.now().toString()));
     }
 

@@ -1,5 +1,6 @@
 package com.github.ngeor.mr;
 
+import com.github.ngeor.changelog.ChangeLogUpdater;
 import com.github.ngeor.changelog.TagPrefix;
 import com.github.ngeor.git.FetchOption;
 import com.github.ngeor.git.Git;
@@ -48,7 +49,8 @@ public record MavenReleaser(File monorepoRoot, String path) {
         // overwrite pom.xml with effective pom
         replacePomWithEffectivePom();
 
-        // TODO changelog
+        // update changelog
+        new ChangeLogUpdater(monorepoRoot, path).updateChangeLog(false, nextVersion);
 
         // commit and tag
         git.addAll();
