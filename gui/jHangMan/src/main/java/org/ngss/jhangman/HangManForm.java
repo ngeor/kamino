@@ -31,6 +31,7 @@ public class HangManForm extends javax.swing.JFrame {
     private void initComponents() {
 
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 exitForm(evt);
             }

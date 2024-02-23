@@ -137,8 +137,7 @@ public class HangManPanel extends JPanel {
             }
 
             Object source = e.getSource();
-            if (source instanceof JButton) {
-                JButton btn = (JButton) source;
+            if (source instanceof JButton btn) {
                 char chLetter = e.getActionCommand().charAt(0);
                 boolean found = false;
                 int remainingChars = 0;

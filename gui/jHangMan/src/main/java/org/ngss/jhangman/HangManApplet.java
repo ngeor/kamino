@@ -30,6 +30,7 @@ public class HangManApplet extends JApplet {
     /**
      * Initializes the applet HangManApplet.
      */
+    @Override
     public void init() {
         initComponents();
 
