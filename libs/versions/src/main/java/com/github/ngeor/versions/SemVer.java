@@ -39,8 +39,8 @@ public class SemVer implements Comparable<SemVer> {
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof SemVer) {
-            return compareTo((SemVer) o) == 0;
+        if (o instanceof SemVer ver) {
+            return compareTo(ver) == 0;
         }
         return false;
     }
