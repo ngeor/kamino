@@ -2,6 +2,7 @@ package com.github.ngeor;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.github.ngeor.git.Commit;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;

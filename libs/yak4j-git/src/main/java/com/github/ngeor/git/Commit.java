@@ -1,4 +1,4 @@
-package com.github.ngeor;
+package com.github.ngeor.git;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;

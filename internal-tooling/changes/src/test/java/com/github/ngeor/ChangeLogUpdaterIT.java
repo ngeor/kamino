@@ -2,6 +2,7 @@ package com.github.ngeor;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.github.ngeor.git.Git;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;

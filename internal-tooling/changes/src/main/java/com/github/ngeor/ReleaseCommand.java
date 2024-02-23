@@ -1,5 +1,6 @@
 package com.github.ngeor;
 
+import com.github.ngeor.git.Git;
 import com.github.ngeor.mr.MavenReleaser;
 import com.github.ngeor.versions.SemVer;
 import java.io.File;

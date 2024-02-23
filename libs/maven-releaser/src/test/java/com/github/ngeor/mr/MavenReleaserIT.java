@@ -3,9 +3,9 @@ package com.github.ngeor.mr;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.github.ngeor.Commit;
-import com.github.ngeor.Git;
-import com.github.ngeor.InitOption;
+import com.github.ngeor.git.Commit;
+import com.github.ngeor.git.Git;
+import com.github.ngeor.git.InitOption;
 import com.github.ngeor.ProcessFailedException;
 import com.github.ngeor.maven.MavenCoordinates;
 import com.github.ngeor.maven.MavenDocument;

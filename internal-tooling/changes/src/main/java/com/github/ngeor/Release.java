@@ -1,5 +1,6 @@
 package com.github.ngeor;
 
+import com.github.ngeor.git.Commit;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.function.Function;

@@ -1,5 +1,6 @@
 package com.github.ngeor;
 
+import com.github.ngeor.git.Commit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;

@@ -1,10 +1,10 @@
 package com.github.ngeor.mr;
 
-import com.github.ngeor.FetchOption;
-import com.github.ngeor.Git;
-import com.github.ngeor.LsFilesOption;
+import com.github.ngeor.git.FetchOption;
+import com.github.ngeor.git.Git;
+import com.github.ngeor.git.LsFilesOption;
 import com.github.ngeor.ProcessFailedException;
-import com.github.ngeor.PushOption;
+import com.github.ngeor.git.PushOption;
 import com.github.ngeor.maven.Maven;
 import com.github.ngeor.maven.MavenCoordinates;
 import com.github.ngeor.maven.MavenDocument;

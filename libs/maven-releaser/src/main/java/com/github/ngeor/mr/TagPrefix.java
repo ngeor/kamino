@@ -1,6 +1,6 @@
 package com.github.ngeor.mr;
 
-import com.github.ngeor.Tag;
+import com.github.ngeor.git.Tag;
 import com.github.ngeor.versions.SemVer;
 
 public final class TagPrefix {

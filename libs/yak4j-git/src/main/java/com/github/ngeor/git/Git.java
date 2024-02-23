@@ -1,5 +1,7 @@
-package com.github.ngeor;
+package com.github.ngeor.git;
 
+import com.github.ngeor.ProcessFailedException;
+import com.github.ngeor.ProcessHelper;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

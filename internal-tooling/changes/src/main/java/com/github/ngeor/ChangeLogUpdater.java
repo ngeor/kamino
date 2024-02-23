@@ -1,5 +1,7 @@
 package com.github.ngeor;
 
+import com.github.ngeor.git.Commit;
+import com.github.ngeor.git.Git;
 import com.github.ngeor.markdown.Item;
 import com.github.ngeor.markdown.Line;
 import com.github.ngeor.markdown.MarkdownReader;

@@ -1,5 +1,8 @@
 package com.github.ngeor;
 
+import com.github.ngeor.git.Commit;
+import com.github.ngeor.git.Git;
+import com.github.ngeor.git.Tag;
 import com.github.ngeor.mr.TagPrefix;
 import java.io.File;
 import java.io.IOException;
