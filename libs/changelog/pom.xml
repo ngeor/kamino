@@ -20,8 +20,8 @@
   <dependencies>
     <dependency>
       <groupId>com.github.ngeor</groupId>
-      <artifactId>yak4j-markdown</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <artifactId>versions</artifactId>
+      <version>1.1.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.github.ngeor</groupId>
@@ -30,17 +30,17 @@
     </dependency>
     <dependency>
       <groupId>com.github.ngeor</groupId>
-      <artifactId>versions</artifactId>
-      <version>1.1.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter</artifactId>
-      <scope>test</scope>
+      <artifactId>yak4j-markdown</artifactId>
+      <version>1.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>

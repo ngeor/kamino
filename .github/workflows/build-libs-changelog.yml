@@ -7,6 +7,7 @@ on:
       - libs/changelog/**
       - .github/workflows/build-libs-changelog.yml
       - pom.xml
+      - libs/java/**
       - libs/versions/**
       - libs/yak4j-git/**
       - libs/yak4j-markdown/**
@@ -17,6 +18,7 @@ on:
       - libs/changelog/**
       - .github/workflows/build-libs-changelog.yml
       - pom.xml
+      - libs/java/**
       - libs/versions/**
       - libs/yak4j-git/**
       - libs/yak4j-markdown/**
