@@ -12,7 +12,7 @@ import org.junit.Test;
  */
 public class BlockTypeTest {
     @Test
-    public void isEmpty_onEmptyBlock_isTrue() throws Exception {
+    public void isEmpty_onEmptyBlock_isTrue() {
         assertTrue(BlockType.Empty.isEmpty());
     }
 

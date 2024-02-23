@@ -20,7 +20,7 @@ public class JShapeTest {
     }
 
     @Test
-    public void blockAt() throws Exception {
+    public void blockAt() {
         char[][] expected = new char[][] {
             {' ', 'J'},
             {' ', 'J'},
@@ -36,12 +36,12 @@ public class JShapeTest {
     }
 
     @Test
-    public void getColumns() throws Exception {
+    public void getColumns() {
         assertEquals(2, shape.getColumns());
     }
 
     @Test
-    public void getRows() throws Exception {
+    public void getRows() {
         assertEquals(3, shape.getRows());
     }
 }

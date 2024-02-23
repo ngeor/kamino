@@ -21,7 +21,7 @@ public class OShapeTest {
     }
 
     @Test
-    public void blockAt() throws Exception {
+    public void blockAt() {
         for (int row = 0; row < shape.getRows(); row++) {
             for (int col = 0; col < shape.getColumns(); col++) {
                 Assert.assertEquals(BlockType.O, shape.blockAt(row, col));
@@ -30,12 +30,12 @@ public class OShapeTest {
     }
 
     @Test
-    public void getColumns() throws Exception {
+    public void getColumns() {
         assertEquals(2, shape.getColumns());
     }
 
     @Test
-    public void getRows() throws Exception {
+    public void getRows() {
         assertEquals(2, shape.getRows());
     }
 }

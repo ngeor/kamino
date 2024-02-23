@@ -18,17 +18,17 @@ public class EmptyShapeTest {
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
-    public void blockAt() throws Exception {
+    public void blockAt() {
         shape.blockAt(0, 0);
     }
 
     @Test
-    public void getColumns() throws Exception {
+    public void getColumns() {
         assertEquals(0, shape.getColumns());
     }
 
     @Test
-    public void getRows() throws Exception {
+    public void getRows() {
         assertEquals(0, shape.getRows());
     }
 }

@@ -20,7 +20,7 @@ public class IShapeTest {
     }
 
     @Test
-    public void blockAt() throws Exception {
+    public void blockAt() {
         for (int row = 0; row < shape.getRows(); row++) {
             for (int col = 0; col < shape.getColumns(); col++) {
                 assertEquals(BlockType.I, shape.blockAt(row, col));
@@ -29,12 +29,12 @@ public class IShapeTest {
     }
 
     @Test
-    public void getColumns() throws Exception {
+    public void getColumns() {
         assertEquals(1, shape.getColumns());
     }
 
     @Test
-    public void getRows() throws Exception {
+    public void getRows() {
         assertEquals(4, shape.getRows());
     }
 }

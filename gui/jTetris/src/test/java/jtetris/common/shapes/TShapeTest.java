@@ -20,7 +20,7 @@ public class TShapeTest {
     }
 
     @Test
-    public void blockAt() throws Exception {
+    public void blockAt() {
         char[][] expected = new char[][] {
             {'T', 'T', 'T'},
             {' ', 'T', ' '}
@@ -35,12 +35,12 @@ public class TShapeTest {
     }
 
     @Test
-    public void getColumns() throws Exception {
+    public void getColumns() {
         assertEquals(3, shape.getColumns());
     }
 
     @Test
-    public void getRows() throws Exception {
+    public void getRows() {
         assertEquals(2, shape.getRows());
     }
 }
