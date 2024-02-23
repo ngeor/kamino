@@ -21,7 +21,7 @@ public final class App {
     }
 
     private static void importOldProject(String[] args)
-            throws IOException, InterruptedException, ParserConfigurationException, TransformerException, SAXException,
+            throws IOException, InterruptedException, ParserConfigurationException, SAXException,
                     ProcessFailedException, ConcurrentException {
         String githubToken = System.getenv("GITHUB_TOKEN");
         if (githubToken == null || githubToken.isBlank()) {

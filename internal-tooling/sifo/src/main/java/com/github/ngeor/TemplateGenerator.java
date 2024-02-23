@@ -22,9 +22,9 @@ public final class TemplateGenerator {
     private static final String GROUP_ID = "com.github.ngeor";
     private static final String DEFAULT_JAVA_VERSION = "11";
 
-    private final SimpleStringTemplate buildTemplate = SimpleStringTemplate.ofResource("/build-template.yml");
-    private final SimpleStringTemplate releaseTemplate = SimpleStringTemplate.ofResource("/release-template.yml");
-    private final SimpleStringTemplate rootPomTemplate = SimpleStringTemplate.ofResource("/root-pom-template.xml");
+    private final SimpleStringTemplate buildTemplate;
+    private final SimpleStringTemplate releaseTemplate;
+    private final SimpleStringTemplate rootPomTemplate;
     private final File root;
     private final MavenModules modules;
 
@@ -35,6 +35,9 @@ public final class TemplateGenerator {
 
         this.root = root;
         this.modules = new MavenModules(root);
+        buildTemplate = SimpleStringTemplate.ofResource("/build-template.yml");
+        releaseTemplate = SimpleStringTemplate.ofResource("/release-template.yml");
+        rootPomTemplate = SimpleStringTemplate.ofResource("/root-pom-template.xml");
     }
 
     private SortedSet<MavenModule> getModules() {

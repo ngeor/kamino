@@ -48,8 +48,7 @@ public final class MavenModules {
         return file.listFiles(new DirectoryFileFilter());
     }
 
-    public Stream<MavenModule> internalDependencies(MavenModule module)
-            throws IOException, ParserConfigurationException, InterruptedException, SAXException {
+    public Stream<MavenModule> internalDependencies(MavenModule module) {
         return module.dependencies().flatMap(c -> internalDependency(c).stream());
     }
 
