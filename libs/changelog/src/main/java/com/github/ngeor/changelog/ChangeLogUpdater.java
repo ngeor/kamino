@@ -12,6 +12,7 @@ import com.github.ngeor.versions.SemVer;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -90,12 +91,14 @@ public class ChangeLogUpdater {
     }
 
     private FormattedRelease.Group format(Release.Group group, FormatOptions options) {
-        String title = group.tag();
-        if (title != null) {
-            title = TagPrefix.forPath(modulePath).stripTagPrefixIfPresent(title);
-            title = String.format("[%s] - %s", title, group.authorDate());
+        final String title;
+        if (group instanceof Release.TaggedGroup taggedGroup) {
+            title = String.format(
+                    "[%s] - %s",
+                    TagPrefix.forPath(modulePath).stripTagPrefixIfPresent(taggedGroup.tag()), taggedGroup.authorDate());
         } else if (options.futureVersion() != null) {
-            title = String.format("[%s] - %s", options.futureVersion(), group.authorDate());
+            // use current date when working on a "future" release
+            title = String.format("[%s] - %s", options.futureVersion(), LocalDate.now());
         } else {
             title = options.unreleasedTitle();
         }
@@ -158,6 +161,8 @@ public class ChangeLogUpdater {
 
                         // insert all new sections before the current position
                         for (Section newSection : generatedSections.values()) {
+                            // TODO there might be a date discrepancy which makes this check fail
+                            // e.g. "[4.8.0] - 2024-02-23" vs "[4.8.0] - 2024-02-24"
                             if (!existingTitles.contains(newSection.title())) {
                                 topLevelSection.contents().add(i, newSection);
                                 i++;

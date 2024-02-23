@@ -76,11 +76,13 @@ public record ReleaseGrouper(Release.SubGroupOptions options) {
         Map<String, List<Release.CommitInfo>> groupedByType = commitInfos.stream()
                 .collect(Collectors.groupingBy(this::calculateType, this::createTreeMap, Collectors.toList()));
 
-        return Optional.of(new Release.Group(
-                lastCommit,
-                groupedByType.entrySet().stream()
-                        .map(e -> new Release.SubGroup(e.getKey(), e.getValue()))
-                        .toList()));
+        List<Release.SubGroup> subGroups = groupedByType.entrySet().stream()
+                .map(e -> new Release.SubGroup(e.getKey(), e.getValue()))
+                .toList();
+        return Optional.of(
+                lastCommit.tag() != null
+                        ? new Release.TaggedGroup(lastCommit, subGroups)
+                        : new Release.UnreleasedGroup(subGroups));
     }
 
     private String calculateType(Release.CommitInfo commitInfo) {

@@ -10,12 +10,25 @@ import org.apache.commons.lang3.Validate;
 public record Release(List<Group> groups) {
     public Release {
         Objects.requireNonNull(groups);
+        Validate.noNullElements(groups);
         long numberOfGroupsWithoutTag =
-                groups.stream().filter(g -> g.tag() == null).count();
+                groups.stream().filter(UnreleasedGroup.class::isInstance).count();
         Validate.isTrue(numberOfGroupsWithoutTag <= 1, "Found more than one group without a tag");
     }
 
-    public record Group(Commit mostRecentCommit, List<SubGroup> subGroups) {
+    public sealed interface Group permits UnreleasedGroup, TaggedGroup {
+        List<SubGroup> subGroups();
+    }
+
+    public record UnreleasedGroup(List<SubGroup> subGroups) implements Group {}
+
+    public record TaggedGroup(Commit mostRecentCommit, List<SubGroup> subGroups) implements Group {
+        public TaggedGroup {
+            Objects.requireNonNull(mostRecentCommit);
+            Objects.requireNonNull(mostRecentCommit.tag());
+            Objects.requireNonNull(mostRecentCommit.authorDate());
+        }
+
         public String tag() {
             return mostRecentCommit.tag();
         }
@@ -25,7 +38,11 @@ public record Release(List<Group> groups) {
         }
     }
 
-    public record SubGroup(String name, List<CommitInfo> commits) {}
+    public record SubGroup(String name, List<CommitInfo> commits) {
+        public SubGroup {
+            Validate.notBlank(name);
+        }
+    }
 
     public sealed interface CommitInfo {
         String type();
