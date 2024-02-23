@@ -18,14 +18,11 @@
     <url>https://github.com/ngeor/kamino/tree/master/cli/duke-basic</url>
   </scm>
   <properties>
-    <!-- dependencies -->
-    <jacoco-maven-plugin.version>0.8.10</jacoco-maven-plugin.version>
     <!-- JaCoCo thresholds. Increase gradually as you add tests. -->
     <jacoco.unit-tests.limit.branch-ratio>75%</jacoco.unit-tests.limit.branch-ratio>
     <jacoco.unit-tests.limit.class-complexity>35</jacoco.unit-tests.limit.class-complexity>
     <jacoco.unit-tests.limit.instruction-ratio>80%</jacoco.unit-tests.limit.instruction-ratio>
     <jacoco.unit-tests.limit.method-complexity>20</jacoco.unit-tests.limit.method-complexity>
-    <java.version>21</java.version>
   </properties>
   <dependencies>
     <dependency>
@@ -56,7 +53,6 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>${jacoco-maven-plugin.version}</version>
         <executions>
           <execution>
             <id>pre-unit-test</id>

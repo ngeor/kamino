@@ -8,6 +8,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.apache.commons.io.FileUtils;
@@ -74,7 +75,7 @@ public class ProjectArchiver {
             }
         }
 
-        List<String> newLines = template.lines().collect(Collectors.toCollection(ArrayList::new));
+        LinkedList<String> newLines = template.lines().collect(Collectors.toCollection(LinkedList::new));
         if (lastBadgeIndex != -1) {
             // insert after this index
             while (!newLines.isEmpty()) {
@@ -115,18 +116,18 @@ public class ProjectArchiver {
     }
 
     private void archiveProjectInGitHub() throws IOException, InterruptedException {
-        try (HttpClient httpClient = HttpClient.newHttpClient()) {
-            HttpRequest httpRequest = HttpRequest.newBuilder(
-                            URI.create("https://api.github.com/repos/ngeor/" + projectDirectory.getName()))
-                    .header("Accept", "application/vnd.github+json")
-                    .header("Authorization", "Bearer " + githubToken)
-                    .header("X-GitHub-Api-Version", "2022-11-28")
-                    .method("PATCH", HttpRequest.BodyPublishers.ofString("{ \"archived\": true }"))
-                    .build();
-            HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
-            if (httpResponse.statusCode() != 200) {
-                throw new IllegalStateException("Could not archive repository: " + httpResponse.statusCode());
-            }
+        // TODO when upgrading to Java 21, use try-with-resources
+        HttpClient httpClient = HttpClient.newHttpClient();
+        HttpRequest httpRequest = HttpRequest.newBuilder(
+                        URI.create("https://api.github.com/repos/ngeor/" + projectDirectory.getName()))
+                .header("Accept", "application/vnd.github+json")
+                .header("Authorization", "Bearer " + githubToken)
+                .header("X-GitHub-Api-Version", "2022-11-28")
+                .method("PATCH", HttpRequest.BodyPublishers.ofString("{ \"archived\": true }"))
+                .build();
+        HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+        if (httpResponse.statusCode() != 200) {
+            throw new IllegalStateException("Could not archive repository: " + httpResponse.statusCode());
         }
     }
 }

@@ -22,26 +22,20 @@ public class ExpressionParser implements Parser<Expression> {
             // try if there is a binary operator next
             ParseResult<String> opResult =
                     binaryOperator().surroundedByOptionalSpace().rollingBack().parse(tokenizer);
-
-            switch (opResult) {
-                case ParseResult.Ok<String> opOk:
-                    ParseResult<Expression> rightResult = nonBinaryParser().parse(tokenizer);
-                    switch (rightResult) {
-                        case ParseResult.Ok<Expression> rightOk:
-                            // combine
-                            leftResult = leftResult.map(leftValue -> leftValue.toBinary(opOk.value(), rightOk.value()));
-                            break;
-                        case ParseResult.None<Expression> ignored:
-                            return ParseResult.err();
-                        case ParseResult.Err<Expression> rightErr:
-                            return rightErr.cast();
-                    }
-                    break;
-                case ParseResult.None<String> ignored:
-                    goOn = false;
-                    break;
-                case ParseResult.Err<String> opErr:
-                    return opErr.cast();
+            if (opResult instanceof ParseResult.Ok<String> opOk) {
+                ParseResult<Expression> rightResult = nonBinaryParser().parse(tokenizer);
+                if (rightResult instanceof ParseResult.Ok<Expression> rightOk) {
+                    // combine
+                    leftResult = leftResult.map(leftValue -> leftValue.toBinary(opOk.value(), rightOk.value()));
+                } else if (rightResult instanceof ParseResult.Err<Expression> rightErr) {
+                    return rightErr.cast();
+                } else {
+                    return ParseResult.err();
+                }
+            } else if (opResult instanceof ParseResult.Err<String> opErr) {
+                return opErr.cast();
+            } else {
+                goOn = false;
             }
         }
 

@@ -14,17 +14,14 @@ public record ManyParser<E>(Parser<E> parser) implements Parser<List<E>> {
         boolean goOn = true;
         ParseResult<E> err = ParseResult.empty();
         while (goOn) {
-            switch (parser.parse(tokenizer)) {
-                case ParseResult.Ok<E> ok:
-                    result.add(ok.value());
-                    break;
-                case ParseResult.None<E> ignored:
-                    goOn = false;
-                    break;
-                case ParseResult.Err<E> e:
-                    goOn = false;
+            ParseResult<E> parseResult = parser.parse(tokenizer);
+            if (parseResult instanceof ParseResult.Ok<E> ok) {
+                result.add(ok.value());
+            } else {
+                goOn = false;
+                if (parseResult instanceof ParseResult.Err<E> e) {
                     err = e;
-                    break;
+                }
             }
         }
 

@@ -3,6 +3,7 @@ package com.github.ngeor;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -30,11 +31,11 @@ public record ReleaseGrouper(Release.SubGroupOptions options) {
                         return Collections.singletonList(Collections.singletonList(commit));
                     }
 
-                    List<List<Commit>> result = new ArrayList<>(listOfLists);
+                    LinkedList<List<Commit>> result = new LinkedList<>(listOfLists);
                     if (commit.tag() != null) {
                         result.add(Collections.singletonList(commit));
                     } else {
-                        List<Commit> lastGroup = new ArrayList<>(result.removeLast());
+                        LinkedList<Commit> lastGroup = new LinkedList<>(result.removeLast());
                         lastGroup.addFirst(commit);
                         result.add(lastGroup);
                     }
@@ -64,7 +65,7 @@ public record ReleaseGrouper(Release.SubGroupOptions options) {
                 .map(this::toCommitInfo)
                 .toList();
         // the tag, if it exists, will be on this commit
-        Commit lastCommit = commitGroup.getLast();
+        Commit lastCommit = commitGroup.get(commitGroup.size() - 1);
         if (commitInfos.isEmpty() && lastCommit.tag() == null) {
             // do not render "Unreleased" section if it is empty
             return Optional.empty();
