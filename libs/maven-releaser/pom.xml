@@ -4,7 +4,7 @@
   <parent>
     <groupId>com.github.ngeor</groupId>
     <artifactId>java</artifactId>
-    <version>4.8.0</version>
+    <version>4.9.0-SNAPSHOT</version>
     <relativePath>../../libs/java</relativePath>
   </parent>
   <groupId>com.github.ngeor</groupId>
