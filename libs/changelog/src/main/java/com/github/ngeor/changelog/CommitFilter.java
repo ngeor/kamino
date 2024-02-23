@@ -1,4 +1,4 @@
-package com.github.ngeor;
+package com.github.ngeor.changelog;
 
 import java.util.List;
 import java.util.function.Predicate;

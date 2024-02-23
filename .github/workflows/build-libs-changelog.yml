@@ -7,12 +7,20 @@ on:
       - libs/changelog/**
       - .github/workflows/build-libs-changelog.yml
       - pom.xml
+      - libs/versions/**
+      - libs/yak4j-git/**
+      - libs/yak4j-markdown/**
+      - libs/yak4j-process/**
   pull_request:
     branches: [ master ]
     paths:
       - libs/changelog/**
       - .github/workflows/build-libs-changelog.yml
       - pom.xml
+      - libs/versions/**
+      - libs/yak4j-git/**
+      - libs/yak4j-markdown/**
+      - libs/yak4j-process/**
 
 jobs:
   build:
@@ -28,4 +36,4 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build with Maven
-      run: mvn -B -ntp clean verify --file libs/changelog/pom.xml
+      run: mvn -B -ntp -pl libs/changelog -am clean verify

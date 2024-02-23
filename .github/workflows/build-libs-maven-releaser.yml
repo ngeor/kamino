@@ -12,6 +12,7 @@ on:
       - libs/versions/**
       - libs/yak4j-dom/**
       - libs/yak4j-git/**
+      - libs/yak4j-markdown/**
       - libs/yak4j-maven/**
       - libs/yak4j-process/**
   pull_request:
@@ -25,6 +26,7 @@ on:
       - libs/versions/**
       - libs/yak4j-dom/**
       - libs/yak4j-git/**
+      - libs/yak4j-markdown/**
       - libs/yak4j-maven/**
       - libs/yak4j-process/**
 

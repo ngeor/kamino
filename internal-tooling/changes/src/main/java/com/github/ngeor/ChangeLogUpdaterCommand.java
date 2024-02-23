@@ -1,5 +1,6 @@
 package com.github.ngeor;
 
+import com.github.ngeor.changelog.ChangeLogUpdater;
 import com.github.ngeor.process.ProcessFailedException;
 import java.io.File;
 import java.io.IOException;

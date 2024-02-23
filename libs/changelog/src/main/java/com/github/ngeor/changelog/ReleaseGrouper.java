@@ -1,4 +1,4 @@
-package com.github.ngeor;
+package com.github.ngeor.changelog;
 
 import com.github.ngeor.git.Commit;
 import java.util.ArrayList;

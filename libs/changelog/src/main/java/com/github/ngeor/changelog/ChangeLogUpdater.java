@@ -1,4 +1,4 @@
-package com.github.ngeor;
+package com.github.ngeor.changelog;
 
 import com.github.ngeor.git.Commit;
 import com.github.ngeor.git.Git;
@@ -7,7 +7,6 @@ import com.github.ngeor.markdown.Line;
 import com.github.ngeor.markdown.MarkdownReader;
 import com.github.ngeor.markdown.MarkdownWriter;
 import com.github.ngeor.markdown.Section;
-import com.github.ngeor.mr.TagPrefix;
 import com.github.ngeor.process.ProcessFailedException;
 import java.io.File;
 import java.io.IOException;

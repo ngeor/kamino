@@ -1,5 +1,6 @@
 package com.github.ngeor.mr;
 
+import com.github.ngeor.changelog.TagPrefix;
 import com.github.ngeor.git.FetchOption;
 import com.github.ngeor.git.Git;
 import com.github.ngeor.git.LsFilesOption;

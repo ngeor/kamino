@@ -1,4 +1,4 @@
-package com.github.ngeor.mr;
+package com.github.ngeor.changelog;
 
 import com.github.ngeor.git.Tag;
 import com.github.ngeor.versions.SemVer;
