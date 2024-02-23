@@ -23,7 +23,7 @@
   </scm>
 
   <properties>
-    <dropwizard.version>2.1.2</dropwizard.version>
+    <dropwizard.version>2.1.12</dropwizard.version>
     <mainClass>buzzstats.BuzzstatsApplication</mainClass>
   </properties>
 
