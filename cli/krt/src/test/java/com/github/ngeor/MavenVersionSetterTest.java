@@ -22,7 +22,7 @@ class MavenVersionSetterTest {
     private MavenVersionSetter mavenVersionSetter;
 
     @BeforeEach
-    void setup() throws IOException {
+    void setup() {
         mavenVersionSetter = new MavenVersionSetter(tempDirectory);
     }
 

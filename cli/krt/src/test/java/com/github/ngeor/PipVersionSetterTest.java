@@ -18,12 +18,12 @@ class PipVersionSetterTest {
     private PipVersionSetter pipVersionSetter;
 
     @BeforeEach
-    void setup() throws IOException {
+    void setup() {
         pipVersionSetter = new PipVersionSetter(tempDirectory);
     }
 
     @Test
-    void test() throws IOException, InterruptedException {
+    void test() throws IOException {
         // arrange
         Files.writeString(
                 tempDirectory.resolve("setup.cfg"),

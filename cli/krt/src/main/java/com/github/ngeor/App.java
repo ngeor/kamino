@@ -160,20 +160,4 @@ public final class App implements Callable<Integer> {
             git.push();
         }
     }
-
-    private static String ensureSemVerRelease(String input) {
-        SemVer semVer = SemVer.parse(input);
-        if (semVer.isPreRelease()) {
-            throw new IllegalArgumentException("Version " + input + " is not allowed to be pre-release");
-        }
-        return semVer.toString();
-    }
-
-    private static String ensureSemVerPreRelease(String input) {
-        SemVer semVer = SemVer.parse(input);
-        if (!semVer.isPreRelease()) {
-            throw new IllegalArgumentException("Version " + input + " is not allowed to be a release");
-        }
-        return semVer.toString();
-    }
 }

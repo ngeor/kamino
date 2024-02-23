@@ -8,6 +8,7 @@ import java.util.jar.Manifest;
 import picocli.CommandLine;
 
 public class ManifestVersionProvider implements CommandLine.IVersionProvider {
+    @Override
     public String[] getVersion() throws Exception {
         Enumeration<URL> resources = getClass().getClassLoader().getResources("META-INF/MANIFEST.MF");
         while (resources.hasMoreElements()) {
