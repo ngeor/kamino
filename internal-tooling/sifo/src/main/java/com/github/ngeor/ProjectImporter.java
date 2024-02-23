@@ -29,7 +29,7 @@ public class ProjectImporter {
 
     public void run()
             throws IOException, InterruptedException, ParserConfigurationException, SAXException,
-        ProcessFailedException {
+                    ProcessFailedException {
         ensureGitLatest();
         importGitSubtree();
         adjustImportedCode();

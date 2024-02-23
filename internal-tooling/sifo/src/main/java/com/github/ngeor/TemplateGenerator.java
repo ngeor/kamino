@@ -42,7 +42,7 @@ public final class TemplateGenerator {
 
     public void regenerateAllTemplates()
             throws IOException, InterruptedException, ParserConfigurationException, SAXException,
-            ProcessFailedException {
+                    ProcessFailedException {
         for (MavenModule module : getModules()) {
             regenerateAllTemplates(module);
         }
