@@ -10,8 +10,8 @@ public class ChildElementWrapperIterator extends BaseNodesIterator<ElementWrappe
 
     @Override
     protected ElementWrapper map(Node node) {
-        if (node != null && node.getNodeType() == Node.ELEMENT_NODE && node instanceof Element) {
-            return new ElementWrapper((Element) node);
+        if (node != null && node.getNodeType() == Node.ELEMENT_NODE && node instanceof Element element) {
+            return new ElementWrapper(element);
         }
         return null;
     }
