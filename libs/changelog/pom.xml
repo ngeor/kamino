@@ -4,48 +4,27 @@
   <parent>
     <groupId>com.github.ngeor</groupId>
     <artifactId>java</artifactId>
-    <version>4.8.0-SNAPSHOT</version>
-    <relativePath>../../libs/java</relativePath>
+    <version>4.7.1</version>
   </parent>
   <groupId>com.github.ngeor</groupId>
-  <artifactId>maven-releaser</artifactId>
+  <artifactId>changelog</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <url>https://github.com/ngeor/kamino/tree/master/libs/maven-releaser</url>
+  <url>https://github.com/ngeor/kamino/tree/master/libs/changelog</url>
   <scm>
     <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
     <developerConnection>scm:git:git@github.com:ngeor/kamino.git</developerConnection>
     <tag>HEAD</tag>
-    <url>https://github.com/ngeor/kamino/tree/master/libs/maven-releaser</url>
+    <url>https://github.com/ngeor/kamino/tree/master/libs/changelog</url>
   </scm>
   <dependencies>
     <dependency>
-      <groupId>com.github.ngeor</groupId>
-      <artifactId>changelog</artifactId>
-      <version>1.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>com.github.ngeor</groupId>
-      <artifactId>versions</artifactId>
-      <version>1.1.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>com.github.ngeor</groupId>
-      <artifactId>yak4j-git</artifactId>
-      <version>1.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>com.github.ngeor</groupId>
-      <artifactId>yak4j-maven</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -62,10 +41,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-failsafe-plugin</artifactId>
       </plugin>
     </plugins>
   </build>

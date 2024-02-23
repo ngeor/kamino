@@ -58,3 +58,22 @@ The following third party libraries are preferred:
 - Upgrade the parent pom of all modules with `mvn versions:update-parent -DallowSnapshots`
 - Build native image of internal tools with `mvn -Pnative -am -pl internal-tooling/changes/ package -DskipTests`
 - The `build.sh` script does some re-building of everything and re-generates GitHub workflows
+
+## Creating a new library
+
+- Install the archetype locally with:
+  ```sh
+  mvn -am -pl archetypes/archetype-kamino-cli clean install
+  ```
+  
+- Use it with
+  ```sh
+  mvn archetype:generate \
+    -DgroupId=com.github.ngeor \
+    -DartifactId=new-lib \
+    -DarchetypeGroupId=com.github.ngeor \
+    -DarchetypeArtifactId=archetype-kamino-cli \
+    -DarchetypeVersion=1.0-SNAPSHOT \
+    -DinteractiveMode=false \
+    -DarchetypeCatalog=local
+  ```

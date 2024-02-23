@@ -21,6 +21,7 @@
     <module>internal-tooling/arturito</module>
     <module>internal-tooling/changes</module>
     <module>internal-tooling/sifo</module>
+    <module>libs/changelog</module>
     <module>libs/checkstyle-rules</module>
     <module>libs/cli-parent-pom</module>
     <module>libs/java</module>
