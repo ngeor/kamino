@@ -37,7 +37,7 @@
     </snapshotRepository>
   </distributionManagement>
   <properties>
-    <assertj-bom.version>3.24.2</assertj-bom.version>
+    <assertj-bom.version>3.25.3</assertj-bom.version>
     <checkstyle-rules.version>7.0.0</checkstyle-rules.version>
     <checkstyle.version>10.12.7</checkstyle.version>
     <commons-io.version>2.15.1</commons-io.version>
