@@ -9,6 +9,7 @@ import com.github.ngeor.versions.SemVerBump;
 import java.io.File;
 import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
+import org.apache.commons.lang3.concurrent.ConcurrentException;
 import org.xml.sax.SAXException;
 
 /**
@@ -29,7 +30,7 @@ public class ProjectImporter {
 
     public void run()
             throws IOException, InterruptedException, ParserConfigurationException, SAXException,
-                    ProcessFailedException {
+                    ProcessFailedException, ConcurrentException {
         ensureGitLatest();
         importGitSubtree();
         adjustImportedCode();
@@ -88,7 +89,7 @@ public class ProjectImporter {
 
     private void adjustImportedCode()
             throws IOException, ParserConfigurationException, InterruptedException, SAXException,
-                    ProcessFailedException {
+                    ProcessFailedException, ConcurrentException {
         new TemplateGenerator(monorepoRoot)
                 .regenerateAllTemplates(new MavenModule(
                         monorepoRoot.toPath().resolve(typeName).toFile(),

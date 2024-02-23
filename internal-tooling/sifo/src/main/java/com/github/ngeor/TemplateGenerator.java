@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.stream.Collectors;
 import javax.xml.parsers.ParserConfigurationException;
+import org.apache.commons.lang3.concurrent.ConcurrentException;
 import org.xml.sax.SAXException;
 
 public final class TemplateGenerator {
@@ -42,7 +43,7 @@ public final class TemplateGenerator {
 
     public void regenerateAllTemplates()
             throws IOException, InterruptedException, ParserConfigurationException, SAXException,
-                    ProcessFailedException {
+                    ProcessFailedException, ConcurrentException {
         for (MavenModule module : getModules()) {
             regenerateAllTemplates(module);
         }
@@ -65,7 +66,7 @@ public final class TemplateGenerator {
 
     public void regenerateAllTemplates(MavenModule module)
             throws IOException, InterruptedException, ParserConfigurationException, SAXException,
-                    ProcessFailedException {
+                    ProcessFailedException, ConcurrentException {
         System.out.println("Regenerating templates for " + module.projectDirectory());
         String javaVersion = module.calculateJavaVersion().orElse(DEFAULT_JAVA_VERSION);
         String buildCommand;
@@ -112,7 +113,7 @@ public final class TemplateGenerator {
 
         fixProjectUrls(module);
 
-        new ReadmeGenerator().fixProjectBadges(module.projectDirectory(), GROUP_ID, workflowId);
+        new ReadmeGenerator(root, module, workflowId).fixProjectBadges();
     }
 
     private static Map<String, String> createTemplateVariables(
