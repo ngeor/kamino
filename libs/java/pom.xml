@@ -90,6 +90,11 @@
         <version>${jsr305.version}</version>
       </dependency>
       <dependency>
+        <groupId>com.puppycrawl.tools</groupId>
+        <artifactId>checkstyle</artifactId>
+        <version>${checkstyle.version}</version>
+      </dependency>
+      <dependency>
         <groupId>commons-io</groupId>
         <artifactId>commons-io</artifactId>
         <version>${commons-io.version}</version>
@@ -104,11 +109,6 @@
         <artifactId>mockito-core</artifactId>
         <version>${mockito.version}</version>
         <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>com.puppycrawl.tools</groupId>
-        <artifactId>checkstyle</artifactId>
-        <version>${checkstyle.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
