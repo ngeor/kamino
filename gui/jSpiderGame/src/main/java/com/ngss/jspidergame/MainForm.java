@@ -27,8 +27,10 @@ public class MainForm extends javax.swing.JFrame {
     @SuppressWarnings("checkstyle:MagicNumber")
     public MainForm() {
         game.addGameEvents(new GameEvents() {
+            @Override
             public void entityCreated(GameEntity ge) {}
 
+            @Override
             public void entityDestroyed(GameEntity ge) {
                 if (ge instanceof Enemy) {
                     score += 10;
@@ -36,10 +38,13 @@ public class MainForm extends javax.swing.JFrame {
                 }
             }
 
+            @Override
             public void spiderHit() {}
 
+            @Override
             public void aliveChanged(boolean value) {}
 
+            @Override
             public void levelChanged(int value) {
                 lblLevel.setText("Level " + value);
             }
@@ -69,11 +74,13 @@ public class MainForm extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Spider Game");
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            @Override
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 formMouseMoved(evt);
             }
         });
         addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
             }
@@ -123,6 +130,7 @@ public class MainForm extends javax.swing.JFrame {
      */
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new MainForm().setVisible(true);
             }
