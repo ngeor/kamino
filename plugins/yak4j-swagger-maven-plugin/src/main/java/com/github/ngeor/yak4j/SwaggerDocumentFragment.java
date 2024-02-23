@@ -110,8 +110,7 @@ public class SwaggerDocumentFragment {
         Object value = data.get(key);
         if (value instanceof Map) {
             return getFragment(key);
-        } else if (value instanceof List) {
-            List list = (List) value;
+        } else if (value instanceof List list) {
             if (!list.isEmpty() && list.get(0) instanceof Map) {
                 return getFragments(key);
             }
@@ -167,8 +166,8 @@ public class SwaggerDocumentFragment {
         map.forEach((key, value) -> {
             if (value instanceof Map) {
                 visitMap((Map<String, Object>) value, visitor);
-            } else if (value instanceof List) {
-                visitList((List) value, visitor);
+            } else if (value instanceof List list) {
+                visitList(list, visitor);
             } else {
                 Object newValue = visitor.apply(key, value);
                 if (newValue != value) {
@@ -183,8 +182,8 @@ public class SwaggerDocumentFragment {
             Object value = list.get(i);
             if (value instanceof Map) {
                 visitMap((Map<String, Object>) value, visitor);
-            } else if (value instanceof List) {
-                visitList((List) value, visitor);
+            } else if (value instanceof List list1) {
+                visitList(list1, visitor);
             } else {
                 Object newValue = visitor.apply(String.valueOf(i), value);
                 if (newValue != value) {

@@ -48,16 +48,16 @@ public class SwaggerWriter {
     }
 
     private void writeObject(YAMLGenerator generator, Object value) throws IOException {
-        if (value instanceof SwaggerDocumentFragment) {
-            writeMap(generator, (SwaggerDocumentFragment) value);
-        } else if (value instanceof List) {
-            writeList(generator, (List) value);
-        } else if (value instanceof Boolean) {
-            generator.writeBoolean((Boolean) value);
-        } else if (value instanceof Integer) {
-            generator.writeNumber((Integer) value);
-        } else if (value instanceof Double) {
-            generator.writeNumber((double) value);
+        if (value instanceof SwaggerDocumentFragment fragment) {
+            writeMap(generator, fragment);
+        } else if (value instanceof List list) {
+            writeList(generator, list);
+        } else if (value instanceof Boolean boolean1) {
+            generator.writeBoolean(boolean1);
+        } else if (value instanceof Integer integer) {
+            generator.writeNumber(integer);
+        } else if (value instanceof Double double1) {
+            generator.writeNumber(double1);
         } else {
             generator.writeString(value.toString());
         }
