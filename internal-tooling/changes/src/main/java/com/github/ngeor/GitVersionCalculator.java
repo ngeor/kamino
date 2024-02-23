@@ -3,6 +3,7 @@ package com.github.ngeor;
 import com.github.ngeor.git.Commit;
 import com.github.ngeor.git.Git;
 import com.github.ngeor.mr.TagPrefix;
+import com.github.ngeor.process.ProcessFailedException;
 import com.github.ngeor.versions.SemVer;
 import com.github.ngeor.versions.SemVerBump;
 import java.io.IOException;

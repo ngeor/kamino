@@ -1,6 +1,7 @@
 package com.github.ngeor;
 
 import com.github.ngeor.git.Git;
+import com.github.ngeor.process.ProcessFailedException;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;

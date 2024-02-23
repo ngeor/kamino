@@ -1,5 +1,6 @@
 package com.github.ngeor;
 
+import com.github.ngeor.process.ProcessFailedException;
 import java.io.File;
 import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
@@ -9,7 +10,7 @@ import org.xml.sax.SAXException;
 public final class App {
     public static void main(String[] args)
             throws IOException, InterruptedException, ParserConfigurationException, SAXException, TransformerException,
-                    ProcessFailedException {
+            ProcessFailedException {
         if (args == null || args.length == 0) {
             new TemplateGenerator(detectRootDirectory()).regenerateAllTemplates();
             return;

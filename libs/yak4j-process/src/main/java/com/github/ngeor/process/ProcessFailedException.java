@@ -1,4 +1,4 @@
-package com.github.ngeor;
+package com.github.ngeor.process;
 
 public class ProcessFailedException extends Exception {
     public ProcessFailedException() {

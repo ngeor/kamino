@@ -3,7 +3,7 @@ package com.github.ngeor.git;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.within;
 
-import com.github.ngeor.ProcessFailedException;
+import com.github.ngeor.process.ProcessFailedException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;

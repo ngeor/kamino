@@ -1,7 +1,7 @@
 package com.github.ngeor.maven;
 
-import com.github.ngeor.ProcessFailedException;
-import com.github.ngeor.ProcessHelper;
+import com.github.ngeor.process.ProcessFailedException;
+import com.github.ngeor.process.ProcessHelper;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.File;
 import java.io.IOException;

@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import com.github.ngeor.git.Commit;
 import com.github.ngeor.git.Git;
 import com.github.ngeor.git.InitOption;
-import com.github.ngeor.ProcessFailedException;
+import com.github.ngeor.process.ProcessFailedException;
 import com.github.ngeor.maven.MavenCoordinates;
 import com.github.ngeor.maven.MavenDocument;
 import com.github.ngeor.versions.SemVer;

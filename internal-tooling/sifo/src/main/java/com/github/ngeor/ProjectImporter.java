@@ -3,6 +3,7 @@ package com.github.ngeor;
 import com.github.ngeor.git.Git;
 import com.github.ngeor.maven.Maven;
 import com.github.ngeor.mr.MavenReleaser;
+import com.github.ngeor.process.ProcessFailedException;
 import com.github.ngeor.versions.SemVer;
 import com.github.ngeor.versions.SemVerBump;
 import java.io.File;
@@ -28,7 +29,7 @@ public class ProjectImporter {
 
     public void run()
             throws IOException, InterruptedException, ParserConfigurationException, SAXException,
-                    ProcessFailedException {
+        ProcessFailedException {
         ensureGitLatest();
         importGitSubtree();
         adjustImportedCode();

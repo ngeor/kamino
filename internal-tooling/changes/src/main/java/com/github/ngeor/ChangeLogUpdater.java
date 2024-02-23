@@ -8,6 +8,7 @@ import com.github.ngeor.markdown.MarkdownReader;
 import com.github.ngeor.markdown.MarkdownWriter;
 import com.github.ngeor.markdown.Section;
 import com.github.ngeor.mr.TagPrefix;
+import com.github.ngeor.process.ProcessFailedException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;

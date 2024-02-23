@@ -2,6 +2,7 @@ package com.github.ngeor;
 
 import com.github.ngeor.maven.Maven;
 import com.github.ngeor.maven.ParentPom;
+import com.github.ngeor.process.ProcessFailedException;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.File;
@@ -41,7 +42,7 @@ public final class TemplateGenerator {
 
     public void regenerateAllTemplates()
             throws IOException, InterruptedException, ParserConfigurationException, SAXException,
-                    ProcessFailedException {
+            ProcessFailedException {
         for (MavenModule module : getModules()) {
             regenerateAllTemplates(module);
         }
