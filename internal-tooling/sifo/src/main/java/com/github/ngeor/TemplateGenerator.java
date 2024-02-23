@@ -68,8 +68,7 @@ public final class TemplateGenerator {
     }
 
     public void regenerateAllTemplates(MavenModule module)
-            throws IOException, InterruptedException, ParserConfigurationException, SAXException,
-                    ProcessFailedException, ConcurrentException {
+            throws IOException, InterruptedException, ProcessFailedException, ConcurrentException {
         System.out.println("Regenerating templates for " + module.projectDirectory());
         String javaVersion = module.calculateJavaVersion().orElse(DEFAULT_JAVA_VERSION);
         String buildCommand;

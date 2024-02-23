@@ -4,13 +4,12 @@ import com.github.ngeor.process.ProcessFailedException;
 import java.io.File;
 import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import org.apache.commons.lang3.concurrent.ConcurrentException;
 import org.xml.sax.SAXException;
 
 public final class App {
     public static void main(String[] args)
-            throws IOException, InterruptedException, ParserConfigurationException, SAXException, TransformerException,
+            throws IOException, InterruptedException, ParserConfigurationException, SAXException,
                     ProcessFailedException, ConcurrentException {
         if (args == null || args.length == 0) {
             new TemplateGenerator(detectRootDirectory()).regenerateAllTemplates();

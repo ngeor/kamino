@@ -2,7 +2,6 @@ package com.github.ngeor;
 
 import com.github.ngeor.maven.MavenCoordinates;
 import java.io.File;
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,8 +11,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
-import javax.xml.parsers.ParserConfigurationException;
-import org.xml.sax.SAXException;
 
 public final class MavenModules {
     private final File root;
@@ -58,8 +55,7 @@ public final class MavenModules {
                 .findFirst();
     }
 
-    public void visitDependenciesRecursively(MavenModule module, Consumer<MavenModule> visitor)
-            throws IOException, ParserConfigurationException, InterruptedException, SAXException {
+    public void visitDependenciesRecursively(MavenModule module, Consumer<MavenModule> visitor) {
         MavenCoordinates ownCoordinates = module.coordinates();
         Set<MavenCoordinates> seen = new HashSet<>();
         LinkedList<MavenModule> remaining = new LinkedList<>(List.of(module));
