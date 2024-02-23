@@ -2,7 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 
-## [4.8.0] - 2024-02-22
+## Unreleased
+
+### Features
+
+* Added openrewrite
+
+### Miscellaneous Tasks
+
+* Added badges
+* Added dependency management for `com.puppycrawl.tools:checkstyle`
+
+### Dependencies
+
+* Upgrade assertJ to 3.25.3
+* Upgrade checkstyle to 10.13.0
+* Upgrade jUnit to 5.10.2
+* Upgrade native maven plugin to 0.10.1
+* Upgrade sortpom maven plugin to 3.4.0
+* Upgrade javadoc maven plugin to 3.6.3
+* Upgrade source maven plugin to 3.3.0
+* Upgrade shade maven plugin to 3.5.2
+
+## [4.8.0] - 2024-02-23
 
 ### Features
 
