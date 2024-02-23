@@ -38,7 +38,23 @@ under the hood.
 
 Normally, apps aren't released to Nexus.
 
+## `null` vs `Optional`
+
+- No method should ever return `null`.
+- Accepting a `null` parameter can be tolerated.
+- Returning an `Optional` if preferred over returning `null`.
+
+## Third party libraries
+
+The following third party libraries are preferred:
+
+- Apache Commons Lang3
+- jUnit 5
+- AssertJ
+- Mockito
+
 ## Tips
 
 - Upgrade the parent pom of all modules with `mvn versions:update-parent -DallowSnapshots`
 - Build native image of internal tools with `mvn -Pnative -am -pl internal-tooling/changes/ package -DskipTests`
+- The `build.sh` script does some re-building of everything and re-generates GitHub workflows
