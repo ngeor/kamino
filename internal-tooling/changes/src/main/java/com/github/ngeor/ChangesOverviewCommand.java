@@ -8,6 +8,7 @@ import com.github.ngeor.git.Tag;
 import com.github.ngeor.process.ProcessFailedException;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -26,14 +27,17 @@ public class ChangesOverviewCommand extends BaseCommand {
 
     @Override
     public void run() throws ConcurrentException {
-        System.out.println("Release status");
+        long now = System.currentTimeMillis();
+        System.out.println("Getting release information...");
 
         List<List<String>> table = new ArrayList<>();
         table.add(new ArrayList<>(List.of("Module", "Latest version", "Date", "Number of unreleased commits")));
         new ModuleFinder()
                 .eligibleModules(rootDirectory)
+                .parallel()
                 .map(this::buildOverview)
-                .forEach(table::add);
+                .sorted(Comparator.comparing(o -> o.get(0)))
+                .forEachOrdered(table::add);
 
         TableFormatter.padColumns(
                 table,
@@ -43,6 +47,8 @@ public class ChangesOverviewCommand extends BaseCommand {
                         TableFormatter.Alignment.LEFT,
                         TableFormatter.Alignment.RIGHT));
         TableFormatter.printTable(table);
+
+        System.out.printf("Done in %dmsec%n", System.currentTimeMillis() - now);
     }
 
     private List<String> buildOverview(String module) {
