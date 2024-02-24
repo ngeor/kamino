@@ -1,6 +1,7 @@
 package com.github.ngeor;
 
 import com.github.ngeor.maven.MavenCoordinates;
+import com.github.ngeor.maven.ModuleFinder;
 import java.io.File;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -10,7 +11,9 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.apache.commons.lang3.Validate;
 
 public final class MavenModules {
     private final File root;
@@ -28,21 +31,15 @@ public final class MavenModules {
     }
 
     private SortedSet<MavenModule> collectModules() {
-        SortedSet<MavenModule> modules = new TreeSet<>();
-        for (File typeDirectory : getDirectories(root)) {
-            for (File projectDirectory : getDirectories(typeDirectory)) {
-                File pomFile = new File(projectDirectory, "pom.xml");
-                if (pomFile.isFile()) {
-                    MavenModule module = new MavenModule(typeDirectory, projectDirectory, pomFile);
-                    modules.add(module);
-                }
-            }
-        }
-        return modules;
-    }
-
-    private static File[] getDirectories(File file) {
-        return file.listFiles(new DirectoryFileFilter());
+        return new ModuleFinder().findModules(root.toPath().resolve("pom.xml").toFile())
+            .map(moduleName -> moduleName.split("/"))
+            .filter(parts -> parts.length == 2)
+            .map(parts -> {
+                File typeDirectory = root.toPath().resolve(parts[0]).toFile();
+                File projectDirectory = typeDirectory.toPath().resolve(parts[1]).toFile();
+                File pomFile = projectDirectory.toPath().resolve("pom.xml").toFile();
+                return new MavenModule(typeDirectory, projectDirectory, pomFile);
+            }).collect(Collectors.toCollection(TreeSet::new));
     }
 
     public Stream<MavenModule> internalDependencies(MavenModule module) {

@@ -24,6 +24,7 @@ public class ChangesOverviewCommand extends BaseCommand {
     @Override
     public void run() {
         System.out.println("Release status");
+
         System.out.println("Module\tLatest version\tDate\tNumber of unreleased commits");
         new ModuleFinder()
                 .eligibleModules(rootDirectory)

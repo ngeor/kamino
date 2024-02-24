@@ -5,15 +5,12 @@ import com.github.ngeor.process.ProcessHelper;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.File;
 import java.io.IOException;
-import java.util.Objects;
 
 public final class Maven {
     private final ProcessHelper processHelper;
-    private final File pomFile;
 
     public Maven(File pomFile) {
         String cmd = System.getProperty("os.name").contains("Windows") ? "mvn.cmd" : "mvn";
-        this.pomFile = Objects.requireNonNull(pomFile);
         this.processHelper = new ProcessHelper(pomFile.getParentFile(), cmd, "-B", "-ntp", "--file", pomFile.getName());
     }
 
