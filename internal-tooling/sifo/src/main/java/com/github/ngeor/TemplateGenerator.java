@@ -40,7 +40,7 @@ public final class TemplateGenerator {
         rootPomTemplate = SimpleStringTemplate.ofResource("/root-pom-template.xml");
     }
 
-    private SortedSet<MavenModule> getModules() {
+    private SortedSet<MavenModule> getModules() throws ConcurrentException {
         return modules.getModules();
     }
 
@@ -53,7 +53,7 @@ public final class TemplateGenerator {
         regenerateRootPom();
     }
 
-    private void regenerateRootPom() throws IOException {
+    private void regenerateRootPom() throws IOException, ConcurrentException {
         StringBuilder builder = new StringBuilder();
         for (MavenModule module : getModules()) {
             if (!builder.isEmpty()) {

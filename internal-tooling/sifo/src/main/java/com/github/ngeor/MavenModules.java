@@ -1,7 +1,7 @@
 package com.github.ngeor;
 
 import com.github.ngeor.maven.MavenCoordinates;
-import com.github.ngeor.maven.ModuleFinder;
+import com.github.ngeor.maven.MavenModuleNg;
 import java.io.File;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -13,7 +13,7 @@ import java.util.TreeSet;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.apache.commons.lang3.Validate;
+import org.apache.commons.lang3.concurrent.ConcurrentException;
 
 public final class MavenModules {
     private final File root;
@@ -23,30 +23,40 @@ public final class MavenModules {
         this.root = root;
     }
 
-    public SortedSet<MavenModule> getModules() {
+    public SortedSet<MavenModule> getModules() throws ConcurrentException {
         if (modules == null) {
             modules = collectModules();
         }
         return modules;
     }
 
-    private SortedSet<MavenModule> collectModules() {
-        return new ModuleFinder().findModules(root.toPath().resolve("pom.xml").toFile())
-            .map(moduleName -> moduleName.split("/"))
-            .filter(parts -> parts.length == 2)
-            .map(parts -> {
-                File typeDirectory = root.toPath().resolve(parts[0]).toFile();
-                File projectDirectory = typeDirectory.toPath().resolve(parts[1]).toFile();
-                File pomFile = projectDirectory.toPath().resolve("pom.xml").toFile();
-                return new MavenModule(typeDirectory, projectDirectory, pomFile);
-            }).collect(Collectors.toCollection(TreeSet::new));
+    private SortedSet<MavenModule> collectModules() throws ConcurrentException {
+        return MavenModuleNg.root(root.toPath().resolve("pom.xml").toFile())
+                .children()
+                .map(MavenModuleNg::getModuleName)
+                .map(moduleName -> moduleName.split("/"))
+                .filter(parts -> parts.length == 2)
+                .map(parts -> {
+                    File typeDirectory = root.toPath().resolve(parts[0]).toFile();
+                    File projectDirectory =
+                            typeDirectory.toPath().resolve(parts[1]).toFile();
+                    File pomFile = projectDirectory.toPath().resolve("pom.xml").toFile();
+                    return new MavenModule(typeDirectory, projectDirectory, pomFile);
+                })
+                .collect(Collectors.toCollection(TreeSet::new));
     }
 
     public Stream<MavenModule> internalDependencies(MavenModule module) {
-        return module.dependencies().flatMap(c -> internalDependency(c).stream());
+        return module.dependencies().flatMap(c -> {
+            try {
+                return internalDependency(c).stream();
+            } catch (ConcurrentException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
-    private Optional<MavenModule> internalDependency(MavenCoordinates coordinates) {
+    private Optional<MavenModule> internalDependency(MavenCoordinates coordinates) throws ConcurrentException {
         return getModules().stream()
                 .filter(m -> coordinates.equals(m.coordinates()))
                 .findFirst();

@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
+import org.apache.commons.lang3.concurrent.ConcurrentException;
 
 public class ChangesOverviewCommand extends BaseCommand {
     private final File rootDirectory;
@@ -22,7 +23,7 @@ public class ChangesOverviewCommand extends BaseCommand {
     }
 
     @Override
-    public void run() {
+    public void run() throws ConcurrentException {
         System.out.println("Release status");
 
         System.out.println("Module\tLatest version\tDate\tNumber of unreleased commits");

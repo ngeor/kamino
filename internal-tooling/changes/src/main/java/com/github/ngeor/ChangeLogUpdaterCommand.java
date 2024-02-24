@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.lang3.concurrent.ConcurrentException;
 
 public class ChangeLogUpdaterCommand extends BaseCommand {
     private final File rootDirectory;
@@ -20,7 +21,7 @@ public class ChangeLogUpdaterCommand extends BaseCommand {
     }
 
     @Override
-    public void run() throws IOException, ProcessFailedException, InterruptedException {
+    public void run() throws IOException, ProcessFailedException, InterruptedException, ConcurrentException {
         List<String> paths =
                 path == null ? new ModuleFinder().eligibleModules(rootDirectory).toList() : List.of(path);
         for (String p : paths) {

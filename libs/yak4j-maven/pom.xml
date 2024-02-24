@@ -19,10 +19,6 @@
   </scm>
   <dependencies>
     <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-    </dependency>
-    <dependency>
       <groupId>com.github.ngeor</groupId>
       <artifactId>yak4j-dom</artifactId>
       <version>1.10.0-SNAPSHOT</version>
@@ -31,6 +27,10 @@
       <groupId>com.github.ngeor</groupId>
       <artifactId>yak4j-process</artifactId>
       <version>1.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
     </dependency>
     <dependency>
       <groupId>org.assertj</groupId>
