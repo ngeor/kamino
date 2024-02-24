@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 import org.apache.commons.lang3.StringUtils;
@@ -22,7 +23,7 @@ public class ElementWrapper {
     private final Element element;
 
     public ElementWrapper(Element element) {
-        this.element = element;
+        this.element = Objects.requireNonNull(element);
     }
 
     public String getNodeName() {
@@ -235,5 +236,12 @@ public class ElementWrapper {
             }
         }
         return result;
+    }
+
+    public Map<String, String> firstElementsText(Set<String> names) {
+        return findChildElements(names, e -> e.getTextContentTrimmed().isPresent())
+            .entrySet()
+            .stream()
+            .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().getTextContentTrimmed().orElseThrow()));
     }
 }

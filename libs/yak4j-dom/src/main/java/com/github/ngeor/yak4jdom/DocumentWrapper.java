@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -27,7 +28,7 @@ public class DocumentWrapper {
     private final Document document;
 
     public DocumentWrapper(Document document) {
-        this.document = document;
+        this.document = Objects.requireNonNull(document);
     }
 
     /**
