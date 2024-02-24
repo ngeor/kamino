@@ -105,4 +105,8 @@ public class DocumentWrapper {
     public void indent() {
         getDocumentElement().indent();
     }
+
+    public DocumentWrapper deepClone() {
+        return new DocumentWrapper((Document) document.cloneNode(true));
+    }
 }
