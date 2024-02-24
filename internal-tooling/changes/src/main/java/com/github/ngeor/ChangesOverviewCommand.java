@@ -7,9 +7,12 @@ import com.github.ngeor.git.Git;
 import com.github.ngeor.git.Tag;
 import com.github.ngeor.process.ProcessFailedException;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 import org.apache.commons.lang3.concurrent.ConcurrentException;
+import org.apache.commons.lang3.tuple.Pair;
 
 public class ChangesOverviewCommand extends BaseCommand {
     private final File rootDirectory;
@@ -25,38 +28,58 @@ public class ChangesOverviewCommand extends BaseCommand {
     public void run() throws ConcurrentException {
         System.out.println("Release status");
 
-        System.out.println("Module\tLatest version\tDate\tNumber of unreleased commits");
+        List<List<String>> table = new ArrayList<>();
+        table.add(new ArrayList<>(List.of("Module", "Latest version", "Date", "Number of unreleased commits")));
         new ModuleFinder()
                 .eligibleModules(rootDirectory)
                 .map(this::buildOverview)
-                .forEach(System.out::println);
+                .forEach(table::add);
+
+        TableFormatter.padColumns(
+                table,
+                List.of(
+                        TableFormatter.Alignment.LEFT,
+                        TableFormatter.Alignment.LEFT,
+                        TableFormatter.Alignment.LEFT,
+                        TableFormatter.Alignment.RIGHT));
+        TableFormatter.printTable(table);
     }
 
-    private String buildOverview(String module) {
+    private List<String> buildOverview(String module) {
+        List<String> result = new ArrayList<>(List.of(module));
+        Pair<Tag, String> p = addTag(module);
+        Tag tag = p.getLeft();
+        // add message for tag
+        result.add(p.getRight());
+        result.add(tag == null ? "N/A" : tag.date());
+        result.add(addCount(module, tag));
+        return result;
+    }
+
+    private Pair<Tag, String> addTag(String module) {
         try {
-            return module + "\t"
-                    + recentTagWithDate(module)
-                            .map(tag -> buildExtraInfo(module, tag))
-                            .orElse("N/A");
-        } catch (ProcessFailedException e) {
-            return module + "\t" + e.getMessage();
+            Tag tag = git.getMostRecentTagWithDate(TagPrefix.forPath(module).tagPrefix())
+                    .orElseThrow();
+            return Pair.of(tag, TagPrefix.forPath(module).stripTagPrefix(tag).toString());
+        } catch (ProcessFailedException ex) {
+            return Pair.of(null, ex.getMessage());
+        } catch (NoSuchElementException ignored) {
+            return Pair.of(null, "N/A");
         }
     }
 
-    private Optional<Tag> recentTagWithDate(String module) throws ProcessFailedException {
-        return git.getMostRecentTagWithDate(TagPrefix.forPath(module).tagPrefix());
-    }
-
-    private String buildExtraInfo(String module, Tag tag) {
-        String count;
-        try {
-            count = String.valueOf(git.revList(tag, module)
-                    .map(Commit::summary)
-                    .filter(new CommitFilter())
-                    .count());
-        } catch (Exception ex) {
-            count = ex.getMessage();
+    private String addCount(String module, Tag tag) {
+        if (tag != null) {
+            try {
+                return String.valueOf(git.revList(tag, module)
+                        .map(Commit::summary)
+                        .filter(new CommitFilter())
+                        .count());
+            } catch (ProcessFailedException ex) {
+                return ex.getMessage();
+            }
+        } else {
+            return "N/A";
         }
-        return TagPrefix.forPath(module).stripTagPrefix(tag) + "\t" + tag.date() + "\t" + count;
     }
 }
