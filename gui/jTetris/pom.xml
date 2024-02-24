@@ -3,9 +3,9 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.github.ngeor</groupId>
-    <artifactId>java</artifactId>
-    <version>4.9.0-SNAPSHOT</version>
-    <relativePath>../../libs/java</relativePath>
+    <artifactId>cli-parent-pom</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>../../libs/cli-parent-pom</relativePath>
   </parent>
   <groupId>com.github.ngeor</groupId>
   <artifactId>jTetris</artifactId>
@@ -20,6 +20,7 @@
     <url>https://github.com/ngeor/kamino/tree/master/gui/jTetris</url>
   </scm>
   <properties>
+    <mainClass>jtetris.swing.MainForm</mainClass>
     <maven.deploy.skip>true</maven.deploy.skip>
   </properties>
   <dependencies>
@@ -37,18 +38,6 @@
   </dependencies>
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <configuration>
-          <archive>
-            <manifest>
-              <addClasspath>true</addClasspath>
-              <mainClass>jtetris.swing.MainForm</mainClass>
-            </manifest>
-          </archive>
-        </configuration>
-      </plugin>
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>

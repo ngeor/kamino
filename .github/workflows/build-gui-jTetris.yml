@@ -7,6 +7,7 @@ on:
       - gui/jTetris/**
       - .github/workflows/build-gui-jTetris.yml
       - pom.xml
+      - libs/cli-parent-pom/**
       - libs/java/**
   pull_request:
     branches: [ master ]
@@ -14,6 +15,7 @@ on:
       - gui/jTetris/**
       - .github/workflows/build-gui-jTetris.yml
       - pom.xml
+      - libs/cli-parent-pom/**
       - libs/java/**
 
 jobs:
