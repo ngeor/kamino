@@ -6,8 +6,8 @@ import static com.github.ngeor.maven.ElementNames.PROJECT;
 import static com.github.ngeor.maven.ElementNames.VERSION;
 
 import com.github.ngeor.yak4jdom.DocumentWrapper;
-import com.github.ngeor.yak4jdom.DomRuntimeException;
 import com.github.ngeor.yak4jdom.ElementWrapper;
+import java.io.File;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,15 +17,20 @@ import org.apache.commons.lang3.Validate;
 
 public class PomRepository {
     private final Map<MavenCoordinates, Map<ResolutionPhase, DocumentWrapper>> map = new HashMap<>();
+    private final Map<MavenCoordinates, Input> inputMap = new HashMap<>();
+    private Resolver resolver;
+
+    public void setResolver(Resolver resolver) {
+        this.resolver = resolver;
+    }
 
     public MavenCoordinates load(String xmlContents) {
-        Validate.notBlank(xmlContents, "xmlContents is required");
-        final DocumentWrapper document;
-        try {
-            document = Objects.requireNonNull(DocumentWrapper.parseString(xmlContents));
-        } catch (DomRuntimeException ex) {
-            throw new RuntimeException("Cannot parse xmlContents", ex);
-        }
+        return load(new Input.StringInput(xmlContents));
+    }
+
+    public MavenCoordinates load(Input input) {
+        Objects.requireNonNull(input);
+        DocumentWrapper document = input.loadDocument();
         ElementWrapper documentElement = document.getDocumentElement();
         Validate.isTrue(
                 PROJECT.equals(documentElement.getNodeName()),
@@ -39,6 +44,7 @@ public class PomRepository {
         validateCoordinates(mavenCoordinates);
         Validate.validState(!isKnown(mavenCoordinates), "Document %s is already loaded", mavenCoordinates.format());
         map.put(mavenCoordinates, new EnumMap<>(Map.of(ResolutionPhase.UNRESOLVED, document)));
+        inputMap.put(mavenCoordinates, input);
         return mavenCoordinates;
     }
 
@@ -71,7 +77,7 @@ public class PomRepository {
                 DocumentWrapper cloneChild = document.deepClone();
                 cloneChild.getDocumentElement().removeChildNodesByName("parent");
                 // prepare parent document
-                DocumentWrapper parent = resolveParent(parentPom);
+                DocumentWrapper parent = resolveParent(coordinates, parentPom);
                 DocumentWrapper cloneParent = parent.deepClone();
                 // perform merge
                 new PomMerger.DocumentMerge().mergeIntoLeft(cloneParent, cloneChild);
@@ -91,13 +97,51 @@ public class PomRepository {
         return document;
     }
 
-    private DocumentWrapper resolveParent(ParentPom parentPom) {
+    private DocumentWrapper resolveParent(MavenCoordinates childCoordinates, ParentPom parentPom) {
+        validateCoordinates(childCoordinates);
         MavenCoordinates parentCoordinates = parentPom.coordinates();
+        validateCoordinates(parentCoordinates);
+        if (!isKnown(parentCoordinates) && resolver != null) {
+            Input parentInput = resolver.resolve(inputMap.get(childCoordinates), parentPom);
+            Validate.validState(parentCoordinates.equals(load(parentInput)));
+        }
         Validate.validState(isKnown(parentCoordinates), "Parent document %s is unknown", parentCoordinates.format());
         return resolveParent(parentCoordinates);
     }
 
     private static void validateCoordinates(MavenCoordinates coordinates) {
         Validate.validState(coordinates != null && !coordinates.hasMissingFields(), "Missing maven coordinates");
+    }
+
+    public sealed interface Input {
+        DocumentWrapper loadDocument();
+
+        record StringInput(String contents) implements Input {
+            public StringInput {
+                Validate.notBlank(contents, "xmlContents is required");
+            }
+
+            @Override
+            public DocumentWrapper loadDocument() {
+                return DocumentWrapper.parseString(contents);
+            }
+        }
+
+        record FileInput(File pomFile) implements Input {
+            public FileInput {
+                Objects.requireNonNull(pomFile);
+                Validate.isTrue(pomFile.isFile(), "%s is not a file", pomFile);
+            }
+
+            @Override
+            public DocumentWrapper loadDocument() {
+                return DocumentWrapper.parse(pomFile);
+            }
+        }
+    }
+
+    @FunctionalInterface
+    public interface Resolver {
+        Input resolve(Input child, ParentPom parentPom);
     }
 }

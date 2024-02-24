@@ -7,6 +7,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.github.ngeor.yak4jdom.DocumentWrapper;
+import com.github.ngeor.yak4jdom.DomRuntimeException;
+import org.apache.commons.lang3.Validate;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
@@ -23,7 +25,7 @@ class PomRepositoryTest {
 
     @Test
     void loadInvalidXml() {
-        assertThatThrownBy(() -> pomRepository.load("oops")).hasMessage("Cannot parse xmlContents");
+        assertThatThrownBy(() -> pomRepository.load("oops")).isInstanceOf(DomRuntimeException.class);
     }
 
     @Test
@@ -150,24 +152,24 @@ class PomRepositoryTest {
     void resolveDocumentWithParent() {
         String parentContents =
                 """
-    <project>
-        <groupId>com.acme</groupId>
-        <artifactId>foo</artifactId>
-        <version>1.0</version>
-    </project>""";
-        MavenCoordinates parentCoordinates = pomRepository.load(parentContents);
-        String childContents =
-                """
-    <project>
-        <parent>
+        <project>
             <groupId>com.acme</groupId>
             <artifactId>foo</artifactId>
             <version>1.0</version>
-        </parent>
-        <groupId>com.acme</groupId>
-        <artifactId>bar</artifactId>
-        <version>1.1</version>
-    </project>""";
+        </project>""";
+        MavenCoordinates parentCoordinates = pomRepository.load(parentContents);
+        String childContents =
+                """
+        <project>
+            <parent>
+                <groupId>com.acme</groupId>
+                <artifactId>foo</artifactId>
+                <version>1.0</version>
+            </parent>
+            <groupId>com.acme</groupId>
+            <artifactId>bar</artifactId>
+            <version>1.1</version>
+        </project>""";
         MavenCoordinates childCoordinates = pomRepository.load(childContents);
 
         // act
@@ -188,5 +190,67 @@ class PomRepositoryTest {
         assertThat(pomRepository.getDocument(parentCoordinates, ResolutionPhase.UNRESOLVED))
                 .as("Unresolved and resolved parent document should point to the same document")
                 .isSameAs(pomRepository.getDocument(parentCoordinates, ResolutionPhase.PARENT_RESOLVED));
+    }
+
+    @Test
+    void loadDocumentWithUnknownParent() {
+        // arrange
+        MavenCoordinates parentCoordinates = new MavenCoordinates("com.acme", "foo", "1.0");
+        String childContents =
+                """
+        <project>
+            <parent>
+                <groupId>com.acme</groupId>
+                <artifactId>foo</artifactId>
+                <version>1.0</version>
+            </parent>
+            <groupId>com.acme</groupId>
+            <artifactId>bar</artifactId>
+            <version>1.1</version>
+        </project>""";
+
+        // act
+        MavenCoordinates childCoordinates = pomRepository.load(childContents);
+
+        // assert
+        assertThat(childCoordinates).isEqualTo(new MavenCoordinates("com.acme", "bar", "1.1"));
+        assertThat(pomRepository.isKnown(parentCoordinates)).isFalse();
+        assertThat(pomRepository.getResolutionPhase(childCoordinates)).isEqualTo(ResolutionPhase.UNRESOLVED);
+    }
+
+    @Test
+    void resolveDocumentWithParentDynamically() {
+        String parentContents =
+                """
+        <project>
+            <groupId>com.acme</groupId>
+            <artifactId>foo</artifactId>
+            <version>1.0</version>
+        </project>""";
+        MavenCoordinates parentCoordinates = new MavenCoordinates("com.acme", "foo", "1.0");
+        String childContents =
+                """
+        <project>
+            <parent>
+                <groupId>com.acme</groupId>
+                <artifactId>foo</artifactId>
+                <version>1.0</version>
+            </parent>
+            <groupId>com.acme</groupId>
+            <artifactId>bar</artifactId>
+            <version>1.1</version>
+        </project>""";
+        MavenCoordinates childCoordinates = pomRepository.load(childContents);
+        pomRepository.setResolver((child, parentPom) -> {
+            Validate.validState(parentCoordinates.equals(parentPom.coordinates()));
+            return new PomRepository.Input.StringInput(parentContents);
+        });
+
+        // act
+        pomRepository.resolveParent(childCoordinates);
+
+        // assert
+        assertThat(pomRepository.getResolutionPhase(parentCoordinates)).isEqualTo(ResolutionPhase.PARENT_RESOLVED);
+        assertThat(pomRepository.getResolutionPhase(childCoordinates)).isEqualTo(ResolutionPhase.PARENT_RESOLVED);
     }
 }
