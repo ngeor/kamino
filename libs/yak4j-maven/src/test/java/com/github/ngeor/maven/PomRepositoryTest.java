@@ -6,6 +6,7 @@ import static com.github.ngeor.maven.ElementNames.VERSION;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import com.github.ngeor.yak4jdom.DocumentWrapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
@@ -110,7 +111,7 @@ class PomRepositoryTest {
     }
 
     @Test
-    void resolveDocumentWithoutParentTwiceFails() {
+    void resolveDocumentWithoutParentTwice() {
         String xmlContents =
                 """
         <project>
@@ -119,8 +120,73 @@ class PomRepositoryTest {
             <version>1.0</version>
         </project>""";
         MavenCoordinates coordinates = pomRepository.load(xmlContents);
-        pomRepository.resolveParent(coordinates);
-        assertThatThrownBy(() -> pomRepository.resolveParent(coordinates))
-                .hasMessage("Document com.acme:foo:1.0 is already resolved");
+        DocumentWrapper document1 = pomRepository.resolveParent(coordinates);
+        DocumentWrapper document2 = pomRepository.resolveParent(coordinates);
+        assertThat(document1).isNotNull().isSameAs(document2);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"<groupId>a</groupId>", "<artifactId>b</artifactId>", "<version>c</version>"})
+    void resolveDocumentWithParentWithIncompleteCoordinates(String lineToRemove) {
+        String childContents =
+                """
+    <project>
+        <parent>
+            <groupId>a</groupId>
+            <artifactId>b</artifactId>
+            <version>c</version>
+        </parent>
+        <groupId>com.acme</groupId>
+        <artifactId>bar</artifactId>
+        <version>1.1</version>
+    </project>"""
+                        .replace(lineToRemove, "");
+        MavenCoordinates childCoordinates = pomRepository.load(childContents);
+        assertThatThrownBy(() -> pomRepository.resolveParent(childCoordinates))
+                .hasMessage("Document com.acme:bar:1.1 has incomplete parent coordinates");
+    }
+
+    @Test
+    void resolveDocumentWithParent() {
+        String parentContents =
+                """
+    <project>
+        <groupId>com.acme</groupId>
+        <artifactId>foo</artifactId>
+        <version>1.0</version>
+    </project>""";
+        MavenCoordinates parentCoordinates = pomRepository.load(parentContents);
+        String childContents =
+                """
+    <project>
+        <parent>
+            <groupId>com.acme</groupId>
+            <artifactId>foo</artifactId>
+            <version>1.0</version>
+        </parent>
+        <groupId>com.acme</groupId>
+        <artifactId>bar</artifactId>
+        <version>1.1</version>
+    </project>""";
+        MavenCoordinates childCoordinates = pomRepository.load(childContents);
+
+        // act
+        DocumentWrapper document = pomRepository.resolveParent(childCoordinates);
+
+        // assert
+        assertThat(pomRepository.getResolutionPhase(parentCoordinates)).isEqualTo(ResolutionPhase.PARENT_RESOLVED);
+        assertThat(pomRepository.getResolutionPhase(childCoordinates)).isEqualTo(ResolutionPhase.PARENT_RESOLVED);
+        assertThat(document.getDocumentElement().firstElement("parent"))
+                .as("Resolved document should not have parent element anymore")
+                .isEmpty();
+        assertThat(pomRepository
+                        .getDocument(childCoordinates, ResolutionPhase.UNRESOLVED)
+                        .getDocumentElement()
+                        .firstElement("parent"))
+                .as("Unresolved child document should still have parent element")
+                .isPresent();
+        assertThat(pomRepository.getDocument(parentCoordinates, ResolutionPhase.UNRESOLVED))
+                .as("Unresolved and resolved parent document should point to the same document")
+                .isSameAs(pomRepository.getDocument(parentCoordinates, ResolutionPhase.PARENT_RESOLVED));
     }
 }

@@ -8,15 +8,10 @@ import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 
 public record MavenCoordinates(String groupId, String artifactId, String version) {
-    public MavenCoordinates {
-        if (artifactId == null || artifactId.isBlank()) {
-            throw new IllegalArgumentException(
-                    String.format("%s can never be null or blank, as it cannot be inherited", ARTIFACT_ID));
-        }
-    }
-
     public static MavenCoordinates fromElement(ElementWrapper element) {
         Objects.requireNonNull(element);
 
@@ -24,17 +19,14 @@ public record MavenCoordinates(String groupId, String artifactId, String version
         return new MavenCoordinates(items.get(GROUP_ID), items.get(ARTIFACT_ID), items.get(VERSION));
     }
 
+    public boolean hasMissingFields() {
+        return StringUtils.isAnyBlank(groupId, artifactId, version);
+    }
+
     public MavenCoordinates requireAllFields() {
-        // artifactId is checked at the constructor
-
-        if (groupId == null || groupId.isBlank()) {
-            throw new IllegalStateException(String.format("%s is missing (%s=%s)", GROUP_ID, ARTIFACT_ID, artifactId));
-        }
-
-        if (version == null || version.isBlank()) {
-            throw new IllegalStateException(String.format("%s is missing %s:%s", VERSION, groupId, artifactId));
-        }
-
+        Validate.notBlank(groupId, "%s is missing (%s=%s)", GROUP_ID, ARTIFACT_ID, artifactId);
+        Validate.notBlank(artifactId, "%s can never be null or blank, as it cannot be inherited", ARTIFACT_ID);
+        Validate.notBlank(version, "%s is missing %s:%s", VERSION, groupId, artifactId);
         return this;
     }
 

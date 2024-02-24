@@ -37,7 +37,7 @@ public final class PomMerger {
         void mergeIntoLeft(E left, E right);
     }
 
-    private static class DocumentMerge implements Merge<DocumentWrapper> {
+    public static class DocumentMerge implements Merge<DocumentWrapper> {
         @Override
         public void mergeIntoLeft(DocumentWrapper left, DocumentWrapper right) {
             ElementWrapper leftDocumentElement = left.getDocumentElement();
