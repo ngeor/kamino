@@ -2,13 +2,13 @@ package com.github.ngeor.yak4j;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
-import org.apache.commons.lang3.exception.UncheckedException;
 
 /**
  * Represents a fragment of a swagger document.
@@ -212,7 +212,7 @@ public class SwaggerDocumentFragment {
         try {
             swaggerWriter.write(this, byteArrayOutputStream);
         } catch (IOException e) {
-            throw new UncheckedException(e);
+            throw new UncheckedIOException(e);
         }
 
         return byteArrayOutputStream.toString();
