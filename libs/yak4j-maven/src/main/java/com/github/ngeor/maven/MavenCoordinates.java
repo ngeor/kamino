@@ -8,7 +8,6 @@ import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public record MavenCoordinates(String groupId, String artifactId, String version) {
     public MavenCoordinates {
@@ -22,14 +21,7 @@ public record MavenCoordinates(String groupId, String artifactId, String version
         Objects.requireNonNull(element);
 
         Map<String, String> items = element
-                .findChildElements(Set.of(GROUP_ID, ARTIFACT_ID, VERSION), e -> e.getTextContentTrimmed()
-                        .isPresent())
-                .entrySet()
-                .stream()
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        e -> e.getValue().getTextContentTrimmed().orElseThrow()));
-
+                .firstElementsText(Set.of(GROUP_ID, ARTIFACT_ID, VERSION));
         return new MavenCoordinates(items.get(GROUP_ID), items.get(ARTIFACT_ID), items.get(VERSION));
     }
 
