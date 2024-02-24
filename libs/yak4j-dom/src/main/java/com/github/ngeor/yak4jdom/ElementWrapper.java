@@ -1,8 +1,12 @@
 package com.github.ngeor.yak4jdom;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 import org.apache.commons.lang3.StringUtils;
@@ -220,5 +224,16 @@ public class ElementWrapper {
         }
 
         return new ElementWrapper((Element) parentNode).path() + "/" + getNodeName();
+    }
+
+    public Map<String, ElementWrapper> findChildElements(Set<String> names, Predicate<ElementWrapper> predicate) {
+        Map<String, ElementWrapper> result = new HashMap<>();
+        for (var it = getChildElementsAsIterator(); result.size() < names.size() && it.hasNext(); ) {
+            var e = it.next();
+            if (names.contains(e.getNodeName()) && predicate.test(e)) {
+                result.put(e.getNodeName(), e);
+            }
+        }
+        return result;
     }
 }
