@@ -6,9 +6,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
+import org.apache.commons.lang3.exception.UncheckedException;
 
 /**
  * Represents a fragment of a swagger document.
@@ -22,7 +22,7 @@ public class SwaggerDocumentFragment {
      * @param data The data of the fragment.
      */
     public SwaggerDocumentFragment(Map<String, Object> data) {
-        this.data = data;
+        this.data = Objects.requireNonNull(data);
     }
 
     public int size() {
@@ -121,32 +121,8 @@ public class SwaggerDocumentFragment {
         }
     }
 
-    /**
-     * Puts a value into the fragment.
-     *
-     * @param key   The key.
-     * @param value The value.
-     */
-    public void put(String key, Object value) {
-        if (!(value instanceof String)) {
-            throw new UnsupportedOperationException();
-        }
-
-        data.put(key, value);
-    }
-
-    /**
-     * Visits all keys (not recursively) with the given visitor.
-     * @param visitor The visitor function.
-     */
-    public void forEach(BiConsumer<String, Object> visitor) {
-        data.forEach((key, value) -> {
-            visitor.accept(key, get(key));
-        });
-    }
-
     public String[] keys() {
-        return data.keySet().toArray(new String[0]);
+        return data.keySet().toArray(String[]::new);
     }
 
     public void renameKey(String oldName, String newName) {
@@ -236,7 +212,7 @@ public class SwaggerDocumentFragment {
         try {
             swaggerWriter.write(this, byteArrayOutputStream);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new UncheckedException(e);
         }
 
         return byteArrayOutputStream.toString();

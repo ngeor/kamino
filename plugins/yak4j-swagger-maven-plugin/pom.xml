@@ -21,24 +21,22 @@
     <url>https://github.com/ngeor/kamino/tree/master/plugins/yak4j-swagger-maven-plugin</url>
   </scm>
   <properties>
+    <jackson-bom.version>2.16.1</jackson-bom.version>
+    <!--
+    jacoco thresholds
+    -->
     <jacoco.aggregate.limit.branch-ratio>82%</jacoco.aggregate.limit.branch-ratio>
     <jacoco.aggregate.limit.class-complexity>50</jacoco.aggregate.limit.class-complexity>
     <jacoco.aggregate.limit.instruction-ratio>87%</jacoco.aggregate.limit.instruction-ratio>
     <jacoco.aggregate.limit.method-complexity>10</jacoco.aggregate.limit.method-complexity>
     <jacoco.unit-tests.limit.branch-ratio>75%</jacoco.unit-tests.limit.branch-ratio>
     <jacoco.unit-tests.limit.class-complexity>50</jacoco.unit-tests.limit.class-complexity>
-    <!--
-    jacoco thresholds
-    -->
     <jacoco.unit-tests.limit.instruction-ratio>65%</jacoco.unit-tests.limit.instruction-ratio>
     <jacoco.unit-tests.limit.method-complexity>10</jacoco.unit-tests.limit.method-complexity>
     <!--
-    dependencies for maven plugins
+    dependencies
     -->
     <maven-core.version>3.9.6</maven-core.version>
-    <!--
-    plugins
-    -->
     <maven-invoker-plugin.version>3.6.0</maven-invoker-plugin.version>
     <maven-plugin-plugin.version>3.11.0</maven-plugin-plugin.version>
   </properties>
@@ -47,7 +45,7 @@
       <dependency>
         <groupId>com.fasterxml.jackson</groupId>
         <artifactId>jackson-bom</artifactId>
-        <version>2.16.1</version>
+        <version>${jackson-bom.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

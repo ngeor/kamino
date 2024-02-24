@@ -27,14 +27,10 @@ public class SwaggerWriter {
 
     private void writeMap(YAMLGenerator generator, SwaggerDocumentFragment map) throws IOException {
         generator.writeStartObject();
-        map.forEach((key, value) -> {
-            try {
-                writeFieldName(generator, key);
-                writeObject(generator, value);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        for (String key : map.keys()) {
+            writeFieldName(generator, key);
+            writeObject(generator, map.get(key));
+        }
         generator.writeEndObject();
     }
 
@@ -50,7 +46,7 @@ public class SwaggerWriter {
     private void writeObject(YAMLGenerator generator, Object value) throws IOException {
         if (value instanceof SwaggerDocumentFragment fragment) {
             writeMap(generator, fragment);
-        } else if (value instanceof List list) {
+        } else if (value instanceof List<?> list) {
             writeList(generator, list);
         } else if (value instanceof Boolean boolean1) {
             generator.writeBoolean(boolean1);
@@ -63,7 +59,7 @@ public class SwaggerWriter {
         }
     }
 
-    private void writeList(YAMLGenerator generator, List list) throws IOException {
+    private void writeList(YAMLGenerator generator, List<?> list) throws IOException {
         generator.writeStartArray();
         for (Object value : list) {
             writeObject(generator, value);
