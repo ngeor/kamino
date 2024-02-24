@@ -1,22 +1,24 @@
 package com.github.ngeor;
 
+import com.github.ngeor.maven.ChildMavenModule;
 import com.github.ngeor.maven.Maven;
-import com.github.ngeor.maven.ParentPom;
+import com.github.ngeor.maven.MavenModule;
+import com.github.ngeor.maven.RootMavenModule;
 import com.github.ngeor.process.ProcessFailedException;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.function.Function;
 import java.util.stream.Collectors;
-import javax.xml.parsers.ParserConfigurationException;
+import java.util.stream.Stream;
 import org.apache.commons.lang3.concurrent.ConcurrentException;
-import org.xml.sax.SAXException;
+import org.apache.commons.lang3.stream.Streams;
 
 public final class TemplateGenerator {
     private static final String GROUP_ID = "com.github.ngeor";
@@ -26,7 +28,7 @@ public final class TemplateGenerator {
     private final SimpleStringTemplate releaseTemplate;
     private final SimpleStringTemplate rootPomTemplate;
     private final File root;
-    private final MavenModules modules;
+    private final RootMavenModule rootModule;
 
     public TemplateGenerator(File root) throws IOException {
         if (!root.toPath().resolve(".github").toFile().isDirectory()) {
@@ -34,76 +36,78 @@ public final class TemplateGenerator {
         }
 
         this.root = root;
-        this.modules = new MavenModules(root);
+        this.rootModule = MavenModule.root(root.toPath().resolve("pom.xml").toFile());
         buildTemplate = SimpleStringTemplate.ofResource("/build-template.yml");
         releaseTemplate = SimpleStringTemplate.ofResource("/release-template.yml");
         rootPomTemplate = SimpleStringTemplate.ofResource("/root-pom-template.xml");
     }
 
-    private SortedSet<MavenModule> getModules() throws ConcurrentException {
-        return modules.getModules();
-    }
-
-    public void regenerateAllTemplates()
-            throws IOException, InterruptedException, ParserConfigurationException, SAXException,
-                    ProcessFailedException, ConcurrentException {
-        for (MavenModule module : getModules()) {
-            regenerateAllTemplates(module);
-        }
+    public void regenerateAllTemplates() throws IOException, ConcurrentException {
+        Streams.failableStream(rootModule.children()).forEach(this::regenerateAllTemplates);
         regenerateRootPom();
     }
 
     private void regenerateRootPom() throws IOException, ConcurrentException {
         StringBuilder builder = new StringBuilder();
-        for (MavenModule module : getModules()) {
+        rootModule.children().forEach(module -> {
             if (!builder.isEmpty()) {
                 builder.append("\n").append("    ");
             }
-            builder.append("<module>").append(module.path()).append("</module>");
-        }
+            builder.append("<module>").append(module.getModuleName()).append("</module>");
+        });
 
         // regenerate root pom
         Files.writeString(
                 root.toPath().resolve("pom.xml"), rootPomTemplate.render(Map.of("modules", builder.toString())));
     }
 
-    public void regenerateAllTemplates(MavenModule module)
+    public void regenerateAllTemplates(ChildMavenModule module)
             throws IOException, InterruptedException, ProcessFailedException, ConcurrentException {
-        System.out.println("Regenerating templates for " + module.projectDirectory());
-        String javaVersion = module.calculateJavaVersion().orElse(DEFAULT_JAVA_VERSION);
+        System.out.println("Regenerating templates for " + module.getModuleName());
+        final String javaVersion = module.effectivePom()
+                .property("maven.compiler.source")
+                .map(v -> "1.8".equals(v) ? "8" : v)
+                .orElse(DEFAULT_JAVA_VERSION);
+
         String buildCommand;
         String extraPaths;
-        List<MavenModule> internalDependencies = new ArrayList<>();
-        modules.visitDependenciesRecursively(module, internalDependencies::add);
-
-        // register also any internal snapshot parent poms as dependencies for this purpose
-        for (ParentPom p : module.parentPoms()) {
-            if (p.relativePath() != null && p.coordinates().version().endsWith("SNAPSHOT")) {
-                modules.getModules().stream()
-                        .filter(m -> m.coordinates().equals(p.coordinates()))
-                        .forEach(internalDependencies::add);
-            }
-        }
+        SortedSet<String> internalDependencies = Stream.concat(
+                        // internal dependencies of module
+                        module.internalDependenciesRecursively(),
+                        // register also any internal snapshot parent poms as dependencies for this purpose
+                        Streams.failableStream(module.parentPoms())
+                                .filter(p -> p.relativePath() != null
+                                        && p.coordinates().version().endsWith("SNAPSHOT"))
+                                .map(p -> rootModule.children(
+                                        p.coordinates().groupId(),
+                                        p.coordinates().artifactId()))
+                                .stream()
+                                .flatMap(Function.identity()))
+                .map(ChildMavenModule::getModuleName)
+                .collect(Collectors.toCollection(TreeSet::new));
 
         if (internalDependencies.isEmpty()) {
-            buildCommand = "mvn -B -ntp clean verify --file " + module.path() + "/"
-                    + module.pomFile().getName();
+            buildCommand = "mvn -B -ntp clean verify --file "
+                    + root.toPath()
+                            .relativize(module.getPomFile().toPath())
+                            .toString()
+                            .replace('\\', '/');
             extraPaths = "";
         } else {
-            buildCommand = "mvn -B -ntp -pl " + module.path() + " -am clean verify";
+            buildCommand = "mvn -B -ntp -pl " + module.getModuleName() + " -am clean verify";
             extraPaths = internalDependencies.stream()
-                    .map(dep -> System.lineSeparator() + "      - " + dep.path() + "/**")
+                    .map(dep -> System.lineSeparator() + "      - " + dep + "/**")
                     .sorted()
                     .collect(Collectors.joining());
         }
         Map<String, String> buildVariables = createTemplateVariables(module, javaVersion, buildCommand, extraPaths);
 
-        String workflowId = module.path().replace('/', '-');
+        String workflowId = module.getModuleName().replace('/', '-');
         Files.writeString(
                 root.toPath().resolve(".github").resolve("workflows").resolve("build-" + workflowId + ".yml"),
                 buildTemplate.render(buildVariables));
 
-        if (requiresReleaseWorkflow(module.typeDirectory().getName())) {
+        if (requiresReleaseWorkflow(typeDirectory(module).getName())) {
             // needs to align with "arturito" release tooling
             final String releaseWorkflowJavaVersion = "17";
             Map<String, String> releaseVariables =
@@ -118,38 +122,38 @@ public final class TemplateGenerator {
         new ReadmeGenerator(root, module, workflowId).fixProjectBadges();
     }
 
-    private static Map<String, String> createTemplateVariables(
-            MavenModule module, String javaVersion, String buildCommand, String extraPaths) {
-        Map<String, String> variables = Map.of(
+    private Map<String, String> createTemplateVariables(
+            ChildMavenModule module, String javaVersion, String buildCommand, String extraPaths) {
+        return Map.of(
                 "name",
-                module.projectDirectory().getName(),
+                projectDirectory(module).getName(),
                 "group",
-                module.typeDirectory().getName(),
+                typeDirectory(module).getName(),
                 "path",
-                module.path(),
+                module.getModuleName(),
                 "javaVersion",
                 javaVersion,
                 "buildCommand",
                 buildCommand,
                 "extraPaths",
                 extraPaths);
-        return variables;
     }
 
     public static boolean requiresReleaseWorkflow(String typeName) {
         return Set.of("archetypes", "libs", "plugins").contains(typeName);
     }
 
-    private void fixProjectUrls(MavenModule module) throws IOException, InterruptedException, ProcessFailedException {
+    private void fixProjectUrls(ChildMavenModule module)
+            throws IOException, InterruptedException, ProcessFailedException {
         boolean hadChanges = false;
-        DocumentWrapper document = DocumentWrapper.parse(module.pomFile());
+        DocumentWrapper document = DocumentWrapper.parse(module.getPomFile());
         ElementWrapper documentElement = document.getDocumentElement();
         hadChanges |= ensureChildText(documentElement, "groupId", GROUP_ID);
         hadChanges |= ensureChildText(
-                documentElement, "artifactId", module.projectDirectory().getName());
+                documentElement, "artifactId", projectDirectory(module).getName());
 
         // TODO do not hardcode the github URL
-        String url = "https://github.com/ngeor/kamino/tree/master/" + module.path();
+        String url = "https://github.com/ngeor/kamino/tree/master/" + module.getModuleName();
         hadChanges |= ensureChildText(documentElement, "url", url);
 
         ElementWrapper scm = documentElement.ensureChild("scm");
@@ -159,8 +163,8 @@ public final class TemplateGenerator {
         hadChanges |= ensureChildText(scm, "url", url);
 
         if (hadChanges) {
-            document.write(module.pomFile());
-            Maven maven = new Maven(module.pomFile());
+            document.write(module.getPomFile());
+            Maven maven = new Maven(module.getPomFile());
             maven.sortPom();
         }
     }
@@ -176,5 +180,13 @@ public final class TemplateGenerator {
         }
         child.setTextContent(text.trim());
         return true;
+    }
+
+    private File typeDirectory(ChildMavenModule module) {
+        return projectDirectory(module).getParentFile();
+    }
+
+    private File projectDirectory(ChildMavenModule module) {
+        return module.getPomFile().getParentFile();
     }
 }

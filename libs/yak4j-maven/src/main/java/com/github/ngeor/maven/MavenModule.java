@@ -9,7 +9,7 @@ import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.concurrent.ConcurrentException;
 import org.apache.commons.lang3.concurrent.LazyInitializer;
 
-public sealed class MavenModuleNg permits RootMavenModule, ChildMavenModule {
+public abstract sealed class MavenModule permits RootMavenModule, ChildMavenModule {
     private final File pomFile;
 
     private record EffectivePomAndParentPoms(MavenDocument doc, List<ParentPom> parentPoms) {}
@@ -30,7 +30,14 @@ public sealed class MavenModuleNg permits RootMavenModule, ChildMavenModule {
         }
     };
 
-    protected MavenModuleNg(File pomFile) {
+    private final LazyInitializer<List<MavenCoordinates>> lazyDependencies = new LazyInitializer<>() {
+        @Override
+        protected List<MavenCoordinates> initialize() throws ConcurrentException {
+            return effectivePom().dependencies().toList();
+        }
+    };
+
+    protected MavenModule(File pomFile) {
         this.pomFile = Objects.requireNonNull(pomFile);
         Validate.isTrue(pomFile.isFile());
     }
@@ -54,4 +61,10 @@ public sealed class MavenModuleNg permits RootMavenModule, ChildMavenModule {
     public MavenCoordinates coordinates() throws ConcurrentException {
         return lazyCoordinates.get();
     }
+
+    public List<MavenCoordinates> dependencies() throws ConcurrentException {
+        return lazyDependencies.get();
+    }
+
+    public abstract RootMavenModule getRootParent();
 }

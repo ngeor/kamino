@@ -8,9 +8,7 @@ import com.github.ngeor.versions.SemVer;
 import com.github.ngeor.versions.SemVerBump;
 import java.io.File;
 import java.io.IOException;
-import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.lang3.concurrent.ConcurrentException;
-import org.xml.sax.SAXException;
 
 /**
  * Imports a project from a different repository into the monorepo.
@@ -28,9 +26,7 @@ public class ProjectImporter {
         this.githubToken = githubToken;
     }
 
-    public void run()
-            throws IOException, InterruptedException, ParserConfigurationException, SAXException,
-                    ProcessFailedException, ConcurrentException {
+    public void run() throws IOException, InterruptedException, ProcessFailedException, ConcurrentException {
         ensureGitLatest();
         importGitSubtree();
         adjustImportedCode();
@@ -88,22 +84,8 @@ public class ProjectImporter {
     }
 
     private void adjustImportedCode()
-            throws IOException, ParserConfigurationException, InterruptedException, SAXException,
-                    ProcessFailedException, ConcurrentException {
-        new TemplateGenerator(monorepoRoot)
-                .regenerateAllTemplates(new MavenModule(
-                        monorepoRoot.toPath().resolve(typeName).toFile(),
-                        monorepoRoot
-                                .toPath()
-                                .resolve(typeName)
-                                .resolve(oldRepoRoot.getName())
-                                .toFile(),
-                        monorepoRoot
-                                .toPath()
-                                .resolve(typeName)
-                                .resolve(oldRepoRoot.getName())
-                                .resolve("pom.xml")
-                                .toFile()));
+            throws IOException, InterruptedException, ProcessFailedException, ConcurrentException {
+        new TemplateGenerator(monorepoRoot).regenerateAllTemplates();
 
         Git monorepo = new Git(monorepoRoot);
         monorepo.addAll();
