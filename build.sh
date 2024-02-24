@@ -30,12 +30,12 @@ if [[ $SKIP_TESTS -eq 1 ]]; then
 else
     mvn clean test
 fi
-# spotless (excluding the aggregator root)
-mvn -pl '!:kamino' spotless:apply
 if [[ $RUN_REWRITE -eq 1 ]]; then
     # open rewrite (excluding the aggregator root)
     mvn -pl '!:kamino' rewrite:run
 fi
+# spotless (excluding the aggregator root)
+mvn -pl '!:kamino' spotless:apply
 # build internal tools
 mvn -Pshade -am -pl internal-tooling/changes package -DskipTests
 mvn -Pshade -am -pl internal-tooling/sifo package -DskipTests
