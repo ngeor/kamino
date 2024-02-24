@@ -7,7 +7,6 @@ import com.github.ngeor.git.Git;
 import com.github.ngeor.process.ProcessFailedException;
 import com.github.ngeor.versions.SemVer;
 import com.github.ngeor.versions.SemVerBump;
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,15 +21,14 @@ public class GitVersionCalculator {
         this.tagPrefix = TagPrefix.forPath(path);
     }
 
-    public Optional<Result> calculateGitVersion() throws IOException, InterruptedException, ProcessFailedException {
+    public Optional<Result> calculateGitVersion() throws ProcessFailedException {
         SemVer mostRecentVersion = git.getMostRecentTag(tagPrefix.tagPrefix())
                 .map(tagPrefix::stripTagPrefix)
                 .orElse(null);
         return mostRecentVersion != null ? Optional.of(calculateGitVersion(mostRecentVersion)) : Optional.empty();
     }
 
-    private Result calculateGitVersion(SemVer mostRecentVersion)
-            throws IOException, ProcessFailedException, InterruptedException {
+    private Result calculateGitVersion(SemVer mostRecentVersion) throws ProcessFailedException {
         String sinceCommit = tagPrefix.addTagPrefix(mostRecentVersion);
 
         List<Commit> commits = git.revList(sinceCommit, path).toList();

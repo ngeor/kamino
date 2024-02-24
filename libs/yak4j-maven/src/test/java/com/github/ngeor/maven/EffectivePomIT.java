@@ -15,7 +15,7 @@ class EffectivePomIT {
     private File file;
 
     @Test
-    void test() throws IOException, InterruptedException, ProcessFailedException {
+    void test() throws IOException, ProcessFailedException {
         String pom =
                 """
             <project>
@@ -43,7 +43,7 @@ class EffectivePomIT {
     }
 
     @Test
-    void testParentPom() throws IOException, InterruptedException, ProcessFailedException {
+    void testParentPom() throws IOException, ProcessFailedException {
         String pom1 =
                 """
         <project>
@@ -94,8 +94,7 @@ class EffectivePomIT {
         });
     }
 
-    private void verifyEffectivePom(Consumer<ElementWrapper> assertions)
-            throws IOException, InterruptedException, ProcessFailedException {
+    private void verifyEffectivePom(Consumer<ElementWrapper> assertions) throws IOException, ProcessFailedException {
         assertions.accept(maven.effectivePomViaMaven().getDocumentElement());
         assertions.accept(new MavenDocument(file).effectivePom().getDocumentElement());
     }

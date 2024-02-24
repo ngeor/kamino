@@ -14,19 +14,19 @@ public final class Maven {
         this.processHelper = new ProcessHelper(pomFile.getParentFile(), cmd, "-B", "-ntp", "--file", pomFile.getName());
     }
 
-    public void sortPom() throws IOException, InterruptedException, ProcessFailedException {
+    public void sortPom() throws ProcessFailedException {
         processHelper.run("-q", "com.github.ekryd.sortpom:sortpom-maven-plugin:sort");
     }
 
-    public void clean() throws IOException, InterruptedException, ProcessFailedException {
+    public void clean() throws ProcessFailedException {
         processHelper.runInheritIO("clean");
     }
 
-    public void verify() throws IOException, InterruptedException, ProcessFailedException {
+    public void verify() throws ProcessFailedException {
         processHelper.runInheritIO("verify");
     }
 
-    public DocumentWrapper effectivePomViaMaven() throws IOException, InterruptedException, ProcessFailedException {
+    public DocumentWrapper effectivePomViaMaven() throws IOException, ProcessFailedException {
         File output = File.createTempFile("pom", ".xml");
         try {
             effectivePomViaMaven(output);
@@ -36,16 +36,15 @@ public final class Maven {
         }
     }
 
-    public void effectivePomViaMaven(File output) throws IOException, ProcessFailedException, InterruptedException {
+    public void effectivePomViaMaven(File output) throws ProcessFailedException {
         processHelper.run("help:effective-pom", "-Doutput=" + output.getAbsolutePath());
     }
 
-    public void install() throws IOException, InterruptedException, ProcessFailedException {
+    public void install() throws ProcessFailedException {
         processHelper.runInheritIO("install");
     }
 
-    public void setVersion(MavenCoordinates moduleCoordinates, String newVersion)
-            throws IOException, ProcessFailedException, InterruptedException {
+    public void setVersion(MavenCoordinates moduleCoordinates, String newVersion) throws ProcessFailedException {
         processHelper.run(
                 "versions:set",
                 String.format("-DgroupId=%s", moduleCoordinates.groupId()),

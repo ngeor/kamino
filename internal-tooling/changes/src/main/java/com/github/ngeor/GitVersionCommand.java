@@ -3,7 +3,6 @@ package com.github.ngeor;
 import com.github.ngeor.git.Git;
 import com.github.ngeor.process.ProcessFailedException;
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.concurrent.ConcurrentException;
@@ -21,7 +20,7 @@ public class GitVersionCommand extends BaseCommand {
     }
 
     @Override
-    public void run() throws IOException, ProcessFailedException, InterruptedException, ConcurrentException {
+    public void run() throws ProcessFailedException, ConcurrentException {
         List<String> paths =
                 path == null ? new ModuleFinder().eligibleModules(rootDirectory).toList() : List.of(path);
         for (String p : paths) {
@@ -29,7 +28,7 @@ public class GitVersionCommand extends BaseCommand {
         }
     }
 
-    private void run(String path) throws IOException, ProcessFailedException, InterruptedException {
+    private void run(String path) throws ProcessFailedException {
         GitVersionCalculator.Result result =
                 new GitVersionCalculator(git, path).calculateGitVersion().orElse(null);
         if (result == null) {

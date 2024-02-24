@@ -22,13 +22,13 @@ class GitIT {
     private Git git;
 
     @BeforeEach
-    void beforeEach() throws IOException, ProcessFailedException, InterruptedException {
+    void beforeEach() throws ProcessFailedException {
         git = new Git(directory);
         git.initAndConfigureIdentity("John Doe", "no-reply@acme.com");
     }
 
     @Test
-    void testHasStagedChanges() throws IOException, InterruptedException, ProcessFailedException {
+    void testHasStagedChanges() throws IOException, ProcessFailedException {
         assertThat(git.hasStagedChanges()).isFalse();
         Files.writeString(directory.toPath().resolve("README.md"), "My project");
         git.addAll();
@@ -38,7 +38,7 @@ class GitIT {
     }
 
     @Test
-    void testGetMostRecentTag() throws IOException, ProcessFailedException, InterruptedException {
+    void testGetMostRecentTag() throws IOException, ProcessFailedException {
         Files.writeString(directory.toPath().resolve("README.md"), "My project");
         git.addAll();
         git.commit("Adding readme file");
@@ -53,7 +53,7 @@ class GitIT {
     }
 
     @Test
-    void testGetMostRecentTagWithDate() throws IOException, ProcessFailedException, InterruptedException {
+    void testGetMostRecentTagWithDate() throws IOException, ProcessFailedException {
         Files.writeString(directory.toPath().resolve("README.md"), "My project");
         git.addAll();
         git.commit("Adding readme file");
@@ -72,7 +72,7 @@ class GitIT {
     }
 
     @Test
-    void testGetRevList() throws IOException, ProcessFailedException, InterruptedException {
+    void testGetRevList() throws IOException, ProcessFailedException {
         Files.writeString(directory.toPath().resolve("README.md"), "My project");
         git.addAll();
         git.commit("Adding readme file");

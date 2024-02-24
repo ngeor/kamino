@@ -62,7 +62,7 @@ public final class TemplateGenerator {
     }
 
     public void regenerateAllTemplates(ChildMavenModule module)
-            throws IOException, InterruptedException, ProcessFailedException, ConcurrentException {
+            throws IOException, ProcessFailedException, ConcurrentException {
         System.out.println("Regenerating templates for " + module.getModuleName());
         final String javaVersion = module.effectivePom()
                 .property("maven.compiler.source")
@@ -143,8 +143,7 @@ public final class TemplateGenerator {
         return Set.of("archetypes", "libs", "plugins").contains(typeName);
     }
 
-    private void fixProjectUrls(ChildMavenModule module)
-            throws IOException, InterruptedException, ProcessFailedException {
+    private void fixProjectUrls(ChildMavenModule module) throws ProcessFailedException {
         boolean hadChanges = false;
         DocumentWrapper document = DocumentWrapper.parse(module.getPomFile());
         ElementWrapper documentElement = document.getDocumentElement();

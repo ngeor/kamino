@@ -34,7 +34,7 @@ public class ProjectImporter {
         archiveImportedRepo();
     }
 
-    private void ensureGitLatest() throws IOException, InterruptedException, ProcessFailedException {
+    private void ensureGitLatest() throws ProcessFailedException {
         System.out.println("Ensure git is on default branch and has latest");
         for (File projectDirectory : new File[] {monorepoRoot, oldRepoRoot}) {
             Git git = new Git(projectDirectory);
@@ -43,12 +43,12 @@ public class ProjectImporter {
         }
     }
 
-    private void ensureOldProjectBuilds() throws IOException, InterruptedException, ProcessFailedException {
+    private void ensureOldProjectBuilds() throws ProcessFailedException {
         System.out.println("Ensure project to be imported builds");
         ensureProjectBuilds(oldRepoRoot);
     }
 
-    private void ensureImportedProjectBuilds() throws IOException, InterruptedException, ProcessFailedException {
+    private void ensureImportedProjectBuilds() throws ProcessFailedException {
         System.out.println("Ensure imported project builds from new location");
         ensureProjectBuilds(monorepoRoot
                 .toPath()
@@ -58,14 +58,14 @@ public class ProjectImporter {
                 .toFile());
     }
 
-    private void ensureProjectBuilds(File file) throws IOException, InterruptedException, ProcessFailedException {
+    private void ensureProjectBuilds(File file) throws ProcessFailedException {
         Maven maven = new Maven(file);
         maven.clean();
         maven.verify();
         maven.clean();
     }
 
-    private void importGitSubtree() throws IOException, InterruptedException, ProcessFailedException {
+    private void importGitSubtree() throws ProcessFailedException {
         // git subtree add -P packages/foo ../source master
         if (monorepoRoot
                 .toPath()
@@ -83,8 +83,7 @@ public class ProjectImporter {
         monorepo.subTreeAdd(typeName + "/" + oldRepoRoot.getName(), oldRepoRoot, oldRepo.getDefaultBranch());
     }
 
-    private void adjustImportedCode()
-            throws IOException, InterruptedException, ProcessFailedException, ConcurrentException {
+    private void adjustImportedCode() throws IOException, ProcessFailedException, ConcurrentException {
         new TemplateGenerator(monorepoRoot).regenerateAllTemplates();
 
         Git monorepo = new Git(monorepoRoot);
@@ -95,7 +94,7 @@ public class ProjectImporter {
         }
     }
 
-    private void performPatchRelease() throws IOException, InterruptedException, ProcessFailedException {
+    private void performPatchRelease() throws IOException, ProcessFailedException {
         ensureImportedProjectBuilds();
 
         if (TemplateGenerator.requiresReleaseWorkflow(typeName)) {

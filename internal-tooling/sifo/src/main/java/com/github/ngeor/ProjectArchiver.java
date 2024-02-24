@@ -35,7 +35,7 @@ public class ProjectArchiver {
         archiveProjectInGitHub();
     }
 
-    private void addArchivalNoticeToReadmeFile() throws IOException, InterruptedException, ProcessFailedException {
+    private void addArchivalNoticeToReadmeFile() throws IOException, ProcessFailedException {
         // add archival notice if it does not exist,
         // either after the badges or before the first second level header
         File readmeFile = new File(projectDirectory, "README.md");

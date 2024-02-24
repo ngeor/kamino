@@ -39,22 +39,21 @@ public class ChangeLogUpdater {
         return projectPath.resolve("CHANGELOG.md").toFile();
     }
 
-    void updateChangeLog() throws IOException, InterruptedException, ProcessFailedException {
+    void updateChangeLog() throws IOException, ProcessFailedException {
         updateChangeLog(false);
     }
 
-    public void updateChangeLog(boolean overwrite) throws IOException, InterruptedException, ProcessFailedException {
+    public void updateChangeLog(boolean overwrite) throws IOException, ProcessFailedException {
         updateChangeLog(overwrite, null);
     }
 
-    public void updateChangeLog(boolean overwrite, SemVer nextVersion)
-            throws IOException, ProcessFailedException, InterruptedException {
+    public void updateChangeLog(boolean overwrite, SemVer nextVersion) throws IOException, ProcessFailedException {
         List<Item> markdown = generateChangeLog(overwrite, nextVersion);
         new MarkdownWriter().write(markdown, getChangeLog());
     }
 
     private List<Item> generateChangeLog(boolean overwrite, SemVer nextVersion)
-            throws IOException, ProcessFailedException, InterruptedException {
+            throws IOException, ProcessFailedException {
 
         Release.SubGroupOptions subGroupOptions =
                 new Release.SubGroupOptions("chore", List.of("feat", "fix", "chore", "deps"), this::remapType);
@@ -81,7 +80,7 @@ public class ChangeLogUpdater {
                 : ("refactor".equals(commitInfo.type()) ? "chore" : commitInfo.type());
     }
 
-    private Stream<Commit> getCommits() throws IOException, InterruptedException, ProcessFailedException {
+    private Stream<Commit> getCommits() throws ProcessFailedException {
         return git.revList((String) null, modulePath);
     }
 

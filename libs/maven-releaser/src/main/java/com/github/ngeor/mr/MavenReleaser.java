@@ -22,8 +22,7 @@ import org.apache.commons.lang3.Validate;
 
 public record MavenReleaser(File monorepoRoot, String path) {
 
-    public void prepareRelease(SemVer nextVersion, boolean push)
-            throws IOException, InterruptedException, ProcessFailedException {
+    public void prepareRelease(SemVer nextVersion, boolean push) throws IOException, ProcessFailedException {
         // calculate the groupId / artifactId of the module, do maven sanity checks
         MavenCoordinates moduleCoordinates = calcModuleCoordinatesAndDoSanityChecks();
 
@@ -101,8 +100,7 @@ public record MavenReleaser(File monorepoRoot, String path) {
         return result;
     }
 
-    private void setVersion(MavenCoordinates moduleCoordinates, String newVersion)
-            throws IOException, ProcessFailedException, InterruptedException {
+    private void setVersion(MavenCoordinates moduleCoordinates, String newVersion) throws ProcessFailedException {
         // maven at monorepo root
         Maven maven = new Maven(monorepoPomFile());
         maven.setVersion(moduleCoordinates, newVersion);

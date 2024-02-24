@@ -7,7 +7,6 @@ import com.github.ngeor.git.Git;
 import com.github.ngeor.git.Tag;
 import com.github.ngeor.process.ProcessFailedException;
 import java.io.File;
-import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 import org.apache.commons.lang3.concurrent.ConcurrentException;
@@ -39,13 +38,12 @@ public class ChangesOverviewCommand extends BaseCommand {
                     + recentTagWithDate(module)
                             .map(tag -> buildExtraInfo(module, tag))
                             .orElse("N/A");
-        } catch (IOException | InterruptedException | ProcessFailedException e) {
+        } catch (ProcessFailedException e) {
             return module + "\t" + e.getMessage();
         }
     }
 
-    private Optional<Tag> recentTagWithDate(String module)
-            throws IOException, InterruptedException, ProcessFailedException {
+    private Optional<Tag> recentTagWithDate(String module) throws ProcessFailedException {
         return git.getMostRecentTagWithDate(TagPrefix.forPath(module).tagPrefix());
     }
 

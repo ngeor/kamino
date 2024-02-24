@@ -163,10 +163,7 @@ public class ReadmeGenerator {
                 return git.getMostRecentTag(
                                 TagPrefix.forPath(mavenModule.getModuleName()).tagPrefix())
                         .isPresent();
-            } catch (IOException | ProcessFailedException e) {
-                throw new ConcurrentException(e);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
+            } catch (ProcessFailedException e) {
                 throw new ConcurrentException(e);
             }
         }

@@ -31,7 +31,7 @@ public final class Git {
      * @throws InterruptedException
      * @throws ProcessFailedException
      */
-    public String getDefaultBranch() throws IOException, InterruptedException, ProcessFailedException {
+    public String getDefaultBranch() throws ProcessFailedException {
         String remote = getOnlyRemote();
         String output = processHelper.run("symbolic-ref", "refs/remotes/" + remote + "/HEAD", "--short");
         return Validate.notBlank(output.replace(remote + "/", "").trim());
@@ -45,12 +45,12 @@ public final class Git {
      * @throws ProcessFailedException
      * @throws InterruptedException
      */
-    public String getCurrentBranch() throws IOException, ProcessFailedException, InterruptedException {
+    public String getCurrentBranch() throws ProcessFailedException {
         return Validate.notBlank(
                 processHelper.run("rev-parse", "--abbrev-ref", "HEAD").trim());
     }
 
-    public String getOnlyRemote() throws IOException, InterruptedException, ProcessFailedException {
+    public String getOnlyRemote() throws ProcessFailedException {
         List<String> remotes = getRemotes();
         Validate.noNullElements(remotes);
         Validate.notEmpty(remotes, "No remotes found");
@@ -58,21 +58,21 @@ public final class Git {
         return remotes.get(0);
     }
 
-    public List<String> getRemotes() throws IOException, InterruptedException, ProcessFailedException {
+    public List<String> getRemotes() throws ProcessFailedException {
         return processHelper.run("remote").lines().collect(Collectors.toList());
     }
 
-    public void checkout(String branch) throws IOException, InterruptedException, ProcessFailedException {
+    public void checkout(String branch) throws ProcessFailedException {
         Validate.notBlank(branch);
         processHelper.run("checkout", branch);
     }
 
-    public void checkoutNewBranch(String branch) throws IOException, ProcessFailedException, InterruptedException {
+    public void checkoutNewBranch(String branch) throws ProcessFailedException {
         Validate.notBlank(branch);
         processHelper.run("checkout", "-b", branch);
     }
 
-    public void fetch(FetchOption... options) throws IOException, ProcessFailedException, InterruptedException {
+    public void fetch(FetchOption... options) throws ProcessFailedException {
         List<String> args = new ArrayList<>(List.of("fetch"));
         for (FetchOption option : options) {
             args.add(
@@ -85,25 +85,24 @@ public final class Git {
         processHelper.run(args);
     }
 
-    public void pull() throws IOException, InterruptedException, ProcessFailedException {
+    public void pull() throws ProcessFailedException {
         processHelper.run("pull");
     }
 
-    public void subTreeAdd(String destination, File oldRepoRoot, String oldRepoBranch)
-            throws IOException, InterruptedException, ProcessFailedException {
+    public void subTreeAdd(String destination, File oldRepoRoot, String oldRepoBranch) throws ProcessFailedException {
         processHelper.run("subtree", "add", "-P", destination, oldRepoRoot.getAbsolutePath(), oldRepoBranch);
     }
 
-    public void addAll() throws IOException, InterruptedException, ProcessFailedException {
+    public void addAll() throws ProcessFailedException {
         processHelper.run("add", "-A");
     }
 
-    public void commit(String message) throws IOException, InterruptedException, ProcessFailedException {
+    public void commit(String message) throws ProcessFailedException {
         Validate.notBlank(message);
         processHelper.run("commit", "-m", message);
     }
 
-    public void push(PushOption... pushOptions) throws IOException, InterruptedException, ProcessFailedException {
+    public void push(PushOption... pushOptions) throws ProcessFailedException {
         List<String> args = new ArrayList<>(List.of("push"));
         for (PushOption pushOption : pushOptions) {
             args.add(
@@ -121,13 +120,11 @@ public final class Git {
      * @param prefix The prefix of the tag.
      * @return The most recent tag.
      */
-    public Optional<Tag> getMostRecentTag(String prefix)
-            throws IOException, InterruptedException, ProcessFailedException {
+    public Optional<Tag> getMostRecentTag(String prefix) throws ProcessFailedException {
         return getMostRecentTag(prefix, null, s -> new Tag(s, null));
     }
 
-    public Optional<Tag> getMostRecentTagWithDate(String prefix)
-            throws IOException, InterruptedException, ProcessFailedException {
+    public Optional<Tag> getMostRecentTagWithDate(String prefix) throws ProcessFailedException {
         return getMostRecentTag(prefix, "--format=%(refname:strip=2),%(creatordate)", s -> {
             String[] parts = s.split(",");
             return new Tag(parts[0], parts[1]);
@@ -135,7 +132,7 @@ public final class Git {
     }
 
     private Optional<Tag> getMostRecentTag(String prefix, String format, Function<String, Tag> mapper)
-            throws IOException, InterruptedException, ProcessFailedException {
+            throws ProcessFailedException {
         List<String> args = new ArrayList<>(Arrays.asList("tag", "-l", prefix + "*", "--sort=-version:refname"));
         if (format != null) {
             args.add(format);
@@ -144,16 +141,16 @@ public final class Git {
         return output.lines().map(mapper).findFirst();
     }
 
-    public void add(String file) throws IOException, InterruptedException, ProcessFailedException {
+    public void add(String file) throws ProcessFailedException {
         Validate.notBlank(file);
         processHelper.run("add", file);
     }
 
-    public boolean hasStagedChanges() throws IOException, InterruptedException {
+    public boolean hasStagedChanges() throws ProcessFailedException {
         return !processHelper.tryRun("diff", "--cached", "--quiet");
     }
 
-    public boolean hasNonStagedChanges() throws IOException, InterruptedException {
+    public boolean hasNonStagedChanges() throws ProcessFailedException {
         return !processHelper.tryRun("diff", "--quiet");
     }
 
@@ -166,8 +163,7 @@ public final class Git {
      * {@code SHA|yyyy-MM-dd|object|summary}
      * where "object" can be in the form {@code tag: tagname} for tags.
      */
-    public Stream<Commit> revList(String since, String path)
-            throws IOException, InterruptedException, ProcessFailedException {
+    public Stream<Commit> revList(String since, String path) throws ProcessFailedException {
         String commit = since == null ? null : since + "..HEAD";
         return processHelper
                 .run(Stream.of("rev-list", "--all", "--format=%H|%as|%D|%s", commit, path)
@@ -177,16 +173,15 @@ public final class Git {
                 .flatMap(line -> Commit.parse(line).stream());
     }
 
-    public Stream<Commit> revList(Tag since, String path)
-            throws IOException, ProcessFailedException, InterruptedException {
+    public Stream<Commit> revList(Tag since, String path) throws ProcessFailedException {
         return revList(since.name(), path);
     }
 
-    public Stream<Commit> revList(String path) throws IOException, ProcessFailedException, InterruptedException {
+    public Stream<Commit> revList(String path) throws ProcessFailedException {
         return revList((String) null, path);
     }
 
-    public void init(InitOption... initOptions) throws IOException, InterruptedException, ProcessFailedException {
+    public void init(InitOption... initOptions) throws ProcessFailedException {
         List<String> args = new ArrayList<>(List.of("init"));
         Arrays.stream(initOptions)
                 .map(initOption -> switch (initOption) {
@@ -197,26 +192,25 @@ public final class Git {
     }
 
     public void initAndConfigureIdentity(String name, String email, InitOption... initOptions)
-            throws IOException, ProcessFailedException, InterruptedException {
+            throws ProcessFailedException {
         init(initOptions);
         configureIdentity(name, email);
     }
 
-    public void tag(String tag) throws IOException, ProcessFailedException, InterruptedException {
+    public void tag(String tag) throws ProcessFailedException {
         processHelper.run("tag", tag);
     }
 
-    public void config(String key, String value) throws IOException, ProcessFailedException, InterruptedException {
+    public void config(String key, String value) throws ProcessFailedException {
         processHelper.run("config", Validate.notBlank(key), value);
     }
 
-    public void configureIdentity(String name, String email)
-            throws IOException, ProcessFailedException, InterruptedException {
+    public void configureIdentity(String name, String email) throws ProcessFailedException {
         config(CONFIG_USER_NAME, Validate.notBlank(name));
         config(CONFIG_USER_EMAIL, Validate.notBlank(email));
     }
 
-    public void ensureOnDefaultBranch() throws IOException, ProcessFailedException, InterruptedException {
+    public void ensureOnDefaultBranch() throws ProcessFailedException {
         String defaultBranch = getDefaultBranch();
         String currentBranch = getCurrentBranch();
         Validate.isTrue(
@@ -226,16 +220,15 @@ public final class Git {
                 currentBranch);
     }
 
-    public void clone(String url) throws IOException, ProcessFailedException, InterruptedException {
+    public void clone(String url) throws ProcessFailedException {
         processHelper.run("clone", Validate.notBlank(url), ".");
     }
 
-    public void symbolicRef(String name, String ref) throws IOException, ProcessFailedException, InterruptedException {
+    public void symbolicRef(String name, String ref) throws ProcessFailedException {
         processHelper.run("symbolic-ref", Validate.notBlank(name), Validate.notBlank(ref));
     }
 
-    public Stream<String> lsFiles(LsFilesOption... options)
-            throws IOException, ProcessFailedException, InterruptedException {
+    public Stream<String> lsFiles(LsFilesOption... options) throws ProcessFailedException {
         List<String> args = new ArrayList<>(List.of("ls-files"));
         Arrays.stream(options)
                 .map(option -> switch (option) {

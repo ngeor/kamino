@@ -73,7 +73,7 @@ class MavenReleaserIT {
             """;
 
     @BeforeEach
-    void beforeEach() throws IOException, ProcessFailedException, InterruptedException {
+    void beforeEach() throws IOException, ProcessFailedException {
         // create remote git
         Git remoteGit = new Git(remoteRoot.toFile());
         remoteGit.init(InitOption.BARE);
@@ -91,7 +91,7 @@ class MavenReleaserIT {
     }
 
     @Test
-    void testHappyFlow() throws IOException, ProcessFailedException, InterruptedException {
+    void testHappyFlow() throws IOException, ProcessFailedException {
         // arrange
         Files.writeString(monorepoRoot.resolve("pom.xml"), validParentPomContents);
         Files.writeString(monorepoRoot.resolve("lib").resolve("pom.xml"), validChildPomContents);
@@ -119,7 +119,7 @@ class MavenReleaserIT {
     class PomValidationIT {
 
         @Test
-        void testModelVersionIsRequired() throws IOException, ProcessFailedException, InterruptedException {
+        void testModelVersionIsRequired() throws IOException, ProcessFailedException {
             testValidation(
                             removeElement(validParentPomContents, "modelVersion"),
                             removeElement(validChildPomContents, "modelVersion"))
@@ -127,36 +127,36 @@ class MavenReleaserIT {
         }
 
         @Test
-        void testGroupIdIsRequired() throws IOException, ProcessFailedException, InterruptedException {
+        void testGroupIdIsRequired() throws IOException, ProcessFailedException {
             testValidation(validParentPomContents, removeElement(validChildPomContents, "groupId"))
                     .hasMessageContaining("groupId");
         }
 
         @Test
-        void testArtifactIdIsRequired() throws IOException, ProcessFailedException, InterruptedException {
+        void testArtifactIdIsRequired() throws IOException, ProcessFailedException {
             testValidation(validParentPomContents, removeElement(validChildPomContents, "artifactId"))
                     .hasMessageContaining("artifactId");
         }
 
         @Test
-        void testVersionIsRequired() throws IOException, ProcessFailedException, InterruptedException {
+        void testVersionIsRequired() throws IOException, ProcessFailedException {
             testValidation(validParentPomContents, removeElement(validChildPomContents, "version"))
                     .hasMessageContaining("version");
         }
 
         @Test
-        void testNameIsRequired() throws IOException, ProcessFailedException, InterruptedException {
+        void testNameIsRequired() throws IOException, ProcessFailedException {
             testValidation(validParentPomContents, validChildPomContents.replaceAll("<name>foo</name>", ""))
                     .hasMessageContaining("name");
         }
 
         @Test
-        void testDescriptionIsRequired() throws IOException, ProcessFailedException, InterruptedException {
+        void testDescriptionIsRequired() throws IOException, ProcessFailedException {
             testMissingTopLevelElement("description");
         }
 
         @Test
-        void testLicensesIsRequired() throws IOException, ProcessFailedException, InterruptedException {
+        void testLicensesIsRequired() throws IOException, ProcessFailedException {
             testValidation(
                             validParentPomContents,
                             """
@@ -173,14 +173,14 @@ class MavenReleaserIT {
         }
 
         @Test
-        void testScmConnectionIsRequired() throws IOException, ProcessFailedException, InterruptedException {
+        void testScmConnectionIsRequired() throws IOException, ProcessFailedException {
             testValidation(validParentPomContents, removeElement(validChildPomContents, "connection"))
                     .hasMessage("Element 'connection' not found under 'project/scm'");
         }
 
         private AbstractThrowableAssert<?, ? extends Throwable> testValidation(
                 String invalidParentPomContents, String invalidChildPomContents)
-                throws IOException, ProcessFailedException, InterruptedException {
+                throws IOException, ProcessFailedException {
             // arrange
             Files.writeString(monorepoRoot.resolve("pom.xml"), invalidParentPomContents);
             Files.writeString(monorepoRoot.resolve("lib").resolve("pom.xml"), invalidChildPomContents);
@@ -192,8 +192,7 @@ class MavenReleaserIT {
             return assertThatThrownBy(() -> releaser.prepareRelease(new SemVer(1, 0, 0), false));
         }
 
-        private void testMissingTopLevelElement(String childElementName)
-                throws IOException, ProcessFailedException, InterruptedException {
+        private void testMissingTopLevelElement(String childElementName) throws IOException, ProcessFailedException {
             // test missing element
             testValidation(validParentPomContents, removeElement(validChildPomContents, childElementName))
                     .hasMessage(String.format("Element '%s' not found under 'project'", childElementName));
@@ -214,7 +213,7 @@ class MavenReleaserIT {
     @Nested
     class GitValidationIT {
         @Test
-        void testDefaultBranch() throws IOException, ProcessFailedException, InterruptedException {
+        void testDefaultBranch() throws IOException, ProcessFailedException {
             // arrange
             Files.writeString(monorepoRoot.resolve("pom.xml"), validParentPomContents);
             Files.writeString(monorepoRoot.resolve("lib").resolve("pom.xml"), validChildPomContents);
@@ -230,7 +229,7 @@ class MavenReleaserIT {
         }
 
         @Test
-        void testNoUntrackedFiles() throws IOException, ProcessFailedException, InterruptedException {
+        void testNoUntrackedFiles() throws IOException, ProcessFailedException {
             // arrange
             addCommitWithInvalidXml();
             Files.writeString(monorepoRoot.resolve("lib").resolve("pom.xml"), validChildPomContents);
@@ -246,7 +245,7 @@ class MavenReleaserIT {
         }
 
         @Test
-        void testNoStagedFiles() throws IOException, ProcessFailedException, InterruptedException {
+        void testNoStagedFiles() throws IOException, ProcessFailedException {
             // arrange
             addCommitWithInvalidXml();
             Files.writeString(monorepoRoot.resolve("lib").resolve("pom.xml"), validChildPomContents);
@@ -260,7 +259,7 @@ class MavenReleaserIT {
         }
 
         @Test
-        void testNoModifiedFiles() throws IOException, ProcessFailedException, InterruptedException {
+        void testNoModifiedFiles() throws IOException, ProcessFailedException {
             // arrange
             addCommitWithInvalidXml();
 
@@ -272,7 +271,7 @@ class MavenReleaserIT {
                     .hasMessage("repo has modified files");
         }
 
-        private void addCommitWithInvalidXml() throws IOException, ProcessFailedException, InterruptedException {
+        private void addCommitWithInvalidXml() throws IOException, ProcessFailedException {
             Files.writeString(monorepoRoot.resolve("pom.xml"), validParentPomContents);
             Files.writeString(monorepoRoot.resolve("lib").resolve("pom.xml"), "dummy");
             git.addAll();

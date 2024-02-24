@@ -27,7 +27,7 @@ public class ReleaseCommand extends BaseCommand {
     }
 
     @Override
-    public void run() throws IOException, InterruptedException, ProcessFailedException {
+    public void run() throws IOException, ProcessFailedException {
         SemVer nextVersion = new GitVersionCalculator(git, path)
                 .calculateGitVersion()
                 .map(GitVersionCalculator.Result::nextVersion)

@@ -22,14 +22,14 @@ class ChangeLogUpdaterIT {
     private ChangeLogUpdater changeLogUpdater;
 
     @BeforeEach
-    void beforeEach() throws IOException, ProcessFailedException, InterruptedException {
+    void beforeEach() throws ProcessFailedException {
         git = new Git(rootDirectory);
         git.initAndConfigureIdentity("John Doe", "no-reply@acme.com");
         changeLogUpdater = new ChangeLogUpdater(rootDirectory, null);
     }
 
     @Test
-    void testWithoutExistingChangelog() throws IOException, ProcessFailedException, InterruptedException {
+    void testWithoutExistingChangelog() throws IOException, ProcessFailedException {
         // arrange
         addCommits("Initial commit", "fix: Adjusted readme", "feat: New version");
         git.tag("v1.0");
@@ -68,7 +68,7 @@ class ChangeLogUpdaterIT {
     }
 
     @Test
-    void testBreakingChanges() throws IOException, ProcessFailedException, InterruptedException {
+    void testBreakingChanges() throws IOException, ProcessFailedException {
         // arrange
         addCommits("Initial commit", "fix!: Adjusted readme");
 
@@ -94,7 +94,7 @@ class ChangeLogUpdaterIT {
     }
 
     @Test
-    void testDepsScope() throws IOException, ProcessFailedException, InterruptedException {
+    void testDepsScope() throws IOException, ProcessFailedException {
         // arrange
         addCommits("chore: Added something", "deps: Upgraded mockito", "chore(deps): Upgraded jUnit");
 
@@ -121,7 +121,7 @@ class ChangeLogUpdaterIT {
     }
 
     @Test
-    void testDoNotGenerateUnreleasedSectionIfEmpty() throws IOException, ProcessFailedException, InterruptedException {
+    void testDoNotGenerateUnreleasedSectionIfEmpty() throws IOException, ProcessFailedException {
         // arrange
         addCommits("chore: Added something", "deps: Upgraded mockito");
         git.tag("v1.0");
@@ -149,8 +149,7 @@ class ChangeLogUpdaterIT {
     }
 
     @Test
-    void testDoNotGenerateUnreleasedSectionIfOnlyIgnoredCommits()
-            throws IOException, ProcessFailedException, InterruptedException {
+    void testDoNotGenerateUnreleasedSectionIfOnlyIgnoredCommits() throws IOException, ProcessFailedException {
         // arrange
         addCommits("chore: Added something", "deps: Upgraded mockito");
         git.tag("v1.0");
@@ -179,8 +178,7 @@ class ChangeLogUpdaterIT {
     }
 
     @Test
-    void testDoNotGenerateUnreleasedSectionIfEmptyWithExistingChangeLog()
-            throws IOException, ProcessFailedException, InterruptedException {
+    void testDoNotGenerateUnreleasedSectionIfEmptyWithExistingChangeLog() throws IOException, ProcessFailedException {
         // arrange
         addCommits("chore: Added something", "deps: Upgraded mockito");
         git.tag("v1.0");
@@ -216,7 +214,7 @@ class ChangeLogUpdaterIT {
     }
 
     @Test
-    void testGenerateChangelogTwiceWithoutTags() throws IOException, ProcessFailedException, InterruptedException {
+    void testGenerateChangelogTwiceWithoutTags() throws IOException, ProcessFailedException {
         // arrange
         addCommits("chore: Added something", "deps: Upgraded mockito");
         changeLogUpdater.updateChangeLog();
@@ -231,7 +229,7 @@ class ChangeLogUpdaterIT {
     }
 
     @Test
-    void testGenerateChangelogTwiceWithTagAtLatest() throws IOException, ProcessFailedException, InterruptedException {
+    void testGenerateChangelogTwiceWithTagAtLatest() throws IOException, ProcessFailedException {
         // arrange
         addCommits("chore: Added something", "deps: Upgraded mockito");
         git.tag("v1.0");
@@ -247,8 +245,7 @@ class ChangeLogUpdaterIT {
     }
 
     @Test
-    void testGenerateChangelogTwiceWithTagAndUnreleasedChanges()
-            throws IOException, ProcessFailedException, InterruptedException {
+    void testGenerateChangelogTwiceWithTagAndUnreleasedChanges() throws IOException, ProcessFailedException {
         // arrange
         addCommits("chore: Added something", "deps: Upgraded mockito");
         git.tag("v1.0");
@@ -265,7 +262,7 @@ class ChangeLogUpdaterIT {
     }
 
     @Test
-    void testTagOnIgnoredCommit() throws IOException, ProcessFailedException, InterruptedException {
+    void testTagOnIgnoredCommit() throws IOException, ProcessFailedException {
         // arrange
         addCommits("chore: Added something", "[maven-release-plugin]: release 1.0");
         git.tag("v1.0");
@@ -289,7 +286,7 @@ class ChangeLogUpdaterIT {
     }
 
     @Test
-    void testOverwrite() throws IOException, ProcessFailedException, InterruptedException {
+    void testOverwrite() throws IOException, ProcessFailedException {
         // arrange
         addCommits("chore: Added something", "[maven-release-plugin]: release 1.0");
         git.tag("v1.0");
@@ -315,7 +312,7 @@ class ChangeLogUpdaterIT {
     }
 
     @Test
-    void testDoNotOverwrite() throws IOException, ProcessFailedException, InterruptedException {
+    void testDoNotOverwrite() throws IOException, ProcessFailedException {
         // arrange
         addCommits("chore: Added something", "[maven-release-plugin]: release 1.0");
         git.tag("v1.0");
@@ -341,8 +338,7 @@ class ChangeLogUpdaterIT {
     }
 
     @Test
-    void testDoNotOverwriteUnreleasedAlwaysGetsOverwritten()
-            throws IOException, ProcessFailedException, InterruptedException {
+    void testDoNotOverwriteUnreleasedAlwaysGetsOverwritten() throws IOException, ProcessFailedException {
         // arrange
         addCommits("chore: Added something", "[maven-release-plugin]: release 1.0");
         git.tag("v1.0");
@@ -375,7 +371,7 @@ class ChangeLogUpdaterIT {
     }
 
     @Test
-    void testAssumeFutureRelease() throws IOException, ProcessFailedException, InterruptedException {
+    void testAssumeFutureRelease() throws IOException, ProcessFailedException {
         // arrange
         addCommits("chore: Added something", "[maven-release-plugin]: release 1.0");
 
@@ -397,13 +393,13 @@ class ChangeLogUpdaterIT {
                                 .replace("$now", LocalDate.now().toString()));
     }
 
-    private void addCommits(String... subjects) throws IOException, ProcessFailedException, InterruptedException {
+    private void addCommits(String... subjects) throws IOException, ProcessFailedException {
         for (String subject : subjects) {
             addCommit(subject);
         }
     }
 
-    private void addCommit(String subject) throws IOException, ProcessFailedException, InterruptedException {
+    private void addCommit(String subject) throws IOException, ProcessFailedException {
         Files.writeString(rootDirectory.toPath().resolve("README.md"), subject);
         git.addAll();
         git.commit(subject);

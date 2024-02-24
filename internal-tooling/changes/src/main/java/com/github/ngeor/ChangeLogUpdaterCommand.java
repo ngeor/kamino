@@ -21,7 +21,7 @@ public class ChangeLogUpdaterCommand extends BaseCommand {
     }
 
     @Override
-    public void run() throws IOException, ProcessFailedException, InterruptedException, ConcurrentException {
+    public void run() throws IOException, ProcessFailedException, ConcurrentException {
         List<String> paths =
                 path == null ? new ModuleFinder().eligibleModules(rootDirectory).toList() : List.of(path);
         for (String p : paths) {
