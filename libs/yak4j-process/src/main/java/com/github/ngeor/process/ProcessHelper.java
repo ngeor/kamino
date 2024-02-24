@@ -16,65 +16,86 @@ public class ProcessHelper {
         this.baseCommand = Arrays.asList(baseCommand);
     }
 
-    public String run(String... args) throws IOException, InterruptedException, ProcessFailedException {
+    public String run(String... args) throws ProcessFailedException {
         return doRun(createArgs(args));
     }
 
-    public String run(Collection<String> args) throws IOException, InterruptedException, ProcessFailedException {
+    public String run(Collection<String> args) throws ProcessFailedException {
         return doRun(createArgs(args));
     }
 
-    private String doRun(List<String> command) throws IOException, InterruptedException, ProcessFailedException {
-        Process process = new ProcessBuilder(command)
-                .directory(workingDirectory)
-                .redirectErrorStream(true)
-                .start();
-        String output = new String(process.getInputStream().readAllBytes());
-        int exitCode = process.waitFor();
-        if (exitCode != 0) {
-            String commandAsString = String.join(" ", command);
-            throw new ProcessFailedException(
-                    String.format("Error running %s in %s: %s", commandAsString, workingDirectory, output));
-        }
-        return output;
-    }
-
-    public void runInheritIO(String... args) throws IOException, InterruptedException, ProcessFailedException {
-        doRunInheritIO(createArgs(args));
-    }
-
-    public void runInheritIO(Collection<String> args) throws IOException, InterruptedException, ProcessFailedException {
-        doRunInheritIO(createArgs(args));
-    }
-
-    private void doRunInheritIO(List<String> command) throws IOException, InterruptedException, ProcessFailedException {
-        Process process = new ProcessBuilder(command)
-                .directory(workingDirectory)
-                .inheritIO()
-                .start();
-        int exitCode = process.waitFor();
-        if (exitCode != 0) {
-            String commandAsString = String.join(" ", command);
-            throw new ProcessFailedException(
-                    String.format("Error running %s in %s", commandAsString, workingDirectory));
+    private String doRun(List<String> command) throws ProcessFailedException {
+        try {
+            Process process = new ProcessBuilder(command)
+                    .directory(workingDirectory)
+                    .redirectErrorStream(true)
+                    .start();
+            String output = new String(process.getInputStream().readAllBytes());
+            int exitCode = process.waitFor();
+            if (exitCode != 0) {
+                String commandAsString = String.join(" ", command);
+                throw new ProcessFailedException(
+                        String.format("Error running %s in %s: %s", commandAsString, workingDirectory, output));
+            }
+            return output;
+        } catch (IOException ex) {
+            throw new ProcessFailedException(ex);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            throw new ProcessFailedException(ex);
         }
     }
 
-    public boolean tryRun(String... args) throws IOException, InterruptedException {
+    public void runInheritIO(String... args) throws ProcessFailedException {
+        doRunInheritIO(createArgs(args));
+    }
+
+    public void runInheritIO(Collection<String> args) throws ProcessFailedException {
+        doRunInheritIO(createArgs(args));
+    }
+
+    private void doRunInheritIO(List<String> command) throws ProcessFailedException {
+        try {
+            Process process = new ProcessBuilder(command)
+                    .directory(workingDirectory)
+                    .inheritIO()
+                    .start();
+            int exitCode = process.waitFor();
+            if (exitCode != 0) {
+                String commandAsString = String.join(" ", command);
+                throw new ProcessFailedException(
+                        String.format("Error running %s in %s", commandAsString, workingDirectory));
+            }
+        } catch (IOException ex) {
+            throw new ProcessFailedException(ex);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            throw new ProcessFailedException(ex);
+        }
+    }
+
+    public boolean tryRun(String... args) throws ProcessFailedException {
         return doTryRun(createArgs(args));
     }
 
-    public boolean tryRun(Collection<String> args) throws IOException, InterruptedException {
+    public boolean tryRun(Collection<String> args) throws ProcessFailedException {
         return doTryRun(createArgs(args));
     }
 
-    private boolean doTryRun(List<String> command) throws IOException, InterruptedException {
-        Process process = new ProcessBuilder(command)
-                .directory(workingDirectory)
-                .redirectErrorStream(true)
-                .start();
-        process.getInputStream().readAllBytes();
-        return process.waitFor() == 0;
+    private boolean doTryRun(List<String> command) throws ProcessFailedException {
+        try {
+            Process process = new ProcessBuilder(command)
+                    .directory(workingDirectory)
+                    .redirectErrorStream(true)
+                    .start();
+            process.getInputStream().readAllBytes();
+            return process.waitFor() == 0;
+        } catch (IOException ex) {
+            throw new ProcessFailedException(ex);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            throw new ProcessFailedException(ex);
+        }
     }
 
     private List<String> createArgs(String... args) {
