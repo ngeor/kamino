@@ -20,8 +20,7 @@ public record MavenCoordinates(String groupId, String artifactId, String version
     public static MavenCoordinates fromElement(ElementWrapper element) {
         Objects.requireNonNull(element);
 
-        Map<String, String> items = element
-                .firstElementsText(Set.of(GROUP_ID, ARTIFACT_ID, VERSION));
+        Map<String, String> items = element.firstElementsText(Set.of(GROUP_ID, ARTIFACT_ID, VERSION));
         return new MavenCoordinates(items.get(GROUP_ID), items.get(ARTIFACT_ID), items.get(VERSION));
     }
 
@@ -41,5 +40,14 @@ public record MavenCoordinates(String groupId, String artifactId, String version
 
     public MavenCoordinates withVersion(String newVersion) {
         return new MavenCoordinates(groupId, artifactId, newVersion);
+    }
+
+    public String format() {
+        return String.format("%s:%s:%s", groupId, artifactId, version);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s %s", MavenCoordinates.class.getSimpleName(), format());
     }
 }

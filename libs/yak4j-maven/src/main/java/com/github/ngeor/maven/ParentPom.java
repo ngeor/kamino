@@ -24,8 +24,8 @@ public record ParentPom(MavenCoordinates coordinates, String relativePath) {
 
     private static ParentPom fromParentElement(ElementWrapper parentElement) {
         Objects.requireNonNull(parentElement);
-        Map<String, String> items = parentElement
-                .firstElementsText(Set.of(GROUP_ID, ARTIFACT_ID, VERSION, RELATIVE_PATH));
+        Map<String, String> items =
+                parentElement.firstElementsText(Set.of(GROUP_ID, ARTIFACT_ID, VERSION, RELATIVE_PATH));
 
         return new ParentPom(
                 new MavenCoordinates(items.get(GROUP_ID), items.get(ARTIFACT_ID), items.get(VERSION)),

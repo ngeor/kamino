@@ -239,9 +239,9 @@ public class ElementWrapper {
     }
 
     public Map<String, String> firstElementsText(Set<String> names) {
-        return findChildElements(names, e -> e.getTextContentTrimmed().isPresent())
-            .entrySet()
-            .stream()
-            .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().getTextContentTrimmed().orElseThrow()));
+        return findChildElements(names, e -> e.getTextContentTrimmed().isPresent()).entrySet().stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        e -> e.getValue().getTextContentTrimmed().orElseThrow()));
     }
 }
