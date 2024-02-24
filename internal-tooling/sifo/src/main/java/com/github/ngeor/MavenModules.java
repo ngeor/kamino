@@ -1,5 +1,6 @@
 package com.github.ngeor;
 
+import com.github.ngeor.maven.ChildMavenModule;
 import com.github.ngeor.maven.MavenCoordinates;
 import com.github.ngeor.maven.MavenModuleNg;
 import java.io.File;
@@ -33,7 +34,7 @@ public final class MavenModules {
     private SortedSet<MavenModule> collectModules() throws ConcurrentException {
         return MavenModuleNg.root(root.toPath().resolve("pom.xml").toFile())
                 .children()
-                .map(MavenModuleNg::getModuleName)
+                .map(ChildMavenModule::getModuleName)
                 .map(moduleName -> moduleName.split("/"))
                 .filter(parts -> parts.length == 2)
                 .map(parts -> {

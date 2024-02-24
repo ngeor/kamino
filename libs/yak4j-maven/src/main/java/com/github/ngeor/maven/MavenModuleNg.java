@@ -5,13 +5,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Stream;
+import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.concurrent.ConcurrentException;
 import org.apache.commons.lang3.concurrent.LazyInitializer;
 
-public final class MavenModuleNg {
+public sealed class MavenModuleNg permits RootMavenModule, ChildMavenModule {
     private final File pomFile;
-    private final String moduleName;
 
     private record EffectivePomAndParentPoms(MavenDocument doc, List<ParentPom> parentPoms) {}
 
@@ -31,21 +30,17 @@ public final class MavenModuleNg {
         }
     };
 
-    private MavenModuleNg(File pomFile, String moduleName) {
+    protected MavenModuleNg(File pomFile) {
         this.pomFile = Objects.requireNonNull(pomFile);
-        this.moduleName = Objects.requireNonNull(moduleName);
+        Validate.isTrue(pomFile.isFile());
     }
 
-    public static MavenModuleNg root(File rootPomFile) {
-        return new MavenModuleNg(rootPomFile, "");
+    public static RootMavenModule root(File rootPomFile) {
+        return new RootMavenModule(rootPomFile);
     }
 
-    public static MavenModuleNg child(File rootPomFile, String moduleName) {
-        return new MavenModuleNg(rootPomFile.toPath().resolve(moduleName).toFile(), moduleName);
-    }
-
-    public String getModuleName() {
-        return moduleName;
+    public File getPomFile() {
+        return pomFile;
     }
 
     public MavenDocument effectivePom() throws ConcurrentException {
@@ -58,9 +53,5 @@ public final class MavenModuleNg {
 
     public MavenCoordinates coordinates() throws ConcurrentException {
         return lazyCoordinates.get();
-    }
-
-    public Stream<MavenModuleNg> children() throws ConcurrentException {
-        return effectivePom().modules().map(name -> MavenModuleNg.child(pomFile, name));
     }
 }
