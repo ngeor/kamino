@@ -1,5 +1,6 @@
-package com.github.ngeor.maven;
+package com.github.ngeor.maven.resolve;
 
+import com.github.ngeor.maven.ParentPom;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.UncheckedIOException;

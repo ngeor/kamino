@@ -1,4 +1,4 @@
-package com.github.ngeor.maven;
+package com.github.ngeor.maven.resolve;
 
 import java.util.HashMap;
 import java.util.HashSet;

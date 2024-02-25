@@ -1,11 +1,11 @@
 package com.github.ngeor;
 
-import com.github.ngeor.maven.Maven;
+import com.github.ngeor.maven.process.Maven;
 import com.github.ngeor.maven.MavenCoordinates;
 import com.github.ngeor.maven.MavenDocument;
 import com.github.ngeor.maven.ParentPom;
-import com.github.ngeor.maven.PomRepository;
-import com.github.ngeor.maven.ResolutionPhase;
+import com.github.ngeor.maven.resolve.PomRepository;
+import com.github.ngeor.maven.resolve.ResolutionPhase;
 import com.github.ngeor.process.ProcessFailedException;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;

@@ -7,7 +7,7 @@ import com.github.ngeor.git.Commit;
 import com.github.ngeor.git.Git;
 import com.github.ngeor.git.InitOption;
 import com.github.ngeor.maven.MavenCoordinates;
-import com.github.ngeor.maven.PomRepository;
+import com.github.ngeor.maven.resolve.PomRepository;
 import com.github.ngeor.process.ProcessFailedException;
 import com.github.ngeor.versions.SemVer;
 import java.io.IOException;

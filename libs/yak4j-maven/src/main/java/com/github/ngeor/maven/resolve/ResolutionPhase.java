@@ -1,4 +1,4 @@
-package com.github.ngeor.maven;
+package com.github.ngeor.maven.resolve;
 
 public enum ResolutionPhase {
     UNRESOLVED,

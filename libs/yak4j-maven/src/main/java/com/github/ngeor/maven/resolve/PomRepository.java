@@ -1,10 +1,12 @@
-package com.github.ngeor.maven;
+package com.github.ngeor.maven.resolve;
 
 import static com.github.ngeor.maven.ElementNames.ARTIFACT_ID;
 import static com.github.ngeor.maven.ElementNames.GROUP_ID;
 import static com.github.ngeor.maven.ElementNames.PROJECT;
 import static com.github.ngeor.maven.ElementNames.VERSION;
 
+import com.github.ngeor.maven.MavenCoordinates;
+import com.github.ngeor.maven.ParentPom;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.File;

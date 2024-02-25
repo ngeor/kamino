@@ -1,7 +1,9 @@
-package com.github.ngeor.maven;
+package com.github.ngeor.maven.resolve;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.github.ngeor.maven.MavenCoordinates;
+import com.github.ngeor.maven.ParentPom;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;

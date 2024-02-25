@@ -1,14 +1,13 @@
-package com.github.ngeor.maven;
+package com.github.ngeor.maven.resolve;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.ngeor.yak4jdom.DocumentWrapper;
-import java.io.IOException;
 import org.junit.jupiter.api.Test;
 
 class PomMergerTest {
     @Test
-    void testMergeProperties() throws IOException {
+    void testMergeProperties() {
         String parent =
                 """
         <project>
@@ -42,7 +41,7 @@ class PomMergerTest {
     }
 
     @Test
-    void testMergePropertiesChildHasNoProperties() throws IOException {
+    void testMergePropertiesChildHasNoProperties() {
         String parent =
                 """
         <project>
@@ -60,7 +59,7 @@ class PomMergerTest {
     }
 
     @Test
-    void testMergePropertiesParentHasNoProperties() throws IOException {
+    void testMergePropertiesParentHasNoProperties() {
         String child =
                 """
     <project>
@@ -78,7 +77,7 @@ class PomMergerTest {
     }
 
     @Test
-    void testMergeGroupId() throws IOException {
+    void testMergeGroupId() {
         String parent = """
         <project>
             <groupId>com.acme</groupId>
@@ -93,7 +92,7 @@ class PomMergerTest {
     }
 
     @Test
-    void testMergeGroupIdOverride() throws IOException {
+    void testMergeGroupIdOverride() {
         String parent = """
         <project>
             <groupId>com.acme</groupId>
@@ -109,7 +108,7 @@ class PomMergerTest {
     }
 
     @Test
-    void testDoNotInheritName() throws IOException {
+    void testDoNotInheritName() {
         String parent = """
         <project>
             <name>com.acme</name>
@@ -123,7 +122,7 @@ class PomMergerTest {
     }
 
     @Test
-    void testMergeLicenses() throws IOException {
+    void testMergeLicenses() {
         String parent =
                 """
         <project>
@@ -144,7 +143,7 @@ class PomMergerTest {
     }
 
     @Test
-    void testMergeScm() throws IOException {
+    void testMergeScm() {
         String parent =
                 """
         <project>
@@ -180,7 +179,7 @@ class PomMergerTest {
     }
 
     @Test
-    void testMergeBuildPlugins() throws IOException {
+    void testMergeBuildPlugins() {
         String parent =
                 """
         <project>
@@ -240,7 +239,7 @@ class PomMergerTest {
     }
 
     @Test
-    void testMergeBuildPluginExecutions() throws IOException {
+    void testMergeBuildPluginExecutions() {
         String parent =
                 """
         <project>
@@ -337,7 +336,7 @@ class PomMergerTest {
     }
 
     @Test
-    void testMergeBuildPluginConfiguration() throws IOException {
+    void testMergeBuildPluginConfiguration() {
         String parent =
                 """
         <project>

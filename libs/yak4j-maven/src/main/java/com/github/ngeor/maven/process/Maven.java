@@ -1,5 +1,6 @@
-package com.github.ngeor.maven;
+package com.github.ngeor.maven.process;
 
+import com.github.ngeor.maven.MavenCoordinates;
 import com.github.ngeor.process.ProcessFailedException;
 import com.github.ngeor.process.ProcessHelper;
 import com.github.ngeor.yak4jdom.DocumentWrapper;

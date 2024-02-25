@@ -23,13 +23,6 @@ public record MavenCoordinates(String groupId, String artifactId, String version
         return StringUtils.isAnyBlank(groupId, artifactId, version);
     }
 
-    public MavenCoordinates requireAllFields() {
-        Validate.notBlank(groupId, "%s is missing (%s=%s)", GROUP_ID, ARTIFACT_ID, artifactId);
-        Validate.notBlank(artifactId, "%s can never be null or blank, as it cannot be inherited", ARTIFACT_ID);
-        Validate.notBlank(version, "%s is missing %s:%s", VERSION, groupId, artifactId);
-        return this;
-    }
-
     public MavenCoordinates withVersion(String newVersion) {
         return new MavenCoordinates(groupId, artifactId, newVersion);
     }
