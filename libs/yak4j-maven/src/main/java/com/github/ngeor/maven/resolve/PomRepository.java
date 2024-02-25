@@ -12,12 +12,9 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.EnumMap;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import org.apache.commons.lang3.Validate;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 public class PomRepository {
     private final Map<MavenCoordinates, Map<ResolutionPhase, DocumentWrapper>> map = new HashMap<>();
@@ -202,18 +199,8 @@ public class PomRepository {
     }
 
     private static void resolveProperties(DocumentWrapper document, Map<String, String> resolvedProperties) {
-        resolveProperties(document.getDocumentElement(), resolvedProperties);
-    }
-
-    private static void resolveProperties(ElementWrapper element, Map<String, String> resolvedProperties) {
-        for (Iterator<Node> it = element.getChildNodesAsIterator(); it.hasNext(); ) {
-            Node node = it.next();
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
-                resolveProperties(new ElementWrapper((Element) node), resolvedProperties);
-            } else if (node.getNodeType() == Node.TEXT_NODE) {
-                node.setTextContent(PropertyResolver.resolve(node.getTextContent(), resolvedProperties::get));
-            }
-        }
+        document.getDocumentElement()
+                .transformTextNodes(text -> PropertyResolver.resolve(text, resolvedProperties::get));
     }
 
     public sealed interface Input {

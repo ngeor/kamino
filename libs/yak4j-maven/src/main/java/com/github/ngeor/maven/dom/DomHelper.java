@@ -43,16 +43,16 @@ public final class DomHelper {
 
     public static Stream<MavenCoordinates> getDependencies(DocumentWrapper document) {
         return document.getDocumentElement()
-            .findChildElements("dependencies")
-            .flatMap(dependencies -> dependencies.findChildElements("dependency"))
-            .map(DomHelper::getCoordinates);
+                .findChildElements("dependencies")
+                .flatMap(dependencies -> dependencies.findChildElements("dependency"))
+                .map(DomHelper::getCoordinates);
     }
 
     public static Stream<String> getModules(DocumentWrapper document) {
         return document.getDocumentElement()
-            .findChildElements("modules")
-            .flatMap(e -> e.findChildElements("module"))
-            .flatMap(ElementWrapper::getTextContentTrimmedAsStream);
+                .findChildElements("modules")
+                .flatMap(e -> e.findChildElements("module"))
+                .flatMap(ElementWrapper::getTextContentTrimmedAsStream);
     }
 
     /**
@@ -65,16 +65,16 @@ public final class DomHelper {
      */
     public static Optional<String> getProperty(DocumentWrapper document, String name) {
         return document.getDocumentElement()
-            .findChildElements("properties")
-            .flatMap(p -> p.findChildElements(name))
-            .map(ElementWrapper::getTextContent)
-            .findFirst();
+                .findChildElements("properties")
+                .flatMap(p -> p.findChildElements(name))
+                .map(ElementWrapper::getTextContent)
+                .findFirst();
     }
 
     public static Map<String, String> getProperties(DocumentWrapper document) {
         return document.getDocumentElement()
-            .findChildElements("properties")
-            .flatMap(ElementWrapper::getChildElements)
-            .collect(Collectors.toMap(ElementWrapper::getNodeName, ElementWrapper::getTextContent));
+                .findChildElements("properties")
+                .flatMap(ElementWrapper::getChildElements)
+                .collect(Collectors.toMap(ElementWrapper::getNodeName, ElementWrapper::getTextContent));
     }
 }

@@ -9,6 +9,9 @@ import java.util.function.Function;
 
 public final class PropertyResolver {
     public static String resolve(String value, Function<String, String> resolver) {
+        if (value == null) {
+            return value;
+        }
         StringBuilder builder = new StringBuilder(value);
         int fromIndex = 0;
         int index = builder.indexOf("${", fromIndex);

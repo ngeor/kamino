@@ -7,8 +7,7 @@ import java.util.stream.Stream;
 
 public class ModuleFinder {
     public Stream<String> eligibleModules(File rootDirectory) {
-        return DomHelper.getModules(
-            DocumentWrapper.parse(
+        return DomHelper.getModules(DocumentWrapper.parse(
                         rootDirectory.toPath().resolve("pom.xml").toFile()))
                 .filter(this::isEligible);
     }

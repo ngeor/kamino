@@ -58,8 +58,7 @@ public final class TemplateGenerator {
         this.pomRepository = new PomRepository();
         this.rootModule = pomRepository.loadAndResolveProperties(new File(rootDirectory, "pom.xml").getCanonicalFile());
         // prime modules
-        resolvedModuleCoordinates = DomHelper.getModules(rootModule
-                )
+        resolvedModuleCoordinates = DomHelper.getModules(rootModule)
                 .collect(Collectors.toMap(moduleName -> moduleName, moduleName -> {
                     System.out.println("Loading module " + moduleName);
                     File file;
@@ -80,8 +79,7 @@ public final class TemplateGenerator {
     }
 
     private Stream<String> modules() {
-        return DomHelper.getModules(rootModule
-        );
+        return DomHelper.getModules(rootModule);
     }
 
     public void regenerateAllTemplates() throws IOException {
@@ -109,7 +107,7 @@ public final class TemplateGenerator {
         MavenCoordinates coordinates = resolvedModuleCoordinates.get(module);
         DocumentWrapper doc = pomRepository.resolveProperties(coordinates);
         final String javaVersion = DomHelper.getProperty(doc, "maven.compiler.source")
-            .map(String::trim)
+                .map(String::trim)
                 .map(v -> "1.8".equals(v) ? "8" : v)
                 .orElse(DEFAULT_JAVA_VERSION);
 
@@ -234,8 +232,7 @@ public final class TemplateGenerator {
         for (MavenCoordinates next = initialCoordinates; next != null; next = queue.poll()) {
             if (seen.add(next)) {
                 Set<MavenCoordinates> internalDependencies = DomHelper.getDependencies(
-                    pomRepository.resolveProperties(next)
-                )
+                                pomRepository.resolveProperties(next))
                         .filter(coordinatesToModule::containsKey)
                         .collect(Collectors.toSet());
                 queue.addAll(internalDependencies);
