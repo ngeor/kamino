@@ -2,7 +2,7 @@ package com.github.ngeor;
 
 import com.github.ngeor.changelog.TagPrefix;
 import com.github.ngeor.git.Git;
-import com.github.ngeor.maven.ChildMavenModule;
+import com.github.ngeor.maven.MavenCoordinates;
 import com.github.ngeor.process.ProcessFailedException;
 import java.io.File;
 import java.io.IOException;
@@ -19,13 +19,15 @@ import org.apache.commons.lang3.concurrent.LazyInitializer;
 
 public class ReadmeGenerator {
     private final File rootDirectory;
-    private final ChildMavenModule mavenModule;
+    private final String mavenModule;
+    private final MavenCoordinates coordinates;
     private final String workflowId;
     private final LazyTagCalculator lazyTagCalculator;
 
-    public ReadmeGenerator(File rootDirectory, ChildMavenModule mavenModule, String workflowId) {
+    public ReadmeGenerator(File rootDirectory, String mavenModule, MavenCoordinates coordinates, String workflowId) {
         this.rootDirectory = Objects.requireNonNull(rootDirectory);
         this.mavenModule = Objects.requireNonNull(mavenModule);
+        this.coordinates = Objects.requireNonNull(coordinates);
         this.workflowId = Validate.notBlank(workflowId);
         this.lazyTagCalculator = new LazyTagCalculator();
     }
@@ -84,19 +86,19 @@ public class ReadmeGenerator {
     }
 
     private Path readmePath() {
-        return mavenModule.getPomFile().toPath().resolveSibling("README.md");
+        return rootDirectory.toPath().resolve(mavenModule).resolve("README.md");
     }
 
     private String projectName() {
-        return mavenModule.getPomFile().getParentFile().getName();
+        return rootDirectory.toPath().resolve(mavenModule).toFile().getName();
     }
 
-    private String groupId() throws ConcurrentException {
-        return mavenModule.coordinates().groupId();
+    private String groupId() {
+        return coordinates.groupId();
     }
 
-    private String artifactId() throws ConcurrentException {
-        return mavenModule.coordinates().artifactId();
+    private String artifactId() {
+        return coordinates.artifactId();
     }
 
     private List<String> readLines() throws IOException {
@@ -115,7 +117,7 @@ public class ReadmeGenerator {
         return Optional.empty();
     }
 
-    private String renderKnownBadge(KnownBadge knownBadge) throws ConcurrentException {
+    private String renderKnownBadge(KnownBadge knownBadge) {
         return switch (knownBadge) {
             case BUILD -> renderBuildBadge();
             case JAVADOC -> renderJavaDocBadge();
@@ -128,14 +130,14 @@ public class ReadmeGenerator {
         return String.format("[![Build %s](%s/badge.svg)](%s)", projectName(), url, url);
     }
 
-    private String renderJavaDocBadge() throws ConcurrentException {
+    private String renderJavaDocBadge() {
         String groupIdArtifactId = String.format("%s/%s", groupId(), artifactId());
         String badgeUrl = String.format("https://javadoc.io/badge2/%s/javadoc.svg", groupIdArtifactId);
         String url = String.format("https://javadoc.io/doc/%s", groupIdArtifactId);
         return String.format("[![javadoc](%s)](%s)", badgeUrl, url);
     }
 
-    private String renderMavenCentralBadge() throws ConcurrentException {
+    private String renderMavenCentralBadge() {
         String groupIdArtifactId = String.format("%s/%s", groupId(), artifactId());
         return "[![Maven Central](https://img.shields.io/maven-central/v/" + groupIdArtifactId
                 + ".svg?label=Maven%20Central)](https://central.sonatype.com/artifact/" + groupIdArtifactId
@@ -160,8 +162,7 @@ public class ReadmeGenerator {
             // so the rest of the badges are applicable too
             Git git = new Git(rootDirectory);
             try {
-                return git.getMostRecentTag(
-                                TagPrefix.forPath(mavenModule.getModuleName()).tagPrefix())
+                return git.getMostRecentTag(TagPrefix.forPath(mavenModule).tagPrefix())
                         .isPresent();
             } catch (ProcessFailedException e) {
                 throw new ConcurrentException(e);

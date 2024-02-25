@@ -8,7 +8,7 @@ import com.github.ngeor.git.LsFilesOption;
 import com.github.ngeor.git.PushOption;
 import com.github.ngeor.maven.Maven;
 import com.github.ngeor.maven.MavenCoordinates;
-import com.github.ngeor.maven.MavenDocument;
+import com.github.ngeor.maven.PomRepository;
 import com.github.ngeor.process.ProcessFailedException;
 import com.github.ngeor.versions.SemVer;
 import com.github.ngeor.versions.SemVerBump;
@@ -24,7 +24,8 @@ public record MavenReleaser(File monorepoRoot, String path) {
 
     public void prepareRelease(SemVer nextVersion, boolean push) throws IOException, ProcessFailedException {
         // calculate the groupId / artifactId of the module, do maven sanity checks
-        MavenCoordinates moduleCoordinates = calcModuleCoordinatesAndDoSanityChecks();
+        PomRepository pomRepository = new PomRepository();
+        MavenCoordinates moduleCoordinates = calcModuleCoordinatesAndDoSanityChecks(pomRepository);
 
         // do git sanity checks, pull latest
         Git git = new Git(monorepoRoot);
@@ -46,7 +47,7 @@ public record MavenReleaser(File monorepoRoot, String path) {
         File backupPom = createBackupOfModulePomFile();
 
         // overwrite pom.xml with effective pom
-        replacePomWithEffectivePom();
+        replacePomWithEffectivePom(pomRepository);
 
         // update changelog
         new ChangeLogUpdater(monorepoRoot, path).updateChangeLog(false, nextVersion);
@@ -72,14 +73,14 @@ public record MavenReleaser(File monorepoRoot, String path) {
         }
     }
 
-    private MavenCoordinates calcModuleCoordinatesAndDoSanityChecks() {
-        MavenDocument mavenDocument = MavenDocument.effectivePomWithoutResolvingProperties(modulePomFile());
-        MavenCoordinates result = mavenDocument.coordinates().requireAllFields();
+    private MavenCoordinates calcModuleCoordinatesAndDoSanityChecks(PomRepository pomRepository) {
+        MavenCoordinates result = pomRepository.load(modulePomFile());
+        DocumentWrapper document = pomRepository.resolveParent(result);
         // ensure modelVersion, name, description exist
         // ensure licenses/license/name and url
         // ensure developers/developer/name and email
         // ensure scm and related properties
-        Preconditions.check(mavenDocument.getDocument())
+        Preconditions.check(document)
                 .hasChildWithTextContent("modelVersion")
                 .hasChildWithTextContent("name")
                 .hasChildWithTextContent("description")
@@ -114,10 +115,10 @@ public record MavenReleaser(File monorepoRoot, String path) {
         return backupPom;
     }
 
-    private void replacePomWithEffectivePom() {
+    private void replacePomWithEffectivePom(PomRepository pomRepository) {
         File pomFile = modulePomFile();
-        MavenDocument mavenDocument = MavenDocument.effectivePomWithoutResolvingProperties(pomFile);
-        DocumentWrapper document = mavenDocument.getDocument();
+        MavenCoordinates coordinates = pomRepository.load(pomFile);
+        DocumentWrapper document = pomRepository.resolveParent(coordinates);
         document.indent();
         document.write(pomFile);
     }

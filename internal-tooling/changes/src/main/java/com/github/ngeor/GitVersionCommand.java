@@ -5,7 +5,6 @@ import com.github.ngeor.process.ProcessFailedException;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
-import org.apache.commons.lang3.concurrent.ConcurrentException;
 
 public class GitVersionCommand extends BaseCommand {
     private final File rootDirectory;
@@ -20,7 +19,7 @@ public class GitVersionCommand extends BaseCommand {
     }
 
     @Override
-    public void run() throws ProcessFailedException, ConcurrentException {
+    public void run() throws ProcessFailedException {
         List<String> paths =
                 path == null ? new ModuleFinder().eligibleModules(rootDirectory).toList() : List.of(path);
         for (String p : paths) {

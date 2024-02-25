@@ -7,7 +7,7 @@ import com.github.ngeor.git.Commit;
 import com.github.ngeor.git.Git;
 import com.github.ngeor.git.InitOption;
 import com.github.ngeor.maven.MavenCoordinates;
-import com.github.ngeor.maven.MavenDocument;
+import com.github.ngeor.maven.PomRepository;
 import com.github.ngeor.process.ProcessFailedException;
 import com.github.ngeor.versions.SemVer;
 import java.io.IOException;
@@ -103,9 +103,11 @@ class MavenReleaserIT {
         releaser.prepareRelease(new SemVer(1, 0, 0), false);
 
         // assert
-        MavenDocument mavenDocument = MavenDocument.effectivePomWithoutResolvingProperties(
-                monorepoRoot.resolve("lib").resolve("pom.xml"));
-        assertThat(mavenDocument.coordinates()).isEqualTo(new MavenCoordinates("com.acme", "foo", "1.1.0-SNAPSHOT"));
+        PomRepository pomRepository = new PomRepository();
+        MavenCoordinates coordinates = pomRepository.load(
+                monorepoRoot.resolve("lib").resolve("pom.xml").toFile());
+        pomRepository.resolveParent(coordinates);
+        assertThat(coordinates).isEqualTo(new MavenCoordinates("com.acme", "foo", "1.1.0-SNAPSHOT"));
         List<Commit> commits = git.revList(null).toList();
         assertThat(commits.stream().map(Commit::summary))
                 .containsExactly(

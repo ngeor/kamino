@@ -12,7 +12,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import org.apache.commons.lang3.concurrent.ConcurrentException;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class ChangesOverviewCommand extends BaseCommand {
@@ -26,7 +25,7 @@ public class ChangesOverviewCommand extends BaseCommand {
     }
 
     @Override
-    public void run() throws ConcurrentException {
+    public void run() {
         long now = System.currentTimeMillis();
         System.out.println("Getting release information...");
 

@@ -4,21 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
 
-class PomMergerIT {
-    @TempDir
-    private Path tempDirectory;
-
-    @BeforeEach
-    void beforeEach() throws IOException {
-        Files.createDirectory(tempDirectory.resolve("lib"));
-    }
-
+class PomMergerTest {
     @Test
     void testMergeProperties() throws IOException {
         String parent =
@@ -485,25 +473,11 @@ class PomMergerIT {
         assertThat(actual).isEqualToNormalizingNewlines(expected);
     }
 
-    private String merge(String parent, String child) throws IOException {
-        Files.writeString(tempDirectory.resolve("pom.xml"), parent);
-        Files.writeString(
-                tempDirectory.resolve("lib").resolve("pom.xml"),
-                child.replace(
-                        "<project>",
-                        """
-            <project>
-                <parent>
-                    <relativePath>..</relativePath>
-                    <artifactId>whatever</artifactId>
-                </parent>
-            """));
-
-        MavenDocument childDoc = new MavenDocument(
-                tempDirectory.resolve("lib").resolve("pom.xml").toFile());
-        MavenDocument effectiveChild = childDoc.effectivePom();
-        DocumentWrapper result = effectiveChild.getDocument();
-        result.indent();
-        return result.writeToString();
+    private String merge(String parent, String child) {
+        DocumentWrapper parentDoc = DocumentWrapper.parseString(parent);
+        DocumentWrapper childDoc = DocumentWrapper.parseString(child);
+        new PomMerger.DocumentMerge().mergeIntoLeft(parentDoc, childDoc);
+        parentDoc.indent();
+        return parentDoc.writeToString();
     }
 }

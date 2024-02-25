@@ -1,16 +1,15 @@
 package com.github.ngeor;
 
-import com.github.ngeor.maven.ChildMavenModule;
-import com.github.ngeor.maven.MavenModule;
+import com.github.ngeor.maven.MavenDocument;
+import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.File;
 import java.util.stream.Stream;
-import org.apache.commons.lang3.concurrent.ConcurrentException;
 
 public class ModuleFinder {
-    public Stream<String> eligibleModules(File rootDirectory) throws ConcurrentException {
-        return MavenModule.root(rootDirectory.toPath().resolve("pom.xml").toFile())
-                .children()
-                .map(ChildMavenModule::getModuleName)
+    public Stream<String> eligibleModules(File rootDirectory) {
+        return new MavenDocument(DocumentWrapper.parse(
+                        rootDirectory.toPath().resolve("pom.xml").toFile()))
+                .modules()
                 .filter(this::isEligible);
     }
 

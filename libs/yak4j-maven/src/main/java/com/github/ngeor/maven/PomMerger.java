@@ -7,31 +7,6 @@ import java.util.Set;
 
 // Notable elements which are not inherited include: artifactId; name; prerequisites; profiles
 public final class PomMerger {
-    public final class Parent {
-        private final MavenDocument parent;
-
-        public Parent(MavenDocument parent) {
-            this.parent = parent;
-        }
-
-        public MavenDocument mergeChild(MavenDocument child) {
-            return mergeIntoLeft(parent, child);
-        }
-    }
-
-    public Parent withParent(MavenDocument parent) {
-        return new Parent(parent);
-    }
-
-    /**
-     * Merges the child pom into the parent.
-     * @param left The parent pom (should be resolved)
-     * @param right The child pom
-     */
-    private MavenDocument mergeIntoLeft(MavenDocument left, MavenDocument right) {
-        new DocumentMerge().mergeIntoLeft(left.getDocument(), right.getDocument());
-        return left;
-    }
 
     private interface Merge<E> {
         void mergeIntoLeft(E left, E right);

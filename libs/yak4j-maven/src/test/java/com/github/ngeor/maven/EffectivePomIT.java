@@ -3,6 +3,7 @@ package com.github.ngeor.maven;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.ngeor.process.ProcessFailedException;
+import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.File;
 import java.io.IOException;
@@ -95,7 +96,12 @@ class EffectivePomIT {
     }
 
     private void verifyEffectivePom(Consumer<ElementWrapper> assertions) throws IOException, ProcessFailedException {
+        // assert by invoking Maven process
         assertions.accept(maven.effectivePomViaMaven().getDocumentElement());
-        assertions.accept(new MavenDocument(file).effectivePom().getDocumentElement());
+        // assert by not invoking Maven process
+        PomRepository pomRepository = new PomRepository();
+        MavenCoordinates coordinates = pomRepository.load(file);
+        DocumentWrapper document = pomRepository.resolveProperties(coordinates);
+        assertions.accept(document.getDocumentElement());
     }
 }

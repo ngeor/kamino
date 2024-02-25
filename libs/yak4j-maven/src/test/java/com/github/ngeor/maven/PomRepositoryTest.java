@@ -45,7 +45,7 @@ class PomRepositoryTest {
                 <version>1.0</version>
             </project>"""
                         .replaceAll(String.format("<%s>.+?</%s>", missingElement, missingElement), "");
-        assertThatThrownBy(() -> pomRepository.load(xmlContents)).hasMessage("Missing maven coordinates");
+        assertThatThrownBy(() -> pomRepository.load(xmlContents)).hasMessageStartingWith("Missing coordinates");
     }
 
     @Test
@@ -72,7 +72,7 @@ class PomRepositoryTest {
             </project>""";
         pomRepository.load(xmlContents);
         assertThatThrownBy(() -> pomRepository.load(xmlContents))
-                .hasMessage("Document com.acme:foo:1.0 is already loaded");
+                .hasMessageStartingWith("Document com.acme:foo:1.0 is already loaded");
     }
 
     @Test
