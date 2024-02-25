@@ -1,5 +1,6 @@
 package com.github.ngeor.maven.resolve;
 
+import com.github.ngeor.maven.MavenCoordinates;
 import com.github.ngeor.maven.ParentPom;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,35 +8,37 @@ import java.io.UncheckedIOException;
 import java.util.Objects;
 import org.apache.commons.lang3.Validate;
 
-public final class DefaultResolver implements PomRepository.Resolver {
+public final class DefaultResolver implements Resolver {
     @Override
-    public PomRepository.Input resolve(PomRepository.Input child, ParentPom parentPom) {
+    public Input resolve(Input child, ParentPom parentPom) {
         Objects.requireNonNull(child);
         Objects.requireNonNull(parentPom);
-        Objects.requireNonNull(parentPom.coordinates());
-        Validate.validState(parentPom.coordinates().isValid(), "Missing maven coordinates");
+        MavenCoordinates coordinates = parentPom.coordinates();
+        Objects.requireNonNull(coordinates);
+        Validate.validState(coordinates.isValid(), "Missing maven coordinates");
         File parentPomFile;
         if (parentPom.relativePath() == null) {
             parentPomFile = parentPomFileFromLocalRepository(parentPom);
-        } else if (child instanceof PomRepository.Input.FileInput fileChild) {
+        } else if (child instanceof FileInput fileChild) {
             parentPomFile = parentPomFileFromRelativePath(fileChild.pomFile(), parentPom);
         } else {
             throw new UnsupportedOperationException();
         }
 
-        return new PomRepository.Input.FileInput(parentPomFile);
+        return new FileInput(parentPomFile);
     }
 
     private File parentPomFileFromLocalRepository(ParentPom parentPom) {
+        MavenCoordinates coordinates = parentPom.coordinates();
         File parentPomFile = new File(System.getProperty("user.home"))
                 .toPath()
                 .resolve(".m2")
                 .resolve("repository")
-                .resolve(parentPom.coordinates().groupId().replace('.', '/'))
-                .resolve(parentPom.coordinates().artifactId())
-                .resolve(parentPom.coordinates().version())
-                .resolve(parentPom.coordinates().artifactId() + "-"
-                        + parentPom.coordinates().version() + ".pom")
+                .resolve(coordinates.groupId().replace('.', '/'))
+                .resolve(coordinates.artifactId())
+                .resolve(coordinates.version())
+                .resolve(coordinates.artifactId() + "-"
+                        + coordinates.version() + ".pom")
                 .toFile();
 
         if (!parentPomFile.isFile()) {

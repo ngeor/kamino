@@ -21,18 +21,22 @@ public class PomRepository {
     private final Map<MavenCoordinates, Input> inputMap = new HashMap<>();
     private final Map<File, MavenCoordinates> fileMap = new HashMap<>();
     private final Map<MavenCoordinates, ParentPom> originalParentPom = new HashMap<>();
-    private Resolver resolver = new DefaultResolver();
+    private final Resolver resolver;
 
-    public void setResolver(Resolver resolver) {
+    public PomRepository(Resolver resolver) {
         this.resolver = Objects.requireNonNull(resolver);
     }
 
+    public PomRepository() {
+        this(new DefaultResolver());
+    }
+
     public MavenCoordinates load(String xmlContents) {
-        return load(new Input.StringInput(xmlContents));
+        return load(new StringInput(xmlContents));
     }
 
     public MavenCoordinates load(File pomFile) {
-        return load(new Input.FileInput(pomFile));
+        return load(new FileInput(pomFile));
     }
 
     public MavenCoordinates load(Input input) {
@@ -81,7 +85,7 @@ public class PomRepository {
             map.put(coordinates, new EnumMap<>(Map.of(ResolutionPhase.UNRESOLVED, document)));
         }
         inputMap.put(coordinates, input);
-        if (input instanceof Input.FileInput fi) {
+        if (input instanceof FileInput fi) {
             try {
                 fileMap.put(fi.pomFile().getCanonicalFile(), coordinates);
             } catch (IOException ex) {
@@ -201,37 +205,5 @@ public class PomRepository {
     private static void resolveProperties(DocumentWrapper document, Map<String, String> resolvedProperties) {
         document.getDocumentElement()
                 .transformTextNodes(text -> PropertyResolver.resolve(text, resolvedProperties::get));
-    }
-
-    public sealed interface Input {
-        DocumentWrapper loadDocument();
-
-        record StringInput(String contents) implements Input {
-            public StringInput {
-                Validate.notBlank(contents, "xmlContents is required");
-            }
-
-            @Override
-            public DocumentWrapper loadDocument() {
-                return DocumentWrapper.parseString(contents);
-            }
-        }
-
-        record FileInput(File pomFile) implements Input {
-            public FileInput {
-                Objects.requireNonNull(pomFile);
-                Validate.isTrue(pomFile.isFile(), "%s is not a file", pomFile);
-            }
-
-            @Override
-            public DocumentWrapper loadDocument() {
-                return DocumentWrapper.parse(pomFile);
-            }
-        }
-    }
-
-    @FunctionalInterface
-    public interface Resolver {
-        Input resolve(Input child, ParentPom parentPom);
     }
 }

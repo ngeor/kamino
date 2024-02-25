@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.github.ngeor.maven.MavenCoordinates;
+import com.github.ngeor.maven.ParentPom;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.DomRuntimeException;
 import org.apache.commons.lang3.Validate;
@@ -16,7 +17,8 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class PomRepositoryTest {
-    private final PomRepository pomRepository = new PomRepository();
+    private final StubResolver resolver = new StubResolver();
+    private final PomRepository pomRepository = new PomRepository(resolver);
 
     @ParameterizedTest
     @NullAndEmptySource
@@ -242,10 +244,7 @@ class PomRepositoryTest {
             <version>1.1</version>
         </project>""";
         MavenCoordinates childCoordinates = pomRepository.load(childContents);
-        pomRepository.setResolver((child, parentPom) -> {
-            Validate.validState(parentCoordinates.equals(parentPom.coordinates()));
-            return new PomRepository.Input.StringInput(parentContents);
-        });
+        resolver.setContents(parentContents);
 
         // act
         pomRepository.resolveParent(childCoordinates);
@@ -253,5 +252,22 @@ class PomRepositoryTest {
         // assert
         assertThat(pomRepository.getResolutionPhase(parentCoordinates)).isEqualTo(ResolutionPhase.PARENT_RESOLVED);
         assertThat(pomRepository.getResolutionPhase(childCoordinates)).isEqualTo(ResolutionPhase.PARENT_RESOLVED);
+    }
+
+    private static final class StubResolver implements Resolver {
+        private String contents;
+
+        @Override
+        public Input resolve(Input child, ParentPom parentPom) {
+            return new StringInput(getContents());
+        }
+
+        public String getContents() {
+            return contents;
+        }
+
+        public void setContents(String contents) {
+            this.contents = contents;
+        }
     }
 }
