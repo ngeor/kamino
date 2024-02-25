@@ -15,7 +15,7 @@ class DomHelperTest {
         @Test
         void withParentPom() {
             String input =
-                """
+                    """
                     <project>
                         <parent>
                             <groupId>com.acme</groupId>
@@ -27,7 +27,8 @@ class DomHelperTest {
                     """;
             DocumentWrapper document = DocumentWrapper.parseString(input);
             Optional<ParentPom> result = DomHelper.getParentPom(document);
-            assertThat(result).contains(new ParentPom(new MavenCoordinates("com.acme", "foo", "1.0-SNAPSHOT"), "../libs"));
+            assertThat(result)
+                    .contains(new ParentPom(new MavenCoordinates("com.acme", "foo", "1.0-SNAPSHOT"), "../libs"));
         }
 
         @Test
@@ -44,7 +45,7 @@ class DomHelperTest {
         @Test
         void withWhitespaceInElements() {
             String input =
-                """
+                    """
                     <project>
                         <parent>
                             <groupId>

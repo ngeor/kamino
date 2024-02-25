@@ -70,8 +70,7 @@ public class PomRepository {
             coordinates = parentDoc.getDocumentElement().firstElementsText(Set.of(GROUP_ID, ARTIFACT_ID, VERSION));
             mavenCoordinates = new MavenCoordinates(
                     coordinates.get(GROUP_ID), coordinates.get(ARTIFACT_ID), coordinates.get(VERSION));
-            Validate.validState(
-                    mavenCoordinates.isValid(), "Missing coordinates in %s after resolving parent", input);
+            Validate.validState(mavenCoordinates.isValid(), "Missing coordinates in %s after resolving parent", input);
             Validate.validState(
                     !isKnown(mavenCoordinates),
                     "Document %s is already loaded (trying to load %s, loaded=%s)",

@@ -7,8 +7,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.github.ngeor.maven.MavenCoordinates;
-import com.github.ngeor.maven.resolve.PomRepository;
-import com.github.ngeor.maven.resolve.ResolutionPhase;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.DomRuntimeException;
 import org.apache.commons.lang3.Validate;

@@ -64,6 +64,4 @@ public final class MavenDocument {
                 .flatMap(ElementWrapper::getTextContentTrimmedAsStream)
                 .findFirst();
     }
-
-
 }

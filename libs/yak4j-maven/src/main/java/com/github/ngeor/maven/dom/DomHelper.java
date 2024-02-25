@@ -31,14 +31,15 @@ public final class DomHelper {
 
     public static Optional<ParentPom> getParentPom(DocumentWrapper document) {
         Objects.requireNonNull(document);
-        return document.getDocumentElement().findChildElements(PARENT)
-            .findFirst()
-            .map(parentElement -> {
-                Map<String, String> items =
-                    parentElement.firstElementsText(Set.of(GROUP_ID, ARTIFACT_ID, VERSION, RELATIVE_PATH));
-                return new ParentPom(
-                    new MavenCoordinates(items.get(GROUP_ID), items.get(ARTIFACT_ID), items.get(VERSION)),
-                    items.get(RELATIVE_PATH));
-            });
+        return document.getDocumentElement()
+                .findChildElements(PARENT)
+                .findFirst()
+                .map(parentElement -> {
+                    Map<String, String> items =
+                            parentElement.firstElementsText(Set.of(GROUP_ID, ARTIFACT_ID, VERSION, RELATIVE_PATH));
+                    return new ParentPom(
+                            new MavenCoordinates(items.get(GROUP_ID), items.get(ARTIFACT_ID), items.get(VERSION)),
+                            items.get(RELATIVE_PATH));
+                });
     }
 }

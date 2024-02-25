@@ -2,7 +2,6 @@ package com.github.ngeor.maven.resolve;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.github.ngeor.maven.resolve.PomRepository;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
