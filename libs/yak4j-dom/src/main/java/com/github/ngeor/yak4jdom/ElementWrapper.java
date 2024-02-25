@@ -5,9 +5,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 import org.apache.commons.lang3.StringUtils;
@@ -227,21 +224,31 @@ public class ElementWrapper {
         return new ElementWrapper((Element) parentNode).path() + "/" + getNodeName();
     }
 
-    public Map<String, ElementWrapper> findChildElements(Set<String> names, Predicate<ElementWrapper> predicate) {
-        Map<String, ElementWrapper> result = new HashMap<>();
-        for (var it = getChildElementsAsIterator(); result.size() < names.size() && it.hasNext(); ) {
-            var e = it.next();
-            if (names.contains(e.getNodeName()) && predicate.test(e)) {
-                result.put(e.getNodeName(), e);
+    public String[] firstElementsText(String... names) {
+        Objects.requireNonNull(names);
+        Validate.isTrue(names.length >= 1, "At least one name is required");
+        // TODO make a Map<String, int> with primitive int value
+        Map<String, Integer> pending = new HashMap<>();
+        for (int i = 0; i < names.length; i++) {
+            String name = names[i];
+            Validate.notBlank(name, "Blank element at index %d", i);
+            if (pending.put(name, i) != null) {
+                throw new IllegalArgumentException(String.format("Duplicate element %s at index %d", name, i));
+            }
+        }
+        String[] result = new String[names.length];
+        for (Iterator<ElementWrapper> it = getChildElementsAsIterator(); !pending.isEmpty() && it.hasNext(); ) {
+            ElementWrapper e = it.next();
+            String nodeName = e.getNodeName();
+            int i = nodeName == null ? -1 : pending.getOrDefault(nodeName, -1);
+            if (i >= 0) {
+                String text = e.getTextContentTrimmed().orElse(null);
+                if (text != null) {
+                    result[i] = text;
+                    pending.remove(nodeName);
+                }
             }
         }
         return result;
-    }
-
-    public Map<String, String> firstElementsText(Set<String> names) {
-        return findChildElements(names, e -> e.getTextContentTrimmed().isPresent()).entrySet().stream()
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        e -> e.getValue().getTextContentTrimmed().orElseThrow()));
     }
 }
