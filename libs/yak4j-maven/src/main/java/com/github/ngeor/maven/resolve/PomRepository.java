@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 import org.apache.commons.lang3.Validate;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -189,7 +188,7 @@ public class PomRepository {
         Objects.requireNonNull(phaseMap, String.format("Document %s is unknown", coordinates.format()));
         return phaseMap.computeIfAbsent(ResolutionPhase.PROPERTIES_RESOLVED, ignored -> {
             DocumentWrapper parentResolved = resolveParent(coordinates);
-            Map<String, String> unresolvedProperties = properties(parentResolved);
+            Map<String, String> unresolvedProperties = DomHelper.getProperties(parentResolved);
             if (unresolvedProperties == null || unresolvedProperties.isEmpty()) {
                 return parentResolved;
             }
@@ -200,14 +199,6 @@ public class PomRepository {
             resolveProperties(result, resolvedProperties);
             return result;
         });
-    }
-
-    // TODO copy pasted
-    private static Map<String, String> properties(DocumentWrapper document) {
-        return document.getDocumentElement()
-                .findChildElements("properties")
-                .flatMap(ElementWrapper::getChildElements)
-                .collect(Collectors.toMap(ElementWrapper::getNodeName, ElementWrapper::getTextContent));
     }
 
     private static void resolveProperties(DocumentWrapper document, Map<String, String> resolvedProperties) {

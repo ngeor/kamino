@@ -2,8 +2,8 @@ package com.github.ngeor;
 
 import com.github.ngeor.maven.MavenCoordinates;
 import com.github.ngeor.maven.ParentPom;
+import com.github.ngeor.maven.dom.DomHelper;
 import com.github.ngeor.maven.process.Maven;
-import com.github.ngeor.maven.resolve.MavenDocument;
 import com.github.ngeor.maven.resolve.PomRepository;
 import com.github.ngeor.maven.resolve.ResolutionPhase;
 import com.github.ngeor.process.ProcessFailedException;
@@ -38,7 +38,7 @@ public final class TemplateGenerator {
     private final SimpleStringTemplate rootPomTemplate;
     private final File rootDirectory;
     private final PomRepository pomRepository;
-    private final MavenDocument rootModule;
+    private final DocumentWrapper rootModule;
     private final Map<String, MavenCoordinates> resolvedModuleCoordinates;
     private final Map<MavenCoordinates, String> coordinatesToModule;
 
@@ -56,11 +56,10 @@ public final class TemplateGenerator {
                 rootDirectory);
         // prime pom repository
         this.pomRepository = new PomRepository();
-        this.rootModule = new MavenDocument(
-                pomRepository.loadAndResolveProperties(new File(rootDirectory, "pom.xml").getCanonicalFile()));
+        this.rootModule = pomRepository.loadAndResolveProperties(new File(rootDirectory, "pom.xml").getCanonicalFile());
         // prime modules
-        resolvedModuleCoordinates = rootModule
-                .modules()
+        resolvedModuleCoordinates = DomHelper.getModules(rootModule
+                )
                 .collect(Collectors.toMap(moduleName -> moduleName, moduleName -> {
                     System.out.println("Loading module " + moduleName);
                     File file;
@@ -74,15 +73,15 @@ public final class TemplateGenerator {
                     } catch (IOException ex) {
                         throw new UncheckedIOException(ex);
                     }
-                    MavenDocument doc = new MavenDocument(pomRepository.loadAndResolveProperties(file));
-                    return doc.coordinates();
+                    return DomHelper.getCoordinates(pomRepository.loadAndResolveProperties(file));
                 }));
         coordinatesToModule = resolvedModuleCoordinates.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
     }
 
     private Stream<String> modules() {
-        return rootModule.modules();
+        return DomHelper.getModules(rootModule
+        );
     }
 
     public void regenerateAllTemplates() throws IOException {
@@ -108,8 +107,9 @@ public final class TemplateGenerator {
     public void regenerateAllTemplates(String module) throws IOException, ProcessFailedException, ConcurrentException {
         System.out.printf("Regenerating templates for %s%n", module);
         MavenCoordinates coordinates = resolvedModuleCoordinates.get(module);
-        MavenDocument doc = new MavenDocument(pomRepository.resolveProperties(coordinates));
-        final String javaVersion = doc.property("maven.compiler.source")
+        DocumentWrapper doc = pomRepository.resolveProperties(coordinates);
+        final String javaVersion = DomHelper.getProperty(doc, "maven.compiler.source")
+            .map(String::trim)
                 .map(v -> "1.8".equals(v) ? "8" : v)
                 .orElse(DEFAULT_JAVA_VERSION);
 
@@ -233,8 +233,9 @@ public final class TemplateGenerator {
         Set<String> result = new TreeSet<>();
         for (MavenCoordinates next = initialCoordinates; next != null; next = queue.poll()) {
             if (seen.add(next)) {
-                MavenDocument doc = new MavenDocument(pomRepository.resolveProperties(next));
-                Set<MavenCoordinates> internalDependencies = doc.dependencies()
+                Set<MavenCoordinates> internalDependencies = DomHelper.getDependencies(
+                    pomRepository.resolveProperties(next)
+                )
                         .filter(coordinatesToModule::containsKey)
                         .collect(Collectors.toSet());
                 queue.addAll(internalDependencies);
