@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 import org.apache.commons.lang3.StringUtils;
@@ -25,11 +26,6 @@ public class ElementWrapper {
 
     public String getNodeName() {
         return this.element.getNodeName();
-    }
-
-    @Deprecated
-    public Iterator<Node> getChildNodesAsIterator() {
-        return new ChildNodesIterator(this.element);
     }
 
     public Iterator<ElementWrapper> getChildElementsAsIterator() {
@@ -250,5 +246,18 @@ public class ElementWrapper {
             }
         }
         return result;
+    }
+
+    public void transformTextNodes(UnaryOperator<String> transformer) {
+        NodeList nodeList = element.getChildNodes();
+        for (int i = nodeList.getLength() - 1; i >= 0; i--) {
+            Node node = nodeList.item(i);
+            if (node instanceof Element e) {
+                // recursion
+                new ElementWrapper(e).transformTextNodes(transformer);
+            } else if (node.getNodeType() == Node.TEXT_NODE) {
+                node.setTextContent(transformer.apply(node.getTextContent()));
+            }
+        }
     }
 }
