@@ -68,8 +68,8 @@ public class PomRepository {
         return new LoadResult(coordinates, document);
     }
 
-    public boolean isKnown(MavenCoordinates coordinates) {
-        return map.containsKey(Objects.requireNonNull(coordinates));
+    private boolean isUnknown(MavenCoordinates coordinates) {
+        return !map.containsKey(Objects.requireNonNull(coordinates));
     }
 
     public ResolutionPhase getResolutionPhase(MavenCoordinates coordinates) {
@@ -103,7 +103,7 @@ public class PomRepository {
         Objects.requireNonNull(parentPom);
         MavenCoordinates parentCoordinates = parentPom.coordinates();
         validateCoordinates(parentCoordinates);
-        if (!isKnown(parentCoordinates)) {
+        if (isUnknown(parentCoordinates)) {
             Input parentInput = resolver.resolve(childInput, parentPom);
             Validate.validState(
                     parentCoordinates.equals(load(parentInput)),
@@ -211,7 +211,7 @@ public class PomRepository {
             coordinates = DomHelper.getCoordinates(parentDoc);
             Validate.validState(coordinates.isValid(), "Missing coordinates in %s after resolving parent", input);
             Validate.validState(
-                !isKnown(coordinates),
+                isUnknown(coordinates),
                 "Document %s is already loaded (trying to load %s, loaded=%s)",
                 coordinates.format(),
                 input,
@@ -224,7 +224,7 @@ public class PomRepository {
                     ResolutionPhase.PARENT_RESOLVED, parentDoc)));
         } else {
             Validate.validState(
-                !isKnown(coordinates),
+                isUnknown(coordinates),
                 "Document %s is already loaded (trying to load %s, loaded=%s)",
                 coordinates.format(),
                 input,
