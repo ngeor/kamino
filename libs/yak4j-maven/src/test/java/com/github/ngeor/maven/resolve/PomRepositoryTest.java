@@ -23,17 +23,17 @@ class PomRepositoryTest {
     @ParameterizedTest
     @NullAndEmptySource
     void loadEmpty(String xmlContents) {
-        assertThatThrownBy(() -> pomRepository.load(xmlContents)).hasMessage("xmlContents is required");
+        assertThatThrownBy(() -> pomRepository.loadAndResolveParent(xmlContents)).hasMessage("xmlContents is required");
     }
 
     @Test
     void loadInvalidXml() {
-        assertThatThrownBy(() -> pomRepository.load("oops")).isInstanceOf(DomRuntimeException.class);
+        assertThatThrownBy(() -> pomRepository.loadAndResolveParent("oops")).isInstanceOf(DomRuntimeException.class);
     }
 
     @Test
     void loadIncorrectRootElement() {
-        assertThatThrownBy(() -> pomRepository.load("<oops />"))
+        assertThatThrownBy(() -> pomRepository.loadAndResolveParent("<oops />"))
                 .hasMessage("Unexpected root element 'oops' (expected 'project')");
     }
 
@@ -48,7 +48,7 @@ class PomRepositoryTest {
                 <version>1.0</version>
             </project>"""
                         .replaceAll(String.format("<%s>.+?</%s>", missingElement, missingElement), "");
-        assertThatThrownBy(() -> pomRepository.load(xmlContents)).hasMessageStartingWith("Missing coordinates");
+        assertThatThrownBy(() -> pomRepository.loadAndResolveParent(xmlContents)).hasMessageStartingWith("Missing coordinates");
     }
 
     @Test
@@ -60,35 +60,8 @@ class PomRepositoryTest {
                 <artifactId>foo</artifactId>
                 <version>1.0</version>
             </project>""";
-        MavenCoordinates result = pomRepository.load(xmlContents);
+        MavenCoordinates result = pomRepository.loadAndResolveParent(xmlContents).coordinates();
         assertThat(result).isEqualTo(new MavenCoordinates("com.acme", "foo", "1.0"));
-    }
-
-    @Test
-    void loadTwiceIsNotAllowed() throws IOException {
-        String xmlContents =
-                """
-            <project>
-                <groupId>com.acme</groupId>
-                <artifactId>foo</artifactId>
-                <version>1.0</version>
-            </project>""";
-        pomRepository.load(xmlContents);
-        assertThatThrownBy(() -> pomRepository.load(xmlContents))
-                .hasMessageStartingWith("Document com.acme:foo:1.0 is already loaded");
-    }
-
-    @Test
-    void getResolutionPhaseUnresolved() throws IOException {
-        String xmlContents =
-                """
-        <project>
-            <groupId>com.acme</groupId>
-            <artifactId>foo</artifactId>
-            <version>1.0</version>
-        </project>""";
-        MavenCoordinates coordinates = pomRepository.load(xmlContents);
-        assertThat(pomRepository.getResolutionPhase(coordinates)).isEqualTo(ResolutionPhase.UNRESOLVED);
     }
 
     @Test
@@ -156,7 +129,7 @@ class PomRepositoryTest {
             <artifactId>foo</artifactId>
             <version>1.0</version>
         </project>""";
-        MavenCoordinates parentCoordinates = pomRepository.load(parentContents);
+        MavenCoordinates parentCoordinates = pomRepository.loadAndResolveParent(parentContents).coordinates();
         String childContents =
                 """
         <project>
@@ -190,32 +163,6 @@ class PomRepositoryTest {
         assertThat(pomRepository.getDocument(parentCoordinates, ResolutionPhase.UNRESOLVED))
                 .as("Unresolved and resolved parent document should point to the same document")
                 .isSameAs(pomRepository.getDocument(parentCoordinates, ResolutionPhase.PARENT_RESOLVED));
-    }
-
-    @Test
-    void loadDocumentWithUnknownParent() throws IOException {
-        // arrange
-        MavenCoordinates parentCoordinates = new MavenCoordinates("com.acme", "foo", "1.0");
-        String childContents =
-                """
-        <project>
-            <parent>
-                <groupId>com.acme</groupId>
-                <artifactId>foo</artifactId>
-                <version>1.0</version>
-            </parent>
-            <groupId>com.acme</groupId>
-            <artifactId>bar</artifactId>
-            <version>1.1</version>
-        </project>""";
-
-        // act
-        MavenCoordinates childCoordinates = pomRepository.load(childContents);
-
-        // assert
-        assertThat(childCoordinates).isEqualTo(new MavenCoordinates("com.acme", "bar", "1.1"));
-        assertThat(pomRepository.isKnown(parentCoordinates)).isFalse();
-        assertThat(pomRepository.getResolutionPhase(childCoordinates)).isEqualTo(ResolutionPhase.UNRESOLVED);
     }
 
     @Test

@@ -32,63 +32,6 @@ public class PomRepository {
         this(new DefaultResolver());
     }
 
-    public MavenCoordinates load(String xmlContents) throws IOException {
-        return load(new StringInput(xmlContents));
-    }
-
-    public MavenCoordinates load(File pomFile) throws IOException {
-        return load(new FileInput(pomFile));
-    }
-
-    public MavenCoordinates load(Input input) throws IOException {
-        Objects.requireNonNull(input);
-        DocumentWrapper document = input.loadDocument();
-        ElementWrapper documentElement = document.getDocumentElement();
-        Validate.isTrue(
-                PROJECT.equals(documentElement.getNodeName()),
-                "Unexpected root element '%s' (expected '%s')",
-                documentElement.getNodeName(),
-                PROJECT);
-        MavenCoordinates coordinates = DomHelper.getCoordinates(documentElement);
-        Validate.notBlank(coordinates.artifactId(), "Missing coordinates (artifactId) in %s", input);
-        if (coordinates.hasMissingFields()) {
-            // try to resolve parent
-            ParentPom parentPom = DomHelper.getParentPom(document)
-                    .orElseThrow(() -> new IllegalStateException(
-                            String.format("Missing coordinates in document %s and no parent pom", input)));
-            DocumentWrapper parentDoc = resolveParent(input, parentPom).deepClone();
-            // TODO reduce duplication with other merge usage
-            DocumentWrapper cloneChild = document.deepClone();
-            cloneChild.getDocumentElement().removeChildNodesByName("parent");
-            new PomMerger.DocumentMerge().mergeIntoLeft(parentDoc, cloneChild);
-            // try to get the resolved coordinates
-            coordinates = DomHelper.getCoordinates(parentDoc);
-            Validate.validState(coordinates.isValid(), "Missing coordinates in %s after resolving parent", input);
-            Validate.validState(
-                    !isKnown(coordinates),
-                    "Document %s is already loaded (trying to load %s, loaded=%s)",
-                    coordinates.format(),
-                    input,
-                    coordinatesToInputMap);
-            originalParentPom.put(coordinates, parentPom);
-            map.put(
-                    coordinates,
-                    new EnumMap<>(Map.of(
-                            ResolutionPhase.UNRESOLVED, document,
-                            ResolutionPhase.PARENT_RESOLVED, parentDoc)));
-        } else {
-            Validate.validState(
-                    !isKnown(coordinates),
-                    "Document %s is already loaded (trying to load %s, loaded=%s)",
-                    coordinates.format(),
-                    input,
-                    coordinatesToInputMap);
-            map.put(coordinates, new EnumMap<>(Map.of(ResolutionPhase.UNRESOLVED, document)));
-        }
-        coordinatesToInputMap.put(coordinates, input);
-        inputToCoordinatesMap.put(input, coordinates);
-        return coordinates;
-    }
 
     public LoadResult loadAndResolveParent(File file) throws IOException {
         return loadAndResolveParent(new FileInput(file));
@@ -241,5 +184,55 @@ public class PomRepository {
         V newValue = supplier.get();
         map.put(key, newValue);
         return newValue;
+    }
+
+    private MavenCoordinates load(Input input) throws IOException {
+        Objects.requireNonNull(input);
+        DocumentWrapper document = input.loadDocument();
+        ElementWrapper documentElement = document.getDocumentElement();
+        Validate.isTrue(
+            PROJECT.equals(documentElement.getNodeName()),
+            "Unexpected root element '%s' (expected '%s')",
+            documentElement.getNodeName(),
+            PROJECT);
+        MavenCoordinates coordinates = DomHelper.getCoordinates(documentElement);
+        Validate.notBlank(coordinates.artifactId(), "Missing coordinates (artifactId) in %s", input);
+        if (coordinates.hasMissingFields()) {
+            // try to resolve parent
+            ParentPom parentPom = DomHelper.getParentPom(document)
+                .orElseThrow(() -> new IllegalStateException(
+                    String.format("Missing coordinates in document %s and no parent pom", input)));
+            DocumentWrapper parentDoc = resolveParent(input, parentPom).deepClone();
+            // TODO reduce duplication with other merge usage
+            DocumentWrapper cloneChild = document.deepClone();
+            cloneChild.getDocumentElement().removeChildNodesByName("parent");
+            new PomMerger.DocumentMerge().mergeIntoLeft(parentDoc, cloneChild);
+            // try to get the resolved coordinates
+            coordinates = DomHelper.getCoordinates(parentDoc);
+            Validate.validState(coordinates.isValid(), "Missing coordinates in %s after resolving parent", input);
+            Validate.validState(
+                !isKnown(coordinates),
+                "Document %s is already loaded (trying to load %s, loaded=%s)",
+                coordinates.format(),
+                input,
+                coordinatesToInputMap);
+            originalParentPom.put(coordinates, parentPom);
+            map.put(
+                coordinates,
+                new EnumMap<>(Map.of(
+                    ResolutionPhase.UNRESOLVED, document,
+                    ResolutionPhase.PARENT_RESOLVED, parentDoc)));
+        } else {
+            Validate.validState(
+                !isKnown(coordinates),
+                "Document %s is already loaded (trying to load %s, loaded=%s)",
+                coordinates.format(),
+                input,
+                coordinatesToInputMap);
+            map.put(coordinates, new EnumMap<>(Map.of(ResolutionPhase.UNRESOLVED, document)));
+        }
+        coordinatesToInputMap.put(coordinates, input);
+        inputToCoordinatesMap.put(input, coordinates);
+        return coordinates;
     }
 }
