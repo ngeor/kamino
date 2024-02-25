@@ -7,6 +7,7 @@ import static com.github.ngeor.maven.ElementNames.VERSION;
 
 import com.github.ngeor.maven.MavenCoordinates;
 import com.github.ngeor.maven.ParentPom;
+import com.github.ngeor.maven.dom.DomHelper;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.File;
@@ -57,7 +58,7 @@ public class PomRepository {
         Validate.notBlank(mavenCoordinates.artifactId(), "Missing coordinates (artifactId) in %s", input);
         if (mavenCoordinates.hasMissingFields()) {
             // try to resolve parent
-            ParentPom parentPom = ParentPom.fromDocument(document)
+            ParentPom parentPom = DomHelper.getParentPom(document)
                     .orElseThrow(() -> new IllegalStateException(
                             String.format("Missing coordinates in document %s and no parent pom", input)));
             DocumentWrapper parentDoc = resolveParent(input, parentPom).deepClone();
@@ -121,7 +122,7 @@ public class PomRepository {
         return phaseMap.computeIfAbsent(ResolutionPhase.PARENT_RESOLVED, ignored -> {
             DocumentWrapper document = Objects.requireNonNull(
                     phaseMap.get(ResolutionPhase.UNRESOLVED), "Document should exist! Internal error!");
-            ParentPom parentPom = ParentPom.fromDocument(document).orElse(null);
+            ParentPom parentPom = DomHelper.getParentPom(document).orElse(null);
             if (parentPom == null) {
                 // no parent pom, nothing to do
                 return document;
