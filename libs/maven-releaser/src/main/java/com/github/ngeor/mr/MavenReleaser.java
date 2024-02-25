@@ -8,6 +8,7 @@ import com.github.ngeor.git.LsFilesOption;
 import com.github.ngeor.git.PushOption;
 import com.github.ngeor.maven.MavenCoordinates;
 import com.github.ngeor.maven.process.Maven;
+import com.github.ngeor.maven.resolve.LoadResult;
 import com.github.ngeor.maven.resolve.PomRepository;
 import com.github.ngeor.process.ProcessFailedException;
 import com.github.ngeor.versions.SemVer;
@@ -73,14 +74,13 @@ public record MavenReleaser(File monorepoRoot, String path) {
         }
     }
 
-    private MavenCoordinates calcModuleCoordinatesAndDoSanityChecks(PomRepository pomRepository) {
-        MavenCoordinates result = pomRepository.load(modulePomFile());
-        DocumentWrapper document = pomRepository.resolveParent(result);
+    private MavenCoordinates calcModuleCoordinatesAndDoSanityChecks(PomRepository pomRepository) throws IOException {
+        LoadResult loadResult = pomRepository.loadAndResolveParent(modulePomFile());
         // ensure modelVersion, name, description exist
         // ensure licenses/license/name and url
         // ensure developers/developer/name and email
         // ensure scm and related properties
-        Preconditions.check(document)
+        Preconditions.check(loadResult.document())
                 .hasChildWithTextContent("modelVersion")
                 .hasChildWithTextContent("name")
                 .hasChildWithTextContent("description")
@@ -98,7 +98,7 @@ public record MavenReleaser(File monorepoRoot, String path) {
                         .hasChildWithTextContent("developerConnection")
                         .hasChildWithTextContent("tag")
                         .hasChildWithTextContent("url"));
-        return result;
+        return loadResult.coordinates();
     }
 
     private void setVersion(MavenCoordinates moduleCoordinates, String newVersion) throws ProcessFailedException {
@@ -115,10 +115,9 @@ public record MavenReleaser(File monorepoRoot, String path) {
         return backupPom;
     }
 
-    private void replacePomWithEffectivePom(PomRepository pomRepository) {
+    private void replacePomWithEffectivePom(PomRepository pomRepository) throws IOException {
         File pomFile = modulePomFile();
-        MavenCoordinates coordinates = pomRepository.load(pomFile);
-        DocumentWrapper document = pomRepository.resolveParent(coordinates);
+        DocumentWrapper document = pomRepository.loadAndResolveParent(pomFile).document();
         document.indent();
         document.write(pomFile);
     }

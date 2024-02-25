@@ -11,7 +11,6 @@ import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.File;
 import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,12 +21,12 @@ import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.concurrent.ConcurrentException;
-import org.apache.commons.lang3.stream.Streams;
 
 public final class TemplateGenerator {
     private static final String GROUP_ID = "com.github.ngeor";
@@ -56,34 +55,40 @@ public final class TemplateGenerator {
                 rootDirectory);
         // prime pom repository
         this.pomRepository = new PomRepository();
-        this.rootModule = pomRepository.loadAndResolveProperties(new File(rootDirectory, "pom.xml").getCanonicalFile());
+        this.rootModule = pomRepository
+                .loadAndResolveProperties(new File(rootDirectory, "pom.xml").getCanonicalFile())
+                .document();
         // prime modules
-        resolvedModuleCoordinates = DomHelper.getModules(rootModule)
-                .collect(Collectors.toMap(moduleName -> moduleName, moduleName -> {
-                    System.out.println("Loading module " + moduleName);
-                    File file;
-                    try {
-                        file = rootDirectory
-                                .toPath()
-                                .resolve(moduleName)
-                                .resolve("pom.xml")
-                                .toFile()
-                                .getCanonicalFile();
-                    } catch (IOException ex) {
-                        throw new UncheckedIOException(ex);
-                    }
-                    return DomHelper.getCoordinates(pomRepository.loadAndResolveProperties(file));
-                }));
+        resolvedModuleCoordinates = primeModules(pomRepository, rootDirectory, rootModule);
         coordinatesToModule = resolvedModuleCoordinates.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
+    }
+
+    private static Map<String, MavenCoordinates> primeModules(
+            PomRepository pomRepository, File rootDirectory, DocumentWrapper rootModule) throws IOException {
+        Map<String, MavenCoordinates> result = new TreeMap<>();
+        for (String moduleName : DomHelper.getModules(rootModule).toList()) {
+            System.out.println("Loading module " + moduleName);
+            File file = rootDirectory
+                    .toPath()
+                    .resolve(moduleName)
+                    .resolve("pom.xml")
+                    .toFile();
+            MavenCoordinates coordinates =
+                    pomRepository.loadAndResolveProperties(file).coordinates();
+            result.put(moduleName, coordinates);
+        }
+        return result;
     }
 
     private Stream<String> modules() {
         return DomHelper.getModules(rootModule);
     }
 
-    public void regenerateAllTemplates() throws IOException {
-        Streams.failableStream(modules()).forEach(this::regenerateAllTemplates);
+    public void regenerateAllTemplates() throws IOException, ProcessFailedException, ConcurrentException {
+        for (String module : modules().toList()) {
+            regenerateAllTemplates(module);
+        }
         regenerateRootPom();
     }
 
@@ -105,7 +110,7 @@ public final class TemplateGenerator {
     public void regenerateAllTemplates(String module) throws IOException, ProcessFailedException, ConcurrentException {
         System.out.printf("Regenerating templates for %s%n", module);
         MavenCoordinates coordinates = resolvedModuleCoordinates.get(module);
-        DocumentWrapper doc = pomRepository.resolveProperties(coordinates);
+        DocumentWrapper doc = pomRepository.getDocument(coordinates, ResolutionPhase.PROPERTIES_RESOLVED);
         final String javaVersion = DomHelper.getProperty(doc, "maven.compiler.source")
                 .map(String::trim)
                 .map(v -> "1.8".equals(v) ? "8" : v)
@@ -232,7 +237,7 @@ public final class TemplateGenerator {
         for (MavenCoordinates next = initialCoordinates; next != null; next = queue.poll()) {
             if (seen.add(next)) {
                 Set<MavenCoordinates> internalDependencies = DomHelper.getDependencies(
-                                pomRepository.resolveProperties(next))
+                                pomRepository.getDocument(next, ResolutionPhase.PROPERTIES_RESOLVED))
                         .filter(coordinatesToModule::containsKey)
                         .collect(Collectors.toSet());
                 queue.addAll(internalDependencies);

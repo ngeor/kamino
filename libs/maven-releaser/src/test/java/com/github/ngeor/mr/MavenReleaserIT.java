@@ -104,9 +104,10 @@ class MavenReleaserIT {
 
         // assert
         PomRepository pomRepository = new PomRepository();
-        MavenCoordinates coordinates = pomRepository.load(
-                monorepoRoot.resolve("lib").resolve("pom.xml").toFile());
-        pomRepository.resolveParent(coordinates);
+        MavenCoordinates coordinates = pomRepository
+                .loadAndResolveParent(
+                        monorepoRoot.resolve("lib").resolve("pom.xml").toFile())
+                .coordinates();
         assertThat(coordinates).isEqualTo(new MavenCoordinates("com.acme", "foo", "1.1.0-SNAPSHOT"));
         List<Commit> commits = git.revList(null).toList();
         assertThat(commits.stream().map(Commit::summary))

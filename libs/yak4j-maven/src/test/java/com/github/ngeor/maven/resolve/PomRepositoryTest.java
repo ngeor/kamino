@@ -10,7 +10,7 @@ import com.github.ngeor.maven.MavenCoordinates;
 import com.github.ngeor.maven.ParentPom;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.DomRuntimeException;
-import org.apache.commons.lang3.Validate;
+import java.io.IOException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
@@ -52,7 +52,7 @@ class PomRepositoryTest {
     }
 
     @Test
-    void load() {
+    void load() throws IOException {
         String xmlContents =
                 """
             <project>
@@ -65,7 +65,7 @@ class PomRepositoryTest {
     }
 
     @Test
-    void loadTwiceIsNotAllowed() {
+    void loadTwiceIsNotAllowed() throws IOException {
         String xmlContents =
                 """
             <project>
@@ -79,7 +79,7 @@ class PomRepositoryTest {
     }
 
     @Test
-    void getResolutionPhaseUnresolved() {
+    void getResolutionPhaseUnresolved() throws IOException {
         String xmlContents =
                 """
         <project>
@@ -92,13 +92,7 @@ class PomRepositoryTest {
     }
 
     @Test
-    void resolveParentUnknownDocument() {
-        assertThatThrownBy(() -> pomRepository.resolveParent(new MavenCoordinates("com.acme", "foo", "1.2")))
-                .hasMessage("Document com.acme:foo:1.2 is unknown");
-    }
-
-    @Test
-    void resolveDocumentWithoutParent() {
+    void resolveDocumentWithoutParent() throws IOException {
         String xmlContents =
                 """
         <project>
@@ -106,17 +100,18 @@ class PomRepositoryTest {
             <artifactId>foo</artifactId>
             <version>1.0</version>
         </project>""";
-        MavenCoordinates coordinates = pomRepository.load(xmlContents);
 
         // act
-        pomRepository.resolveParent(coordinates);
+        MavenCoordinates coordinates =
+                pomRepository.loadAndResolveParent(xmlContents).coordinates();
 
         // assert
         assertThat(pomRepository.getResolutionPhase(coordinates)).isEqualTo(ResolutionPhase.PARENT_RESOLVED);
     }
 
     @Test
-    void resolveDocumentWithoutParentTwice() {
+    void resolveDocumentWithoutParentTwice() throws IOException {
+        // arrange
         String xmlContents =
                 """
         <project>
@@ -124,10 +119,12 @@ class PomRepositoryTest {
             <artifactId>foo</artifactId>
             <version>1.0</version>
         </project>""";
-        MavenCoordinates coordinates = pomRepository.load(xmlContents);
-        DocumentWrapper document1 = pomRepository.resolveParent(coordinates);
-        DocumentWrapper document2 = pomRepository.resolveParent(coordinates);
-        assertThat(document1).isNotNull().isSameAs(document2);
+
+        // act
+        LoadResult a = pomRepository.loadAndResolveParent(xmlContents);
+        LoadResult b = pomRepository.loadAndResolveParent(xmlContents);
+        assertThat(a).isNotNull().isEqualTo(b);
+        assertThat(a.document()).isNotNull().isSameAs(b.document());
     }
 
     @ParameterizedTest
@@ -146,13 +143,12 @@ class PomRepositoryTest {
         <version>1.1</version>
     </project>"""
                         .replace(lineToRemove, "");
-        MavenCoordinates childCoordinates = pomRepository.load(childContents);
-        assertThatThrownBy(() -> pomRepository.resolveParent(childCoordinates))
+        assertThatThrownBy(() -> pomRepository.loadAndResolveParent(childContents))
                 .hasMessage("Document com.acme:bar:1.1 has incomplete parent coordinates");
     }
 
     @Test
-    void resolveDocumentWithParent() {
+    void resolveDocumentWithParent() throws IOException {
         String parentContents =
                 """
         <project>
@@ -173,10 +169,11 @@ class PomRepositoryTest {
             <artifactId>bar</artifactId>
             <version>1.1</version>
         </project>""";
-        MavenCoordinates childCoordinates = pomRepository.load(childContents);
 
         // act
-        DocumentWrapper document = pomRepository.resolveParent(childCoordinates);
+        LoadResult loadResult = pomRepository.loadAndResolveParent(childContents);
+        MavenCoordinates childCoordinates = loadResult.coordinates();
+        DocumentWrapper document = loadResult.document();
 
         // assert
         assertThat(pomRepository.getResolutionPhase(parentCoordinates)).isEqualTo(ResolutionPhase.PARENT_RESOLVED);
@@ -196,7 +193,7 @@ class PomRepositoryTest {
     }
 
     @Test
-    void loadDocumentWithUnknownParent() {
+    void loadDocumentWithUnknownParent() throws IOException {
         // arrange
         MavenCoordinates parentCoordinates = new MavenCoordinates("com.acme", "foo", "1.0");
         String childContents =
@@ -222,7 +219,7 @@ class PomRepositoryTest {
     }
 
     @Test
-    void resolveDocumentWithParentDynamically() {
+    void resolveDocumentWithParentDynamically() throws IOException {
         String parentContents =
                 """
         <project>
@@ -230,6 +227,8 @@ class PomRepositoryTest {
             <artifactId>foo</artifactId>
             <version>1.0</version>
         </project>""";
+        resolver.setContents(parentContents);
+
         MavenCoordinates parentCoordinates = new MavenCoordinates("com.acme", "foo", "1.0");
         String childContents =
                 """
@@ -243,13 +242,12 @@ class PomRepositoryTest {
             <artifactId>bar</artifactId>
             <version>1.1</version>
         </project>""";
-        MavenCoordinates childCoordinates = pomRepository.load(childContents);
-        resolver.setContents(parentContents);
 
         // act
-        pomRepository.resolveParent(childCoordinates);
+        LoadResult loadResult = pomRepository.loadAndResolveParent(childContents);
 
         // assert
+        MavenCoordinates childCoordinates = loadResult.coordinates();
         assertThat(pomRepository.getResolutionPhase(parentCoordinates)).isEqualTo(ResolutionPhase.PARENT_RESOLVED);
         assertThat(pomRepository.getResolutionPhase(childCoordinates)).isEqualTo(ResolutionPhase.PARENT_RESOLVED);
     }

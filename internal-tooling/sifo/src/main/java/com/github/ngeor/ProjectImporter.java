@@ -8,6 +8,7 @@ import com.github.ngeor.versions.SemVer;
 import com.github.ngeor.versions.SemVerBump;
 import java.io.File;
 import java.io.IOException;
+import org.apache.commons.lang3.concurrent.ConcurrentException;
 
 /**
  * Imports a project from a different repository into the monorepo.
@@ -25,7 +26,7 @@ public class ProjectImporter {
         this.githubToken = githubToken;
     }
 
-    public void run() throws IOException, InterruptedException, ProcessFailedException {
+    public void run() throws IOException, InterruptedException, ProcessFailedException, ConcurrentException {
         ensureGitLatest();
         importGitSubtree();
         adjustImportedCode();
@@ -82,7 +83,7 @@ public class ProjectImporter {
         monorepo.subTreeAdd(typeName + "/" + oldRepoRoot.getName(), oldRepoRoot, oldRepo.getDefaultBranch());
     }
 
-    private void adjustImportedCode() throws IOException, ProcessFailedException {
+    private void adjustImportedCode() throws IOException, ProcessFailedException, ConcurrentException {
         new TemplateGenerator(monorepoRoot).regenerateAllTemplates();
 
         Git monorepo = new Git(monorepoRoot);
