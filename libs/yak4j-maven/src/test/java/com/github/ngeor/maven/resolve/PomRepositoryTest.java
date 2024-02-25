@@ -23,7 +23,8 @@ class PomRepositoryTest {
     @ParameterizedTest
     @NullAndEmptySource
     void loadEmpty(String xmlContents) {
-        assertThatThrownBy(() -> pomRepository.loadAndResolveParent(xmlContents)).hasMessage("xmlContents is required");
+        assertThatThrownBy(() -> pomRepository.loadAndResolveParent(xmlContents))
+                .hasMessage("xmlContents is required");
     }
 
     @Test
@@ -48,7 +49,8 @@ class PomRepositoryTest {
                 <version>1.0</version>
             </project>"""
                         .replaceAll(String.format("<%s>.+?</%s>", missingElement, missingElement), "");
-        assertThatThrownBy(() -> pomRepository.loadAndResolveParent(xmlContents)).hasMessageStartingWith("Missing coordinates");
+        assertThatThrownBy(() -> pomRepository.loadAndResolveParent(xmlContents))
+                .hasMessageStartingWith("Missing coordinates");
     }
 
     @Test
@@ -60,7 +62,8 @@ class PomRepositoryTest {
                 <artifactId>foo</artifactId>
                 <version>1.0</version>
             </project>""";
-        MavenCoordinates result = pomRepository.loadAndResolveParent(xmlContents).coordinates();
+        MavenCoordinates result =
+                pomRepository.loadAndResolveParent(xmlContents).coordinates();
         assertThat(result).isEqualTo(new MavenCoordinates("com.acme", "foo", "1.0"));
     }
 
@@ -129,7 +132,8 @@ class PomRepositoryTest {
             <artifactId>foo</artifactId>
             <version>1.0</version>
         </project>""";
-        MavenCoordinates parentCoordinates = pomRepository.loadAndResolveParent(parentContents).coordinates();
+        MavenCoordinates parentCoordinates =
+                pomRepository.loadAndResolveParent(parentContents).coordinates();
         String childContents =
                 """
         <project>

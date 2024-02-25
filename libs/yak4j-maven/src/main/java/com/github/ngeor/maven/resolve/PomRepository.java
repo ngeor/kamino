@@ -32,7 +32,6 @@ public class PomRepository {
         this(new DefaultResolver());
     }
 
-
     public LoadResult loadAndResolveParent(File file) throws IOException {
         return loadAndResolveParent(new FileInput(file));
     }
@@ -72,6 +71,7 @@ public class PomRepository {
         return !map.containsKey(Objects.requireNonNull(coordinates));
     }
 
+    @Deprecated
     public ResolutionPhase getResolutionPhase(MavenCoordinates coordinates) {
         Objects.requireNonNull(coordinates);
         Map<ResolutionPhase, DocumentWrapper> phaseMap = map.get(coordinates);
@@ -79,10 +79,12 @@ public class PomRepository {
         return phaseMap.keySet().stream().max(Enum::compareTo).orElseThrow();
     }
 
+    @Deprecated
     public ParentPom getOriginalParentPom(MavenCoordinates childCoordinates) {
         return originalParentPom.get(childCoordinates);
     }
 
+    @Deprecated
     public DocumentWrapper getDocument(MavenCoordinates coordinates, ResolutionPhase phase) {
         validateCoordinates(coordinates);
         Objects.requireNonNull(phase);
@@ -191,17 +193,17 @@ public class PomRepository {
         DocumentWrapper document = input.loadDocument();
         ElementWrapper documentElement = document.getDocumentElement();
         Validate.isTrue(
-            PROJECT.equals(documentElement.getNodeName()),
-            "Unexpected root element '%s' (expected '%s')",
-            documentElement.getNodeName(),
-            PROJECT);
+                PROJECT.equals(documentElement.getNodeName()),
+                "Unexpected root element '%s' (expected '%s')",
+                documentElement.getNodeName(),
+                PROJECT);
         MavenCoordinates coordinates = DomHelper.getCoordinates(documentElement);
         Validate.notBlank(coordinates.artifactId(), "Missing coordinates (artifactId) in %s", input);
         if (coordinates.hasMissingFields()) {
             // try to resolve parent
             ParentPom parentPom = DomHelper.getParentPom(document)
-                .orElseThrow(() -> new IllegalStateException(
-                    String.format("Missing coordinates in document %s and no parent pom", input)));
+                    .orElseThrow(() -> new IllegalStateException(
+                            String.format("Missing coordinates in document %s and no parent pom", input)));
             DocumentWrapper parentDoc = resolveParent(input, parentPom).deepClone();
             // TODO reduce duplication with other merge usage
             DocumentWrapper cloneChild = document.deepClone();
@@ -211,24 +213,24 @@ public class PomRepository {
             coordinates = DomHelper.getCoordinates(parentDoc);
             Validate.validState(coordinates.isValid(), "Missing coordinates in %s after resolving parent", input);
             Validate.validState(
-                isUnknown(coordinates),
-                "Document %s is already loaded (trying to load %s, loaded=%s)",
-                coordinates.format(),
-                input,
-                coordinatesToInputMap);
+                    isUnknown(coordinates),
+                    "Document %s is already loaded (trying to load %s, loaded=%s)",
+                    coordinates.format(),
+                    input,
+                    coordinatesToInputMap);
             originalParentPom.put(coordinates, parentPom);
             map.put(
-                coordinates,
-                new EnumMap<>(Map.of(
-                    ResolutionPhase.UNRESOLVED, document,
-                    ResolutionPhase.PARENT_RESOLVED, parentDoc)));
+                    coordinates,
+                    new EnumMap<>(Map.of(
+                            ResolutionPhase.UNRESOLVED, document,
+                            ResolutionPhase.PARENT_RESOLVED, parentDoc)));
         } else {
             Validate.validState(
-                isUnknown(coordinates),
-                "Document %s is already loaded (trying to load %s, loaded=%s)",
-                coordinates.format(),
-                input,
-                coordinatesToInputMap);
+                    isUnknown(coordinates),
+                    "Document %s is already loaded (trying to load %s, loaded=%s)",
+                    coordinates.format(),
+                    input,
+                    coordinatesToInputMap);
             map.put(coordinates, new EnumMap<>(Map.of(ResolutionPhase.UNRESOLVED, document)));
         }
         coordinatesToInputMap.put(coordinates, input);
