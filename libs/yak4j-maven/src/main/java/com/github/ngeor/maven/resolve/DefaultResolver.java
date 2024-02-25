@@ -13,7 +13,7 @@ public final class DefaultResolver implements PomRepository.Resolver {
         Objects.requireNonNull(child);
         Objects.requireNonNull(parentPom);
         Objects.requireNonNull(parentPom.coordinates());
-        Validate.validState(!parentPom.coordinates().hasMissingFields(), "Missing maven coordinates");
+        Validate.validState(parentPom.coordinates().isValid(), "Missing maven coordinates");
         File parentPomFile;
         if (parentPom.relativePath() == null) {
             parentPomFile = parentPomFileFromLocalRepository(parentPom);

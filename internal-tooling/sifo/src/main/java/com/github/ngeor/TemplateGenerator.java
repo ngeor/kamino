@@ -2,7 +2,7 @@ package com.github.ngeor;
 
 import com.github.ngeor.maven.process.Maven;
 import com.github.ngeor.maven.MavenCoordinates;
-import com.github.ngeor.maven.MavenDocument;
+import com.github.ngeor.maven.resolve.MavenDocument;
 import com.github.ngeor.maven.ParentPom;
 import com.github.ngeor.maven.resolve.PomRepository;
 import com.github.ngeor.maven.resolve.ResolutionPhase;

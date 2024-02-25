@@ -70,7 +70,7 @@ public class PomRepository {
             mavenCoordinates = new MavenCoordinates(
                     coordinates.get(GROUP_ID), coordinates.get(ARTIFACT_ID), coordinates.get(VERSION));
             Validate.validState(
-                    !mavenCoordinates.hasMissingFields(), "Missing coordinates in %s after resolving parent", input);
+                    mavenCoordinates.isValid(), "Missing coordinates in %s after resolving parent", input);
             Validate.validState(
                     !isKnown(mavenCoordinates),
                     "Document %s is already loaded (trying to load %s, loaded=%s)",
@@ -127,7 +127,7 @@ public class PomRepository {
                 return document;
             } else {
                 Validate.validState(
-                        !parentPom.coordinates().hasMissingFields(),
+                        parentPom.coordinates().isValid(),
                         "Document %s has incomplete parent coordinates",
                         coordinates.format());
 
@@ -183,7 +183,7 @@ public class PomRepository {
     }
 
     private static void validateCoordinates(MavenCoordinates coordinates) {
-        Validate.validState(coordinates != null && !coordinates.hasMissingFields(), "Missing coordinates");
+        Validate.validState(coordinates != null && coordinates.isValid(), "Missing coordinates");
     }
 
     public DocumentWrapper loadAndResolveProperties(File file) {

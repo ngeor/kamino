@@ -1,6 +1,6 @@
 package com.github.ngeor;
 
-import com.github.ngeor.maven.MavenDocument;
+import com.github.ngeor.maven.resolve.MavenDocument;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.File;
 import java.util.stream.Stream;

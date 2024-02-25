@@ -1,5 +1,7 @@
-package com.github.ngeor.maven;
+package com.github.ngeor.maven.resolve;
 
+import com.github.ngeor.maven.MavenCoordinates;
+import com.github.ngeor.maven.dom.DomHelper;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.util.Map;
@@ -15,19 +17,15 @@ public final class MavenDocument {
         this.document = Objects.requireNonNull(document);
     }
 
-    public ParentPom parentPom() {
-        return ParentPom.fromDocument(document).orElse(null);
-    }
-
     public MavenCoordinates coordinates() {
-        return MavenCoordinates.fromElement(document.getDocumentElement());
+        return DomHelper.getCoordinates(document);
     }
 
     public Stream<MavenCoordinates> dependencies() {
         return document.getDocumentElement()
                 .findChildElements("dependencies")
                 .flatMap(dependencies -> dependencies.findChildElements("dependency"))
-                .map(MavenCoordinates::fromElement);
+                .map(DomHelper::getCoordinates);
     }
 
     public Stream<String> modules() {
@@ -66,4 +64,6 @@ public final class MavenDocument {
                 .flatMap(ElementWrapper::getTextContentTrimmedAsStream)
                 .findFirst();
     }
+
+
 }
