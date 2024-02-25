@@ -1,9 +1,6 @@
 package com.github.ngeor.maven.resolve;
 
-import static com.github.ngeor.maven.ElementNames.ARTIFACT_ID;
-import static com.github.ngeor.maven.ElementNames.GROUP_ID;
 import static com.github.ngeor.maven.ElementNames.PROJECT;
-import static com.github.ngeor.maven.ElementNames.VERSION;
 
 import com.github.ngeor.maven.MavenCoordinates;
 import com.github.ngeor.maven.ParentPom;
@@ -18,7 +15,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.Validate;
 import org.w3c.dom.Element;
@@ -52,11 +48,9 @@ public class PomRepository {
                 "Unexpected root element '%s' (expected '%s')",
                 documentElement.getNodeName(),
                 PROJECT);
-        Map<String, String> coordinates = documentElement.firstElementsText(Set.of(GROUP_ID, ARTIFACT_ID, VERSION));
-        MavenCoordinates mavenCoordinates =
-                new MavenCoordinates(coordinates.get(GROUP_ID), coordinates.get(ARTIFACT_ID), coordinates.get(VERSION));
-        Validate.notBlank(mavenCoordinates.artifactId(), "Missing coordinates (artifactId) in %s", input);
-        if (mavenCoordinates.hasMissingFields()) {
+        MavenCoordinates coordinates = DomHelper.getCoordinates(documentElement);
+        Validate.notBlank(coordinates.artifactId(), "Missing coordinates (artifactId) in %s", input);
+        if (coordinates.hasMissingFields()) {
             // try to resolve parent
             ParentPom parentPom = DomHelper.getParentPom(document)
                     .orElseThrow(() -> new IllegalStateException(
@@ -67,40 +61,38 @@ public class PomRepository {
             cloneChild.getDocumentElement().removeChildNodesByName("parent");
             new PomMerger.DocumentMerge().mergeIntoLeft(parentDoc, cloneChild);
             // try to get the resolved coordinates
-            coordinates = parentDoc.getDocumentElement().firstElementsText(Set.of(GROUP_ID, ARTIFACT_ID, VERSION));
-            mavenCoordinates = new MavenCoordinates(
-                    coordinates.get(GROUP_ID), coordinates.get(ARTIFACT_ID), coordinates.get(VERSION));
-            Validate.validState(mavenCoordinates.isValid(), "Missing coordinates in %s after resolving parent", input);
+            coordinates = DomHelper.getCoordinates(parentDoc);
+            Validate.validState(coordinates.isValid(), "Missing coordinates in %s after resolving parent", input);
             Validate.validState(
-                    !isKnown(mavenCoordinates),
+                    !isKnown(coordinates),
                     "Document %s is already loaded (trying to load %s, loaded=%s)",
-                    mavenCoordinates.format(),
+                    coordinates.format(),
                     input,
                     inputMap);
-            originalParentPom.put(mavenCoordinates, parentPom);
+            originalParentPom.put(coordinates, parentPom);
             map.put(
-                    mavenCoordinates,
+                    coordinates,
                     new EnumMap<>(Map.of(
                             ResolutionPhase.UNRESOLVED, document,
                             ResolutionPhase.PARENT_RESOLVED, parentDoc)));
         } else {
             Validate.validState(
-                    !isKnown(mavenCoordinates),
+                    !isKnown(coordinates),
                     "Document %s is already loaded (trying to load %s, loaded=%s)",
-                    mavenCoordinates.format(),
+                    coordinates.format(),
                     input,
                     inputMap);
-            map.put(mavenCoordinates, new EnumMap<>(Map.of(ResolutionPhase.UNRESOLVED, document)));
+            map.put(coordinates, new EnumMap<>(Map.of(ResolutionPhase.UNRESOLVED, document)));
         }
-        inputMap.put(mavenCoordinates, input);
+        inputMap.put(coordinates, input);
         if (input instanceof Input.FileInput fi) {
             try {
-                fileMap.put(fi.pomFile().getCanonicalFile(), mavenCoordinates);
+                fileMap.put(fi.pomFile().getCanonicalFile(), coordinates);
             } catch (IOException ex) {
                 throw new UncheckedIOException(ex);
             }
         }
-        return mavenCoordinates;
+        return coordinates;
     }
 
     public boolean isKnown(MavenCoordinates coordinates) {
