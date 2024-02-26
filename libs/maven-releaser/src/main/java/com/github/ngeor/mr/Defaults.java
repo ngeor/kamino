@@ -1,6 +1,6 @@
 package com.github.ngeor.mr;
 
-import com.github.ngeor.changelog.FormatOptions;
+import com.github.ngeor.changelog.format.FormatOptions;
 import java.util.Map;
 
 public final class Defaults {

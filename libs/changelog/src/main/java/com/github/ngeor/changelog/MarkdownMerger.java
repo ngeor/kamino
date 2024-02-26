@@ -1,5 +1,8 @@
 package com.github.ngeor.changelog;
 
+import com.github.ngeor.changelog.format.FormatOptions;
+import com.github.ngeor.changelog.format.FormattedGroup;
+import com.github.ngeor.changelog.format.FormattedRelease;
 import com.github.ngeor.markdown.Item;
 import com.github.ngeor.markdown.Line;
 import com.github.ngeor.markdown.Section;
@@ -26,7 +29,7 @@ public record MarkdownMerger(FormatOptions formatOptions, boolean overwrite) {
                 && j < formattedRelease.groups().size()) {
             Item leftItem = topLevelSection.contents().get(i);
             if (leftItem instanceof Section leftSection && leftSection.level() == 2) {
-                FormattedRelease.Group rightGroup = formattedRelease.groups().get(j);
+                FormattedGroup rightGroup = formattedRelease.groups().get(j);
                 String leftTitle = leftSection.title();
                 String rightTitle = rightGroup.title();
                 if (formatOptions.unreleasedTitle().equalsIgnoreCase(leftTitle)) {
@@ -85,7 +88,7 @@ public record MarkdownMerger(FormatOptions formatOptions, boolean overwrite) {
         }
     }
 
-    private Section generateSection(FormattedRelease.Group group) {
+    private Section generateSection(FormattedGroup group) {
         String title = group.title();
         return new Section(2, title, formatSectionBody(group));
     }
@@ -99,7 +102,7 @@ public record MarkdownMerger(FormatOptions formatOptions, boolean overwrite) {
                 .orElseThrow(() -> new IllegalArgumentException("Changelog must have a top level heading"));
     }
 
-    private List<Item> formatSectionBody(FormattedRelease.Group formattedGroup) {
+    private List<Item> formatSectionBody(FormattedGroup formattedGroup) {
         return formattedGroup.subGroups().stream()
                 .map(childGroup -> {
                     List<Item> body = childGroup.items().stream()

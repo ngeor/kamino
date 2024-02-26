@@ -1,5 +1,12 @@
 package com.github.ngeor.changelog;
 
+import com.github.ngeor.changelog.format.FormatOptions;
+import com.github.ngeor.changelog.format.FormattedRelease;
+import com.github.ngeor.changelog.format.Formatter;
+import com.github.ngeor.changelog.group.CommitInfo;
+import com.github.ngeor.changelog.group.Release;
+import com.github.ngeor.changelog.group.ReleaseGrouper;
+import com.github.ngeor.changelog.group.SubGroupOptions;
 import com.github.ngeor.git.Commit;
 import com.github.ngeor.git.Git;
 import com.github.ngeor.markdown.Item;
@@ -21,12 +28,14 @@ public class ChangeLogUpdater {
     private final String modulePath;
     private final Git git;
     private final FormatOptions formatOptions;
+    private final TagPrefix tagPrefix;
 
     public ChangeLogUpdater(File rootDirectory, String modulePath, FormatOptions formatOptions) {
         this.rootDirectory = rootDirectory;
         this.modulePath = modulePath;
         this.git = new Git(rootDirectory);
         this.formatOptions = Objects.requireNonNull(formatOptions);
+        this.tagPrefix = TagPrefix.forPath(modulePath);
     }
 
     private File getChangeLog() {
@@ -51,12 +60,12 @@ public class ChangeLogUpdater {
     private List<Item> generateChangeLog(boolean overwrite, SemVer futureVersion)
             throws IOException, ProcessFailedException {
 
-        Release.SubGroupOptions subGroupOptions =
-                new Release.SubGroupOptions("chore", List.of("feat", "fix", "chore", "deps"), this::remapType);
+        SubGroupOptions subGroupOptions =
+                new SubGroupOptions("chore", List.of("feat", "fix", "chore", "deps"), this::remapType);
 
         ReleaseGrouper releaseGrouper = new ReleaseGrouper(subGroupOptions);
         Release release = releaseGrouper.toRelease(getCommits());
-        FormattedRelease formattedRelease = new Formatter(formatOptions, modulePath, futureVersion).format(release);
+        FormattedRelease formattedRelease = new Formatter(formatOptions, tagPrefix, futureVersion).format(release);
         File changeLog = getChangeLog();
         List<Item> markdown = changeLog.isFile()
                 ? new MarkdownReader().read(changeLog)
@@ -65,7 +74,7 @@ public class ChangeLogUpdater {
         return markdown;
     }
 
-    private String remapType(Release.CommitInfo commitInfo) {
+    private String remapType(CommitInfo commitInfo) {
         return "chore".equals(commitInfo.type()) && "deps".equals(commitInfo.scope())
                 ? "deps"
                 : ("refactor".equals(commitInfo.type()) ? "chore" : commitInfo.type());

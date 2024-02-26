@@ -1,4 +1,4 @@
-package com.github.ngeor.changelog;
+package com.github.ngeor.changelog.format;
 
 import java.util.Map;
 

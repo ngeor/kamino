@@ -1,4 +1,4 @@
-package com.github.ngeor.changelog;
+package com.github.ngeor.changelog.group;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

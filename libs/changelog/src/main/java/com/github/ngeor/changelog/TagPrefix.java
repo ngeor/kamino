@@ -2,12 +2,11 @@ package com.github.ngeor.changelog;
 
 import com.github.ngeor.git.Tag;
 import com.github.ngeor.versions.SemVer;
+import org.apache.commons.lang3.Validate;
 
-public final class TagPrefix {
-    private final String tagPrefix;
-
-    private TagPrefix(String tagPrefix) {
-        this.tagPrefix = tagPrefix;
+public record TagPrefix(String tagPrefix) {
+    public TagPrefix {
+        Validate.notBlank(tagPrefix);
     }
 
     public static TagPrefix forPath(String path) {
@@ -21,10 +20,6 @@ public final class TagPrefix {
             tagPrefix = path + "/v";
         }
         return new TagPrefix(tagPrefix);
-    }
-
-    public String tagPrefix() {
-        return tagPrefix;
     }
 
     public String addTagPrefix(SemVer version) {

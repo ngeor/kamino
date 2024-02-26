@@ -2,6 +2,7 @@ package com.github.ngeor.changelog;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.github.ngeor.changelog.format.FormatOptions;
 import com.github.ngeor.git.Git;
 import com.github.ngeor.git.User;
 import com.github.ngeor.process.ProcessFailedException;

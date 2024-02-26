@@ -1,5 +1,6 @@
-package com.github.ngeor.changelog;
+package com.github.ngeor.changelog.group;
 
+import com.github.ngeor.changelog.CommitFilter;
 import com.github.ngeor.git.Commit;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,7 +16,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public record ReleaseGrouper(Release.SubGroupOptions options) {
+public record ReleaseGrouper(SubGroupOptions options) {
     private static final Pattern conventionalCommitPattern = Pattern.compile(
             "^(?<type>[a-z]+)(\\((?<scope>[a-z]+)\\))?(?<breaking>!)?:\\s*(?<description>.+)$",
             Pattern.CASE_INSENSITIVE);
@@ -54,12 +55,12 @@ public record ReleaseGrouper(Release.SubGroupOptions options) {
         return new Release(groupsFromCommitGroups(groups));
     }
 
-    private List<Release.Group> groupsFromCommitGroups(List<List<Commit>> groups) {
+    private List<Group> groupsFromCommitGroups(List<List<Commit>> groups) {
         return groups.stream().flatMap(g -> groupFromCommitGroup(g).stream()).toList();
     }
 
-    private Optional<Release.Group> groupFromCommitGroup(List<Commit> commitGroup) {
-        List<Release.CommitInfo> commitInfos = commitGroup.stream()
+    private Optional<Group> groupFromCommitGroup(List<Commit> commitGroup) {
+        List<CommitInfo> commitInfos = commitGroup.stream()
                 // filter out excluded commits
                 .filter(c -> new CommitFilter().test(c.summary()))
                 // resolve type, scope, etc
@@ -73,24 +74,24 @@ public record ReleaseGrouper(Release.SubGroupOptions options) {
         }
 
         // group them by "type", sorted according to options
-        Map<String, List<Release.CommitInfo>> groupedByType = commitInfos.stream()
+        Map<String, List<CommitInfo>> groupedByType = commitInfos.stream()
                 .collect(Collectors.groupingBy(this::calculateType, this::createTreeMap, Collectors.toList()));
 
-        List<Release.SubGroup> subGroups = groupedByType.entrySet().stream()
-                .map(e -> new Release.SubGroup(e.getKey(), e.getValue()))
+        List<SubGroup> subGroups = groupedByType.entrySet().stream()
+                .map(e -> new SubGroup(e.getKey(), e.getValue()))
                 .toList();
         return Optional.of(
                 lastCommit.tag() != null
-                        ? new Release.TaggedGroup(lastCommit, subGroups)
-                        : new Release.UnreleasedGroup(subGroups));
+                        ? new TaggedGroup(lastCommit, subGroups)
+                        : new UnreleasedGroup(subGroups));
     }
 
-    private String calculateType(Release.CommitInfo commitInfo) {
+    private String calculateType(CommitInfo commitInfo) {
         // override the type if needed, fallback to the default group if null
         return Objects.requireNonNullElseGet(options.scopeOverrider().apply(commitInfo), options::defaultGroup);
     }
 
-    private Map<String, List<Release.CommitInfo>> createTreeMap() {
+    private Map<String, List<CommitInfo>> createTreeMap() {
         Map<String, Integer> orders = new HashMap<>();
         for (int i = 0; i < options.order().size(); i++) {
             orders.put(options.order().get(i), i);
@@ -113,16 +114,16 @@ public record ReleaseGrouper(Release.SubGroupOptions options) {
         });
     }
 
-    private Release.CommitInfo toCommitInfo(Commit commit) {
+    private CommitInfo toCommitInfo(Commit commit) {
         Matcher matcher = conventionalCommitPattern.matcher(commit.summary());
         if (matcher.matches()) {
             String type = matcher.group("type");
             String description = matcher.group("description");
             String scope = matcher.group("scope");
             boolean isBreaking = matcher.group("breaking") != null;
-            return new Release.CommitInfo.ConventionalCommit(type, scope, description, isBreaking);
+            return new ConventionalCommit(type, scope, description, isBreaking);
         }
 
-        return new Release.CommitInfo.UntypedCommit(commit);
+        return new UntypedCommit(commit);
     }
 }

@@ -1,7 +1,12 @@
-package com.github.ngeor.changelog;
+package com.github.ngeor.changelog.format;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.github.ngeor.changelog.group.ConventionalCommit;
+import com.github.ngeor.changelog.group.Release;
+import com.github.ngeor.changelog.group.SubGroup;
+import com.github.ngeor.changelog.group.TaggedGroup;
+import com.github.ngeor.changelog.group.UnreleasedGroup;
 import com.github.ngeor.git.Commit;
 import java.time.LocalDate;
 import java.util.Map;
@@ -13,19 +18,19 @@ class FormatterTest {
         // arrange
         FormatOptions options = new FormatOptions("Unreleased", Map.of("chore", "Chores"), null);
         String moduleName = "libs/java";
-        Release release = new Release(new Release.UnreleasedGroup(new Release.SubGroup(
-                "chore", new Release.CommitInfo.ConventionalCommit("chore", null, "Added tests", false))));
+        Release release = new Release(new UnreleasedGroup(new SubGroup(
+                "chore", new ConventionalCommit("chore", null, "Added tests", false))));
 
         // act
-        FormattedRelease formatted = new Formatter(options, moduleName, null).format(release);
+        FormattedRelease formatted = Formatter.format(release, options, moduleName);
 
         // assert
         assertThat(formatted).isNotNull();
         assertThat(formatted.groups()).hasSize(1);
-        FormattedRelease.Group group = formatted.groups().get(0);
+        FormattedGroup group = formatted.groups().get(0);
         assertThat(group.title()).isEqualTo("Unreleased");
         assertThat(group.subGroups()).hasSize(1);
-        FormattedRelease.SubGroup subGroup = group.subGroups().get(0);
+        FormattedSubGroup subGroup = group.subGroups().get(0);
         assertThat(subGroup.title()).isEqualTo("Chores");
         assertThat(subGroup.items()).containsExactly("Added tests");
     }
@@ -35,16 +40,16 @@ class FormatterTest {
         // arrange
         FormatOptions options = new FormatOptions("Unreleased", Map.of("chore", "Chores"), null);
         String moduleName = "libs/java";
-        Release release = new Release(new Release.UnreleasedGroup(new Release.SubGroup(
-                "chore", new Release.CommitInfo.ConventionalCommit("chore", null, "Added tests", true))));
+        Release release = new Release(new UnreleasedGroup(new SubGroup(
+                "chore", new ConventionalCommit("chore", null, "Added tests", true))));
 
         // act
-        FormattedRelease formatted = new Formatter(options, moduleName, null).format(release);
+        FormattedRelease formatted = Formatter.format(release, options, moduleName);
 
         // assert
         assertThat(formatted).isNotNull();
-        FormattedRelease.Group group = formatted.groups().get(0);
-        FormattedRelease.SubGroup subGroup = group.subGroups().get(0);
+        FormattedGroup group = formatted.groups().get(0);
+        FormattedSubGroup subGroup = group.subGroups().get(0);
         assertThat(subGroup.items()).containsExactly("**Breaking**: Added tests");
     }
 
@@ -53,18 +58,18 @@ class FormatterTest {
         // arrange
         FormatOptions options = new FormatOptions("Unreleased", Map.of("chore", "Chores"), null);
         String moduleName = "libs/java";
-        Release release = new Release(new Release.TaggedGroup(
+        Release release = new Release(new TaggedGroup(
                 new Commit("sha", LocalDate.of(2024, 2, 26), "libs/java/v1.0.0", "Release v1.0.0"),
-                new Release.SubGroup(
-                        "chore", new Release.CommitInfo.ConventionalCommit("chore", null, "Added tests", true))));
+                new SubGroup(
+                        "chore", new ConventionalCommit("chore", null, "Added tests", true))));
 
         // act
-        FormattedRelease formatted = new Formatter(options, moduleName, null).format(release);
+        FormattedRelease formatted = Formatter.format(release, options, moduleName);
 
         // assert
         assertThat(formatted).isNotNull();
         assertThat(formatted.groups()).hasSize(1);
-        FormattedRelease.Group group = formatted.groups().get(0);
+        FormattedGroup group = formatted.groups().get(0);
         assertThat(group.title()).isEqualTo("[1.0.0] - 2024-02-26");
     }
 
@@ -75,19 +80,19 @@ class FormatterTest {
                 "Unreleased", Map.of("chore", "Chores"), "https://github.com/ngeor/changelog/compare/%s...%s");
         String moduleName = "libs/java";
         Release release = new Release(
-                new Release.TaggedGroup(
+                new TaggedGroup(
                         new Commit("sha", LocalDate.of(2024, 2, 27), "libs/java/v1.1.0", "Release v1.1.0"),
-                        new Release.SubGroup(
+                        new SubGroup(
                                 "chore",
-                                new Release.CommitInfo.ConventionalCommit("chore", null, "Fixed tests", false))),
-                new Release.TaggedGroup(
+                                new ConventionalCommit("chore", null, "Fixed tests", false))),
+                new TaggedGroup(
                         new Commit("sha", LocalDate.of(2024, 2, 26), "libs/java/v1.0.0", "Release v1.0.0"),
-                        new Release.SubGroup(
+                        new SubGroup(
                                 "chore",
-                                new Release.CommitInfo.ConventionalCommit("chore", null, "Added tests", true))));
+                                new ConventionalCommit("chore", null, "Added tests", true))));
 
         // act
-        FormattedRelease formatted = new Formatter(options, moduleName, null).format(release);
+        FormattedRelease formatted = Formatter.format(release, options, moduleName);
 
         // assert
         assertThat(formatted).isNotNull();

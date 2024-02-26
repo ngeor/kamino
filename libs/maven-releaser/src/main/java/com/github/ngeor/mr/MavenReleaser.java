@@ -1,7 +1,7 @@
 package com.github.ngeor.mr;
 
 import com.github.ngeor.changelog.ChangeLogUpdater;
-import com.github.ngeor.changelog.FormatOptions;
+import com.github.ngeor.changelog.format.FormatOptions;
 import com.github.ngeor.changelog.TagPrefix;
 import com.github.ngeor.git.FetchOption;
 import com.github.ngeor.git.Git;

@@ -2,6 +2,10 @@ package com.github.ngeor.changelog;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.github.ngeor.changelog.format.FormatOptions;
+import com.github.ngeor.changelog.format.FormattedGroup;
+import com.github.ngeor.changelog.format.FormattedRelease;
+import com.github.ngeor.changelog.format.FormattedSubGroup;
 import com.github.ngeor.markdown.Item;
 import com.github.ngeor.markdown.Line;
 import com.github.ngeor.markdown.Section;
@@ -24,7 +28,7 @@ class MarkdownMergerTest {
         MarkdownMerger markdownMerger = new MarkdownMerger(new FormatOptions(UNRELEASED, Map.of(), null), false);
         List<Item> markdown = List.of(new Section(1, CHANGELOG));
         FormattedRelease formattedRelease = new FormattedRelease(
-                new FormattedRelease.Group(UNRELEASED, new FormattedRelease.SubGroup(CHORES, "Simple fix")));
+                new FormattedGroup(UNRELEASED, new FormattedSubGroup(CHORES, "Simple fix")));
 
         // act
         markdownMerger.mergeIntoLeft(markdown, formattedRelease);
@@ -43,7 +47,7 @@ class MarkdownMergerTest {
         List<Item> markdown = List.of(new Section(
                 1, CHANGELOG, new Section(2, UNRELEASED, new Section(3, CHORES, new Line("* Simple fix")))));
         FormattedRelease formattedRelease = new FormattedRelease(
-                new FormattedRelease.Group("[1.0]", new FormattedRelease.SubGroup(CHORES, "Simple fix")));
+                new FormattedGroup("[1.0]", new FormattedSubGroup(CHORES, "Simple fix")));
 
         // act
         markdownMerger.mergeIntoLeft(markdown, formattedRelease);
@@ -61,8 +65,8 @@ class MarkdownMergerTest {
         List<Item> markdown = List.of(new Section(
                 1, CHANGELOG, new Section(2, UNRELEASED, new Section(3, CHORES, new Line("* Simple fix")))));
         FormattedRelease formattedRelease = new FormattedRelease(
-                new FormattedRelease.Group(UNRELEASED, new FormattedRelease.SubGroup(FIXES, "Another simple fix")),
-                new FormattedRelease.Group("[1.0]", new FormattedRelease.SubGroup(CHORES, "Simple fix")));
+                new FormattedGroup(UNRELEASED, new FormattedSubGroup(FIXES, "Another simple fix")),
+                new FormattedGroup("[1.0]", new FormattedSubGroup(CHORES, "Simple fix")));
 
         // act
         markdownMerger.mergeIntoLeft(markdown, formattedRelease);
@@ -87,8 +91,8 @@ class MarkdownMergerTest {
                 new Section(2, "[1.2.1] whatever", new Section(3, CHORES, new Line("* Gone")))));
 
         FormattedRelease formattedRelease = new FormattedRelease(
-                new FormattedRelease.Group("[1.4.0]", new FormattedRelease.SubGroup(FIXES, "Another simple fix")),
-                new FormattedRelease.Group("[1.2.1]", new FormattedRelease.SubGroup(CHORES, "Simple fix")));
+                new FormattedGroup("[1.4.0]", new FormattedSubGroup(FIXES, "Another simple fix")),
+                new FormattedGroup("[1.2.1]", new FormattedSubGroup(CHORES, "Simple fix")));
 
         // act
         markdownMerger.mergeIntoLeft(markdown, formattedRelease);
