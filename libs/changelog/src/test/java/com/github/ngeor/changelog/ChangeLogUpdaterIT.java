@@ -3,6 +3,7 @@ package com.github.ngeor.changelog;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.ngeor.git.Git;
+import com.github.ngeor.git.User;
 import com.github.ngeor.process.ProcessFailedException;
 import com.github.ngeor.versions.SemVer;
 import java.io.File;
@@ -24,7 +25,7 @@ class ChangeLogUpdaterIT {
     @BeforeEach
     void beforeEach() throws ProcessFailedException {
         git = new Git(rootDirectory);
-        git.initAndConfigureIdentity("John Doe", "no-reply@acme.com");
+        git.initAndConfigureIdentity("master", new User("John Doe", "no-reply@acme.com"));
         changeLogUpdater = new ChangeLogUpdater(rootDirectory, null);
     }
 

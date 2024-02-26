@@ -24,7 +24,7 @@ class GitIT {
     @BeforeEach
     void beforeEach() throws ProcessFailedException {
         git = new Git(directory);
-        git.initAndConfigureIdentity("John Doe", "no-reply@acme.com");
+        git.initAndConfigureIdentity("main", new User("John Doe", "no-reply@acme.com"));
     }
 
     @Test

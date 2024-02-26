@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import com.github.ngeor.git.Commit;
 import com.github.ngeor.git.Git;
 import com.github.ngeor.git.InitOption;
+import com.github.ngeor.git.User;
 import com.github.ngeor.maven.MavenCoordinates;
 import com.github.ngeor.maven.resolve.PomRepository;
 import com.github.ngeor.process.ProcessFailedException;
@@ -76,15 +77,15 @@ class MavenReleaserIT {
     void beforeEach() throws IOException, ProcessFailedException {
         // create remote git
         Git remoteGit = new Git(remoteRoot.toFile());
-        remoteGit.init(InitOption.BARE);
+        remoteGit.init("trunk", InitOption.BARE);
 
         // clone local git
         git = new Git(monorepoRoot.toFile());
         git.clone("file://" + remoteRoot.toAbsolutePath());
-        git.configureIdentity("John Doe", "no-reply@acme.com");
+        git.configureIdentity(new User("John Doe", "no-reply@acme.com"));
 
         // so that the default branch can be determined
-        git.symbolicRef("refs/remotes/origin/HEAD", "refs/remotes/origin/master");
+        git.symbolicRef("refs/remotes/origin/HEAD", "refs/remotes/origin/trunk");
 
         Files.createDirectory(monorepoRoot.resolve("lib"));
         releaser = new MavenReleaser(monorepoRoot.toFile(), "lib");
@@ -228,7 +229,7 @@ class MavenReleaserIT {
 
             // assert
             assertThatThrownBy(() -> releaser.prepareRelease(new SemVer(1, 0, 0), false))
-                    .hasMessage("repo was not on default branch (expected master, found develop)");
+                    .hasMessage("repo was not on default branch (expected trunk, found develop)");
         }
 
         @Test

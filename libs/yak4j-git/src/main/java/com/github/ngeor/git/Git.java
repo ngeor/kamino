@@ -181,8 +181,8 @@ public final class Git {
         return revList((String) null, path);
     }
 
-    public void init(InitOption... initOptions) throws ProcessFailedException {
-        List<String> args = new ArrayList<>(List.of("init"));
+    public void init(String initialBranch, InitOption... initOptions) throws ProcessFailedException {
+        List<String> args = new ArrayList<>(List.of("init", "-b", Validate.notBlank(initialBranch)));
         Arrays.stream(initOptions)
                 .map(initOption -> switch (initOption) {
                     case BARE -> "--bare";
@@ -191,10 +191,10 @@ public final class Git {
         processHelper.run(args);
     }
 
-    public void initAndConfigureIdentity(String name, String email, InitOption... initOptions)
+    public void initAndConfigureIdentity(String initialBranch, User user, InitOption... initOptions)
             throws ProcessFailedException {
-        init(initOptions);
-        configureIdentity(name, email);
+        init(initialBranch, initOptions);
+        configureIdentity(user);
     }
 
     public void tag(String tag) throws ProcessFailedException {
@@ -205,9 +205,10 @@ public final class Git {
         processHelper.run("config", Validate.notBlank(key), value);
     }
 
-    public void configureIdentity(String name, String email) throws ProcessFailedException {
-        config(CONFIG_USER_NAME, Validate.notBlank(name));
-        config(CONFIG_USER_EMAIL, Validate.notBlank(email));
+    public void configureIdentity(User user) throws ProcessFailedException {
+        Objects.requireNonNull(user);
+        config(CONFIG_USER_NAME, user.name());
+        config(CONFIG_USER_EMAIL, user.email());
     }
 
     public void ensureOnDefaultBranch() throws ProcessFailedException {
