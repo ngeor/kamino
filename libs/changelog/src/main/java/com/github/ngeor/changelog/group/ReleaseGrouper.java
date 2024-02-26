@@ -11,16 +11,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.TreeMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public record ReleaseGrouper(SubGroupOptions options) {
-    private static final Pattern conventionalCommitPattern = Pattern.compile(
-            "^(?<type>[a-z]+)(\\((?<scope>[a-z]+)\\))?(?<breaking>!)?:\\s*(?<description>.+)$",
-            Pattern.CASE_INSENSITIVE);
-
     public Release toRelease(Stream<Commit> commits) {
         return fromCommitGroups(fromCommits(commits));
     }
@@ -64,7 +58,7 @@ public record ReleaseGrouper(SubGroupOptions options) {
                 // filter out excluded commits
                 .filter(c -> new CommitFilter().test(c.summary()))
                 // resolve type, scope, etc
-                .map(this::toCommitInfo)
+                .map(CommitInfoFactory::toCommitInfo)
                 .toList();
         // the tag, if it exists, will be on this commit
         Commit lastCommit = commitGroup.get(commitGroup.size() - 1);
@@ -112,18 +106,5 @@ public record ReleaseGrouper(SubGroupOptions options) {
                 }
             }
         });
-    }
-
-    private CommitInfo toCommitInfo(Commit commit) {
-        Matcher matcher = conventionalCommitPattern.matcher(commit.summary());
-        if (matcher.matches()) {
-            String type = matcher.group("type");
-            String description = matcher.group("description");
-            String scope = matcher.group("scope");
-            boolean isBreaking = matcher.group("breaking") != null;
-            return new ConventionalCommit(type, scope, description, isBreaking);
-        }
-
-        return new UntypedCommit(commit);
     }
 }
