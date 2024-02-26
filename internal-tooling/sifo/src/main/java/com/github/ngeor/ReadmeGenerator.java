@@ -3,7 +3,6 @@ package com.github.ngeor;
 import com.github.ngeor.changelog.TagPrefix;
 import com.github.ngeor.git.Git;
 import com.github.ngeor.maven.MavenCoordinates;
-import com.github.ngeor.process.ProcessFailedException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,14 +21,22 @@ public class ReadmeGenerator {
     private final String mavenModule;
     private final MavenCoordinates coordinates;
     private final String workflowId;
-    private final LazyTagCalculator lazyTagCalculator;
+    /**
+     * Checks if the module has any tags in git (indicating it is already released).
+     */
+    private final LazyInitializer<Boolean> lazyHasTags;
 
     public ReadmeGenerator(File rootDirectory, String mavenModule, MavenCoordinates coordinates, String workflowId) {
         this.rootDirectory = Objects.requireNonNull(rootDirectory);
-        this.mavenModule = Objects.requireNonNull(mavenModule);
+        Validate.isTrue(rootDirectory.isDirectory(), "%s must be a directory", rootDirectory);
+        this.mavenModule = Validate.notBlank(mavenModule, "Maven module is required");
         this.coordinates = Objects.requireNonNull(coordinates);
         this.workflowId = Validate.notBlank(workflowId);
-        this.lazyTagCalculator = new LazyTagCalculator();
+        this.lazyHasTags = LazyInitializer.<Boolean>builder()
+                .setInitializer(() -> new Git(rootDirectory)
+                        .getMostRecentTag(TagPrefix.forPath(mavenModule).tagPrefix())
+                        .isPresent())
+                .get();
     }
 
     public void fixProjectBadges() throws IOException, ConcurrentException {
@@ -152,22 +159,7 @@ public class ReadmeGenerator {
 
         // if there are tags for this project, then it is probably a released library,
         // so the rest of the badges are applicable too
-        return lazyTagCalculator.get();
-    }
-
-    private final class LazyTagCalculator extends LazyInitializer<Boolean> {
-        @Override
-        protected Boolean initialize() throws ConcurrentException {
-            // if there are tags for this project, then it is probably a released library,
-            // so the rest of the badges are applicable too
-            Git git = new Git(rootDirectory);
-            try {
-                return git.getMostRecentTag(TagPrefix.forPath(mavenModule).tagPrefix())
-                        .isPresent();
-            } catch (ProcessFailedException e) {
-                throw new ConcurrentException(e);
-            }
-        }
+        return lazyHasTags.get();
     }
 
     private static boolean looksLikeBadge(String line) {
