@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -26,7 +27,21 @@ class ChangeLogUpdaterIT {
     void beforeEach() throws ProcessFailedException {
         git = new Git(rootDirectory);
         git.initAndConfigureIdentity("master", new User("John Doe", "no-reply@acme.com"));
-        changeLogUpdater = new ChangeLogUpdater(rootDirectory, null);
+        changeLogUpdater = new ChangeLogUpdater(
+                rootDirectory,
+                null,
+                new FormatOptions(
+                        "Unreleased",
+                        Map.of(
+                                "fix",
+                                "Fixes",
+                                "chore",
+                                "Miscellaneous Tasks",
+                                "feat",
+                                "Features",
+                                "deps",
+                                "Dependencies"),
+                        null));
     }
 
     @Test

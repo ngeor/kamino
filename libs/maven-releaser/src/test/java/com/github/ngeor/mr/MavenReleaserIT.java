@@ -88,7 +88,7 @@ class MavenReleaserIT {
         git.symbolicRef("refs/remotes/origin/HEAD", "refs/remotes/origin/trunk");
 
         Files.createDirectory(monorepoRoot.resolve("lib"));
-        releaser = new MavenReleaser(monorepoRoot.toFile(), "lib");
+        releaser = new MavenReleaser(monorepoRoot.toFile(), "lib", Defaults.defaultFormatOptions());
     }
 
     @Test

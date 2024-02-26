@@ -1,6 +1,7 @@
 package com.github.ngeor;
 
 import com.github.ngeor.git.Git;
+import com.github.ngeor.mr.Defaults;
 import com.github.ngeor.mr.MavenReleaser;
 import com.github.ngeor.process.ProcessFailedException;
 import com.github.ngeor.versions.SemVer;
@@ -33,6 +34,6 @@ public class ReleaseCommand extends BaseCommand {
                 .map(GitVersionCalculator.Result::nextVersion)
                 .or(() -> Optional.ofNullable(initialVersion).map(SemVer::parse))
                 .orElseThrow();
-        new MavenReleaser(rootDirectory, path).prepareRelease(nextVersion, push);
+        new MavenReleaser(rootDirectory, path, Defaults.defaultFormatOptions()).prepareRelease(nextVersion, push);
     }
 }

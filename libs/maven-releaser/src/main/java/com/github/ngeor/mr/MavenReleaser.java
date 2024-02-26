@@ -1,6 +1,7 @@
 package com.github.ngeor.mr;
 
 import com.github.ngeor.changelog.ChangeLogUpdater;
+import com.github.ngeor.changelog.FormatOptions;
 import com.github.ngeor.changelog.TagPrefix;
 import com.github.ngeor.git.FetchOption;
 import com.github.ngeor.git.Git;
@@ -21,7 +22,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import org.apache.commons.lang3.Validate;
 
-public record MavenReleaser(File monorepoRoot, String path) {
+public record MavenReleaser(File monorepoRoot, String path, FormatOptions formatOptions) {
 
     public void prepareRelease(SemVer nextVersion, boolean push) throws IOException, ProcessFailedException {
         // calculate the groupId / artifactId of the module, do maven sanity checks
@@ -51,7 +52,7 @@ public record MavenReleaser(File monorepoRoot, String path) {
         replacePomWithEffectivePom(pomRepository);
 
         // update changelog
-        new ChangeLogUpdater(monorepoRoot, path).updateChangeLog(false, nextVersion);
+        new ChangeLogUpdater(monorepoRoot, path, formatOptions).updateChangeLog(false, nextVersion);
 
         // commit and tag
         git.addAll();

@@ -2,6 +2,7 @@ package com.github.ngeor;
 
 import com.github.ngeor.git.Git;
 import com.github.ngeor.maven.process.Maven;
+import com.github.ngeor.mr.Defaults;
 import com.github.ngeor.mr.MavenReleaser;
 import com.github.ngeor.process.ProcessFailedException;
 import com.github.ngeor.versions.SemVer;
@@ -13,6 +14,7 @@ import org.apache.commons.lang3.concurrent.ConcurrentException;
 /**
  * Imports a project from a different repository into the monorepo.
  */
+@SuppressWarnings("java:S106") // allow System.out.println
 public class ProjectImporter {
     private final File monorepoRoot;
     private final File oldRepoRoot;
@@ -105,7 +107,8 @@ public class ProjectImporter {
                     .orElseThrow();
             SemVer nextVersion = maxReleaseVersion.bump(SemVerBump.PATCH);
 
-            new MavenReleaser(monorepoRoot, typeName + "/" + oldRepoRoot.getName()).prepareRelease(nextVersion, true);
+            new MavenReleaser(monorepoRoot, typeName + "/" + oldRepoRoot.getName(), Defaults.defaultFormatOptions())
+                    .prepareRelease(nextVersion, true);
         }
     }
 

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,11 +26,13 @@ public class ChangeLogUpdater {
     private final File rootDirectory;
     private final String modulePath;
     private final Git git;
+    private final FormatOptions formatOptions;
 
-    public ChangeLogUpdater(File rootDirectory, String modulePath) {
+    public ChangeLogUpdater(File rootDirectory, String modulePath, FormatOptions formatOptions) {
         this.rootDirectory = rootDirectory;
         this.modulePath = modulePath;
         this.git = new Git(rootDirectory);
+        this.formatOptions = Objects.requireNonNull(formatOptions);
     }
 
     private File getChangeLog() {
@@ -46,24 +49,20 @@ public class ChangeLogUpdater {
         updateChangeLog(overwrite, null);
     }
 
-    public void updateChangeLog(boolean overwrite, SemVer nextVersion) throws IOException, ProcessFailedException {
-        List<Item> markdown = generateChangeLog(overwrite, nextVersion);
+    public void updateChangeLog(boolean overwrite, SemVer futureVersion) throws IOException, ProcessFailedException {
+        List<Item> markdown = generateChangeLog(overwrite, futureVersion);
         new MarkdownWriter().write(markdown, getChangeLog());
     }
 
-    private List<Item> generateChangeLog(boolean overwrite, SemVer nextVersion)
+    private List<Item> generateChangeLog(boolean overwrite, SemVer futureVersion)
             throws IOException, ProcessFailedException {
 
         Release.SubGroupOptions subGroupOptions =
                 new Release.SubGroupOptions("chore", List.of("feat", "fix", "chore", "deps"), this::remapType);
-        FormatOptions formatOptions = new FormatOptions(
-                "Unreleased",
-                nextVersion,
-                Map.of("feat", "Features", "fix", "Fixes", "chore", "Miscellaneous Tasks", "deps", "Dependencies"));
 
         ReleaseGrouper releaseGrouper = new ReleaseGrouper(subGroupOptions);
         Release release = releaseGrouper.toRelease(getCommits());
-        FormattedRelease formattedRelease = new Formatter(formatOptions, modulePath).format(release);
+        FormattedRelease formattedRelease = new Formatter(formatOptions, modulePath, futureVersion).format(release);
         File changeLog = getChangeLog();
         List<Item> markdown = changeLog.isFile()
                 ? new MarkdownReader().read(changeLog)

@@ -28,6 +28,7 @@ import java.util.stream.Stream;
 import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.concurrent.ConcurrentException;
 
+@SuppressWarnings("java:S106") // allow System.out.println
 public final class TemplateGenerator {
     private static final String GROUP_ID = "com.github.ngeor";
     private static final String DEFAULT_JAVA_VERSION = "11";
