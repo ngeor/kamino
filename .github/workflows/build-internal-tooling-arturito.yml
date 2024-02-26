@@ -9,6 +9,9 @@ on:
       - pom.xml
       - libs/cli-parent-pom/**
       - libs/java/**
+      - libs/yak4j-dom/**
+      - libs/yak4j-maven/**
+      - libs/yak4j-process/**
   pull_request:
     branches: [ master ]
     paths:
@@ -17,6 +20,9 @@ on:
       - pom.xml
       - libs/cli-parent-pom/**
       - libs/java/**
+      - libs/yak4j-dom/**
+      - libs/yak4j-maven/**
+      - libs/yak4j-process/**
 
 jobs:
   build:

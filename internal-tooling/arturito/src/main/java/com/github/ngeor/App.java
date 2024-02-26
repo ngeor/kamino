@@ -1,12 +1,14 @@
 package com.github.ngeor;
 
+import com.github.ngeor.maven.process.Maven;
+import com.github.ngeor.process.ProcessFailedException;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.List;
+import java.nio.file.Path;
 import org.apache.commons.io.FileUtils;
 
 /**
@@ -19,7 +21,7 @@ public final class App {
      * Says hello to the world.
      * @param args The arguments of the program.
      */
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws IOException, InterruptedException, ProcessFailedException {
         if (args.length != 5) {
             throw new IllegalArgumentException("Expected exactly 5 arguments");
         }
@@ -34,36 +36,13 @@ public final class App {
             // create GPG key file
             File keysFile = createKeysFile();
 
+            Gpg gpg = new Gpg(new File("."));
+
             // gpg key workaround
-            new ProcessBuilder(
-                            "gpg",
-                            "--batch",
-                            "--yes",
-                            "--passphrase=" + gpgPassphrase,
-                            "--output",
-                            "-",
-                            keysFile.toString())
-                    .inheritIO()
-                    .redirectOutput(ProcessBuilder.Redirect.DISCARD)
-                    .start()
-                    .waitFor();
+            gpg.workaround(gpgPassphrase, keysFile);
 
             // now the real gpg key import
-            List<Process> processes = ProcessBuilder.startPipeline(List.of(
-                    new ProcessBuilder(
-                                    "gpg",
-                                    "--batch",
-                                    "--yes",
-                                    "--passphrase=" + gpgPassphrase,
-                                    "--output",
-                                    "-",
-                                    keysFile.toString())
-                            .inheritIO()
-                            .redirectOutput(ProcessBuilder.Redirect.PIPE),
-                    new ProcessBuilder("gpg", "--batch", "--yes", "--import")
-                            .redirectOutput(ProcessBuilder.Redirect.DISCARD)
-                            .redirectError(ProcessBuilder.Redirect.INHERIT)));
-            processes.get(processes.size() - 1).waitFor();
+            gpg.importKey(gpgPassphrase, keysFile);
 
             // prepare settings.xml
             File settingsFile = createMavenSettingsFile(nexusUsername, nexusPassword, gpgKey, gpgPassphrase);
@@ -105,14 +84,8 @@ public final class App {
         return settingsFile;
     }
 
-    private static void runMavenDeploy(File settingsFile, String path) throws InterruptedException, IOException {
-        int exitCode = new ProcessBuilder("mvn", "-B", "-ntp", "-s", settingsFile.toString(), "-Pgpg", "deploy")
-                .directory(new File(".").toPath().resolve(path).toFile())
-                .inheritIO()
-                .start()
-                .waitFor();
-        if (exitCode != 0) {
-            throw new IllegalStateException("Maven deploy failed");
-        }
+    private static void runMavenDeploy(File settingsFile, String path) throws ProcessFailedException {
+        Maven maven = new Maven(Path.of(path).resolve("pom.xml").toFile(), settingsFile, "gpg");
+        maven.deploy();
     }
 }
