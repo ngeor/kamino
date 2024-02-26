@@ -19,7 +19,7 @@ esac; shift; done
 if [[ "$1" == '--' ]]; then shift; fi
 
 # sort pom
-mvn -Psortpom validate
+mvn -Psortpom validate -Denforcer.skip=true -Dcheckstyle.skip=true
 # sort root pom file (does not currently have a sortpom configuration)
 mvn -N com.github.ekryd.sortpom:sortpom-maven-plugin:sort -Dsort.sortModules=true -Dsort.createBackupFile=false
 # remove pom.bak files etc
@@ -35,13 +35,13 @@ if [[ $RUN_REWRITE -eq 1 ]]; then
     mvn -pl '!:kamino' rewrite:run
 fi
 # spotless (excluding the aggregator root)
-mvn -pl '!:kamino' spotless:apply
+mvn -pl '!:kamino' spotless:apply -Denforcer.skip=true -Dcheckstyle.skip=true
 # build internal tools
-mvn -Pshade -am -pl internal-tooling/changes package -DskipTests
-mvn -Pshade -am -pl internal-tooling/sifo package -DskipTests
+mvn -Pshade -am -pl internal-tooling/changes package  -Denforcer.skip=true -Dcheckstyle.skip=true -DskipTests
+mvn -Pshade -am -pl internal-tooling/sifo package  -Denforcer.skip=true -Dcheckstyle.skip=true -DskipTests
 if [[ $BUILD_NATIVE -eq 1 ]]; then
-    mvn -Pnative -am -pl internal-tooling/changes package -DskipTests
-    mvn -Pnative -am -pl internal-tooling/sifo package -DskipTests
+    mvn -Pnative -am -pl internal-tooling/changes package  -Denforcer.skip=true -Dcheckstyle.skip=true -DskipTests
+    mvn -Pnative -am -pl internal-tooling/sifo package  -Denforcer.skip=true -Dcheckstyle.skip=true -DskipTests
 fi
 # generate templates
 java -jar internal-tooling/sifo/target/sifo-1.0-SNAPSHOT.jar
