@@ -27,8 +27,8 @@ class MarkdownMergerTest {
         // arrange
         MarkdownMerger markdownMerger = new MarkdownMerger(new FormatOptions(UNRELEASED, Map.of(), null), false);
         List<Item> markdown = List.of(new Section(1, CHANGELOG));
-        FormattedRelease formattedRelease = new FormattedRelease(
-                new FormattedGroup(UNRELEASED, new FormattedSubGroup(CHORES, "Simple fix")));
+        FormattedRelease formattedRelease =
+                new FormattedRelease(new FormattedGroup(UNRELEASED, new FormattedSubGroup(CHORES, "Simple fix")));
 
         // act
         markdownMerger.mergeIntoLeft(markdown, formattedRelease);
@@ -46,8 +46,8 @@ class MarkdownMergerTest {
         MarkdownMerger markdownMerger = new MarkdownMerger(new FormatOptions(UNRELEASED, Map.of(), null), overwrite);
         List<Item> markdown = List.of(new Section(
                 1, CHANGELOG, new Section(2, UNRELEASED, new Section(3, CHORES, new Line("* Simple fix")))));
-        FormattedRelease formattedRelease = new FormattedRelease(
-                new FormattedGroup("[1.0]", new FormattedSubGroup(CHORES, "Simple fix")));
+        FormattedRelease formattedRelease =
+                new FormattedRelease(new FormattedGroup("[1.0]", new FormattedSubGroup(CHORES, "Simple fix")));
 
         // act
         markdownMerger.mergeIntoLeft(markdown, formattedRelease);

@@ -12,5 +12,4 @@ public record FormattedRelease(List<FormattedGroup> groups) {
     public FormattedRelease(FormattedGroup... groups) {
         this(Arrays.asList(groups));
     }
-
 }

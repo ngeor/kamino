@@ -8,5 +8,4 @@ public sealed interface CommitInfo permits UntypedCommit, ConventionalCommit {
     String description();
 
     boolean isBreaking();
-
 }

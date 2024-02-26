@@ -3,6 +3,7 @@ package com.github.ngeor.changelog;
 import com.github.ngeor.changelog.format.FormatOptions;
 import com.github.ngeor.changelog.format.FormattedRelease;
 import com.github.ngeor.changelog.format.Formatter;
+import com.github.ngeor.changelog.group.CommitGrouper;
 import com.github.ngeor.changelog.group.CommitInfo;
 import com.github.ngeor.changelog.group.Release;
 import com.github.ngeor.changelog.group.ReleaseGrouper;
@@ -21,6 +22,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public class ChangeLogUpdater {
@@ -31,17 +33,11 @@ public class ChangeLogUpdater {
     private final TagPrefix tagPrefix;
 
     public ChangeLogUpdater(File rootDirectory, String modulePath, FormatOptions formatOptions) {
-        this.rootDirectory = rootDirectory;
+        this.rootDirectory = Objects.requireNonNull(rootDirectory);
         this.modulePath = modulePath;
         this.git = new Git(rootDirectory);
         this.formatOptions = Objects.requireNonNull(formatOptions);
         this.tagPrefix = TagPrefix.forPath(modulePath);
-    }
-
-    private File getChangeLog() {
-        Path rootPath = rootDirectory.toPath();
-        Path projectPath = modulePath == null ? rootPath : rootPath.resolve(modulePath);
-        return projectPath.resolve("CHANGELOG.md").toFile();
     }
 
     void updateChangeLog() throws IOException, ProcessFailedException {
@@ -53,34 +49,64 @@ public class ChangeLogUpdater {
     }
 
     public void updateChangeLog(boolean overwrite, SemVer futureVersion) throws IOException, ProcessFailedException {
-        List<Item> markdown = generateChangeLog(overwrite, futureVersion);
-        new MarkdownWriter().write(markdown, getChangeLog());
+        FormattedRelease formattedRelease = Optional.of(getCommits())
+                .map(this::groupCommits)
+                .map(this::createRelease)
+                .map(r -> formatRelease(r, futureVersion))
+                .orElseThrow();
+
+        File changeLogFile = getChangeLogFile();
+        List<Item> markdown = parseExistingChangeLog(changeLogFile);
+        merge(markdown, formattedRelease, overwrite);
+        saveChangeLog(changeLogFile, markdown);
     }
 
-    private List<Item> generateChangeLog(boolean overwrite, SemVer futureVersion)
-            throws IOException, ProcessFailedException {
+    private File getChangeLogFile() {
+        Path rootPath = rootDirectory.toPath();
+        Path projectPath = modulePath == null ? rootPath : rootPath.resolve(modulePath);
+        return projectPath.resolve("CHANGELOG.md").toFile();
+    }
 
+    private Stream<Commit> getCommits() throws ProcessFailedException {
+        return git.revList((String) null, modulePath);
+    }
+
+    private List<List<Commit>> groupCommits(Stream<Commit> commits) {
+        CommitGrouper commitGrouper = new CommitGrouper();
+        return commitGrouper.fromCommits(commits);
+    }
+
+    private Release createRelease(List<List<Commit>> commitGroups) {
         SubGroupOptions subGroupOptions =
-                new SubGroupOptions("chore", List.of("feat", "fix", "chore", "deps"), this::remapType);
-
+                new SubGroupOptions("chore", List.of("feat", "fix", "chore", "deps"), this::overrideType);
         ReleaseGrouper releaseGrouper = new ReleaseGrouper(subGroupOptions);
-        Release release = releaseGrouper.toRelease(getCommits());
-        FormattedRelease formattedRelease = new Formatter(formatOptions, tagPrefix, futureVersion).format(release);
-        File changeLog = getChangeLog();
-        List<Item> markdown = changeLog.isFile()
-                ? new MarkdownReader().read(changeLog)
-                : new ArrayList<>(List.of(new Section(1, "Changelog")));
-        new MarkdownMerger(formatOptions, overwrite).mergeIntoLeft(markdown, formattedRelease);
-        return markdown;
+        return releaseGrouper.fromCommitGroups(commitGroups);
     }
 
-    private String remapType(CommitInfo commitInfo) {
+    private String overrideType(CommitInfo commitInfo) {
         return "chore".equals(commitInfo.type()) && "deps".equals(commitInfo.scope())
                 ? "deps"
                 : ("refactor".equals(commitInfo.type()) ? "chore" : commitInfo.type());
     }
 
-    private Stream<Commit> getCommits() throws ProcessFailedException {
-        return git.revList((String) null, modulePath);
+    private FormattedRelease formatRelease(Release release, SemVer futureVersion) {
+        Formatter formatter = new Formatter(formatOptions, tagPrefix, futureVersion);
+        return formatter.format(release);
+    }
+
+    private static List<Item> parseExistingChangeLog(File changeLog) throws IOException {
+        return changeLog.isFile()
+                ? new MarkdownReader().read(changeLog)
+                : new ArrayList<>(List.of(new Section(1, "Changelog")));
+    }
+
+    private void merge(List<Item> markdown, FormattedRelease formattedRelease, boolean overwrite) {
+        MarkdownMerger markdownMerger = new MarkdownMerger(formatOptions, overwrite);
+        markdownMerger.mergeIntoLeft(markdown, formattedRelease);
+    }
+
+    private static void saveChangeLog(File changeLogFile, List<Item> markdown) throws IOException {
+        MarkdownWriter markdownWriter = new MarkdownWriter();
+        markdownWriter.write(markdown, changeLogFile);
     }
 }

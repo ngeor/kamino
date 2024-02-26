@@ -17,5 +17,4 @@ public record Release(List<Group> groups) {
     public Release(Group... groups) {
         this(Arrays.asList(groups));
     }
-
 }

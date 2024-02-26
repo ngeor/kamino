@@ -18,8 +18,8 @@ class FormatterTest {
         // arrange
         FormatOptions options = new FormatOptions("Unreleased", Map.of("chore", "Chores"), null);
         String moduleName = "libs/java";
-        Release release = new Release(new UnreleasedGroup(new SubGroup(
-                "chore", new ConventionalCommit("chore", null, "Added tests", false))));
+        Release release = new Release(new UnreleasedGroup(
+                new SubGroup("chore", new ConventionalCommit("chore", null, "Added tests", false))));
 
         // act
         FormattedRelease formatted = Formatter.format(release, options, moduleName);
@@ -40,8 +40,8 @@ class FormatterTest {
         // arrange
         FormatOptions options = new FormatOptions("Unreleased", Map.of("chore", "Chores"), null);
         String moduleName = "libs/java";
-        Release release = new Release(new UnreleasedGroup(new SubGroup(
-                "chore", new ConventionalCommit("chore", null, "Added tests", true))));
+        Release release = new Release(
+                new UnreleasedGroup(new SubGroup("chore", new ConventionalCommit("chore", null, "Added tests", true))));
 
         // act
         FormattedRelease formatted = Formatter.format(release, options, moduleName);
@@ -60,8 +60,7 @@ class FormatterTest {
         String moduleName = "libs/java";
         Release release = new Release(new TaggedGroup(
                 new Commit("sha", LocalDate.of(2024, 2, 26), "libs/java/v1.0.0", "Release v1.0.0"),
-                new SubGroup(
-                        "chore", new ConventionalCommit("chore", null, "Added tests", true))));
+                new SubGroup("chore", new ConventionalCommit("chore", null, "Added tests", true))));
 
         // act
         FormattedRelease formatted = Formatter.format(release, options, moduleName);
@@ -82,14 +81,10 @@ class FormatterTest {
         Release release = new Release(
                 new TaggedGroup(
                         new Commit("sha", LocalDate.of(2024, 2, 27), "libs/java/v1.1.0", "Release v1.1.0"),
-                        new SubGroup(
-                                "chore",
-                                new ConventionalCommit("chore", null, "Fixed tests", false))),
+                        new SubGroup("chore", new ConventionalCommit("chore", null, "Fixed tests", false))),
                 new TaggedGroup(
                         new Commit("sha", LocalDate.of(2024, 2, 26), "libs/java/v1.0.0", "Release v1.0.0"),
-                        new SubGroup(
-                                "chore",
-                                new ConventionalCommit("chore", null, "Added tests", true))));
+                        new SubGroup("chore", new ConventionalCommit("chore", null, "Added tests", true))));
 
         // act
         FormattedRelease formatted = Formatter.format(release, options, moduleName);

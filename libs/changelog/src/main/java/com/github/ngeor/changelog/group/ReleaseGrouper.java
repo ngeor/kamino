@@ -2,48 +2,15 @@ package com.github.ngeor.changelog.group;
 
 import com.github.ngeor.changelog.CommitFilter;
 import com.github.ngeor.git.Commit;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public record ReleaseGrouper(SubGroupOptions options) {
-    public Release toRelease(Stream<Commit> commits) {
-        return fromCommitGroups(fromCommits(commits));
-    }
-
-    public List<List<Commit>> fromCommits(Stream<Commit> commits) {
-        return commits.reduce(
-                Collections.emptyList(),
-                (listOfLists, commit) -> {
-                    if (listOfLists.isEmpty()) {
-                        return Collections.singletonList(Collections.singletonList(commit));
-                    }
-
-                    LinkedList<List<Commit>> result = new LinkedList<>(listOfLists);
-                    if (commit.tag() != null) {
-                        result.add(Collections.singletonList(commit));
-                    } else {
-                        LinkedList<Commit> lastGroup = new LinkedList<>(result.removeLast());
-                        lastGroup.addFirst(commit);
-                        result.add(lastGroup);
-                    }
-
-                    return result;
-                },
-                (x, y) -> {
-                    List<List<Commit>> result = new ArrayList<>(x);
-                    result.addAll(y);
-                    return result;
-                });
-    }
 
     public Release fromCommitGroups(List<List<Commit>> groups) {
         return new Release(groupsFromCommitGroups(groups));
@@ -75,9 +42,7 @@ public record ReleaseGrouper(SubGroupOptions options) {
                 .map(e -> new SubGroup(e.getKey(), e.getValue()))
                 .toList();
         return Optional.of(
-                lastCommit.tag() != null
-                        ? new TaggedGroup(lastCommit, subGroups)
-                        : new UnreleasedGroup(subGroups));
+                lastCommit.tag() != null ? new TaggedGroup(lastCommit, subGroups) : new UnreleasedGroup(subGroups));
     }
 
     private String calculateType(CommitInfo commitInfo) {

@@ -13,7 +13,8 @@ import java.util.List;
 import java.util.Objects;
 
 public record Formatter(FormatOptions options, TagPrefix tagPrefix, SemVer futureVersion) {
-    public static FormattedRelease format(Release release, FormatOptions options, String modulePath, SemVer futureVersion) {
+    public static FormattedRelease format(
+            Release release, FormatOptions options, String modulePath, SemVer futureVersion) {
         return new Formatter(options, TagPrefix.forPath(modulePath), futureVersion).format(release);
     }
 

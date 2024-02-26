@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 
-class ReleaseGrouperTest {
+class CommitGrouperTest {
     @Test
     void testEmpty() {
         List<List<Commit>> groups = fromCommits(Stream.empty());
@@ -88,6 +88,6 @@ class ReleaseGrouperTest {
     }
 
     private List<List<Commit>> fromCommits(Stream<Commit> commits) {
-        return new ReleaseGrouper(null).fromCommits(commits);
+        return new CommitGrouper().fromCommits(commits);
     }
 }

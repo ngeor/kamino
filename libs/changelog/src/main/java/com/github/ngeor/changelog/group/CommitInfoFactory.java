@@ -6,8 +6,8 @@ import java.util.regex.Pattern;
 
 public final class CommitInfoFactory {
     private static final Pattern conventionalCommitPattern = Pattern.compile(
-        "^(?<type>[a-z]+)(\\((?<scope>[a-z]+)\\))?(?<breaking>!)?:\\s*(?<description>.+)$",
-        Pattern.CASE_INSENSITIVE);
+            "^(?<type>[a-z]+)(\\((?<scope>[a-z]+)\\))?(?<breaking>!)?:\\s*(?<description>.+)$",
+            Pattern.CASE_INSENSITIVE);
 
     private CommitInfoFactory() {}
 
