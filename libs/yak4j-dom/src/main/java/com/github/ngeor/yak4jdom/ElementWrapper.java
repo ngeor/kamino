@@ -1,8 +1,6 @@
 package com.github.ngeor.yak4jdom;
 
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.UnaryOperator;
@@ -41,7 +39,7 @@ public class ElementWrapper {
      * Gets the child elements of the given name.
      */
     public Stream<ElementWrapper> findChildElements(String childElementName) {
-        return getChildElements().filter(element -> Objects.equals(element.getNodeName(), childElementName));
+        return getChildElements().filter(e -> Objects.equals(e.getNodeName(), childElementName));
     }
 
     public Optional<ElementWrapper> firstElement(String childElementName) {
@@ -223,20 +221,12 @@ public class ElementWrapper {
     public String[] firstElementsText(String... names) {
         Objects.requireNonNull(names);
         Validate.isTrue(names.length >= 1, "At least one name is required");
-        // TODO make a Map<String, int> with primitive int value
-        Map<String, Integer> pending = new HashMap<>();
-        for (int i = 0; i < names.length; i++) {
-            String name = names[i];
-            Validate.notBlank(name, "Blank element at index %d", i);
-            if (pending.put(name, i) != null) {
-                throw new IllegalArgumentException(String.format("Duplicate element %s at index %d", name, i));
-            }
-        }
+        StringIntMap pending = new StringIntMap(names);
         String[] result = new String[names.length];
         for (Iterator<ElementWrapper> it = getChildElementsAsIterator(); !pending.isEmpty() && it.hasNext(); ) {
             ElementWrapper e = it.next();
             String nodeName = e.getNodeName();
-            int i = nodeName == null ? -1 : pending.getOrDefault(nodeName, -1);
+            int i = nodeName == null ? -1 : pending.get(nodeName);
             if (i >= 0) {
                 String text = e.getTextContentTrimmed().orElse(null);
                 if (text != null) {
