@@ -2,6 +2,7 @@ package com.github.ngeor.changelog;
 
 import com.github.ngeor.git.Commit;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
@@ -16,17 +17,29 @@ public record Release(List<Group> groups) {
         Validate.isTrue(numberOfGroupsWithoutTag <= 1, "Found more than one group without a tag");
     }
 
+    public Release(Group... groups) {
+        this(Arrays.asList(groups));
+    }
+
     public sealed interface Group permits UnreleasedGroup, TaggedGroup {
         List<SubGroup> subGroups();
     }
 
-    public record UnreleasedGroup(List<SubGroup> subGroups) implements Group {}
+    public record UnreleasedGroup(List<SubGroup> subGroups) implements Group {
+        public UnreleasedGroup(SubGroup... subGroups) {
+            this(Arrays.asList(subGroups));
+        }
+    }
 
     public record TaggedGroup(Commit mostRecentCommit, List<SubGroup> subGroups) implements Group {
         public TaggedGroup {
             Objects.requireNonNull(mostRecentCommit);
             Objects.requireNonNull(mostRecentCommit.tag());
             Objects.requireNonNull(mostRecentCommit.authorDate());
+        }
+
+        public TaggedGroup(Commit mostRecentCommit, SubGroup... subGroups) {
+            this(mostRecentCommit, Arrays.asList(subGroups));
         }
 
         public String tag() {
@@ -41,6 +54,11 @@ public record Release(List<Group> groups) {
     public record SubGroup(String name, List<CommitInfo> commits) {
         public SubGroup {
             Validate.notBlank(name);
+            Objects.requireNonNull(commits);
+        }
+
+        public SubGroup(String name, CommitInfo... commits) {
+            this(name, Arrays.asList(commits));
         }
     }
 

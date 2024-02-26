@@ -12,7 +12,6 @@ import com.github.ngeor.versions.SemVer;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -64,8 +63,7 @@ public class ChangeLogUpdater {
 
         ReleaseGrouper releaseGrouper = new ReleaseGrouper(subGroupOptions);
         Release release = releaseGrouper.toRelease(getCommits());
-        FormattedRelease formattedRelease = format(release, formatOptions);
-
+        FormattedRelease formattedRelease = new Formatter(formatOptions, modulePath).format(release);
         File changeLog = getChangeLog();
         List<Item> markdown = changeLog.isFile()
                 ? new MarkdownReader().read(changeLog)
@@ -82,43 +80,6 @@ public class ChangeLogUpdater {
 
     private Stream<Commit> getCommits() throws ProcessFailedException {
         return git.revList((String) null, modulePath);
-    }
-
-    private FormattedRelease format(Release release, FormatOptions options) {
-        return new FormattedRelease(
-                release.groups().stream().map(g -> format(g, options)).toList());
-    }
-
-    private FormattedRelease.Group format(Release.Group group, FormatOptions options) {
-        final String title;
-        if (group instanceof Release.TaggedGroup taggedGroup) {
-            title = String.format(
-                    "[%s] - %s",
-                    TagPrefix.forPath(modulePath).stripTagPrefixIfPresent(taggedGroup.tag()), taggedGroup.authorDate());
-        } else if (options.futureVersion() != null) {
-            // use current date when working on a "future" release
-            title = String.format("[%s] - %s", options.futureVersion(), LocalDate.now());
-        } else {
-            title = options.unreleasedTitle();
-        }
-
-        return new FormattedRelease.Group(
-                title, group.subGroups().stream().map(g -> format(g, options)).toList());
-    }
-
-    private static FormattedRelease.SubGroup format(Release.SubGroup subGroup, FormatOptions options) {
-        String title = options.subGroupNames().getOrDefault(subGroup.name(), subGroup.name());
-        return new FormattedRelease.SubGroup(
-                title,
-                subGroup.commits().stream().map(ChangeLogUpdater::formatCommit).toList());
-    }
-
-    private static String formatCommit(Release.CommitInfo commit) {
-        if (commit.isBreaking()) {
-            return String.format("**Breaking**: %s", commit.description());
-        }
-
-        return commit.description();
     }
 
     private void merge(
