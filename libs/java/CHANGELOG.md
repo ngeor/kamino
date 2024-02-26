@@ -24,7 +24,7 @@ All notable changes to this project will be documented in this file.
 * Upgrade source maven plugin to 3.3.0
 * Upgrade shade maven plugin to 3.5.2
 
-## [4.8.0] - 2024-02-23
+## [4.8.0](https://github.com/ngeor/kamino/compare/libs/java/v4.7.1...libs/java/v4.8.0) - 2024-02-23
 
 ### Features
 
@@ -42,19 +42,19 @@ All notable changes to this project will be documented in this file.
 
 * Upgrade to Mockito 5.10.0
 
-## [4.7.1] - 2024-02-15
+## [4.7.1](https://github.com/ngeor/kamino/compare/libs/java/v4.7.0...libs/java/v4.7.1) - 2024-02-15
 
 ### Fixes
 
 * Removed shade and native profiles from parent pom, broke libs
 
-## [4.7.0] - 2024-02-14
+## [4.7.0](https://github.com/ngeor/kamino/compare/libs/java/v4.6.0...libs/java/v4.7.0) - 2024-02-14
 
 ### Features
 
 * Introducing yak4j-argparse library
 
-## [4.6.0] - 2024-02-13
+## [4.6.0](https://github.com/ngeor/kamino/compare/libs/java/v4.5.0...libs/java/v4.6.0) - 2024-02-13
 
 ### Features
 
@@ -64,7 +64,7 @@ All notable changes to this project will be documented in this file.
 
 * Use `com.github.ngeor:java` as the parent pom everywhere
 
-## [4.5.0] - 2024-02-10
+## [4.5.0](https://github.com/ngeor/kamino/compare/libs/java/v4.4.0...libs/java/v4.5.0) - 2024-02-10
 
 ### Features
 
@@ -74,7 +74,7 @@ All notable changes to this project will be documented in this file.
 
 * Configure `sortpom` to not expand empty elements
 
-## [4.4.0] - 2024-02-10
+## [4.4.0](https://github.com/ngeor/kamino/compare/libs/java/v4.3.0...libs/java/v4.4.0) - 2024-02-10
 
 ### Features
 
@@ -88,7 +88,7 @@ All notable changes to this project will be documented in this file.
 * Keeping only root `.gitignore`, deleting the rest
 * Moved `.gitattributes` to the root folder
 
-## [4.3.0] - 2024-01-30
+## [4.3.0](https://github.com/ngeor/kamino/compare/libs/java/v4.2.1...libs/java/v4.3.0) - 2024-01-30
 
 ### Features
 
