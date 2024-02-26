@@ -6,13 +6,28 @@ import com.github.ngeor.process.ProcessHelper;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
 
 public final class Maven {
     private final ProcessHelper processHelper;
 
     public Maven(File pomFile) {
+        this(pomFile, null, null);
+    }
+
+    public Maven(File pomFile, File settingsFile, String profile) {
         String cmd = System.getProperty("os.name").contains("Windows") ? "mvn.cmd" : "mvn";
-        this.processHelper = new ProcessHelper(pomFile.getParentFile(), cmd, "-B", "-ntp", "--file", pomFile.getName());
+        List<String> baseArgs = new ArrayList<>(List.of(cmd, "-B", "-ntp"));
+        if (settingsFile != null) {
+            baseArgs.addAll(List.of("-s", settingsFile.toString()));
+        }
+        if (!StringUtils.isBlank(profile)) {
+            baseArgs.add(String.format("-P%s", profile));
+        }
+        baseArgs.addAll(List.of("--file", pomFile.getName()));
+        this.processHelper = new ProcessHelper(pomFile.getParentFile(), baseArgs);
     }
 
     public void sortPom() throws ProcessFailedException {
@@ -52,5 +67,9 @@ public final class Maven {
                 String.format("-DartifactId=%s", moduleCoordinates.artifactId()),
                 String.format("-DoldVersion=%s", moduleCoordinates.version()),
                 String.format("-DnewVersion=%s", newVersion));
+    }
+
+    public void deploy() throws ProcessFailedException {
+        processHelper.runInheritIO("deploy");
     }
 }
