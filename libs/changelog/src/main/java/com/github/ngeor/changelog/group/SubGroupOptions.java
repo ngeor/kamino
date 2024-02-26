@@ -4,5 +4,5 @@ import java.util.List;
 import java.util.function.Function;
 
 public record SubGroupOptions(
-    String defaultGroup, List<String> order, Function<CommitInfo, String> scopeOverrider) {
+    String defaultType, List<String> typeOrder, Function<CommitInfo, String> typeOverrider) {
 }

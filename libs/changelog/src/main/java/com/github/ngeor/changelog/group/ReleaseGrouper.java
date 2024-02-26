@@ -88,13 +88,13 @@ public record ReleaseGrouper(SubGroupOptions options) {
 
     private String calculateType(CommitInfo commitInfo) {
         // override the type if needed, fallback to the default group if null
-        return Objects.requireNonNullElseGet(options.scopeOverrider().apply(commitInfo), options::defaultGroup);
+        return Objects.requireNonNullElseGet(options.typeOverrider().apply(commitInfo), options::defaultType);
     }
 
     private Map<String, List<CommitInfo>> createTreeMap() {
         Map<String, Integer> orders = new HashMap<>();
-        for (int i = 0; i < options.order().size(); i++) {
-            orders.put(options.order().get(i), i);
+        for (int i = 0; i < options.typeOrder().size(); i++) {
+            orders.put(options.typeOrder().get(i), i);
         }
 
         return new TreeMap<>((o1, o2) -> {
