@@ -2,6 +2,7 @@ package com.github.ngeor.changelog.group;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.github.ngeor.changelog.TagPrefix;
 import com.github.ngeor.git.Commit;
 import java.util.Collections;
 import java.util.List;
@@ -87,7 +88,17 @@ class CommitGrouperTest {
         assertThat(groups).containsExactly(List.of(b, c), List.of(a));
     }
 
+    @Test
+    void testIrrelevantTagsDoNotFormGroup() {
+        Commit a = new Commit(null, null, "v1", "1");
+        Commit b = new Commit(null, null, "1.0", "2");
+        Commit c = new Commit(null, null, null, "3");
+        Stream<Commit> commits = Stream.of(c, b, a);
+        List<List<Commit>> groups = fromCommits(commits);
+        assertThat(groups).containsExactly(List.of(b, c), List.of(a));
+    }
+
     private List<List<Commit>> fromCommits(Stream<Commit> commits) {
-        return new CommitGrouper().fromCommits(commits);
+        return new CommitGrouper(TagPrefix.forPath(null)).fromCommits(commits);
     }
 }

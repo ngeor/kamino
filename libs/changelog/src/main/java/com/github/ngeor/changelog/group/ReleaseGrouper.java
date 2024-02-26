@@ -1,6 +1,7 @@
 package com.github.ngeor.changelog.group;
 
 import com.github.ngeor.changelog.CommitFilter;
+import com.github.ngeor.changelog.TagPrefix;
 import com.github.ngeor.git.Commit;
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.Optional;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-public record ReleaseGrouper(SubGroupOptions options) {
+public record ReleaseGrouper(SubGroupOptions options, TagPrefix tagPrefix) {
 
     public Release fromCommitGroups(List<List<Commit>> groups) {
         return new Release(groupsFromCommitGroups(groups));
@@ -29,7 +30,11 @@ public record ReleaseGrouper(SubGroupOptions options) {
                 .toList();
         // the tag, if it exists, will be on this commit
         Commit lastCommit = commitGroup.get(commitGroup.size() - 1);
-        if (commitInfos.isEmpty() && lastCommit.tag() == null) {
+        // make sure the tag starts with the expected prefix
+        String tag = Optional.ofNullable(lastCommit.tag())
+                .filter(tagPrefix::tagStartsWithExpectedPrefix)
+                .orElse(null);
+        if (commitInfos.isEmpty() && tag == null) {
             // do not render "Unreleased" section if it is empty
             return Optional.empty();
         }
@@ -41,8 +46,7 @@ public record ReleaseGrouper(SubGroupOptions options) {
         List<SubGroup> subGroups = groupedByType.entrySet().stream()
                 .map(e -> new SubGroup(e.getKey(), e.getValue()))
                 .toList();
-        return Optional.of(
-                lastCommit.tag() != null ? new TaggedGroup(lastCommit, subGroups) : new UnreleasedGroup(subGroups));
+        return Optional.of(tag != null ? new TaggedGroup(lastCommit, subGroups) : new UnreleasedGroup(subGroups));
     }
 
     private String calculateType(CommitInfo commitInfo) {

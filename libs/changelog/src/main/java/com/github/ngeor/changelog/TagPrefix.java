@@ -51,4 +51,8 @@ public record TagPrefix(String tagPrefix) {
         }
         return input;
     }
+
+    public boolean tagStartsWithExpectedPrefix(String tag) {
+        return tag != null && tag.startsWith(tagPrefix);
+    }
 }

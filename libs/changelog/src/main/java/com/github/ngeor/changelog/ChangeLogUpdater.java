@@ -49,6 +49,8 @@ public class ChangeLogUpdater {
     }
 
     public void updateChangeLog(boolean overwrite, SemVer futureVersion) throws IOException, ProcessFailedException {
+        // TODO parallelize this part with the part that parses the changelog
+        // NOTE: Optional is only used as syntactic sugar, to have the pipeline-style chaining.
         FormattedRelease formattedRelease = Optional.of(getCommits())
                 .map(this::groupCommits)
                 .map(this::createRelease)
@@ -72,14 +74,14 @@ public class ChangeLogUpdater {
     }
 
     private List<List<Commit>> groupCommits(Stream<Commit> commits) {
-        CommitGrouper commitGrouper = new CommitGrouper();
+        CommitGrouper commitGrouper = new CommitGrouper(tagPrefix);
         return commitGrouper.fromCommits(commits);
     }
 
     private Release createRelease(List<List<Commit>> commitGroups) {
         SubGroupOptions subGroupOptions =
                 new SubGroupOptions("chore", List.of("feat", "fix", "chore", "deps"), this::overrideType);
-        ReleaseGrouper releaseGrouper = new ReleaseGrouper(subGroupOptions);
+        ReleaseGrouper releaseGrouper = new ReleaseGrouper(subGroupOptions, tagPrefix);
         return releaseGrouper.fromCommitGroups(commitGroups);
     }
 
