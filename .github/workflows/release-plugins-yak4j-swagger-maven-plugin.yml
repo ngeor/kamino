@@ -16,7 +16,7 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build arturito release tooling
-      run: mvn -Pshade -B -ntp --file internal-tooling/arturito/pom.xml clean package
+      run: mvn -Pshade -B -ntp -am -pl internal-tooling/arturito clean package -DskipTests
     - name: Run arturito release tooling
       run: >-
         java -jar internal-tooling/arturito/target/arturito-1.0-SNAPSHOT.jar
