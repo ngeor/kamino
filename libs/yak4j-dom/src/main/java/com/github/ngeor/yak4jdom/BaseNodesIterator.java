@@ -1,6 +1,7 @@
 package com.github.ngeor.yak4jdom;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -24,7 +25,11 @@ public abstract class BaseNodesIterator<E> implements Iterator<E> {
     @Override
     public E next() {
         doNext();
-        return nextToReturn.take();
+        E result = nextToReturn.take();
+        if (result == null) {
+            throw new NoSuchElementException();
+        }
+        return result;
     }
 
     private void doNext() {

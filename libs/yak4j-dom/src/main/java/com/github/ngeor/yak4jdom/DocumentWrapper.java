@@ -11,13 +11,14 @@ import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import org.apache.commons.lang3.concurrent.ConcurrentException;
+import org.apache.commons.lang3.concurrent.LazyInitializer;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -25,6 +26,26 @@ import org.xml.sax.SAXException;
  * A wrapper for a Document.
  */
 public class DocumentWrapper {
+    private static final LazyInitializer<DocumentBuilderFactory> lazyDocumentBuilderFactory =
+            LazyInitializer.<DocumentBuilderFactory>builder()
+                    .setInitializer(DocumentBuilderFactory::newInstance)
+                    .get();
+    private static final LazyInitializer<DocumentBuilder> lazyDocumentBuilder =
+            LazyInitializer.<DocumentBuilder>builder()
+                    .setInitializer(() -> lazyDocumentBuilderFactory.get().newDocumentBuilder())
+                    .get();
+    private static final LazyInitializer<TransformerFactory> lazyTransformerFactory =
+            LazyInitializer.<TransformerFactory>builder()
+                    .setInitializer(TransformerFactory::newInstance)
+                    .get();
+    private static final LazyInitializer<Transformer> lazyTransformer = LazyInitializer.<Transformer>builder()
+            .setInitializer(() -> {
+                Transformer transformer = lazyTransformerFactory.get().newTransformer();
+                transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+                return transformer;
+            })
+            .get();
+
     private final Document document;
 
     public DocumentWrapper(Document document) {
@@ -36,10 +57,9 @@ public class DocumentWrapper {
      */
     public static DocumentWrapper parse(File file) {
         try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder documentBuilder = factory.newDocumentBuilder();
+            DocumentBuilder documentBuilder = lazyDocumentBuilder.get();
             return new DocumentWrapper(documentBuilder.parse(file));
-        } catch (ParserConfigurationException | SAXException | IOException ex) {
+        } catch (ConcurrentException | SAXException | IOException ex) {
             throw new DomRuntimeException(ex);
         }
     }
@@ -49,10 +69,9 @@ public class DocumentWrapper {
      */
     public static DocumentWrapper parse(InputStream inputStream) {
         try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder documentBuilder = factory.newDocumentBuilder();
+            DocumentBuilder documentBuilder = lazyDocumentBuilder.get();
             return new DocumentWrapper(documentBuilder.parse(inputStream));
-        } catch (ParserConfigurationException | SAXException | IOException ex) {
+        } catch (ConcurrentException | SAXException | IOException ex) {
             throw new DomRuntimeException(ex);
         }
     }
@@ -82,13 +101,11 @@ public class DocumentWrapper {
 
     public void write(Writer writer) {
         try {
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            Transformer transformer = lazyTransformer.get();
             DOMSource domSource = new DOMSource(document);
             StreamResult streamResult = new StreamResult(writer);
             transformer.transform(domSource, streamResult);
-        } catch (TransformerException ex) {
+        } catch (ConcurrentException | TransformerException ex) {
             throw new DomRuntimeException(ex);
         }
     }
