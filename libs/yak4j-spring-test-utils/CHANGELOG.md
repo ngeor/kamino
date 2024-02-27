@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## [0.22.0](https://github.com/ngeor/kamino/compare/libs/yak4j-spring-test-utils/v0.21.2...libs/yak4j-spring-test-utils/v0.22.0) - 2024-02-27
 
 ### Fixes
 
