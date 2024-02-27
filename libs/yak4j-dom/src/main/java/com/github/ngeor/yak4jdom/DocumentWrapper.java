@@ -119,8 +119,8 @@ public class DocumentWrapper {
         }
     }
 
-    public void indent() {
-        getDocumentElement().indent();
+    public void indent(String indentation) {
+        getDocumentElement().indent(indentation);
     }
 
     public DocumentWrapper deepClone() {

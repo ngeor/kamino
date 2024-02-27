@@ -88,11 +88,12 @@ public final class App {
     }
 
     private static void runMavenDeploy(File settingsFile, String path) throws IOException, InterruptedException {
-        int exitCode = new ProcessBuilder("mvn", "-B", "-ntp", "-s", settingsFile.toString(), "-Pgpg", "deploy")
-            .directory(new File(".").toPath().resolve(path).toFile())
-            .inheritIO()
-            .start()
-            .waitFor();
+        int exitCode = new ProcessBuilder(
+                        "mvn", "--debug", "-B", "-ntp", "-s", settingsFile.toString(), "-Pgpg", "deploy")
+                .directory(new File(".").toPath().resolve(path).toFile())
+                .inheritIO()
+                .start()
+                .waitFor();
         if (exitCode != 0) {
             throw new IOException("Deploy failed");
         }

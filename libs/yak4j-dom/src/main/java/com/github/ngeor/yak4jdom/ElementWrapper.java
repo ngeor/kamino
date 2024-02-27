@@ -98,15 +98,15 @@ public class ElementWrapper {
         }
     }
 
-    public void indent() {
-        indent(1);
+    public void indent(String indentation) {
+        indent(1, indentation);
     }
 
     public boolean hasChildElements() {
         return getChildElements().findAny().isPresent();
     }
 
-    private void indent(int level) {
+    private void indent(int level, String indentation) {
         if (!hasChildElements()) {
             trimLeft();
             trimRight();
@@ -133,9 +133,9 @@ public class ElementWrapper {
                     isFirst = false;
                 }
 
-                element.insertBefore(indentationNode(level), node);
+                element.insertBefore(indentationNode(level, indentation), node);
 
-                new ElementWrapper((Element) node).indent(level + 1);
+                new ElementWrapper((Element) node).indent(level + 1, indentation);
 
                 element.insertBefore(element.getOwnerDocument().createTextNode("\n"), temp);
 
@@ -144,13 +144,12 @@ public class ElementWrapper {
                 node = node.getNextSibling();
             }
         }
-        element.appendChild(indentationNode(level - 1));
+        element.appendChild(indentationNode(level - 1, indentation));
     }
 
-    private Node indentationNode(int level) {
+    private Node indentationNode(int level, String indentation) {
         Validate.isTrue(level >= 0);
-        String oneLevelIndentation = "    ";
-        String textContents = oneLevelIndentation.repeat(level);
+        String textContents = indentation.repeat(level);
         return element.getOwnerDocument().createTextNode(textContents);
     }
 

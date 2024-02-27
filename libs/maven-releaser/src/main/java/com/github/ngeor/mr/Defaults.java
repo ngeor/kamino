@@ -6,6 +6,8 @@ import java.util.Map;
 public final class Defaults {
     private Defaults() {}
 
+    public static final String XML_INDENTATION = "  ";
+
     public static FormatOptions defaultFormatOptions() {
         return new FormatOptions(
                 "Unreleased",

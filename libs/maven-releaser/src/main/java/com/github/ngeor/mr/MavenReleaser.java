@@ -1,5 +1,7 @@
 package com.github.ngeor.mr;
 
+import static com.github.ngeor.mr.Defaults.XML_INDENTATION;
+
 import com.github.ngeor.changelog.ChangeLogUpdater;
 import com.github.ngeor.changelog.TagPrefix;
 import com.github.ngeor.changelog.format.FormatOptions;
@@ -119,7 +121,7 @@ public record MavenReleaser(File monorepoRoot, String path, FormatOptions format
     private void replacePomWithEffectivePom(PomRepository pomRepository) throws IOException {
         File pomFile = modulePomFile();
         DocumentWrapper document = pomRepository.loadAndResolveParent(pomFile).document();
-        document.indent();
+        document.indent(XML_INDENTATION);
         document.write(pomFile);
     }
 

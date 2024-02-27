@@ -476,7 +476,7 @@ class PomMergerTest {
         DocumentWrapper parentDoc = DocumentWrapper.parseString(parent);
         DocumentWrapper childDoc = DocumentWrapper.parseString(child);
         new PomMerger.DocumentMerge().mergeIntoLeft(parentDoc, childDoc);
-        parentDoc.indent();
+        parentDoc.indent("    ");
         return parentDoc.writeToString();
     }
 }
