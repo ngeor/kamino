@@ -5,6 +5,7 @@ public final class ElementNames {
 
     public static final String ARTIFACT_ID = "artifactId";
     public static final String GROUP_ID = "groupId";
+    public static final String MODULES = "modules";
     public static final String PARENT = "parent";
     public static final String PROJECT = "project";
     public static final String RELATIVE_PATH = "relativePath";
