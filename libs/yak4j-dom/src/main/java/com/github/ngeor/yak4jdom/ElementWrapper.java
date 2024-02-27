@@ -255,4 +255,9 @@ public class ElementWrapper {
         Node node = element.getOwnerDocument().importNode(other.element, true);
         return new ElementWrapper((Element) element.appendChild(node));
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s %s", ElementWrapper.class.getSimpleName(), getNodeName());
+    }
 }
