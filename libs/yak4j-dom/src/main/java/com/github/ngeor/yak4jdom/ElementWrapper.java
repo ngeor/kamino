@@ -3,6 +3,7 @@ package com.github.ngeor.yak4jdom;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -89,10 +90,16 @@ public class ElementWrapper {
     }
 
     public void removeChildNodesByName(String name) {
+        Objects.requireNonNull(name);
+        removeChildNodesByName(name::equals);
+    }
+
+    public void removeChildNodesByName(Predicate<String> namePredicate) {
+        Objects.requireNonNull(namePredicate);
         NodeList childNodes = this.element.getChildNodes();
         for (int i = childNodes.getLength() - 1; i >= 0; i--) {
             Node item = childNodes.item(i);
-            if (item.getNodeType() == Node.ELEMENT_NODE && name.equals(item.getNodeName())) {
+            if (item.getNodeType() == Node.ELEMENT_NODE && namePredicate.test(item.getNodeName())) {
                 this.element.removeChild(item);
             }
         }
