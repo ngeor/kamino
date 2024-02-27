@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## [3.0.0](https://github.com/ngeor/kamino/compare/archetypes/archetype-quickstart-jdk8/v2.9.0...archetypes/archetype-quickstart-jdk8/v3.0.0) - 2024-02-27
 
 ### Miscellaneous Tasks
 
