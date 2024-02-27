@@ -49,7 +49,7 @@ class ChangeLogUpdaterIT {
     void testWithoutExistingChangelog() throws IOException, ProcessFailedException {
         // arrange
         addCommits("Initial commit", "fix: Adjusted readme", "feat: New version");
-        git.tag("v1.0");
+        tag();
         addCommits("chore: Adding homepage");
 
         // act
@@ -141,7 +141,7 @@ class ChangeLogUpdaterIT {
     void testDoNotGenerateUnreleasedSectionIfEmpty() throws IOException, ProcessFailedException {
         // arrange
         addCommits("chore: Added something", "deps: Upgraded mockito");
-        git.tag("v1.0");
+        tag();
 
         // act
         changeLogUpdater.updateChangeLog();
@@ -169,7 +169,7 @@ class ChangeLogUpdaterIT {
     void testDoNotGenerateUnreleasedSectionIfOnlyIgnoredCommits() throws IOException, ProcessFailedException {
         // arrange
         addCommits("chore: Added something", "deps: Upgraded mockito");
-        git.tag("v1.0");
+        tag();
         addCommits("[maven-release-plugin]: prepare for next development iteration");
 
         // act
@@ -198,7 +198,7 @@ class ChangeLogUpdaterIT {
     void testDoNotGenerateUnreleasedSectionIfEmptyWithExistingChangeLog() throws IOException, ProcessFailedException {
         // arrange
         addCommits("chore: Added something", "deps: Upgraded mockito");
-        git.tag("v1.0");
+        tag();
 
         writeChangeLog("""
         # My changelog
@@ -249,7 +249,7 @@ class ChangeLogUpdaterIT {
     void testGenerateChangelogTwiceWithTagAtLatest() throws IOException, ProcessFailedException {
         // arrange
         addCommits("chore: Added something", "deps: Upgraded mockito");
-        git.tag("v1.0");
+        tag();
         changeLogUpdater.updateChangeLog();
         String contents = readChangeLog();
 
@@ -265,7 +265,7 @@ class ChangeLogUpdaterIT {
     void testGenerateChangelogTwiceWithTagAndUnreleasedChanges() throws IOException, ProcessFailedException {
         // arrange
         addCommits("chore: Added something", "deps: Upgraded mockito");
-        git.tag("v1.0");
+        tag();
         addCommits("fix: Important hotfix");
         changeLogUpdater.updateChangeLog();
         String contents = readChangeLog();
@@ -282,7 +282,7 @@ class ChangeLogUpdaterIT {
     void testTagOnIgnoredCommit() throws IOException, ProcessFailedException {
         // arrange
         addCommits("chore: Added something", "[maven-release-plugin]: release 1.0");
-        git.tag("v1.0");
+        tag();
 
         // act
         changeLogUpdater.updateChangeLog();
@@ -306,7 +306,7 @@ class ChangeLogUpdaterIT {
     void testOverwrite() throws IOException, ProcessFailedException {
         // arrange
         addCommits("chore: Added something", "[maven-release-plugin]: release 1.0");
-        git.tag("v1.0");
+        tag();
         changeLogUpdater.updateChangeLog();
         writeChangeLog(readChangeLog().replace("something", "oops"));
 
@@ -332,7 +332,7 @@ class ChangeLogUpdaterIT {
     void testDoNotOverwrite() throws IOException, ProcessFailedException {
         // arrange
         addCommits("chore: Added something", "[maven-release-plugin]: release 1.0");
-        git.tag("v1.0");
+        tag();
         changeLogUpdater.updateChangeLog();
         writeChangeLog(readChangeLog().replace("something", "oops"));
 
@@ -358,7 +358,7 @@ class ChangeLogUpdaterIT {
     void testDoNotOverwriteUnreleasedAlwaysGetsOverwritten() throws IOException, ProcessFailedException {
         // arrange
         addCommits("chore: Added something", "[maven-release-plugin]: release 1.0");
-        git.tag("v1.0");
+        tag();
         addCommits("fix: Various fixes");
         changeLogUpdater.updateChangeLog();
         writeChangeLog(readChangeLog().replace("something", "oops").replace("Various", "Hilarious"));
@@ -432,5 +432,9 @@ class ChangeLogUpdaterIT {
 
     private Path changeLogPath() {
         return rootDirectory.toPath().resolve("CHANGELOG.md");
+    }
+
+    private void tag() throws ProcessFailedException {
+        git.tag("v1.0", "Releasing 1.0");
     }
 }

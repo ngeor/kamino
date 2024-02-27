@@ -59,7 +59,7 @@ public record MavenReleaser(File monorepoRoot, String path, FormatOptions format
         git.addAll();
         git.commit(String.format("release(%s): releasing %s", path, nextVersion));
         String tag = TagPrefix.forPath(path).addTagPrefix(nextVersion);
-        git.tag(tag);
+        git.tag(tag, String.format("Releasing %s", nextVersion));
 
         // restore original pom
         restoreOriginalPom(backupPom);

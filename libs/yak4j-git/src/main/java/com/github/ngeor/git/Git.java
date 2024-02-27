@@ -197,8 +197,8 @@ public final class Git {
         configureIdentity(user);
     }
 
-    public void tag(String tag) throws ProcessFailedException {
-        processHelper.run("tag", tag);
+    public void tag(String tag, String message) throws ProcessFailedException {
+        processHelper.run("tag", "-m", message, tag);
     }
 
     public void config(String key, String value) throws ProcessFailedException {
