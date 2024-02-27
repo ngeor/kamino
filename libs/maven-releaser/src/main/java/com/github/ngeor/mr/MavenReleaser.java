@@ -28,8 +28,7 @@ public record MavenReleaser(File monorepoRoot, String path, FormatOptions format
 
     public void prepareRelease(SemVer nextVersion, boolean push) throws IOException, ProcessFailedException {
         // calculate the groupId / artifactId of the module, do maven sanity checks
-        PomRepository pomRepository = new PomRepository();
-        MavenCoordinates moduleCoordinates = calcModuleCoordinatesAndDoSanityChecks(pomRepository);
+        MavenCoordinates moduleCoordinates = calcModuleCoordinatesAndDoSanityChecks();
 
         // do git sanity checks, pull latest
         Git git = new Git(monorepoRoot);
@@ -51,7 +50,7 @@ public record MavenReleaser(File monorepoRoot, String path, FormatOptions format
         File backupPom = createBackupOfModulePomFile();
 
         // overwrite pom.xml with effective pom
-        replacePomWithEffectivePom(pomRepository);
+        replacePomWithEffectivePom();
 
         // update changelog
         new ChangeLogUpdater(monorepoRoot, path, formatOptions).updateChangeLog(false, nextVersion);
@@ -77,7 +76,8 @@ public record MavenReleaser(File monorepoRoot, String path, FormatOptions format
         }
     }
 
-    private MavenCoordinates calcModuleCoordinatesAndDoSanityChecks(PomRepository pomRepository) throws IOException {
+    private MavenCoordinates calcModuleCoordinatesAndDoSanityChecks() throws IOException {
+        PomRepository pomRepository = new PomRepository();
         LoadResult loadResult = pomRepository.loadAndResolveParent(modulePomFile());
         // ensure modelVersion, name, description exist
         // ensure licenses/license/name and url
@@ -118,7 +118,8 @@ public record MavenReleaser(File monorepoRoot, String path, FormatOptions format
         return backupPom;
     }
 
-    private void replacePomWithEffectivePom(PomRepository pomRepository) throws IOException {
+    private void replacePomWithEffectivePom() throws IOException {
+        PomRepository pomRepository = new PomRepository();
         File pomFile = modulePomFile();
         DocumentWrapper document = pomRepository.loadAndResolveParent(pomFile).document();
         document.indent(XML_INDENTATION);

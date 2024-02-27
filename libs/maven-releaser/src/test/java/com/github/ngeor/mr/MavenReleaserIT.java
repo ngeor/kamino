@@ -104,12 +104,7 @@ class MavenReleaserIT {
         releaser.prepareRelease(new SemVer(1, 0, 0), false);
 
         // assert
-        PomRepository pomRepository = new PomRepository();
-        MavenCoordinates coordinates = pomRepository
-                .loadAndResolveParent(
-                        monorepoRoot.resolve("lib").resolve("pom.xml").toFile())
-                .coordinates();
-        assertThat(coordinates).isEqualTo(new MavenCoordinates("com.acme", "foo", "1.1.0-SNAPSHOT"));
+        assertThat(getCoordinates()).isEqualTo(new MavenCoordinates("com.acme", "foo", "1.1.0-SNAPSHOT"));
         List<Commit> commits = git.revList(null).toList();
         assertThat(commits.stream().map(Commit::summary))
                 .containsExactly(
@@ -117,6 +112,16 @@ class MavenReleaserIT {
                         "release(lib): releasing 1.0.0",
                         "chore: Added pom.xml");
         assertThat(commits.stream().map(Commit::tag)).containsExactly(null, "lib/v1.0.0", null);
+        git.checkout("lib/v1.0.0");
+        assertThat(getCoordinates()).isEqualTo(new MavenCoordinates("com.acme", "foo", "1.0.0"));
+    }
+
+    private MavenCoordinates getCoordinates() throws IOException {
+        PomRepository pomRepository = new PomRepository();
+        return pomRepository
+                .loadAndResolveParent(
+                        monorepoRoot.resolve("lib").resolve("pom.xml").toFile())
+                .coordinates();
     }
 
     @Nested
