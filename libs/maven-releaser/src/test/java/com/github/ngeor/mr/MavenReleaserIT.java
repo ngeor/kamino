@@ -75,6 +75,7 @@ class MavenReleaserIT {
                 </scm>
             </project>
             """;
+
     @SuppressWarnings("FieldCanBeLocal")
     private final String validChildPomWithParentContents =
             """
@@ -188,6 +189,75 @@ class MavenReleaserIT {
                 .doesNotHaveParentPom()
                 .doesNotHaveModules()
                 .hasScmTag("lib/v1.0.0");
+    }
+
+    @Test
+    void testSnapshotsAreNotAllowed() throws IOException, ProcessFailedException {
+        // arrange
+        String parentContents =
+                """
+            <project>
+                <modelVersion>4.0.0</modelVersion>
+                <groupId>com.acme</groupId>
+                <artifactId>parent</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <packaging>pom</packaging>
+                <modules>
+                    <module>lib</module>
+                </modules>
+                <licenses>
+                    <license>
+                        <name>MIT</name>
+                        <url>https://opensource.org/licenses/MIT</url>
+                    </license>
+                </licenses>
+                <developers>
+                    <developer>
+                        <name>Nikolaos Georgiou</name>
+                        <email>nikolaos.georgiou@gmail.com</email>
+                    </developer>
+                </developers>
+            </project>
+            """;
+        String childContents =
+                """
+            <project>
+                <modelVersion>4.0.0</modelVersion>
+                <artifactId>lib</artifactId>
+                <name>lib</name>
+                <description>Cool library</description>
+                <version>1.1-SNAPSHOT</version>
+                <parent>
+                    <groupId>com.acme</groupId>
+                    <artifactId>parent</artifactId>
+                    <version>1.0-SNAPSHOT</version>
+                    <relativePath>..</relativePath>
+                </parent>
+                <scm>
+                    <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
+                    <developerConnection>scm:git:git@github.com:ngeor/kamino.git</developerConnection>
+                    <tag>HEAD</tag>
+                    <url>https://github.com/ngeor/kamino/tree/master/libs/java</url>
+                </scm>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.acme</groupId>
+                        <artifactId>express</artifactId>
+                        <version>0.1.2-SNAPSHOT</version>
+                    </dependency>
+                </dependencies>
+            </project>
+            """;
+        Files.writeString(monorepoRoot.resolve("pom.xml"), parentContents);
+        Path childPomPath = monorepoRoot.resolve("lib").resolve("pom.xml");
+        Files.writeString(childPomPath, childContents);
+        git.addAll();
+        git.commit("chore: Added pom.xml");
+        git.push();
+
+        // act and assert
+        assertThatThrownBy(() -> releaser.prepareRelease(new SemVer(1, 0, 0), false))
+                .hasMessageContaining("Snapshot version 0.1.2-SNAPSHOT is not allowed");
     }
 
     @SuppressWarnings("UnusedReturnValue")

@@ -18,11 +18,13 @@ import com.github.ngeor.process.ProcessFailedException;
 import com.github.ngeor.versions.SemVer;
 import com.github.ngeor.versions.SemVerBump;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
+import com.github.ngeor.yak4jdom.ElementWrapper;
 import com.github.ngeor.yak4jdom.Preconditions;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.Objects;
 import java.util.Set;
 import org.apache.commons.lang3.Validate;
 
@@ -132,6 +134,26 @@ public record MavenReleaser(File monorepoRoot, String path, FormatOptions format
                 .forEach(e -> e.setTextContent(tag));
         document.indent(XML_INDENTATION);
         document.write(pomFile);
+        ensureNoSnapshotVersions(document);
+    }
+
+    private void ensureNoSnapshotVersions(DocumentWrapper document) {
+        Objects.requireNonNull(document);
+        ensureNoSnapshotVersions(document.getDocumentElement());
+    }
+
+    private void ensureNoSnapshotVersions(ElementWrapper element) {
+        Objects.requireNonNull(element);
+        // recursion
+        element.getChildElements().forEach(this::ensureNoSnapshotVersions);
+
+        if (ElementNames.VERSION.equals(element.getNodeName())) {
+            String text = element.getTextContentTrimmed().orElse("");
+            if (text.endsWith("-SNAPSHOT")) {
+                throw new IllegalArgumentException(
+                        String.format("Snapshot version %s is not allowed (%s)", text, element.path()));
+            }
+        }
     }
 
     private void restoreOriginalPom(File backupPom) throws IOException {
