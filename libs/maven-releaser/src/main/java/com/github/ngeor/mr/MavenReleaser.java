@@ -9,6 +9,7 @@ import com.github.ngeor.git.FetchOption;
 import com.github.ngeor.git.Git;
 import com.github.ngeor.git.LsFilesOption;
 import com.github.ngeor.git.PushOption;
+import com.github.ngeor.maven.ElementNames;
 import com.github.ngeor.maven.MavenCoordinates;
 import com.github.ngeor.maven.process.Maven;
 import com.github.ngeor.maven.resolve.LoadResult;
@@ -22,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.Set;
 import org.apache.commons.lang3.Validate;
 
 public record MavenReleaser(File monorepoRoot, String path, FormatOptions formatOptions) {
@@ -50,7 +52,8 @@ public record MavenReleaser(File monorepoRoot, String path, FormatOptions format
         File backupPom = createBackupOfModulePomFile();
 
         // overwrite pom.xml with effective pom
-        replacePomWithEffectivePom();
+        String tag = TagPrefix.forPath(path).addTagPrefix(nextVersion);
+        replacePomWithEffectivePom(tag);
 
         // update changelog
         new ChangeLogUpdater(monorepoRoot, path, formatOptions).updateChangeLog(false, nextVersion);
@@ -58,7 +61,6 @@ public record MavenReleaser(File monorepoRoot, String path, FormatOptions format
         // commit and tag
         git.addAll();
         git.commit(String.format("release(%s): releasing %s", path, nextVersion));
-        String tag = TagPrefix.forPath(path).addTagPrefix(nextVersion);
         git.tag(tag, String.format("Releasing %s", nextVersion));
 
         // restore original pom
@@ -118,10 +120,16 @@ public record MavenReleaser(File monorepoRoot, String path, FormatOptions format
         return backupPom;
     }
 
-    private void replacePomWithEffectivePom() throws IOException {
+    private void replacePomWithEffectivePom(String tag) throws IOException {
         PomRepository pomRepository = new PomRepository();
         File pomFile = modulePomFile();
         DocumentWrapper document = pomRepository.loadAndResolveParent(pomFile).document();
+        Set<String> elementsToRemove = Set.of(ElementNames.MODULES, ElementNames.PARENT);
+        document.getDocumentElement().removeChildNodesByName(elementsToRemove::contains);
+        document.getDocumentElement()
+                .findChildElements("scm")
+                .flatMap(e -> e.findChildElements("tag"))
+                .forEach(e -> e.setTextContent(tag));
         document.indent(XML_INDENTATION);
         document.write(pomFile);
     }

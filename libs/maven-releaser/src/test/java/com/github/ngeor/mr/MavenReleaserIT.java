@@ -7,10 +7,13 @@ import com.github.ngeor.git.Commit;
 import com.github.ngeor.git.Git;
 import com.github.ngeor.git.InitOption;
 import com.github.ngeor.git.User;
+import com.github.ngeor.maven.ElementNames;
 import com.github.ngeor.maven.MavenCoordinates;
-import com.github.ngeor.maven.resolve.PomRepository;
+import com.github.ngeor.maven.dom.DomHelper;
 import com.github.ngeor.process.ProcessFailedException;
 import com.github.ngeor.versions.SemVer;
+import com.github.ngeor.yak4jdom.DocumentWrapper;
+import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -72,6 +75,42 @@ class MavenReleaserIT {
                 </scm>
             </project>
             """;
+    @SuppressWarnings("FieldCanBeLocal")
+    private final String validChildPomWithParentContents =
+            """
+        <project>
+            <modelVersion>4.0.0</modelVersion>
+            <groupId>com.acme</groupId>
+            <artifactId>foo</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <name>foo</name>
+            <description>The library</description>
+            <parent>
+                <groupId>com.acme</groupId>
+                <artifactId>monorepo</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <relativePath>..</relativePath>
+            </parent>
+            <licenses>
+                <license>
+                    <name>MIT</name>
+                    <url>https://opensource.org/licenses/MIT</url>
+                </license>
+            </licenses>
+            <developers>
+                <developer>
+                    <name>Nikolaos Georgiou</name>
+                    <email>nikolaos.georgiou@gmail.com</email>
+                </developer>
+            </developers>
+            <scm>
+                <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
+                <developerConnection>scm:git:git@github.com:ngeor/kamino.git</developerConnection>
+                <tag>HEAD</tag>
+                <url>https://github.com/ngeor/kamino/tree/master/libs/java</url>
+            </scm>
+        </project>
+        """;
 
     @BeforeEach
     void beforeEach() throws IOException, ProcessFailedException {
@@ -95,7 +134,8 @@ class MavenReleaserIT {
     void testHappyFlow() throws IOException, ProcessFailedException {
         // arrange
         Files.writeString(monorepoRoot.resolve("pom.xml"), validParentPomContents);
-        Files.writeString(monorepoRoot.resolve("lib").resolve("pom.xml"), validChildPomContents);
+        Path childPomPath = monorepoRoot.resolve("lib").resolve("pom.xml");
+        Files.writeString(childPomPath, validChildPomContents);
         git.addAll();
         git.commit("chore: Added pom.xml");
         git.push();
@@ -104,7 +144,7 @@ class MavenReleaserIT {
         releaser.prepareRelease(new SemVer(1, 0, 0), false);
 
         // assert
-        assertThat(getCoordinates()).isEqualTo(new MavenCoordinates("com.acme", "foo", "1.1.0-SNAPSHOT"));
+        new DocumentAssertions(childPomPath).hasCoordinates(new MavenCoordinates("com.acme", "foo", "1.1.0-SNAPSHOT"));
         List<Commit> commits = git.revList(null).toList();
         assertThat(commits.stream().map(Commit::summary))
                 .containsExactly(
@@ -113,15 +153,80 @@ class MavenReleaserIT {
                         "chore: Added pom.xml");
         assertThat(commits.stream().map(Commit::tag)).containsExactly(null, "lib/v1.0.0", null);
         git.checkout("lib/v1.0.0");
-        assertThat(getCoordinates()).isEqualTo(new MavenCoordinates("com.acme", "foo", "1.0.0"));
+        new DocumentAssertions(childPomPath).hasCoordinates(new MavenCoordinates("com.acme", "foo", "1.0.0"));
     }
 
-    private MavenCoordinates getCoordinates() throws IOException {
-        PomRepository pomRepository = new PomRepository();
-        return pomRepository
-                .loadAndResolveParent(
-                        monorepoRoot.resolve("lib").resolve("pom.xml").toFile())
-                .coordinates();
+    @Test
+    void testHappyFlowWithParent() throws IOException, ProcessFailedException {
+        // arrange
+        Files.writeString(monorepoRoot.resolve("pom.xml"), validParentPomContents);
+        Path childPomPath = monorepoRoot.resolve("lib").resolve("pom.xml");
+        Files.writeString(childPomPath, validChildPomWithParentContents);
+        git.addAll();
+        git.commit("chore: Added pom.xml");
+        git.push();
+
+        // act
+        releaser.prepareRelease(new SemVer(1, 0, 0), false);
+
+        // assert
+        new DocumentAssertions(childPomPath)
+                .hasCoordinates(new MavenCoordinates("com.acme", "foo", "1.1.0-SNAPSHOT"))
+                .hasParentPom()
+                .doesNotHaveModules()
+                .hasScmTag("HEAD");
+        List<Commit> commits = git.revList(null).toList();
+        assertThat(commits.stream().map(Commit::summary))
+                .containsExactly(
+                        "release(lib): switching to development version 1.1.0-SNAPSHOT",
+                        "release(lib): releasing 1.0.0",
+                        "chore: Added pom.xml");
+        assertThat(commits.stream().map(Commit::tag)).containsExactly(null, "lib/v1.0.0", null);
+        git.checkout("lib/v1.0.0");
+        new DocumentAssertions(childPomPath)
+                .hasCoordinates(new MavenCoordinates("com.acme", "foo", "1.0.0"))
+                .doesNotHaveParentPom()
+                .doesNotHaveModules()
+                .hasScmTag("lib/v1.0.0");
+    }
+
+    @SuppressWarnings("UnusedReturnValue")
+    record DocumentAssertions(DocumentWrapper document) {
+        public DocumentAssertions(Path path) {
+            this(DocumentWrapper.parse(path.toFile()));
+        }
+
+        public DocumentAssertions hasCoordinates(MavenCoordinates expected) {
+            assertThat(DomHelper.getCoordinates(document)).isEqualTo(expected);
+            return this;
+        }
+
+        public DocumentAssertions hasParentPom() {
+            assertThat(document.getDocumentElement().firstElement(ElementNames.PARENT))
+                    .isPresent();
+            return this;
+        }
+
+        public DocumentAssertions doesNotHaveParentPom() {
+            assertThat(document.getDocumentElement().firstElement(ElementNames.PARENT))
+                    .isEmpty();
+            return this;
+        }
+
+        public DocumentAssertions doesNotHaveModules() {
+            assertThat(document.getDocumentElement().firstElement(ElementNames.MODULES))
+                    .isEmpty();
+            return this;
+        }
+
+        public DocumentAssertions hasScmTag(String expected) {
+            assertThat(document.getDocumentElement()
+                            .findChildElements("scm")
+                            .flatMap(e -> e.findChildElements("tag"))
+                            .flatMap(ElementWrapper::getTextContentTrimmedAsStream))
+                    .containsExactly(expected);
+            return this;
+        }
     }
 
     @Nested
@@ -161,7 +266,7 @@ class MavenReleaserIT {
 
         @Test
         void testDescriptionIsRequired() throws IOException, ProcessFailedException {
-            testMissingTopLevelElement("description");
+            testMissingDescription();
         }
 
         @Test
@@ -201,7 +306,8 @@ class MavenReleaserIT {
             return assertThatThrownBy(() -> releaser.prepareRelease(new SemVer(1, 0, 0), false));
         }
 
-        private void testMissingTopLevelElement(String childElementName) throws IOException, ProcessFailedException {
+        private void testMissingDescription() throws IOException, ProcessFailedException {
+            String childElementName = "description";
             // test missing element
             testValidation(validParentPomContents, removeElement(validChildPomContents, childElementName))
                     .hasMessage(String.format("Element '%s' not found under 'project'", childElementName));
