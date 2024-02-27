@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## [1.10.0](https://github.com/ngeor/kamino/compare/libs/yak4j-dom/v1.9.7...libs/yak4j-dom/v1.10.0) - 2024-02-27
 
 ### Features
 
@@ -22,6 +22,7 @@ All notable changes to this project will be documented in this file.
 * Added `firstElementsText` method
 * Added method `deepClone`
 * Modified `firstElementsText` to accept and return an array
+* Make XML indentation configurable
 
 ### Fixes
 
