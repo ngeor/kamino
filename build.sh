@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-MVN=mvnd
+MVN="${MVN:-mvnd}"
 
 # Collect options
 BUILD_NATIVE=0
