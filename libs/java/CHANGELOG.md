@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## [4.9.0](https://github.com/ngeor/kamino/compare/libs/java/v4.8.0...libs/java/v4.9.0) - 2024-02-27
 
 ### Features
 
