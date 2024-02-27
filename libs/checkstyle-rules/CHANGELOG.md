@@ -2,11 +2,35 @@
 
 All notable changes to this project will be documented in this file.
 
-## [7.0.0] - 2024-02-17
+## Unreleased
+
+### Miscellaneous Tasks
+
+* Added badges
+* Removed duplicated elements present in parent pom
+* Make test method public
+
+## [7.0.0](https://github.com/ngeor/kamino/compare/libs/checkstyle-rules/v6.7.2...libs/checkstyle-rules/v7.0.0) - 2024-02-17
 
 ### Features
 
 * **Breaking**: Changed import order to align with palantir
+
+### Fixes
+
+* Breaking checkstyle-rules parent pom relationship
+
+### Miscellaneous Tasks
+
+* Delete old .github and scripts folders
+* Keeping only root .editorconfig, deleting the rest
+* Keeping only root .gitignore, deleting the rest
+* Use `com.github.ngeor:java` as the parent pom everywhere
+* Switch to snapshot version of parent pom
+
+### Dependencies
+
+* Upgraded parent pom
 
 ## [6.7.2] - 2024-01-28
 

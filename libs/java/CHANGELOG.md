@@ -72,7 +72,7 @@ All notable changes to this project will be documented in this file.
 
 ### Miscellaneous Tasks
 
-* Configure `sortpom` to not expand empty elements
+* Configure sortpom to not expand empty elements
 
 ## [4.4.0](https://github.com/ngeor/kamino/compare/libs/java/v4.3.0...libs/java/v4.4.0) - 2024-02-10
 
@@ -83,10 +83,10 @@ All notable changes to this project will be documented in this file.
 
 ### Miscellaneous Tasks
 
-* Delete old `.github` and `scripts` folders
-* Keeping only root `.editorconfig`, deleting the rest
-* Keeping only root `.gitignore`, deleting the rest
-* Moved `.gitattributes` to the root folder
+* Delete old .github and scripts folders
+* Keeping only root .editorconfig, deleting the rest
+* Keeping only root .gitignore, deleting the rest
+* Moved .gitattributes to the root folder
 
 ## [4.3.0](https://github.com/ngeor/kamino/compare/libs/java/v4.2.1...libs/java/v4.3.0) - 2024-01-30
 

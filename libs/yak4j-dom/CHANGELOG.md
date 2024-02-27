@@ -1,4 +1,5 @@
 # Changelog
+
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
@@ -7,6 +8,20 @@ All notable changes to this project will be documented in this file.
 
 * Adding root pom (#11)
 * Resolve properties in custom effective pom resolver
+* Added parseString and writeToString methods
+* Added removeChildNodesByName method
+* Ability to re-indent a document
+* Added getChildElementsAsIterator
+* Trimming whitespace out of text nodes
+* Added path method
+* Added method getTextContentTrimmedAsStream
+* Added "asTyped" method, converting XML document into Java record
+* Support child elements
+* Introducing Preconditions API
+* Add overload `findChildElements` to get elements of multiple names
+* Added `firstElementsText` method
+* Added method `deepClone`
+* Modified `firstElementsText` to accept and return an array
 
 ### Fixes
 
@@ -16,17 +31,28 @@ All notable changes to this project will be documented in this file.
 
 * fix badge URLs
 * Add groupId in all pom files
+* Add Box class
 * Keeping only root .editorconfig, deleting the rest
 * Keeping only root .gitignore, deleting the rest
 * Upgrade to latest parent pom
 * Upgraded to latest parent pom
 * Use `com.github.ngeor:java` as the parent pom everywhere
+* Switch to snapshot version of parent pom
+* Removed unused class XmlUtils
+* Removed unused methods
+* Use commons-lang3 library
+* Use Java 17 instanceof
+* Adding `ResolutionPhase`
+* Adding tests
+* Removed `ChildNodesIterator`
+* Reuse DocumentBuilder
+* Do not use a HashMap in firstElementsText
 
-### refactor
+### Dependencies
 
-* Add Box class
+* Upgraded parent pom
 
-## [1.9.7] - 2024-01-27
+## [1.9.7](https://github.com/ngeor/kamino/compare/libs/yak4j-dom/v1.9.6...libs/yak4j-dom/v1.9.7) - 2024-01-27
 
 ### Fixes
 
@@ -36,20 +62,17 @@ All notable changes to this project will be documented in this file.
 
 * Deleted old release scripts
 
-## [1.9.6] - 2024-01-26
+## [1.9.6](https://github.com/ngeor/kamino/compare/libs/yak4j-dom/v1.9.5...libs/yak4j-dom/v1.9.6) - 2024-01-26
 
 ### Miscellaneous Tasks
 
 * Update URL for Maven Central badge
 
-## [1.9.5] - 2024-01-26
+## [1.9.5](https://github.com/ngeor/kamino/compare/libs/yak4j-dom/v1.9.4...libs/yak4j-dom/v1.9.5) - 2024-01-26
 
+## [1.9.4](https://github.com/ngeor/kamino/compare/libs/yak4j-dom/v1.9.3...libs/yak4j-dom/v1.9.4) - 2024-01-26
 
-## [1.9.4] - 2024-01-26
-
-
-## [1.9.3] - 2024-01-26
-
+## [1.9.3](https://github.com/ngeor/kamino/compare/libs/yak4j-dom/v1.9.2...libs/yak4j-dom/v1.9.3) - 2024-01-26
 
 ## [1.9.2] - 2024-01-26
 
@@ -57,10 +80,6 @@ All notable changes to this project will be documented in this file.
 
 * Add 'libs/yak4j-dom/' from commit '835c3837644c8bcdb063d411b995c331ac9ebae2'
 * Adding workflows for libs/yak4j-dom
-* Update release script
-* Updated copyright year in LICENSE
-* Updating parent from 2.1.0 to 2.4.0
-* Updating parent from 2.4.0 to 3.1.1
 
 ## [1.9.1] - 2022-01-26
 

@@ -2,6 +2,43 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Miscellaneous Tasks
+
+* Keeping only root .editorconfig, deleting the rest
+* Keeping only root .gitignore, deleting the rest
+* Upgrade to latest parent pom
+* Fix archetype-quickstart-jdk8 workflows
+* **Breaking**: Remove checkstyle as it no longer works on Java 8
+* Upgraded to latest parent pom
+* Use `com.github.ngeor:java` as the parent pom everywhere
+* Switch to snapshot version of parent pom
+* Added badges
+
+### Dependencies
+
+* Upgraded parent pom
+
+## [2.9.0](https://github.com/ngeor/kamino/compare/archetypes/archetype-quickstart-jdk8/v2.8.4...archetypes/archetype-quickstart-jdk8/v2.9.0) - 2024-01-30
+
+### Miscellaneous Tasks
+
+* Removed old workflows
+* fix badge URLs
+* Add groupId in all pom files
+
+### Dependencies
+
+* Upgraded dependencies of generated projects
+
+## [2.8.4] - 2024-01-27
+
+### Miscellaneous Tasks
+
+* Add 'archetypes/archetype-quickstart-jdk8/' from commit '2df0c15184f9f5fee92f4c20175feda72eac55ea'
+* Adjusted project for monorepo
+
 ## [2.8.3] - 2024-01-26
 
 ### Bug Fixes

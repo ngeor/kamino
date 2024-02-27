@@ -1,15 +1,32 @@
 # Changelog
+
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## Unreleased
+
+### Fixes
+
+* Upgrading libraries to Java 17
 
 ### Miscellaneous Tasks
 
-- Updated copyright year in LICENSE
-- Updating parent from 2.1.0 to 2.4.0
-- Updating parent from 2.4.0 to 3.1.1
-- Update dependency org.apache.maven.plugins:maven-invoker-plugin to v3.2.2
-- Update maven-plugin-plugin.version to v3.6.4
+* Delete old .github and scripts folders
+* Keeping only root .editorconfig, deleting the rest
+* Keeping only root .gitignore, deleting the rest
+* Upgrade to latest parent pom
+* Upgraded to latest parent pom
+* Switch to snapshot version of parent pom
+
+### Dependencies
+
+* Upgraded parent pom
+
+## [0.8.2] - 2024-01-28
+
+### Miscellaneous Tasks
+
+* Add 'plugins/yak4j-json-yaml-converter-maven-plugin/' from commit '16297e4d389a4b0834c0fe8a5a6b79934631789d'
+* Adjusted imported code
 
 ## [0.8.1] - 2022-01-27
 

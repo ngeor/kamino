@@ -1,16 +1,35 @@
 # Changelog
+
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## Unreleased
+
+### Fixes
+
+* Upgrading libraries to Java 17
 
 ### Miscellaneous Tasks
 
-- Updated copyright year in LICENSE
-- Updating parent from 2.1.0 to 2.4.0
-- Updating parent from 2.4.0 to 3.1.1
-- Update dependency org.apache.maven.plugins:maven-invoker-plugin to v3.2.2
-- Update maven-plugin-plugin.version to v3.6.4
-- Update dependency com.fasterxml.jackson.core:jackson-databind to v2.13.1
+* Delete old .github and scripts folders
+* Keeping only root .editorconfig, deleting the rest
+* Keeping only root .gitignore, deleting the rest
+* Upgrade to latest parent pom
+* Upgraded to latest parent pom
+* Use `com.github.ngeor:java` as the parent pom everywhere
+* Switch to snapshot version of parent pom
+* Using Java 17 instanceof
+* Do not wrap IOException into a RuntimeException
+
+### Dependencies
+
+* Upgraded parent pom
+
+## [0.17.2] - 2024-01-28
+
+### Miscellaneous Tasks
+
+* Add 'plugins/yak4j-swagger-maven-plugin/' from commit '98fa7082924d2360cd0f3be25e8ec5c08532c304'
+* Adjusted imported code
 
 ## [0.17.1] - 2022-01-27
 
