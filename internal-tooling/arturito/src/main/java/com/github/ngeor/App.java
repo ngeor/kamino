@@ -1,14 +1,12 @@
 package com.github.ngeor;
 
-import com.github.ngeor.maven.process.Maven;
-import com.github.ngeor.process.ProcessFailedException;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
+import java.util.Objects;
 import org.apache.commons.io.FileUtils;
 
 /**
@@ -21,7 +19,7 @@ public final class App {
      * Says hello to the world.
      * @param args The arguments of the program.
      */
-    public static void main(String[] args) throws IOException, InterruptedException, ProcessFailedException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         if (args.length != 5) {
             throw new IllegalArgumentException("Expected exactly 5 arguments");
         }
@@ -36,7 +34,7 @@ public final class App {
             // create GPG key file
             File keysFile = createKeysFile();
 
-            Gpg gpg = new Gpg(new File("."));
+            Gpg gpg = new Gpg();
 
             // gpg key workaround
             gpg.workaround(gpgPassphrase, keysFile);
@@ -60,7 +58,7 @@ public final class App {
     private static File createKeysFile() throws IOException {
         File keysFile = File.createTempFile("keys", ".asc");
         keysFile.deleteOnExit();
-        try (InputStream is = App.class.getResourceAsStream("/keys.asc");
+        try (InputStream is = getResource("/keys.asc");
                 FileOutputStream fos = new FileOutputStream(keysFile)) {
             is.transferTo(fos);
         }
@@ -71,7 +69,7 @@ public final class App {
             String nexusUsername, String nexusPassword, String gpgKey, String gpgPassphrase) throws IOException {
         File settingsFile = File.createTempFile("settings", ".xml");
         settingsFile.deleteOnExit();
-        try (InputStream is = App.class.getResourceAsStream("/settings.xml.template")) {
+        try (InputStream is = getResource("/settings.xml.template")) {
             Files.writeString(
                     settingsFile.toPath(),
                     String.format(
@@ -84,8 +82,19 @@ public final class App {
         return settingsFile;
     }
 
-    private static void runMavenDeploy(File settingsFile, String path) throws ProcessFailedException {
-        Maven maven = new Maven(Path.of(path).resolve("pom.xml").toFile(), settingsFile, "gpg");
-        maven.deploy();
+    private static InputStream getResource(String resourceName) {
+        return Objects.requireNonNull(
+                App.class.getResourceAsStream(resourceName), "Resource " + resourceName + " not found");
+    }
+
+    private static void runMavenDeploy(File settingsFile, String path) throws IOException, InterruptedException {
+        int exitCode = new ProcessBuilder("mvn", "-B", "-ntp", "-Pgpg", "-s", settingsFile.getAbsolutePath(), "deploy")
+                .directory(new File(path))
+                .inheritIO()
+                .start()
+                .waitFor();
+        if (exitCode != 0) {
+            throw new IOException("Deploy failed");
+        }
     }
 }
