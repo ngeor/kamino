@@ -36,7 +36,7 @@ public class ProcessHelper {
                     .redirectErrorStream(true)
                     .start();
             String output = new String(process.getInputStream().readAllBytes());
-            waitForAndCheckStatus(process, processBuilderWithArgs);
+            waitForAndCheckStatus(process, processBuilderWithArgs.commandLine(), output);
             return output;
         } catch (IOException ex) {
             throw new ProcessFailedException(ex);
@@ -58,7 +58,7 @@ public class ProcessHelper {
         try {
             Process process =
                     processBuilderWithArgs.processBuilder().inheritIO().start();
-            waitForAndCheckStatus(process, processBuilderWithArgs);
+            waitForAndCheckStatus(process, processBuilderWithArgs.commandLine());
         } catch (IOException ex) {
             throw new ProcessFailedException(ex);
         } catch (InterruptedException ex) {
@@ -67,12 +67,20 @@ public class ProcessHelper {
         }
     }
 
-    private void waitForAndCheckStatus(Process process, ProcessBuilderWithArgs processBuilderWithArgs)
+    private void waitForAndCheckStatus(Process process, String commandLine)
+            throws InterruptedException, ProcessFailedException {
+        int exitCode = process.waitFor();
+        if (exitCode != 0) {
+            throw new ProcessFailedException(String.format("Error running %s in %s", commandLine, workingDirectory));
+        }
+    }
+
+    private void waitForAndCheckStatus(Process process, String commandLine, String output)
             throws InterruptedException, ProcessFailedException {
         int exitCode = process.waitFor();
         if (exitCode != 0) {
             throw new ProcessFailedException(
-                    String.format("Error running %s in %s", processBuilderWithArgs.commandLine(), workingDirectory));
+                    String.format("Error running %s in %s: %s", commandLine, workingDirectory, output));
         }
     }
 
