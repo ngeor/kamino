@@ -106,4 +106,25 @@ class MarkdownMergerTest {
                         new Section(2, "[1.3.0]", new Section(3, CHORES, new Line("* Help"))),
                         new Section(2, "[1.2.1]", new Section(3, CHORES, new Line("* Simple fix")))));
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"unreleased", "Unreleased", "[unreleased]"})
+    void testDetectUnreleased(String oldTitle) {
+        // arrange
+        MarkdownMerger markdownMerger = new MarkdownMerger(new FormatOptions(UNRELEASED, Map.of(), null), false);
+        List<Item> markdown = List.of(
+                new Section(1, CHANGELOG, new Section(2, oldTitle, new Section(3, CHORES, new Line("* Simple fix")))));
+        FormattedRelease formattedRelease = new FormattedRelease(
+                new FormattedGroup(UNRELEASED, new FormattedSubGroup(FIXES, "Another simple fix")));
+
+        // act
+        markdownMerger.mergeIntoLeft(markdown, formattedRelease);
+
+        // assert
+        assertThat(markdown)
+                .containsExactly(new Section(
+                        1,
+                        CHANGELOG,
+                        new Section(2, UNRELEASED, new Section(3, FIXES, new Line("* Another simple fix")))));
+    }
 }
