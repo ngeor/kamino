@@ -249,4 +249,10 @@ public class ElementWrapper {
             }
         }
     }
+
+    public ElementWrapper importNode(ElementWrapper other) {
+        Objects.requireNonNull(other);
+        Node node = element.getOwnerDocument().importNode(other.element, true);
+        return new ElementWrapper((Element) element.appendChild(node));
+    }
 }
