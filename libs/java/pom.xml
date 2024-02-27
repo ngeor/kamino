@@ -1,8 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.ngeor</groupId>
   <artifactId>java</artifactId>
-  <version>4.9.0</version>
+  <version>4.10.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>java</name>
   <description>Parent pom for Java repository</description>
@@ -172,7 +173,8 @@
           <groupId>com.diffplug.spotless</groupId>
           <artifactId>spotless-maven-plugin</artifactId>
           <version>${spotless-maven-plugin.version}</version>
-          <configuration><!-- TODO set to origin/master once spotless is configured to break the build -->
+          <configuration>
+            <!-- TODO set to origin/master once spotless is configured to break the build -->
             <ratchetFrom>NONE</ratchetFrom>
             <java>
               <palantirJavaFormat>
@@ -296,7 +298,9 @@
     </pluginManagement>
   </build>
   <profiles>
-    <profile><!-- https://github.com/Ekryd/sortpom --><!-- mvn -Psortpom validate -->
+    <profile>
+      <!-- https://github.com/Ekryd/sortpom -->
+      <!-- mvn -Psortpom validate -->
       <id>sortpom</id>
       <build>
         <plugins>
