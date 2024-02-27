@@ -141,7 +141,7 @@ public final class PomMerger {
             if ("executions".equals(name)) {
                 return new ExecutionsMerge();
             } else if ("configuration".equals(name)) {
-                return new ConfigurationMerge();
+                return new AppendToExistingMerger();
             } else {
                 return super.createMerger(rightChild);
             }
@@ -191,14 +191,16 @@ public final class PomMerger {
         protected Merge<ElementWrapper> createMerger(ElementWrapper rightChild) {
             String name = rightChild.getNodeName();
             if ("configuration".equals(name)) {
-                return new ConfigurationMerge();
+                return new AppendToExistingMerger();
+            } else if ("goals".equals(name)) {
+                return new GoalsMerger();
             } else {
                 return super.createMerger(rightChild);
             }
         }
     }
 
-    private static class ConfigurationMerge extends BasicMerger {
+    private static class AppendToExistingMerger extends BasicMerger {
         @Override
         protected Optional<ElementWrapper> locateExistingChild(ElementWrapper left, ElementWrapper rightChild) {
             return Optional.empty();
@@ -206,7 +208,16 @@ public final class PomMerger {
 
         @Override
         protected Merge<ElementWrapper> createMerger(ElementWrapper rightChild) {
-            return new ConfigurationMerge();
+            return new AppendToExistingMerger();
+        }
+    }
+
+    private static class GoalsMerger implements Merge<ElementWrapper> {
+
+        @Override
+        public void mergeIntoLeft(ElementWrapper left, ElementWrapper right) {
+            left.removeChildNodesByName("goal");
+            right.findChildElements("goal").forEach(left::importNode);
         }
     }
 

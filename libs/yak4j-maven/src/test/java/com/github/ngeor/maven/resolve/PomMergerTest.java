@@ -336,6 +336,110 @@ class PomMergerTest {
     }
 
     @Test
+    void testMergeBuildPluginExecutionsMultipleGoals() {
+        String parent =
+                """
+    <project>
+        <build>
+            <plugins>
+                <plugin>
+                    <groupId>com.acme</groupId>
+                    <artifactId>foo</artifactId>
+                    <version>1.0</version>
+                    <executions>
+                        <execution>
+                            <id>pre-test</id>
+                            <goals>
+                                <goal>clean</goal>
+                                <goal>test</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>test</id>
+                            <goals>
+                                <goal>verify</goal>
+                                <goal>report</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </build>
+    </project>
+    """;
+
+        String child =
+                """
+    <project>
+        <build>
+            <plugins>
+                <plugin>
+                    <groupId>com.acme</groupId>
+                    <artifactId>foo</artifactId>
+                    <executions>
+                        <execution>
+                            <id>pre-test</id>
+                            <goals>
+                                <goal>clean</goal>
+                                <goal>validate</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>post-test</id>
+                            <goals>
+                                <goal>report</goal>
+                                <goal>aggregate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </build>
+    </project>
+    """;
+
+        String expected =
+                """
+    <project>
+        <build>
+            <plugins>
+                <plugin>
+                    <groupId>com.acme</groupId>
+                    <artifactId>foo</artifactId>
+                    <version>1.0</version>
+                    <executions>
+                        <execution>
+                            <id>pre-test</id>
+                            <goals>
+                                <goal>clean</goal>
+                                <goal>validate</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>test</id>
+                            <goals>
+                                <goal>verify</goal>
+                                <goal>report</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>post-test</id>
+                            <goals>
+                                <goal>report</goal>
+                                <goal>aggregate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </build>
+    </project>
+    """;
+        String actual = merge(parent, child);
+        assertThat(actual).isEqualToNormalizingNewlines(expected);
+    }
+
+    @Test
     void testMergeBuildPluginConfiguration() {
         String parent =
                 """
