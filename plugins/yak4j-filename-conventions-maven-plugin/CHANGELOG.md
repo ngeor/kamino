@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## [0.19.0](https://github.com/ngeor/kamino/compare/plugins/yak4j-filename-conventions-maven-plugin/v0.18.2...plugins/yak4j-filename-conventions-maven-plugin/v0.19.0) - 2024-02-27
 
 ### Fixes
 
