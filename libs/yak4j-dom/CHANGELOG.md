@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Features
+
+* Added method importNode
+
 ## [1.10.0](https://github.com/ngeor/kamino/compare/libs/yak4j-dom/v1.9.7...libs/yak4j-dom/v1.10.0) - 2024-02-27
 
 ### Features

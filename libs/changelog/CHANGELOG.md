@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Features
+
+* Use annotated tags for releases
+
 ### Fixes
 
 * Exclude tags from other projects

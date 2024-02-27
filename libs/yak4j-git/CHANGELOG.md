@@ -15,6 +15,7 @@
 * Added methods hasNonStagedChanges, lsFiles
 * Added fetch method
 * Added methods initAndConfigureIdentity, configureIdentity
+* Use annotated tags for releases
 
 ### Fixes
 

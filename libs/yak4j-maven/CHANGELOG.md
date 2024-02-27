@@ -20,6 +20,7 @@
 * Implemented basic parent resolution in `PomRepository`
 * Adding Input and Resolver abstractions
 * Add deploy method, add support for custom settings file
+* Make XML indentation configurable
 
 ### Fixes
 
@@ -28,6 +29,7 @@
 * Merge plugin configurations
 * Merge plugin configurations
 * Fix setting the next snapshot version
+* Fix merging of plugin goals
 
 ### Miscellaneous Tasks
 

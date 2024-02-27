@@ -17,6 +17,8 @@
 * Implement sanity checks before attempting release
 * Added sanity checks against the Maven pom file before preparing the release
 * Added git sanity checks
+* Make XML indentation configurable
+* Use annotated tags for releases
 
 ### Fixes
 
@@ -24,6 +26,7 @@
 * Merge plugin configurations
 * Push tags upon releasing
 * Fix setting the next snapshot version
+* Accidentally kept snapshot version in release pom
 
 ### Miscellaneous Tasks
 
