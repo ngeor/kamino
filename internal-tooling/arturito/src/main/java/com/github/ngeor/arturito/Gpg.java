@@ -1,4 +1,4 @@
-package com.github.ngeor;
+package com.github.ngeor.arturito;
 
 import java.io.File;
 import java.io.IOException;

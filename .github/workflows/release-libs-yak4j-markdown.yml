@@ -16,12 +16,17 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build arturito release tooling
-      run: mvn -Pshade -B -ntp -am -pl internal-tooling/arturito clean package -DskipTests
+      run: mvn -Pshade -B -ntp -am -pl internal-tooling/arturito clean package
     - name: Run arturito release tooling
       run: >-
         java -jar internal-tooling/arturito/target/arturito-1.0-SNAPSHOT.jar
+        --gpg-key
         ${{ secrets.GPG_KEY }}
+        --gpg-passphrase
         ${{ secrets.GPG_PASSPHRASE }}
+        --nexus-username
         ${{ secrets.OSSRH_USERNAME }}
+        --nexus-password
         ${{ secrets.OSSRH_PASSWORD }}
+        --path
         libs/yak4j-markdown

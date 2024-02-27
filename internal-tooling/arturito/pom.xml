@@ -20,7 +20,7 @@
     <url>https://github.com/ngeor/kamino/tree/master/internal-tooling/arturito</url>
   </scm>
   <properties>
-    <mainClass>com.github.ngeor.App</mainClass>
+    <mainClass>com.github.ngeor.arturito.App</mainClass>
   </properties>
   <dependencies>
     <dependency>
