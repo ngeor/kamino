@@ -1,5 +1,6 @@
 package com.github.ngeor.maven.resolve;
 
+import com.github.ngeor.maven.ElementNames;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.util.Optional;
@@ -17,9 +18,9 @@ public final class PomMerger {
         public void mergeIntoLeft(DocumentWrapper left, DocumentWrapper right) {
             ElementWrapper leftDocumentElement = left.getDocumentElement();
             ElementWrapper rightDocumentElement = right.getDocumentElement();
-            // Notable elements which are not inherited include: artifactId; name; prerequisites; profiles
-            leftDocumentElement.removeChildNodesByName("artifactId");
-            leftDocumentElement.removeChildNodesByName("name");
+            // Notable elements which are not inherited include: artifactId; name
+            leftDocumentElement.removeChildNodesByName(ElementNames.ARTIFACT_ID);
+            leftDocumentElement.removeChildNodesByName(ElementNames.NAME);
             new ProjectMerge().mergeIntoLeft(leftDocumentElement, rightDocumentElement);
         }
     }
@@ -72,10 +73,10 @@ public final class PomMerger {
             if (Set.of(
                             "properties",
                             "modelVersion",
-                            "groupId",
-                            "artifactId",
-                            "version",
-                            "name",
+                            ElementNames.GROUP_ID,
+                            ElementNames.ARTIFACT_ID,
+                            ElementNames.VERSION,
+                            ElementNames.NAME,
                             "packaging",
                             "description",
                             "url",
@@ -84,7 +85,7 @@ public final class PomMerger {
                 return new BasicRecursiveMerger();
             } else if ("build".equals(name)) {
                 return new BuildMerge();
-            } else if ("dependencies".equals(name)) {
+            } else if (ElementNames.DEPENDENCIES.equals(name)) {
                 return new DependenciesMerge();
             } else if ("profiles".equals(name)) {
                 return new ProfilesMerge();
@@ -253,7 +254,7 @@ public final class PomMerger {
                 return new BasicRecursiveMerger();
             } else if ("build".equals(name)) {
                 return new BuildMerge();
-            } else if ("dependencies".equals(name)) {
+            } else if (ElementNames.DEPENDENCIES.equals(name)) {
                 return new DependenciesMerge();
             } else if ("reporting".equals(name)) {
                 return new ReportingMerge();
@@ -277,7 +278,7 @@ public final class PomMerger {
         @Override
         protected Merge<ElementWrapper> createMerger(ElementWrapper rightChild) {
             String name = rightChild.getNodeName();
-            if ("dependencies".equals(name)) {
+            if (ElementNames.DEPENDENCIES.equals(name)) {
                 return new DependenciesMerge();
             } else {
                 throw new MergeNotImplementedException(rightChild);
@@ -302,12 +303,12 @@ public final class PomMerger {
         protected Optional<ElementWrapper> locateExistingChild(ElementWrapper left, ElementWrapper rightChild) {
             String name = rightChild.getNodeName();
             if (getChildElementName().equals(name)) {
-                String groupId = requireChildText(rightChild, "groupId");
-                String artifactId = requireChildText(rightChild, "artifactId");
+                String groupId = requireChildText(rightChild, ElementNames.GROUP_ID);
+                String artifactId = requireChildText(rightChild, ElementNames.ARTIFACT_ID);
                 return left.getChildElements()
                         .filter(x -> name.equals(x.getNodeName()))
-                        .filter(x -> hasChildText(x, "groupId", groupId))
-                        .filter(x -> hasChildText(x, "artifactId", artifactId))
+                        .filter(x -> hasChildText(x, ElementNames.GROUP_ID, groupId))
+                        .filter(x -> hasChildText(x, ElementNames.ARTIFACT_ID, artifactId))
                         .findFirst();
             } else {
                 throw new MergeNotImplementedException(rightChild);
@@ -367,7 +368,7 @@ public final class PomMerger {
 
         @Override
         protected String getIdElementName() {
-            return "name";
+            return ElementNames.NAME;
         }
     }
 
@@ -379,7 +380,7 @@ public final class PomMerger {
 
         @Override
         protected String getIdElementName() {
-            return "name";
+            return ElementNames.NAME;
         }
     }
 
