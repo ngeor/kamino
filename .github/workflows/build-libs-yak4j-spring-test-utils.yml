@@ -7,14 +7,16 @@ on:
       - libs/yak4j-spring-test-utils/**
       - .github/workflows/build-libs-yak4j-spring-test-utils.yml
       - pom.xml
-      - libs/java/**
+      - poms/java/**
+      - poms/public-library/**
   pull_request:
     branches: [ master ]
     paths:
       - libs/yak4j-spring-test-utils/**
       - .github/workflows/build-libs-yak4j-spring-test-utils.yml
       - pom.xml
-      - libs/java/**
+      - poms/java/**
+      - poms/public-library/**
 
 jobs:
   build:

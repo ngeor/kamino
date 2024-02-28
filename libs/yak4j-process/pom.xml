@@ -3,9 +3,9 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.github.ngeor</groupId>
-    <artifactId>java</artifactId>
-    <version>4.10.0-SNAPSHOT</version>
-    <relativePath>../../libs/java</relativePath>
+    <artifactId>public-library</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>../../poms/public-library</relativePath>
   </parent>
   <groupId>com.github.ngeor</groupId>
   <artifactId>yak4j-process</artifactId>
@@ -17,27 +17,4 @@
     <tag>HEAD</tag>
     <url>https://github.com/ngeor/kamino/tree/master/libs/yak4j-process</url>
   </scm>
-  <dependencies>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter</artifactId>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-enforcer-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>com.diffplug.spotless</groupId>
-        <artifactId>spotless-maven-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </build>
 </project>

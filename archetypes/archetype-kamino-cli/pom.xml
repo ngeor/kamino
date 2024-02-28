@@ -5,7 +5,7 @@
     <groupId>com.github.ngeor</groupId>
     <artifactId>java</artifactId>
     <version>4.10.0-SNAPSHOT</version>
-    <relativePath>../../libs/java</relativePath>
+    <relativePath>../../poms/java</relativePath>
   </parent>
   <groupId>com.github.ngeor</groupId>
   <artifactId>archetype-kamino-cli</artifactId>

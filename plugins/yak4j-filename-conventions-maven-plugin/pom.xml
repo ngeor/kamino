@@ -3,9 +3,9 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.github.ngeor</groupId>
-    <artifactId>java</artifactId>
-    <version>4.10.0-SNAPSHOT</version>
-    <relativePath>../../libs/java</relativePath>
+    <artifactId>public-library</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>../../poms/public-library</relativePath>
   </parent>
   <groupId>com.github.ngeor</groupId>
   <artifactId>yak4j-filename-conventions-maven-plugin</artifactId>
@@ -21,11 +21,11 @@
     <url>https://github.com/ngeor/kamino/tree/master/plugins/yak4j-filename-conventions-maven-plugin</url>
   </scm>
   <properties>
-    <jacoco.it-tests.limit.branch-ratio>89%</jacoco.it-tests.limit.branch-ratio>
-    <jacoco.it-tests.limit.class-complexity>16</jacoco.it-tests.limit.class-complexity>
     <!--
     jacoco thresholds
     -->
+    <jacoco.it-tests.limit.branch-ratio>89%</jacoco.it-tests.limit.branch-ratio>
+    <jacoco.it-tests.limit.class-complexity>16</jacoco.it-tests.limit.class-complexity>
     <jacoco.it-tests.limit.instruction-ratio>95%</jacoco.it-tests.limit.instruction-ratio>
     <jacoco.it-tests.limit.method-complexity>5</jacoco.it-tests.limit.method-complexity>
     <!--
@@ -73,14 +73,6 @@
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
         <version>${maven-plugin-plugin.version}</version>
         <configuration>
@@ -107,10 +99,6 @@
         <configuration>
           <excludes>**/HelpMojo.*</excludes>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -141,7 +129,6 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.11</version>
         <configuration>
           <excludes>
             <!-- generated file -->

@@ -3,9 +3,9 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.github.ngeor</groupId>
-    <artifactId>java</artifactId>
-    <version>4.10.0-SNAPSHOT</version>
-    <relativePath>../../libs/java</relativePath>
+    <artifactId>public-library</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>../../poms/public-library</relativePath>
   </parent>
   <groupId>com.github.ngeor</groupId>
   <artifactId>yak4j-sync-archetype-maven-plugin</artifactId>
@@ -21,13 +21,13 @@
     <url>https://github.com/ngeor/kamino/tree/master/plugins/yak4j-sync-archetype-maven-plugin</url>
   </scm>
   <properties>
+    <!--
+    jacoco thresholds
+    -->
     <jacoco.aggregate.limit.branch-ratio>77%</jacoco.aggregate.limit.branch-ratio>
     <jacoco.aggregate.limit.class-complexity>11</jacoco.aggregate.limit.class-complexity>
     <jacoco.aggregate.limit.instruction-ratio>92%</jacoco.aggregate.limit.instruction-ratio>
     <jacoco.aggregate.limit.method-complexity>5</jacoco.aggregate.limit.method-complexity>
-    <!--
-    jacoco thresholds
-    -->
     <jacoco.unit-tests.limit.branch-ratio>42%</jacoco.unit-tests.limit.branch-ratio>
     <jacoco.unit-tests.limit.class-complexity>11</jacoco.unit-tests.limit.class-complexity>
     <jacoco.unit-tests.limit.instruction-ratio>18%</jacoco.unit-tests.limit.instruction-ratio>
@@ -72,27 +72,9 @@
       <version>${maven-plugin-plugin.version}</version>
       <scope>provided</scope>
     </dependency>
-    <dependency>
-      <groupId>org.assertj</groupId>
-      <artifactId>assertj-core</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter</artifactId>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
@@ -124,10 +106,6 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-invoker-plugin</artifactId>
         <version>${maven-invoker-plugin.version}</version>
         <configuration>
@@ -155,7 +133,6 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.11</version>
         <configuration>
           <excludes>
             <!-- generated file -->

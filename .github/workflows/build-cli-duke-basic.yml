@@ -7,14 +7,14 @@ on:
       - cli/duke-basic/**
       - .github/workflows/build-cli-duke-basic.yml
       - pom.xml
-      - libs/java/**
+      - poms/java/**
   pull_request:
     branches: [ master ]
     paths:
       - cli/duke-basic/**
       - .github/workflows/build-cli-duke-basic.yml
       - pom.xml
-      - libs/java/**
+      - poms/java/**
 
 jobs:
   build:

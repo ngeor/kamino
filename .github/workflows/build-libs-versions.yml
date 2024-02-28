@@ -7,14 +7,16 @@ on:
       - libs/versions/**
       - .github/workflows/build-libs-versions.yml
       - pom.xml
-      - libs/java/**
+      - poms/java/**
+      - poms/public-library/**
   pull_request:
     branches: [ master ]
     paths:
       - libs/versions/**
       - .github/workflows/build-libs-versions.yml
       - pom.xml
-      - libs/java/**
+      - poms/java/**
+      - poms/public-library/**
 
 jobs:
   build:

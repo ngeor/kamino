@@ -3,9 +3,9 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.github.ngeor</groupId>
-    <artifactId>java</artifactId>
-    <version>4.10.0-SNAPSHOT</version>
-    <relativePath>../../libs/java</relativePath>
+    <artifactId>public-library</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>../../poms/public-library</relativePath>
   </parent>
   <groupId>com.github.ngeor</groupId>
   <artifactId>archetype-quickstart-jdk8</artifactId>
@@ -21,24 +21,15 @@
     <url>https://github.com/ngeor/kamino/tree/master/archetypes/archetype-quickstart-jdk8</url>
   </scm>
   <properties>
+    <archetype-packaging.version>3.2.1</archetype-packaging.version>
     <java.version>1.8</java.version>
   </properties>
   <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-      </plugin>
-    </plugins>
     <extensions>
       <extension>
         <groupId>org.apache.maven.archetype</groupId>
         <artifactId>archetype-packaging</artifactId>
-        <version>3.2.1</version>
+        <version>${archetype-packaging.version}</version>
       </extension>
     </extensions>
   </build>

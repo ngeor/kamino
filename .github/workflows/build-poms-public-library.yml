@@ -1,18 +1,20 @@
-name: Build java
+name: Build public-library
 
 on:
   push:
     branches: [ master ]
     paths:
-      - libs/java/**
-      - .github/workflows/build-libs-java.yml
+      - poms/public-library/**
+      - .github/workflows/build-poms-public-library.yml
       - pom.xml
+      - poms/java/**
   pull_request:
     branches: [ master ]
     paths:
-      - libs/java/**
-      - .github/workflows/build-libs-java.yml
+      - poms/public-library/**
+      - .github/workflows/build-poms-public-library.yml
       - pom.xml
+      - poms/java/**
 
 jobs:
   build:
@@ -28,4 +30,4 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build with Maven
-      run: mvn -B -ntp clean verify --file libs/java/pom.xml
+      run: mvn -B -ntp -pl poms/public-library -am clean verify

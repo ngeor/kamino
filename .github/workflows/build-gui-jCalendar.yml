@@ -7,14 +7,14 @@ on:
       - gui/jCalendar/**
       - .github/workflows/build-gui-jCalendar.yml
       - pom.xml
-      - libs/java/**
+      - poms/java/**
   pull_request:
     branches: [ master ]
     paths:
       - gui/jCalendar/**
       - .github/workflows/build-gui-jCalendar.yml
       - pom.xml
-      - libs/java/**
+      - poms/java/**
 
 jobs:
   build:

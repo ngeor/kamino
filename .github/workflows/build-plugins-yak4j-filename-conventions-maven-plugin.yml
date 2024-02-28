@@ -7,14 +7,16 @@ on:
       - plugins/yak4j-filename-conventions-maven-plugin/**
       - .github/workflows/build-plugins-yak4j-filename-conventions-maven-plugin.yml
       - pom.xml
-      - libs/java/**
+      - poms/java/**
+      - poms/public-library/**
   pull_request:
     branches: [ master ]
     paths:
       - plugins/yak4j-filename-conventions-maven-plugin/**
       - .github/workflows/build-plugins-yak4j-filename-conventions-maven-plugin.yml
       - pom.xml
-      - libs/java/**
+      - poms/java/**
+      - poms/public-library/**
 
 jobs:
   build:

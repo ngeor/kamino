@@ -1,20 +1,18 @@
-name: Build cli-parent-pom
+name: Build java
 
 on:
   push:
     branches: [ master ]
     paths:
-      - libs/cli-parent-pom/**
-      - .github/workflows/build-libs-cli-parent-pom.yml
-      - pom.xml
       - poms/java/**
+      - .github/workflows/build-poms-java.yml
+      - pom.xml
   pull_request:
     branches: [ master ]
     paths:
-      - libs/cli-parent-pom/**
-      - .github/workflows/build-libs-cli-parent-pom.yml
-      - pom.xml
       - poms/java/**
+      - .github/workflows/build-poms-java.yml
+      - pom.xml
 
 jobs:
   build:
@@ -30,4 +28,4 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build with Maven
-      run: mvn -B -ntp -pl libs/cli-parent-pom -am clean verify
+      run: mvn -B -ntp clean verify --file poms/java/pom.xml

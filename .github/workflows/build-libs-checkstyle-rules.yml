@@ -7,14 +7,16 @@ on:
       - libs/checkstyle-rules/**
       - .github/workflows/build-libs-checkstyle-rules.yml
       - pom.xml
-      - libs/java/**
+      - poms/java/**
+      - poms/public-library/**
   pull_request:
     branches: [ master ]
     paths:
       - libs/checkstyle-rules/**
       - .github/workflows/build-libs-checkstyle-rules.yml
       - pom.xml
-      - libs/java/**
+      - poms/java/**
+      - poms/public-library/**
 
 jobs:
   build:

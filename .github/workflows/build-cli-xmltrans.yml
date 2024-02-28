@@ -7,14 +7,14 @@ on:
       - cli/xmltrans/**
       - .github/workflows/build-cli-xmltrans.yml
       - pom.xml
-      - libs/java/**
+      - poms/java/**
   pull_request:
     branches: [ master ]
     paths:
       - cli/xmltrans/**
       - .github/workflows/build-cli-xmltrans.yml
       - pom.xml
-      - libs/java/**
+      - poms/java/**
 
 jobs:
   build:

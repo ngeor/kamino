@@ -7,18 +7,20 @@ on:
       - libs/yak4j-maven/**
       - .github/workflows/build-libs-yak4j-maven.yml
       - pom.xml
-      - libs/java/**
       - libs/yak4j-dom/**
       - libs/yak4j-process/**
+      - poms/java/**
+      - poms/public-library/**
   pull_request:
     branches: [ master ]
     paths:
       - libs/yak4j-maven/**
       - .github/workflows/build-libs-yak4j-maven.yml
       - pom.xml
-      - libs/java/**
       - libs/yak4j-dom/**
       - libs/yak4j-process/**
+      - poms/java/**
+      - poms/public-library/**
 
 jobs:
   build:

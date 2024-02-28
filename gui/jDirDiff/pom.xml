@@ -5,7 +5,7 @@
     <groupId>com.github.ngeor</groupId>
     <artifactId>java</artifactId>
     <version>4.10.0-SNAPSHOT</version>
-    <relativePath>../../libs/java</relativePath>
+    <relativePath>../../poms/java</relativePath>
   </parent>
   <groupId>com.github.ngeor</groupId>
   <artifactId>jDirDiff</artifactId>
@@ -24,7 +24,6 @@
     <jacoco.unit-tests.limit.class-complexity>35</jacoco.unit-tests.limit.class-complexity>
     <jacoco.unit-tests.limit.instruction-ratio>1%</jacoco.unit-tests.limit.instruction-ratio>
     <jacoco.unit-tests.limit.method-complexity>12</jacoco.unit-tests.limit.method-complexity>
-    <maven.deploy.skip>true</maven.deploy.skip>
   </properties>
   <dependencies>
     <dependency>

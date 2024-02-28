@@ -24,7 +24,6 @@
     <module>libs/changelog</module>
     <module>libs/checkstyle-rules</module>
     <module>libs/cli-parent-pom</module>
-    <module>libs/java</module>
     <module>libs/maven-releaser</module>
     <module>libs/versions</module>
     <module>libs/yak4j-argparse</module>
@@ -40,6 +39,8 @@
     <module>plugins/yak4j-json-yaml-converter-maven-plugin</module>
     <module>plugins/yak4j-swagger-maven-plugin</module>
     <module>plugins/yak4j-sync-archetype-maven-plugin</module>
+    <module>poms/java</module>
+    <module>poms/public-library</module>
     <module>web/BuzzStats</module>
     <module>web/icqfriends</module>
   </modules>

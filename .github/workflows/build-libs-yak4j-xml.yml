@@ -7,14 +7,16 @@ on:
       - libs/yak4j-xml/**
       - .github/workflows/build-libs-yak4j-xml.yml
       - pom.xml
-      - libs/java/**
+      - poms/java/**
+      - poms/public-library/**
   pull_request:
     branches: [ master ]
     paths:
       - libs/yak4j-xml/**
       - .github/workflows/build-libs-yak4j-xml.yml
       - pom.xml
-      - libs/java/**
+      - poms/java/**
+      - poms/public-library/**
 
 jobs:
   build:

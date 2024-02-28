@@ -7,14 +7,14 @@ on:
       - web/icqfriends/**
       - .github/workflows/build-web-icqfriends.yml
       - pom.xml
-      - libs/java/**
+      - poms/java/**
   pull_request:
     branches: [ master ]
     paths:
       - web/icqfriends/**
       - .github/workflows/build-web-icqfriends.yml
       - pom.xml
-      - libs/java/**
+      - poms/java/**
 
 jobs:
   build:

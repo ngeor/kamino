@@ -3,9 +3,9 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.github.ngeor</groupId>
-    <artifactId>java</artifactId>
-    <version>4.10.0-SNAPSHOT</version>
-    <relativePath>../../libs/java</relativePath>
+    <artifactId>public-library</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>../../poms/public-library</relativePath>
   </parent>
   <groupId>com.github.ngeor</groupId>
   <artifactId>yak4j-utc-time-zone-mapper</artifactId>
@@ -21,39 +21,19 @@
     <url>https://github.com/ngeor/kamino/tree/master/libs/yak4j-utc-time-zone-mapper</url>
   </scm>
   <properties>
-    <jacoco.unit-tests.limit.branch-ratio>99%</jacoco.unit-tests.limit.branch-ratio>
-    <jacoco.unit-tests.limit.class-complexity>10</jacoco.unit-tests.limit.class-complexity>
     <!--
     jacoco thresholds
     -->
+    <jacoco.unit-tests.limit.branch-ratio>99%</jacoco.unit-tests.limit.branch-ratio>
+    <jacoco.unit-tests.limit.class-complexity>10</jacoco.unit-tests.limit.class-complexity>
     <jacoco.unit-tests.limit.instruction-ratio>99%</jacoco.unit-tests.limit.instruction-ratio>
     <jacoco.unit-tests.limit.method-complexity>5</jacoco.unit-tests.limit.method-complexity>
   </properties>
-  <dependencies>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter</artifactId>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-      </plugin>
-      <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.11</version>
         <executions>
           <execution>
             <id>pre-unit-test</id>

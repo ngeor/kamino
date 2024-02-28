@@ -9,7 +9,6 @@ on:
       - pom.xml
       - libs/changelog/**
       - libs/cli-parent-pom/**
-      - libs/java/**
       - libs/maven-releaser/**
       - libs/versions/**
       - libs/yak4j-dom/**
@@ -17,6 +16,7 @@ on:
       - libs/yak4j-markdown/**
       - libs/yak4j-maven/**
       - libs/yak4j-process/**
+      - poms/java/**
   pull_request:
     branches: [ master ]
     paths:
@@ -25,7 +25,6 @@ on:
       - pom.xml
       - libs/changelog/**
       - libs/cli-parent-pom/**
-      - libs/java/**
       - libs/maven-releaser/**
       - libs/versions/**
       - libs/yak4j-dom/**
@@ -33,6 +32,7 @@ on:
       - libs/yak4j-markdown/**
       - libs/yak4j-maven/**
       - libs/yak4j-process/**
+      - poms/java/**
 
 jobs:
   build:

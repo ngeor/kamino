@@ -7,14 +7,14 @@ on:
       - archetypes/archetype-kamino-cli/**
       - .github/workflows/build-archetypes-archetype-kamino-cli.yml
       - pom.xml
-      - libs/java/**
+      - poms/java/**
   pull_request:
     branches: [ master ]
     paths:
       - archetypes/archetype-kamino-cli/**
       - .github/workflows/build-archetypes-archetype-kamino-cli.yml
       - pom.xml
-      - libs/java/**
+      - poms/java/**
 
 jobs:
   build:

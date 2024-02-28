@@ -7,14 +7,14 @@ on:
       - cli/zfs-snapshot-trimmer/**
       - .github/workflows/build-cli-zfs-snapshot-trimmer.yml
       - pom.xml
-      - libs/java/**
+      - poms/java/**
   pull_request:
     branches: [ master ]
     paths:
       - cli/zfs-snapshot-trimmer/**
       - .github/workflows/build-cli-zfs-snapshot-trimmer.yml
       - pom.xml
-      - libs/java/**
+      - poms/java/**
 
 jobs:
   build:
