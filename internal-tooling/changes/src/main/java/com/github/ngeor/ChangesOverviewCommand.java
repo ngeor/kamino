@@ -18,6 +18,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 @SuppressWarnings("java:S106")
 public class ChangesOverviewCommand extends BaseCommand {
+    private static final String NOT_AVAILABLE = "N/A";
     private final File rootDirectory;
     private final Git git;
 
@@ -67,7 +68,7 @@ public class ChangesOverviewCommand extends BaseCommand {
             // add message for tag
             result.add(p.getRight());
             result.add(nextVersion(tag));
-            result.add(tag == null ? "N/A" : tag.date());
+            result.add(tag == null ? NOT_AVAILABLE : tag.date());
             result.add(unreleasedCommitCount(tag));
             return result;
         }
@@ -81,7 +82,7 @@ public class ChangesOverviewCommand extends BaseCommand {
             } catch (ProcessFailedException ex) {
                 return Pair.of(null, ex.getMessage());
             } catch (NoSuchElementException ignored) {
-                return Pair.of(null, "N/A");
+                return Pair.of(null, NOT_AVAILABLE);
             }
         }
 
@@ -96,7 +97,7 @@ public class ChangesOverviewCommand extends BaseCommand {
                     return ex.getMessage();
                 }
             } else {
-                return "N/A";
+                return NOT_AVAILABLE;
             }
         }
 
@@ -107,13 +108,13 @@ public class ChangesOverviewCommand extends BaseCommand {
                     .flatMap(SemVer::tryParse)
                     .orElse(null);
             if (recentVersion == null) {
-                return "N/A";
+                return NOT_AVAILABLE;
             }
 
             GitVersionCalculator calculator = new GitVersionCalculator(git, module);
             try {
                 GitVersionCalculator.Result result = calculator.calculateGitVersion(recentVersion);
-                return result.nextVersion().toString();
+                return result.nextVersion() != null ? result.nextVersion().toString() : NOT_AVAILABLE;
             } catch (ProcessFailedException e) {
                 return e.getMessage();
             }
