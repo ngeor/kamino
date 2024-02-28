@@ -19,6 +19,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Queue;
 import java.util.Set;
 import java.util.SortedSet;
@@ -249,16 +250,19 @@ public final class TemplateGenerator {
         MavenCoordinates next = initialCoordinates;
         List<String> result = new ArrayList<>();
         while (next != null) {
-            ParentPom parentPom = pomRepository.getOriginalParentPom(next);
-            String parentModule = null;
-            if (parentPom != null) {
-                next = parentPom.coordinates();
-                if (next != null && next.version() != null && next.version().endsWith("-SNAPSHOT")) {
-                    parentModule = coordinatesToModule.get(next);
-                }
-            }
+            DocumentWrapper originalDocument = pomRepository.getDocument(next, ResolutionPhase.UNRESOLVED);
+            MavenCoordinates parentCoordinates = DomHelper.getParentPom(originalDocument)
+                    .map(ParentPom::coordinates)
+                    .filter(c -> c.version() != null && c.version().endsWith("-SNAPSHOT"))
+                    .orElse(null);
+
+            String parentModule = Optional.ofNullable(parentCoordinates)
+                    .map(coordinatesToModule::get)
+                    .orElse(null);
+
             if (parentModule != null) {
                 result.add(parentModule);
+                next = parentCoordinates;
             } else {
                 next = null;
             }

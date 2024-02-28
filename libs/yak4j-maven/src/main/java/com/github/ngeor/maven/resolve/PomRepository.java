@@ -21,7 +21,6 @@ public class PomRepository {
     private final Map<MavenCoordinates, Map<ResolutionPhase, DocumentWrapper>> map = new HashMap<>();
     private final Map<MavenCoordinates, Input> coordinatesToInputMap = new HashMap<>();
     private final Map<Input, MavenCoordinates> inputToCoordinatesMap = new HashMap<>();
-    private final Map<MavenCoordinates, ParentPom> originalParentPom = new HashMap<>();
     private final Resolver resolver;
 
     public PomRepository(Resolver resolver) {
@@ -69,11 +68,6 @@ public class PomRepository {
 
     private boolean isUnknown(MavenCoordinates coordinates) {
         return !map.containsKey(Objects.requireNonNull(coordinates));
-    }
-
-    @Deprecated
-    public ParentPom getOriginalParentPom(MavenCoordinates childCoordinates) {
-        return originalParentPom.get(childCoordinates);
     }
 
     @Deprecated
@@ -136,7 +130,6 @@ public class PomRepository {
                 // TODO modify PomMerger to avoid cloning of current document
                 DocumentWrapper cloneChild = document.deepClone();
                 cloneChild.getDocumentElement().removeChildNodesByName("parent");
-                originalParentPom.put(coordinates, parentPom);
                 DocumentWrapper cloneParent = parent.deepClone();
                 // perform merge
                 new PomMerger.DocumentMerge().mergeIntoLeft(cloneParent, cloneChild);
@@ -210,7 +203,6 @@ public class PomRepository {
                     coordinates.format(),
                     input,
                     coordinatesToInputMap);
-            originalParentPom.put(coordinates, parentPom);
             map.put(
                     coordinates,
                     new EnumMap<>(Map.of(
