@@ -2,7 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## [0.18.0](https://github.com/ngeor/kamino/compare/plugins/yak4j-sync-archetype-maven-plugin/v0.17.2...plugins/yak4j-sync-archetype-maven-plugin/v0.18.0) - 2024-02-28
+
+### Features
+
+* Added parent pom for public libraries
 
 ### Fixes
 
