@@ -28,7 +28,7 @@ public class GitVersionCalculator {
         return mostRecentVersion != null ? Optional.of(calculateGitVersion(mostRecentVersion)) : Optional.empty();
     }
 
-    private Result calculateGitVersion(SemVer mostRecentVersion) throws ProcessFailedException {
+    public Result calculateGitVersion(SemVer mostRecentVersion) throws ProcessFailedException {
         String sinceCommit = tagPrefix.addTagPrefix(mostRecentVersion);
 
         List<Commit> commits = git.revList(sinceCommit, path).toList();
@@ -54,6 +54,7 @@ public class GitVersionCalculator {
         return new Result(mostRecentVersion, bump, nextVersion);
     }
 
+    // TODO reuse CommitInfo class from internal tools
     private SemVerBump calculateBump(String message) {
         if (message.startsWith("fix:")) {
             return SemVerBump.PATCH;
