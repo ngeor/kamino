@@ -15,7 +15,7 @@ public class VersionResolver {
 
     public SemVer resolve(String version) throws IOException, InterruptedException {
         SortedSet<SemVer> versions = versionsProvider.listVersions();
-        SemVerBump bump = SemVerBump.parse(version);
+        SemVerBump bump = SemVerBump.tryParse(version).orElse(null);
         if (bump != null) {
             return versions.last().bump(bump);
         }
