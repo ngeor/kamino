@@ -9,6 +9,8 @@ import com.github.ngeor.versions.SemVer;
 import com.github.ngeor.versions.SemVerBump;
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
+import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.concurrent.ConcurrentException;
 
 /**
@@ -22,10 +24,14 @@ public class ProjectImporter {
     private final String githubToken;
 
     public ProjectImporter(File monorepoRoot, File oldRepoRoot, String typeName, String githubToken) {
-        this.monorepoRoot = monorepoRoot;
-        this.oldRepoRoot = oldRepoRoot;
-        this.typeName = typeName;
+        this.monorepoRoot = Objects.requireNonNull(monorepoRoot);
+        this.oldRepoRoot = Objects.requireNonNull(oldRepoRoot);
+        this.typeName = Validate.notBlank(typeName);
         this.githubToken = githubToken;
+    }
+
+    private String modulePath() {
+        return String.join("/", typeName, oldRepoRoot.getName());
     }
 
     public void run() throws IOException, InterruptedException, ProcessFailedException, ConcurrentException {
@@ -82,7 +88,7 @@ public class ProjectImporter {
         System.out.println("Importing git subtree");
         Git monorepo = new Git(monorepoRoot);
         Git oldRepo = new Git(oldRepoRoot);
-        monorepo.subTreeAdd(typeName + "/" + oldRepoRoot.getName(), oldRepoRoot, oldRepo.getDefaultBranch());
+        monorepo.subTreeAdd(modulePath(), oldRepoRoot, oldRepo.getDefaultBranch());
     }
 
     private void adjustImportedCode() throws IOException, ProcessFailedException, ConcurrentException {
@@ -99,7 +105,7 @@ public class ProjectImporter {
     private void performPatchRelease() throws IOException, ProcessFailedException {
         ensureImportedProjectBuilds();
 
-        if (TemplateGenerator.requiresReleaseWorkflow(typeName)) {
+        if (Defaults.isEligibleForRelease(modulePath())) {
             Git git = new Git(oldRepoRoot);
             SemVer maxReleaseVersion = git.getMostRecentTag("v")
                     .map(tag -> tag.name().substring(1))
@@ -107,7 +113,7 @@ public class ProjectImporter {
                     .orElseThrow();
             SemVer nextVersion = maxReleaseVersion.bump(SemVerBump.PATCH);
 
-            new MavenReleaser(monorepoRoot, typeName + "/" + oldRepoRoot.getName(), Defaults.defaultFormatOptions())
+            new MavenReleaser(monorepoRoot, modulePath(), Defaults.defaultFormatOptions())
                     .prepareRelease(nextVersion, true);
         }
     }

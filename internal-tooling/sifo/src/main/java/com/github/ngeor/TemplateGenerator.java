@@ -6,6 +6,7 @@ import com.github.ngeor.maven.dom.DomHelper;
 import com.github.ngeor.maven.process.Maven;
 import com.github.ngeor.maven.resolve.PomRepository;
 import com.github.ngeor.maven.resolve.ResolutionPhase;
+import com.github.ngeor.mr.Defaults;
 import com.github.ngeor.process.ProcessFailedException;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
@@ -143,7 +144,7 @@ public final class TemplateGenerator {
                 rootDirectory.toPath().resolve(".github").resolve("workflows").resolve("build-" + workflowId + ".yml"),
                 buildTemplate.render(buildVariables));
 
-        if (requiresReleaseWorkflow(typeDirectory(module))) {
+        if (Defaults.isEligibleForRelease(module)) {
             // needs to align with "arturito" release tooling
             final String releaseWorkflowJavaVersion = "17";
             Map<String, String> releaseVariables =
@@ -177,10 +178,6 @@ public final class TemplateGenerator {
                 buildCommand,
                 "extraPaths",
                 extraPaths);
-    }
-
-    public static boolean requiresReleaseWorkflow(String typeName) {
-        return Set.of("archetypes", "libs", "plugins").contains(typeName);
     }
 
     private void fixProjectUrls(String module) throws ProcessFailedException {

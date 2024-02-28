@@ -14,4 +14,12 @@ public final class Defaults {
                 Map.of("feat", "Features", "fix", "Fixes", "chore", "Miscellaneous Tasks", "deps", "Dependencies"),
                 "https://github.com/ngeor/kamino/compare/%s...%s");
     }
+
+    public static boolean isEligibleForRelease(String module) {
+        return module != null
+                && (module.startsWith("archetypes/")
+                        || module.startsWith("libs/")
+                        || module.startsWith("plugins/")
+                        || module.startsWith("poms/"));
+    }
 }
