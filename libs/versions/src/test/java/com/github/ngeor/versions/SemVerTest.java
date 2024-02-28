@@ -1,6 +1,7 @@
 package com.github.ngeor.versions;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Arrays;
 import org.junit.jupiter.api.Test;
@@ -13,16 +14,9 @@ import org.junit.jupiter.params.provider.ValueSource;
 class SemVerTest {
     @Test
     void testToString() {
-        assertEquals("1.0.0", new SemVer(1, 0, 0).toString());
-        assertEquals("0.9.8", new SemVer(0, 9, 8).toString());
-        assertEquals("2.3.1-SNAPSHOT", new SemVer(2, 3, 1, "SNAPSHOT").toString());
-    }
-
-    @ParameterizedTest
-    @NullAndEmptySource
-    @ValueSource(strings = " ")
-    void testPreReleaseValidation(String invalidPreRelease) {
-        assertThrows(IllegalArgumentException.class, () -> new SemVer(1, 2, 3, invalidPreRelease));
+        assertThat(new SemVer(1, 0, 0)).hasToString("1.0.0");
+        assertThat(new SemVer(0, 9, 8)).hasToString("0.9.8");
+        assertThat(new SemVer(2, 3, 1, "SNAPSHOT")).hasToString("2.3.1-SNAPSHOT");
     }
 
     @Test
@@ -44,14 +38,36 @@ class SemVerTest {
             new SemVer(2, 1, 0)
         };
         Arrays.sort(values);
-        assertArrayEquals(sorted, values);
+        assertThat(values).isEqualTo(sorted);
     }
 
     @Test
     void testParse() {
-        assertEquals(new SemVer(1, 2, 3), SemVer.parse("1.2.3"));
-        assertEquals(new SemVer(3, 2, 1, "alpha"), SemVer.parse("3.2.1-alpha"));
-        assertEquals(new SemVer(11, 12, 31, "alpha-beta"), SemVer.parse("11.12.31-alpha-beta"));
+        assertThat(SemVer.parse("1.2.3")).isEqualTo(new SemVer(1, 2, 3));
+        assertThat(SemVer.parse("3.2.1-alpha")).isEqualTo(new SemVer(3, 2, 1, "alpha"));
+        assertThat(SemVer.parse("11.12.31-alpha-beta")).isEqualTo(new SemVer(11, 12, 31, "alpha-beta"));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"2.1", "45.36.90-", "v100.200.300"})
+    void testParseFail(String input) {
+        assertThatThrownBy(() -> SemVer.parse(input)).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+        "1.2.3, 1, 2, 3, ",
+        "0.10.5-alpha, 0, 10, 5, alpha",
+    })
+    void testTryParseSuccess(String input, int major, int minor, int patch, String preRelease) {
+        assertThat(SemVer.tryParse(input)).contains(new SemVer(major, minor, patch, preRelease));
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    @ValueSource(strings = {" ", "1.0", "1.0.0-", "v3.2.1"})
+    void testTryParseFail(String input) {
+        assertThat(SemVer.tryParse(input)).isEmpty();
     }
 
     @ParameterizedTest
@@ -65,6 +81,6 @@ class SemVerTest {
         SemVer result = original.bump(semVerBump);
 
         // assert
-        assertEquals(expected, result.toString());
+        assertThat(result).hasToString(expected);
     }
 }

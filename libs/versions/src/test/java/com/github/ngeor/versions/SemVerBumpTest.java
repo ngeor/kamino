@@ -1,31 +1,30 @@
 package com.github.ngeor.versions;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class SemVerBumpTest {
+    @ParameterizedTest
+    @ValueSource(strings = {"MAJOR", "major", "MINOR", "minor", "PATCH", "patch"})
+    void parse(String input) {
+        assertThat(SemVerBump.parse(input)).isEqualTo(SemVerBump.valueOf(input.toUpperCase()));
+    }
+
     @Test
-    void parse() {
-        assertEquals(SemVerBump.MAJOR, SemVerBump.parse("MAJOR"));
-        assertEquals(SemVerBump.MAJOR, SemVerBump.parse("major"));
-        assertEquals(SemVerBump.MINOR, SemVerBump.parse("MINOR"));
-        assertEquals(SemVerBump.MINOR, SemVerBump.parse("minor"));
-        assertEquals(SemVerBump.PATCH, SemVerBump.parse("PATCH"));
-        assertEquals(SemVerBump.PATCH, SemVerBump.parse("patch"));
-        assertNull(SemVerBump.parse("unknown"));
+    void parseFail() {
+        assertThatThrownBy(() -> SemVerBump.parse("unknown")).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void compare() {
-        assertThat(SemVerBump.MAJOR).isGreaterThan(SemVerBump.MINOR);
-        assertThat(SemVerBump.MAJOR).isGreaterThan(SemVerBump.PATCH);
+        assertThat(SemVerBump.MAJOR).isGreaterThan(SemVerBump.MINOR).isGreaterThan(SemVerBump.PATCH);
 
-        assertThat(SemVerBump.MINOR).isGreaterThan(SemVerBump.PATCH);
-        assertThat(SemVerBump.MINOR).isLessThan(SemVerBump.MAJOR);
+        assertThat(SemVerBump.MINOR).isGreaterThan(SemVerBump.PATCH).isLessThan(SemVerBump.MAJOR);
 
-        assertThat(SemVerBump.PATCH).isLessThan(SemVerBump.MINOR);
-        assertThat(SemVerBump.PATCH).isLessThan(SemVerBump.MAJOR);
+        assertThat(SemVerBump.PATCH).isLessThan(SemVerBump.MINOR).isLessThan(SemVerBump.MAJOR);
     }
 }

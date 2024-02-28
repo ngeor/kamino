@@ -1,53 +1,39 @@
 package com.github.ngeor.versions;
 
 import java.util.Objects;
+import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class SemVer implements Comparable<SemVer> {
-    private final int major;
-    private final int minor;
-    private final int patch;
-    private final String preRelease;
+public record SemVer(int major, int minor, int patch, String preRelease) implements Comparable<SemVer> {
+    private static final Pattern SEMVER_PATTERN = Pattern.compile("^(\\d+)\\.(\\d+)\\.(\\d+)(-(.+))?$");
 
     public SemVer(int major, int minor, int patch) {
-        this.major = major;
-        this.minor = minor;
-        this.patch = patch;
-        this.preRelease = null;
+        this(major, minor, patch, null);
     }
 
-    public SemVer(int major, int minor, int patch, String preRelease) {
-        if (preRelease == null || preRelease.isBlank()) {
-            throw new IllegalArgumentException("preRelease must not be empty");
+    public static SemVer parse(String input) {
+        Objects.requireNonNull(input);
+        return tryParse(input)
+                .orElseThrow(() ->
+                        new IllegalArgumentException(String.format("Cannot parse %s as a semantic version", input)));
+    }
+
+    public static Optional<SemVer> tryParse(String input) {
+        if (input == null || input.isBlank()) {
+            return Optional.empty();
         }
-        this.major = major;
-        this.minor = minor;
-        this.patch = patch;
-        this.preRelease = preRelease;
-    }
 
-    public static SemVer parse(String s) {
-        String[] parts = s.split("\\.");
-        int major = Integer.parseInt(parts[0]);
-        int minor = Integer.parseInt(parts[1]);
-        String[] patchParts = parts[2].split("-", 2);
-        int patch = Integer.parseInt(patchParts[0]);
-        if (patchParts.length == 2) {
-            return new SemVer(major, minor, patch, patchParts[1]);
+        Matcher matcher = SEMVER_PATTERN.matcher(input);
+        if (!matcher.matches()) {
+            return Optional.empty();
         }
-        return new SemVer(major, minor, patch);
-    }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o instanceof SemVer ver) {
-            return compareTo(ver) == 0;
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(major, minor, patch, preRelease);
+        int major = Integer.parseInt(matcher.group(1));
+        int minor = Integer.parseInt(matcher.group(2));
+        int patch = Integer.parseInt(matcher.group(3));
+        String preRelease = matcher.group(5);
+        return Optional.of(new SemVer(major, minor, patch, preRelease));
     }
 
     @Override
@@ -63,50 +49,47 @@ public class SemVer implements Comparable<SemVer> {
     @Override
     public int compareTo(SemVer other) {
         // 1.0.0-alpha < 1.0.0
-        if (major < other.major) {
-            return -1;
-        } else if (major > other.major) {
-            return 1;
-        } else if (minor < other.minor) {
-            return -1;
-        } else if (minor > other.minor) {
-            return 1;
-        } else if (patch < other.patch) {
-            return -1;
-        } else if (patch > other.patch) {
-            return 1;
-        } else {
-            if (preRelease != null) {
-                if (other.preRelease != null) {
-                    return preRelease.compareTo(other.preRelease);
-                } else {
-                    return -1;
-                }
+        int cmp = Integer.compare(major, other.major);
+        if (cmp != 0) {
+            return cmp;
+        }
+        cmp = Integer.compare(minor, other.minor);
+        if (cmp != 0) {
+            return cmp;
+        }
+        cmp = Integer.compare(patch, other.patch);
+        if (cmp != 0) {
+            return cmp;
+        }
+        if (isPreRelease()) {
+            if (other.isPreRelease()) {
+                return preRelease.compareTo(other.preRelease);
             } else {
-                if (other.preRelease != null) {
-                    return 1;
-                } else {
-                    return 0;
-                }
+                return -1;
+            }
+        } else {
+            if (other.isPreRelease()) {
+                return 1;
+            } else {
+                return 0;
             }
         }
     }
 
     public boolean isPreRelease() {
-        return preRelease != null;
+        return preRelease != null && !preRelease.isBlank();
     }
 
     public SemVer bump(SemVerBump bump) {
-        switch (bump) {
-            case MAJOR:
-                return new SemVer(major + 1, 0, 0);
-            case MINOR:
-                return new SemVer(major, minor + 1, 0);
-            case PATCH:
-                return new SemVer(major, minor, patch + 1);
-            default:
-                throw new IllegalArgumentException();
+        Objects.requireNonNull(bump);
+        if (isPreRelease()) {
+            throw new IllegalArgumentException("Cannot bump a pre-release version");
         }
+        return switch (bump) {
+            case MAJOR -> new SemVer(major + 1, 0, 0);
+            case MINOR -> new SemVer(major, minor + 1, 0);
+            case PATCH -> new SemVer(major, minor, patch + 1);
+        };
     }
 
     @SuppressWarnings("checkstyle:HiddenField")
