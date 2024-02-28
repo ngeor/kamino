@@ -3,14 +3,12 @@ package com.github.ngeor.git;
 import com.github.ngeor.process.ProcessFailedException;
 import com.github.ngeor.process.ProcessHelper;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.apache.commons.lang3.Validate;
 
@@ -27,8 +25,6 @@ public final class Git {
      * Gets the default branch of the git repo.
      * The method will return a non-blank value or throw an exception.
      * @return The default branch.
-     * @throws IOException
-     * @throws InterruptedException
      * @throws ProcessFailedException
      */
     public String getDefaultBranch() throws ProcessFailedException {
@@ -41,9 +37,7 @@ public final class Git {
      * Gets the current branch of the git repo.
      * The method will return a non-blank value or throw an exception.
      * @return The current branch
-     * @throws IOException
      * @throws ProcessFailedException
-     * @throws InterruptedException
      */
     public String getCurrentBranch() throws ProcessFailedException {
         return Validate.notBlank(
@@ -59,7 +53,7 @@ public final class Git {
     }
 
     public List<String> getRemotes() throws ProcessFailedException {
-        return processHelper.run("remote").lines().collect(Collectors.toList());
+        return processHelper.run("remote").lines().toList();
     }
 
     public void checkout(String branch) throws ProcessFailedException {
