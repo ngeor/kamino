@@ -125,14 +125,10 @@ public class PomRepository {
 
                 // prepare parent document
                 DocumentWrapper parent = resolveParent(coordinates, parentPom);
-
-                // prepare child document
-                // TODO modify PomMerger to avoid cloning of current document
-                DocumentWrapper cloneChild = document.deepClone();
-                cloneChild.getDocumentElement().removeChildNodesByName("parent");
                 DocumentWrapper cloneParent = parent.deepClone();
+
                 // perform merge
-                new PomMerger.DocumentMerge().mergeIntoLeft(cloneParent, cloneChild);
+                new PomMerger.DocumentMerge().mergeIntoLeft(cloneParent, document);
                 return cloneParent;
             }
         });

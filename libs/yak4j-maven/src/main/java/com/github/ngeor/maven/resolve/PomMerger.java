@@ -5,8 +5,9 @@ import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.util.Optional;
 import java.util.Set;
+import org.apache.commons.lang3.Validate;
 
-// Notable elements which are not inherited include: artifactId; name; prerequisites; profiles
+// Notable elements which are not inherited include: artifactId; name
 public final class PomMerger {
 
     private interface Merge<E> {
@@ -66,7 +67,7 @@ public final class PomMerger {
         }
     }
 
-    private static class ProjectMerge extends BasicMerger {
+    private static final class ProjectMerge extends BasicMerger {
         @Override
         protected Merge<ElementWrapper> createMerger(ElementWrapper rightChild) {
             String name = rightChild.getNodeName();
@@ -103,6 +104,21 @@ public final class PomMerger {
                 throw new MergeNotImplementedException(rightChild);
             }
         }
+
+        @Override
+        protected void visitChild(ElementWrapper left, ElementWrapper rightChild) {
+            if (ElementNames.PARENT.equals(rightChild.getNodeName())) {
+                // 1. verify that the left side doesn't have a parent element,
+                // otherwise we're merging into a document that hasn't been resolved yet
+                // 2. simply ignore the parent of the right child
+                Validate.validState(
+                    left.firstElement(ElementNames.PARENT).isEmpty(),
+                    "The left-side document still contains a parent element!"
+                );
+            } else {
+                super.visitChild(left, rightChild);
+            }
+        }
     }
 
     private static class BuildMerge extends BasicMerger {
@@ -123,7 +139,7 @@ public final class PomMerger {
         }
     }
 
-    private static class PluginsMerge extends CoordinateMerge {
+    private static final class PluginsMerge extends CoordinateMerge {
         @Override
         protected String getChildElementName() {
             return "plugin";
@@ -135,7 +151,7 @@ public final class PomMerger {
         }
     }
 
-    private static class PluginMerge extends BasicRecursiveMerger {
+    private static final class PluginMerge extends BasicRecursiveMerger {
         @Override
         protected Merge<ElementWrapper> createMerger(ElementWrapper rightChild) {
             String name = rightChild.getNodeName();
@@ -149,7 +165,7 @@ public final class PomMerger {
         }
     }
 
-    private static class ExecutionsMerge extends IdentityMerge {
+    private static final class ExecutionsMerge extends IdentityMerge {
         @Override
         protected Set<String> getChildElementNames() {
             return Set.of("execution");
@@ -187,7 +203,7 @@ public final class PomMerger {
         }
     }
 
-    private static class ExecutionMerge extends BasicRecursiveMerger {
+    private static final class ExecutionMerge extends BasicRecursiveMerger {
         @Override
         protected Merge<ElementWrapper> createMerger(ElementWrapper rightChild) {
             String name = rightChild.getNodeName();
@@ -201,7 +217,7 @@ public final class PomMerger {
         }
     }
 
-    private static class AppendToExistingMerger extends BasicMerger {
+    private static final class AppendToExistingMerger extends BasicMerger {
         @Override
         protected Optional<ElementWrapper> locateExistingChild(ElementWrapper left, ElementWrapper rightChild) {
             return Optional.empty();
@@ -213,7 +229,7 @@ public final class PomMerger {
         }
     }
 
-    private static class GoalsMerger implements Merge<ElementWrapper> {
+    private static final class GoalsMerger implements Merge<ElementWrapper> {
 
         @Override
         public void mergeIntoLeft(ElementWrapper left, ElementWrapper right) {
@@ -222,7 +238,7 @@ public final class PomMerger {
         }
     }
 
-    private static class ExtensionsMerge extends CoordinateMerge {
+    private static final class ExtensionsMerge extends CoordinateMerge {
         @Override
         protected String getChildElementName() {
             return "extension";
@@ -234,7 +250,7 @@ public final class PomMerger {
         }
     }
 
-    private static class DependenciesMerge extends CoordinateMerge {
+    private static final class DependenciesMerge extends CoordinateMerge {
         @Override
         protected String getChildElementName() {
             return "dependency";
@@ -246,7 +262,7 @@ public final class PomMerger {
         }
     }
 
-    private static class ProfileMerge extends BasicMerger {
+    private static final class ProfileMerge extends BasicMerger {
         @Override
         protected Merge<ElementWrapper> createMerger(ElementWrapper rightChild) {
             String name = rightChild.getNodeName();
@@ -272,9 +288,9 @@ public final class PomMerger {
         }
     }
 
-    private static class ReportingMerge extends BuildMerge {}
+    private static final class ReportingMerge extends BuildMerge {}
 
-    private static class DependencyManagementMerge extends BasicMerger {
+    private static final class DependencyManagementMerge extends BasicMerger {
         @Override
         protected Merge<ElementWrapper> createMerger(ElementWrapper rightChild) {
             String name = rightChild.getNodeName();
@@ -286,7 +302,7 @@ public final class PomMerger {
         }
     }
 
-    private static class PluginManagementMerge extends BasicMerger {
+    private static final class PluginManagementMerge extends BasicMerger {
         @Override
         protected Merge<ElementWrapper> createMerger(ElementWrapper rightChild) {
             String name = rightChild.getNodeName();
