@@ -7,14 +7,14 @@ on:
       - web/BuzzStats/**
       - .github/workflows/build-web-BuzzStats.yml
       - pom.xml
-      - poms/java/**
+      - libs/java/**
   pull_request:
     branches: [ master ]
     paths:
       - web/BuzzStats/**
       - .github/workflows/build-web-BuzzStats.yml
       - pom.xml
-      - poms/java/**
+      - libs/java/**
 
 jobs:
   build:

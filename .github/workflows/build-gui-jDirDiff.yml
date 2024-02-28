@@ -7,14 +7,14 @@ on:
       - gui/jDirDiff/**
       - .github/workflows/build-gui-jDirDiff.yml
       - pom.xml
-      - poms/java/**
+      - libs/java/**
   pull_request:
     branches: [ master ]
     paths:
       - gui/jDirDiff/**
       - .github/workflows/build-gui-jDirDiff.yml
       - pom.xml
-      - poms/java/**
+      - libs/java/**
 
 jobs:
   build:

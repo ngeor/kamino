@@ -7,14 +7,14 @@ on:
       - poms/public-library/**
       - .github/workflows/build-poms-public-library.yml
       - pom.xml
-      - poms/java/**
+      - libs/java/**
   pull_request:
     branches: [ master ]
     paths:
       - poms/public-library/**
       - .github/workflows/build-poms-public-library.yml
       - pom.xml
-      - poms/java/**
+      - libs/java/**
 
 jobs:
   build:

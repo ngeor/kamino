@@ -26,8 +26,6 @@ SKIP_TESTS_OPTS="-Denforcer.skip=true -Dcheckstyle.skip=true -Dmaven.javadoc.ski
 ${MVN} -Psortpom ${SKIP_TESTS_OPTS} validate
 # sort root pom file (does not currently have a sortpom configuration)
 ${MVN} -N -Dsort.sortModules=true -Dsort.createBackupFile=false ${SKIP_TESTS_OPTS} com.github.ekryd.sortpom:sortpom-maven-plugin:sort
-# remove pom.bak files etc
-git clean -f -X
 # build
 if [[ $SKIP_TESTS -eq 1 ]]; then
     ${MVN} ${SKIP_TESTS_OPTS} clean test

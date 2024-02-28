@@ -7,7 +7,7 @@ on:
       - libs/versions/**
       - .github/workflows/build-libs-versions.yml
       - pom.xml
-      - poms/java/**
+      - libs/java/**
       - poms/public-library/**
   pull_request:
     branches: [ master ]
@@ -15,7 +15,7 @@ on:
       - libs/versions/**
       - .github/workflows/build-libs-versions.yml
       - pom.xml
-      - poms/java/**
+      - libs/java/**
       - poms/public-library/**
 
 jobs:

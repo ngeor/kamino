@@ -7,7 +7,7 @@ on:
       - libs/yak4j-markdown/**
       - .github/workflows/build-libs-yak4j-markdown.yml
       - pom.xml
-      - poms/java/**
+      - libs/java/**
       - poms/public-library/**
   pull_request:
     branches: [ master ]
@@ -15,7 +15,7 @@ on:
       - libs/yak4j-markdown/**
       - .github/workflows/build-libs-yak4j-markdown.yml
       - pom.xml
-      - poms/java/**
+      - libs/java/**
       - poms/public-library/**
 
 jobs:

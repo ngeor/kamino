@@ -4,14 +4,14 @@ on:
   push:
     branches: [ master ]
     paths:
-      - poms/java/**
-      - .github/workflows/build-poms-java.yml
+      - libs/java/**
+      - .github/workflows/build-libs-java.yml
       - pom.xml
   pull_request:
     branches: [ master ]
     paths:
-      - poms/java/**
-      - .github/workflows/build-poms-java.yml
+      - libs/java/**
+      - .github/workflows/build-libs-java.yml
       - pom.xml
 
 jobs:
@@ -28,4 +28,4 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build with Maven
-      run: mvn -B -ntp clean verify --file poms/java/pom.xml
+      run: mvn -B -ntp clean verify --file libs/java/pom.xml

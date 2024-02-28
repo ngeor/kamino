@@ -7,7 +7,7 @@
   <packaging>pom</packaging>
   <name>java</name>
   <description>Parent pom for Java repository</description>
-  <url>https://github.com/ngeor/kamino/tree/master/poms/java</url>
+  <url>https://github.com/ngeor/kamino/tree/master/libs/java</url>
   <licenses>
     <license>
       <name>MIT</name>
@@ -24,7 +24,7 @@
     <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
     <developerConnection>scm:git:git@github.com:ngeor/kamino.git</developerConnection>
     <tag>HEAD</tag>
-    <url>https://github.com/ngeor/kamino/tree/master/poms/java</url>
+    <url>https://github.com/ngeor/kamino/tree/master/libs/java</url>
   </scm>
   <properties>
     <assertj-bom.version>3.25.3</assertj-bom.version>

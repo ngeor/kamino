@@ -2,7 +2,7 @@ name: Release java
 
 on:
   push:
-    tags: [ "poms/java/v*" ]
+    tags: [ "libs/java/v*" ]
 
 jobs:
   build:
@@ -29,4 +29,4 @@ jobs:
         --nexus-password
         ${{ secrets.OSSRH_PASSWORD }}
         --path
-        poms/java
+        libs/java

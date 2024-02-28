@@ -7,14 +7,14 @@ on:
       - libs/cli-parent-pom/**
       - .github/workflows/build-libs-cli-parent-pom.yml
       - pom.xml
-      - poms/java/**
+      - libs/java/**
   pull_request:
     branches: [ master ]
     paths:
       - libs/cli-parent-pom/**
       - .github/workflows/build-libs-cli-parent-pom.yml
       - pom.xml
-      - poms/java/**
+      - libs/java/**
 
 jobs:
   build:

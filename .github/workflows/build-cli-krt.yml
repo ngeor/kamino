@@ -8,8 +8,8 @@ on:
       - .github/workflows/build-cli-krt.yml
       - pom.xml
       - libs/cli-parent-pom/**
+      - libs/java/**
       - libs/versions/**
-      - poms/java/**
   pull_request:
     branches: [ master ]
     paths:
@@ -17,8 +17,8 @@ on:
       - .github/workflows/build-cli-krt.yml
       - pom.xml
       - libs/cli-parent-pom/**
+      - libs/java/**
       - libs/versions/**
-      - poms/java/**
 
 jobs:
   build:

@@ -7,14 +7,14 @@ on:
       - gui/jSpiderGame/**
       - .github/workflows/build-gui-jSpiderGame.yml
       - pom.xml
-      - poms/java/**
+      - libs/java/**
   pull_request:
     branches: [ master ]
     paths:
       - gui/jSpiderGame/**
       - .github/workflows/build-gui-jSpiderGame.yml
       - pom.xml
-      - poms/java/**
+      - libs/java/**
 
 jobs:
   build:

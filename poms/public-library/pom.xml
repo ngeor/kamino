@@ -5,7 +5,7 @@
     <groupId>com.github.ngeor</groupId>
     <artifactId>java</artifactId>
     <version>4.10.0-SNAPSHOT</version>
-    <relativePath>../java</relativePath>
+    <relativePath>../../libs/java</relativePath>
   </parent>
   <groupId>com.github.ngeor</groupId>
   <artifactId>public-library</artifactId>

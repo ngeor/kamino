@@ -8,13 +8,13 @@ on:
       - .github/workflows/build-libs-maven-releaser.yml
       - pom.xml
       - libs/changelog/**
+      - libs/java/**
       - libs/versions/**
       - libs/yak4j-dom/**
       - libs/yak4j-git/**
       - libs/yak4j-markdown/**
       - libs/yak4j-maven/**
       - libs/yak4j-process/**
-      - poms/java/**
       - poms/public-library/**
   pull_request:
     branches: [ master ]
@@ -23,13 +23,13 @@ on:
       - .github/workflows/build-libs-maven-releaser.yml
       - pom.xml
       - libs/changelog/**
+      - libs/java/**
       - libs/versions/**
       - libs/yak4j-dom/**
       - libs/yak4j-git/**
       - libs/yak4j-markdown/**
       - libs/yak4j-maven/**
       - libs/yak4j-process/**
-      - poms/java/**
       - poms/public-library/**
 
 jobs:

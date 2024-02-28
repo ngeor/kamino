@@ -7,11 +7,11 @@ on:
       - libs/changelog/**
       - .github/workflows/build-libs-changelog.yml
       - pom.xml
+      - libs/java/**
       - libs/versions/**
       - libs/yak4j-git/**
       - libs/yak4j-markdown/**
       - libs/yak4j-process/**
-      - poms/java/**
       - poms/public-library/**
   pull_request:
     branches: [ master ]
@@ -19,11 +19,11 @@ on:
       - libs/changelog/**
       - .github/workflows/build-libs-changelog.yml
       - pom.xml
+      - libs/java/**
       - libs/versions/**
       - libs/yak4j-git/**
       - libs/yak4j-markdown/**
       - libs/yak4j-process/**
-      - poms/java/**
       - poms/public-library/**
 
 jobs:

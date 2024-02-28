@@ -7,14 +7,14 @@ on:
       - gui/jHangMan/**
       - .github/workflows/build-gui-jHangMan.yml
       - pom.xml
-      - poms/java/**
+      - libs/java/**
   pull_request:
     branches: [ master ]
     paths:
       - gui/jHangMan/**
       - .github/workflows/build-gui-jHangMan.yml
       - pom.xml
-      - poms/java/**
+      - libs/java/**
 
 jobs:
   build:

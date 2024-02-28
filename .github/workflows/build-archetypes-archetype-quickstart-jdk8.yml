@@ -7,7 +7,7 @@ on:
       - archetypes/archetype-quickstart-jdk8/**
       - .github/workflows/build-archetypes-archetype-quickstart-jdk8.yml
       - pom.xml
-      - poms/java/**
+      - libs/java/**
       - poms/public-library/**
   pull_request:
     branches: [ master ]
@@ -15,7 +15,7 @@ on:
       - archetypes/archetype-quickstart-jdk8/**
       - .github/workflows/build-archetypes-archetype-quickstart-jdk8.yml
       - pom.xml
-      - poms/java/**
+      - libs/java/**
       - poms/public-library/**
 
 jobs:
