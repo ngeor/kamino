@@ -72,14 +72,6 @@ public class PomRepository {
     }
 
     @Deprecated
-    public ResolutionPhase getResolutionPhase(MavenCoordinates coordinates) {
-        Objects.requireNonNull(coordinates);
-        Map<ResolutionPhase, DocumentWrapper> phaseMap = map.get(coordinates);
-        Validate.notEmpty(phaseMap, "Document %s is unknown", coordinates.format());
-        return phaseMap.keySet().stream().max(Enum::compareTo).orElseThrow();
-    }
-
-    @Deprecated
     public ParentPom getOriginalParentPom(MavenCoordinates childCoordinates) {
         return originalParentPom.get(childCoordinates);
     }

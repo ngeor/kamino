@@ -82,7 +82,7 @@ class PomRepositoryTest {
                 pomRepository.loadAndResolveParent(xmlContents).coordinates();
 
         // assert
-        assertThat(pomRepository.getResolutionPhase(coordinates)).isEqualTo(ResolutionPhase.PARENT_RESOLVED);
+        assertThat(coordinates).isEqualTo(new MavenCoordinates("com.acme", "foo", "1.0"));
     }
 
     @Test
@@ -153,8 +153,6 @@ class PomRepositoryTest {
         DocumentWrapper document = loadResult.document();
 
         // assert
-        assertThat(pomRepository.getResolutionPhase(parentCoordinates)).isEqualTo(ResolutionPhase.PARENT_RESOLVED);
-        assertThat(pomRepository.getResolutionPhase(childCoordinates)).isEqualTo(ResolutionPhase.PARENT_RESOLVED);
         assertThat(document.getDocumentElement().firstElement("parent"))
                 .as("Resolved document should not have parent element anymore")
                 .isEmpty();
@@ -199,8 +197,7 @@ class PomRepositoryTest {
 
         // assert
         MavenCoordinates childCoordinates = loadResult.coordinates();
-        assertThat(pomRepository.getResolutionPhase(parentCoordinates)).isEqualTo(ResolutionPhase.PARENT_RESOLVED);
-        assertThat(pomRepository.getResolutionPhase(childCoordinates)).isEqualTo(ResolutionPhase.PARENT_RESOLVED);
+        assertThat(childCoordinates).isEqualTo(new MavenCoordinates("com.acme", "bar", "1.1"));
     }
 
     private static final class StubResolver implements Resolver {
