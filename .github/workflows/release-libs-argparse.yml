@@ -1,8 +1,8 @@
-name: Release yak4j-argparse
+name: Release argparse
 
 on:
   push:
-    tags: [ "libs/yak4j-argparse/v*" ]
+    tags: [ "libs/argparse/v*" ]
 
 jobs:
   build:
@@ -29,4 +29,4 @@ jobs:
         --nexus-password
         ${{ secrets.OSSRH_PASSWORD }}
         --path
-        libs/yak4j-argparse
+        libs/argparse

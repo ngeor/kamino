@@ -7,12 +7,12 @@ on:
       - internal-tooling/changes/**
       - .github/workflows/build-internal-tooling-changes.yml
       - pom.xml
+      - libs/argparse/**
       - libs/changelog/**
       - libs/cli-parent-pom/**
       - libs/java/**
       - libs/maven-releaser/**
       - libs/versions/**
-      - libs/yak4j-argparse/**
       - libs/yak4j-dom/**
       - libs/yak4j-git/**
       - libs/yak4j-markdown/**
@@ -24,12 +24,12 @@ on:
       - internal-tooling/changes/**
       - .github/workflows/build-internal-tooling-changes.yml
       - pom.xml
+      - libs/argparse/**
       - libs/changelog/**
       - libs/cli-parent-pom/**
       - libs/java/**
       - libs/maven-releaser/**
       - libs/versions/**
-      - libs/yak4j-argparse/**
       - libs/yak4j-dom/**
       - libs/yak4j-git/**
       - libs/yak4j-markdown/**

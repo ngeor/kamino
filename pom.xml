@@ -21,13 +21,13 @@
     <module>internal-tooling/arturito</module>
     <module>internal-tooling/changes</module>
     <module>internal-tooling/sifo</module>
+    <module>libs/argparse</module>
     <module>libs/changelog</module>
     <module>libs/checkstyle-rules</module>
     <module>libs/cli-parent-pom</module>
     <module>libs/java</module>
     <module>libs/maven-releaser</module>
     <module>libs/versions</module>
-    <module>libs/yak4j-argparse</module>
     <module>libs/yak4j-dom</module>
     <module>libs/yak4j-git</module>
     <module>libs/yak4j-markdown</module>

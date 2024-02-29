@@ -24,6 +24,11 @@
   <dependencies>
     <dependency>
       <groupId>com.github.ngeor</groupId>
+      <artifactId>argparse</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.github.ngeor</groupId>
       <artifactId>changelog</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
@@ -36,11 +41,6 @@
       <groupId>com.github.ngeor</groupId>
       <artifactId>versions</artifactId>
       <version>1.1.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>com.github.ngeor</groupId>
-      <artifactId>yak4j-argparse</artifactId>
-      <version>1.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.github.ngeor</groupId>

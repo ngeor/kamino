@@ -1,19 +1,19 @@
-name: Build yak4j-argparse
+name: Build argparse
 
 on:
   push:
     branches: [ master ]
     paths:
-      - libs/yak4j-argparse/**
-      - .github/workflows/build-libs-yak4j-argparse.yml
+      - libs/argparse/**
+      - .github/workflows/build-libs-argparse.yml
       - pom.xml
       - libs/java/**
       - poms/public-library/**
   pull_request:
     branches: [ master ]
     paths:
-      - libs/yak4j-argparse/**
-      - .github/workflows/build-libs-yak4j-argparse.yml
+      - libs/argparse/**
+      - .github/workflows/build-libs-argparse.yml
       - pom.xml
       - libs/java/**
       - poms/public-library/**
@@ -32,4 +32,4 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - name: Build with Maven
-      run: mvn -B -ntp -pl libs/yak4j-argparse -am clean verify
+      run: mvn -B -ntp -pl libs/argparse -am clean verify
