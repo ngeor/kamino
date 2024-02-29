@@ -95,6 +95,7 @@ public class ArgumentParser {
         }
     }
 
+    @SuppressWarnings("java:S106")
     private void printHelp(ArgSpec argSpec) {
         switch (argSpec.kind()) {
             case FLAG -> System.out.printf("[--%s] %s%n", argSpec.name(), argSpec.description());
