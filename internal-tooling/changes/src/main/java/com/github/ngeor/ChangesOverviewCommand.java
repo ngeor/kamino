@@ -57,10 +57,10 @@ public class ChangesOverviewCommand extends BaseCommand {
     }
 
     private List<String> buildOverview(String module) {
-        return new ModuleOverviewBuilder(git, module).buildOverview();
+        return new ModuleOverviewBuilder(git, module, TagPrefix.forPath(module)).buildOverview();
     }
 
-    private record ModuleOverviewBuilder(Git git, String module) {
+    private record ModuleOverviewBuilder(Git git, String module, TagPrefix tagPrefix) {
         public List<String> buildOverview() {
             List<String> result = new ArrayList<>(List.of(module));
             Pair<Tag, String> p = addTag();
@@ -75,10 +75,10 @@ public class ChangesOverviewCommand extends BaseCommand {
 
         private Pair<Tag, String> addTag() {
             try {
-                Tag tag = git.getMostRecentTag(TagPrefix.forPath(module).tagPrefix())
-                        .orElseThrow();
-                return Pair.of(
-                        tag, TagPrefix.forPath(module).stripTagPrefix(tag).toString());
+                String prefix = tagPrefix.tagPrefix();
+                Tag tag = git.getTags(prefix, false).findFirst().orElseThrow();
+                String message = tag.name().substring(prefix.length());
+                return Pair.of(tag, message);
             } catch (ProcessFailedException ex) {
                 return Pair.of(null, ex.getMessage());
             } catch (NoSuchElementException ignored) {
@@ -104,7 +104,7 @@ public class ChangesOverviewCommand extends BaseCommand {
         private String nextVersion(Tag tag) {
             SemVer recentVersion = Optional.ofNullable(tag)
                     .map(Tag::name)
-                    .map(n -> TagPrefix.forPath(module).stripTagPrefixIfPresent(n))
+                    .map(tagPrefix::stripTagPrefixIfPresent)
                     .flatMap(SemVer::tryParse)
                     .orElse(null);
             if (recentVersion == null) {

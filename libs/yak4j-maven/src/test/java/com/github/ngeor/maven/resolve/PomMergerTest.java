@@ -579,7 +579,7 @@ class PomMergerTest {
     private String merge(String parent, String child) {
         DocumentWrapper parentDoc = DocumentWrapper.parseString(parent);
         DocumentWrapper childDoc = DocumentWrapper.parseString(child);
-        new PomMerger.DocumentMerge().mergeIntoLeft(parentDoc, childDoc);
+        PomMerger.mergeIntoLeft(parentDoc, childDoc);
         parentDoc.indent("    ");
         return parentDoc.writeToString();
     }

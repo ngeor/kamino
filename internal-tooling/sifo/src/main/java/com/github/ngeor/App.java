@@ -3,11 +3,9 @@ package com.github.ngeor;
 import com.github.ngeor.process.ProcessFailedException;
 import java.io.File;
 import java.io.IOException;
-import org.apache.commons.lang3.concurrent.ConcurrentException;
 
 public final class App {
-    public static void main(String[] args)
-            throws IOException, InterruptedException, ProcessFailedException, ConcurrentException {
+    public static void main(String[] args) throws IOException, InterruptedException, ProcessFailedException {
         if (args == null || args.length == 0) {
             new TemplateGenerator(detectRootDirectory()).regenerateAllTemplates();
             return;
@@ -17,7 +15,7 @@ public final class App {
     }
 
     private static void importOldProject(String[] args)
-            throws IOException, InterruptedException, ProcessFailedException, ConcurrentException {
+            throws IOException, InterruptedException, ProcessFailedException {
         String githubToken = System.getenv("GITHUB_TOKEN");
         if (githubToken == null || githubToken.isBlank()) {
             throw new IllegalStateException("GITHUB_TOKEN env variable is not configured");

@@ -1,11 +1,13 @@
 package com.github.ngeor;
 
+import com.github.ngeor.git.Git;
+import com.github.ngeor.git.Tag;
 import com.github.ngeor.maven.MavenCoordinates;
-import com.github.ngeor.maven.ParentPom;
 import com.github.ngeor.maven.dom.DomHelper;
 import com.github.ngeor.maven.process.Maven;
 import com.github.ngeor.maven.resolve.PomRepository;
-import com.github.ngeor.maven.resolve.ResolutionPhase;
+import com.github.ngeor.maven.resolve.input.Input;
+import com.github.ngeor.maven.resolve.input.ParentInputIterator;
 import com.github.ngeor.mr.Defaults;
 import com.github.ngeor.process.ProcessFailedException;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
@@ -13,7 +15,6 @@ import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,26 +24,26 @@ import java.util.Optional;
 import java.util.Queue;
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.concurrent.ConcurrentException;
+import org.apache.commons.lang3.concurrent.ConcurrentRuntimeException;
+import org.apache.commons.lang3.concurrent.LazyInitializer;
 
 @SuppressWarnings("java:S106") // allow System.out.println
 public final class TemplateGenerator {
     private static final String GROUP_ID = "com.github.ngeor";
     private static final String DEFAULT_JAVA_VERSION = "11";
-
     private final SimpleStringTemplate buildTemplate;
     private final SimpleStringTemplate releaseTemplate;
     private final SimpleStringTemplate rootPomTemplate;
     private final File rootDirectory;
-    private final PomRepository pomRepository;
-    private final DocumentWrapper rootModule;
-    private final Map<String, MavenCoordinates> resolvedModuleCoordinates;
-    private final Map<MavenCoordinates, String> coordinatesToModule;
+    private final PomRepository pomRepository = new PomRepository();
+    private final LazyInitializer<List<String>> lazyTags;
 
     public TemplateGenerator(File rootDirectory) throws IOException {
         // load templates
@@ -56,39 +57,57 @@ public final class TemplateGenerator {
                 new File(rootDirectory, ".github").isDirectory(),
                 "Could not find .github folder under %s",
                 rootDirectory);
-        // prime pom repository
-        this.pomRepository = new PomRepository();
-        this.rootModule = pomRepository
-                .loadAndResolveProperties(new File(rootDirectory, "pom.xml").getCanonicalFile())
-                .document();
-        // prime modules
-        resolvedModuleCoordinates = primeModules(pomRepository, rootDirectory, rootModule);
-        coordinatesToModule = resolvedModuleCoordinates.entrySet().stream()
-                .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
+        lazyTags = LazyInitializer.<List<String>>builder()
+                .setInitializer(() -> new Git(rootDirectory)
+                        .getTags(null, false)
+                        .map(Tag::name)
+                        .toList())
+                .get();
     }
 
-    private static Map<String, MavenCoordinates> primeModules(
-            PomRepository pomRepository, File rootDirectory, DocumentWrapper rootModule) {
-        Map<String, MavenCoordinates> result = new TreeMap<>();
-        for (String moduleName : DomHelper.getModules(rootModule).toList()) {
-            System.out.println("Loading module " + moduleName);
-            File file = rootDirectory
-                    .toPath()
-                    .resolve(moduleName)
-                    .resolve("pom.xml")
-                    .toFile();
-            MavenCoordinates coordinates =
-                    pomRepository.loadAndResolveProperties(file).coordinates();
-            result.put(moduleName, coordinates);
+    private List<String> tags() {
+        try {
+            return lazyTags.get();
+        } catch (ConcurrentException ex) {
+            throw new ConcurrentRuntimeException(ex);
         }
-        return result;
     }
+
+    private File rootModulePomXmlFile() {
+        return new File(rootDirectory, "pom.xml");
+    }
+
+    private List<String> lazyModules;
 
     private Stream<String> modules() {
-        return DomHelper.getModules(rootModule);
+        if (lazyModules == null) {
+            lazyModules = DomHelper.getModules(
+                            pomRepository.load(rootModulePomXmlFile()).document())
+                    .toList();
+        }
+        return lazyModules.stream();
     }
 
-    public void regenerateAllTemplates() throws IOException, ProcessFailedException, ConcurrentException {
+    private Map<MavenCoordinates, String> lazyCoordinateToModuleName;
+
+    private Map<MavenCoordinates, String> coordinateToModuleNameMap() {
+        if (lazyCoordinateToModuleName == null) {
+            lazyCoordinateToModuleName = modules()
+                    .collect(Collectors.toMap(
+                            name -> pomRepository.load(modulePomXmlFile(name)).coordinates(), Function.identity()));
+        }
+        return lazyCoordinateToModuleName;
+    }
+
+    private File modulePomXmlFile(String module) {
+        return rootDirectory.toPath().resolve(module).resolve("pom.xml").toFile();
+    }
+
+    private Optional<String> findModuleName(MavenCoordinates coordinates) {
+        return Optional.ofNullable(coordinateToModuleNameMap().get(coordinates));
+    }
+
+    public void regenerateAllTemplates() throws IOException, ProcessFailedException {
         for (String module : modules().toList()) {
             regenerateAllTemplates(module);
         }
@@ -110,24 +129,27 @@ public final class TemplateGenerator {
                 rootPomTemplate.render(Map.of("modules", builder.toString())));
     }
 
-    public void regenerateAllTemplates(String module) throws IOException, ProcessFailedException, ConcurrentException {
+    public void regenerateAllTemplates(String module) throws IOException, ProcessFailedException {
         System.out.printf("Regenerating templates for %s%n", module);
-        MavenCoordinates coordinates = resolvedModuleCoordinates.get(module);
-        DocumentWrapper doc = pomRepository.getDocument(coordinates, ResolutionPhase.PROPERTIES_RESOLVED);
+        Input input = pomRepository.loadAndResolveProperties(modulePomXmlFile(module));
+        DocumentWrapper doc = input.document();
+        MavenCoordinates coordinates = input.coordinates();
+
         final String javaVersion = DomHelper.getProperty(doc, "maven.compiler.source")
                 .map(String::trim)
                 .map(v -> "1.8".equals(v) ? "8" : v)
                 .orElse(DEFAULT_JAVA_VERSION);
 
-        String buildCommand;
-        String extraPaths;
+        Input loadedInput = pomRepository.load(modulePomXmlFile(module));
         SortedSet<String> internalDependencies = Stream.concat(
                         // internal dependencies of module
                         internalDependenciesRecursively(coordinates),
                         // register also any internal snapshot parent poms as dependencies for this purpose
-                        parentPomSnapshots(coordinates))
+                        parentPomSnapshots(loadedInput))
                 .collect(Collectors.toCollection(TreeSet::new));
 
+        String buildCommand;
+        String extraPaths;
         if (internalDependencies.isEmpty()) {
             buildCommand = "mvn -B -ntp clean verify --file " + module + "/pom.xml";
             extraPaths = "";
@@ -161,7 +183,7 @@ public final class TemplateGenerator {
 
         fixProjectUrls(module);
 
-        new ReadmeGenerator(rootDirectory, module, coordinates, workflowId).fixProjectBadges();
+        new ReadmeGenerator(rootDirectory, module, coordinates, workflowId, this::tags).fixProjectBadges();
     }
 
     private Map<String, String> createTemplateVariables(
@@ -183,8 +205,9 @@ public final class TemplateGenerator {
 
     private void fixProjectUrls(String module) throws ProcessFailedException {
         boolean hadChanges = false;
-        DocumentWrapper document =
-                pomRepository.getDocument(resolvedModuleCoordinates.get(module), ResolutionPhase.UNRESOLVED);
+        DocumentWrapper document = pomRepository
+                .load(rootDirectory.toPath().resolve(module).resolve("pom.xml").toFile())
+                .document();
         ElementWrapper documentElement = document.getDocumentElement();
         hadChanges |= ensureChildText(documentElement, "groupId", GROUP_ID);
         hadChanges |= ensureChildText(documentElement, "artifactId", projectDirectory(module));
@@ -235,38 +258,28 @@ public final class TemplateGenerator {
         Set<String> result = new TreeSet<>();
         for (MavenCoordinates next = initialCoordinates; next != null; next = queue.poll()) {
             if (seen.add(next)) {
-                Set<MavenCoordinates> internalDependencies = DomHelper.getDependencies(
-                                pomRepository.getDocument(next, ResolutionPhase.PROPERTIES_RESOLVED))
-                        .filter(coordinatesToModule::containsKey)
-                        .collect(Collectors.toSet());
-                queue.addAll(internalDependencies);
-                internalDependencies.stream().map(coordinatesToModule::get).forEach(result::add);
+                Map<MavenCoordinates, String> internalDependencies = pomRepository.findKnownFile(next).stream()
+                        .map(pomRepository::loadAndResolveProperties)
+                        .map(Input::document)
+                        .flatMap(DomHelper::getDependencies)
+                        .map(dep -> Map.entry(dep, findModuleName(dep)))
+                        .filter(e -> e.getValue().isPresent())
+                        .collect(Collectors.toMap(
+                                Map.Entry::getKey, e -> e.getValue().get()));
+                queue.addAll(internalDependencies.keySet());
+                result.addAll(internalDependencies.values());
             }
         }
         return result.stream();
     }
 
-    private Stream<String> parentPomSnapshots(MavenCoordinates initialCoordinates) {
-        MavenCoordinates next = initialCoordinates;
-        List<String> result = new ArrayList<>();
-        while (next != null) {
-            DocumentWrapper originalDocument = pomRepository.getDocument(next, ResolutionPhase.UNRESOLVED);
-            MavenCoordinates parentCoordinates = DomHelper.getParentPom(originalDocument)
-                    .map(ParentPom::coordinates)
-                    .filter(c -> c.version() != null && c.version().endsWith("-SNAPSHOT"))
-                    .orElse(null);
-
-            String parentModule = Optional.ofNullable(parentCoordinates)
-                    .map(coordinatesToModule::get)
-                    .orElse(null);
-
-            if (parentModule != null) {
-                result.add(parentModule);
-                next = parentCoordinates;
-            } else {
-                next = null;
-            }
-        }
-        return result.stream();
+    // must not be parent resolved or property resolved
+    // TODO perhaps a way to check that it is not parent resolved or property resolved
+    private Stream<String> parentPomSnapshots(Input loadedInput) {
+        ParentInputIterator parentInputIterator = new ParentInputIterator(loadedInput, pomRepository);
+        Iterable<Input> iterable = () -> parentInputIterator;
+        return StreamSupport.stream(iterable.spliterator(), false)
+                .filter(i -> i.coordinates().version().endsWith("-SNAPSHOT"))
+                .flatMap(i -> findModuleName(i.coordinates()).stream());
     }
 }
