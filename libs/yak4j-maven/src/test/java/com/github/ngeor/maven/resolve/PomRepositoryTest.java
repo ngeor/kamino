@@ -10,7 +10,6 @@ import com.github.ngeor.maven.MavenCoordinates;
 import com.github.ngeor.maven.ParentPom;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.DomRuntimeException;
-import java.io.IOException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
@@ -54,7 +53,7 @@ class PomRepositoryTest {
     }
 
     @Test
-    void load() throws IOException {
+    void load() {
         String xmlContents =
                 """
             <project>
@@ -68,7 +67,7 @@ class PomRepositoryTest {
     }
 
     @Test
-    void resolveDocumentWithoutParent() throws IOException {
+    void resolveDocumentWithoutParent() {
         String xmlContents =
                 """
         <project>
@@ -86,7 +85,7 @@ class PomRepositoryTest {
     }
 
     @Test
-    void resolveDocumentWithoutParentTwice() throws IOException {
+    void resolveDocumentWithoutParentTwice() {
         // arrange
         String xmlContents =
                 """
@@ -124,7 +123,7 @@ class PomRepositoryTest {
     }
 
     @Test
-    void resolveDocumentWithParent() throws IOException {
+    void resolveDocumentWithParent() {
         String parentContents =
                 """
         <project>
@@ -168,7 +167,7 @@ class PomRepositoryTest {
     }
 
     @Test
-    void resolveDocumentWithParentDynamically() throws IOException {
+    void resolveDocumentWithParentDynamically() {
         String parentContents =
                 """
         <project>

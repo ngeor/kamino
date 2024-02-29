@@ -112,9 +112,8 @@ public final class PomMerger {
                 // otherwise we're merging into a document that hasn't been resolved yet
                 // 2. simply ignore the parent of the right child
                 Validate.validState(
-                    left.firstElement(ElementNames.PARENT).isEmpty(),
-                    "The left-side document still contains a parent element!"
-                );
+                        left.firstElement(ElementNames.PARENT).isEmpty(),
+                        "The left-side document still contains a parent element!");
             } else {
                 super.visitChild(left, rightChild);
             }

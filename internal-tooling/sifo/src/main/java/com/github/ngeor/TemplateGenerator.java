@@ -68,7 +68,7 @@ public final class TemplateGenerator {
     }
 
     private static Map<String, MavenCoordinates> primeModules(
-            PomRepository pomRepository, File rootDirectory, DocumentWrapper rootModule) throws IOException {
+            PomRepository pomRepository, File rootDirectory, DocumentWrapper rootModule) {
         Map<String, MavenCoordinates> result = new TreeMap<>();
         for (String moduleName : DomHelper.getModules(rootModule).toList()) {
             System.out.println("Loading module " + moduleName);

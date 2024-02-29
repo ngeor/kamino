@@ -80,7 +80,7 @@ public record MavenReleaser(File monorepoRoot, String path, FormatOptions format
         }
     }
 
-    private MavenCoordinates calcModuleCoordinatesAndDoSanityChecks() throws IOException {
+    private MavenCoordinates calcModuleCoordinatesAndDoSanityChecks() {
         PomRepository pomRepository = new PomRepository();
         LoadResult loadResult = pomRepository.loadAndResolveParent(modulePomFile());
         // ensure modelVersion, name, description exist
@@ -122,7 +122,7 @@ public record MavenReleaser(File monorepoRoot, String path, FormatOptions format
         return backupPom;
     }
 
-    private void replacePomWithEffectivePom(String tag) throws IOException {
+    private void replacePomWithEffectivePom(String tag) {
         PomRepository pomRepository = new PomRepository();
         File pomFile = modulePomFile();
         DocumentWrapper document = pomRepository.loadAndResolveParent(pomFile).document();

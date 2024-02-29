@@ -8,14 +8,12 @@ import com.github.ngeor.maven.dom.DomHelper;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.File;
-import java.io.IOException;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 import org.apache.commons.lang3.Validate;
-import org.apache.commons.lang3.function.FailableFunction;
-import org.apache.commons.lang3.function.FailableSupplier;
 
 public class PomRepository {
     private final Map<MavenCoordinates, Map<ResolutionPhase, DocumentWrapper>> map = new HashMap<>();
@@ -31,32 +29,31 @@ public class PomRepository {
         this(new DefaultResolver());
     }
 
-    public LoadResult loadAndResolveParent(File file) throws IOException {
+    public LoadResult loadAndResolveParent(File file) {
         return loadAndResolveParent(new FileInput(file));
     }
 
-    public LoadResult loadAndResolveParent(String contents) throws IOException {
+    public LoadResult loadAndResolveParent(String contents) {
         return loadAndResolveParent(new StringInput(contents));
     }
 
-    public LoadResult loadAndResolveParent(Input input) throws IOException {
+    public LoadResult loadAndResolveParent(Input input) {
         return loadAndThen(input, this::resolveParent);
     }
 
-    public LoadResult loadAndResolveProperties(File file) throws IOException {
+    public LoadResult loadAndResolveProperties(File file) {
         return loadAndResolveProperties(new FileInput(file));
     }
 
-    public LoadResult loadAndResolveProperties(String contents) throws IOException {
+    public LoadResult loadAndResolveProperties(String contents) {
         return loadAndResolveProperties(new StringInput(contents));
     }
 
-    public LoadResult loadAndResolveProperties(Input input) throws IOException {
+    public LoadResult loadAndResolveProperties(Input input) {
         return loadAndThen(input, this::resolveProperties);
     }
 
-    private LoadResult loadAndThen(Input input, FailableFunction<MavenCoordinates, DocumentWrapper, IOException> action)
-            throws IOException {
+    private LoadResult loadAndThen(Input input, Function<MavenCoordinates, DocumentWrapper> action) {
         Objects.requireNonNull(input);
         MavenCoordinates coordinates = inputToCoordinatesMap.get(input);
         if (coordinates == null) {
@@ -81,12 +78,12 @@ public class PomRepository {
         return document;
     }
 
-    private DocumentWrapper resolveParent(MavenCoordinates childCoordinates, ParentPom parentPom) throws IOException {
+    private DocumentWrapper resolveParent(MavenCoordinates childCoordinates, ParentPom parentPom) {
         validateCoordinates(childCoordinates);
         return resolveParent(coordinatesToInputMap.get(childCoordinates), parentPom);
     }
 
-    private DocumentWrapper resolveParent(Input childInput, ParentPom parentPom) throws IOException {
+    private DocumentWrapper resolveParent(Input childInput, ParentPom parentPom) {
         Objects.requireNonNull(childInput);
         Objects.requireNonNull(parentPom);
         MavenCoordinates parentCoordinates = parentPom.coordinates();
@@ -106,11 +103,11 @@ public class PomRepository {
         Validate.validState(coordinates != null && coordinates.isValid(), "Missing coordinates");
     }
 
-    private DocumentWrapper resolveParent(MavenCoordinates coordinates) throws IOException {
+    private DocumentWrapper resolveParent(MavenCoordinates coordinates) {
         validateCoordinates(coordinates);
         Map<ResolutionPhase, DocumentWrapper> phaseMap = map.get(coordinates);
         Objects.requireNonNull(phaseMap, String.format("Document %s is unknown", coordinates.format()));
-        return computeIfAbsent(phaseMap, ResolutionPhase.PARENT_RESOLVED, () -> {
+        return phaseMap.computeIfAbsent(ResolutionPhase.PARENT_RESOLVED, ignored -> {
             DocumentWrapper document = Objects.requireNonNull(
                     phaseMap.get(ResolutionPhase.UNRESOLVED), "Document should exist! Internal error!");
             ParentPom parentPom = DomHelper.getParentPom(document).orElse(null);
@@ -134,11 +131,11 @@ public class PomRepository {
         });
     }
 
-    private DocumentWrapper resolveProperties(MavenCoordinates coordinates) throws IOException {
+    private DocumentWrapper resolveProperties(MavenCoordinates coordinates) {
         validateCoordinates(coordinates);
         Map<ResolutionPhase, DocumentWrapper> phaseMap = map.get(coordinates);
         Objects.requireNonNull(phaseMap, String.format("Document %s is unknown", coordinates.format()));
-        return computeIfAbsent(phaseMap, ResolutionPhase.PROPERTIES_RESOLVED, () -> {
+        return phaseMap.computeIfAbsent(ResolutionPhase.PROPERTIES_RESOLVED, ignored -> {
             DocumentWrapper parentResolved = resolveParent(coordinates);
             Map<String, String> unresolvedProperties = DomHelper.getProperties(parentResolved);
             if (unresolvedProperties == null || unresolvedProperties.isEmpty()) {
@@ -158,18 +155,7 @@ public class PomRepository {
                 .transformTextNodes(text -> PropertyResolver.resolve(text, resolvedProperties::get));
     }
 
-    private static <K, V, E extends Throwable> V computeIfAbsent(Map<K, V> map, K key, FailableSupplier<V, E> supplier)
-            throws E {
-        if (map.containsKey(key)) {
-            return map.get(key);
-        }
-
-        V newValue = supplier.get();
-        map.put(key, newValue);
-        return newValue;
-    }
-
-    private MavenCoordinates load(Input input) throws IOException {
+    private MavenCoordinates load(Input input) {
         Objects.requireNonNull(input);
         DocumentWrapper document = input.loadDocument();
         ElementWrapper documentElement = document.getDocumentElement();
