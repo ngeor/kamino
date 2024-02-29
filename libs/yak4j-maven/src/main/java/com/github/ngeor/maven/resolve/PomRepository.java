@@ -1,206 +1,94 @@
 package com.github.ngeor.maven.resolve;
 
-import static com.github.ngeor.maven.ElementNames.PROJECT;
-
 import com.github.ngeor.maven.MavenCoordinates;
-import com.github.ngeor.maven.ParentPom;
 import com.github.ngeor.maven.dom.DomHelper;
+import com.github.ngeor.maven.resolve.cache.CachedDocumentDecorator;
+import com.github.ngeor.maven.resolve.cache.CanonicalFile;
+import com.github.ngeor.maven.resolve.input.DefaultLocalRepositoryLocator;
+import com.github.ngeor.maven.resolve.input.DefaultParentLoader;
+import com.github.ngeor.maven.resolve.input.DefaultParentResolver;
+import com.github.ngeor.maven.resolve.input.FileInput;
+import com.github.ngeor.maven.resolve.input.Input;
+import com.github.ngeor.maven.resolve.input.InputFactory;
+import com.github.ngeor.maven.resolve.input.LocalRepositoryLocator;
+import com.github.ngeor.maven.resolve.input.ParentLoader;
+import com.github.ngeor.maven.resolve.input.ParentResolver;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
-import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.File;
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Function;
-import org.apache.commons.lang3.Validate;
+import java.util.Optional;
 
-public class PomRepository {
-    private final Map<MavenCoordinates, Map<ResolutionPhase, DocumentWrapper>> map = new HashMap<>();
-    private final Map<MavenCoordinates, Input> coordinatesToInputMap = new HashMap<>();
-    private final Map<Input, MavenCoordinates> inputToCoordinatesMap = new HashMap<>();
-    private final Resolver resolver;
+public class PomRepository implements InputFactory, ParentLoader, ParentResolver {
+    private final Map<MavenCoordinates, File> coordinatesToFile = new HashMap<>();
+    private final Map<CanonicalFile, DocumentWrapper> documentCache = new HashMap<>();
+    private final Map<CanonicalFile, DocumentWrapper> propertyCache = new HashMap<>();
+    private final Map<CanonicalFile, Input> parentResolverCache = new HashMap<>();
 
-    public PomRepository(Resolver resolver) {
-        this.resolver = Objects.requireNonNull(resolver);
-    }
-
-    public PomRepository() {
-        this(new DefaultResolver());
-    }
-
-    public LoadResult loadAndResolveParent(File file) {
-        return loadAndResolveParent(new FileInput(file));
-    }
-
-    public LoadResult loadAndResolveParent(String contents) {
-        return loadAndResolveParent(new StringInput(contents));
-    }
-
-    public LoadResult loadAndResolveParent(Input input) {
-        return loadAndThen(input, this::resolveParent);
-    }
-
-    public LoadResult loadAndResolveProperties(File file) {
-        return loadAndResolveProperties(new FileInput(file));
-    }
-
-    public LoadResult loadAndResolveProperties(String contents) {
-        return loadAndResolveProperties(new StringInput(contents));
-    }
-
-    public LoadResult loadAndResolveProperties(Input input) {
-        return loadAndThen(input, this::resolveProperties);
-    }
-
-    private LoadResult loadAndThen(Input input, Function<MavenCoordinates, DocumentWrapper> action) {
-        Objects.requireNonNull(input);
-        MavenCoordinates coordinates = inputToCoordinatesMap.get(input);
-        if (coordinates == null) {
-            coordinates = load(input);
-        }
-        DocumentWrapper document = action.apply(coordinates);
-        return new LoadResult(coordinates, document);
-    }
-
-    private boolean isUnknown(MavenCoordinates coordinates) {
-        return !map.containsKey(Objects.requireNonNull(coordinates));
-    }
-
-    @Deprecated
-    public DocumentWrapper getDocument(MavenCoordinates coordinates, ResolutionPhase phase) {
-        validateCoordinates(coordinates);
-        Objects.requireNonNull(phase);
-        Map<ResolutionPhase, DocumentWrapper> phaseMap = map.get(coordinates);
-        Objects.requireNonNull(phaseMap, String.format("Document %s is unknown", coordinates.format()));
-        DocumentWrapper document = phaseMap.get(phase);
-        Objects.requireNonNull(document, String.format("Document %s is not in phase %s", coordinates.format(), phase));
-        return document;
-    }
-
-    private DocumentWrapper resolveParent(MavenCoordinates childCoordinates, ParentPom parentPom) {
-        validateCoordinates(childCoordinates);
-        return resolveParent(coordinatesToInputMap.get(childCoordinates), parentPom);
-    }
-
-    private DocumentWrapper resolveParent(Input childInput, ParentPom parentPom) {
-        Objects.requireNonNull(childInput);
-        Objects.requireNonNull(parentPom);
-        MavenCoordinates parentCoordinates = parentPom.coordinates();
-        validateCoordinates(parentCoordinates);
-        if (isUnknown(parentCoordinates)) {
-            Input parentInput = resolver.resolve(childInput, parentPom);
-            Validate.validState(
-                    parentCoordinates.equals(load(parentInput)),
-                    "Loaded parent document %s did not have expected coordinates %s",
-                    parentInput,
-                    parentCoordinates);
-        }
-        return resolveParent(parentCoordinates);
-    }
-
-    private static void validateCoordinates(MavenCoordinates coordinates) {
-        Validate.validState(coordinates != null && coordinates.isValid(), "Missing coordinates");
-    }
-
-    private DocumentWrapper resolveParent(MavenCoordinates coordinates) {
-        validateCoordinates(coordinates);
-        Map<ResolutionPhase, DocumentWrapper> phaseMap = map.get(coordinates);
-        Objects.requireNonNull(phaseMap, String.format("Document %s is unknown", coordinates.format()));
-        return phaseMap.computeIfAbsent(ResolutionPhase.PARENT_RESOLVED, ignored -> {
-            DocumentWrapper document = Objects.requireNonNull(
-                    phaseMap.get(ResolutionPhase.UNRESOLVED), "Document should exist! Internal error!");
-            ParentPom parentPom = DomHelper.getParentPom(document).orElse(null);
-            if (parentPom == null) {
-                // no parent pom, nothing to do
-                return document;
-            } else {
-                Validate.validState(
-                        parentPom.coordinates().isValid(),
-                        "Document %s has incomplete parent coordinates",
-                        coordinates.format());
-
-                // prepare parent document
-                DocumentWrapper parent = resolveParent(coordinates, parentPom);
-                DocumentWrapper cloneParent = parent.deepClone();
-
-                // perform merge
-                new PomMerger.DocumentMerge().mergeIntoLeft(cloneParent, document);
-                return cloneParent;
+    private final InputFactory factory = FileInput.asFactory()
+            .decorate(factory -> CachedDocumentDecorator.decorateFactory(factory, documentCache))
+            .decorate(SanityCheckedInput::decorateFactory)
+            .decorate(factory -> (pomFile -> {
+                Input result = factory.load(pomFile);
+                coordinatesToFile.put(result.coordinates(), pomFile);
+                return result;
+            }));
+    private final LocalRepositoryLocator localRepositoryLocator = new DefaultLocalRepositoryLocator();
+    private final ParentLoader parentLoader = new DefaultParentLoader(factory, localRepositoryLocator);
+    private final ParentResolver parentResolver = new DefaultParentResolver(parentLoader) {
+        @Override
+        public Input resolveWithParentRecursively(Input input) {
+            CanonicalFile key = new CanonicalFile(input.pomFile());
+            Input result = parentResolverCache.get(key);
+            if (result == null) {
+                result = super.resolveWithParentRecursively(input);
+                parentResolverCache.put(key, result);
             }
-        });
-    }
-
-    private DocumentWrapper resolveProperties(MavenCoordinates coordinates) {
-        validateCoordinates(coordinates);
-        Map<ResolutionPhase, DocumentWrapper> phaseMap = map.get(coordinates);
-        Objects.requireNonNull(phaseMap, String.format("Document %s is unknown", coordinates.format()));
-        return phaseMap.computeIfAbsent(ResolutionPhase.PROPERTIES_RESOLVED, ignored -> {
-            DocumentWrapper parentResolved = resolveParent(coordinates);
-            Map<String, String> unresolvedProperties = DomHelper.getProperties(parentResolved);
-            if (unresolvedProperties == null || unresolvedProperties.isEmpty()) {
-                return parentResolved;
-            }
-
-            // resolve them
-            Map<String, String> resolvedProperties = PropertyResolver.resolve(unresolvedProperties);
-            DocumentWrapper result = parentResolved.deepClone();
-            resolveProperties(result, resolvedProperties);
             return result;
-        });
-    }
-
-    private static void resolveProperties(DocumentWrapper document, Map<String, String> resolvedProperties) {
-        document.getDocumentElement()
-                .transformTextNodes(text -> PropertyResolver.resolve(text, resolvedProperties::get));
-    }
-
-    private MavenCoordinates load(Input input) {
-        Objects.requireNonNull(input);
-        DocumentWrapper document = input.loadDocument();
-        ElementWrapper documentElement = document.getDocumentElement();
-        Validate.isTrue(
-                PROJECT.equals(documentElement.getNodeName()),
-                "Unexpected root element '%s' (expected '%s')",
-                documentElement.getNodeName(),
-                PROJECT);
-        MavenCoordinates coordinates = DomHelper.getCoordinates(documentElement);
-        Validate.notBlank(coordinates.artifactId(), "Missing coordinates (artifactId) in %s", input);
-        if (coordinates.hasMissingFields()) {
-            // try to resolve parent
-            ParentPom parentPom = DomHelper.getParentPom(document)
-                    .orElseThrow(() -> new IllegalStateException(
-                            String.format("Missing coordinates in document %s and no parent pom", input)));
-            DocumentWrapper parentDoc = resolveParent(input, parentPom).deepClone();
-            // TODO reduce duplication with other merge usage
-            DocumentWrapper cloneChild = document.deepClone();
-            cloneChild.getDocumentElement().removeChildNodesByName("parent");
-            new PomMerger.DocumentMerge().mergeIntoLeft(parentDoc, cloneChild);
-            // try to get the resolved coordinates
-            coordinates = DomHelper.getCoordinates(parentDoc);
-            Validate.validState(coordinates.isValid(), "Missing coordinates in %s after resolving parent", input);
-            Validate.validState(
-                    isUnknown(coordinates),
-                    "Document %s is already loaded (trying to load %s, loaded=%s)",
-                    coordinates.format(),
-                    input,
-                    coordinatesToInputMap);
-            map.put(
-                    coordinates,
-                    new EnumMap<>(Map.of(
-                            ResolutionPhase.UNRESOLVED, document,
-                            ResolutionPhase.PARENT_RESOLVED, parentDoc)));
-        } else {
-            Validate.validState(
-                    isUnknown(coordinates),
-                    "Document %s is already loaded (trying to load %s, loaded=%s)",
-                    coordinates.format(),
-                    input,
-                    coordinatesToInputMap);
-            map.put(coordinates, new EnumMap<>(Map.of(ResolutionPhase.UNRESOLVED, document)));
         }
-        coordinatesToInputMap.put(coordinates, input);
-        inputToCoordinatesMap.put(input, coordinates);
-        return coordinates;
+    };
+
+    @Override
+    public Input load(File file) {
+        return factory.load(file);
+    }
+
+    @Override
+    public Optional<Input> loadParent(Input input) {
+        return parentLoader.loadParent(input);
+    }
+
+    public Input resolveWithParentRecursively(File file) {
+        return resolveWithParentRecursively(load(file));
+    }
+
+    @Override
+    public Input resolveWithParentRecursively(Input input) {
+        return parentResolver.resolveWithParentRecursively(input);
+    }
+
+    public Input loadAndResolveProperties(File file) {
+        return resolveWithParentRecursively(file)
+                .mapDocument(doc ->
+                        propertyCache.computeIfAbsent(new CanonicalFile(file), ignored -> doResolveProperties(doc)));
+    }
+
+    public Optional<File> findKnownFile(MavenCoordinates coordinates) {
+        return Optional.ofNullable(coordinatesToFile.get(Objects.requireNonNull(coordinates)));
+    }
+
+    private static DocumentWrapper doResolveProperties(DocumentWrapper document) {
+        Map<String, String> unresolvedProperties = DomHelper.getProperties(document);
+        if (unresolvedProperties == null || unresolvedProperties.isEmpty()) {
+            return document;
+        }
+
+        // resolve them
+        Map<String, String> resolvedProperties = PropertyResolver.resolve(unresolvedProperties);
+        DocumentWrapper result = document.deepClone();
+        boolean hadChanges = result.getDocumentElement()
+                .transformTextNodes(text -> PropertyResolver.resolve(text, resolvedProperties::get));
+        return hadChanges ? result : document;
     }
 }

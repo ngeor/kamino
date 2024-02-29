@@ -1,6 +1,7 @@
 package com.github.ngeor;
 
 import com.github.ngeor.git.Git;
+import com.github.ngeor.git.Tag;
 import com.github.ngeor.maven.process.Maven;
 import com.github.ngeor.mr.Defaults;
 import com.github.ngeor.mr.MavenReleaser;
@@ -11,7 +12,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 import org.apache.commons.lang3.Validate;
-import org.apache.commons.lang3.concurrent.ConcurrentException;
 
 /**
  * Imports a project from a different repository into the monorepo.
@@ -34,7 +34,7 @@ public class ProjectImporter {
         return String.join("/", typeName, oldRepoRoot.getName());
     }
 
-    public void run() throws IOException, InterruptedException, ProcessFailedException, ConcurrentException {
+    public void run() throws IOException, InterruptedException, ProcessFailedException {
         ensureGitLatest();
         importGitSubtree();
         adjustImportedCode();
@@ -91,7 +91,7 @@ public class ProjectImporter {
         monorepo.subTreeAdd(modulePath(), oldRepoRoot, oldRepo.getDefaultBranch());
     }
 
-    private void adjustImportedCode() throws IOException, ProcessFailedException, ConcurrentException {
+    private void adjustImportedCode() throws IOException, ProcessFailedException {
         new TemplateGenerator(monorepoRoot).regenerateAllTemplates();
 
         Git monorepo = new Git(monorepoRoot);
@@ -107,9 +107,10 @@ public class ProjectImporter {
 
         if (Defaults.isEligibleForRelease(modulePath())) {
             Git git = new Git(oldRepoRoot);
-            SemVer maxReleaseVersion = git.getMostRecentTag("v")
-                    .map(tag -> tag.name().substring(1))
+            SemVer maxReleaseVersion = git.getTags("v", true)
+                    .map(Tag::name)
                     .map(SemVer::parse)
+                    .findFirst()
                     .orElseThrow();
             SemVer nextVersion = maxReleaseVersion.bump(SemVerBump.PATCH);
 

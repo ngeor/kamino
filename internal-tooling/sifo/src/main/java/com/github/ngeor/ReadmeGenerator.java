@@ -1,7 +1,6 @@
 package com.github.ngeor;
 
 import com.github.ngeor.changelog.TagPrefix;
-import com.github.ngeor.git.Git;
 import com.github.ngeor.maven.MavenCoordinates;
 import java.io.File;
 import java.io.IOException;
@@ -12,9 +11,8 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Supplier;
 import org.apache.commons.lang3.Validate;
-import org.apache.commons.lang3.concurrent.ConcurrentException;
-import org.apache.commons.lang3.concurrent.LazyInitializer;
 
 public class ReadmeGenerator {
     private final File rootDirectory;
@@ -24,22 +22,23 @@ public class ReadmeGenerator {
     /**
      * Checks if the module has any tags in git (indicating it is already released).
      */
-    private final LazyInitializer<Boolean> lazyHasTags;
+    private final Supplier<List<String>> tagsSupplier;
 
-    public ReadmeGenerator(File rootDirectory, String mavenModule, MavenCoordinates coordinates, String workflowId) {
+    public ReadmeGenerator(
+            File rootDirectory,
+            String mavenModule,
+            MavenCoordinates coordinates,
+            String workflowId,
+            Supplier<List<String>> tagsSupplier) {
         this.rootDirectory = Objects.requireNonNull(rootDirectory);
         Validate.isTrue(rootDirectory.isDirectory(), "%s must be a directory", rootDirectory);
         this.mavenModule = Validate.notBlank(mavenModule, "Maven module is required");
         this.coordinates = Objects.requireNonNull(coordinates);
         this.workflowId = Validate.notBlank(workflowId);
-        this.lazyHasTags = LazyInitializer.<Boolean>builder()
-                .setInitializer(() -> new Git(rootDirectory)
-                        .getMostRecentTag(TagPrefix.forPath(mavenModule).tagPrefix())
-                        .isPresent())
-                .get();
+        this.tagsSupplier = tagsSupplier;
     }
 
-    public void fixProjectBadges() throws IOException, ConcurrentException {
+    public void fixProjectBadges() throws IOException {
         List<String> lines = readLines();
         State state = State.INITIAL;
         EnumSet<KnownBadge> foundBadges = EnumSet.noneOf(KnownBadge.class);
@@ -151,7 +150,7 @@ public class ReadmeGenerator {
                 + "/overview)";
     }
 
-    private boolean isBadgeApplicable(KnownBadge knownBadge) throws ConcurrentException {
+    private boolean isBadgeApplicable(KnownBadge knownBadge) {
         if (knownBadge == KnownBadge.BUILD) {
             // all projects build
             return true;
@@ -159,7 +158,8 @@ public class ReadmeGenerator {
 
         // if there are tags for this project, then it is probably a released library,
         // so the rest of the badges are applicable too
-        return lazyHasTags.get();
+        return tagsSupplier.get().stream()
+                .anyMatch(tag -> TagPrefix.forPath(mavenModule).tagStartsWithExpectedPrefix(tag));
     }
 
     private static boolean looksLikeBadge(String line) {

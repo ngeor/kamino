@@ -313,7 +313,7 @@ class MavenReleaserIT {
         @Test
         void testGroupIdIsRequired() throws IOException, ProcessFailedException {
             testValidation(validParentPomContents, removeElement(validChildPomContents, "groupId"))
-                    .hasMessageContaining("Missing coordinates");
+                    .hasMessage("Cannot resolve coordinates, parent element is missing");
         }
 
         @Test
@@ -325,7 +325,7 @@ class MavenReleaserIT {
         @Test
         void testVersionIsRequired() throws IOException, ProcessFailedException {
             testValidation(validParentPomContents, removeElement(validChildPomContents, "version"))
-                    .hasMessageContaining("Missing coordinates");
+                    .hasMessage("Cannot resolve coordinates, parent element is missing");
         }
 
         @Test

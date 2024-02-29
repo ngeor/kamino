@@ -4,6 +4,7 @@ import com.github.ngeor.changelog.CommitFilter;
 import com.github.ngeor.changelog.TagPrefix;
 import com.github.ngeor.git.Commit;
 import com.github.ngeor.git.Git;
+import com.github.ngeor.git.Tag;
 import com.github.ngeor.process.ProcessFailedException;
 import com.github.ngeor.versions.SemVer;
 import com.github.ngeor.versions.SemVerBump;
@@ -22,8 +23,10 @@ public class GitVersionCalculator {
     }
 
     public Optional<Result> calculateGitVersion() throws ProcessFailedException {
-        SemVer mostRecentVersion = git.getMostRecentTag(tagPrefix.tagPrefix())
-                .map(tagPrefix::stripTagPrefix)
+        SemVer mostRecentVersion = git.getTags(tagPrefix.tagPrefix(), true)
+                .map(Tag::name)
+                .map(SemVer::parse)
+                .findFirst()
                 .orElse(null);
         return mostRecentVersion != null ? Optional.of(calculateGitVersion(mostRecentVersion)) : Optional.empty();
     }

@@ -5,16 +5,21 @@ import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.util.Optional;
 import java.util.Set;
-import org.apache.commons.lang3.Validate;
 
 // Notable elements which are not inherited include: artifactId; name
 public final class PomMerger {
+    private PomMerger() {}
+
+    public static DocumentWrapper mergeIntoLeft(DocumentWrapper left, DocumentWrapper right) {
+        new DocumentMerge().mergeIntoLeft(left, right);
+        return left;
+    }
 
     private interface Merge<E> {
         void mergeIntoLeft(E left, E right);
     }
 
-    public static class DocumentMerge implements Merge<DocumentWrapper> {
+    private static class DocumentMerge implements Merge<DocumentWrapper> {
         @Override
         public void mergeIntoLeft(DocumentWrapper left, DocumentWrapper right) {
             ElementWrapper leftDocumentElement = left.getDocumentElement();
@@ -107,14 +112,8 @@ public final class PomMerger {
 
         @Override
         protected void visitChild(ElementWrapper left, ElementWrapper rightChild) {
-            if (ElementNames.PARENT.equals(rightChild.getNodeName())) {
-                // 1. verify that the left side doesn't have a parent element,
-                // otherwise we're merging into a document that hasn't been resolved yet
-                // 2. simply ignore the parent of the right child
-                Validate.validState(
-                        left.firstElement(ElementNames.PARENT).isEmpty(),
-                        "The left-side document still contains a parent element!");
-            } else {
+            // simply ignore the parent of the right child
+            if (!ElementNames.PARENT.equals(rightChild.getNodeName())) {
                 super.visitChild(left, rightChild);
             }
         }
