@@ -244,17 +244,24 @@ public class ElementWrapper {
         return result;
     }
 
-    public void transformTextNodes(UnaryOperator<String> transformer) {
+    public boolean transformTextNodes(UnaryOperator<String> transformer) {
+        boolean hadChanges = false;
         NodeList nodeList = element.getChildNodes();
         for (int i = nodeList.getLength() - 1; i >= 0; i--) {
             Node node = nodeList.item(i);
             if (node instanceof Element e) {
                 // recursion
-                new ElementWrapper(e).transformTextNodes(transformer);
+                hadChanges |= new ElementWrapper(e).transformTextNodes(transformer);
             } else if (node.getNodeType() == Node.TEXT_NODE) {
-                node.setTextContent(transformer.apply(node.getTextContent()));
+                String oldContent = node.getTextContent();
+                String newContent = transformer.apply(oldContent);
+                if (!Objects.equals(oldContent, newContent)) {
+                    hadChanges = true;
+                    node.setTextContent(newContent);
+                }
             }
         }
+        return hadChanges;
     }
 
     public ElementWrapper importNode(ElementWrapper other) {
