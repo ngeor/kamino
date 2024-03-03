@@ -1,4 +1,4 @@
-package com.github.ngeor.maven.resolve.cache;
+package com.github.ngeor.maven.document.loader.cache;
 
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.util.function.Function;

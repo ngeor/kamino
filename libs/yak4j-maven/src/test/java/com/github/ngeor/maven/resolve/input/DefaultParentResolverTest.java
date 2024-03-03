@@ -3,6 +3,9 @@ package com.github.ngeor.maven.resolve.input;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.ngeor.maven.MavenCoordinates;
+import com.github.ngeor.maven.document.loader.DocumentLoader;
+import com.github.ngeor.maven.document.loader.DocumentLoaderFactory;
+import com.github.ngeor.maven.document.loader.FileDocumentLoader;
 import com.github.ngeor.maven.dom.DomHelper;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.IOException;
@@ -19,7 +22,7 @@ class DefaultParentResolverTest {
     @TempDir
     private Path rootDir;
 
-    private final InputFactory factory = FileInput.asFactory();
+    private final DocumentLoaderFactory factory = FileDocumentLoader.asFactory();
     private final LocalRepositoryLocator localRepositoryLocator = () -> localRepository;
     private final ParentLoader parentLoader = new DefaultParentLoader(factory, localRepositoryLocator);
     private final ParentResolver parentResolver = new DefaultParentResolver(parentLoader);
@@ -37,10 +40,11 @@ class DefaultParentResolverTest {
             <color>red</color>
         </properties>
     </project>""");
-        Input input = factory.load(rootDir.resolve("pom.xml").toFile());
+        DocumentLoader input =
+                factory.createDocumentLoader(rootDir.resolve("pom.xml").toFile());
 
         // act
-        Input result = parentResolver.resolveWithParentRecursively(input);
+        DocumentLoader result = parentResolver.resolveWithParentRecursively(input);
 
         // assert
         assertThat(result).isNotNull().isSameAs(input);
@@ -74,14 +78,15 @@ class DefaultParentResolverTest {
             <taste>sweet</taste>
         </properties>
     </project>""");
-        Input input = factory.load(rootDir.resolve("child.xml").toFile());
+        DocumentLoader input =
+                factory.createDocumentLoader(rootDir.resolve("child.xml").toFile());
 
         // act
-        Input result = parentResolver.resolveWithParentRecursively(input);
+        DocumentLoader result = parentResolver.resolveWithParentRecursively(input);
 
         // assert
         assertThat(result).isNotNull().isNotSameAs(input);
-        DocumentWrapper resolvedDocument = result.document();
+        DocumentWrapper resolvedDocument = result.loadDocument();
         assertThat(DomHelper.getCoordinates(resolvedDocument))
                 .isEqualTo(new MavenCoordinates("com.acme", "child", "1.0"));
         assertThat(DomHelper.getProperty(resolvedDocument, "color")).contains("blue");
@@ -132,14 +137,15 @@ class DefaultParentResolverTest {
             <taste>sweet</taste>
         </properties>
     </project>""");
-        Input input = factory.load(rootDir.resolve("child.xml").toFile());
+        DocumentLoader input =
+                factory.createDocumentLoader(rootDir.resolve("child.xml").toFile());
 
         // act
-        Input result = parentResolver.resolveWithParentRecursively(input);
+        DocumentLoader result = parentResolver.resolveWithParentRecursively(input);
 
         // assert
         assertThat(result).isNotNull().isNotSameAs(input);
-        DocumentWrapper resolvedDocument = result.document();
+        DocumentWrapper resolvedDocument = result.loadDocument();
         assertThat(DomHelper.getCoordinates(resolvedDocument))
                 .isEqualTo(new MavenCoordinates("com.acme", "child", "1.0"));
         assertThat(DomHelper.getProperty(resolvedDocument, "color")).contains("blue");

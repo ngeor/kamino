@@ -1,5 +1,6 @@
 package com.github.ngeor.maven.resolve.input;
 
+import com.github.ngeor.maven.document.loader.DocumentLoader;
 import com.github.ngeor.maven.resolve.PomMerger;
 import java.util.Objects;
 
@@ -11,17 +12,17 @@ public class DefaultParentResolver implements ParentResolver {
     }
 
     @Override
-    public Input resolveWithParentRecursively(Input input) {
-        Input optionalParentInput = parentLoader.loadParent(input).orElse(null);
+    public DocumentLoader resolveWithParentRecursively(DocumentLoader input) {
+        DocumentLoader optionalParentInput = parentLoader.loadParent(input).orElse(null);
         if (optionalParentInput == null) {
             return input;
         }
 
-        Input resolvedParent = resolveWithParentRecursively(optionalParentInput);
+        DocumentLoader resolvedParent = resolveWithParentRecursively(optionalParentInput);
         return merge(resolvedParent, input);
     }
 
-    private Input merge(Input parent, Input child) {
-        return parent.mapDocument(parentDoc -> PomMerger.mergeIntoLeft(parentDoc.deepClone(), child.document()));
+    private DocumentLoader merge(DocumentLoader parent, DocumentLoader child) {
+        return parent.mapDocument(parentDoc -> PomMerger.mergeIntoLeft(parentDoc.deepClone(), child.loadDocument()));
     }
 }

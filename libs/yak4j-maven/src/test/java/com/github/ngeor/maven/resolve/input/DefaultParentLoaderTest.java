@@ -4,6 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.github.ngeor.maven.ElementNames;
+import com.github.ngeor.maven.document.loader.DocumentLoader;
+import com.github.ngeor.maven.document.loader.DocumentLoaderFactory;
+import com.github.ngeor.maven.document.loader.FileDocumentLoader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,7 +23,7 @@ class DefaultParentLoaderTest {
     @TempDir
     private Path localRepository;
 
-    private final InputFactory factory = FileInput.asFactory();
+    private final DocumentLoaderFactory factory = FileDocumentLoader.asFactory();
     private final LocalRepositoryLocator localRepositoryLocator = () -> localRepository;
     private final DefaultParentLoader parentLoader = new DefaultParentLoader(factory, localRepositoryLocator);
 
@@ -54,14 +57,15 @@ class DefaultParentLoaderTest {
                 </parent>
             </project>"""
                             .formatted(xmlRelativePath));
-            Input child = factory.load(childPom);
+            DocumentLoader child = factory.createDocumentLoader(childPom);
 
             // act
-            Input parent = parentLoader.loadParent(child).orElseThrow();
+            DocumentLoader parent = parentLoader.loadParent(child).orElseThrow();
 
             // assert
             assertThat(parent).isNotNull();
-            assertThat(parent.document().getDocumentElement().getTextContent()).isEqualTo("hello");
+            assertThat(parent.loadDocument().getDocumentElement().getTextContent())
+                    .isEqualTo("hello");
         }
 
         @Test
@@ -74,11 +78,11 @@ class DefaultParentLoaderTest {
             <parent>
             </parent>
         </project>""");
-            Input child = factory.load(childPom);
+            DocumentLoader child = factory.createDocumentLoader(childPom);
 
             // act
-            Input parent1 = parentLoader.loadParent(child).orElseThrow();
-            Input parent2 = parentLoader.loadParent(child).orElseThrow();
+            DocumentLoader parent1 = parentLoader.loadParent(child).orElseThrow();
+            DocumentLoader parent2 = parentLoader.loadParent(child).orElseThrow();
 
             // assert
             assertThat(parent1).isNotNull();
@@ -92,10 +96,10 @@ class DefaultParentLoaderTest {
             Files.writeString(childPom.toPath(), """
                 <project>
                 </project>""");
-            Input child = factory.load(childPom);
+            DocumentLoader child = factory.createDocumentLoader(childPom);
 
             // act
-            Input parent = parentLoader.loadParent(child).orElse(null);
+            DocumentLoader parent = parentLoader.loadParent(child).orElse(null);
 
             // assert
             assertThat(parent).isNull();
@@ -138,14 +142,15 @@ class DefaultParentLoaderTest {
             <relativePath>../oops.xml</relativePath>
         </parent>
     </project>""");
-            Input child = factory.load(childPom);
+            DocumentLoader child = factory.createDocumentLoader(childPom);
 
             // act
-            Input parent = parentLoader.loadParent(child).orElseThrow();
+            DocumentLoader parent = parentLoader.loadParent(child).orElseThrow();
 
             // assert
             assertThat(parent).isNotNull();
-            assertThat(parent.document().getDocumentElement().getTextContent()).isEqualTo("hello local repository");
+            assertThat(parent.loadDocument().getDocumentElement().getTextContent())
+                    .isEqualTo("hello local repository");
         }
 
         @Test
@@ -161,14 +166,15 @@ class DefaultParentLoaderTest {
                 <version>1.0</version>
             </parent>
         </project>""");
-            Input child = factory.load(childPom);
+            DocumentLoader child = factory.createDocumentLoader(childPom);
 
             // act
-            Input parent = parentLoader.loadParent(child).orElseThrow();
+            DocumentLoader parent = parentLoader.loadParent(child).orElseThrow();
 
             // assert
             assertThat(parent).isNotNull();
-            assertThat(parent.document().getDocumentElement().getTextContent()).isEqualTo("hello local repository");
+            assertThat(parent.loadDocument().getDocumentElement().getTextContent())
+                    .isEqualTo("hello local repository");
         }
 
         @ParameterizedTest
@@ -186,7 +192,7 @@ class DefaultParentLoaderTest {
             </parent>
         </project>"""
                             .replaceAll(String.format("<%s>.+</%s>", elementName, elementName), ""));
-            Input child = factory.load(childPom);
+            DocumentLoader child = factory.createDocumentLoader(childPom);
 
             // act and assert
             assertThatThrownBy(() -> parentLoader.loadParent(child))
@@ -206,11 +212,11 @@ class DefaultParentLoaderTest {
                 <version>2.0</version>
             </parent>
         </project>""");
-            Input child = factory.load(childPom);
-            Input parent = parentLoader.loadParent(child).orElseThrow();
+            DocumentLoader child = factory.createDocumentLoader(childPom);
+            DocumentLoader parent = parentLoader.loadParent(child).orElseThrow();
 
             // act and assert
-            assertThatThrownBy(parent::document)
+            assertThatThrownBy(parent::loadDocument)
                     .hasCauseInstanceOf(FileNotFoundException.class)
                     .hasMessageContaining("foo-2.0.pom");
         }

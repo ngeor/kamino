@@ -1,15 +1,15 @@
 package com.github.ngeor.maven.resolve;
 
 import com.github.ngeor.maven.MavenCoordinates;
+import com.github.ngeor.maven.document.loader.DocumentLoader;
+import com.github.ngeor.maven.document.loader.DocumentLoaderFactory;
+import com.github.ngeor.maven.document.loader.FileDocumentLoader;
+import com.github.ngeor.maven.document.loader.cache.CachedDocumentDecorator;
+import com.github.ngeor.maven.document.loader.cache.CanonicalFile;
 import com.github.ngeor.maven.dom.DomHelper;
-import com.github.ngeor.maven.resolve.cache.CachedDocumentDecorator;
-import com.github.ngeor.maven.resolve.cache.CanonicalFile;
 import com.github.ngeor.maven.resolve.input.DefaultLocalRepositoryLocator;
 import com.github.ngeor.maven.resolve.input.DefaultParentLoader;
 import com.github.ngeor.maven.resolve.input.DefaultParentResolver;
-import com.github.ngeor.maven.resolve.input.FileInput;
-import com.github.ngeor.maven.resolve.input.Input;
-import com.github.ngeor.maven.resolve.input.InputFactory;
 import com.github.ngeor.maven.resolve.input.LocalRepositoryLocator;
 import com.github.ngeor.maven.resolve.input.ParentLoader;
 import com.github.ngeor.maven.resolve.input.ParentResolver;
@@ -20,17 +20,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-public class PomRepository implements InputFactory, ParentLoader, ParentResolver {
+public class PomRepository implements DocumentLoaderFactory, ParentLoader, ParentResolver {
     private final Map<MavenCoordinates, File> coordinatesToFile = new HashMap<>();
     private final Map<CanonicalFile, DocumentWrapper> documentCache = new HashMap<>();
     private final Map<CanonicalFile, DocumentWrapper> propertyCache = new HashMap<>();
-    private final Map<CanonicalFile, Input> parentResolverCache = new HashMap<>();
+    private final Map<CanonicalFile, DocumentLoader> parentResolverCache = new HashMap<>();
 
-    private final InputFactory factory = FileInput.asFactory()
+    private final DocumentLoaderFactory factory = FileDocumentLoader.asFactory()
             .decorate(factory -> CachedDocumentDecorator.decorateFactory(factory, documentCache))
             .decorate(SanityCheckedInput::decorateFactory)
             .decorate(factory -> (pomFile -> {
-                Input result = factory.load(pomFile);
+                DocumentLoader result = factory.createDocumentLoader(pomFile);
                 coordinatesToFile.put(result.coordinates(), pomFile);
                 return result;
             }));
@@ -38,9 +38,9 @@ public class PomRepository implements InputFactory, ParentLoader, ParentResolver
     private final ParentLoader parentLoader = new DefaultParentLoader(factory, localRepositoryLocator);
     private final ParentResolver parentResolver = new DefaultParentResolver(parentLoader) {
         @Override
-        public Input resolveWithParentRecursively(Input input) {
-            CanonicalFile key = new CanonicalFile(input.pomFile());
-            Input result = parentResolverCache.get(key);
+        public DocumentLoader resolveWithParentRecursively(DocumentLoader input) {
+            CanonicalFile key = new CanonicalFile(input.getPomFile());
+            DocumentLoader result = parentResolverCache.get(key);
             if (result == null) {
                 result = super.resolveWithParentRecursively(input);
                 parentResolverCache.put(key, result);
@@ -50,25 +50,25 @@ public class PomRepository implements InputFactory, ParentLoader, ParentResolver
     };
 
     @Override
-    public Input load(File file) {
-        return factory.load(file);
+    public DocumentLoader createDocumentLoader(File file) {
+        return factory.createDocumentLoader(file);
     }
 
     @Override
-    public Optional<Input> loadParent(Input input) {
+    public Optional<DocumentLoader> loadParent(DocumentLoader input) {
         return parentLoader.loadParent(input);
     }
 
-    public Input resolveWithParentRecursively(File file) {
-        return resolveWithParentRecursively(load(file));
+    public DocumentLoader resolveWithParentRecursively(File file) {
+        return resolveWithParentRecursively(createDocumentLoader(file));
     }
 
     @Override
-    public Input resolveWithParentRecursively(Input input) {
+    public DocumentLoader resolveWithParentRecursively(DocumentLoader input) {
         return parentResolver.resolveWithParentRecursively(input);
     }
 
-    public Input loadAndResolveProperties(File file) {
+    public DocumentLoader loadAndResolveProperties(File file) {
         return resolveWithParentRecursively(file)
                 .mapDocument(doc ->
                         propertyCache.computeIfAbsent(new CanonicalFile(file), ignored -> doResolveProperties(doc)));

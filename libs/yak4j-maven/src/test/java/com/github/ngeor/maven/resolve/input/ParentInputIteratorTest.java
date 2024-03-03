@@ -2,6 +2,8 @@ package com.github.ngeor.maven.resolve.input;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.github.ngeor.maven.document.loader.DocumentLoaderFactory;
+import com.github.ngeor.maven.document.loader.FileDocumentLoader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,7 +14,7 @@ class ParentInputIteratorTest {
     @TempDir
     private Path tempDir;
 
-    private final InputFactory factory = FileInput.asFactory();
+    private final DocumentLoaderFactory factory = FileDocumentLoader.asFactory();
     private final ParentLoader parentLoader = new DefaultParentLoader(factory, () -> null);
 
     @Test
@@ -23,8 +25,8 @@ class ParentInputIteratorTest {
             </project>""");
 
         // act
-        ParentInputIterator parentInputIterator =
-                new ParentInputIterator(factory.load(tempDir.resolve("pom.xml").toFile()), parentLoader);
+        ParentInputIterator parentInputIterator = new ParentInputIterator(
+                factory.createDocumentLoader(tempDir.resolve("pom.xml").toFile()), parentLoader);
 
         // assert
         assertThat(parentInputIterator).toIterable().isEmpty();
@@ -55,12 +57,13 @@ class ParentInputIteratorTest {
 
         // act
         ParentInputIterator parentInputIterator = new ParentInputIterator(
-                factory.load(tempDir.resolve("child.xml").toFile()), parentLoader);
+                factory.createDocumentLoader(tempDir.resolve("child.xml").toFile()), parentLoader);
 
         // assert
         assertThat(parentInputIterator)
                 .toIterable()
-                .containsExactly(factory.load(tempDir.resolve("parent.xml").toFile()));
+                .containsExactly(factory.createDocumentLoader(
+                        tempDir.resolve("parent.xml").toFile()));
     }
 
     @Test
@@ -99,13 +102,15 @@ class ParentInputIteratorTest {
 
         // act
         ParentInputIterator parentInputIterator = new ParentInputIterator(
-                factory.load(tempDir.resolve("child.xml").toFile()), parentLoader);
+                factory.createDocumentLoader(tempDir.resolve("child.xml").toFile()), parentLoader);
 
         // assert
         assertThat(parentInputIterator)
                 .toIterable()
                 .containsExactly(
-                        factory.load(tempDir.resolve("parent.xml").toFile()),
-                        factory.load(tempDir.resolve("grandparent.xml").toFile()));
+                        factory.createDocumentLoader(
+                                tempDir.resolve("parent.xml").toFile()),
+                        factory.createDocumentLoader(
+                                tempDir.resolve("grandparent.xml").toFile()));
     }
 }

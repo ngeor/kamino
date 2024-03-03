@@ -1,4 +1,4 @@
-package com.github.ngeor.maven.resolve.input;
+package com.github.ngeor.maven.document.loader;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -14,8 +14,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-class FileInputTest {
-    private final InputFactory factory = FileInput.asFactory();
+class FileDocumentLoaderTest {
+    private final DocumentLoaderFactory factory = FileDocumentLoader.asFactory();
 
     @Nested
     class Document {
@@ -33,24 +33,24 @@ class FileInputTest {
 
         @Test
         void loadDocument() {
-            Input input = factory.load(rootPom);
-            DocumentWrapper document = input.document();
+            DocumentLoader input = factory.createDocumentLoader(rootPom);
+            DocumentWrapper document = input.loadDocument();
             assertThat(document).isNotNull();
             assertThat(document.getDocumentElement().getTextContent()).isEqualTo("hello world");
         }
 
         @Test
         void loadDocumentTwiceReturnsDifferentInstance() {
-            Input input = factory.load(rootPom);
-            DocumentWrapper doc1 = input.document();
-            DocumentWrapper doc2 = input.document();
+            DocumentLoader input = factory.createDocumentLoader(rootPom);
+            DocumentWrapper doc1 = input.loadDocument();
+            DocumentWrapper doc2 = input.loadDocument();
             assertThat(doc1).isNotNull().isNotSameAs(doc2);
         }
 
         @Test
         void fileNotFound() {
-            Input input = factory.load(new File(rootDir, "oops.xml"));
-            assertThatThrownBy(input::document)
+            DocumentLoader input = factory.createDocumentLoader(new File(rootDir, "oops.xml"));
+            assertThatThrownBy(input::loadDocument)
                     .hasCauseInstanceOf(FileNotFoundException.class)
                     .hasMessageContaining("oops.xml");
         }
@@ -85,7 +85,7 @@ class FileInputTest {
                         <version>2.0</version>
                     </parent>
                 </project>""");
-            Input input = factory.load(childPom);
+            DocumentLoader input = factory.createDocumentLoader(childPom);
 
             // act
             MavenCoordinates result = input.coordinates();
@@ -109,7 +109,7 @@ class FileInputTest {
                         <version>2.0</version>
                     </parent>
                 </project>""");
-            Input input = factory.load(childPom);
+            DocumentLoader input = factory.createDocumentLoader(childPom);
 
             // act and assert
             assertThatThrownBy(input::coordinates).hasMessage("Cannot resolve coordinates, artifactId is missing");
@@ -130,7 +130,7 @@ class FileInputTest {
                         <version>2.0</version>
                     </parent>
                 </project>""");
-            Input input = factory.load(childPom);
+            DocumentLoader input = factory.createDocumentLoader(childPom);
 
             // act
             MavenCoordinates result = input.coordinates();
@@ -154,7 +154,7 @@ class FileInputTest {
                         <version>2.0</version>
                     </parent>
                 </project>""");
-            Input input = factory.load(childPom);
+            DocumentLoader input = factory.createDocumentLoader(childPom);
 
             // act
             MavenCoordinates result = input.coordinates();
@@ -177,7 +177,7 @@ class FileInputTest {
                         <version>2.0</version>
                     </parent>
                 </project>""");
-            Input input = factory.load(childPom);
+            DocumentLoader input = factory.createDocumentLoader(childPom);
 
             // act and assert
             assertThatThrownBy(input::coordinates).hasMessage("groupId is missing from parent coordinates");
@@ -197,7 +197,7 @@ class FileInputTest {
                         <version>2.0</version>
                     </parent>
                 </project>""");
-            Input input = factory.load(childPom);
+            DocumentLoader input = factory.createDocumentLoader(childPom);
 
             // act and assert
             assertThatThrownBy(input::coordinates).hasMessage("artifactId is missing from parent coordinates");
@@ -217,7 +217,7 @@ class FileInputTest {
                         <artifactId>bar</artifactId>
                     </parent>
                 </project>""");
-            Input input = factory.load(childPom);
+            DocumentLoader input = factory.createDocumentLoader(childPom);
 
             // act and assert
             assertThatThrownBy(input::coordinates).hasMessage("version is missing from parent coordinates");
@@ -233,7 +233,7 @@ class FileInputTest {
                     <groupId>com.acme</groupId>
                     <artifactId>foo</artifactId>
                 </project>""");
-            Input input = factory.load(childPom);
+            DocumentLoader input = factory.createDocumentLoader(childPom);
 
             // act and assert
             assertThatThrownBy(input::coordinates).hasMessage("Cannot resolve coordinates, parent element is missing");

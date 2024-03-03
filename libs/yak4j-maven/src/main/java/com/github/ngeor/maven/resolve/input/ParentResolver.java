@@ -1,5 +1,7 @@
 package com.github.ngeor.maven.resolve.input;
 
+import com.github.ngeor.maven.document.loader.DocumentLoader;
+
 public interface ParentResolver {
-    Input resolveWithParentRecursively(Input input);
+    DocumentLoader resolveWithParentRecursively(DocumentLoader input);
 }

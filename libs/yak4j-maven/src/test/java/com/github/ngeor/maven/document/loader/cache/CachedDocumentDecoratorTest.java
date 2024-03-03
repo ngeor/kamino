@@ -1,10 +1,10 @@
-package com.github.ngeor.maven.resolve.cache;
+package com.github.ngeor.maven.document.loader.cache;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.github.ngeor.maven.document.loader.DocumentLoaderFactory;
+import com.github.ngeor.maven.document.loader.FileDocumentLoader;
 import com.github.ngeor.maven.resolve.input.DefaultParentLoader;
-import com.github.ngeor.maven.resolve.input.FileInput;
-import com.github.ngeor.maven.resolve.input.InputFactory;
 import com.github.ngeor.maven.resolve.input.LocalRepositoryLocator;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.File;
@@ -17,8 +17,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 class CachedDocumentDecoratorTest {
-    private final InputFactory factory =
-            FileInput.asFactory().decorate(f -> CachedDocumentDecorator.decorateFactory(f, new HashMap<>()));
+    private final DocumentLoaderFactory factory =
+            FileDocumentLoader.asFactory().decorate(f -> CachedDocumentDecorator.decorateFactory(f, new HashMap<>()));
     private final LocalRepositoryLocator localRepositoryLocator = () -> {
         throw new IllegalStateException("oops");
     };
@@ -56,8 +56,10 @@ class CachedDocumentDecoratorTest {
         }
 
         private void act(String file1, String file2) {
-            doc1 = factory.load(new File(tempDir.toFile(), file1)).document();
-            doc2 = factory.load(new File(tempDir.toFile(), file2)).document();
+            doc1 = factory.createDocumentLoader(new File(tempDir.toFile(), file1))
+                    .loadDocument();
+            doc2 = factory.createDocumentLoader(new File(tempDir.toFile(), file2))
+                    .loadDocument();
         }
     }
 
@@ -78,13 +80,13 @@ class CachedDocumentDecoratorTest {
                     </parent>
                 </project>""");
             DocumentWrapper parent1 = parentLoader
-                    .loadParent(factory.load(pomXmlPath.toFile()))
+                    .loadParent(factory.createDocumentLoader(pomXmlPath.toFile()))
                     .orElseThrow()
-                    .document();
+                    .loadDocument();
             DocumentWrapper parent2 = parentLoader
-                    .loadParent(factory.load(pomXmlPath.toFile()))
+                    .loadParent(factory.createDocumentLoader(pomXmlPath.toFile()))
                     .orElseThrow()
-                    .document();
+                    .loadDocument();
             assertThat(parent1).isNotNull().isSameAs(parent2);
         }
     }

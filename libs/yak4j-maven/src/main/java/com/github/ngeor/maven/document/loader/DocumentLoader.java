@@ -1,4 +1,4 @@
-package com.github.ngeor.maven.resolve.input;
+package com.github.ngeor.maven.document.loader;
 
 import com.github.ngeor.maven.MavenCoordinates;
 import com.github.ngeor.maven.ParentPom;
@@ -8,26 +8,27 @@ import java.io.File;
 import java.util.function.UnaryOperator;
 import org.apache.commons.lang3.StringUtils;
 
-public interface Input {
+public interface DocumentLoader {
 
     // TODO return an immutable version of DocumentWrapper
-    DocumentWrapper document();
+    DocumentWrapper loadDocument();
 
     /**
      * Gets the POM file.
-     * This is used only to resolve a parent POM via the relative path.
+     * This is used to resolve a parent POM via the relative path.
      */
-    File pomFile();
+    File getPomFile();
 
+    // TODO move to a different interface where DocumentLoader is a no-op
     default MavenCoordinates coordinates() {
-        MavenCoordinates coordinates = DomHelper.getCoordinates(document());
+        MavenCoordinates coordinates = DomHelper.getCoordinates(loadDocument());
         if (coordinates.isValid()) {
             return coordinates;
         }
         if (StringUtils.isBlank(coordinates.artifactId())) {
             throw new IllegalArgumentException("Cannot resolve coordinates, artifactId is missing");
         }
-        MavenCoordinates parentCoordinates = DomHelper.getParentPom(document())
+        MavenCoordinates parentCoordinates = DomHelper.getParentPom(loadDocument())
                 .map(ParentPom::validateCoordinates)
                 .orElseThrow(
                         () -> new IllegalArgumentException("Cannot resolve coordinates, parent element is missing"));
@@ -37,9 +38,10 @@ public interface Input {
                 StringUtils.defaultIfBlank(coordinates.version(), parentCoordinates.version()));
     }
 
-    default Input mapDocument(UnaryOperator<DocumentWrapper> mapper) {
-        DocumentWrapper document = document();
+    // TODO make it a decorator, do not actually load the document here
+    default DocumentLoader mapDocument(UnaryOperator<DocumentWrapper> mapper) {
+        DocumentWrapper document = loadDocument();
         DocumentWrapper mapped = mapper.apply(document);
-        return document == mapped ? this : new MergedInput(mapped, pomFile());
+        return document == mapped ? this : new PreloadedDocumentLoader(mapped, getPomFile());
     }
 }
