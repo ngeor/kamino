@@ -1,16 +1,16 @@
-package com.github.ngeor.maven.resolve.input;
+package com.github.ngeor.maven.document.parent;
 
 import com.github.ngeor.maven.document.loader.DocumentLoader;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public class ParentInputIterator implements Iterator<DocumentLoader> {
+public class ParentDocumentLoaderIterator implements Iterator<DocumentLoader> {
     private DocumentLoader next;
     private final ParentLoader parentLoader;
     private boolean valueTaken = true;
 
-    public ParentInputIterator(DocumentLoader next, ParentLoader parentLoader) {
+    public ParentDocumentLoaderIterator(DocumentLoader next, ParentLoader parentLoader) {
         this.next = Objects.requireNonNull(next);
         this.parentLoader = Objects.requireNonNull(parentLoader);
     }

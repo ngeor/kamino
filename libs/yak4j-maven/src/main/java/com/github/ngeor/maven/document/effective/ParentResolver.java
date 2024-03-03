@@ -1,4 +1,4 @@
-package com.github.ngeor.maven.resolve.input;
+package com.github.ngeor.maven.document.effective;
 
 import com.github.ngeor.maven.document.loader.DocumentLoader;
 

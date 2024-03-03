@@ -1,12 +1,15 @@
-package com.github.ngeor.maven.resolve.input;
+package com.github.ngeor.maven.document.effective;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.github.ngeor.maven.MavenCoordinates;
 import com.github.ngeor.maven.document.loader.DocumentLoader;
 import com.github.ngeor.maven.document.loader.DocumentLoaderFactory;
 import com.github.ngeor.maven.document.loader.FileDocumentLoader;
+import com.github.ngeor.maven.document.parent.DefaultParentLoader;
+import com.github.ngeor.maven.document.parent.LocalRepositoryLocator;
+import com.github.ngeor.maven.document.parent.ParentLoader;
 import com.github.ngeor.maven.dom.DomHelper;
+import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.IOException;
 import java.nio.file.Files;

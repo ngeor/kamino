@@ -1,10 +1,10 @@
-package com.github.ngeor.maven.resolve.input;
+package com.github.ngeor.maven.document.parent;
 
-import com.github.ngeor.maven.MavenCoordinates;
-import com.github.ngeor.maven.ParentPom;
 import com.github.ngeor.maven.document.loader.DocumentLoader;
 import com.github.ngeor.maven.document.loader.DocumentLoaderFactory;
 import com.github.ngeor.maven.dom.DomHelper;
+import com.github.ngeor.maven.dom.MavenCoordinates;
+import com.github.ngeor.maven.dom.ParentPom;
 import java.io.File;
 import java.util.Objects;
 import java.util.Optional;

@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.ngeor.maven.document.loader.DocumentLoaderFactory;
 import com.github.ngeor.maven.document.loader.FileDocumentLoader;
-import com.github.ngeor.maven.resolve.input.DefaultParentLoader;
-import com.github.ngeor.maven.resolve.input.LocalRepositoryLocator;
+import com.github.ngeor.maven.document.parent.DefaultParentLoader;
+import com.github.ngeor.maven.document.parent.LocalRepositoryLocator;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.File;
 import java.io.IOException;

@@ -1,8 +1,8 @@
 package com.github.ngeor.maven.document.loader;
 
-import com.github.ngeor.maven.MavenCoordinates;
-import com.github.ngeor.maven.ParentPom;
 import com.github.ngeor.maven.dom.DomHelper;
+import com.github.ngeor.maven.dom.MavenCoordinates;
+import com.github.ngeor.maven.dom.ParentPom;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.File;
 import java.util.function.UnaryOperator;
@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 public interface DocumentLoader {
 
     // TODO return an immutable version of DocumentWrapper
+    // TODO add a method that indicates if the document is already loaded or not
     DocumentWrapper loadDocument();
 
     /**

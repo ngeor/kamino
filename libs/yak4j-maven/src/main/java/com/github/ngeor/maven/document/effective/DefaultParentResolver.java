@@ -1,7 +1,7 @@
-package com.github.ngeor.maven.resolve.input;
+package com.github.ngeor.maven.document.effective;
 
 import com.github.ngeor.maven.document.loader.DocumentLoader;
-import com.github.ngeor.maven.resolve.PomMerger;
+import com.github.ngeor.maven.document.parent.ParentLoader;
 import java.util.Objects;
 
 public class DefaultParentResolver implements ParentResolver {

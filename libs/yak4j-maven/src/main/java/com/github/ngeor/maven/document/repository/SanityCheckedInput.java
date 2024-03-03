@@ -1,9 +1,9 @@
-package com.github.ngeor.maven.resolve;
+package com.github.ngeor.maven.document.repository;
 
-import com.github.ngeor.maven.ElementNames;
 import com.github.ngeor.maven.document.loader.DocumentLoader;
 import com.github.ngeor.maven.document.loader.DocumentLoaderDecorator;
 import com.github.ngeor.maven.document.loader.DocumentLoaderFactory;
+import com.github.ngeor.maven.dom.ElementNames;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.util.Objects;

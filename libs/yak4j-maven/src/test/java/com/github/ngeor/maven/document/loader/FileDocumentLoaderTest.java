@@ -3,7 +3,7 @@ package com.github.ngeor.maven.document.loader;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.github.ngeor.maven.MavenCoordinates;
+import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.File;
 import java.io.FileNotFoundException;

@@ -1,4 +1,4 @@
-package com.github.ngeor.maven.resolve;
+package com.github.ngeor.maven.document.effective;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

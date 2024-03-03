@@ -1,4 +1,4 @@
-package com.github.ngeor.maven.resolve.input;
+package com.github.ngeor.maven.document.parent;
 
 import java.io.File;
 import java.nio.file.Path;

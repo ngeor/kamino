@@ -2,12 +2,12 @@ package com.github.ngeor;
 
 import com.github.ngeor.git.Git;
 import com.github.ngeor.git.Tag;
-import com.github.ngeor.maven.MavenCoordinates;
 import com.github.ngeor.maven.document.loader.DocumentLoader;
+import com.github.ngeor.maven.document.parent.ParentDocumentLoaderIterator;
+import com.github.ngeor.maven.document.repository.PomRepository;
 import com.github.ngeor.maven.dom.DomHelper;
+import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.maven.process.Maven;
-import com.github.ngeor.maven.resolve.PomRepository;
-import com.github.ngeor.maven.resolve.input.ParentInputIterator;
 import com.github.ngeor.mr.Defaults;
 import com.github.ngeor.process.ProcessFailedException;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
@@ -284,8 +284,9 @@ public final class TemplateGenerator {
     // must not be parent resolved or property resolved
     // TODO perhaps a way to check that it is not parent resolved or property resolved
     private Stream<String> parentPomSnapshots(DocumentLoader loadedInput) {
-        ParentInputIterator parentInputIterator = new ParentInputIterator(loadedInput, pomRepository);
-        Iterable<DocumentLoader> iterable = () -> parentInputIterator;
+        ParentDocumentLoaderIterator parentDocumentLoaderIterator =
+                new ParentDocumentLoaderIterator(loadedInput, pomRepository);
+        Iterable<DocumentLoader> iterable = () -> parentDocumentLoaderIterator;
         return StreamSupport.stream(iterable.spliterator(), false)
                 .filter(i -> i.coordinates().version().endsWith("-SNAPSHOT"))
                 .flatMap(i -> findModuleName(i.coordinates()).stream());

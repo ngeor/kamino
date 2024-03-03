@@ -1,12 +1,12 @@
-package com.github.ngeor.maven.resolve.input;
+package com.github.ngeor.maven.document.parent;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.github.ngeor.maven.ElementNames;
 import com.github.ngeor.maven.document.loader.DocumentLoader;
 import com.github.ngeor.maven.document.loader.DocumentLoaderFactory;
 import com.github.ngeor.maven.document.loader.FileDocumentLoader;
+import com.github.ngeor.maven.dom.ElementNames;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;

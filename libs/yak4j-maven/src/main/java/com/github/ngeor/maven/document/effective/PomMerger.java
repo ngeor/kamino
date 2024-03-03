@@ -1,6 +1,6 @@
-package com.github.ngeor.maven.resolve;
+package com.github.ngeor.maven.document.effective;
 
-import com.github.ngeor.maven.ElementNames;
+import com.github.ngeor.maven.dom.ElementNames;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.util.Optional;

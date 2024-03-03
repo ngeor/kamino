@@ -1,4 +1,4 @@
-package com.github.ngeor.maven;
+package com.github.ngeor.maven.dom;
 
 import java.util.Objects;
 import org.apache.commons.lang3.Validate;

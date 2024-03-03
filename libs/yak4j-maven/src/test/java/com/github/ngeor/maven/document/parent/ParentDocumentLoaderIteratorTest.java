@@ -1,4 +1,4 @@
-package com.github.ngeor.maven.resolve.input;
+package com.github.ngeor.maven.document.parent;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -10,7 +10,7 @@ import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-class ParentInputIteratorTest {
+class ParentDocumentLoaderIteratorTest {
     @TempDir
     private Path tempDir;
 
@@ -25,11 +25,11 @@ class ParentInputIteratorTest {
             </project>""");
 
         // act
-        ParentInputIterator parentInputIterator = new ParentInputIterator(
+        ParentDocumentLoaderIterator parentDocumentLoaderIterator = new ParentDocumentLoaderIterator(
                 factory.createDocumentLoader(tempDir.resolve("pom.xml").toFile()), parentLoader);
 
         // assert
-        assertThat(parentInputIterator).toIterable().isEmpty();
+        assertThat(parentDocumentLoaderIterator).toIterable().isEmpty();
     }
 
     @Test
@@ -56,11 +56,11 @@ class ParentInputIteratorTest {
             </project>""");
 
         // act
-        ParentInputIterator parentInputIterator = new ParentInputIterator(
+        ParentDocumentLoaderIterator parentDocumentLoaderIterator = new ParentDocumentLoaderIterator(
                 factory.createDocumentLoader(tempDir.resolve("child.xml").toFile()), parentLoader);
 
         // assert
-        assertThat(parentInputIterator)
+        assertThat(parentDocumentLoaderIterator)
                 .toIterable()
                 .containsExactly(factory.createDocumentLoader(
                         tempDir.resolve("parent.xml").toFile()));
@@ -101,11 +101,11 @@ class ParentInputIteratorTest {
             </project>""");
 
         // act
-        ParentInputIterator parentInputIterator = new ParentInputIterator(
+        ParentDocumentLoaderIterator parentDocumentLoaderIterator = new ParentDocumentLoaderIterator(
                 factory.createDocumentLoader(tempDir.resolve("child.xml").toFile()), parentLoader);
 
         // assert
-        assertThat(parentInputIterator)
+        assertThat(parentDocumentLoaderIterator)
                 .toIterable()
                 .containsExactly(
                         factory.createDocumentLoader(

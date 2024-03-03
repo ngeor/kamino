@@ -1,13 +1,11 @@
 package com.github.ngeor.maven.dom;
 
-import static com.github.ngeor.maven.ElementNames.ARTIFACT_ID;
-import static com.github.ngeor.maven.ElementNames.GROUP_ID;
-import static com.github.ngeor.maven.ElementNames.PARENT;
-import static com.github.ngeor.maven.ElementNames.RELATIVE_PATH;
-import static com.github.ngeor.maven.ElementNames.VERSION;
+import static com.github.ngeor.maven.dom.ElementNames.ARTIFACT_ID;
+import static com.github.ngeor.maven.dom.ElementNames.GROUP_ID;
+import static com.github.ngeor.maven.dom.ElementNames.PARENT;
+import static com.github.ngeor.maven.dom.ElementNames.RELATIVE_PATH;
+import static com.github.ngeor.maven.dom.ElementNames.VERSION;
 
-import com.github.ngeor.maven.MavenCoordinates;
-import com.github.ngeor.maven.ParentPom;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.util.Map;

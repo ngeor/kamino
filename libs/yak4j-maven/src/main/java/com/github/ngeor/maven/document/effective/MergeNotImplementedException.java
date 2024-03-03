@@ -1,4 +1,4 @@
-package com.github.ngeor.maven.resolve;
+package com.github.ngeor.maven.document.effective;
 
 import com.github.ngeor.yak4jdom.ElementWrapper;
 

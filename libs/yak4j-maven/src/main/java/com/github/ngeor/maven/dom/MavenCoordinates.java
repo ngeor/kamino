@@ -1,4 +1,4 @@
-package com.github.ngeor.maven;
+package com.github.ngeor.maven.dom;
 
 import org.apache.commons.lang3.StringUtils;
 

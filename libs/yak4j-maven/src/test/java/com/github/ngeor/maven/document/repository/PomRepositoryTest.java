@@ -1,14 +1,14 @@
-package com.github.ngeor.maven.resolve;
+package com.github.ngeor.maven.document.repository;
 
-import static com.github.ngeor.maven.ElementNames.ARTIFACT_ID;
-import static com.github.ngeor.maven.ElementNames.GROUP_ID;
-import static com.github.ngeor.maven.ElementNames.VERSION;
+import static com.github.ngeor.maven.dom.ElementNames.ARTIFACT_ID;
+import static com.github.ngeor.maven.dom.ElementNames.GROUP_ID;
+import static com.github.ngeor.maven.dom.ElementNames.VERSION;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.github.ngeor.maven.MavenCoordinates;
 import com.github.ngeor.maven.document.loader.DocumentLoader;
 import com.github.ngeor.maven.dom.DomHelper;
+import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.DomRuntimeException;
 import java.io.File;
