@@ -27,7 +27,7 @@ final class SanityCheckedInput extends DocumentLoaderDecorator {
         return result;
     }
 
-    public static DocumentLoaderFactory decorateFactory(DocumentLoaderFactory factory) {
+    public static DocumentLoaderFactory<DocumentLoader> decorateFactory(DocumentLoaderFactory<DocumentLoader> factory) {
         return pomFile -> new SanityCheckedInput(factory.createDocumentLoader(pomFile));
     }
 

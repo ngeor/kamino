@@ -21,13 +21,13 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-public class PomRepository implements DocumentLoaderFactory, ParentLoader, ParentResolver {
+public class PomRepository implements DocumentLoaderFactory<DocumentLoader>, ParentLoader, ParentResolver {
     private final Map<MavenCoordinates, File> coordinatesToFile = new HashMap<>();
     private final Map<CanonicalFile, DocumentWrapper> documentCache = new HashMap<>();
     private final Map<CanonicalFile, DocumentWrapper> propertyCache = new HashMap<>();
     private final Map<CanonicalFile, DocumentLoader> parentResolverCache = new HashMap<>();
 
-    private final DocumentLoaderFactory factory = FileDocumentLoader.asFactory()
+    private final DocumentLoaderFactory<DocumentLoader> factory = FileDocumentLoader.asFactory()
             .decorate(factory -> CachedDocumentDecorator.decorateFactory(factory, documentCache))
             .decorate(SanityCheckedInput::decorateFactory)
             .decorate(factory -> (pomFile -> {

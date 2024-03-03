@@ -19,7 +19,7 @@ public record FileDocumentLoader(File pomFile) implements DocumentLoader {
         return pomFile;
     }
 
-    public static DocumentLoaderFactory asFactory() {
+    public static DocumentLoaderFactory<DocumentLoader> asFactory() {
         return FileDocumentLoader::new;
     }
 }

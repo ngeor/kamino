@@ -24,12 +24,12 @@ public class CachedDocumentDecorator extends DocumentLoaderDecorator {
         return input instanceof CachedDocumentDecorator ? input : new CachedDocumentDecorator(input, cache);
     }
 
-    public static DocumentLoaderFactory decorateFactory(DocumentLoaderFactory factory, DocumentCache cache) {
+    public static DocumentLoaderFactory<DocumentLoader> decorateFactory(DocumentLoaderFactory<DocumentLoader> factory, DocumentCache cache) {
         return pomFile -> CachedDocumentDecorator.decorateDocumentLoader(factory.createDocumentLoader(pomFile), cache);
     }
 
-    public static DocumentLoaderFactory decorateFactory(
-            DocumentLoaderFactory factory, Map<CanonicalFile, DocumentWrapper> cache) {
+    public static DocumentLoaderFactory<DocumentLoader> decorateFactory(
+            DocumentLoaderFactory<DocumentLoader> factory, Map<CanonicalFile, DocumentWrapper> cache) {
         return decorateFactory(factory, cache::computeIfAbsent);
     }
 

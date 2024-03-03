@@ -1,13 +1,13 @@
 package com.github.ngeor.maven.document.loader;
 
 import java.io.File;
-import java.util.function.UnaryOperator;
+import java.util.function.Function;
 
 @FunctionalInterface
-public interface DocumentLoaderFactory {
-    DocumentLoader createDocumentLoader(File pomFile);
+public interface DocumentLoaderFactory<E extends DocumentLoader> {
+    E createDocumentLoader(File pomFile);
 
-    default DocumentLoaderFactory decorate(UnaryOperator<DocumentLoaderFactory> decorator) {
+    default <O extends DocumentLoader> DocumentLoaderFactory<O> decorate(Function<DocumentLoaderFactory<E>, DocumentLoaderFactory<O>> decorator) {
         return decorator.apply(this);
     }
 }

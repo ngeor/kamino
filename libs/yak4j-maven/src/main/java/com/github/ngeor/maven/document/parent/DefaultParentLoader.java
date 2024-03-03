@@ -11,10 +11,10 @@ import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 
 public class DefaultParentLoader implements ParentLoader {
-    private final DocumentLoaderFactory factory;
+    private final DocumentLoaderFactory<DocumentLoader> factory;
     private final LocalRepositoryLocator localRepositoryLocator;
 
-    public DefaultParentLoader(DocumentLoaderFactory factory, LocalRepositoryLocator localRepositoryLocator) {
+    public DefaultParentLoader(DocumentLoaderFactory<DocumentLoader> factory, LocalRepositoryLocator localRepositoryLocator) {
         this.factory = Objects.requireNonNull(factory);
         this.localRepositoryLocator = Objects.requireNonNull(localRepositoryLocator);
     }
