@@ -54,6 +54,21 @@ public class PomRepository implements DocumentLoaderFactory<CanResolveProperties
         DocumentLoader documentLoader = factory.createDocumentLoader(file);
         return new CanResolveProperties() {
             @Override
+            public DocumentWrapper loadDocument() {
+                return documentLoader.loadDocument();
+            }
+
+            @Override
+            public File getPomFile() {
+                return documentLoader.getPomFile();
+            }
+
+            @Override
+            public Optional<DocumentLoader> loadParent() {
+                return parentLoader.loadParent(this);
+            }
+
+            @Override
             public DocumentWrapper effectivePom() {
                 return parentResolver.resolveWithParentRecursively(documentLoader).loadDocument();
             }
@@ -64,16 +79,6 @@ public class PomRepository implements DocumentLoaderFactory<CanResolveProperties
                     new CanonicalFile(file),
                     ignored -> CanResolveProperties.super.resolveProperties()
                 );
-            }
-
-            @Override
-            public DocumentWrapper loadDocument() {
-                return documentLoader.loadDocument();
-            }
-
-            @Override
-            public File getPomFile() {
-                return documentLoader.getPomFile();
             }
         };
     }
