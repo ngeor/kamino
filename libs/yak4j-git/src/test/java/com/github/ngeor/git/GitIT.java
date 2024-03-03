@@ -42,21 +42,6 @@ class GitIT {
         Files.writeString(directory.toPath().resolve("README.md"), "My project");
         git.addAll();
         git.commit("Adding readme file");
-        tag("v1.0.0");
-
-        Files.writeString(directory.toPath().resolve("CHANGELOG.md"), "My changelog");
-        git.addAll();
-        git.commit("Adding changelog file");
-        tag("v1.1.0");
-
-        assertThat(git.getMostRecentTag("v")).contains(new Tag("v1.1.0", null));
-    }
-
-    @Test
-    void testGetMostRecentTagWithDate() throws IOException, ProcessFailedException {
-        Files.writeString(directory.toPath().resolve("README.md"), "My project");
-        git.addAll();
-        git.commit("Adding readme file");
         tag("v9.0.0");
 
         Files.writeString(directory.toPath().resolve("CHANGELOG.md"), "My changelog");
@@ -64,7 +49,7 @@ class GitIT {
         git.commit("Adding changelog file");
         tag("v10.0.0");
 
-        Tag tag = git.getMostRecentTagWithDate("v").orElseThrow();
+        Tag tag = git.getMostRecentTag("v").orElseThrow();
 
         assertThat(tag.name()).isEqualTo("v10.0.0");
         assertThat(OffsetDateTime.parse(tag.date(), DateTimeFormatter.ofPattern("E MMM d HH:mm:ss yyyy Z", Locale.US)))

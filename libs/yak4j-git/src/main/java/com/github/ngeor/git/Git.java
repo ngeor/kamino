@@ -8,7 +8,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Stream;
 import org.apache.commons.lang3.Validate;
 
@@ -115,24 +114,29 @@ public final class Git {
      * @return The most recent tag.
      */
     public Optional<Tag> getMostRecentTag(String prefix) throws ProcessFailedException {
-        return getMostRecentTag(prefix, null, s -> new Tag(s, null));
+        return getTags(prefix, false).findFirst();
     }
 
-    public Optional<Tag> getMostRecentTagWithDate(String prefix) throws ProcessFailedException {
-        return getMostRecentTag(prefix, "--format=%(refname:strip=2),%(creatordate)", s -> {
-            String[] parts = s.split(",");
-            return new Tag(parts[0], parts[1]);
-        });
-    }
-
-    private Optional<Tag> getMostRecentTag(String prefix, String format, Function<String, Tag> mapper)
-            throws ProcessFailedException {
-        List<String> args = new ArrayList<>(Arrays.asList("tag", "-l", prefix + "*", "--sort=-version:refname"));
-        if (format != null) {
-            args.add(format);
+    public Stream<Tag> getTags(String prefix, boolean stripPrefix) throws ProcessFailedException {
+        List<String> args = new ArrayList<>(List.of("tag", "-l"));
+        boolean usePrefix = prefix != null && !prefix.isBlank();
+        if (usePrefix) {
+            if (prefix.endsWith("*")) {
+                throw new IllegalArgumentException("prefix cannot end in *");
+            }
+            args.add(prefix + "*");
         }
+        args.addAll(List.of("--sort=-version:refname", "--format=%(refname:strip=2),%(creatordate)"));
         String output = processHelper.run(args);
-        return output.lines().map(mapper).findFirst();
+        return output.lines().map(line -> {
+            String[] parts = line.split(",");
+            String name = parts[0];
+            if (usePrefix && stripPrefix && name.startsWith(prefix)) {
+                name = name.substring(prefix.length());
+            }
+            String date = parts[1];
+            return new Tag(name, date);
+        });
     }
 
     public void add(String file) throws ProcessFailedException {
