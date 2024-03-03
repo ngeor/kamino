@@ -8,6 +8,11 @@ import java.util.function.Function;
 public interface DocumentLoaderFactory<E extends DocumentLoader> {
     E createDocumentLoader(File pomFile);
 
+    default E createDocumentLoader(Path pomPath) {
+        return createDocumentLoader(pomPath.toFile());
+    }
+
+    // TODO use this more in the tests
     default E createDocumentLoader(Path directory, String filename) {
         return createDocumentLoader(directory.resolve(filename).toFile());
     }

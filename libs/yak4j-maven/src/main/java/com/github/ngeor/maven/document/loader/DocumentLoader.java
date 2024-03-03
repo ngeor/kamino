@@ -5,13 +5,11 @@ import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.maven.dom.ParentPom;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.File;
-import java.util.function.UnaryOperator;
 import org.apache.commons.lang3.StringUtils;
 
 public interface DocumentLoader {
 
     // TODO return an immutable version of DocumentWrapper
-    // TODO add a method that indicates if the document is already loaded or not
     DocumentWrapper loadDocument();
 
     /**
@@ -20,7 +18,6 @@ public interface DocumentLoader {
      */
     File getPomFile();
 
-    // TODO move to a different interface where DocumentLoader is a no-op
     default MavenCoordinates coordinates() {
         MavenCoordinates coordinates = DomHelper.getCoordinates(loadDocument());
         if (coordinates.isValid()) {
@@ -37,12 +34,5 @@ public interface DocumentLoader {
                 StringUtils.defaultIfBlank(coordinates.groupId(), parentCoordinates.groupId()),
                 coordinates.artifactId(),
                 StringUtils.defaultIfBlank(coordinates.version(), parentCoordinates.version()));
-    }
-
-    // TODO make it a decorator, do not actually load the document here
-    default DocumentLoader mapDocument(UnaryOperator<DocumentWrapper> mapper) {
-        DocumentWrapper document = loadDocument();
-        DocumentWrapper mapped = mapper.apply(document);
-        return document == mapped ? this : new PreloadedDocumentLoader(mapped, getPomFile());
     }
 }

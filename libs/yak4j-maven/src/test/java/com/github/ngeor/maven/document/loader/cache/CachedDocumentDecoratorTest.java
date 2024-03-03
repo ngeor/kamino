@@ -84,11 +84,11 @@ class CachedDocumentDecoratorTest {
                         <relativePath>parent.xml</relativePath>
                     </parent>
                 </project>""");
-            DocumentWrapper parent1 = factory.createDocumentLoader(pomXmlPath.toFile())
+            DocumentWrapper parent1 = factory.createDocumentLoader(pomXmlPath)
                     .loadParent()
                     .orElseThrow()
                     .loadDocument();
-            DocumentWrapper parent2 = factory.createDocumentLoader(pomXmlPath.toFile())
+            DocumentWrapper parent2 = factory.createDocumentLoader(pomXmlPath)
                     .loadParent()
                     .orElseThrow()
                     .loadDocument();
