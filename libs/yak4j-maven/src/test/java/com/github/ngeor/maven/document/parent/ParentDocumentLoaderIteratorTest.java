@@ -2,7 +2,6 @@ package com.github.ngeor.maven.document.parent;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.github.ngeor.maven.document.loader.DocumentLoader;
 import com.github.ngeor.maven.document.loader.DocumentLoaderFactory;
 import com.github.ngeor.maven.document.loader.FileDocumentLoader;
 import java.io.IOException;
@@ -15,8 +14,13 @@ class ParentDocumentLoaderIteratorTest {
     @TempDir
     private Path tempDir;
 
-    private final DocumentLoaderFactory<DocumentLoader> factory = FileDocumentLoader.asFactory();
-    private final ParentLoader parentLoader = new DefaultParentLoader(factory, () -> null);
+    private final LocalRepositoryLocator localRepositoryLocator = () -> {
+        throw new IllegalStateException("oops");
+    };
+    private final ParentPomFinder parentPomFinder = new DefaultParentPomFinder(localRepositoryLocator);
+
+    private final DocumentLoaderFactory<CanLoadParent> factory =
+            FileDocumentLoader.asFactory().decorate(f -> new CanLoadParentFactory(f, parentPomFinder));
 
     @Test
     void noParent() throws IOException {
@@ -24,8 +28,7 @@ class ParentDocumentLoaderIteratorTest {
         Files.writeString(tempDir.resolve("pom.xml"), """
             <project>
             </project>""");
-        CanLoadParent next = new CanLoadParentDecorator(
-                factory.createDocumentLoader(tempDir.resolve("pom.xml").toFile()), parentLoader);
+        CanLoadParent next = factory.createDocumentLoader(tempDir, "pom.xml");
 
         // act
         ParentDocumentLoaderIterator parentDocumentLoaderIterator = new ParentDocumentLoaderIterator(next);
@@ -56,8 +59,7 @@ class ParentDocumentLoaderIteratorTest {
                 <artifactId>b</artifactId>
                 <version>1</version>
             </project>""");
-        CanLoadParent next = new CanLoadParentDecorator(
-                factory.createDocumentLoader(tempDir.resolve("child.xml").toFile()), parentLoader);
+        CanLoadParent next = factory.createDocumentLoader(tempDir, "child.xml");
 
         // act
         ParentDocumentLoaderIterator parentDocumentLoaderIterator = new ParentDocumentLoaderIterator(next);
@@ -65,10 +67,7 @@ class ParentDocumentLoaderIteratorTest {
         // assert
         assertThat(parentDocumentLoaderIterator)
                 .toIterable()
-                .containsExactly(new CanLoadParentDecorator(
-                        factory.createDocumentLoader(
-                                tempDir.resolve("parent.xml").toFile()),
-                        parentLoader));
+                .containsExactly(factory.createDocumentLoader(tempDir, "parent.xml"));
     }
 
     @Test
@@ -104,8 +103,7 @@ class ParentDocumentLoaderIteratorTest {
                 <artifactId>y</artifactId>
                 <version>2</version>
             </project>""");
-        CanLoadParent next = new CanLoadParentDecorator(
-                factory.createDocumentLoader(tempDir.resolve("child.xml").toFile()), parentLoader);
+        CanLoadParent next = factory.createDocumentLoader(tempDir, "child.xml");
 
         // act
         ParentDocumentLoaderIterator parentDocumentLoaderIterator = new ParentDocumentLoaderIterator(next);
@@ -114,13 +112,7 @@ class ParentDocumentLoaderIteratorTest {
         assertThat(parentDocumentLoaderIterator)
                 .toIterable()
                 .containsExactly(
-                        new CanLoadParentDecorator(
-                                factory.createDocumentLoader(
-                                        tempDir.resolve("parent.xml").toFile()),
-                                parentLoader),
-                        new CanLoadParentDecorator(
-                                factory.createDocumentLoader(
-                                        tempDir.resolve("grandparent.xml").toFile()),
-                                parentLoader));
+                        factory.createDocumentLoader(tempDir, "parent.xml"),
+                        factory.createDocumentLoader(tempDir, "grandparent.xml"));
     }
 }

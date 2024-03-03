@@ -1,11 +1,10 @@
 package com.github.ngeor.maven.document.parent;
 
-import com.github.ngeor.maven.document.loader.DocumentLoader;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public class ParentDocumentLoaderIterator implements Iterator<DocumentLoader> {
+public class ParentDocumentLoaderIterator implements Iterator<CanLoadParent> {
     private CanLoadParent next;
     private boolean valueTaken = true;
 
@@ -20,7 +19,7 @@ public class ParentDocumentLoaderIterator implements Iterator<DocumentLoader> {
     }
 
     @Override
-    public DocumentLoader next() {
+    public CanLoadParent next() {
         check();
         valueTaken = true;
         if (next == null) {

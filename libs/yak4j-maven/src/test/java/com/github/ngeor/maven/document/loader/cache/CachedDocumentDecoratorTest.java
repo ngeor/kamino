@@ -4,8 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.ngeor.maven.document.loader.DocumentLoaderFactory;
 import com.github.ngeor.maven.document.loader.FileDocumentLoader;
-import com.github.ngeor.maven.document.parent.DefaultParentLoader;
+import com.github.ngeor.maven.document.parent.CanLoadParent;
+import com.github.ngeor.maven.document.parent.CanLoadParentFactory;
+import com.github.ngeor.maven.document.parent.DefaultParentPomFinder;
 import com.github.ngeor.maven.document.parent.LocalRepositoryLocator;
+import com.github.ngeor.maven.document.parent.ParentPomFinder;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.File;
 import java.io.IOException;
@@ -17,12 +20,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 class CachedDocumentDecoratorTest {
-    private final DocumentLoaderFactory factory =
-            FileDocumentLoader.asFactory().decorate(f -> CachedDocumentDecorator.decorateFactory(f, new HashMap<>()));
     private final LocalRepositoryLocator localRepositoryLocator = () -> {
         throw new IllegalStateException("oops");
     };
-    private final DefaultParentLoader parentLoader = new DefaultParentLoader(factory, localRepositoryLocator);
+    private final ParentPomFinder parentPomFinder = new DefaultParentPomFinder(localRepositoryLocator);
+
+    private final DocumentLoaderFactory<CanLoadParent> factory = FileDocumentLoader.asFactory()
+            .decorate(f -> CachedDocumentDecorator.decorateFactory(f, new HashMap<>()))
+            .decorate(f -> new CanLoadParentFactory(f, parentPomFinder));
 
     @TempDir
     private Path tempDir;
@@ -79,12 +84,12 @@ class CachedDocumentDecoratorTest {
                         <relativePath>parent.xml</relativePath>
                     </parent>
                 </project>""");
-            DocumentWrapper parent1 = parentLoader
-                    .loadParent(factory.createDocumentLoader(pomXmlPath.toFile()))
+            DocumentWrapper parent1 = factory.createDocumentLoader(pomXmlPath.toFile())
+                    .loadParent()
                     .orElseThrow()
                     .loadDocument();
-            DocumentWrapper parent2 = parentLoader
-                    .loadParent(factory.createDocumentLoader(pomXmlPath.toFile()))
+            DocumentWrapper parent2 = factory.createDocumentLoader(pomXmlPath.toFile())
+                    .loadParent()
                     .orElseThrow()
                     .loadDocument();
             assertThat(parent1).isNotNull().isSameAs(parent2);

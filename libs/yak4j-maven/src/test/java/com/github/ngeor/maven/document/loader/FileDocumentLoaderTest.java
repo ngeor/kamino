@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 class FileDocumentLoaderTest {
-    private final DocumentLoaderFactory factory = FileDocumentLoader.asFactory();
+    private final DocumentLoaderFactory<DocumentLoader> factory = FileDocumentLoader.asFactory();
 
     @Nested
     class Document {

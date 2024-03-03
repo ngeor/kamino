@@ -2,7 +2,6 @@ package com.github.ngeor;
 
 import com.github.ngeor.git.Git;
 import com.github.ngeor.git.Tag;
-import com.github.ngeor.maven.document.loader.DocumentLoader;
 import com.github.ngeor.maven.document.parent.CanLoadParent;
 import com.github.ngeor.maven.document.parent.ParentDocumentLoaderIterator;
 import com.github.ngeor.maven.document.property.CanResolveProperties;
@@ -286,7 +285,7 @@ public final class TemplateGenerator {
     // TODO perhaps a way to check that it is not parent resolved or property resolved
     private Stream<String> parentPomSnapshots(CanLoadParent loadedInput) {
         ParentDocumentLoaderIterator parentDocumentLoaderIterator = new ParentDocumentLoaderIterator(loadedInput);
-        Iterable<DocumentLoader> iterable = () -> parentDocumentLoaderIterator;
+        Iterable<CanLoadParent> iterable = () -> parentDocumentLoaderIterator;
         return StreamSupport.stream(iterable.spliterator(), false)
                 .filter(i -> i.coordinates().version().endsWith("-SNAPSHOT"))
                 .flatMap(i -> findModuleName(i.coordinates()).stream());

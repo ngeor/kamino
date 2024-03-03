@@ -8,7 +8,6 @@ import com.github.ngeor.maven.document.loader.DocumentLoaderFactory;
 import com.github.ngeor.maven.document.loader.FileDocumentLoader;
 import com.github.ngeor.maven.dom.ElementNames;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,24 +18,26 @@ import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class DefaultParentLoaderTest {
+class DefaultParentPomFinderTest {
     @TempDir
     private Path localRepository;
 
-    private final DocumentLoaderFactory factory = FileDocumentLoader.asFactory();
+    private final DocumentLoaderFactory<DocumentLoader> factory = FileDocumentLoader.asFactory();
     private final LocalRepositoryLocator localRepositoryLocator = () -> localRepository;
-    private final DefaultParentLoader parentLoader = new DefaultParentLoader(factory, localRepositoryLocator);
+    private final DefaultParentPomFinder parentPomFinder = new DefaultParentPomFinder(localRepositoryLocator);
 
     @Nested
     class LoadParent {
         @TempDir
         private File rootDir;
 
+        private File rootPom;
+
         private File childPom;
 
         @BeforeEach
         void beforeEach() throws IOException {
-            File rootPom = new File(rootDir, "pom.xml");
+            rootPom = new File(rootDir, "pom.xml");
             File childDir = new File(rootDir, "foo");
             childPom = new File(childDir, "pom.xml");
             Files.writeString(rootPom.toPath(), """
@@ -60,34 +61,10 @@ class DefaultParentLoaderTest {
             DocumentLoader child = factory.createDocumentLoader(childPom);
 
             // act
-            DocumentLoader parent = parentLoader.loadParent(child).orElseThrow();
+            File parent = parentPomFinder.findParentPom(child).orElseThrow();
 
             // assert
-            assertThat(parent).isNotNull();
-            assertThat(parent.loadDocument().getDocumentElement().getTextContent())
-                    .isEqualTo("hello");
-        }
-
-        @Test
-        void loadParentTwice() throws IOException {
-            // arrange
-            Files.writeString(
-                    childPom.toPath(),
-                    """
-        <project>
-            <parent>
-            </parent>
-        </project>""");
-            DocumentLoader child = factory.createDocumentLoader(childPom);
-
-            // act
-            DocumentLoader parent1 = parentLoader.loadParent(child).orElseThrow();
-            DocumentLoader parent2 = parentLoader.loadParent(child).orElseThrow();
-
-            // assert
-            assertThat(parent1).isNotNull();
-            assertThat(parent2).isNotNull();
-            assertThat(parent1).isNotSameAs(parent2);
+            assertThat(parent.getCanonicalFile()).isEqualTo(rootPom.getCanonicalFile());
         }
 
         @Test
@@ -98,11 +75,8 @@ class DefaultParentLoaderTest {
                 </project>""");
             DocumentLoader child = factory.createDocumentLoader(childPom);
 
-            // act
-            DocumentLoader parent = parentLoader.loadParent(child).orElse(null);
-
-            // assert
-            assertThat(parent).isNull();
+            // act and assert
+            assertThat(parentPomFinder.findParentPom(child)).isEmpty();
         }
     }
 
@@ -111,6 +85,7 @@ class DefaultParentLoaderTest {
         @TempDir
         private File childDir;
 
+        private File rootPom;
         private File childPom;
 
         @BeforeEach
@@ -121,7 +96,7 @@ class DefaultParentLoaderTest {
                     .resolve("foo")
                     .resolve("1.0");
             Files.createDirectories(rootPomDirectory);
-            File rootPom = rootPomDirectory.resolve("foo-1.0.pom").toFile();
+            rootPom = rootPomDirectory.resolve("foo-1.0.pom").toFile();
             Files.writeString(rootPom.toPath(), """
                 <project>hello local repository</project>""");
 
@@ -145,12 +120,10 @@ class DefaultParentLoaderTest {
             DocumentLoader child = factory.createDocumentLoader(childPom);
 
             // act
-            DocumentLoader parent = parentLoader.loadParent(child).orElseThrow();
+            File parent = parentPomFinder.findParentPom(child).orElseThrow();
 
             // assert
-            assertThat(parent).isNotNull();
-            assertThat(parent.loadDocument().getDocumentElement().getTextContent())
-                    .isEqualTo("hello local repository");
+            assertThat(parent).isEqualTo(rootPom);
         }
 
         @Test
@@ -169,12 +142,10 @@ class DefaultParentLoaderTest {
             DocumentLoader child = factory.createDocumentLoader(childPom);
 
             // act
-            DocumentLoader parent = parentLoader.loadParent(child).orElseThrow();
+            File parent = parentPomFinder.findParentPom(child).orElseThrow();
 
             // assert
-            assertThat(parent).isNotNull();
-            assertThat(parent.loadDocument().getDocumentElement().getTextContent())
-                    .isEqualTo("hello local repository");
+            assertThat(parent).isEqualTo(rootPom);
         }
 
         @ParameterizedTest
@@ -195,30 +166,8 @@ class DefaultParentLoaderTest {
             DocumentLoader child = factory.createDocumentLoader(childPom);
 
             // act and assert
-            assertThatThrownBy(() -> parentLoader.loadParent(child))
+            assertThatThrownBy(() -> parentPomFinder.findParentPom(child))
                     .hasMessage("%s is missing from parent coordinates", elementName);
-        }
-
-        @Test
-        void fileNotFoundHappensOnlyOnLoadDocument() throws IOException {
-            // arrange
-            Files.writeString(
-                    childPom.toPath(),
-                    """
-        <project>
-            <parent>
-                <groupId>com.acme</groupId>
-                <artifactId>foo</artifactId>
-                <version>2.0</version>
-            </parent>
-        </project>""");
-            DocumentLoader child = factory.createDocumentLoader(childPom);
-            DocumentLoader parent = parentLoader.loadParent(child).orElseThrow();
-
-            // act and assert
-            assertThatThrownBy(parent::loadDocument)
-                    .hasCauseInstanceOf(FileNotFoundException.class)
-                    .hasMessageContaining("foo-2.0.pom");
         }
     }
 }

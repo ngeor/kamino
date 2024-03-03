@@ -1,7 +1,6 @@
 package com.github.ngeor.maven.document.parent;
 
 import com.github.ngeor.maven.document.loader.DocumentLoader;
-import com.github.ngeor.maven.document.loader.DocumentLoaderFactory;
 import com.github.ngeor.maven.dom.DomHelper;
 import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.maven.dom.ParentPom;
@@ -10,21 +9,17 @@ import java.util.Objects;
 import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 
-public class DefaultParentLoader implements ParentLoader {
-    private final DocumentLoaderFactory<DocumentLoader> factory;
+public final class DefaultParentPomFinder implements ParentPomFinder {
     private final LocalRepositoryLocator localRepositoryLocator;
 
-    public DefaultParentLoader(
-            DocumentLoaderFactory<DocumentLoader> factory, LocalRepositoryLocator localRepositoryLocator) {
-        this.factory = Objects.requireNonNull(factory);
-        this.localRepositoryLocator = Objects.requireNonNull(localRepositoryLocator);
+    public DefaultParentPomFinder(LocalRepositoryLocator localRepositoryLocator) {
+        Objects.requireNonNull(localRepositoryLocator);
+        this.localRepositoryLocator = localRepositoryLocator;
     }
 
     @Override
-    public Optional<DocumentLoader> loadParent(DocumentLoader input) {
-        return DomHelper.getParentPom(input.loadDocument())
-                .map(parentPom -> findParentPomXmlFile(input, parentPom))
-                .map(factory::createDocumentLoader);
+    public Optional<File> findParentPom(DocumentLoader input) {
+        return DomHelper.getParentPom(input.loadDocument()).map(parentPom -> findParentPomXmlFile(input, parentPom));
     }
 
     // NOTE: if this is expensive, make it protected and cache it with a decorator
@@ -51,5 +46,27 @@ public class DefaultParentLoader implements ParentLoader {
                 .resolve(coordinates.version())
                 .resolve(coordinates.artifactId() + "-" + coordinates.version() + ".pom")
                 .toFile();
+    }
+
+    public LocalRepositoryLocator localRepositoryLocator() {
+        return localRepositoryLocator;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (obj == null || obj.getClass() != this.getClass()) return false;
+        var that = (DefaultParentPomFinder) obj;
+        return Objects.equals(this.localRepositoryLocator, that.localRepositoryLocator);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(localRepositoryLocator);
+    }
+
+    @Override
+    public String toString() {
+        return "DefaultParentLoader[" + "localRepositoryLocator=" + localRepositoryLocator + ']';
     }
 }
