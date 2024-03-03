@@ -42,8 +42,7 @@ class PomRepositoryTest {
             } catch (IOException e) {
                 throw new UncheckedIOException(e);
             }
-            return pomRepository.createDocumentLoader(
-                    tempDir.resolve("pom.xml").toFile());
+            return pomRepository.createDocumentLoader(tempDir.resolve("pom.xml").toFile());
         }
 
         @ParameterizedTest
@@ -129,8 +128,7 @@ class PomRepositoryTest {
                     </project>"""
                             .replace(lineToRemove, "");
             EffectivePom effectivePom = resolveWithParentRecursively(childContents);
-            assertThatThrownBy(effectivePom::effectivePom)
-                    .hasMessageContaining("is missing from parent coordinates");
+            assertThatThrownBy(effectivePom::effectivePom).hasMessageContaining("is missing from parent coordinates");
         }
 
         @Test
@@ -166,9 +164,7 @@ class PomRepositoryTest {
             assertThat(document.getDocumentElement().firstElement("parent"))
                     .as("Resolved document should not have parent element anymore")
                     .isEmpty();
-            assertThat(loadResult.loadDocument()
-                            .getDocumentElement()
-                            .firstElement("parent"))
+            assertThat(loadResult.loadDocument().getDocumentElement().firstElement("parent"))
                     .as("Unresolved child document should still have parent element")
                     .isPresent();
             assertThat(pomRepository
@@ -176,8 +172,7 @@ class PomRepositoryTest {
                             .loadDocument())
                     .as("Unresolved and resolved parent document should point to the same document")
                     .isSameAs(pomRepository
-                            .createDocumentLoader(
-                                    tempDir.resolve("parent.xml").toFile())
+                            .createDocumentLoader(tempDir.resolve("parent.xml").toFile())
                             .effectivePom());
         }
     }
@@ -200,16 +195,13 @@ class PomRepositoryTest {
 
             // act
             File pomXmlFile = pomXmlPath.toFile();
-            DocumentWrapper doc =
-                    pomRepository.createDocumentLoader(pomXmlFile).resolveProperties();
+            DocumentWrapper doc = pomRepository.createDocumentLoader(pomXmlFile).resolveProperties();
 
             // assert
             assertThat(doc)
                     .isNotNull()
                     .isSameAs(pomRepository.createDocumentLoader(pomXmlFile).loadDocument())
-                    .isSameAs(pomRepository
-                            .createDocumentLoader(pomXmlFile)
-                            .loadDocument());
+                    .isSameAs(pomRepository.createDocumentLoader(pomXmlFile).loadDocument());
         }
 
         @Test
@@ -238,9 +230,7 @@ class PomRepositoryTest {
                     .isNotNull()
                     .isSameAs(doc2)
                     .isSameAs(pomRepository.createDocumentLoader(pomXmlFile).loadDocument())
-                    .isSameAs(pomRepository
-                            .createDocumentLoader(pomXmlFile)
-                            .loadDocument());
+                    .isSameAs(pomRepository.createDocumentLoader(pomXmlFile).loadDocument());
         }
 
         @Test
@@ -262,16 +252,13 @@ class PomRepositoryTest {
 
             // act
             File pomXmlFile = pomXmlPath.toFile();
-            DocumentWrapper doc =
-                    pomRepository.createDocumentLoader(pomXmlFile).resolveProperties();
+            DocumentWrapper doc = pomRepository.createDocumentLoader(pomXmlFile).resolveProperties();
 
             // assert
             assertThat(doc)
                     .isNotNull()
                     .isSameAs(pomRepository.createDocumentLoader(pomXmlFile).loadDocument())
-                    .isSameAs(pomRepository
-                            .createDocumentLoader(pomXmlFile)
-                            .loadDocument());
+                    .isSameAs(pomRepository.createDocumentLoader(pomXmlFile).loadDocument());
         }
 
         @Test
@@ -294,8 +281,7 @@ class PomRepositoryTest {
 
             // act
             File pomXmlFile = pomXmlPath.toFile();
-            DocumentWrapper doc =
-                    pomRepository.createDocumentLoader(pomXmlFile).resolveProperties();
+            DocumentWrapper doc = pomRepository.createDocumentLoader(pomXmlFile).resolveProperties();
 
             // assert
             assertThat(doc).isNotNull();
@@ -406,8 +392,7 @@ class PomRepositoryTest {
             assertThat(pomRepository.createDocumentLoader(new File(tempDir.toFile(), "pom.xml")))
                     .isNotNull();
             for (String module : List.of("parent", "child", "grandparent")) {
-                assertThat(pomRepository.createDocumentLoader(
-                                new File(new File(tempDir.toFile(), module), "pom.xml")))
+                assertThat(pomRepository.createDocumentLoader(new File(new File(tempDir.toFile(), module), "pom.xml")))
                         .isNotNull();
             }
         }

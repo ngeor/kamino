@@ -17,7 +17,7 @@ public interface CanResolveProperties extends EffectivePom {
         Map<String, String> resolvedProperties = PropertyResolver.resolve(unresolvedProperties);
         DocumentWrapper result = document.deepClone();
         boolean hadChanges = result.getDocumentElement()
-            .transformTextNodes(text -> PropertyResolver.resolve(text, resolvedProperties::get));
+                .transformTextNodes(text -> PropertyResolver.resolve(text, resolvedProperties::get));
         return hadChanges ? result : document;
     }
 }

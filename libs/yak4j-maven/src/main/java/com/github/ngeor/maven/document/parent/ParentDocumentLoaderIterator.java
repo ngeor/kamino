@@ -6,13 +6,11 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class ParentDocumentLoaderIterator implements Iterator<DocumentLoader> {
-    private DocumentLoader next;
-    private final ParentLoader parentLoader;
+    private CanLoadParent next;
     private boolean valueTaken = true;
 
-    public ParentDocumentLoaderIterator(DocumentLoader next, ParentLoader parentLoader) {
+    public ParentDocumentLoaderIterator(CanLoadParent next) {
         this.next = Objects.requireNonNull(next);
-        this.parentLoader = Objects.requireNonNull(parentLoader);
     }
 
     @Override
@@ -34,7 +32,7 @@ public class ParentDocumentLoaderIterator implements Iterator<DocumentLoader> {
     private void check() {
         if (valueTaken) {
             valueTaken = false;
-            next = parentLoader.loadParent(next).orElse(null);
+            next = next.loadParent().orElse(null);
         }
     }
 }

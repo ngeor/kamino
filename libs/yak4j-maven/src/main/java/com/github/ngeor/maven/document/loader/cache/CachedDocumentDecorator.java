@@ -24,7 +24,8 @@ public class CachedDocumentDecorator extends DocumentLoaderDecorator {
         return input instanceof CachedDocumentDecorator ? input : new CachedDocumentDecorator(input, cache);
     }
 
-    public static DocumentLoaderFactory<DocumentLoader> decorateFactory(DocumentLoaderFactory<DocumentLoader> factory, DocumentCache cache) {
+    public static DocumentLoaderFactory<DocumentLoader> decorateFactory(
+            DocumentLoaderFactory<DocumentLoader> factory, DocumentCache cache) {
         return pomFile -> CachedDocumentDecorator.decorateDocumentLoader(factory.createDocumentLoader(pomFile), cache);
     }
 

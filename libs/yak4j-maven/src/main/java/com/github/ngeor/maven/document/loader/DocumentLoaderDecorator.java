@@ -23,7 +23,7 @@ public abstract class DocumentLoaderDecorator implements DocumentLoader {
 
     @Override
     public String toString() {
-        return String.format("%s %s", getClass().getSimpleName(), decorated);
+        return String.format("%s[%s]", getClass().getSimpleName(), decorated);
     }
 
     protected DocumentLoader getDecorated() {

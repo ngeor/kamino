@@ -125,8 +125,7 @@ public record MavenReleaser(File monorepoRoot, String path, FormatOptions format
     private void replacePomWithEffectivePom(String tag) {
         PomRepository pomRepository = new PomRepository();
         File pomFile = modulePomFile();
-        DocumentWrapper document =
-                pomRepository.createDocumentLoader(pomFile).effectivePom();
+        DocumentWrapper document = pomRepository.createDocumentLoader(pomFile).effectivePom();
         Set<String> elementsToRemove = Set.of(ElementNames.MODULES, ElementNames.PARENT);
         document.getDocumentElement().removeChildNodesByName(elementsToRemove::contains);
         document.getDocumentElement()

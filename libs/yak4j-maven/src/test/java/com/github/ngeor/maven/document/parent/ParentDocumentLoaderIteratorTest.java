@@ -2,6 +2,7 @@ package com.github.ngeor.maven.document.parent;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.github.ngeor.maven.document.loader.DocumentLoader;
 import com.github.ngeor.maven.document.loader.DocumentLoaderFactory;
 import com.github.ngeor.maven.document.loader.FileDocumentLoader;
 import java.io.IOException;
@@ -14,7 +15,7 @@ class ParentDocumentLoaderIteratorTest {
     @TempDir
     private Path tempDir;
 
-    private final DocumentLoaderFactory factory = FileDocumentLoader.asFactory();
+    private final DocumentLoaderFactory<DocumentLoader> factory = FileDocumentLoader.asFactory();
     private final ParentLoader parentLoader = new DefaultParentLoader(factory, () -> null);
 
     @Test
@@ -23,10 +24,11 @@ class ParentDocumentLoaderIteratorTest {
         Files.writeString(tempDir.resolve("pom.xml"), """
             <project>
             </project>""");
+        CanLoadParent next = new CanLoadParentDecorator(
+                factory.createDocumentLoader(tempDir.resolve("pom.xml").toFile()), parentLoader);
 
         // act
-        ParentDocumentLoaderIterator parentDocumentLoaderIterator = new ParentDocumentLoaderIterator(
-                factory.createDocumentLoader(tempDir.resolve("pom.xml").toFile()), parentLoader);
+        ParentDocumentLoaderIterator parentDocumentLoaderIterator = new ParentDocumentLoaderIterator(next);
 
         // assert
         assertThat(parentDocumentLoaderIterator).toIterable().isEmpty();
@@ -54,16 +56,19 @@ class ParentDocumentLoaderIteratorTest {
                 <artifactId>b</artifactId>
                 <version>1</version>
             </project>""");
+        CanLoadParent next = new CanLoadParentDecorator(
+                factory.createDocumentLoader(tempDir.resolve("child.xml").toFile()), parentLoader);
 
         // act
-        ParentDocumentLoaderIterator parentDocumentLoaderIterator = new ParentDocumentLoaderIterator(
-                factory.createDocumentLoader(tempDir.resolve("child.xml").toFile()), parentLoader);
+        ParentDocumentLoaderIterator parentDocumentLoaderIterator = new ParentDocumentLoaderIterator(next);
 
         // assert
         assertThat(parentDocumentLoaderIterator)
                 .toIterable()
-                .containsExactly(factory.createDocumentLoader(
-                        tempDir.resolve("parent.xml").toFile()));
+                .containsExactly(new CanLoadParentDecorator(
+                        factory.createDocumentLoader(
+                                tempDir.resolve("parent.xml").toFile()),
+                        parentLoader));
     }
 
     @Test
@@ -99,18 +104,23 @@ class ParentDocumentLoaderIteratorTest {
                 <artifactId>y</artifactId>
                 <version>2</version>
             </project>""");
+        CanLoadParent next = new CanLoadParentDecorator(
+                factory.createDocumentLoader(tempDir.resolve("child.xml").toFile()), parentLoader);
 
         // act
-        ParentDocumentLoaderIterator parentDocumentLoaderIterator = new ParentDocumentLoaderIterator(
-                factory.createDocumentLoader(tempDir.resolve("child.xml").toFile()), parentLoader);
+        ParentDocumentLoaderIterator parentDocumentLoaderIterator = new ParentDocumentLoaderIterator(next);
 
         // assert
         assertThat(parentDocumentLoaderIterator)
                 .toIterable()
                 .containsExactly(
-                        factory.createDocumentLoader(
-                                tempDir.resolve("parent.xml").toFile()),
-                        factory.createDocumentLoader(
-                                tempDir.resolve("grandparent.xml").toFile()));
+                        new CanLoadParentDecorator(
+                                factory.createDocumentLoader(
+                                        tempDir.resolve("parent.xml").toFile()),
+                                parentLoader),
+                        new CanLoadParentDecorator(
+                                factory.createDocumentLoader(
+                                        tempDir.resolve("grandparent.xml").toFile()),
+                                parentLoader));
     }
 }

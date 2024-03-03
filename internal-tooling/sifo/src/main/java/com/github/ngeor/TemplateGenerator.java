@@ -3,6 +3,7 @@ package com.github.ngeor;
 import com.github.ngeor.git.Git;
 import com.github.ngeor.git.Tag;
 import com.github.ngeor.maven.document.loader.DocumentLoader;
+import com.github.ngeor.maven.document.parent.CanLoadParent;
 import com.github.ngeor.maven.document.parent.ParentDocumentLoaderIterator;
 import com.github.ngeor.maven.document.property.CanResolveProperties;
 import com.github.ngeor.maven.document.repository.PomRepository;
@@ -145,12 +146,11 @@ public final class TemplateGenerator {
                 .map(v -> "1.8".equals(v) ? "8" : v)
                 .orElse(DEFAULT_JAVA_VERSION);
 
-        DocumentLoader loadedInput = pomRepository.createDocumentLoader(modulePomXmlFile(module));
         SortedSet<String> internalDependencies = Stream.concat(
                         // internal dependencies of module
                         internalDependenciesRecursively(coordinates),
                         // register also any internal snapshot parent poms as dependencies for this purpose
-                        parentPomSnapshots(loadedInput))
+                        parentPomSnapshots(input))
                 .collect(Collectors.toCollection(TreeSet::new));
 
         String buildCommand;
@@ -284,9 +284,8 @@ public final class TemplateGenerator {
 
     // must not be parent resolved or property resolved
     // TODO perhaps a way to check that it is not parent resolved or property resolved
-    private Stream<String> parentPomSnapshots(DocumentLoader loadedInput) {
-        ParentDocumentLoaderIterator parentDocumentLoaderIterator =
-                new ParentDocumentLoaderIterator(loadedInput, pomRepository);
+    private Stream<String> parentPomSnapshots(CanLoadParent loadedInput) {
+        ParentDocumentLoaderIterator parentDocumentLoaderIterator = new ParentDocumentLoaderIterator(loadedInput);
         Iterable<DocumentLoader> iterable = () -> parentDocumentLoaderIterator;
         return StreamSupport.stream(iterable.spliterator(), false)
                 .filter(i -> i.coordinates().version().endsWith("-SNAPSHOT"))

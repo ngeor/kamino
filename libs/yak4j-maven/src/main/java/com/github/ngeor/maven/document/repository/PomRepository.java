@@ -1,7 +1,6 @@
 package com.github.ngeor.maven.document.repository;
 
 import com.github.ngeor.maven.document.effective.DefaultParentResolver;
-import com.github.ngeor.maven.document.effective.EffectivePom;
 import com.github.ngeor.maven.document.effective.ParentResolver;
 import com.github.ngeor.maven.document.loader.DocumentLoader;
 import com.github.ngeor.maven.document.loader.DocumentLoaderFactory;
@@ -13,6 +12,7 @@ import com.github.ngeor.maven.document.parent.DefaultParentLoader;
 import com.github.ngeor.maven.document.parent.LocalRepositoryLocator;
 import com.github.ngeor.maven.document.parent.ParentLoader;
 import com.github.ngeor.maven.document.property.CanResolveProperties;
+import com.github.ngeor.maven.document.property.CanResolvePropertiesDecorator;
 import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.File;
@@ -21,19 +21,19 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-public class PomRepository implements DocumentLoaderFactory<CanResolveProperties>, ParentLoader {
+public class PomRepository implements DocumentLoaderFactory<CanResolveProperties> {
     private final Map<MavenCoordinates, File> coordinatesToFile = new HashMap<>();
     private final Map<CanonicalFile, DocumentWrapper> documentCache = new HashMap<>();
-    private final Map<CanonicalFile, DocumentWrapper> propertyCache = new HashMap<>();
+    private final Map<CanonicalFile, CacheCanResolveProperties> newCache = new HashMap<>();
 
     private final DocumentLoaderFactory<DocumentLoader> oldFactory = FileDocumentLoader.asFactory()
-        .decorate(factory -> CachedDocumentDecorator.decorateFactory(factory, documentCache))
-        .decorate(SanityCheckedInput::decorateFactory)
-        .decorate(factory -> (pomFile -> {
-            DocumentLoader result = factory.createDocumentLoader(pomFile);
-            coordinatesToFile.put(result.coordinates(), pomFile);
-            return result;
-        }));
+            .decorate(factory -> CachedDocumentDecorator.decorateFactory(factory, documentCache))
+            .decorate(SanityCheckedInput::decorateFactory)
+            .decorate(factory -> (pomFile -> {
+                DocumentLoader result = factory.createDocumentLoader(pomFile);
+                coordinatesToFile.put(result.coordinates(), pomFile);
+                return result;
+            }));
 
     private final LocalRepositoryLocator localRepositoryLocator = new DefaultLocalRepositoryLocator();
     private final ParentLoader parentLoader = new DefaultParentLoader(oldFactory, localRepositoryLocator);
@@ -53,47 +53,17 @@ public class PomRepository implements DocumentLoaderFactory<CanResolveProperties
         }
     };
 
-    private final DocumentLoaderFactory<EffectivePom> factory = oldFactory
-        .decorate(parentLoader::decorateFactory)
-        .decorate(parentResolver::decorateFactory);
+    private final DocumentLoaderFactory<CanResolveProperties> factory = oldFactory
+            .decorate(parentLoader::decorateFactory)
+            .decorate(parentResolver::decorateFactory)
+            .decorate(f -> pomFile -> new CanResolvePropertiesDecorator(f.createDocumentLoader(pomFile)))
+            .decorate(f -> pomFile -> newCache.computeIfAbsent(
+                    new CanonicalFile(pomFile),
+                    ignored -> new CacheCanResolveProperties(f.createDocumentLoader(pomFile))));
 
     @Override
     public CanResolveProperties createDocumentLoader(File file) {
-        EffectivePom documentLoader = factory.createDocumentLoader(file);
-        return new CanResolveProperties() {
-            @Override
-            public DocumentWrapper loadDocument() {
-                return documentLoader.loadDocument();
-            }
-
-            @Override
-            public File getPomFile() {
-                return documentLoader.getPomFile();
-            }
-
-            @Override
-            public Optional<DocumentLoader> loadParent() {
-                return documentLoader.loadParent();
-            }
-
-            @Override
-            public DocumentWrapper effectivePom() {
-                return documentLoader.effectivePom();
-            }
-
-            @Override
-            public DocumentWrapper resolveProperties() {
-                return propertyCache.computeIfAbsent(
-                    new CanonicalFile(file),
-                    ignored -> CanResolveProperties.super.resolveProperties()
-                );
-            }
-        };
-    }
-
-    @Override
-    public Optional<DocumentLoader> loadParent(DocumentLoader input) {
-        return parentLoader.loadParent(input);
+        return factory.createDocumentLoader(file);
     }
 
     public Optional<File> findKnownFile(MavenCoordinates coordinates) {

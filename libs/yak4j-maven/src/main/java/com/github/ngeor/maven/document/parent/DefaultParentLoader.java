@@ -14,7 +14,8 @@ public class DefaultParentLoader implements ParentLoader {
     private final DocumentLoaderFactory<DocumentLoader> factory;
     private final LocalRepositoryLocator localRepositoryLocator;
 
-    public DefaultParentLoader(DocumentLoaderFactory<DocumentLoader> factory, LocalRepositoryLocator localRepositoryLocator) {
+    public DefaultParentLoader(
+            DocumentLoaderFactory<DocumentLoader> factory, LocalRepositoryLocator localRepositoryLocator) {
         this.factory = Objects.requireNonNull(factory);
         this.localRepositoryLocator = Objects.requireNonNull(localRepositoryLocator);
     }
