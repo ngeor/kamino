@@ -204,7 +204,7 @@ class PomRepositoryTest {
             // act
             File pomXmlFile = pomXmlPath.toFile();
             DocumentWrapper doc =
-                    pomRepository.loadAndResolveProperties(pomXmlFile).loadDocument();
+                    pomRepository.loadAndResolveProperties(pomXmlFile).resolveProperties();
 
             // assert
             assertThat(doc)
@@ -232,9 +232,9 @@ class PomRepositoryTest {
             // act
             File pomXmlFile = pomXmlPath.toFile();
             DocumentWrapper doc1 =
-                    pomRepository.loadAndResolveProperties(pomXmlFile).loadDocument();
+                    pomRepository.loadAndResolveProperties(pomXmlFile).resolveProperties();
             DocumentWrapper doc2 =
-                    pomRepository.loadAndResolveProperties(pomXmlFile).loadDocument();
+                    pomRepository.loadAndResolveProperties(pomXmlFile).resolveProperties();
 
             // assert
             assertThat(doc1)
@@ -266,7 +266,7 @@ class PomRepositoryTest {
             // act
             File pomXmlFile = pomXmlPath.toFile();
             DocumentWrapper doc =
-                    pomRepository.loadAndResolveProperties(pomXmlFile).loadDocument();
+                    pomRepository.loadAndResolveProperties(pomXmlFile).resolveProperties();
 
             // assert
             assertThat(doc)
@@ -298,7 +298,7 @@ class PomRepositoryTest {
             // act
             File pomXmlFile = pomXmlPath.toFile();
             DocumentWrapper doc =
-                    pomRepository.loadAndResolveProperties(pomXmlFile).loadDocument();
+                    pomRepository.loadAndResolveProperties(pomXmlFile).resolveProperties();
 
             // assert
             assertThat(doc).isNotNull();
@@ -331,9 +331,9 @@ class PomRepositoryTest {
             // act
             File pomXmlFile = pomXmlPath.toFile();
             DocumentWrapper doc1 =
-                    pomRepository.loadAndResolveProperties(pomXmlFile).loadDocument();
+                    pomRepository.loadAndResolveProperties(pomXmlFile).resolveProperties();
             DocumentWrapper doc2 =
-                    pomRepository.loadAndResolveProperties(pomXmlFile).loadDocument();
+                    pomRepository.loadAndResolveProperties(pomXmlFile).resolveProperties();
 
             // assert
             assertThat(doc1).isNotNull().isSameAs(doc2);

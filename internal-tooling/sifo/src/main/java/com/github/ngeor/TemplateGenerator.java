@@ -4,6 +4,7 @@ import com.github.ngeor.git.Git;
 import com.github.ngeor.git.Tag;
 import com.github.ngeor.maven.document.loader.DocumentLoader;
 import com.github.ngeor.maven.document.parent.ParentDocumentLoaderIterator;
+import com.github.ngeor.maven.document.property.CanResolveProperties;
 import com.github.ngeor.maven.document.repository.PomRepository;
 import com.github.ngeor.maven.dom.DomHelper;
 import com.github.ngeor.maven.dom.MavenCoordinates;
@@ -135,8 +136,8 @@ public final class TemplateGenerator {
 
     public void regenerateAllTemplates(String module) throws IOException, ProcessFailedException {
         System.out.printf("Regenerating templates for %s%n", module);
-        DocumentLoader input = pomRepository.loadAndResolveProperties(modulePomXmlFile(module));
-        DocumentWrapper doc = input.loadDocument();
+        CanResolveProperties input = pomRepository.loadAndResolveProperties(modulePomXmlFile(module));
+        DocumentWrapper doc = input.resolveProperties();
         MavenCoordinates coordinates = input.coordinates();
 
         final String javaVersion = DomHelper.getProperty(doc, "maven.compiler.source")
@@ -268,7 +269,7 @@ public final class TemplateGenerator {
             if (seen.add(next)) {
                 Map<MavenCoordinates, String> internalDependencies = pomRepository.findKnownFile(next).stream()
                         .map(pomRepository::loadAndResolveProperties)
-                        .map(DocumentLoader::loadDocument)
+                        .map(CanResolveProperties::resolveProperties)
                         .flatMap(DomHelper::getDependencies)
                         .map(dep -> Map.entry(dep, findModuleName(dep)))
                         .filter(e -> e.getValue().isPresent())

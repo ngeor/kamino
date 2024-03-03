@@ -102,7 +102,7 @@ class EffectivePomIT {
         assertions.accept(maven.effectivePomViaMaven().getDocumentElement());
         // assert by not invoking Maven process
         PomRepository pomRepository = new PomRepository();
-        DocumentWrapper document = pomRepository.loadAndResolveProperties(file).loadDocument();
+        DocumentWrapper document = pomRepository.loadAndResolveProperties(file).resolveProperties();
         assertions.accept(document.getDocumentElement());
     }
 }

@@ -11,8 +11,7 @@ import com.github.ngeor.maven.document.parent.DefaultLocalRepositoryLocator;
 import com.github.ngeor.maven.document.parent.DefaultParentLoader;
 import com.github.ngeor.maven.document.parent.LocalRepositoryLocator;
 import com.github.ngeor.maven.document.parent.ParentLoader;
-import com.github.ngeor.maven.document.property.PropertyResolver;
-import com.github.ngeor.maven.dom.DomHelper;
+import com.github.ngeor.maven.document.property.CanResolveProperties;
 import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.File;
@@ -69,27 +68,30 @@ public class PomRepository implements DocumentLoaderFactory<DocumentLoader>, Par
         return parentResolver.resolveWithParentRecursively(input);
     }
 
-    public DocumentLoader loadAndResolveProperties(File file) {
-        return resolveWithParentRecursively(file)
-                .mapDocument(doc ->
-                        propertyCache.computeIfAbsent(new CanonicalFile(file), ignored -> doResolveProperties(doc)));
+    public CanResolveProperties loadAndResolveProperties(File file) {
+        DocumentLoader effective = resolveWithParentRecursively(file);
+        return new CanResolveProperties() {
+            @Override
+            public DocumentWrapper loadDocument() {
+                return effective.loadDocument();
+            }
+
+            @Override
+            public File getPomFile() {
+                return effective.getPomFile();
+            }
+
+            @Override
+            public DocumentWrapper resolveProperties() {
+                return propertyCache.computeIfAbsent(
+                    new CanonicalFile(file),
+                    ignored -> CanResolveProperties.super.resolveProperties()
+                );
+            }
+        };
     }
 
     public Optional<File> findKnownFile(MavenCoordinates coordinates) {
         return Optional.ofNullable(coordinatesToFile.get(Objects.requireNonNull(coordinates)));
-    }
-
-    private static DocumentWrapper doResolveProperties(DocumentWrapper document) {
-        Map<String, String> unresolvedProperties = DomHelper.getProperties(document);
-        if (unresolvedProperties == null || unresolvedProperties.isEmpty()) {
-            return document;
-        }
-
-        // resolve them
-        Map<String, String> resolvedProperties = PropertyResolver.resolve(unresolvedProperties);
-        DocumentWrapper result = document.deepClone();
-        boolean hadChanges = result.getDocumentElement()
-                .transformTextNodes(text -> PropertyResolver.resolve(text, resolvedProperties::get));
-        return hadChanges ? result : document;
     }
 }
