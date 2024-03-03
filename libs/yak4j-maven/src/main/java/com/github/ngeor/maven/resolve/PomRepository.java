@@ -7,6 +7,7 @@ import com.github.ngeor.maven.document.loader.FileDocumentLoader;
 import com.github.ngeor.maven.document.loader.cache.CachedDocumentDecorator;
 import com.github.ngeor.maven.document.loader.cache.CanonicalFile;
 import com.github.ngeor.maven.dom.DomHelper;
+import com.github.ngeor.maven.property.resolver.PropertyResolver;
 import com.github.ngeor.maven.resolve.input.DefaultLocalRepositoryLocator;
 import com.github.ngeor.maven.resolve.input.DefaultParentLoader;
 import com.github.ngeor.maven.resolve.input.DefaultParentResolver;

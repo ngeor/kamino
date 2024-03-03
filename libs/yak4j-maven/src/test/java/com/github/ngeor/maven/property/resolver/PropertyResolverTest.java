@@ -1,7 +1,8 @@
-package com.github.ngeor.maven.resolve;
+package com.github.ngeor.maven.property.resolver;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.github.ngeor.maven.property.resolver.PropertyResolver;
 import java.util.Map;
 import java.util.TreeMap;
 import org.junit.jupiter.api.Test;
