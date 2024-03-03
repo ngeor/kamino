@@ -7,6 +7,7 @@ import com.github.ngeor.maven.document.loader.DocumentLoaderFactory;
 import com.github.ngeor.maven.document.loader.FileDocumentLoader;
 import com.github.ngeor.maven.document.loader.cache.CachedDocumentDecorator;
 import com.github.ngeor.maven.document.loader.cache.CanonicalFile;
+import com.github.ngeor.maven.document.parent.CanLoadParent;
 import com.github.ngeor.maven.document.parent.DefaultLocalRepositoryLocator;
 import com.github.ngeor.maven.document.parent.DefaultParentLoader;
 import com.github.ngeor.maven.document.parent.LocalRepositoryLocator;
@@ -26,16 +27,20 @@ public class PomRepository implements DocumentLoaderFactory<CanResolveProperties
     private final Map<CanonicalFile, DocumentWrapper> propertyCache = new HashMap<>();
     private final Map<CanonicalFile, DocumentLoader> parentResolverCache = new HashMap<>();
 
-    private final DocumentLoaderFactory<DocumentLoader> factory = FileDocumentLoader.asFactory()
-            .decorate(factory -> CachedDocumentDecorator.decorateFactory(factory, documentCache))
-            .decorate(SanityCheckedInput::decorateFactory)
-            .decorate(factory -> (pomFile -> {
-                DocumentLoader result = factory.createDocumentLoader(pomFile);
-                coordinatesToFile.put(result.coordinates(), pomFile);
-                return result;
-            }));
+    private final DocumentLoaderFactory<DocumentLoader> oldFactory = FileDocumentLoader.asFactory()
+        .decorate(factory -> CachedDocumentDecorator.decorateFactory(factory, documentCache))
+        .decorate(SanityCheckedInput::decorateFactory)
+        .decorate(factory -> (pomFile -> {
+            DocumentLoader result = factory.createDocumentLoader(pomFile);
+            coordinatesToFile.put(result.coordinates(), pomFile);
+            return result;
+        }));
+
     private final LocalRepositoryLocator localRepositoryLocator = new DefaultLocalRepositoryLocator();
-    private final ParentLoader parentLoader = new DefaultParentLoader(factory, localRepositoryLocator);
+    private final ParentLoader parentLoader = new DefaultParentLoader(oldFactory, localRepositoryLocator);
+    private final DocumentLoaderFactory<CanLoadParent> factory = oldFactory
+        .decorate(parentLoader::decorateFactory);
+
     private final ParentResolver parentResolver = new DefaultParentResolver(parentLoader) {
         @Override
         public DocumentLoader resolveWithParentRecursively(DocumentLoader input) {
@@ -51,7 +56,7 @@ public class PomRepository implements DocumentLoaderFactory<CanResolveProperties
 
     @Override
     public CanResolveProperties createDocumentLoader(File file) {
-        DocumentLoader documentLoader = factory.createDocumentLoader(file);
+        CanLoadParent documentLoader = factory.createDocumentLoader(file);
         return new CanResolveProperties() {
             @Override
             public DocumentWrapper loadDocument() {
@@ -65,7 +70,7 @@ public class PomRepository implements DocumentLoaderFactory<CanResolveProperties
 
             @Override
             public Optional<DocumentLoader> loadParent() {
-                return parentLoader.loadParent(this);
+                return documentLoader.loadParent();
             }
 
             @Override
