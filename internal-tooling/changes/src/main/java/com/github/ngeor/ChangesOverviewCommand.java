@@ -75,7 +75,7 @@ public class ChangesOverviewCommand extends BaseCommand {
 
         private Pair<Tag, String> addTag() {
             try {
-                Tag tag = git.getMostRecentTagWithDate(TagPrefix.forPath(module).tagPrefix())
+                Tag tag = git.getMostRecentTag(TagPrefix.forPath(module).tagPrefix())
                         .orElseThrow();
                 return Pair.of(
                         tag, TagPrefix.forPath(module).stripTagPrefix(tag).toString());
