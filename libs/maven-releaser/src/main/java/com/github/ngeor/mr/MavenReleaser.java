@@ -9,7 +9,7 @@ import com.github.ngeor.git.FetchOption;
 import com.github.ngeor.git.Git;
 import com.github.ngeor.git.LsFilesOption;
 import com.github.ngeor.git.PushOption;
-import com.github.ngeor.maven.document.loader.DocumentLoader;
+import com.github.ngeor.maven.document.effective.EffectivePom;
 import com.github.ngeor.maven.document.repository.PomRepository;
 import com.github.ngeor.maven.dom.ElementNames;
 import com.github.ngeor.maven.dom.MavenCoordinates;
@@ -82,12 +82,12 @@ public record MavenReleaser(File monorepoRoot, String path, FormatOptions format
 
     private MavenCoordinates calcModuleCoordinatesAndDoSanityChecks() {
         PomRepository pomRepository = new PomRepository();
-        DocumentLoader loadResult = pomRepository.resolveWithParentRecursively(modulePomFile());
+        EffectivePom loadResult = pomRepository.createDocumentLoader(modulePomFile());
         // ensure modelVersion, name, description exist
         // ensure licenses/license/name and url
         // ensure developers/developer/name and email
         // ensure scm and related properties
-        Preconditions.check(loadResult.loadDocument())
+        Preconditions.check(loadResult.effectivePom())
                 .hasChildWithTextContent("modelVersion")
                 .hasChildWithTextContent("name")
                 .hasChildWithTextContent("description")
@@ -126,7 +126,7 @@ public record MavenReleaser(File monorepoRoot, String path, FormatOptions format
         PomRepository pomRepository = new PomRepository();
         File pomFile = modulePomFile();
         DocumentWrapper document =
-                pomRepository.resolveWithParentRecursively(pomFile).loadDocument();
+                pomRepository.createDocumentLoader(pomFile).effectivePom();
         Set<String> elementsToRemove = Set.of(ElementNames.MODULES, ElementNames.PARENT);
         document.getDocumentElement().removeChildNodesByName(elementsToRemove::contains);
         document.getDocumentElement()

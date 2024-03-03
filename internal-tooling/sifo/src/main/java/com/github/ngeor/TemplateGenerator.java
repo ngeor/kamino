@@ -136,7 +136,7 @@ public final class TemplateGenerator {
 
     public void regenerateAllTemplates(String module) throws IOException, ProcessFailedException {
         System.out.printf("Regenerating templates for %s%n", module);
-        CanResolveProperties input = pomRepository.loadAndResolveProperties(modulePomXmlFile(module));
+        CanResolveProperties input = pomRepository.createDocumentLoader(modulePomXmlFile(module));
         DocumentWrapper doc = input.resolveProperties();
         MavenCoordinates coordinates = input.coordinates();
 
@@ -268,7 +268,7 @@ public final class TemplateGenerator {
         for (MavenCoordinates next = initialCoordinates; next != null; next = queue.poll()) {
             if (seen.add(next)) {
                 Map<MavenCoordinates, String> internalDependencies = pomRepository.findKnownFile(next).stream()
-                        .map(pomRepository::loadAndResolveProperties)
+                        .map(pomRepository::createDocumentLoader)
                         .map(CanResolveProperties::resolveProperties)
                         .flatMap(DomHelper::getDependencies)
                         .map(dep -> Map.entry(dep, findModuleName(dep)))

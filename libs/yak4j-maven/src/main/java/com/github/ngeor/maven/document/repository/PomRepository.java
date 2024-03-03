@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-public class PomRepository implements DocumentLoaderFactory<DocumentLoader>, ParentLoader, ParentResolver {
+public class PomRepository implements DocumentLoaderFactory<CanResolveProperties>, ParentLoader {
     private final Map<MavenCoordinates, File> coordinatesToFile = new HashMap<>();
     private final Map<CanonicalFile, DocumentWrapper> documentCache = new HashMap<>();
     private final Map<CanonicalFile, DocumentWrapper> propertyCache = new HashMap<>();
@@ -50,35 +50,12 @@ public class PomRepository implements DocumentLoaderFactory<DocumentLoader>, Par
     };
 
     @Override
-    public DocumentLoader createDocumentLoader(File file) {
-        return factory.createDocumentLoader(file);
-    }
-
-    @Override
-    public Optional<DocumentLoader> loadParent(DocumentLoader input) {
-        return parentLoader.loadParent(input);
-    }
-
-    public DocumentLoader resolveWithParentRecursively(File file) {
-        return resolveWithParentRecursively(createDocumentLoader(file));
-    }
-
-    @Override
-    public DocumentLoader resolveWithParentRecursively(DocumentLoader input) {
-        return parentResolver.resolveWithParentRecursively(input);
-    }
-
-    public CanResolveProperties loadAndResolveProperties(File file) {
-        DocumentLoader effective = resolveWithParentRecursively(file);
+    public CanResolveProperties createDocumentLoader(File file) {
+        DocumentLoader documentLoader = factory.createDocumentLoader(file);
         return new CanResolveProperties() {
             @Override
-            public DocumentWrapper loadDocument() {
-                return effective.loadDocument();
-            }
-
-            @Override
-            public File getPomFile() {
-                return effective.getPomFile();
+            public DocumentWrapper effectivePom() {
+                return parentResolver.resolveWithParentRecursively(documentLoader).loadDocument();
             }
 
             @Override
@@ -88,7 +65,22 @@ public class PomRepository implements DocumentLoaderFactory<DocumentLoader>, Par
                     ignored -> CanResolveProperties.super.resolveProperties()
                 );
             }
+
+            @Override
+            public DocumentWrapper loadDocument() {
+                return documentLoader.loadDocument();
+            }
+
+            @Override
+            public File getPomFile() {
+                return documentLoader.getPomFile();
+            }
         };
+    }
+
+    @Override
+    public Optional<DocumentLoader> loadParent(DocumentLoader input) {
+        return parentLoader.loadParent(input);
     }
 
     public Optional<File> findKnownFile(MavenCoordinates coordinates) {

@@ -1,13 +1,13 @@
 package com.github.ngeor.maven.document.property;
 
-import com.github.ngeor.maven.document.loader.DocumentLoader;
+import com.github.ngeor.maven.document.effective.EffectivePom;
 import com.github.ngeor.maven.dom.DomHelper;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.util.Map;
 
-public interface CanResolveProperties extends DocumentLoader {
+public interface CanResolveProperties extends EffectivePom {
     default DocumentWrapper resolveProperties() {
-        DocumentWrapper document = loadDocument();
+        DocumentWrapper document = effectivePom();
         Map<String, String> unresolvedProperties = DomHelper.getProperties(document);
         if (unresolvedProperties == null || unresolvedProperties.isEmpty()) {
             return document;
