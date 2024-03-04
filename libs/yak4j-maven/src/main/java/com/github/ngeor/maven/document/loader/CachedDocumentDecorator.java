@@ -3,6 +3,9 @@ package com.github.ngeor.maven.document.loader;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.util.Objects;
 
+/**
+ * Decorates a {@link DocumentLoader} by ensuring that the DOM {@link DocumentWrapper} is cached and only loaded once.
+ */
 final class CachedDocumentDecorator extends DocumentLoaderDecorator {
     private final CachedDocumentLoaderFactory creator;
 

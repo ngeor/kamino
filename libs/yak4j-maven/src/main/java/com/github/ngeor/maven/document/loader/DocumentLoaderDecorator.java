@@ -4,6 +4,9 @@ import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.File;
 import java.util.Objects;
 
+/**
+ * Base class for a decorator of {@link DocumentLoader} that delegates calls to the decorated instance.
+ */
 public abstract class DocumentLoaderDecorator implements DocumentLoader {
     private final DocumentLoader decorated;
 

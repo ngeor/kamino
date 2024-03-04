@@ -7,6 +7,9 @@ import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.File;
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * An object that can load a Maven POM document from a file.
+ */
 public interface DocumentLoader {
 
     // TODO return an immutable version of DocumentWrapper
