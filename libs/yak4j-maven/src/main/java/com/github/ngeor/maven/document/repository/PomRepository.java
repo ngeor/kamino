@@ -25,15 +25,14 @@ public class PomRepository implements DocumentLoaderFactory<CanResolveProperties
     private final Map<CanonicalFile, CacheCanResolveProperties> cache = new HashMap<>();
 
     private final DocumentLoaderFactory<CanResolveProperties> factory = FileDocumentLoader.asFactory()
-            .decorate(factory -> CachedDocumentDecorator.decorateFactory(factory, documentCache))
+            .decorate(f -> CachedDocumentDecorator.decorateFactory(f, documentCache))
             .decorate(SanityCheckedInput::decorateFactory)
-            .decorate(factory -> (pomFile -> {
-                DocumentLoader result = factory.createDocumentLoader(pomFile);
+            .decorate(f -> (pomFile -> {
+                DocumentLoader result = f.createDocumentLoader(pomFile);
                 coordinatesToFile.put(result.coordinates(), pomFile);
                 return result;
             }))
-            .decorate(factory ->
-                    new CanLoadParentFactory(factory, new DefaultParentPomFinder(new DefaultLocalRepositoryLocator())))
+            .decorate(f -> new CanLoadParentFactory(f, new DefaultParentPomFinder(new DefaultLocalRepositoryLocator())))
             .decorate(EffectivePomDecorator::decorateFactory)
             .decorate(CanResolvePropertiesDecorator::decorateFactory)
             .decorate(f -> pomFile -> cache.computeIfAbsent(

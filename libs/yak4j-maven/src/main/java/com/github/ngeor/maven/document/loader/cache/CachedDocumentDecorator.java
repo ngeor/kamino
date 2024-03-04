@@ -4,6 +4,7 @@ import com.github.ngeor.maven.document.loader.DocumentLoader;
 import com.github.ngeor.maven.document.loader.DocumentLoaderDecorator;
 import com.github.ngeor.maven.document.loader.DocumentLoaderFactory;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -32,6 +33,10 @@ public class CachedDocumentDecorator extends DocumentLoaderDecorator {
     public static DocumentLoaderFactory<DocumentLoader> decorateFactory(
             DocumentLoaderFactory<DocumentLoader> factory, Map<CanonicalFile, DocumentWrapper> cache) {
         return decorateFactory(factory, cache::computeIfAbsent);
+    }
+
+    public static DocumentLoaderFactory<DocumentLoader> decorateFactory(DocumentLoaderFactory<DocumentLoader> factory) {
+        return decorateFactory(factory, new HashMap<>());
     }
 
     @Override

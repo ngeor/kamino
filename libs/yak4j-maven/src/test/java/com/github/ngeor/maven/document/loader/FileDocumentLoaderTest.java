@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -18,15 +19,15 @@ class FileDocumentLoaderTest {
     private final DocumentLoaderFactory<DocumentLoader> factory = FileDocumentLoader.asFactory();
 
     @Nested
-    class Document {
+    class LoadDocument {
         @TempDir
-        private File rootDir;
+        private Path rootDir;
 
         private File rootPom;
 
         @BeforeEach
         void beforeEach() throws IOException {
-            rootPom = new File(rootDir, "pom.xml");
+            rootPom = new File(rootDir.toFile(), "pom.xml");
             Files.writeString(rootPom.toPath(), """
                 <project>hello world</project>""");
         }
@@ -49,7 +50,7 @@ class FileDocumentLoaderTest {
 
         @Test
         void fileNotFound() {
-            DocumentLoader input = factory.createDocumentLoader(new File(rootDir, "oops.xml"));
+            DocumentLoader input = factory.createDocumentLoader(rootDir, "oops.xml");
             assertThatThrownBy(input::loadDocument)
                     .hasCauseInstanceOf(FileNotFoundException.class)
                     .hasMessageContaining("oops.xml");

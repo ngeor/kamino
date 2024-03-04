@@ -42,7 +42,7 @@ class PomRepositoryTest {
             } catch (IOException e) {
                 throw new UncheckedIOException(e);
             }
-            return pomRepository.createDocumentLoader(tempDir.resolve("pom.xml").toFile());
+            return pomRepository.createDocumentLoader(tempDir, "pom.xml");
         }
 
         @ParameterizedTest
@@ -389,10 +389,9 @@ class PomRepositoryTest {
             </project>
             """);
 
-            assertThat(pomRepository.createDocumentLoader(new File(tempDir.toFile(), "pom.xml")))
-                    .isNotNull();
+            assertThat(pomRepository.createDocumentLoader(tempDir, "pom.xml")).isNotNull();
             for (String module : List.of("parent", "child", "grandparent")) {
-                assertThat(pomRepository.createDocumentLoader(new File(new File(tempDir.toFile(), module), "pom.xml")))
+                assertThat(pomRepository.createDocumentLoader(tempDir.resolve(module), "pom.xml"))
                         .isNotNull();
             }
         }
