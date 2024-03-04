@@ -2,12 +2,12 @@ package com.github.ngeor.maven.document.effective;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.github.ngeor.maven.document.loader.CachedDocumentDecorator;
+import com.github.ngeor.maven.document.loader.CanonicalFile;
 import com.github.ngeor.maven.document.loader.DocumentLoader;
 import com.github.ngeor.maven.document.loader.DocumentLoaderDecorator;
 import com.github.ngeor.maven.document.loader.DocumentLoaderFactory;
 import com.github.ngeor.maven.document.loader.FileDocumentLoader;
-import com.github.ngeor.maven.document.loader.cache.CachedDocumentDecorator;
-import com.github.ngeor.maven.document.loader.cache.CanonicalFile;
 import com.github.ngeor.maven.document.parent.CanLoadParentFactory;
 import com.github.ngeor.maven.document.parent.DefaultParentPomFinder;
 import com.github.ngeor.maven.document.parent.LocalRepositoryLocator;

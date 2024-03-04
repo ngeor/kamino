@@ -1,4 +1,4 @@
-package com.github.ngeor.maven.document.loader.cache;
+package com.github.ngeor.maven.document.loader;
 
 import java.io.File;
 import java.io.IOException;

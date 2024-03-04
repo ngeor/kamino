@@ -2,9 +2,9 @@ package com.github.ngeor.maven.document.parent;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.github.ngeor.maven.document.loader.CachedDocumentDecorator;
 import com.github.ngeor.maven.document.loader.DocumentLoaderFactory;
 import com.github.ngeor.maven.document.loader.FileDocumentLoader;
-import com.github.ngeor.maven.document.loader.cache.CachedDocumentDecorator;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.IOException;
 import java.nio.file.Files;

@@ -1,10 +1,7 @@
-package com.github.ngeor.maven.document.loader.cache;
+package com.github.ngeor.maven.document.loader;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.github.ngeor.maven.document.loader.DocumentLoader;
-import com.github.ngeor.maven.document.loader.DocumentLoaderFactory;
-import com.github.ngeor.maven.document.loader.FileDocumentLoader;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.IOException;
 import java.nio.file.Files;
