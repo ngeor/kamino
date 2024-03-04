@@ -7,9 +7,18 @@ import com.github.ngeor.maven.document.parent.ParentDocumentLoaderIterator;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.File;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Optional;
 
-public record EffectivePomDecorator(CanLoadParent canLoadParent) implements EffectivePom {
+public final class EffectivePomDecorator implements EffectivePom {
+    private final CanLoadParent decorated;
+    private final Merger merger;
+
+    public EffectivePomDecorator(CanLoadParent decorated, Merger merger) {
+        this.decorated = Objects.requireNonNull(decorated);
+        this.merger = Objects.requireNonNull(merger);
+    }
+
     @Override
     public DocumentWrapper effectivePom() {
         ParentDocumentLoaderIterator it = new ParentDocumentLoaderIterator(this);
@@ -18,17 +27,17 @@ public record EffectivePomDecorator(CanLoadParent canLoadParent) implements Effe
 
     @Override
     public DocumentWrapper loadDocument() {
-        return canLoadParent.loadDocument();
+        return decorated.loadDocument();
     }
 
     @Override
     public File getPomFile() {
-        return canLoadParent.getPomFile();
+        return decorated.getPomFile();
     }
 
     @Override
     public Optional<CanLoadParent> loadParent() {
-        return canLoadParent.loadParent();
+        return decorated.loadParent();
     }
 
     private DocumentWrapper merge(Iterator<CanLoadParent> it, DocumentLoader child) {
@@ -36,12 +45,12 @@ public record EffectivePomDecorator(CanLoadParent canLoadParent) implements Effe
             return child.loadDocument();
         }
 
-        // TODO: check if this approach merges the same intermediate results (performance)
-        DocumentWrapper left = merge(it, it.next()).deepClone();
-        return PomMerger.mergeIntoLeft(left, child.loadDocument());
+        DocumentWrapper left = merge(it, it.next());
+        return merger.mergeIntoLeft(left, child);
     }
 
-    public static DocumentLoaderFactory<EffectivePom> decorateFactory(DocumentLoaderFactory<CanLoadParent> factory) {
-        return pomFile -> new EffectivePomDecorator(factory.createDocumentLoader(pomFile));
+    public static DocumentLoaderFactory<EffectivePom> decorateFactory(
+            DocumentLoaderFactory<CanLoadParent> factory, Merger merger) {
+        return pomFile -> new EffectivePomDecorator(factory.createDocumentLoader(pomFile), merger);
     }
 }

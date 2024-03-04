@@ -1,5 +1,6 @@
 package com.github.ngeor.maven.document.effective;
 
+import com.github.ngeor.maven.document.loader.DocumentLoader;
 import com.github.ngeor.maven.dom.ElementNames;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
@@ -7,8 +8,11 @@ import java.util.Optional;
 import java.util.Set;
 
 // Notable elements which are not inherited include: artifactId; name
-public final class PomMerger {
-    private PomMerger() {}
+public final class PomMerger implements Merger {
+    @Override
+    public DocumentWrapper mergeIntoLeft(DocumentWrapper left, DocumentLoader child) {
+        return mergeIntoLeft(left.deepClone(), child.loadDocument());
+    }
 
     public static DocumentWrapper mergeIntoLeft(DocumentWrapper left, DocumentWrapper right) {
         new DocumentMerge().mergeIntoLeft(left, right);
