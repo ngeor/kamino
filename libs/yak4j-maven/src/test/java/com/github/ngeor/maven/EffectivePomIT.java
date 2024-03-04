@@ -2,8 +2,8 @@ package com.github.ngeor.maven;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.github.ngeor.maven.document.repository.PomRepository;
 import com.github.ngeor.maven.process.Maven;
-import com.github.ngeor.maven.resolve.PomRepository;
 import com.github.ngeor.process.ProcessFailedException;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
@@ -102,7 +102,7 @@ class EffectivePomIT {
         assertions.accept(maven.effectivePomViaMaven().getDocumentElement());
         // assert by not invoking Maven process
         PomRepository pomRepository = new PomRepository();
-        DocumentWrapper document = pomRepository.loadAndResolveProperties(file).document();
+        DocumentWrapper document = pomRepository.createDocumentLoader(file).resolveProperties();
         assertions.accept(document.getDocumentElement());
     }
 }

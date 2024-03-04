@@ -9,11 +9,13 @@ import com.github.ngeor.git.FetchOption;
 import com.github.ngeor.git.Git;
 import com.github.ngeor.git.LsFilesOption;
 import com.github.ngeor.git.PushOption;
-import com.github.ngeor.maven.ElementNames;
-import com.github.ngeor.maven.MavenCoordinates;
+import com.github.ngeor.maven.document.effective.EffectivePomFactory;
+import com.github.ngeor.maven.document.loader.FileDocumentLoader;
+import com.github.ngeor.maven.document.parent.CanLoadParentFactory;
+import com.github.ngeor.maven.dom.DomHelper;
+import com.github.ngeor.maven.dom.ElementNames;
+import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.maven.process.Maven;
-import com.github.ngeor.maven.resolve.PomRepository;
-import com.github.ngeor.maven.resolve.input.Input;
 import com.github.ngeor.process.ProcessFailedException;
 import com.github.ngeor.versions.SemVer;
 import com.github.ngeor.versions.SemVerBump;
@@ -81,13 +83,12 @@ public record MavenReleaser(File monorepoRoot, String path, FormatOptions format
     }
 
     private MavenCoordinates calcModuleCoordinatesAndDoSanityChecks() {
-        PomRepository pomRepository = new PomRepository();
-        Input loadResult = pomRepository.resolveWithParentRecursively(modulePomFile());
+        DocumentWrapper effectivePom = loadEffectivePom();
         // ensure modelVersion, name, description exist
         // ensure licenses/license/name and url
         // ensure developers/developer/name and email
         // ensure scm and related properties
-        Preconditions.check(loadResult.document())
+        Preconditions.check(effectivePom)
                 .hasChildWithTextContent("modelVersion")
                 .hasChildWithTextContent("name")
                 .hasChildWithTextContent("description")
@@ -105,7 +106,7 @@ public record MavenReleaser(File monorepoRoot, String path, FormatOptions format
                         .hasChildWithTextContent("developerConnection")
                         .hasChildWithTextContent("tag")
                         .hasChildWithTextContent("url"));
-        return loadResult.coordinates();
+        return DomHelper.coordinates(effectivePom);
     }
 
     private void setVersion(MavenCoordinates moduleCoordinates, String newVersion) throws ProcessFailedException {
@@ -123,19 +124,26 @@ public record MavenReleaser(File monorepoRoot, String path, FormatOptions format
     }
 
     private void replacePomWithEffectivePom(String tag) {
-        PomRepository pomRepository = new PomRepository();
         File pomFile = modulePomFile();
-        DocumentWrapper document =
-                pomRepository.resolveWithParentRecursively(pomFile).document();
+        DocumentWrapper effectivePom = loadEffectivePom();
         Set<String> elementsToRemove = Set.of(ElementNames.MODULES, ElementNames.PARENT);
-        document.getDocumentElement().removeChildNodesByName(elementsToRemove::contains);
-        document.getDocumentElement()
+        effectivePom.getDocumentElement().removeChildNodesByName(elementsToRemove::contains);
+        effectivePom
+                .getDocumentElement()
                 .findChildElements("scm")
                 .flatMap(e -> e.findChildElements("tag"))
                 .forEach(e -> e.setTextContent(tag));
-        document.indent(XML_INDENTATION);
-        document.write(pomFile);
-        ensureNoSnapshotVersions(document);
+        effectivePom.indent(XML_INDENTATION);
+        effectivePom.write(pomFile);
+        ensureNoSnapshotVersions(effectivePom);
+    }
+
+    private DocumentWrapper loadEffectivePom() {
+        return FileDocumentLoader.asFactory()
+                .decorate(CanLoadParentFactory::new)
+                .decorate(EffectivePomFactory::new)
+                .createDocumentLoader(modulePomFile())
+                .effectivePom();
     }
 
     private void ensureNoSnapshotVersions(DocumentWrapper document) {

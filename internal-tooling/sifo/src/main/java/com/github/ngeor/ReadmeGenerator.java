@@ -1,7 +1,7 @@
 package com.github.ngeor;
 
 import com.github.ngeor.changelog.TagPrefix;
-import com.github.ngeor.maven.MavenCoordinates;
+import com.github.ngeor.maven.dom.MavenCoordinates;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
