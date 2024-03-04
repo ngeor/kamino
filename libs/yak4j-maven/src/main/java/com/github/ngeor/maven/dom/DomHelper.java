@@ -8,20 +8,17 @@ import static com.github.ngeor.maven.dom.ElementNames.VERSION;
 
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 
 public final class DomHelper {
     private DomHelper() {}
-
-    private static MavenCoordinates getCoordinates(DocumentWrapper document) {
-        Objects.requireNonNull(document);
-        return getCoordinates(document.getDocumentElement());
-    }
 
     private static MavenCoordinates getCoordinates(ElementWrapper element) {
         Objects.requireNonNull(element);
@@ -81,20 +78,39 @@ public final class DomHelper {
     }
 
     public static MavenCoordinates coordinates(DocumentWrapper document) {
-        MavenCoordinates coordinates = DomHelper.getCoordinates(document);
-        if (coordinates.isValid()) {
-            return coordinates;
+        Iterator<ElementWrapper> it = document.getDocumentElement().getChildElementsAsIterator();
+        String groupId = null;
+        String artifactId = null;
+        String version = null;
+        ElementWrapper parent = null;
+        while (it.hasNext()) {
+            boolean needToCheckForCompletion = false;
+            ElementWrapper next = it.next();
+            String nodeName = next.getNodeName();
+            if (groupId == null && GROUP_ID.equals(nodeName)) {
+                groupId = next.getTextContentTrimmed().orElse(null);
+                needToCheckForCompletion = groupId != null;
+            } else if (artifactId == null && ARTIFACT_ID.equals(nodeName)) {
+                artifactId = next.getTextContentTrimmed().orElse(null);
+                needToCheckForCompletion = artifactId != null;
+            } else if (version == null && VERSION.equals(nodeName)) {
+                version = next.getTextContentTrimmed().orElse(null);
+                needToCheckForCompletion = version != null;
+            } else if (parent == null && PARENT.equals(nodeName)) {
+                parent = next;
+            }
+            if (needToCheckForCompletion && !StringUtils.isAnyBlank(groupId, artifactId, version)) {
+                return new MavenCoordinates(groupId, artifactId, version);
+            }
         }
-        if (StringUtils.isBlank(coordinates.artifactId())) {
+        if (StringUtils.isBlank(artifactId)) {
             throw new IllegalArgumentException("Cannot resolve coordinates, artifactId is missing");
         }
-        MavenCoordinates parentCoordinates = DomHelper.getParentPom(document)
-                .map(ParentPom::validateCoordinates)
-                .orElseThrow(
-                        () -> new IllegalArgumentException("Cannot resolve coordinates, parent element is missing"));
+        Validate.isTrue(parent != null, "Cannot resolve coordinates, parent element is missing");
+        MavenCoordinates parentCoordinates = DomHelper.getParentPom(parent).validateCoordinates();
         return new MavenCoordinates(
-                StringUtils.defaultIfBlank(coordinates.groupId(), parentCoordinates.groupId()),
-                coordinates.artifactId(),
-                StringUtils.defaultIfBlank(coordinates.version(), parentCoordinates.version()));
+                StringUtils.defaultIfBlank(groupId, parentCoordinates.groupId()),
+                artifactId,
+                StringUtils.defaultIfBlank(version, parentCoordinates.version()));
     }
 }
