@@ -25,8 +25,4 @@ public abstract class DocumentLoaderDecorator implements DocumentLoader {
     public String toString() {
         return String.format("%s[%s]", getClass().getSimpleName(), decorated);
     }
-
-    protected DocumentLoader getDecorated() {
-        return decorated;
-    }
 }
