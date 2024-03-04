@@ -32,7 +32,7 @@ public final class TemplateGenerator {
     private final SimpleStringTemplate releaseTemplate;
     private final SimpleStringTemplate rootPomTemplate;
     private final File rootDirectory;
-    private final ModuleRepository moduleRepository = new ModuleRepository();
+    private final ModuleRepository moduleRepository = new CachedModuleRepository();
     private final LazyInitializer<List<String>> lazyTags;
 
     public TemplateGenerator(File rootDirectory) throws IOException {
