@@ -1,8 +1,5 @@
 package com.github.ngeor.maven.document.repository;
 
-import static com.github.ngeor.maven.dom.ElementNames.ARTIFACT_ID;
-import static com.github.ngeor.maven.dom.ElementNames.GROUP_ID;
-import static com.github.ngeor.maven.dom.ElementNames.VERSION;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -19,7 +16,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -58,21 +54,6 @@ class PomRepositoryTest {
         void incorrectRootElement() {
             assertThatThrownBy(() -> resolveWithParentRecursively("<oops />").loadDocument())
                     .hasMessage("Unexpected root element 'oops' (expected 'project')");
-        }
-
-        @ParameterizedTest
-        @ValueSource(strings = {GROUP_ID, ARTIFACT_ID, VERSION})
-        void missingCoordinate(String missingElement) {
-            String xmlContents =
-                    """
-                    <project>
-                        <groupId>com.acme</groupId>
-                        <artifactId>foo</artifactId>
-                        <version>1.0</version>
-                    </project>"""
-                            .replaceAll(String.format("<%s>.+?</%s>", missingElement, missingElement), "");
-            assertThatThrownBy(() -> resolveWithParentRecursively(xmlContents).loadDocument())
-                    .hasMessageStartingWith("Cannot resolve coordinates");
         }
 
         @Test
@@ -396,57 +377,6 @@ class PomRepositoryTest {
                 assertThat(pomRepository.createDocumentLoader(tempDir.resolve(module), "pom.xml"))
                         .isNotNull();
             }
-        }
-    }
-
-    @Nested
-    class FindLoadedFile {
-        private final MavenCoordinates coordinates = new MavenCoordinates("com.acme", "foo", "1.0");
-
-        @BeforeEach
-        void beforeEach() throws IOException {
-            Files.writeString(
-                    tempDir.resolve("pom.xml"),
-                    """
-                <project>
-                    <groupId>com.acme</groupId>
-                    <artifactId>foo</artifactId>
-                    <version>1.0</version>
-                </project>""");
-        }
-
-        @Test
-        void empty() {
-            assertThat(pomRepository.findLoadedFile(coordinates)).isEmpty();
-        }
-
-        @Test
-        void match() {
-            // arrange
-            pomRepository.createDocumentLoader(tempDir, "pom.xml").loadDocument();
-
-            // act and assert
-            assertThat(pomRepository.findLoadedFile(coordinates))
-                    .contains(tempDir.resolve("pom.xml").toFile());
-        }
-
-        @Test
-        void matchDoesNotHappenWithoutLoadDocument() {
-            // arrange
-            pomRepository.createDocumentLoader(tempDir, "pom.xml");
-
-            // act and assert
-            assertThat(pomRepository.findLoadedFile(coordinates)).isEmpty();
-        }
-
-        @Test
-        void noMatchWithWrongCoordinates() {
-            // arrange
-            pomRepository.createDocumentLoader(tempDir, "pom.xml").loadDocument();
-
-            // act and assert
-            assertThat(pomRepository.findLoadedFile(coordinates.withVersion("2.0")))
-                    .isEmpty();
         }
     }
 }

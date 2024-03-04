@@ -2,10 +2,7 @@ package com.github.ngeor;
 
 import com.github.ngeor.git.Git;
 import com.github.ngeor.git.Tag;
-import com.github.ngeor.maven.document.parent.CanLoadParent;
-import com.github.ngeor.maven.document.parent.ParentDocumentLoaderIterator;
 import com.github.ngeor.maven.document.property.CanResolveProperties;
-import com.github.ngeor.maven.document.repository.PomRepository;
 import com.github.ngeor.maven.dom.DomHelper;
 import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.maven.process.Maven;
@@ -16,20 +13,12 @@ import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.Queue;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.concurrent.ConcurrentException;
 import org.apache.commons.lang3.concurrent.ConcurrentRuntimeException;
@@ -43,7 +32,7 @@ public final class TemplateGenerator {
     private final SimpleStringTemplate releaseTemplate;
     private final SimpleStringTemplate rootPomTemplate;
     private final File rootDirectory;
-    private final PomRepository pomRepository = new PomRepository();
+    private final ModuleRepository moduleRepository = new ModuleRepository();
     private final LazyInitializer<List<String>> lazyTags;
 
     public TemplateGenerator(File rootDirectory) throws IOException {
@@ -64,6 +53,7 @@ public final class TemplateGenerator {
                         .map(Tag::name)
                         .toList())
                 .get();
+        moduleRepository.loadModules(rootDirectory.toPath().resolve("pom.xml"));
     }
 
     private List<String> tags() {
@@ -74,46 +64,8 @@ public final class TemplateGenerator {
         }
     }
 
-    private File rootModulePomXmlFile() {
-        return new File(rootDirectory, "pom.xml");
-    }
-
-    private List<String> lazyModules;
-
-    private Stream<String> modules() {
-        if (lazyModules == null) {
-            lazyModules = DomHelper.getModules(pomRepository
-                            .createDocumentLoader(rootModulePomXmlFile())
-                            .loadDocument())
-                    .toList();
-        }
-        return lazyModules.stream();
-    }
-
-    private Map<MavenCoordinates, String> lazyCoordinateToModuleName;
-
-    private Map<MavenCoordinates, String> coordinateToModuleNameMap() {
-        if (lazyCoordinateToModuleName == null) {
-            lazyCoordinateToModuleName = modules()
-                    .collect(Collectors.toMap(
-                            name -> DomHelper.coordinates(pomRepository
-                                    .createDocumentLoader(modulePomXmlFile(name))
-                                    .loadDocument()),
-                            Function.identity()));
-        }
-        return lazyCoordinateToModuleName;
-    }
-
-    private File modulePomXmlFile(String module) {
-        return rootDirectory.toPath().resolve(module).resolve("pom.xml").toFile();
-    }
-
-    private Optional<String> findModuleName(MavenCoordinates coordinates) {
-        return Optional.ofNullable(coordinateToModuleNameMap().get(coordinates));
-    }
-
     public void regenerateAllTemplates() throws IOException, ProcessFailedException {
-        for (String module : modules().toList()) {
+        for (String module : moduleRepository.moduleNames()) {
             regenerateAllTemplates(module);
         }
         regenerateRootPom();
@@ -121,7 +73,7 @@ public final class TemplateGenerator {
 
     private void regenerateRootPom() throws IOException {
         StringBuilder builder = new StringBuilder();
-        modules().forEach(module -> {
+        moduleRepository.moduleNames().forEach(module -> {
             if (!builder.isEmpty()) {
                 builder.append("\n").append("    ");
             }
@@ -136,7 +88,7 @@ public final class TemplateGenerator {
 
     public void regenerateAllTemplates(String module) throws IOException, ProcessFailedException {
         System.out.printf("Regenerating templates for %s%n", module);
-        CanResolveProperties input = pomRepository.createDocumentLoader(modulePomXmlFile(module));
+        CanResolveProperties input = moduleRepository.moduleDocumentLoader(module);
         DocumentWrapper doc = input.resolveProperties();
         MavenCoordinates coordinates = DomHelper.coordinates(doc);
 
@@ -145,12 +97,10 @@ public final class TemplateGenerator {
                 .map(v -> "1.8".equals(v) ? "8" : v)
                 .orElse(DEFAULT_JAVA_VERSION);
 
-        SortedSet<String> internalDependencies = Stream.concat(
-                        // internal dependencies of module
-                        internalDependenciesRecursively(coordinates),
-                        // register also any internal snapshot parent poms as dependencies for this purpose
-                        parentPomSnapshots(input))
-                .collect(Collectors.toCollection(TreeSet::new));
+        // internal dependencies of module
+        SortedSet<String> internalDependencies = new TreeSet<>(moduleRepository.dependenciesOfRecursively(module));
+        // register also any internal snapshot parent poms as dependencies for this purpose
+        internalDependencies.addAll(moduleRepository.parentSnapshotsOfRecursively(module));
 
         String buildCommand;
         String extraPaths;
@@ -209,13 +159,7 @@ public final class TemplateGenerator {
 
     private void fixProjectUrls(String module) throws ProcessFailedException {
         boolean hadChanges = false;
-        DocumentWrapper document = pomRepository
-                .createDocumentLoader(rootDirectory
-                        .toPath()
-                        .resolve(module)
-                        .resolve("pom.xml")
-                        .toFile())
-                .loadDocument();
+        DocumentWrapper document = moduleRepository.moduleDocumentLoader(module).loadDocument();
         ElementWrapper documentElement = document.getDocumentElement();
         hadChanges |= ensureChildText(documentElement, "groupId", GROUP_ID);
         hadChanges |= ensureChildText(documentElement, "artifactId", projectDirectory(module));
@@ -258,36 +202,5 @@ public final class TemplateGenerator {
 
     private String projectDirectory(String module) {
         return module.split("/")[1];
-    }
-
-    private Stream<String> internalDependenciesRecursively(MavenCoordinates initialCoordinates) {
-        Set<MavenCoordinates> seen = new HashSet<>();
-        Queue<MavenCoordinates> queue = new LinkedList<>();
-        Set<String> result = new TreeSet<>();
-        for (MavenCoordinates next = initialCoordinates; next != null; next = queue.poll()) {
-            if (seen.add(next)) {
-                Map<MavenCoordinates, String> internalDependencies = pomRepository.findLoadedFile(next).stream()
-                        .map(pomRepository::createDocumentLoader)
-                        .map(CanResolveProperties::resolveProperties)
-                        .flatMap(DomHelper::getDependencies)
-                        .map(dep -> Map.entry(dep, findModuleName(dep)))
-                        .filter(e -> e.getValue().isPresent())
-                        .collect(Collectors.toMap(
-                                Map.Entry::getKey, e -> e.getValue().get()));
-                queue.addAll(internalDependencies.keySet());
-                result.addAll(internalDependencies.values());
-            }
-        }
-        return result.stream();
-    }
-
-    // must not be parent resolved or property resolved
-    // TODO perhaps a way to check that it is not parent resolved or property resolved
-    private Stream<String> parentPomSnapshots(CanLoadParent loadedInput) {
-        ParentDocumentLoaderIterator parentDocumentLoaderIterator = new ParentDocumentLoaderIterator(loadedInput);
-        Iterable<CanLoadParent> iterable = () -> parentDocumentLoaderIterator;
-        return StreamSupport.stream(iterable.spliterator(), false)
-                .filter(i -> DomHelper.coordinates(i.loadDocument()).version().endsWith("-SNAPSHOT"))
-                .flatMap(i -> findModuleName(DomHelper.coordinates(i.loadDocument())).stream());
     }
 }
