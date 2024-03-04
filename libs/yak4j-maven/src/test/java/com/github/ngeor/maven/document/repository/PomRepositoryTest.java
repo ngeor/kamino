@@ -19,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -395,6 +396,51 @@ class PomRepositoryTest {
                 assertThat(pomRepository.createDocumentLoader(tempDir.resolve(module), "pom.xml"))
                         .isNotNull();
             }
+        }
+    }
+
+    @Nested
+    class FindLoadedFile {
+        private final MavenCoordinates coordinates = new MavenCoordinates("com.acme", "foo", "1.0");
+        @BeforeEach
+        void beforeEach() throws IOException {
+            Files.writeString(tempDir.resolve("pom.xml"), """
+                <project>
+                    <groupId>com.acme</groupId>
+                    <artifactId>foo</artifactId>
+                    <version>1.0</version>
+                </project>""");
+        }
+        @Test
+        void empty() {
+            assertThat(pomRepository.findLoadedFile(coordinates)).isEmpty();
+        }
+
+        @Test
+        void match() {
+            // arrange
+            pomRepository.createDocumentLoader(tempDir, "pom.xml").loadDocument();
+
+            // act and assert
+            assertThat(pomRepository.findLoadedFile(coordinates)).contains(tempDir.resolve("pom.xml").toFile());
+        }
+
+        @Test
+        void matchDoesNotHappenWithoutLoadDocument() {
+            // arrange
+            pomRepository.createDocumentLoader(tempDir, "pom.xml");
+
+            // act and assert
+            assertThat(pomRepository.findLoadedFile(coordinates)).isEmpty();
+        }
+
+        @Test
+        void noMatchWithWrongCoordinates() {
+            // arrange
+            pomRepository.createDocumentLoader(tempDir, "pom.xml").loadDocument();
+
+            // act and assert
+            assertThat(pomRepository.findLoadedFile(coordinates.withVersion("2.0"))).isEmpty();
         }
     }
 }

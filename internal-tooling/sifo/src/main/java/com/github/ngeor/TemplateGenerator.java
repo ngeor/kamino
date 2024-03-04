@@ -266,7 +266,7 @@ public final class TemplateGenerator {
         Set<String> result = new TreeSet<>();
         for (MavenCoordinates next = initialCoordinates; next != null; next = queue.poll()) {
             if (seen.add(next)) {
-                Map<MavenCoordinates, String> internalDependencies = pomRepository.findKnownFile(next).stream()
+                Map<MavenCoordinates, String> internalDependencies = pomRepository.findLoadedFile(next).stream()
                         .map(pomRepository::createDocumentLoader)
                         .map(CanResolveProperties::resolveProperties)
                         .flatMap(DomHelper::getDependencies)

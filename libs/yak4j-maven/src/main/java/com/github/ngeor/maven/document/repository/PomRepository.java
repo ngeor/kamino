@@ -43,7 +43,7 @@ public final class PomRepository implements DocumentLoaderFactory<CanResolveProp
         return factory.createDocumentLoader(file);
     }
 
-    public Optional<File> findKnownFile(MavenCoordinates coordinates) {
+    public Optional<File> findLoadedFile(MavenCoordinates coordinates) {
         return Optional.ofNullable(coordinatesToFile.get(Objects.requireNonNull(coordinates)));
     }
 
