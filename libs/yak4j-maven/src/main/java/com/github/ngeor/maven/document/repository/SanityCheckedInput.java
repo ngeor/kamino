@@ -30,14 +30,4 @@ final class SanityCheckedInput extends DocumentLoaderDecorator {
     public static DocumentLoaderFactory<DocumentLoader> decorateFactory(DocumentLoaderFactory<DocumentLoader> factory) {
         return pomFile -> new SanityCheckedInput(factory.createDocumentLoader(pomFile));
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        return obj instanceof SanityCheckedInput other && Objects.equals(getDecorated(), other.getDecorated());
-    }
-
-    @Override
-    public int hashCode() {
-        return getDecorated().hashCode();
-    }
 }

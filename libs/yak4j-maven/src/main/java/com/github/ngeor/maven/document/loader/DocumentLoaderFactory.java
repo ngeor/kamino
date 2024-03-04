@@ -12,7 +12,6 @@ public interface DocumentLoaderFactory<E extends DocumentLoader> {
         return createDocumentLoader(pomPath.toFile());
     }
 
-    // TODO use this more in the tests
     default E createDocumentLoader(Path directory, String filename) {
         return createDocumentLoader(directory.resolve(filename).toFile());
     }

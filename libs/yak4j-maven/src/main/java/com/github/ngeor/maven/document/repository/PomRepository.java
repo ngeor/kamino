@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-public class PomRepository implements DocumentLoaderFactory<CanResolveProperties> {
+public final class PomRepository implements DocumentLoaderFactory<CanResolveProperties> {
     private final Map<MavenCoordinates, File> coordinatesToFile = new HashMap<>();
 
     private final DocumentLoaderFactory<CanResolveProperties> factory = FileDocumentLoader.asFactory()
