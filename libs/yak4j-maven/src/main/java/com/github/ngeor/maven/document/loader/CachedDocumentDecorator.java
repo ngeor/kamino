@@ -3,7 +3,7 @@ package com.github.ngeor.maven.document.loader;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.util.Objects;
 
-class CachedDocumentDecorator extends DocumentLoaderDecorator {
+final class CachedDocumentDecorator extends DocumentLoaderDecorator {
     private final CachedDocumentLoaderFactory creator;
 
     public CachedDocumentDecorator(DocumentLoader decorated, CachedDocumentLoaderFactory creator) {

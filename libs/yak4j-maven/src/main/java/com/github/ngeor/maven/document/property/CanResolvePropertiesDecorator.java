@@ -8,7 +8,7 @@ import java.io.File;
 import java.util.Objects;
 import java.util.Optional;
 
-public class CanResolvePropertiesDecorator implements CanResolveProperties {
+final class CanResolvePropertiesDecorator implements CanResolveProperties {
     private final EffectivePom decorated;
     private final PropertyResolver propertyResolver;
 

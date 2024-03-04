@@ -1,7 +1,6 @@
 package com.github.ngeor.maven.document.effective;
 
 import com.github.ngeor.maven.document.loader.DocumentLoader;
-import com.github.ngeor.maven.document.loader.DocumentLoaderFactory;
 import com.github.ngeor.maven.document.parent.CanLoadParent;
 import com.github.ngeor.maven.document.parent.ParentDocumentLoaderIterator;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
@@ -10,7 +9,7 @@ import java.util.Iterator;
 import java.util.Objects;
 import java.util.Optional;
 
-public final class EffectivePomDecorator implements EffectivePom {
+final class EffectivePomDecorator implements EffectivePom {
     private final CanLoadParent decorated;
     private final Merger merger;
 
@@ -47,10 +46,5 @@ public final class EffectivePomDecorator implements EffectivePom {
 
         DocumentWrapper left = merge(it, it.next());
         return merger.mergeIntoLeft(left, child);
-    }
-
-    public static DocumentLoaderFactory<EffectivePom> decorateFactory(
-            DocumentLoaderFactory<CanLoadParent> factory, Merger merger) {
-        return pomFile -> new EffectivePomDecorator(factory.createDocumentLoader(pomFile), merger);
     }
 }

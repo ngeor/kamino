@@ -5,7 +5,7 @@ import com.github.ngeor.maven.dom.DomHelper;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.util.Map;
 
-public class DefaultPropertyResolver implements PropertyResolver {
+public final class DefaultPropertyResolver implements PropertyResolver {
     @Override
     public DocumentWrapper resolveProperties(EffectivePom effectivePom) {
         DocumentWrapper document = effectivePom.effectivePom();

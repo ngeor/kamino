@@ -5,7 +5,7 @@ import com.github.ngeor.maven.document.loader.DocumentLoader;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.util.Objects;
 
-public class CachedMerger implements Merger {
+public final class CachedMerger implements Merger {
     private final FileCache<DocumentWrapper> cache = new FileCache<>();
     private final Merger decorated;
 

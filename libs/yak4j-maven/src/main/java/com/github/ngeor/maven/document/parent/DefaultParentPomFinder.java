@@ -13,8 +13,7 @@ public final class DefaultParentPomFinder implements ParentPomFinder {
     private final LocalRepositoryLocator localRepositoryLocator;
 
     public DefaultParentPomFinder(LocalRepositoryLocator localRepositoryLocator) {
-        Objects.requireNonNull(localRepositoryLocator);
-        this.localRepositoryLocator = localRepositoryLocator;
+        this.localRepositoryLocator = Objects.requireNonNull(localRepositoryLocator);
     }
 
     @Override
@@ -46,27 +45,5 @@ public final class DefaultParentPomFinder implements ParentPomFinder {
                 .resolve(coordinates.version())
                 .resolve(coordinates.artifactId() + "-" + coordinates.version() + ".pom")
                 .toFile();
-    }
-
-    public LocalRepositoryLocator localRepositoryLocator() {
-        return localRepositoryLocator;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) return true;
-        if (obj == null || obj.getClass() != this.getClass()) return false;
-        var that = (DefaultParentPomFinder) obj;
-        return Objects.equals(this.localRepositoryLocator, that.localRepositoryLocator);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(localRepositoryLocator);
-    }
-
-    @Override
-    public String toString() {
-        return "DefaultParentLoader[" + "localRepositoryLocator=" + localRepositoryLocator + ']';
     }
 }

@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 @SuppressWarnings("MagicNumber")
-class EffectivePomDecoratorTest {
+class EffectivePomFactoryTest {
     @TempDir
     private Path localRepository;
 
@@ -38,7 +38,7 @@ class EffectivePomDecoratorTest {
     private final ParentPomFinder parentPomFinder = new DefaultParentPomFinder(localRepositoryLocator);
     private final DocumentLoaderFactory<EffectivePom> factory = FileDocumentLoader.asFactory()
             .decorate(f -> new CanLoadParentFactory(f, parentPomFinder))
-            .decorate(f -> EffectivePomDecorator.decorateFactory(f, new PomMerger()));
+            .decorate(f -> new EffectivePomFactory(f, new PomMerger()));
     private final Map<CanonicalFile, Integer> loadCount = new HashMap<>();
     private final DocumentLoaderFactory<EffectivePom> cachedFactory = FileDocumentLoader.asFactory()
             .decorate(f -> pomFile -> (DocumentLoader) new DocumentLoaderDecorator(f.createDocumentLoader(pomFile)) {
@@ -50,7 +50,7 @@ class EffectivePomDecoratorTest {
             })
             .decorate(CachedDocumentLoaderFactory::new)
             .decorate(f -> new CanLoadParentFactory(f, parentPomFinder))
-            .decorate(f -> EffectivePomDecorator.decorateFactory(f, new CachedMerger(new PomMerger())));
+            .decorate(f -> new EffectivePomFactory(f, new CachedMerger(new PomMerger())));
 
     private Set<Integer> loadCounts() {
         return new HashSet<>(loadCount.values());

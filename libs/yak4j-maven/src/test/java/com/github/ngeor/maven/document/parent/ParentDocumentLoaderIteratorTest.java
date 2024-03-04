@@ -7,6 +7,8 @@ import com.github.ngeor.maven.document.loader.FileDocumentLoader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -65,9 +67,7 @@ class ParentDocumentLoaderIteratorTest {
         ParentDocumentLoaderIterator parentDocumentLoaderIterator = new ParentDocumentLoaderIterator(next);
 
         // assert
-        assertThat(parentDocumentLoaderIterator)
-                .toIterable()
-                .containsExactly(factory.createDocumentLoader(tempDir, "parent.xml"));
+        assertContents(parentDocumentLoaderIterator, "parent.xml");
     }
 
     @Test
@@ -109,10 +109,12 @@ class ParentDocumentLoaderIteratorTest {
         ParentDocumentLoaderIterator parentDocumentLoaderIterator = new ParentDocumentLoaderIterator(next);
 
         // assert
-        assertThat(parentDocumentLoaderIterator)
-                .toIterable()
-                .containsExactly(
-                        factory.createDocumentLoader(tempDir, "parent.xml"),
-                        factory.createDocumentLoader(tempDir, "grandparent.xml"));
+        assertContents(parentDocumentLoaderIterator, "parent.xml", "grandparent.xml");
+    }
+
+    private void assertContents(ParentDocumentLoaderIterator iterator, String... expectedFiles) {
+        List<String> actual = new ArrayList<>();
+        iterator.forEachRemaining(x -> actual.add(x.getPomFile().getName()));
+        assertThat(actual).containsExactly(expectedFiles);
     }
 }

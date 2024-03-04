@@ -6,7 +6,7 @@ import java.io.File;
 import java.util.Objects;
 import java.util.Optional;
 
-public class CanLoadParentFactory implements DocumentLoaderFactory<CanLoadParent> {
+public final class CanLoadParentFactory implements DocumentLoaderFactory<CanLoadParent> {
     private final DocumentLoaderFactory<DocumentLoader> decorated;
     private final ParentPomFinder parentPomFinder;
 
@@ -18,21 +18,6 @@ public class CanLoadParentFactory implements DocumentLoaderFactory<CanLoadParent
     @Override
     public CanLoadParent createDocumentLoader(File pomFile) {
         return new CanLoadParentDecorator(decorated.createDocumentLoader(pomFile), this);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return obj instanceof CanLoadParentFactory other && Objects.equals(decorated, other.decorated);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(decorated);
-    }
-
-    @Override
-    public String toString() {
-        return String.format("%s[%s]", CanLoadParentFactory.class.getSimpleName(), decorated);
     }
 
     Optional<CanLoadParent> loadParent(DocumentLoader loader) {

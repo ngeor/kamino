@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public class ParentDocumentLoaderIterator implements Iterator<CanLoadParent> {
+public final class ParentDocumentLoaderIterator implements Iterator<CanLoadParent> {
     private CanLoadParent next;
     private boolean valueTaken = true;
 

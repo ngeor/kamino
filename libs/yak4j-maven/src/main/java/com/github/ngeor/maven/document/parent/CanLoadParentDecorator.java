@@ -5,7 +5,7 @@ import com.github.ngeor.maven.document.loader.DocumentLoaderDecorator;
 import java.util.Objects;
 import java.util.Optional;
 
-class CanLoadParentDecorator extends DocumentLoaderDecorator implements CanLoadParent {
+final class CanLoadParentDecorator extends DocumentLoaderDecorator implements CanLoadParent {
     private final CanLoadParentFactory factory;
 
     public CanLoadParentDecorator(DocumentLoader decorated, CanLoadParentFactory factory) {
@@ -16,17 +16,5 @@ class CanLoadParentDecorator extends DocumentLoaderDecorator implements CanLoadP
     @Override
     public Optional<CanLoadParent> loadParent() {
         return factory.loadParent(this);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return obj instanceof CanLoadParentDecorator other
-                && Objects.equals(getDecorated(), other.getDecorated())
-                && Objects.equals(factory, other.factory);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getDecorated(), factory);
     }
 }

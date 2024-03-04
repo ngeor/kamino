@@ -5,7 +5,7 @@ import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.File;
 import java.util.Objects;
 
-public class CachedDocumentLoaderFactory implements DocumentLoaderFactory<DocumentLoader> {
+public final class CachedDocumentLoaderFactory implements DocumentLoaderFactory<DocumentLoader> {
     private final DocumentLoaderFactory<DocumentLoader> decorated;
     private final FileCache<DocumentWrapper> documentCache = new FileCache<>();
 
