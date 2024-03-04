@@ -9,9 +9,9 @@ import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-class CachedDocumentDecoratorTest {
+class CachedDocumentLoaderFactoryTest {
     private final DocumentLoaderFactory<DocumentLoader> factory =
-            FileDocumentLoader.asFactory().decorate(CachedDocumentDecorator::decorateFactory);
+            FileDocumentLoader.asFactory().decorate(CachedDocumentLoaderFactory::new);
 
     @TempDir
     private Path tempDir;

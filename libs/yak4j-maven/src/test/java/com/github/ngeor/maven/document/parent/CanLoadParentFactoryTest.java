@@ -2,7 +2,7 @@ package com.github.ngeor.maven.document.parent;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.github.ngeor.maven.document.loader.CachedDocumentDecorator;
+import com.github.ngeor.maven.document.loader.CachedDocumentLoaderFactory;
 import com.github.ngeor.maven.document.loader.DocumentLoaderFactory;
 import com.github.ngeor.maven.document.loader.FileDocumentLoader;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
@@ -67,7 +67,7 @@ class CanLoadParentFactoryTest {
     @Nested
     class LoadParent {
         private final DocumentLoaderFactory<CanLoadParent> cachedFactory = FileDocumentLoader.asFactory()
-                .decorate(CachedDocumentDecorator::decorateFactory)
+                .decorate(CachedDocumentLoaderFactory::new)
                 .decorate(f -> new CanLoadParentFactory(f, parentPomFinder));
 
         @Test

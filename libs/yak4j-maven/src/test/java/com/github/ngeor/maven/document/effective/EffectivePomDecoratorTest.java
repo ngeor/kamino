@@ -2,8 +2,8 @@ package com.github.ngeor.maven.document.effective;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.github.ngeor.maven.document.loader.CachedDocumentDecorator;
-import com.github.ngeor.maven.document.loader.CanonicalFile;
+import com.github.ngeor.maven.document.cache.CanonicalFile;
+import com.github.ngeor.maven.document.loader.CachedDocumentLoaderFactory;
 import com.github.ngeor.maven.document.loader.DocumentLoader;
 import com.github.ngeor.maven.document.loader.DocumentLoaderDecorator;
 import com.github.ngeor.maven.document.loader.DocumentLoaderFactory;
@@ -44,11 +44,11 @@ class EffectivePomDecoratorTest {
             .decorate(f -> pomFile -> (DocumentLoader) new DocumentLoaderDecorator(f.createDocumentLoader(pomFile)) {
                 @Override
                 public DocumentWrapper loadDocument() {
-                    int x = loadCount.compute(new CanonicalFile(pomFile), (k, v) -> v == null ? 1 : v + 1);
+                    loadCount.compute(new CanonicalFile(pomFile), (k, v) -> v == null ? 1 : v + 1);
                     return super.loadDocument();
                 }
             })
-            .decorate(CachedDocumentDecorator::decorateFactory)
+            .decorate(CachedDocumentLoaderFactory::new)
             .decorate(f -> new CanLoadParentFactory(f, parentPomFinder))
             .decorate(f -> EffectivePomDecorator.decorateFactory(f, new CachedMerger(new PomMerger())));
 

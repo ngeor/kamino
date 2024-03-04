@@ -3,7 +3,7 @@ package com.github.ngeor.maven.document.repository;
 import com.github.ngeor.maven.document.effective.CachedMerger;
 import com.github.ngeor.maven.document.effective.EffectivePomDecorator;
 import com.github.ngeor.maven.document.effective.PomMerger;
-import com.github.ngeor.maven.document.loader.CachedDocumentDecorator;
+import com.github.ngeor.maven.document.loader.CachedDocumentLoaderFactory;
 import com.github.ngeor.maven.document.loader.DocumentLoader;
 import com.github.ngeor.maven.document.loader.DocumentLoaderFactory;
 import com.github.ngeor.maven.document.loader.FileDocumentLoader;
@@ -25,7 +25,7 @@ public class PomRepository implements DocumentLoaderFactory<CanResolveProperties
     private final Map<MavenCoordinates, File> coordinatesToFile = new HashMap<>();
 
     private final DocumentLoaderFactory<CanResolveProperties> factory = FileDocumentLoader.asFactory()
-            .decorate(CachedDocumentDecorator::decorateFactory)
+            .decorate(CachedDocumentLoaderFactory::new)
             .decorate(SanityCheckedInput::decorateFactory)
             .decorate(f -> (pomFile -> {
                 DocumentLoader result = f.createDocumentLoader(pomFile);
