@@ -15,6 +15,6 @@ public final class EffectivePomFactory extends DocumentLoaderFactoryDecorator<Ca
 
     @Override
     protected EffectivePom decorateDocumentLoader(CanLoadParent inner) {
-        return new EffectivePomDecorator(inner, merger);
+        return new EffectivePomAdaptor(inner, merger);
     }
 }

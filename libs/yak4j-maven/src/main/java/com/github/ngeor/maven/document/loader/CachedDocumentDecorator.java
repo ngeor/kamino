@@ -6,7 +6,7 @@ import java.util.Objects;
 /**
  * Decorates a {@link DocumentLoader} by ensuring that the DOM {@link DocumentWrapper} is cached and only loaded once.
  */
-final class CachedDocumentDecorator extends DocumentLoaderDecorator {
+final class CachedDocumentDecorator extends DocumentLoaderDecorator<DocumentLoader> {
     private final CachedDocumentLoaderFactory creator;
 
     public CachedDocumentDecorator(DocumentLoader decorated, CachedDocumentLoaderFactory creator) {

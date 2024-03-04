@@ -1,20 +1,17 @@
 package com.github.ngeor.maven.document.parent;
 
-import com.github.ngeor.maven.document.loader.DocumentLoader;
 import com.github.ngeor.maven.document.loader.DocumentLoaderDecorator;
-import java.util.Objects;
 import java.util.Optional;
 
-final class CanLoadParentDecorator extends DocumentLoaderDecorator implements CanLoadParent {
-    private final CanLoadParentFactory factory;
+public class CanLoadParentDecorator<E extends CanLoadParent> extends DocumentLoaderDecorator<E>
+        implements CanLoadParent {
 
-    public CanLoadParentDecorator(DocumentLoader decorated, CanLoadParentFactory factory) {
+    protected CanLoadParentDecorator(E decorated) {
         super(decorated);
-        this.factory = Objects.requireNonNull(factory);
     }
 
     @Override
     public Optional<CanLoadParent> loadParent() {
-        return factory.loadParent(this);
+        return getDecorated().loadParent();
     }
 }

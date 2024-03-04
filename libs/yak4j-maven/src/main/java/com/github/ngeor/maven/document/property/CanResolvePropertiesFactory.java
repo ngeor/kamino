@@ -17,6 +17,6 @@ public final class CanResolvePropertiesFactory
 
     @Override
     protected CanResolveProperties decorateDocumentLoader(EffectivePom inner) {
-        return new CanResolvePropertiesDecorator(inner, propertyResolver);
+        return new CanResolvePropertiesAdaptor(inner, propertyResolver);
     }
 }

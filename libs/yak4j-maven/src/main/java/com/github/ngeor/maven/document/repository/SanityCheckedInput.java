@@ -9,7 +9,7 @@ import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.util.Objects;
 import org.apache.commons.lang3.Validate;
 
-final class SanityCheckedInput extends DocumentLoaderDecorator {
+final class SanityCheckedInput extends DocumentLoaderDecorator<DocumentLoader> {
     private SanityCheckedInput(DocumentLoader decorated) {
         super(decorated);
     }

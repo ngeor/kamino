@@ -6,11 +6,12 @@ import java.util.Objects;
 
 /**
  * Base class for a decorator of {@link DocumentLoader} that delegates calls to the decorated instance.
+ * @param <E> The type of {@link DocumentLoader} this decorator decorates.
  */
-public abstract class DocumentLoaderDecorator implements DocumentLoader {
-    private final DocumentLoader decorated;
+public abstract class DocumentLoaderDecorator<E extends DocumentLoader> implements DocumentLoader {
+    private final E decorated;
 
-    protected DocumentLoaderDecorator(DocumentLoader decorated) {
+    protected DocumentLoaderDecorator(E decorated) {
         this.decorated = Objects.requireNonNull(decorated);
     }
 
@@ -27,5 +28,9 @@ public abstract class DocumentLoaderDecorator implements DocumentLoader {
     @Override
     public String toString() {
         return String.format("%s[%s]", getClass().getSimpleName(), decorated);
+    }
+
+    protected E getDecorated() {
+        return decorated;
     }
 }

@@ -16,7 +16,7 @@ public final class CanLoadParentFactory extends DocumentLoaderFactoryDecorator<D
 
     @Override
     protected CanLoadParent decorateDocumentLoader(DocumentLoader inner) {
-        return new CanLoadParentDecorator(inner, this);
+        return new CanLoadParentAdaptor(inner, this);
     }
 
     Optional<CanLoadParent> loadParent(DocumentLoader loader) {

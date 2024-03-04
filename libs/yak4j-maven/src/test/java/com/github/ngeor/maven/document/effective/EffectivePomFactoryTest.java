@@ -41,7 +41,7 @@ class EffectivePomFactoryTest {
             .decorate(f -> new EffectivePomFactory(f, new PomMerger()));
     private final Map<CanonicalFile, Integer> loadCount = new HashMap<>();
     private final DocumentLoaderFactory<EffectivePom> cachedFactory = FileDocumentLoader.asFactory()
-            .decorate(f -> pomFile -> (DocumentLoader) new DocumentLoaderDecorator(f.createDocumentLoader(pomFile)) {
+            .decorate(f -> pomFile -> (DocumentLoader) new DocumentLoaderDecorator<>(f.createDocumentLoader(pomFile)) {
                 @Override
                 public DocumentWrapper loadDocument() {
                     loadCount.compute(new CanonicalFile(pomFile), (k, v) -> v == null ? 1 : v + 1);
