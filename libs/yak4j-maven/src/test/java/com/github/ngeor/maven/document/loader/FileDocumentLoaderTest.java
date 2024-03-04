@@ -3,6 +3,7 @@ package com.github.ngeor.maven.document.loader;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import com.github.ngeor.maven.dom.DomHelper;
 import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.File;
@@ -89,7 +90,7 @@ class FileDocumentLoaderTest {
             DocumentLoader input = factory.createDocumentLoader(childPom);
 
             // act
-            MavenCoordinates result = input.coordinates();
+            MavenCoordinates result = DomHelper.coordinates(input.loadDocument());
 
             // assert
             assertThat(result).isEqualTo(new MavenCoordinates("com.acme", "foo", "1.0"));
@@ -113,7 +114,8 @@ class FileDocumentLoaderTest {
             DocumentLoader input = factory.createDocumentLoader(childPom);
 
             // act and assert
-            assertThatThrownBy(input::coordinates).hasMessage("Cannot resolve coordinates, artifactId is missing");
+            assertThatThrownBy(() -> DomHelper.coordinates(input.loadDocument()))
+                    .hasMessage("Cannot resolve coordinates, artifactId is missing");
         }
 
         @Test
@@ -134,7 +136,7 @@ class FileDocumentLoaderTest {
             DocumentLoader input = factory.createDocumentLoader(childPom);
 
             // act
-            MavenCoordinates result = input.coordinates();
+            MavenCoordinates result = DomHelper.coordinates(input.loadDocument());
 
             // assert
             assertThat(result).isEqualTo(new MavenCoordinates("com.bar", "foo", "1.0"));
@@ -158,7 +160,7 @@ class FileDocumentLoaderTest {
             DocumentLoader input = factory.createDocumentLoader(childPom);
 
             // act
-            MavenCoordinates result = input.coordinates();
+            MavenCoordinates result = DomHelper.coordinates(input.loadDocument());
 
             // assert
             assertThat(result).isEqualTo(new MavenCoordinates("com.acme", "foo", "2.0"));
@@ -181,7 +183,8 @@ class FileDocumentLoaderTest {
             DocumentLoader input = factory.createDocumentLoader(childPom);
 
             // act and assert
-            assertThatThrownBy(input::coordinates).hasMessage("groupId is missing from parent coordinates");
+            assertThatThrownBy(() -> DomHelper.coordinates(input.loadDocument()))
+                    .hasMessage("groupId is missing from parent coordinates");
         }
 
         @Test
@@ -201,7 +204,8 @@ class FileDocumentLoaderTest {
             DocumentLoader input = factory.createDocumentLoader(childPom);
 
             // act and assert
-            assertThatThrownBy(input::coordinates).hasMessage("artifactId is missing from parent coordinates");
+            assertThatThrownBy(() -> DomHelper.coordinates(input.loadDocument()))
+                    .hasMessage("artifactId is missing from parent coordinates");
         }
 
         @Test
@@ -221,7 +225,8 @@ class FileDocumentLoaderTest {
             DocumentLoader input = factory.createDocumentLoader(childPom);
 
             // act and assert
-            assertThatThrownBy(input::coordinates).hasMessage("version is missing from parent coordinates");
+            assertThatThrownBy(() -> DomHelper.coordinates(input.loadDocument()))
+                    .hasMessage("version is missing from parent coordinates");
         }
 
         @Test
@@ -237,7 +242,8 @@ class FileDocumentLoaderTest {
             DocumentLoader input = factory.createDocumentLoader(childPom);
 
             // act and assert
-            assertThatThrownBy(input::coordinates).hasMessage("Cannot resolve coordinates, parent element is missing");
+            assertThatThrownBy(() -> DomHelper.coordinates(input.loadDocument()))
+                    .hasMessage("Cannot resolve coordinates, parent element is missing");
         }
     }
 }

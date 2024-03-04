@@ -96,9 +96,9 @@ public final class TemplateGenerator {
         if (lazyCoordinateToModuleName == null) {
             lazyCoordinateToModuleName = modules()
                     .collect(Collectors.toMap(
-                            name -> pomRepository
+                            name -> DomHelper.coordinates(pomRepository
                                     .createDocumentLoader(modulePomXmlFile(name))
-                                    .coordinates(),
+                                    .loadDocument()),
                             Function.identity()));
         }
         return lazyCoordinateToModuleName;
@@ -138,7 +138,7 @@ public final class TemplateGenerator {
         System.out.printf("Regenerating templates for %s%n", module);
         CanResolveProperties input = pomRepository.createDocumentLoader(modulePomXmlFile(module));
         DocumentWrapper doc = input.resolveProperties();
-        MavenCoordinates coordinates = input.coordinates();
+        MavenCoordinates coordinates = DomHelper.coordinates(doc);
 
         final String javaVersion = DomHelper.getProperty(doc, "maven.compiler.source")
                 .map(String::trim)
@@ -287,7 +287,7 @@ public final class TemplateGenerator {
         ParentDocumentLoaderIterator parentDocumentLoaderIterator = new ParentDocumentLoaderIterator(loadedInput);
         Iterable<CanLoadParent> iterable = () -> parentDocumentLoaderIterator;
         return StreamSupport.stream(iterable.spliterator(), false)
-                .filter(i -> i.coordinates().version().endsWith("-SNAPSHOT"))
-                .flatMap(i -> findModuleName(i.coordinates()).stream());
+                .filter(i -> DomHelper.coordinates(i.loadDocument()).version().endsWith("-SNAPSHOT"))
+                .flatMap(i -> findModuleName(DomHelper.coordinates(i.loadDocument())).stream());
     }
 }

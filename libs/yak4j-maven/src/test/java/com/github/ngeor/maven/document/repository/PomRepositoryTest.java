@@ -49,12 +49,13 @@ class PomRepositoryTest {
         @EmptySource
         @ValueSource(strings = {" ", "oops"})
         void invalidXml(String value) {
-            assertThatThrownBy(() -> resolveWithParentRecursively(value)).isInstanceOf(DomRuntimeException.class);
+            assertThatThrownBy(() -> resolveWithParentRecursively(value).loadDocument())
+                    .isInstanceOf(DomRuntimeException.class);
         }
 
         @Test
         void incorrectRootElement() {
-            assertThatThrownBy(() -> resolveWithParentRecursively("<oops />"))
+            assertThatThrownBy(() -> resolveWithParentRecursively("<oops />").loadDocument())
                     .hasMessage("Unexpected root element 'oops' (expected 'project')");
         }
 
@@ -69,7 +70,7 @@ class PomRepositoryTest {
                         <version>1.0</version>
                     </project>"""
                             .replaceAll(String.format("<%s>.+?</%s>", missingElement, missingElement), "");
-            assertThatThrownBy(() -> resolveWithParentRecursively(xmlContents))
+            assertThatThrownBy(() -> resolveWithParentRecursively(xmlContents).loadDocument())
                     .hasMessageStartingWith("Cannot resolve coordinates");
         }
 
@@ -89,7 +90,7 @@ class PomRepositoryTest {
             // assert
             assertThat(result).isNotNull();
             assertThat(result.effectivePom()).isSameAs(result.loadDocument());
-            MavenCoordinates coordinates = result.coordinates();
+            MavenCoordinates coordinates = DomHelper.coordinates(result.loadDocument());
             assertThat(coordinates).isEqualTo(new MavenCoordinates("com.acme", "foo", "1.0"));
         }
 
