@@ -402,15 +402,19 @@ class PomRepositoryTest {
     @Nested
     class FindLoadedFile {
         private final MavenCoordinates coordinates = new MavenCoordinates("com.acme", "foo", "1.0");
+
         @BeforeEach
         void beforeEach() throws IOException {
-            Files.writeString(tempDir.resolve("pom.xml"), """
+            Files.writeString(
+                    tempDir.resolve("pom.xml"),
+                    """
                 <project>
                     <groupId>com.acme</groupId>
                     <artifactId>foo</artifactId>
                     <version>1.0</version>
                 </project>""");
         }
+
         @Test
         void empty() {
             assertThat(pomRepository.findLoadedFile(coordinates)).isEmpty();
@@ -422,7 +426,8 @@ class PomRepositoryTest {
             pomRepository.createDocumentLoader(tempDir, "pom.xml").loadDocument();
 
             // act and assert
-            assertThat(pomRepository.findLoadedFile(coordinates)).contains(tempDir.resolve("pom.xml").toFile());
+            assertThat(pomRepository.findLoadedFile(coordinates))
+                    .contains(tempDir.resolve("pom.xml").toFile());
         }
 
         @Test
@@ -440,7 +445,8 @@ class PomRepositoryTest {
             pomRepository.createDocumentLoader(tempDir, "pom.xml").loadDocument();
 
             // act and assert
-            assertThat(pomRepository.findLoadedFile(coordinates.withVersion("2.0"))).isEmpty();
+            assertThat(pomRepository.findLoadedFile(coordinates.withVersion("2.0")))
+                    .isEmpty();
         }
     }
 }

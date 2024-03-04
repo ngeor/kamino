@@ -1,15 +1,11 @@
 package com.github.ngeor.maven.document.repository;
 
-import com.github.ngeor.maven.document.effective.CachedMerger;
 import com.github.ngeor.maven.document.effective.EffectivePomFactory;
-import com.github.ngeor.maven.document.effective.PomMerger;
 import com.github.ngeor.maven.document.loader.CachedDocumentLoaderFactory;
 import com.github.ngeor.maven.document.loader.DocumentLoader;
 import com.github.ngeor.maven.document.loader.DocumentLoaderFactory;
 import com.github.ngeor.maven.document.loader.FileDocumentLoader;
 import com.github.ngeor.maven.document.parent.CanLoadParentFactory;
-import com.github.ngeor.maven.document.parent.DefaultLocalRepositoryLocator;
-import com.github.ngeor.maven.document.parent.DefaultParentPomFinder;
 import com.github.ngeor.maven.document.property.CachedPropertyResolver;
 import com.github.ngeor.maven.document.property.CanResolveProperties;
 import com.github.ngeor.maven.document.property.CanResolvePropertiesFactory;
@@ -33,8 +29,8 @@ public final class PomRepository implements DocumentLoaderFactory<CanResolveProp
             .decorate(f -> DocumentLoaderVisitorFactory.visitDocument(f, this::sanityCheckDocument))
             .decorate(f -> new DocumentLoaderVisitorFactory(f, this::populateCoordinates))
             .decorate(CachedDocumentLoaderFactory::new)
-            .decorate(f -> new CanLoadParentFactory(f, new DefaultParentPomFinder(new DefaultLocalRepositoryLocator())))
-            .decorate(f -> new EffectivePomFactory(f, new CachedMerger(new PomMerger())))
+            .decorate(CanLoadParentFactory::new)
+            .decorate(EffectivePomFactory::new)
             .decorate(
                     f -> new CanResolvePropertiesFactory(f, new CachedPropertyResolver(new DefaultPropertyResolver())));
 

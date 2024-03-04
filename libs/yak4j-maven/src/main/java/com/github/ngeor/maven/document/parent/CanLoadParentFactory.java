@@ -14,6 +14,10 @@ public final class CanLoadParentFactory extends DocumentLoaderFactoryDecorator<D
         this.parentPomFinder = Objects.requireNonNull(parentPomFinder);
     }
 
+    public CanLoadParentFactory(DocumentLoaderFactory<DocumentLoader> decorated) {
+        this(decorated, new DefaultParentPomFinder(new DefaultLocalRepositoryLocator()));
+    }
+
     @Override
     protected CanLoadParent decorateDocumentLoader(DocumentLoader inner) {
         return new CanLoadParentAdaptor(inner, this);

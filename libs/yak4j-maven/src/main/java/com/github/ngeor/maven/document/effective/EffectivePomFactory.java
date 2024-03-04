@@ -13,6 +13,10 @@ public final class EffectivePomFactory extends DocumentLoaderFactoryDecorator<Ca
         this.merger = Objects.requireNonNull(merger);
     }
 
+    public EffectivePomFactory(DocumentLoaderFactory<CanLoadParent> decorated) {
+        this(decorated, new CachedMerger(new PomMerger()));
+    }
+
     @Override
     protected EffectivePom decorateDocumentLoader(CanLoadParent inner) {
         return new EffectivePomAdaptor(inner, merger);
