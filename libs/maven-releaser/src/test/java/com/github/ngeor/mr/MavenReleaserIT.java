@@ -267,7 +267,7 @@ class MavenReleaserIT {
         }
 
         public DocumentAssertions hasCoordinates(MavenCoordinates expected) {
-            assertThat(DomHelper.getCoordinates(document)).isEqualTo(expected);
+            assertThat(DomHelper.coordinates(document)).isEqualTo(expected);
             return this;
         }
 

@@ -144,7 +144,7 @@ class EffectivePomFactoryTest {
 
         // assert
         assertThat(resolvedDocument).isNotNull().isNotSameAs(input.loadDocument());
-        assertThat(DomHelper.getCoordinates(resolvedDocument))
+        assertThat(DomHelper.coordinates(resolvedDocument))
                 .isEqualTo(new MavenCoordinates("com.acme", "parent", "1.0"));
         assertThat(DomHelper.getProperty(resolvedDocument, "color")).contains("blue");
         assertThat(DomHelper.getProperty(resolvedDocument, "taste")).contains("sour");
@@ -161,7 +161,7 @@ class EffectivePomFactoryTest {
 
         // assert
         assertThat(doc1).isNotNull().isSameAs(doc2);
-        assertThat(DomHelper.getCoordinates(doc1)).isEqualTo(new MavenCoordinates("com.acme", "parent", "1.0"));
+        assertThat(DomHelper.coordinates(doc1)).isEqualTo(new MavenCoordinates("com.acme", "parent", "1.0"));
         assertThat(DomHelper.getProperty(doc1, "color")).contains("blue");
         assertThat(DomHelper.getProperty(doc1, "taste")).contains("sour");
         assertThat(DomHelper.getParentPom(doc1)).isEmpty();
@@ -177,8 +177,7 @@ class EffectivePomFactoryTest {
 
         // assert
         assertThat(resolvedDocument).isNotNull().isNotSameAs(input.loadDocument());
-        assertThat(DomHelper.getCoordinates(resolvedDocument))
-                .isEqualTo(new MavenCoordinates("com.acme", "child", "1.0"));
+        assertThat(DomHelper.coordinates(resolvedDocument)).isEqualTo(new MavenCoordinates("com.acme", "child", "1.0"));
         assertThat(DomHelper.getProperty(resolvedDocument, "color")).contains("blue");
         assertThat(DomHelper.getProperty(resolvedDocument, "taste")).contains("sweet");
         assertThat(DomHelper.getParentPom(resolvedDocument)).isEmpty();
