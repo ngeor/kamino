@@ -7,7 +7,7 @@ all: gs
 gs:
 	git st
 
-rebuild: clean sortpom fmt package run
+build: sortpom fmt package run
 
 clean:
 	$(MVN) clean
