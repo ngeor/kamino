@@ -36,31 +36,27 @@ public final class MavenReleaser {
     }
 
     public void prepareRelease() throws IOException, ProcessFailedException {
+        File modulePomFile = options.monorepoRoot()
+                .toPath()
+                .resolve(options.path())
+                .resolve("pom.xml")
+                .toFile();
+
         // calculate the groupId / artifactId of the module, do maven sanity checks
-        MavenCoordinates moduleCoordinates = calcModuleCoordinatesAndDoSanityChecks();
+        MavenCoordinates moduleCoordinates = calcModuleCoordinatesAndDoSanityChecks(modulePomFile);
 
         // do git sanity checks, pull latest
-        Git git = new Git(options.monorepoRoot());
-        git.ensureOnDefaultBranch();
-        Validate.isTrue(!git.hasStagedChanges(), "repo has staged files");
-        Validate.isTrue(!git.hasNonStagedChanges(), "repo has modified files");
-        Validate.isTrue(
-                git.lsFiles(LsFilesOption.OTHER, LsFilesOption.EXCLUDE_STANDARD)
-                        .findFirst()
-                        .isEmpty(),
-                "repo has untracked files");
-        git.fetch(FetchOption.PRUNE, FetchOption.PRUNE_TAGS, FetchOption.TAGS);
-        git.pull();
+        Git git = initializeGitAndDoSanityChecks();
 
         // switch to release version (fixes all usages in the monorepo)
         setVersion(moduleCoordinates, options.nextVersion().toString());
 
         // make a backup of the pom file
-        File backupPom = createBackupOfModulePomFile();
+        File backupPom = createBackupOfModulePomFile(modulePomFile);
 
         // overwrite pom.xml with effective pom
         String tag = TagPrefix.forPath(options.path()).addTagPrefix(options.nextVersion());
-        replacePomWithEffectivePom(tag);
+        replacePomWithEffectivePom(modulePomFile, tag);
 
         // update changelog
         new ChangeLogUpdater(options.monorepoRoot(), options.path(), options.formatOptions())
@@ -72,7 +68,7 @@ public final class MavenReleaser {
         git.tag(tag, String.format("Releasing %s", options.nextVersion()));
 
         // restore original pom
-        restoreOriginalPom(backupPom);
+        restoreOriginalPom(backupPom, modulePomFile);
 
         // switch to development version
         String developmentVersion = options.nextVersion()
@@ -89,8 +85,12 @@ public final class MavenReleaser {
         }
     }
 
-    private MavenCoordinates calcModuleCoordinatesAndDoSanityChecks() {
-        DocumentWrapper effectivePom = loadEffectivePom();
+    private MavenCoordinates calcModuleCoordinatesAndDoSanityChecks(File modulePomFile) {
+        DocumentWrapper effectivePom = loadEffectivePom(modulePomFile);
+        return calcModuleCoordinatesAndDoSanityChecks(effectivePom);
+    }
+
+    static MavenCoordinates calcModuleCoordinatesAndDoSanityChecks(DocumentWrapper effectivePom) {
         // ensure modelVersion, name, description exist
         // ensure licenses/license/name and url
         // ensure developers/developer/name and email
@@ -116,23 +116,37 @@ public final class MavenReleaser {
         return DomHelper.coordinates(effectivePom);
     }
 
+    private Git initializeGitAndDoSanityChecks() throws ProcessFailedException {
+        Git git = new Git(options.monorepoRoot());
+        git.ensureOnDefaultBranch();
+        Validate.isTrue(!git.hasStagedChanges(), "repo has staged files");
+        Validate.isTrue(!git.hasNonStagedChanges(), "repo has modified files");
+        Validate.isTrue(
+                git.lsFiles(LsFilesOption.OTHER, LsFilesOption.EXCLUDE_STANDARD)
+                        .findFirst()
+                        .isEmpty(),
+                "repo has untracked files");
+        git.fetch(FetchOption.PRUNE, FetchOption.PRUNE_TAGS, FetchOption.TAGS);
+        git.pull();
+        return git;
+    }
+
     private void setVersion(MavenCoordinates moduleCoordinates, String newVersion) throws ProcessFailedException {
         // maven at monorepo root
         Maven maven = new Maven(monorepoPomFile());
         maven.setVersion(moduleCoordinates, newVersion);
     }
 
-    private File createBackupOfModulePomFile() throws IOException {
+    private File createBackupOfModulePomFile(File modulePomFile) throws IOException {
         // make a backup of the pom file
         File backupPom = File.createTempFile("pom", ".xml");
         backupPom.deleteOnExit();
-        Files.copy(modulePomFile().toPath(), backupPom.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        Files.copy(modulePomFile.toPath(), backupPom.toPath(), StandardCopyOption.REPLACE_EXISTING);
         return backupPom;
     }
 
-    private void replacePomWithEffectivePom(String tag) {
-        File pomFile = modulePomFile();
-        DocumentWrapper effectivePom = loadEffectivePom();
+    private void replacePomWithEffectivePom(File modulePomFile, String tag) {
+        DocumentWrapper effectivePom = loadEffectivePom(modulePomFile);
         Set<String> elementsToRemove = Set.of(ElementNames.MODULES, ElementNames.PARENT);
         effectivePom.getDocumentElement().removeChildNodesByName(elementsToRemove::contains);
         effectivePom
@@ -141,15 +155,15 @@ public final class MavenReleaser {
                 .flatMap(e -> e.findChildElements("tag"))
                 .forEach(e -> e.setTextContent(tag));
         effectivePom.indent(XML_INDENTATION);
-        effectivePom.write(pomFile);
+        effectivePom.write(modulePomFile);
         ensureNoSnapshotVersions(effectivePom);
     }
 
-    private DocumentWrapper loadEffectivePom() {
+    private DocumentWrapper loadEffectivePom(File modulePomFile) {
         return FileDocumentLoader.asFactory()
                 .decorate(CanLoadParentFactory::new)
                 .decorate(EffectivePomFactory::new)
-                .createDocumentLoader(modulePomFile())
+                .createDocumentLoader(modulePomFile)
                 .effectivePom();
     }
 
@@ -172,19 +186,11 @@ public final class MavenReleaser {
         }
     }
 
-    private void restoreOriginalPom(File backupPom) throws IOException {
-        Files.copy(backupPom.toPath(), modulePomFile().toPath(), StandardCopyOption.REPLACE_EXISTING);
+    private void restoreOriginalPom(File backupPom, File modulePomFile) throws IOException {
+        Files.copy(backupPom.toPath(), modulePomFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
     }
 
     private File monorepoPomFile() {
         return new File(options.monorepoRoot(), "pom.xml");
-    }
-
-    private File modulePomFile() {
-        return options.monorepoRoot()
-                .toPath()
-                .resolve(options.path())
-                .resolve("pom.xml")
-                .toFile();
     }
 }
