@@ -1,3 +1,4 @@
+.PHONY: all gs build clean sortpom fmt package verify run run-changes run-sifo
 SKIP_TESTS_OPTS=-Denforcer.skip=true -Dcheckstyle.skip=true -Dmaven.javadoc.skip=true -DskipTests
 MVN=mvnd
 INTERNAL_TOOLS=internal-tooling/changes,internal-tooling/sifo
