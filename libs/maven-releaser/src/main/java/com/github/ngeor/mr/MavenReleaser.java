@@ -4,7 +4,6 @@ import static com.github.ngeor.mr.Defaults.XML_INDENTATION;
 
 import com.github.ngeor.changelog.ChangeLogUpdater;
 import com.github.ngeor.changelog.TagPrefix;
-import com.github.ngeor.changelog.format.FormatOptions;
 import com.github.ngeor.git.FetchOption;
 import com.github.ngeor.git.Git;
 import com.github.ngeor.git.LsFilesOption;
@@ -17,7 +16,6 @@ import com.github.ngeor.maven.dom.ElementNames;
 import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.maven.process.Maven;
 import com.github.ngeor.process.ProcessFailedException;
-import com.github.ngeor.versions.SemVer;
 import com.github.ngeor.versions.SemVerBump;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
@@ -30,14 +28,19 @@ import java.util.Objects;
 import java.util.Set;
 import org.apache.commons.lang3.Validate;
 
-public record MavenReleaser(File monorepoRoot, String path, FormatOptions formatOptions) {
+public final class MavenReleaser {
+    private final Options options;
 
-    public void prepareRelease(SemVer nextVersion, boolean push) throws IOException, ProcessFailedException {
+    public MavenReleaser(Options options) {
+        this.options = Objects.requireNonNull(options);
+    }
+
+    public void prepareRelease() throws IOException, ProcessFailedException {
         // calculate the groupId / artifactId of the module, do maven sanity checks
         MavenCoordinates moduleCoordinates = calcModuleCoordinatesAndDoSanityChecks();
 
         // do git sanity checks, pull latest
-        Git git = new Git(monorepoRoot);
+        Git git = new Git(options.monorepoRoot());
         git.ensureOnDefaultBranch();
         Validate.isTrue(!git.hasStagedChanges(), "repo has staged files");
         Validate.isTrue(!git.hasNonStagedChanges(), "repo has modified files");
@@ -50,34 +53,38 @@ public record MavenReleaser(File monorepoRoot, String path, FormatOptions format
         git.pull();
 
         // switch to release version (fixes all usages in the monorepo)
-        setVersion(moduleCoordinates, nextVersion.toString());
+        setVersion(moduleCoordinates, options.nextVersion().toString());
 
         // make a backup of the pom file
         File backupPom = createBackupOfModulePomFile();
 
         // overwrite pom.xml with effective pom
-        String tag = TagPrefix.forPath(path).addTagPrefix(nextVersion);
+        String tag = TagPrefix.forPath(options.path()).addTagPrefix(options.nextVersion());
         replacePomWithEffectivePom(tag);
 
         // update changelog
-        new ChangeLogUpdater(monorepoRoot, path, formatOptions).updateChangeLog(false, nextVersion);
+        new ChangeLogUpdater(options.monorepoRoot(), options.path(), options.formatOptions())
+                .updateChangeLog(false, options.nextVersion());
 
         // commit and tag
         git.addAll();
-        git.commit(String.format("release(%s): releasing %s", path, nextVersion));
-        git.tag(tag, String.format("Releasing %s", nextVersion));
+        git.commit(String.format("release(%s): releasing %s", options.path(), options.nextVersion()));
+        git.tag(tag, String.format("Releasing %s", options.nextVersion()));
 
         // restore original pom
         restoreOriginalPom(backupPom);
 
         // switch to development version
-        String developmentVersion =
-                nextVersion.bump(SemVerBump.MINOR).preRelease("SNAPSHOT").toString();
-        setVersion(moduleCoordinates.withVersion(nextVersion.toString()), developmentVersion);
+        String developmentVersion = options.nextVersion()
+                .bump(SemVerBump.MINOR)
+                .preRelease("SNAPSHOT")
+                .toString();
+        setVersion(moduleCoordinates.withVersion(options.nextVersion().toString()), developmentVersion);
         git.addAll();
-        git.commit(String.format("release(%s): switching to development version %s", path, developmentVersion));
+        git.commit(
+                String.format("release(%s): switching to development version %s", options.path(), developmentVersion));
 
-        if (push) {
+        if (options.push()) {
             git.push(PushOption.TAGS);
         }
     }
@@ -170,10 +177,14 @@ public record MavenReleaser(File monorepoRoot, String path, FormatOptions format
     }
 
     private File monorepoPomFile() {
-        return new File(monorepoRoot, "pom.xml");
+        return new File(options.monorepoRoot(), "pom.xml");
     }
 
     private File modulePomFile() {
-        return monorepoRoot.toPath().resolve(path).resolve("pom.xml").toFile();
+        return options.monorepoRoot()
+                .toPath()
+                .resolve(options.path())
+                .resolve("pom.xml")
+                .toFile();
     }
 }

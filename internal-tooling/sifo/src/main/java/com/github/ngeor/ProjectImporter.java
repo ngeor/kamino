@@ -4,7 +4,9 @@ import com.github.ngeor.git.Git;
 import com.github.ngeor.git.Tag;
 import com.github.ngeor.maven.process.Maven;
 import com.github.ngeor.mr.Defaults;
+import com.github.ngeor.mr.ImmutableOptions;
 import com.github.ngeor.mr.MavenReleaser;
+import com.github.ngeor.mr.Options;
 import com.github.ngeor.process.ProcessFailedException;
 import com.github.ngeor.versions.SemVer;
 import com.github.ngeor.versions.SemVerBump;
@@ -113,9 +115,14 @@ public class ProjectImporter {
                     .findFirst()
                     .orElseThrow();
             SemVer nextVersion = maxReleaseVersion.bump(SemVerBump.PATCH);
-
-            new MavenReleaser(monorepoRoot, modulePath(), Defaults.defaultFormatOptions())
-                    .prepareRelease(nextVersion, true);
+            Options options = ImmutableOptions.builder()
+                    .monorepoRoot(monorepoRoot)
+                    .path(modulePath())
+                    .formatOptions(Defaults.defaultFormatOptions())
+                    .nextVersion(nextVersion)
+                    .push(true)
+                    .build();
+            new MavenReleaser(options).prepareRelease();
         }
     }
 

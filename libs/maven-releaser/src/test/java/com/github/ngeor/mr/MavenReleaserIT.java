@@ -7,13 +7,9 @@ import com.github.ngeor.git.Commit;
 import com.github.ngeor.git.Git;
 import com.github.ngeor.git.InitOption;
 import com.github.ngeor.git.User;
-import com.github.ngeor.maven.dom.DomHelper;
-import com.github.ngeor.maven.dom.ElementNames;
 import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.process.ProcessFailedException;
 import com.github.ngeor.versions.SemVer;
-import com.github.ngeor.yak4jdom.DocumentWrapper;
-import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -32,7 +28,6 @@ class MavenReleaserIT {
     private Path monorepoRoot;
 
     private Git git;
-    private MavenReleaser releaser;
     private final String validParentPomContents =
             """
             <project>
@@ -128,7 +123,17 @@ class MavenReleaserIT {
         git.symbolicRef("refs/remotes/origin/HEAD", "refs/remotes/origin/trunk");
 
         Files.createDirectory(monorepoRoot.resolve("lib"));
-        releaser = new MavenReleaser(monorepoRoot.toFile(), "lib", Defaults.defaultFormatOptions());
+    }
+
+    private void act() throws IOException, ProcessFailedException {
+        Options options = ImmutableOptions.builder()
+                .monorepoRoot(monorepoRoot.toFile())
+                .path("lib")
+                .formatOptions(Defaults.defaultFormatOptions())
+                .nextVersion(new SemVer(1, 0, 0))
+                .push(false)
+                .build();
+        new MavenReleaser(options).prepareRelease();
     }
 
     @Test
@@ -142,7 +147,7 @@ class MavenReleaserIT {
         git.push();
 
         // act
-        releaser.prepareRelease(new SemVer(1, 0, 0), false);
+        act();
 
         // assert
         new DocumentAssertions(childPomPath).hasCoordinates(new MavenCoordinates("com.acme", "foo", "1.1.0-SNAPSHOT"));
@@ -168,7 +173,7 @@ class MavenReleaserIT {
         git.push();
 
         // act
-        releaser.prepareRelease(new SemVer(1, 0, 0), false);
+        act();
 
         // assert
         new DocumentAssertions(childPomPath)
@@ -256,47 +261,7 @@ class MavenReleaserIT {
         git.push();
 
         // act and assert
-        assertThatThrownBy(() -> releaser.prepareRelease(new SemVer(1, 0, 0), false))
-                .hasMessageContaining("Snapshot version 0.1.2-SNAPSHOT is not allowed");
-    }
-
-    @SuppressWarnings("UnusedReturnValue")
-    record DocumentAssertions(DocumentWrapper document) {
-        public DocumentAssertions(Path path) {
-            this(DocumentWrapper.parse(path.toFile()));
-        }
-
-        public DocumentAssertions hasCoordinates(MavenCoordinates expected) {
-            assertThat(DomHelper.coordinates(document)).isEqualTo(expected);
-            return this;
-        }
-
-        public DocumentAssertions hasParentPom() {
-            assertThat(document.getDocumentElement().firstElement(ElementNames.PARENT))
-                    .isPresent();
-            return this;
-        }
-
-        public DocumentAssertions doesNotHaveParentPom() {
-            assertThat(document.getDocumentElement().firstElement(ElementNames.PARENT))
-                    .isEmpty();
-            return this;
-        }
-
-        public DocumentAssertions doesNotHaveModules() {
-            assertThat(document.getDocumentElement().firstElement(ElementNames.MODULES))
-                    .isEmpty();
-            return this;
-        }
-
-        public DocumentAssertions hasScmTag(String expected) {
-            assertThat(document.getDocumentElement()
-                            .findChildElements("scm")
-                            .flatMap(e -> e.findChildElements("tag"))
-                            .flatMap(ElementWrapper::getTextContentTrimmedAsStream))
-                    .containsExactly(expected);
-            return this;
-        }
+        assertThatThrownBy(this::act).hasMessageContaining("Snapshot version 0.1.2-SNAPSHOT is not allowed");
     }
 
     @Nested
@@ -373,7 +338,7 @@ class MavenReleaserIT {
             git.push();
 
             // act and assert
-            return assertThatThrownBy(() -> releaser.prepareRelease(new SemVer(1, 0, 0), false));
+            return assertThatThrownBy(MavenReleaserIT.this::act);
         }
 
         private void testMissingDescription() throws IOException, ProcessFailedException {
@@ -409,7 +374,7 @@ class MavenReleaserIT {
             git.checkoutNewBranch("develop");
 
             // assert
-            assertThatThrownBy(() -> releaser.prepareRelease(new SemVer(1, 0, 0), false))
+            assertThatThrownBy(MavenReleaserIT.this::act)
                     .hasMessage("repo was not on default branch (expected trunk, found develop)");
         }
 
@@ -425,8 +390,7 @@ class MavenReleaserIT {
             Files.writeString(monorepoRoot.resolve("pom2.xml"), validChildPomContents);
 
             // assert
-            assertThatThrownBy(() -> releaser.prepareRelease(new SemVer(1, 0, 0), false))
-                    .hasMessage("repo has untracked files");
+            assertThatThrownBy(MavenReleaserIT.this::act).hasMessage("repo has untracked files");
         }
 
         @Test
@@ -439,8 +403,7 @@ class MavenReleaserIT {
             git.addAll();
 
             // act and assert
-            assertThatThrownBy(() -> releaser.prepareRelease(new SemVer(1, 0, 0), false))
-                    .hasMessage("repo has staged files");
+            assertThatThrownBy(MavenReleaserIT.this::act).hasMessage("repo has staged files");
         }
 
         @Test
@@ -452,8 +415,7 @@ class MavenReleaserIT {
             Files.writeString(monorepoRoot.resolve("lib").resolve("pom.xml"), validChildPomContents);
 
             // act and assert
-            assertThatThrownBy(() -> releaser.prepareRelease(new SemVer(1, 0, 0), false))
-                    .hasMessage("repo has modified files");
+            assertThatThrownBy(MavenReleaserIT.this::act).hasMessage("repo has modified files");
         }
 
         private void addCommitWithInvalidXml() throws IOException, ProcessFailedException {
