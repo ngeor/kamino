@@ -3,7 +3,12 @@ package com.github.ngeor.mr;
 import static com.github.ngeor.mr.FnUtil.toUnaryOperator;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import com.github.ngeor.git.Git;
+import com.github.ngeor.git.InitOption;
+import com.github.ngeor.git.User;
+import com.github.ngeor.process.ProcessFailedException;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
+import java.nio.file.Path;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import org.assertj.core.api.AbstractThrowableAssert;
@@ -76,5 +81,18 @@ public final class Util {
     public static AbstractThrowableAssert<?, ? extends Throwable> assertRemovingElementThrows(
             String elementName, Consumer<DocumentWrapper> consumer) {
         return assertRemovingElementThrows(elementName, toUnaryOperator(consumer));
+    }
+
+    public static void createRemoteGit(Path remoteRoot, Path workingDirectory) throws ProcessFailedException {
+        Git remoteGit = new Git(remoteRoot.toFile());
+        remoteGit.init("trunk", InitOption.BARE);
+
+        // clone local git
+        Git git = new Git(workingDirectory.toFile());
+        git.clone("file://" + remoteRoot.toAbsolutePath());
+        git.configureIdentity(new User("John Doe", "no-reply@acme.com"));
+
+        // so that the default branch can be determined
+        git.symbolicRef("refs/remotes/origin/HEAD", "refs/remotes/origin/trunk");
     }
 }

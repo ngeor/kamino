@@ -7,8 +7,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.github.ngeor.git.Commit;
 import com.github.ngeor.git.Git;
-import com.github.ngeor.git.InitOption;
-import com.github.ngeor.git.User;
 import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.process.ProcessFailedException;
 import com.github.ngeor.versions.SemVer;
@@ -17,7 +15,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -69,18 +66,8 @@ class MavenReleaserIT {
 
     @BeforeEach
     void beforeEach() throws IOException, ProcessFailedException {
-        // create remote git
-        Git remoteGit = new Git(remoteRoot.toFile());
-        remoteGit.init("trunk", InitOption.BARE);
-
-        // clone local git
+        Util.createRemoteGit(remoteRoot, monorepoRoot);
         git = new Git(monorepoRoot.toFile());
-        git.clone("file://" + remoteRoot.toAbsolutePath());
-        git.configureIdentity(new User("John Doe", "no-reply@acme.com"));
-
-        // so that the default branch can be determined
-        git.symbolicRef("refs/remotes/origin/HEAD", "refs/remotes/origin/trunk");
-
         Files.createDirectory(monorepoRoot.resolve("lib"));
     }
 
@@ -221,71 +208,5 @@ class MavenReleaserIT {
 
         // act and assert
         assertThatThrownBy(this::act).hasMessageContaining("Snapshot version 0.1.2-SNAPSHOT is not allowed");
-    }
-
-    @Nested
-    class GitValidationIT {
-        @Test
-        void testDefaultBranch() throws IOException, ProcessFailedException {
-            // arrange
-            Files.writeString(monorepoRoot.resolve("pom.xml"), VALID_PARENT_POM_CONTENTS);
-            Files.writeString(monorepoRoot.resolve("lib").resolve("pom.xml"), VALID_CHILD_POM_CONTENTS);
-            git.addAll();
-            git.commit("chore: Added pom.xml");
-
-            // act
-            git.checkoutNewBranch("develop");
-
-            // assert
-            assertThatThrownBy(MavenReleaserIT.this::act)
-                    .hasMessage("repo was not on default branch (expected trunk, found develop)");
-        }
-
-        @Test
-        void testNoUntrackedFiles() throws IOException, ProcessFailedException {
-            // arrange
-            addCommitWithInvalidXml();
-            Files.writeString(monorepoRoot.resolve("lib").resolve("pom.xml"), VALID_CHILD_POM_CONTENTS);
-            git.addAll();
-            git.commit("Fixed pom issues");
-
-            // act
-            Files.writeString(monorepoRoot.resolve("pom2.xml"), VALID_CHILD_POM_CONTENTS);
-
-            // assert
-            assertThatThrownBy(MavenReleaserIT.this::act).hasMessage("repo has untracked files");
-        }
-
-        @Test
-        void testNoStagedFiles() throws IOException, ProcessFailedException {
-            // arrange
-            addCommitWithInvalidXml();
-            Files.writeString(monorepoRoot.resolve("lib").resolve("pom.xml"), VALID_CHILD_POM_CONTENTS);
-
-            // act
-            git.addAll();
-
-            // act and assert
-            assertThatThrownBy(MavenReleaserIT.this::act).hasMessage("repo has staged files");
-        }
-
-        @Test
-        void testNoModifiedFiles() throws IOException, ProcessFailedException {
-            // arrange
-            addCommitWithInvalidXml();
-
-            // act
-            Files.writeString(monorepoRoot.resolve("lib").resolve("pom.xml"), VALID_CHILD_POM_CONTENTS);
-
-            // act and assert
-            assertThatThrownBy(MavenReleaserIT.this::act).hasMessage("repo has modified files");
-        }
-
-        private void addCommitWithInvalidXml() throws IOException, ProcessFailedException {
-            Files.writeString(monorepoRoot.resolve("pom.xml"), VALID_PARENT_POM_CONTENTS);
-            Files.writeString(monorepoRoot.resolve("lib").resolve("pom.xml"), "dummy");
-            git.addAll();
-            git.commit("Adding incorrect commit");
-        }
     }
 }
