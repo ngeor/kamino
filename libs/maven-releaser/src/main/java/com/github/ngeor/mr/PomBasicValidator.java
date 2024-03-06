@@ -4,7 +4,10 @@ import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.Preconditions;
 import java.util.function.Consumer;
 
-public class PomBasicValidator implements Consumer<DocumentWrapper> {
+@SuppressWarnings("java:S6548") // "enum singleton pattern detected"
+public enum PomBasicValidator implements Consumer<DocumentWrapper> {
+    INSTANCE;
+
     @Override
     public void accept(DocumentWrapper effectivePom) {
         // ensure modelVersion, name, description exist

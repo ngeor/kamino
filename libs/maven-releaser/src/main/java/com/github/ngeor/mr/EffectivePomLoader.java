@@ -7,7 +7,10 @@ import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.File;
 import java.util.function.Function;
 
-public class EffectivePomLoader implements Function<File, DocumentWrapper> {
+@SuppressWarnings("java:S6548") // "enum singleton pattern detected"
+public enum EffectivePomLoader implements Function<File, DocumentWrapper> {
+    INSTANCE;
+
     @Override
     public DocumentWrapper apply(File modulePomFile) {
         return FileDocumentLoader.asFactory()

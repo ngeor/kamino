@@ -8,12 +8,10 @@ import com.github.ngeor.changelog.TagPrefix;
 import com.github.ngeor.git.Git;
 import com.github.ngeor.git.PushOption;
 import com.github.ngeor.maven.dom.DomHelper;
-import com.github.ngeor.maven.dom.ElementNames;
 import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.maven.process.Maven;
 import com.github.ngeor.process.ProcessFailedException;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
-import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
@@ -28,7 +26,7 @@ public final class MavenReleaser {
 
     public void prepareRelease() throws IOException, ProcessFailedException {
         // do git sanity checks, pull latest
-        Git git = new GitInitializer().apply(options.monorepoRoot());
+        Git git = GitInitializer.INSTANCE.apply(options.monorepoRoot());
 
         File modulePomFile = options.monorepoRoot()
                 .toPath()
@@ -71,7 +69,7 @@ public final class MavenReleaser {
                     modulePomFile,
                     RemoveParentElements.INSTANCE,
                     doc -> updateScmTag(doc, tag),
-                    MavenReleaser::ensureNoSnapshotVersions);
+                    EnsureNoSnapshotVersions.INSTANCE);
 
             // update changelog
             new ChangeLogUpdater(ImmutableOptions.builder()
@@ -98,8 +96,8 @@ public final class MavenReleaser {
     }
 
     private static MavenCoordinates calcModuleCoordinatesAndDoSanityChecks(File modulePomFile) {
-        return new EffectivePomLoader()
-                .andThen(FnUtil.toUnaryOperator(new PomBasicValidator()))
+        return EffectivePomLoader.INSTANCE
+                .andThen(FnUtil.toUnaryOperator(PomBasicValidator.INSTANCE))
                 .andThen(DomHelper::coordinates)
                 .apply(modulePomFile);
     }
@@ -112,7 +110,7 @@ public final class MavenReleaser {
     @SafeVarargs
     private static void replacePomWithEffectivePom(File modulePomFile, Consumer<DocumentWrapper>... consumers) {
         // need to load the effective pom again because it has switched to the release version
-        DocumentWrapper effectivePom = new EffectivePomLoader().apply(modulePomFile);
+        DocumentWrapper effectivePom = EffectivePomLoader.INSTANCE.apply(modulePomFile);
         for (Consumer<DocumentWrapper> consumer : consumers) {
             consumer.accept(effectivePom);
         }
@@ -130,24 +128,5 @@ public final class MavenReleaser {
     private static void indentAndWrite(File modulePomFile, DocumentWrapper effectivePom) {
         effectivePom.indent(XML_INDENTATION);
         effectivePom.write(modulePomFile);
-    }
-
-    private static void ensureNoSnapshotVersions(DocumentWrapper document) {
-        Objects.requireNonNull(document);
-        ensureNoSnapshotVersions(document.getDocumentElement());
-    }
-
-    private static void ensureNoSnapshotVersions(ElementWrapper element) {
-        Objects.requireNonNull(element);
-        // recursion
-        element.getChildElements().forEach(MavenReleaser::ensureNoSnapshotVersions);
-
-        if (ElementNames.VERSION.equals(element.getNodeName())) {
-            String text = element.getTextContentTrimmed().orElse("");
-            if (text.endsWith("-SNAPSHOT")) {
-                throw new IllegalArgumentException(
-                        String.format("Snapshot version %s is not allowed (%s)", text, element.path()));
-            }
-        }
     }
 }

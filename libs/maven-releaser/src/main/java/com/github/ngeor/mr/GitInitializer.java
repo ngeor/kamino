@@ -8,7 +8,10 @@ import java.io.File;
 import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.function.FailableFunction;
 
-public class GitInitializer implements FailableFunction<File, Git, ProcessFailedException> {
+@SuppressWarnings("java:S6548") // "enum singleton pattern detected"
+public enum GitInitializer implements FailableFunction<File, Git, ProcessFailedException> {
+    INSTANCE;
+
     @Override
     public Git apply(File monorepoRoot) throws ProcessFailedException {
         Git git = new Git(monorepoRoot);

@@ -5,7 +5,7 @@ import static com.github.ngeor.mr.Util.VALID_CHILD_POM_CONTENTS;
 import org.junit.jupiter.api.Test;
 
 class PomBasicValidatorTest {
-    private final PomBasicValidator validator = new PomBasicValidator();
+    private final PomBasicValidator validator = PomBasicValidator.INSTANCE;
 
     @Test
     void testModelVersionIsRequired() {
