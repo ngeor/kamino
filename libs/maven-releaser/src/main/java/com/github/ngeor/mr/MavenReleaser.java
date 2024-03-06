@@ -6,9 +6,6 @@ import com.github.ngeor.changelog.ChangeLogUpdater;
 import com.github.ngeor.changelog.TagPrefix;
 import com.github.ngeor.git.Git;
 import com.github.ngeor.git.PushOption;
-import com.github.ngeor.maven.document.effective.EffectivePomFactory;
-import com.github.ngeor.maven.document.loader.FileDocumentLoader;
-import com.github.ngeor.maven.document.parent.CanLoadParentFactory;
 import com.github.ngeor.maven.dom.DomHelper;
 import com.github.ngeor.maven.dom.ElementNames;
 import com.github.ngeor.maven.dom.MavenCoordinates;
@@ -87,7 +84,7 @@ public final class MavenReleaser {
     }
 
     private static MavenCoordinates calcModuleCoordinatesAndDoSanityChecks(File modulePomFile) {
-        DocumentWrapper effectivePom = loadEffectivePom(modulePomFile);
+        DocumentWrapper effectivePom = new EffectivePomLoader().apply(modulePomFile);
         return calcModuleCoordinatesAndDoSanityChecks(effectivePom);
     }
 
@@ -133,7 +130,7 @@ public final class MavenReleaser {
     }
 
     private static void replacePomWithEffectivePom(File modulePomFile, String tag) {
-        DocumentWrapper effectivePom = loadEffectivePom(modulePomFile);
+        DocumentWrapper effectivePom = new EffectivePomLoader().apply(modulePomFile);
         Set<String> elementsToRemove = Set.of(ElementNames.MODULES, ElementNames.PARENT);
         effectivePom.getDocumentElement().removeChildNodesByName(elementsToRemove::contains);
         effectivePom
@@ -144,14 +141,6 @@ public final class MavenReleaser {
         effectivePom.indent(XML_INDENTATION);
         effectivePom.write(modulePomFile);
         ensureNoSnapshotVersions(effectivePom);
-    }
-
-    private static DocumentWrapper loadEffectivePom(File modulePomFile) {
-        return FileDocumentLoader.asFactory()
-                .decorate(CanLoadParentFactory::new)
-                .decorate(EffectivePomFactory::new)
-                .createDocumentLoader(modulePomFile)
-                .effectivePom();
     }
 
     private static void ensureNoSnapshotVersions(DocumentWrapper document) {
