@@ -15,8 +15,6 @@ import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 import java.util.Set;
 
@@ -39,40 +37,50 @@ public final class MavenReleaser {
 
         // calculate the groupId / artifactId of the module, do maven sanity checks
         MavenCoordinates moduleCoordinates = calcModuleCoordinatesAndDoSanityChecks(modulePomFile);
+        VersionDiff releaseDiff = new VersionDiff(moduleCoordinates, options.nextVersion());
+        Maven maven = new Maven(new File(options.monorepoRoot(), "pom.xml"));
 
         // switch to release version (fixes all usages in the monorepo)
-        VersionDiff releaseDiff = new VersionDiff(moduleCoordinates, options.nextVersion());
-        setVersion(options.monorepoRoot(), releaseDiff);
+        switchToReleaseVersion(maven, git, releaseDiff, options, modulePomFile);
 
-        // make a backup of the pom file
-        File backupPom = createBackupOfModulePomFile(modulePomFile);
-
-        // overwrite pom.xml with effective pom
-        String tag = TagPrefix.forPath(options.path()).addTagPrefix(options.nextVersion());
-        replacePomWithEffectivePom(modulePomFile, tag);
-
-        // update changelog
-        new ChangeLogUpdater(options.monorepoRoot(), options.path(), options.formatOptions())
-                .updateChangeLog(false, options.nextVersion());
-
-        // commit and tag
-        git.addAll();
-        git.commit(String.format("release(%s): releasing %s", options.path(), options.nextVersion()));
-        git.tag(tag, String.format("Releasing %s", options.nextVersion()));
-
-        // restore original pom
-        restoreOriginalPom(backupPom, modulePomFile);
+        // original, i.e. not effective, pom is restored at this point
 
         // switch to development version
-        VersionDiff snapshotDiff = releaseDiff.toSnapshot();
-        setVersion(options.monorepoRoot(), snapshotDiff);
-        git.addAll();
-        git.commit(String.format(
-                "release(%s): switching to development version %s", options.path(), snapshotDiff.newVersion()));
+        switchToNextDevelopmentVersion(maven, git, options.path(), releaseDiff);
 
         if (options.push()) {
             git.push(PushOption.TAGS);
         }
+    }
+
+    private static void switchToReleaseVersion(
+            Maven maven, Git git, VersionDiff releaseDiff, Options options, File modulePomFile)
+            throws ProcessFailedException, IOException {
+        setVersion(maven, releaseDiff);
+
+        // make a backup of the pom file
+        try (BackupFile ignored = new BackupFile(modulePomFile)) {
+            // overwrite pom.xml with effective pom
+            String tag = TagPrefix.forPath(options.path()).addTagPrefix(options.nextVersion());
+            replacePomWithEffectivePom(modulePomFile, tag);
+
+            // update changelog
+            new ChangeLogUpdater(options.monorepoRoot(), options.path(), options.formatOptions())
+                    .updateChangeLog(false, options.nextVersion());
+
+            // commit and tag
+            git.addAll();
+            git.commit(String.format("release(%s): releasing %s", options.path(), options.nextVersion()));
+            git.tag(tag, String.format("Releasing %s", options.nextVersion()));
+        }
+    }
+
+    private static void switchToNextDevelopmentVersion(Maven maven, Git git, String path, VersionDiff releaseDiff)
+            throws ProcessFailedException {
+        VersionDiff snapshotDiff = releaseDiff.toSnapshot();
+        setVersion(maven, snapshotDiff);
+        git.addAll();
+        git.commit(String.format("release(%s): switching to development version %s", path, snapshotDiff.newVersion()));
     }
 
     private static MavenCoordinates calcModuleCoordinatesAndDoSanityChecks(File modulePomFile) {
@@ -82,18 +90,9 @@ public final class MavenReleaser {
                 .apply(modulePomFile);
     }
 
-    private static void setVersion(File monorepoRoot, VersionDiff versionDiff) throws ProcessFailedException {
+    private static void setVersion(Maven maven, VersionDiff versionDiff) throws ProcessFailedException {
         // maven at monorepo root
-        Maven maven = new Maven(monorepoPomFile(monorepoRoot));
         maven.setVersion(versionDiff.oldVersion(), versionDiff.newVersion().toString());
-    }
-
-    private static File createBackupOfModulePomFile(File modulePomFile) throws IOException {
-        // make a backup of the pom file
-        File backupPom = File.createTempFile("pom", ".xml");
-        backupPom.deleteOnExit();
-        Files.copy(modulePomFile.toPath(), backupPom.toPath(), StandardCopyOption.REPLACE_EXISTING);
-        return backupPom;
     }
 
     private static void replacePomWithEffectivePom(File modulePomFile, String tag) {
@@ -105,9 +104,9 @@ public final class MavenReleaser {
                 .findChildElements("scm")
                 .flatMap(e -> e.findChildElements("tag"))
                 .forEach(e -> e.setTextContent(tag));
+        ensureNoSnapshotVersions(effectivePom);
         effectivePom.indent(XML_INDENTATION);
         effectivePom.write(modulePomFile);
-        ensureNoSnapshotVersions(effectivePom);
     }
 
     private static void ensureNoSnapshotVersions(DocumentWrapper document) {
@@ -127,13 +126,5 @@ public final class MavenReleaser {
                         String.format("Snapshot version %s is not allowed (%s)", text, element.path()));
             }
         }
-    }
-
-    private static void restoreOriginalPom(File backupPom, File modulePomFile) throws IOException {
-        Files.copy(backupPom.toPath(), modulePomFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-    }
-
-    private static File monorepoPomFile(File monorepoRoot) {
-        return new File(monorepoRoot, "pom.xml");
     }
 }
