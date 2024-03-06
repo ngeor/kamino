@@ -1,6 +1,7 @@
 package com.github.ngeor;
 
 import com.github.ngeor.changelog.ChangeLogUpdater;
+import com.github.ngeor.changelog.ImmutableOptions;
 import com.github.ngeor.mr.Defaults;
 import com.github.ngeor.process.ProcessFailedException;
 import java.io.File;
@@ -25,7 +26,13 @@ public class ChangeLogUpdaterCommand extends BaseCommand {
         List<String> paths =
                 path == null ? new ModuleFinder().eligibleModules(rootDirectory).toList() : List.of(path);
         for (String p : paths) {
-            new ChangeLogUpdater(rootDirectory, p, Defaults.defaultFormatOptions()).updateChangeLog(overwrite);
+            new ChangeLogUpdater(ImmutableOptions.builder()
+                            .rootDirectory(rootDirectory)
+                            .modulePath(p)
+                            .formatOptions(Defaults.defaultFormatOptions())
+                            .overwrite(overwrite)
+                            .build())
+                    .updateChangeLog();
         }
     }
 }

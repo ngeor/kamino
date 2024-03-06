@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.Map;
+import java.util.function.UnaryOperator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -22,27 +23,39 @@ class ChangeLogUpdaterIT {
     private File rootDirectory;
 
     private Git git;
-    private ChangeLogUpdater changeLogUpdater;
 
     @BeforeEach
     void beforeEach() throws ProcessFailedException {
         git = new Git(rootDirectory);
         git.initAndConfigureIdentity("master", new User("John Doe", "no-reply@acme.com"));
-        changeLogUpdater = new ChangeLogUpdater(
-                rootDirectory,
-                null,
-                new FormatOptions(
-                        "Unreleased",
-                        Map.of(
-                                "fix",
-                                "Fixes",
-                                "chore",
-                                "Miscellaneous Tasks",
-                                "feat",
-                                "Features",
-                                "deps",
-                                "Dependencies"),
-                        null));
+    }
+
+    private ChangeLogUpdater buildChangeLogUpdater(UnaryOperator<ImmutableOptions.Builder> customizer) {
+        return new ChangeLogUpdater(customizer
+                .apply(ImmutableOptions.builder()
+                        .rootDirectory(rootDirectory)
+                        .formatOptions(new FormatOptions(
+                                "Unreleased",
+                                Map.of(
+                                        "fix",
+                                        "Fixes",
+                                        "chore",
+                                        "Miscellaneous Tasks",
+                                        "feat",
+                                        "Features",
+                                        "deps",
+                                        "Dependencies"),
+                                null)))
+                .build());
+    }
+
+    private void updateChangeLog(UnaryOperator<ImmutableOptions.Builder> customizer)
+            throws IOException, ProcessFailedException {
+        buildChangeLogUpdater(customizer).updateChangeLog();
+    }
+
+    private void updateChangeLog() throws IOException, ProcessFailedException {
+        updateChangeLog(UnaryOperator.identity());
     }
 
     @Test
@@ -53,34 +66,34 @@ class ChangeLogUpdaterIT {
         addCommits("chore: Adding homepage");
 
         // act
-        changeLogUpdater.updateChangeLog();
+        updateChangeLog();
 
         // assert
         assertThat(readChangeLog())
                 .isEqualToNormalizingNewlines(
                         """
-            # Changelog
+                    # Changelog
 
-            ## Unreleased
+                    ## Unreleased
 
-            ### Miscellaneous Tasks
+                    ### Miscellaneous Tasks
 
-            * Adding homepage
+                    * Adding homepage
 
-            ## [1.0] - $now
+                    ## [1.0] - $now
 
-            ### Features
+                    ### Features
 
-            * New version
+                    * New version
 
-            ### Fixes
+                    ### Fixes
 
-            * Adjusted readme
+                    * Adjusted readme
 
-            ### Miscellaneous Tasks
+                    ### Miscellaneous Tasks
 
-            * Initial commit
-            """
+                    * Initial commit
+                    """
                                 .replace("$now", LocalDate.now().toString()));
     }
 
@@ -90,24 +103,24 @@ class ChangeLogUpdaterIT {
         addCommits("Initial commit", "fix!: Adjusted readme");
 
         // act
-        changeLogUpdater.updateChangeLog();
+        updateChangeLog();
 
         // assert
         assertThat(readChangeLog())
                 .isEqualToNormalizingNewlines(
                         """
-                # Changelog
+                    # Changelog
 
-                ## Unreleased
+                    ## Unreleased
 
-                ### Fixes
+                    ### Fixes
 
-                * **Breaking**: Adjusted readme
+                    * **Breaking**: Adjusted readme
 
-                ### Miscellaneous Tasks
+                    ### Miscellaneous Tasks
 
-                * Initial commit
-                """);
+                    * Initial commit
+                    """);
     }
 
     @Test
@@ -116,25 +129,25 @@ class ChangeLogUpdaterIT {
         addCommits("chore: Added something", "deps: Upgraded mockito", "chore(deps): Upgraded jUnit");
 
         // act
-        changeLogUpdater.updateChangeLog();
+        updateChangeLog();
 
         // assert
         assertThat(readChangeLog())
                 .isEqualToNormalizingNewlines(
                         """
-        # Changelog
+                    # Changelog
 
-        ## Unreleased
+                    ## Unreleased
 
-        ### Miscellaneous Tasks
+                    ### Miscellaneous Tasks
 
-        * Added something
+                    * Added something
 
-        ### Dependencies
+                    ### Dependencies
 
-        * Upgraded mockito
-        * Upgraded jUnit
-        """);
+                    * Upgraded mockito
+                    * Upgraded jUnit
+                    """);
     }
 
     @Test
@@ -144,24 +157,24 @@ class ChangeLogUpdaterIT {
         tag();
 
         // act
-        changeLogUpdater.updateChangeLog();
+        updateChangeLog();
 
         // assert
         assertThat(readChangeLog())
                 .isEqualToNormalizingNewlines(
                         """
-            # Changelog
+                    # Changelog
 
-            ## [1.0] - $now
+                    ## [1.0] - $now
 
-            ### Miscellaneous Tasks
+                    ### Miscellaneous Tasks
 
-            * Added something
+                    * Added something
 
-            ### Dependencies
+                    ### Dependencies
 
-            * Upgraded mockito
-            """
+                    * Upgraded mockito
+                    """
                                 .replace("$now", LocalDate.now().toString()));
     }
 
@@ -173,24 +186,24 @@ class ChangeLogUpdaterIT {
         addCommits("[maven-release-plugin]: prepare for next development iteration");
 
         // act
-        changeLogUpdater.updateChangeLog();
+        updateChangeLog();
 
         // assert
         assertThat(readChangeLog())
                 .isEqualToNormalizingNewlines(
                         """
-                # Changelog
+                    # Changelog
 
-                ## [1.0] - $now
+                    ## [1.0] - $now
 
-                ### Miscellaneous Tasks
+                    ### Miscellaneous Tasks
 
-                * Added something
+                    * Added something
 
-                ### Dependencies
+                    ### Dependencies
 
-                * Upgraded mockito
-                """
+                    * Upgraded mockito
+                    """
                                 .replace("$now", LocalDate.now().toString()));
     }
 
@@ -200,33 +213,34 @@ class ChangeLogUpdaterIT {
         addCommits("chore: Added something", "deps: Upgraded mockito");
         tag();
 
-        writeChangeLog("""
-        # My changelog
+        writeChangeLog(
+                """
+            # My changelog
 
-        ## Unreleased
+            ## Unreleased
 
-        * Whatever
-        """);
+            * Whatever
+            """);
 
         // act
-        changeLogUpdater.updateChangeLog();
+        updateChangeLog();
 
         // assert
         assertThat(readChangeLog())
                 .isEqualToNormalizingNewlines(
                         """
-            # My changelog
+                    # My changelog
 
-            ## [1.0] - $now
+                    ## [1.0] - $now
 
-            ### Miscellaneous Tasks
+                    ### Miscellaneous Tasks
 
-            * Added something
+                    * Added something
 
-            ### Dependencies
+                    ### Dependencies
 
-            * Upgraded mockito
-            """
+                    * Upgraded mockito
+                    """
                                 .replace("$now", LocalDate.now().toString()));
     }
 
@@ -234,11 +248,11 @@ class ChangeLogUpdaterIT {
     void testGenerateChangelogTwiceWithoutTags() throws IOException, ProcessFailedException {
         // arrange
         addCommits("chore: Added something", "deps: Upgraded mockito");
-        changeLogUpdater.updateChangeLog();
+        updateChangeLog();
         String contents = readChangeLog();
 
         // act
-        changeLogUpdater.updateChangeLog();
+        updateChangeLog();
 
         // assert
         String contents2 = readChangeLog();
@@ -250,11 +264,11 @@ class ChangeLogUpdaterIT {
         // arrange
         addCommits("chore: Added something", "deps: Upgraded mockito");
         tag();
-        changeLogUpdater.updateChangeLog();
+        updateChangeLog();
         String contents = readChangeLog();
 
         // act
-        changeLogUpdater.updateChangeLog();
+        updateChangeLog();
 
         // assert
         String contents2 = readChangeLog();
@@ -267,11 +281,11 @@ class ChangeLogUpdaterIT {
         addCommits("chore: Added something", "deps: Upgraded mockito");
         tag();
         addCommits("fix: Important hotfix");
-        changeLogUpdater.updateChangeLog();
+        updateChangeLog();
         String contents = readChangeLog();
 
         // act
-        changeLogUpdater.updateChangeLog();
+        updateChangeLog();
 
         // assert
         String contents2 = readChangeLog();
@@ -285,46 +299,20 @@ class ChangeLogUpdaterIT {
         tag();
 
         // act
-        changeLogUpdater.updateChangeLog();
+        updateChangeLog();
 
         // assert
         assertThat(readChangeLog())
                 .isEqualToNormalizingNewlines(
                         """
-                # Changelog
+                    # Changelog
 
-                ## [1.0] - $now
+                    ## [1.0] - $now
 
-                ### Miscellaneous Tasks
+                    ### Miscellaneous Tasks
 
-                * Added something
-                """
-                                .replace("$now", LocalDate.now().toString()));
-    }
-
-    @Test
-    void testOverwrite() throws IOException, ProcessFailedException {
-        // arrange
-        addCommits("chore: Added something", "[maven-release-plugin]: release 1.0");
-        tag();
-        changeLogUpdater.updateChangeLog();
-        writeChangeLog(readChangeLog().replace("something", "oops"));
-
-        // act
-        changeLogUpdater.updateChangeLog(true);
-
-        // assert
-        assertThat(readChangeLog())
-                .isEqualToNormalizingNewlines(
-                        """
-                # Changelog
-
-                ## [1.0] - $now
-
-                ### Miscellaneous Tasks
-
-                * Added something
-                """
+                    * Added something
+                    """
                                 .replace("$now", LocalDate.now().toString()));
     }
 
@@ -333,24 +321,24 @@ class ChangeLogUpdaterIT {
         // arrange
         addCommits("chore: Added something", "[maven-release-plugin]: release 1.0");
         tag();
-        changeLogUpdater.updateChangeLog();
+        updateChangeLog();
         writeChangeLog(readChangeLog().replace("something", "oops"));
 
         // act
-        changeLogUpdater.updateChangeLog();
+        updateChangeLog();
 
         // assert
         assertThat(readChangeLog())
                 .isEqualToNormalizingNewlines(
                         """
-                # Changelog
+        # Changelog
 
-                ## [1.0] - $now
+        ## [1.0] - $now
 
-                ### Miscellaneous Tasks
+        ### Miscellaneous Tasks
 
-                * Added oops
-                """
+        * Added oops
+        """
                                 .replace("$now", LocalDate.now().toString()));
     }
 
@@ -360,11 +348,43 @@ class ChangeLogUpdaterIT {
         addCommits("chore: Added something", "[maven-release-plugin]: release 1.0");
         tag();
         addCommits("fix: Various fixes");
-        changeLogUpdater.updateChangeLog();
+        updateChangeLog();
         writeChangeLog(readChangeLog().replace("something", "oops").replace("Various", "Hilarious"));
 
         // act
-        changeLogUpdater.updateChangeLog();
+        updateChangeLog();
+
+        // assert
+        assertThat(readChangeLog())
+                .isEqualToNormalizingNewlines(
+                        """
+        # Changelog
+
+        ## Unreleased
+
+        ### Fixes
+
+        * Various fixes
+
+        ## [1.0] - $now
+
+        ### Miscellaneous Tasks
+
+        * Added oops
+        """
+                                .replace("$now", LocalDate.now().toString()));
+    }
+
+    @Test
+    void testOverwrite() throws IOException, ProcessFailedException {
+        // arrange
+        addCommits("chore: Added something", "[maven-release-plugin]: release 1.0");
+        tag();
+        updateChangeLog();
+        writeChangeLog(readChangeLog().replace("something", "oops"));
+
+        // act
+        updateChangeLog(builder -> builder.overwrite(true));
 
         // assert
         assertThat(readChangeLog())
@@ -372,17 +392,11 @@ class ChangeLogUpdaterIT {
                         """
                 # Changelog
 
-                ## Unreleased
-
-                ### Fixes
-
-                * Various fixes
-
                 ## [1.0] - $now
 
                 ### Miscellaneous Tasks
 
-                * Added oops
+                * Added something
                 """
                                 .replace("$now", LocalDate.now().toString()));
     }
@@ -393,7 +407,7 @@ class ChangeLogUpdaterIT {
         addCommits("chore: Added something", "[maven-release-plugin]: release 1.0");
 
         // act
-        changeLogUpdater.updateChangeLog(false, new SemVer(1, 0, 0));
+        updateChangeLog(builder -> builder.futureVersion(new SemVer(1, 0, 0)));
 
         // assert
         assertThat(readChangeLog())

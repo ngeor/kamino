@@ -3,6 +3,7 @@ package com.github.ngeor.mr;
 import static com.github.ngeor.mr.Defaults.XML_INDENTATION;
 
 import com.github.ngeor.changelog.ChangeLogUpdater;
+import com.github.ngeor.changelog.ImmutableOptions;
 import com.github.ngeor.changelog.TagPrefix;
 import com.github.ngeor.git.Git;
 import com.github.ngeor.git.PushOption;
@@ -65,8 +66,13 @@ public final class MavenReleaser {
             replacePomWithEffectivePom(modulePomFile, tag);
 
             // update changelog
-            new ChangeLogUpdater(options.monorepoRoot(), options.path(), options.formatOptions())
-                    .updateChangeLog(false, options.nextVersion());
+            new ChangeLogUpdater(ImmutableOptions.builder()
+                            .rootDirectory(options.monorepoRoot())
+                            .modulePath(options.path())
+                            .formatOptions(options.formatOptions())
+                            .futureVersion(options.nextVersion())
+                            .build())
+                    .updateChangeLog();
 
             // commit and tag
             git.addAll();

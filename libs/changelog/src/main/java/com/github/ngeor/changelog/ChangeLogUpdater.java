@@ -1,6 +1,5 @@
 package com.github.ngeor.changelog;
 
-import com.github.ngeor.changelog.format.FormatOptions;
 import com.github.ngeor.changelog.format.FormattedRelease;
 import com.github.ngeor.changelog.format.Formatter;
 import com.github.ngeor.changelog.group.CommitGrouper;
@@ -15,7 +14,6 @@ import com.github.ngeor.markdown.MarkdownReader;
 import com.github.ngeor.markdown.MarkdownWriter;
 import com.github.ngeor.markdown.Section;
 import com.github.ngeor.process.ProcessFailedException;
-import com.github.ngeor.versions.SemVer;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -26,51 +24,39 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public class ChangeLogUpdater {
-    private final File rootDirectory;
-    private final String modulePath;
+    private final Options options;
     private final Git git;
-    private final FormatOptions formatOptions;
     private final TagPrefix tagPrefix;
 
-    public ChangeLogUpdater(File rootDirectory, String modulePath, FormatOptions formatOptions) {
-        this.rootDirectory = Objects.requireNonNull(rootDirectory);
-        this.modulePath = modulePath;
-        this.git = new Git(rootDirectory);
-        this.formatOptions = Objects.requireNonNull(formatOptions);
-        this.tagPrefix = TagPrefix.forPath(modulePath);
+    public ChangeLogUpdater(Options options) {
+        this.options = Objects.requireNonNull(options);
+        this.git = new Git(options.rootDirectory());
+        this.tagPrefix = TagPrefix.forPath(options.modulePath().orElse(null));
     }
 
-    void updateChangeLog() throws IOException, ProcessFailedException {
-        updateChangeLog(false);
-    }
-
-    public void updateChangeLog(boolean overwrite) throws IOException, ProcessFailedException {
-        updateChangeLog(overwrite, null);
-    }
-
-    public void updateChangeLog(boolean overwrite, SemVer futureVersion) throws IOException, ProcessFailedException {
+    public void updateChangeLog() throws IOException, ProcessFailedException {
         // TODO parallelize this part with the part that parses the changelog
         // NOTE: Optional is only used as syntactic sugar, to have the pipeline-style chaining.
         FormattedRelease formattedRelease = Optional.of(getCommits())
                 .map(this::groupCommits)
                 .map(this::createRelease)
-                .map(r -> formatRelease(r, futureVersion))
+                .map(this::formatRelease)
                 .orElseThrow();
 
         File changeLogFile = getChangeLogFile();
         List<Item> markdown = parseExistingChangeLog(changeLogFile);
-        merge(markdown, formattedRelease, overwrite);
+        merge(markdown, formattedRelease);
         saveChangeLog(changeLogFile, markdown);
     }
 
     private File getChangeLogFile() {
-        Path rootPath = rootDirectory.toPath();
-        Path projectPath = modulePath == null ? rootPath : rootPath.resolve(modulePath);
+        Path rootPath = options.rootDirectory().toPath();
+        Path projectPath = options.modulePath().map(rootPath::resolve).orElse(rootPath);
         return projectPath.resolve("CHANGELOG.md").toFile();
     }
 
     private Stream<Commit> getCommits() throws ProcessFailedException {
-        return git.revList((String) null, modulePath);
+        return git.revList((String) null, options.modulePath().orElse(null));
     }
 
     private List<List<Commit>> groupCommits(Stream<Commit> commits) {
@@ -91,8 +77,9 @@ public class ChangeLogUpdater {
                 : ("refactor".equals(commitInfo.type()) ? "chore" : commitInfo.type());
     }
 
-    private FormattedRelease formatRelease(Release release, SemVer futureVersion) {
-        Formatter formatter = new Formatter(formatOptions, tagPrefix, futureVersion);
+    private FormattedRelease formatRelease(Release release) {
+        Formatter formatter = new Formatter(
+                options.formatOptions(), tagPrefix, options.futureVersion().orElse(null));
         return formatter.format(release);
     }
 
@@ -102,8 +89,8 @@ public class ChangeLogUpdater {
                 : new ArrayList<>(List.of(new Section(1, "Changelog")));
     }
 
-    private void merge(List<Item> markdown, FormattedRelease formattedRelease, boolean overwrite) {
-        MarkdownMerger markdownMerger = new MarkdownMerger(formatOptions, overwrite);
+    private void merge(List<Item> markdown, FormattedRelease formattedRelease) {
+        MarkdownMerger markdownMerger = new MarkdownMerger(options.formatOptions(), options.overwrite());
         markdownMerger.mergeIntoLeft(markdown, formattedRelease);
     }
 
