@@ -11,7 +11,6 @@ import com.github.ngeor.maven.dom.ElementNames;
 import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.maven.process.Maven;
 import com.github.ngeor.process.ProcessFailedException;
-import com.github.ngeor.versions.SemVerBump;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.File;
@@ -42,8 +41,8 @@ public final class MavenReleaser {
         MavenCoordinates moduleCoordinates = calcModuleCoordinatesAndDoSanityChecks(modulePomFile);
 
         // switch to release version (fixes all usages in the monorepo)
-        setVersion(
-                options.monorepoRoot(), moduleCoordinates, options.nextVersion().toString());
+        VersionDiff releaseDiff = new VersionDiff(moduleCoordinates, options.nextVersion());
+        setVersion(options.monorepoRoot(), releaseDiff);
 
         // make a backup of the pom file
         File backupPom = createBackupOfModulePomFile(modulePomFile);
@@ -65,17 +64,11 @@ public final class MavenReleaser {
         restoreOriginalPom(backupPom, modulePomFile);
 
         // switch to development version
-        String developmentVersion = options.nextVersion()
-                .bump(SemVerBump.MINOR)
-                .preRelease("SNAPSHOT")
-                .toString();
-        setVersion(
-                options.monorepoRoot(),
-                moduleCoordinates.withVersion(options.nextVersion().toString()),
-                developmentVersion);
+        VersionDiff snapshotDiff = releaseDiff.toSnapshot();
+        setVersion(options.monorepoRoot(), snapshotDiff);
         git.addAll();
-        git.commit(
-                String.format("release(%s): switching to development version %s", options.path(), developmentVersion));
+        git.commit(String.format(
+                "release(%s): switching to development version %s", options.path(), snapshotDiff.newVersion()));
 
         if (options.push()) {
             git.push(PushOption.TAGS);
@@ -89,11 +82,10 @@ public final class MavenReleaser {
                 .apply(modulePomFile);
     }
 
-    private static void setVersion(File monorepoRoot, MavenCoordinates moduleCoordinates, String newVersion)
-            throws ProcessFailedException {
+    private static void setVersion(File monorepoRoot, VersionDiff versionDiff) throws ProcessFailedException {
         // maven at monorepo root
         Maven maven = new Maven(monorepoPomFile(monorepoRoot));
-        maven.setVersion(moduleCoordinates, newVersion);
+        maven.setVersion(versionDiff.oldVersion(), versionDiff.newVersion().toString());
     }
 
     private static File createBackupOfModulePomFile(File modulePomFile) throws IOException {
