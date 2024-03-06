@@ -17,7 +17,7 @@ import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
-import java.util.Set;
+import java.util.function.Consumer;
 
 public final class MavenReleaser {
     private final Options options;
@@ -41,7 +41,9 @@ public final class MavenReleaser {
         VersionDiff releaseDiff = new VersionDiff(moduleCoordinates, options.nextVersion());
         Maven maven = new Maven(new File(options.monorepoRoot(), "pom.xml"));
 
-        // switch to release version (fixes all usages in the monorepo)
+        // Switch to release version.
+        // Converts the pom to the effective pom, discarding parent information, so that it
+        // can be published to Maven Central independently.
         switchToReleaseVersion(maven, git, releaseDiff, options, modulePomFile);
 
         // original, i.e. not effective, pom is restored at this point
@@ -57,13 +59,19 @@ public final class MavenReleaser {
     private static void switchToReleaseVersion(
             Maven maven, Git git, VersionDiff releaseDiff, Options options, File modulePomFile)
             throws ProcessFailedException, IOException {
+        // switch to release version (fixes all usages in the monorepo)
         setVersion(maven, releaseDiff);
 
         // make a backup of the pom file
         try (BackupFile ignored = new BackupFile(modulePomFile)) {
             // overwrite pom.xml with effective pom
             String tag = TagPrefix.forPath(options.path()).addTagPrefix(options.nextVersion());
-            replacePomWithEffectivePom(modulePomFile, tag);
+
+            replacePomWithEffectivePom(
+                    modulePomFile,
+                    RemoveParentElements.INSTANCE,
+                    doc -> updateScmTag(doc, tag),
+                    MavenReleaser::ensureNoSnapshotVersions);
 
             // update changelog
             new ChangeLogUpdater(ImmutableOptions.builder()
@@ -77,7 +85,7 @@ public final class MavenReleaser {
             // commit and tag
             git.addAll();
             git.commit(String.format("release(%s): releasing %s", options.path(), options.nextVersion()));
-            git.tag(tag, String.format("Releasing %s", options.nextVersion()));
+            git.tag(tag, String.format("Releasing %s", tag));
         }
     }
 
@@ -101,16 +109,25 @@ public final class MavenReleaser {
         maven.setVersion(versionDiff.oldVersion(), versionDiff.newVersion().toString());
     }
 
-    private static void replacePomWithEffectivePom(File modulePomFile, String tag) {
+    @SafeVarargs
+    private static void replacePomWithEffectivePom(File modulePomFile, Consumer<DocumentWrapper>... consumers) {
+        // need to load the effective pom again because it has switched to the release version
         DocumentWrapper effectivePom = new EffectivePomLoader().apply(modulePomFile);
-        Set<String> elementsToRemove = Set.of(ElementNames.MODULES, ElementNames.PARENT);
-        effectivePom.getDocumentElement().removeChildNodesByName(elementsToRemove::contains);
+        for (Consumer<DocumentWrapper> consumer : consumers) {
+            consumer.accept(effectivePom);
+        }
+        indentAndWrite(modulePomFile, effectivePom);
+    }
+
+    private static void updateScmTag(DocumentWrapper effectivePom, String tag) {
         effectivePom
                 .getDocumentElement()
                 .findChildElements("scm")
                 .flatMap(e -> e.findChildElements("tag"))
                 .forEach(e -> e.setTextContent(tag));
-        ensureNoSnapshotVersions(effectivePom);
+    }
+
+    private static void indentAndWrite(File modulePomFile, DocumentWrapper effectivePom) {
         effectivePom.indent(XML_INDENTATION);
         effectivePom.write(modulePomFile);
     }
