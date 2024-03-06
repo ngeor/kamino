@@ -1,5 +1,7 @@
 package com.github.ngeor.mr;
 
+import static com.github.ngeor.mr.Util.VALID_CHILD_POM_CONTENTS;
+import static com.github.ngeor.mr.Util.VALID_PARENT_POM_CONTENTS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -20,49 +22,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 class MavenReleaserIT {
-    static final String VALID_PARENT_POM_CONTENTS =
-            """
-            <project>
-                <modelVersion>4.0.0</modelVersion>
-                <groupId>com.acme</groupId>
-                <artifactId>monorepo</artifactId>
-                <version>1.0-SNAPSHOT</version>
-                <packaging>pom</packaging>
-                <modules>
-                    <module>lib</module>
-                </modules>
-            </project>
-            """;
-    static final String VALID_CHILD_POM_CONTENTS =
-            """
-            <project>
-                <modelVersion>4.0.0</modelVersion>
-                <groupId>com.acme</groupId>
-                <artifactId>foo</artifactId>
-                <version>1.0-SNAPSHOT</version>
-                <name>foo</name>
-                <description>The library</description>
-                <licenses>
-                    <license>
-                        <name>MIT</name>
-                        <url>https://opensource.org/licenses/MIT</url>
-                    </license>
-                </licenses>
-                <developers>
-                    <developer>
-                        <name>Nikolaos Georgiou</name>
-                        <email>nikolaos.georgiou@gmail.com</email>
-                    </developer>
-                </developers>
-                <scm>
-                    <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
-                    <developerConnection>scm:git:git@github.com:ngeor/kamino.git</developerConnection>
-                    <tag>HEAD</tag>
-                    <url>https://github.com/ngeor/kamino/tree/master/libs/java</url>
-                </scm>
-            </project>
-            """;
-
     @TempDir
     private Path remoteRoot;
 
