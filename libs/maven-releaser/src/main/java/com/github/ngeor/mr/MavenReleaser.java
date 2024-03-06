@@ -68,7 +68,7 @@ public final class MavenReleaser {
             replacePomWithEffectivePom(
                     modulePomFile,
                     RemoveParentElements.INSTANCE,
-                    doc -> updateScmTag(doc, tag),
+                    new UpdateScmTag(tag),
                     EnsureNoSnapshotVersions.INSTANCE);
 
             // update changelog
@@ -115,14 +115,6 @@ public final class MavenReleaser {
             consumer.accept(effectivePom);
         }
         indentAndWrite(modulePomFile, effectivePom);
-    }
-
-    private static void updateScmTag(DocumentWrapper effectivePom, String tag) {
-        effectivePom
-                .getDocumentElement()
-                .findChildElements("scm")
-                .flatMap(e -> e.findChildElements("tag"))
-                .forEach(e -> e.setTextContent(tag));
     }
 
     private static void indentAndWrite(File modulePomFile, DocumentWrapper effectivePom) {
