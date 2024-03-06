@@ -1,11 +1,11 @@
 package com.github.ngeor.mr;
 
+import static com.github.ngeor.mr.FnUtil.toUnaryOperator;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.UnaryOperator;
 import org.assertj.core.api.AbstractThrowableAssert;
 
 public final class Util {
@@ -75,13 +75,6 @@ public final class Util {
 
     public static AbstractThrowableAssert<?, ? extends Throwable> assertRemovingElementThrows(
             String elementName, Consumer<DocumentWrapper> consumer) {
-        return assertInvalidPom(removeElement(elementName), toUnaryOperator(consumer));
-    }
-
-    public static <E> UnaryOperator<E> toUnaryOperator(Consumer<E> consumer) {
-        return input -> {
-            consumer.accept(input);
-            return input;
-        };
+        return assertRemovingElementThrows(elementName, toUnaryOperator(consumer));
     }
 }

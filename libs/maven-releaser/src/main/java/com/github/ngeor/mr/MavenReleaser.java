@@ -83,13 +83,10 @@ public final class MavenReleaser {
     }
 
     private static MavenCoordinates calcModuleCoordinatesAndDoSanityChecks(File modulePomFile) {
-        DocumentWrapper effectivePom = new EffectivePomLoader().apply(modulePomFile);
-        new PomBasicValidator().accept(effectivePom);
-        return calcModuleCoordinates(effectivePom);
-    }
-
-    static MavenCoordinates calcModuleCoordinates(DocumentWrapper effectivePom) {
-        return DomHelper.coordinates(effectivePom);
+        return new EffectivePomLoader()
+                .andThen(FnUtil.toUnaryOperator(new PomBasicValidator()))
+                .andThen(DomHelper::coordinates)
+                .apply(modulePomFile);
     }
 
     private static void setVersion(File monorepoRoot, MavenCoordinates moduleCoordinates, String newVersion)
