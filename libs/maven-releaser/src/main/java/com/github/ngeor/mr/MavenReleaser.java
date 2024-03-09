@@ -14,7 +14,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.function.Consumer;
-import org.apache.commons.lang3.function.Failable;
 
 public final class MavenReleaser {
     private final Options options;
@@ -69,8 +68,7 @@ public final class MavenReleaser {
                     options.xmlIndentation(),
                     RemoveParentElements.INSTANCE,
                     new UpdateScmTag(tag),
-                    Failable.asConsumer(
-                            new ResolveReactorSnapshots(options.monorepoRoot(), git, releaseDiff.oldVersion())),
+                    new ResolveReactorSnapshots(options.monorepoRoot(), git, releaseDiff.oldVersion()),
                     EnsureNoSnapshotVersions.INSTANCE);
 
             // update changelog

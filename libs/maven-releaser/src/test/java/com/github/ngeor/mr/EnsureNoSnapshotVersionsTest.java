@@ -44,7 +44,7 @@ class EnsureNoSnapshotVersionsTest {
 
         // act and assert
         assertThatThrownBy(() -> EnsureNoSnapshotVersions.INSTANCE.accept(document))
-                .hasMessage("Snapshot version 1.0-SNAPSHOT is not allowed (project/version)");
+                .hasMessage("Snapshot version 1.0-SNAPSHOT is not allowed (project)");
     }
 
     @Test
@@ -54,7 +54,7 @@ class EnsureNoSnapshotVersionsTest {
 
         // act and assert
         assertThatThrownBy(() -> EnsureNoSnapshotVersions.INSTANCE.accept(document))
-                .hasMessage("Snapshot version 2.0-SNAPSHOT is not allowed (project/parent/version)");
+                .hasMessage("Snapshot version 2.0-SNAPSHOT is not allowed (project/parent)");
     }
 
     @Test
@@ -64,6 +64,6 @@ class EnsureNoSnapshotVersionsTest {
 
         // act and assert
         assertThatThrownBy(() -> EnsureNoSnapshotVersions.INSTANCE.accept(document))
-                .hasMessage("Snapshot version 3.0-SNAPSHOT is not allowed (project/dependencies/dependency/version)");
+                .hasMessage("Snapshot version 3.0-SNAPSHOT is not allowed (project/dependencies/dependency)");
     }
 }
