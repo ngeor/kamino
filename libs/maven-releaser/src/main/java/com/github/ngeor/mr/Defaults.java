@@ -4,9 +4,9 @@ import com.github.ngeor.changelog.format.FormatOptions;
 import java.util.Map;
 
 public final class Defaults {
-    private Defaults() {}
-
     public static final String XML_INDENTATION = "  ";
+
+    private Defaults() {}
 
     public static FormatOptions defaultFormatOptions() {
         return new FormatOptions(

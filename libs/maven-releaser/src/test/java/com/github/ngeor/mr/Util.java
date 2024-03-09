@@ -14,8 +14,6 @@ import java.util.function.Function;
 import org.assertj.core.api.AbstractThrowableAssert;
 
 public final class Util {
-    private Util() {}
-
     public static final String VALID_PARENT_POM_CONTENTS =
             """
         <project>
@@ -58,6 +56,8 @@ public final class Util {
             </scm>
         </project>
         """;
+
+    private Util() {}
 
     public static String removeElement(String elementName) {
         return VALID_CHILD_POM_CONTENTS.replaceAll(String.format("<%s>.+?</%s>", elementName, elementName), "");

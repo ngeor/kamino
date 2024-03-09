@@ -18,6 +18,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+@SuppressWarnings("MagicNumber")
 class MavenReleaserIT {
     @TempDir
     private Path remoteRoot;
@@ -78,6 +79,7 @@ class MavenReleaserIT {
                 .formatOptions(Defaults.defaultFormatOptions())
                 .nextVersion(new SemVer(1, 0, 0))
                 .push(false)
+                .xmlIndentation("    ")
                 .build();
         new MavenReleaser(options).prepareRelease();
     }
@@ -208,5 +210,269 @@ class MavenReleaserIT {
 
         // act and assert
         assertThatThrownBy(this::act).hasMessageContaining("Snapshot version 0.1.2-SNAPSHOT is not allowed");
+    }
+
+    @Test
+    void resolveReactorSnapshots() throws IOException, ProcessFailedException {
+        // arrange
+        Files.writeString(
+                monorepoRoot.resolve("pom.xml"),
+                """
+                <project>
+                    <modelVersion>4.0.0</modelVersion>
+                    <groupId>com.acme</groupId>
+                    <artifactId>aggregator</artifactId>
+                    <version>1.0.0-SNAPSHOT</version>
+                    <packaging>pom</packaging>
+                    <modules>
+                        <module>foo</module>
+                        <module>bar</module>
+                    </modules>
+                </project>
+                """);
+        Files.createDirectory(monorepoRoot.resolve("foo"));
+        Files.writeString(
+                monorepoRoot.resolve("foo").resolve("pom.xml"),
+                """
+                <project>
+                    <modelVersion>4.0.0</modelVersion>
+                    <groupId>com.acme</groupId>
+                    <artifactId>foo</artifactId>
+                    <version>2.0.0-SNAPSHOT</version>
+                    <packaging>pom</packaging>
+                    <name>foo</name>
+                    <description>foo</description>
+                    <licenses>
+                        <license>
+                            <name>MIT</name>
+                            <url>https://opensource.org/licenses/MIT</url>
+                        </license>
+                    </licenses>
+                    <developers>
+                        <developer>
+                            <name>Nikolaos Georgiou</name>
+                            <email>nikolaos.georgiou@gmail.com</email>
+                        </developer>
+                    </developers>
+                    <scm>
+                        <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
+                        <developerConnection>scm:git:git@github.com:ngeor/kamino.git</developerConnection>
+                        <tag>HEAD</tag>
+                        <url>https://github.com/ngeor/kamino/tree/master/libs/java</url>
+                    </scm>
+                </project>
+                """);
+        Files.createDirectory(monorepoRoot.resolve("bar"));
+        Files.writeString(
+                monorepoRoot.resolve("bar").resolve("pom.xml"),
+                """
+                <project>
+                    <modelVersion>4.0.0</modelVersion>
+                    <groupId>com.acme</groupId>
+                    <artifactId>bar</artifactId>
+                    <version>3.0.0-SNAPSHOT</version>
+                    <packaging>pom</packaging>
+                    <name>bar</name>
+                    <description>bar</description>
+                    <licenses>
+                        <license>
+                            <name>MIT</name>
+                            <url>https://opensource.org/licenses/MIT</url>
+                        </license>
+                    </licenses>
+                    <developers>
+                        <developer>
+                            <name>Nikolaos Georgiou</name>
+                            <email>nikolaos.georgiou@gmail.com</email>
+                        </developer>
+                    </developers>
+                    <scm>
+                        <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
+                        <developerConnection>scm:git:git@github.com:ngeor/kamino.git</developerConnection>
+                        <tag>HEAD</tag>
+                        <url>https://github.com/ngeor/kamino/tree/master/libs/java</url>
+                    </scm>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.acme</groupId>
+                            <artifactId>foo</artifactId>
+                            <version>2.0.0-SNAPSHOT</version>
+                        </dependency>
+                    </dependencies>
+                </project>
+                """);
+        git.addAll();
+        git.commit("Initial import");
+        git.push();
+
+        new MavenReleaser(ImmutableOptions.builder()
+                        .monorepoRoot(monorepoRoot.toFile())
+                        .path("foo")
+                        .formatOptions(Defaults.defaultFormatOptions())
+                        .nextVersion(new SemVer(2, 0, 0))
+                        .push(true)
+                        .xmlIndentation("    ")
+                        .build())
+                .prepareRelease();
+
+        git.push();
+
+        new MavenReleaser(ImmutableOptions.builder()
+                        .monorepoRoot(monorepoRoot.toFile())
+                        .path("bar")
+                        .formatOptions(Defaults.defaultFormatOptions())
+                        .nextVersion(new SemVer(3, 0, 0))
+                        .push(true)
+                        .xmlIndentation("    ")
+                        .build())
+                .prepareRelease();
+
+        git.push();
+
+        assertThat(Files.readString(monorepoRoot.resolve("bar").resolve("pom.xml")))
+                .as("bar/pom.xml development version")
+                .isEqualToNormalizingNewlines(
+                        """
+                <project>
+                    <modelVersion>4.0.0</modelVersion>
+                    <groupId>com.acme</groupId>
+                    <artifactId>bar</artifactId>
+                    <version>3.1.0-SNAPSHOT</version>
+                    <packaging>pom</packaging>
+                    <name>bar</name>
+                    <description>bar</description>
+                    <licenses>
+                        <license>
+                            <name>MIT</name>
+                            <url>https://opensource.org/licenses/MIT</url>
+                        </license>
+                    </licenses>
+                    <developers>
+                        <developer>
+                            <name>Nikolaos Georgiou</name>
+                            <email>nikolaos.georgiou@gmail.com</email>
+                        </developer>
+                    </developers>
+                    <scm>
+                        <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
+                        <developerConnection>scm:git:git@github.com:ngeor/kamino.git</developerConnection>
+                        <tag>HEAD</tag>
+                        <url>https://github.com/ngeor/kamino/tree/master/libs/java</url>
+                    </scm>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.acme</groupId>
+                            <artifactId>foo</artifactId>
+                            <version>2.1.0-SNAPSHOT</version>
+                        </dependency>
+                    </dependencies>
+                </project>
+                """);
+        assertThat(Files.readString(monorepoRoot.resolve("foo").resolve("pom.xml")))
+                .as("foo/pom.xml development version")
+                .isEqualToNormalizingNewlines(
+                        """
+                <project>
+                    <modelVersion>4.0.0</modelVersion>
+                    <groupId>com.acme</groupId>
+                    <artifactId>foo</artifactId>
+                    <version>2.1.0-SNAPSHOT</version>
+                    <packaging>pom</packaging>
+                    <name>foo</name>
+                    <description>foo</description>
+                    <licenses>
+                        <license>
+                            <name>MIT</name>
+                            <url>https://opensource.org/licenses/MIT</url>
+                        </license>
+                    </licenses>
+                    <developers>
+                        <developer>
+                            <name>Nikolaos Georgiou</name>
+                            <email>nikolaos.georgiou@gmail.com</email>
+                        </developer>
+                    </developers>
+                    <scm>
+                        <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
+                        <developerConnection>scm:git:git@github.com:ngeor/kamino.git</developerConnection>
+                        <tag>HEAD</tag>
+                        <url>https://github.com/ngeor/kamino/tree/master/libs/java</url>
+                    </scm>
+                </project>
+                """);
+
+        git.checkout("bar/v3.0.0");
+
+        assertThat(Files.readString(monorepoRoot.resolve("bar").resolve("pom.xml")))
+                .as("bar/pom.xml release version")
+                .isEqualToNormalizingNewlines(
+                        """
+                <project>
+                    <modelVersion>4.0.0</modelVersion>
+                    <groupId>com.acme</groupId>
+                    <artifactId>bar</artifactId>
+                    <version>3.0.0</version>
+                    <packaging>pom</packaging>
+                    <name>bar</name>
+                    <description>bar</description>
+                    <licenses>
+                        <license>
+                            <name>MIT</name>
+                            <url>https://opensource.org/licenses/MIT</url>
+                        </license>
+                    </licenses>
+                    <developers>
+                        <developer>
+                            <name>Nikolaos Georgiou</name>
+                            <email>nikolaos.georgiou@gmail.com</email>
+                        </developer>
+                    </developers>
+                    <scm>
+                        <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
+                        <developerConnection>scm:git:git@github.com:ngeor/kamino.git</developerConnection>
+                        <tag>bar/v3.0.0</tag>
+                        <url>https://github.com/ngeor/kamino/tree/master/libs/java</url>
+                    </scm>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.acme</groupId>
+                            <artifactId>foo</artifactId>
+                            <version>2.0.0</version>
+                        </dependency>
+                    </dependencies>
+                </project>
+                """);
+        assertThat(Files.readString(monorepoRoot.resolve("foo").resolve("pom.xml")))
+                .as("foo/pom.xml development version")
+                .isEqualToNormalizingNewlines(
+                        """
+                <project>
+                    <modelVersion>4.0.0</modelVersion>
+                    <groupId>com.acme</groupId>
+                    <artifactId>foo</artifactId>
+                    <version>2.1.0-SNAPSHOT</version>
+                    <packaging>pom</packaging>
+                    <name>foo</name>
+                    <description>foo</description>
+                    <licenses>
+                        <license>
+                            <name>MIT</name>
+                            <url>https://opensource.org/licenses/MIT</url>
+                        </license>
+                    </licenses>
+                    <developers>
+                        <developer>
+                            <name>Nikolaos Georgiou</name>
+                            <email>nikolaos.georgiou@gmail.com</email>
+                        </developer>
+                    </developers>
+                    <scm>
+                        <connection>scm:git:https://github.com/ngeor/kamino.git</connection>
+                        <developerConnection>scm:git:git@github.com:ngeor/kamino.git</developerConnection>
+                        <tag>HEAD</tag>
+                        <url>https://github.com/ngeor/kamino/tree/master/libs/java</url>
+                    </scm>
+                </project>
+                """);
     }
 }

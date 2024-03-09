@@ -40,6 +40,7 @@ public class ReleaseCommand extends BaseCommand {
                 .monorepoRoot(rootDirectory)
                 .path(path)
                 .formatOptions(Defaults.defaultFormatOptions())
+                .xmlIndentation(Defaults.XML_INDENTATION)
                 .nextVersion(nextVersion)
                 .push(push)
                 .build();

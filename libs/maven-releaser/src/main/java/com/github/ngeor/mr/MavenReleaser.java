@@ -1,7 +1,5 @@
 package com.github.ngeor.mr;
 
-import static com.github.ngeor.mr.Defaults.XML_INDENTATION;
-
 import com.github.ngeor.changelog.ChangeLogUpdater;
 import com.github.ngeor.changelog.ImmutableOptions;
 import com.github.ngeor.changelog.TagPrefix;
@@ -16,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.function.Consumer;
+import org.apache.commons.lang3.function.Failable;
 
 public final class MavenReleaser {
     private final Options options;
@@ -67,8 +66,10 @@ public final class MavenReleaser {
 
             replacePomWithEffectivePom(
                     modulePomFile,
+                    options.xmlIndentation(),
                     RemoveParentElements.INSTANCE,
                     new UpdateScmTag(tag),
+                    Failable.asConsumer(new ResolveReactorSnapshots(options.monorepoRoot(), git, releaseDiff.oldVersion())),
                     EnsureNoSnapshotVersions.INSTANCE);
 
             // update changelog
@@ -108,17 +109,18 @@ public final class MavenReleaser {
     }
 
     @SafeVarargs
-    private static void replacePomWithEffectivePom(File modulePomFile, Consumer<DocumentWrapper>... consumers) {
+    private static void replacePomWithEffectivePom(
+            File modulePomFile, String xmlIndentation, Consumer<DocumentWrapper>... consumers) {
         // need to load the effective pom again because it has switched to the release version
         DocumentWrapper effectivePom = EffectivePomLoader.INSTANCE.apply(modulePomFile);
         for (Consumer<DocumentWrapper> consumer : consumers) {
             consumer.accept(effectivePom);
         }
-        indentAndWrite(modulePomFile, effectivePom);
+        indentAndWrite(modulePomFile, effectivePom, xmlIndentation);
     }
 
-    private static void indentAndWrite(File modulePomFile, DocumentWrapper effectivePom) {
-        effectivePom.indent(XML_INDENTATION);
+    private static void indentAndWrite(File modulePomFile, DocumentWrapper effectivePom, String xmlIndentation) {
+        effectivePom.indent(xmlIndentation);
         effectivePom.write(modulePomFile);
     }
 }

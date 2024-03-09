@@ -16,4 +16,6 @@ public interface Options {
     SemVer nextVersion();
 
     boolean push();
+
+    String xmlIndentation();
 }

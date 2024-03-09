@@ -119,6 +119,7 @@ public class ProjectImporter {
                     .monorepoRoot(monorepoRoot)
                     .path(modulePath())
                     .formatOptions(Defaults.defaultFormatOptions())
+                    .xmlIndentation(Defaults.XML_INDENTATION)
                     .nextVersion(nextVersion)
                     .push(true)
                     .build();
