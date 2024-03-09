@@ -44,9 +44,7 @@ public class ResolveReactorSnapshots implements FailableConsumer<DocumentWrapper
         String[] values =
                 element.firstElementsText(ElementNames.GROUP_ID, ElementNames.ARTIFACT_ID, ElementNames.VERSION);
         MavenCoordinates coordinates = new MavenCoordinates(values[0], values[1], values[2]);
-        if (coordinates.hasMissingFields()
-                || coordinates.equals(moduleCoordinates)
-                || !coordinates.version().endsWith("-SNAPSHOT")) {
+        if (coordinates.hasMissingFields() || coordinates.equals(moduleCoordinates) || !coordinates.isSnapshot()) {
             return;
         }
 

@@ -69,7 +69,8 @@ public final class MavenReleaser {
                     options.xmlIndentation(),
                     RemoveParentElements.INSTANCE,
                     new UpdateScmTag(tag),
-                    Failable.asConsumer(new ResolveReactorSnapshots(options.monorepoRoot(), git, releaseDiff.oldVersion())),
+                    Failable.asConsumer(
+                            new ResolveReactorSnapshots(options.monorepoRoot(), git, releaseDiff.oldVersion())),
                     EnsureNoSnapshotVersions.INSTANCE);
 
             // update changelog

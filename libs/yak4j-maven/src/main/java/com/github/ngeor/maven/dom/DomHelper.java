@@ -37,7 +37,7 @@ public final class DomHelper {
     private static ParentPom getParentPom(ElementWrapper parentElement) {
         Objects.requireNonNull(parentElement);
         String[] items = parentElement.firstElementsText(GROUP_ID, ARTIFACT_ID, VERSION, RELATIVE_PATH);
-        return new ParentPom(new MavenCoordinates(items[0], items[1], items[2]), items[3]);
+        return new ParentPom(items[0], items[1], items[2], items[3]);
     }
 
     public static Stream<MavenCoordinates> getDependencies(DocumentWrapper document) {

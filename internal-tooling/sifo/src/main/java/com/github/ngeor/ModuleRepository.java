@@ -6,6 +6,7 @@ import com.github.ngeor.maven.document.parent.ParentDocumentLoaderIterator;
 import com.github.ngeor.maven.document.property.CanResolveProperties;
 import com.github.ngeor.maven.document.repository.PomRepository;
 import com.github.ngeor.maven.dom.DomHelper;
+import com.github.ngeor.maven.dom.HasVersion;
 import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.nio.file.Path;
@@ -80,7 +81,7 @@ public class ModuleRepository {
         return StreamSupport.stream(iterable.spliterator(), false)
                 .map(DocumentLoader::loadDocument)
                 .map(DomHelper::coordinates)
-                .filter(c -> c.version().endsWith("-SNAPSHOT"))
+                .filter(HasVersion::isSnapshot)
                 .flatMap(c -> moduleByCoordinates(c).stream())
                 .collect(Collectors.toSet());
     }
