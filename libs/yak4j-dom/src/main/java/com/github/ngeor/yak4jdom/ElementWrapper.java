@@ -31,8 +31,12 @@ public class ElementWrapper {
         return new ChildElementWrapperIterator(element);
     }
 
+    public Iterable<ElementWrapper> getChildElementsAsIterable() {
+        return this::getChildElementsAsIterator;
+    }
+
     public Stream<ElementWrapper> getChildElements() {
-        Iterable<ElementWrapper> iterable = this::getChildElementsAsIterator;
+        Iterable<ElementWrapper> iterable = getChildElementsAsIterable();
         return StreamSupport.stream(iterable.spliterator(), false);
     }
 
@@ -105,12 +109,12 @@ public class ElementWrapper {
         }
     }
 
-    public void indent(String indentation) {
-        indent(1, indentation);
+    public boolean hasChildElements() {
+        return getChildElementsAsIterator().hasNext();
     }
 
-    public boolean hasChildElements() {
-        return getChildElements().findAny().isPresent();
+    public void indent(String indentation) {
+        indent(1, indentation);
     }
 
     private void indent(int level, String indentation) {
@@ -216,7 +220,7 @@ public class ElementWrapper {
         Node parentNode = element.getParentNode();
         if (parentNode == null
                 || parentNode.getNodeType() == Node.DOCUMENT_NODE
-                || (!(parentNode instanceof Element))
+                || !(parentNode instanceof Element)
                 || parentNode == element) {
             return getNodeName();
         }
@@ -229,7 +233,7 @@ public class ElementWrapper {
         Validate.isTrue(names.length >= 1, "At least one name is required");
         StringIntMap pending = new StringIntMap(names);
         String[] result = new String[names.length];
-        for (Iterator<ElementWrapper> it = getChildElementsAsIterator(); !pending.isEmpty() && it.hasNext(); ) {
+        for (Iterator<ElementWrapper> it = getChildElementsAsIterator(); !pending.isEmpty() && it.hasNext();) {
             ElementWrapper e = it.next();
             String nodeName = e.getNodeName();
             int i = nodeName == null ? -1 : pending.get(nodeName);
