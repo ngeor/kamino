@@ -105,7 +105,8 @@ public class DocumentWrapper {
             DOMSource domSource = new DOMSource(document);
             StreamResult streamResult = new StreamResult(writer);
             transformer.transform(domSource, streamResult);
-        } catch (ConcurrentException | TransformerException ex) {
+            writer.append(System.lineSeparator());
+        } catch (ConcurrentException | TransformerException | IOException ex) {
             throw new DomRuntimeException(ex);
         }
     }
@@ -113,7 +114,7 @@ public class DocumentWrapper {
     public String writeToString() {
         try (StringWriter writer = new StringWriter()) {
             write(writer);
-            return writer + System.lineSeparator();
+            return writer.toString();
         } catch (IOException ex) {
             throw new DomRuntimeException(ex);
         }

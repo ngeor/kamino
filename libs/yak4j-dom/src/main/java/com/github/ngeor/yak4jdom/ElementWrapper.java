@@ -233,15 +233,19 @@ public class ElementWrapper {
         Validate.isTrue(names.length >= 1, "At least one name is required");
         StringIntMap pending = new StringIntMap(names);
         String[] result = new String[names.length];
-        for (Iterator<ElementWrapper> it = getChildElementsAsIterator(); !pending.isEmpty() && it.hasNext();) {
-            ElementWrapper e = it.next();
+        for (ElementWrapper e : getChildElementsAsIterable()) {
             String nodeName = e.getNodeName();
-            int i = nodeName == null ? -1 : pending.get(nodeName);
-            if (i >= 0) {
-                String text = e.getTextContentTrimmed().orElse(null);
-                if (text != null) {
-                    result[i] = text;
-                    pending.remove(nodeName);
+            if (nodeName != null) {
+                int i = pending.get(nodeName);
+                if (i >= 0) {
+                    String text = e.getTextContentTrimmed().orElse(null);
+                    if (text != null) {
+                        result[i] = text;
+                        pending.remove(nodeName);
+                        if (pending.isEmpty()) {
+                            break;
+                        }
+                    }
                 }
             }
         }
