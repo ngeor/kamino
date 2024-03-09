@@ -68,8 +68,4 @@ public final class Maven {
                 String.format("-DoldVersion=%s", moduleCoordinates.version()),
                 String.format("-DnewVersion=%s", newVersion));
     }
-
-    public void deploy() throws ProcessFailedException {
-        processHelper.runInheritIO("deploy");
-    }
 }
