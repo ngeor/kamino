@@ -1,6 +1,11 @@
 # Changelog
 
-## Unreleased
+## [2.0.0](https://github.com/ngeor/kamino/compare/libs/versions/v1.0.1...libs/versions/v2.0.0) - 2024-03-10
+
+### Features
+
+* Added parent pom for public libraries
+* **Breaking**: Added tryParse methods, made parse methods return an exception instead of returning null
 
 ### Miscellaneous Tasks
 
