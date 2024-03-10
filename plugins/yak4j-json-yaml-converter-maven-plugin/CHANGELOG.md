@@ -2,7 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## [0.9.0](https://github.com/ngeor/kamino/compare/plugins/yak4j-json-yaml-converter-maven-plugin/v0.8.2...plugins/yak4j-json-yaml-converter-maven-plugin/v0.9.0) - 2024-03-10
+
+### Features
+
+* Added parent pom for public libraries
 
 ### Fixes
 
