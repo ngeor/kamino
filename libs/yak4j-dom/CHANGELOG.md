@@ -2,11 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## [1.11.0](https://github.com/ngeor/kamino/compare/libs/yak4j-dom/v1.10.0...libs/yak4j-dom/v1.11.0) - 2024-03-10
 
 ### Features
 
 * Added method importNode
+* Implemented toString for ElementWrapper
+* Added "removeChildNodesByName" overload that accepts a Predicate
+* Added parent pom for public libraries
+* Returning whether transformTextNodes had changes or not
+* Added `getChildElementsAsIterable` method
+
+### Fixes
+
+* Ensure XML documents have EOL at EOF
 
 ## [1.10.0](https://github.com/ngeor/kamino/compare/libs/yak4j-dom/v1.9.7...libs/yak4j-dom/v1.10.0) - 2024-02-27
 
