@@ -4,10 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.maven.dom.ParentPom;
-import com.github.ngeor.yak4jdom.DocumentWrapper;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import org.apache.commons.lang3.Validate;
 import org.junit.jupiter.api.Test;
 
 class PomDocumentTest {
@@ -52,19 +52,24 @@ class PomDocumentTest {
         PomDocument child1 = loadPomDocument("/2level/child1.xml");
         PomDocument child2 = loadPomDocument("/2level/child2.xml");
         Repository repository = new ResourceRepository();
-        MergerNg merger = (left, right) -> left;
+        MergerNg defaultMerger = new DefaultMergerNg();
+        CountingMerger countingMerger = new CountingMerger(defaultMerger);
+        MergerNg merger = new CacheMergerNg(countingMerger);
         EffectivePomDocument effective1 = child1.effectivePom(repository, merger);
         EffectivePomDocument effective2 = child2.effectivePom(repository, merger);
+        assertThat(countingMerger.counts).containsOnly(
+            Map.entry(new MavenCoordinates("com.acme", "grandparent", "4.0"), Map.of(
+                    new MavenCoordinates("com.acme", "parent", "5.0"), 1)
+            ),
+            Map.entry(new MavenCoordinates("com.acme", "parent", "5.0"), Map.of(
+                new MavenCoordinates("com.acme", "child1", "6.0"), 1,
+                new MavenCoordinates("com.acme", "child2", "7.0"), 1)
+            )
+        );
     }
 
     private PomDocument loadPomDocument(String resourceName) {
         return new ResourcePomDocument(resourceName);
-    }
-
-    private DocumentWrapper loadDocumentWrapper(String resourceName) {
-        Objects.requireNonNull(resourceName);
-        Validate.isTrue(resourceName.startsWith("/"));
-        return DocumentWrapper.parse(Objects.requireNonNull(getClass().getResourceAsStream(resourceName)));
     }
 
     private static class ResourceRepository implements Repository {
@@ -82,6 +87,26 @@ class PomDocumentTest {
             } else {
                 throw new UnsupportedOperationException();
             }
+        }
+    }
+
+    private static class CountingMerger implements MergerNg {
+        private final Map<MavenCoordinates, Map<MavenCoordinates, Integer>> counts = new HashMap<>();
+        private final MergerNg decorated;
+
+        private CountingMerger(MergerNg decorated) {
+            this.decorated = Objects.requireNonNull(decorated);
+        }
+
+        @Override
+        public EffectivePomDocument merge(PomDocument root) {
+            return decorated.merge(root);
+        }
+
+        @Override
+        public EffectivePomDocument merge(EffectivePomDocument left, PomDocument right) {
+            counts.computeIfAbsent(left.coordinates(), ignored -> new HashMap<>()).compute(right.coordinates(), (k, v) -> v == null ? 1 : v+1);
+            return decorated.merge(left, right);
         }
     }
 }
