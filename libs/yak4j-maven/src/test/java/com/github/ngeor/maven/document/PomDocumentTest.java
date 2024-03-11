@@ -45,6 +45,16 @@ class PomDocumentTest {
         assertThat(pomDocument.parentPom()).isEmpty();
     }
 
+    @Test
+    void effectivePomMergesParentWithGrandparentOnlyOnce() {
+        PomDocument child1 = loadPomDocument("/2level/child1.xml");
+        PomDocument child2 = loadPomDocument("/2level/child2.xml");
+        Repository repository = ignored -> loadDocumentWrapper("/pom3.xml");
+        MergerNg merger = (left, right) -> left;
+        EffectivePomDocument effective1 = child1.effectivePom(repository, merger);
+        EffectivePomDocument effective2 = child2.effectivePom(repository, merger);
+    }
+
     private PomDocument loadPomDocument(String resourceName) {
         return new PomDocument(loadDocumentWrapper(resourceName));
     }

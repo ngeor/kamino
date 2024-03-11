@@ -1,0 +1,5 @@
+<project>
+  <groupId>com.acme</groupId>
+  <artifactId>grandparent</artifactId>
+  <version>4.0</version>
+</project>
