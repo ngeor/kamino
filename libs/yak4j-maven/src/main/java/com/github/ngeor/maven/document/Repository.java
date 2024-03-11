@@ -1,9 +1,8 @@
 package com.github.ngeor.maven.document;
 
-import com.github.ngeor.maven.dom.ParentPom;
-import com.github.ngeor.yak4jdom.DocumentWrapper;
+import java.util.Optional;
 
 @FunctionalInterface
 public interface Repository {
-    DocumentWrapper load(ParentPom parentPom);
+    Optional<PomDocument> findParent(PomDocument pomDocument);
 }

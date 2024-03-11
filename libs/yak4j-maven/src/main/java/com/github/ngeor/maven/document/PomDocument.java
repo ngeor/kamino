@@ -2,26 +2,21 @@ package com.github.ngeor.maven.document;
 
 import com.github.ngeor.maven.dom.DomHelper;
 import com.github.ngeor.maven.dom.ParentPom;
-import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.util.Optional;
 
-public class PomDocument extends BasePomDocument {
-    public PomDocument(DocumentWrapper document) {
-        super(document);
-    }
-
+public abstract class PomDocument extends BasePomDocument {
     public Optional<ParentPom> parentPom() {
-        return DomHelper.getParentPom(getDocument());
+        return DomHelper.getParentPom(loadDocument());
     }
 
     public Optional<PomDocument> parent(Repository repository) {
-        return parentPom().map(repository::load).map(PomDocument::new);
+        return repository.findParent(this);
     }
 
     public EffectivePomDocument effectivePom(Repository repository, MergerNg merger) {
         ParentPom parentPom = parentPom().orElse(null);
         if (parentPom == null) {
-            return new EffectivePomDocument(getDocument());
+            return new EffectivePomDocument(loadDocument());
         }
 
         EffectivePomDocument parentDoc = parent(repository).orElseThrow().effectivePom(repository, merger);

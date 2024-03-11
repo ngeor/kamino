@@ -3,20 +3,20 @@ package com.github.ngeor.maven.document;
 import com.github.ngeor.maven.dom.DomHelper;
 import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
-import java.util.Objects;
 
 public abstract class BasePomDocument {
-    private final DocumentWrapper document;
+    private DocumentWrapper document;
 
-    protected BasePomDocument(DocumentWrapper document) {
-        this.document = Objects.requireNonNull(document);
-    }
-
-    protected DocumentWrapper getDocument() {
+    protected DocumentWrapper loadDocument() {
+        if (document == null) {
+            document = doLoadDocument();
+        }
         return document;
     }
 
+    protected abstract DocumentWrapper doLoadDocument();
+
     public MavenCoordinates coordinates() {
-        return DomHelper.coordinates(document);
+        return DomHelper.coordinates(loadDocument());
     }
 }
