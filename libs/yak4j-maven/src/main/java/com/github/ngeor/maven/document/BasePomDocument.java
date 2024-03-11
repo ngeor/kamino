@@ -7,7 +7,7 @@ import com.github.ngeor.yak4jdom.DocumentWrapper;
 public abstract class BasePomDocument {
     private DocumentWrapper document;
 
-    protected DocumentWrapper loadDocument() {
+    public final DocumentWrapper loadDocument() {
         if (document == null) {
             document = doLoadDocument();
         }
@@ -16,7 +16,7 @@ public abstract class BasePomDocument {
 
     protected abstract DocumentWrapper doLoadDocument();
 
-    public MavenCoordinates coordinates() {
+    public final MavenCoordinates coordinates() {
         return DomHelper.coordinates(loadDocument());
     }
 }
