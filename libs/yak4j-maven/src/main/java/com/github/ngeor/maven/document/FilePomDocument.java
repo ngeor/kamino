@@ -15,4 +15,8 @@ public class FilePomDocument extends PomDocument {
     protected DocumentWrapper doLoadDocument() {
         return DocumentWrapper.parse(pomFile);
     }
+
+    public File getPomFile() {
+        return pomFile;
+    }
 }

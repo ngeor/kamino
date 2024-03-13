@@ -6,7 +6,9 @@ import com.github.ngeor.maven.dom.MavenCoordinates;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
+import java.util.Objects;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -17,7 +19,10 @@ class FilePomDocumentIT {
     @Test
     void test() throws IOException {
         File pomFile = tempDir.resolve("pom.xml").toFile();
-        getClass().getResourceAsStream("/pom1.xml").transferTo(new FileOutputStream(pomFile));
+        try (InputStream is = Objects.requireNonNull(getClass().getResourceAsStream("/pom1.xml"));
+                FileOutputStream fos = new FileOutputStream(pomFile)) {
+            is.transferTo(fos);
+        }
         FilePomDocument filePomDocument = new FilePomDocument(pomFile);
         assertThat(filePomDocument.coordinates()).isEqualTo(new MavenCoordinates("com.acme", "foo", "1.0"));
     }
