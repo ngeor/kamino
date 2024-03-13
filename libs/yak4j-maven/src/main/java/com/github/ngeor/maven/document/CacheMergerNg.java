@@ -21,7 +21,8 @@ public class CacheMergerNg implements MergerNg {
 
     @Override
     public EffectivePomDocument merge(EffectivePomDocument left, PomDocument right) {
-        return mergeCache.computeIfAbsent(left.coordinates(), ignored -> new HashMap<>())
-            .computeIfAbsent(right.coordinates(), ignored -> decorated.merge(left, right));
+        return mergeCache
+                .computeIfAbsent(left.coordinates(), ignored -> new HashMap<>())
+                .computeIfAbsent(right.coordinates(), ignored -> decorated.merge(left, right));
     }
 }

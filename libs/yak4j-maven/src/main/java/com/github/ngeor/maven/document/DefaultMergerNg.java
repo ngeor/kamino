@@ -10,6 +10,7 @@ public class DefaultMergerNg implements MergerNg {
 
     @Override
     public EffectivePomDocument merge(EffectivePomDocument left, PomDocument right) {
-        return new EffectivePomDocument( PomMerger.mergeIntoLeft(left.loadDocument().deepClone(), right.loadDocument()) );
+        return new EffectivePomDocument(
+                PomMerger.mergeIntoLeft(left.loadDocument().deepClone(), right.loadDocument()));
     }
 }
