@@ -5,17 +5,17 @@ import java.util.Optional;
 
 public abstract class PomDocument extends BasePomDocument {
 
-    public Optional<PomDocument> parent(Repository repository) {
-        return repository.findParent(this);
+    public Optional<PomDocument> parent(ParentFinderNg parentFinder) {
+        return parentFinder.findParent(this);
     }
 
-    public EffectivePomDocument effectivePom(Repository repository, MergerNg merger) {
+    public EffectivePomDocument effectivePom(ParentFinderNg parentFinder, MergerNg merger) {
         ParentPom parentPom = parentPom().orElse(null);
         if (parentPom == null) {
             return new EffectivePomDocument(loadDocument());
         }
 
-        EffectivePomDocument parentDoc = parent(repository).orElseThrow().effectivePom(repository, merger);
+        EffectivePomDocument parentDoc = parent(parentFinder).orElseThrow().effectivePom(parentFinder, merger);
         return merger.merge(parentDoc, this);
     }
 }
