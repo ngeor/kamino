@@ -2,7 +2,9 @@ package com.github.ngeor.maven.document;
 
 import com.github.ngeor.maven.dom.DomHelper;
 import com.github.ngeor.maven.dom.MavenCoordinates;
+import com.github.ngeor.maven.dom.ParentPom;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
+import java.util.Optional;
 
 public abstract class BasePomDocument {
     private DocumentWrapper document;
@@ -18,5 +20,12 @@ public abstract class BasePomDocument {
 
     public final MavenCoordinates coordinates() {
         return DomHelper.coordinates(loadDocument());
+    }
+
+    public final Optional<ParentPom> parentPom() {
+        return DomHelper.getParentPom(loadDocument()).map(p -> {
+            p.validateCoordinates();
+            return p;
+        });
     }
 }

@@ -5,9 +5,7 @@ import com.github.ngeor.maven.dom.ParentPom;
 import java.util.Optional;
 
 public abstract class PomDocument extends BasePomDocument {
-    public Optional<ParentPom> parentPom() {
-        return DomHelper.getParentPom(loadDocument());
-    }
+
 
     public Optional<PomDocument> parent(Repository repository) {
         return repository.findParent(this);

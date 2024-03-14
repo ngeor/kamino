@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.github.ngeor.maven.dom.ElementNames;
 import com.github.ngeor.maven.dom.MavenCoordinates;
+import com.github.ngeor.maven.dom.ParentPom;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -122,6 +123,36 @@ class BasePomDocumentTest {
                 return doc;
             });
             assertThatThrownBy(pom::coordinates)
+                .hasMessage(elementName + " is missing from parent coordinates");
+        }
+    }
+
+    @Nested
+    class ParentPomTest {
+        @Test
+        void withoutParent() {
+            ResourcePomDocument pom = new ResourcePomDocument("/pom1.xml");
+            assertThat(pom.parentPom()).isEmpty();
+        }
+
+        @Test
+        void withParent() {
+            ResourcePomDocument pom = new ResourcePomDocument("/pom2.xml");
+            assertThat(pom.parentPom()).contains(new ParentPom("com.shared", "bar", "2.0", null));
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {
+            ElementNames.GROUP_ID,
+            ElementNames.ARTIFACT_ID,
+            ElementNames.VERSION
+        })
+        void parentCoordinatesAreMandatory(String elementName) {
+            ResourcePomDocument pom = new ResourcePomDocument("/pom2.xml", doc -> {
+                doc.getDocumentElement().firstElement(ElementNames.PARENT).ifPresent(e -> e.removeChildNodesByName(elementName));
+                return doc;
+            });
+            assertThatThrownBy(pom::parentPom)
                 .hasMessage(elementName + " is missing from parent coordinates");
         }
     }
