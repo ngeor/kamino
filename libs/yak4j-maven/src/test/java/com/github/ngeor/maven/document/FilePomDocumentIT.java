@@ -1,29 +1,36 @@
 package com.github.ngeor.maven.document;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import com.github.ngeor.maven.dom.MavenCoordinates;
+import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UncheckedIOException;
 import java.nio.file.Path;
 import java.util.Objects;
-import org.junit.jupiter.api.Test;
+import java.util.function.UnaryOperator;
 import org.junit.jupiter.api.io.TempDir;
 
-class FilePomDocumentIT {
+class FilePomDocumentIT extends BasePomDocumentTest<FilePomDocument> {
     @TempDir
     private Path tempDir;
 
-    @Test
-    void test() throws IOException {
+    @Override
+    protected FilePomDocument createDocument(String resourceName, UnaryOperator<DocumentWrapper> documentDecorator) {
         File pomFile = tempDir.resolve("pom.xml").toFile();
-        try (InputStream is = Objects.requireNonNull(getClass().getResourceAsStream("/pom1.xml"));
+
+        try (InputStream is = Objects.requireNonNull(getClass().getResourceAsStream(resourceName));
                 FileOutputStream fos = new FileOutputStream(pomFile)) {
             is.transferTo(fos);
+        } catch (IOException ex) {
+            throw new UncheckedIOException(ex);
         }
-        FilePomDocument filePomDocument = new FilePomDocument(pomFile);
-        assertThat(filePomDocument.coordinates()).isEqualTo(new MavenCoordinates("com.acme", "foo", "1.0"));
+
+        return new FilePomDocument(pomFile) {
+            @Override
+            protected DocumentWrapper doLoadDocument() {
+                return documentDecorator.apply(super.doLoadDocument());
+            }
+        };
     }
 }

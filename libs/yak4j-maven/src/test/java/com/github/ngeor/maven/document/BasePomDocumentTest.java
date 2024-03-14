@@ -6,17 +6,19 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import com.github.ngeor.maven.dom.ElementNames;
 import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.maven.dom.ParentPom;
+import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.UnaryOperator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class BasePomDocumentTest {
+abstract class BasePomDocumentTest<E extends PomDocument> {
     @Test
     void coordinatesTwiceOnlyLoadsDocumentOnce() {
         AtomicInteger count = new AtomicInteger();
-        ResourcePomDocument pom = new ResourcePomDocument("/pom1.xml", doc -> {
+        E pom = createDocument("/pom1.xml", doc -> {
             count.incrementAndGet();
             return doc;
         });
@@ -34,7 +36,7 @@ class BasePomDocumentTest {
 
         @Test
         void allCoordinatesPresent() {
-            ResourcePomDocument pom = new ResourcePomDocument(resourceName);
+            E pom = createDocument(resourceName);
             MavenCoordinates coordinates = pom.coordinates();
             assertThat(coordinates).isEqualTo(new MavenCoordinates("com.acme", "foo", "1.0"));
         }
@@ -42,7 +44,7 @@ class BasePomDocumentTest {
         @ParameterizedTest
         @ValueSource(strings = {ElementNames.GROUP_ID, ElementNames.ARTIFACT_ID, ElementNames.VERSION})
         void oneCoordinateMissing(String elementName) {
-            ResourcePomDocument pom = new ResourcePomDocument(resourceName, doc -> {
+            E pom = createDocument(resourceName, doc -> {
                 doc.getDocumentElement().removeChildNodesByName(elementName);
                 return doc;
             });
@@ -54,7 +56,7 @@ class BasePomDocumentTest {
         @ParameterizedTest
         @ValueSource(strings = {ElementNames.GROUP_ID, ElementNames.ARTIFACT_ID, ElementNames.VERSION})
         void oneCoordinateEmpty(String elementName) {
-            ResourcePomDocument pom = new ResourcePomDocument(resourceName, doc -> {
+            E pom = createDocument(resourceName, doc -> {
                 doc.getDocumentElement().firstElement(elementName).ifPresent(e -> e.setTextContent(""));
                 return doc;
             });
@@ -70,14 +72,14 @@ class BasePomDocumentTest {
 
         @Test
         void allCoordinatesPresent() {
-            ResourcePomDocument pom = new ResourcePomDocument(resourceName);
+            E pom = createDocument(resourceName);
             MavenCoordinates coordinates = pom.coordinates();
             assertThat(coordinates).isEqualTo(new MavenCoordinates("com.future", "ball", "1.0.1"));
         }
 
         @Test
         void groupIdIsInherited() {
-            ResourcePomDocument pom = new ResourcePomDocument(resourceName, doc -> {
+            E pom = createDocument(resourceName, doc -> {
                 doc.getDocumentElement().removeChildNodesByName(ElementNames.GROUP_ID);
                 return doc;
             });
@@ -87,7 +89,7 @@ class BasePomDocumentTest {
 
         @Test
         void artifactIdIsNotInherited() {
-            ResourcePomDocument pom = new ResourcePomDocument(resourceName, doc -> {
+            E pom = createDocument(resourceName, doc -> {
                 doc.getDocumentElement().removeChildNodesByName(ElementNames.ARTIFACT_ID);
                 return doc;
             });
@@ -98,7 +100,7 @@ class BasePomDocumentTest {
 
         @Test
         void versionIsInherited() {
-            ResourcePomDocument pom = new ResourcePomDocument(resourceName, doc -> {
+            E pom = createDocument(resourceName, doc -> {
                 doc.getDocumentElement().removeChildNodesByName(ElementNames.VERSION);
                 return doc;
             });
@@ -109,7 +111,7 @@ class BasePomDocumentTest {
         @ParameterizedTest
         @ValueSource(strings = {ElementNames.GROUP_ID, ElementNames.VERSION})
         void parentCoordinatesAreMandatory(String elementName) {
-            ResourcePomDocument pom = new ResourcePomDocument(resourceName, doc -> {
+            E pom = createDocument(resourceName, doc -> {
                 doc.getDocumentElement().removeChildNodesByName(elementName);
                 doc.getDocumentElement()
                         .firstElement(ElementNames.PARENT)
@@ -124,20 +126,20 @@ class BasePomDocumentTest {
     class ParentPomTest {
         @Test
         void withoutParent() {
-            ResourcePomDocument pom = new ResourcePomDocument("/pom1.xml");
+            E pom = createDocument("/pom1.xml");
             assertThat(pom.parentPom()).isEmpty();
         }
 
         @Test
         void withParent() {
-            ResourcePomDocument pom = new ResourcePomDocument("/pom2.xml");
+            E pom = createDocument("/pom2.xml");
             assertThat(pom.parentPom()).contains(new ParentPom("com.shared", "bar", "2.0", null));
         }
 
         @ParameterizedTest
         @ValueSource(strings = {ElementNames.GROUP_ID, ElementNames.ARTIFACT_ID, ElementNames.VERSION})
         void parentCoordinatesAreMandatory(String elementName) {
-            ResourcePomDocument pom = new ResourcePomDocument("/pom2.xml", doc -> {
+            E pom = createDocument("/pom2.xml", doc -> {
                 doc.getDocumentElement()
                         .firstElement(ElementNames.PARENT)
                         .ifPresent(e -> e.removeChildNodesByName(elementName));
@@ -145,5 +147,11 @@ class BasePomDocumentTest {
             });
             assertThatThrownBy(pom::parentPom).hasMessage(elementName + " is missing from parent coordinates");
         }
+    }
+
+    protected abstract E createDocument(String resourceName, UnaryOperator<DocumentWrapper> documentDecorator);
+
+    protected E createDocument(String resourceName) {
+        return createDocument(resourceName, UnaryOperator.identity());
     }
 }
