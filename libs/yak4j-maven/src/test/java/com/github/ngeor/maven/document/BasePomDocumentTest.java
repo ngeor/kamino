@@ -40,33 +40,27 @@ class BasePomDocumentTest {
         }
 
         @ParameterizedTest
-        @ValueSource(strings = {
-            ElementNames.GROUP_ID,
-            ElementNames.ARTIFACT_ID,
-            ElementNames.VERSION
-        })
+        @ValueSource(strings = {ElementNames.GROUP_ID, ElementNames.ARTIFACT_ID, ElementNames.VERSION})
         void oneCoordinateMissing(String elementName) {
             ResourcePomDocument pom = new ResourcePomDocument(resourceName, doc -> {
                 doc.getDocumentElement().removeChildNodesByName(elementName);
                 return doc;
             });
-            assertThatThrownBy(pom::coordinates).isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Cannot resolve coordinates, " + elementName + " is missing");
+            assertThatThrownBy(pom::coordinates)
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("Cannot resolve coordinates, " + elementName + " is missing");
         }
 
         @ParameterizedTest
-        @ValueSource(strings = {
-            ElementNames.GROUP_ID,
-            ElementNames.ARTIFACT_ID,
-            ElementNames.VERSION
-        })
+        @ValueSource(strings = {ElementNames.GROUP_ID, ElementNames.ARTIFACT_ID, ElementNames.VERSION})
         void oneCoordinateEmpty(String elementName) {
             ResourcePomDocument pom = new ResourcePomDocument(resourceName, doc -> {
                 doc.getDocumentElement().firstElement(elementName).ifPresent(e -> e.setTextContent(""));
                 return doc;
             });
-            assertThatThrownBy(pom::coordinates).isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Cannot resolve coordinates, " + elementName + " is missing");
+            assertThatThrownBy(pom::coordinates)
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("Cannot resolve coordinates, " + elementName + " is missing");
         }
     }
 
@@ -97,8 +91,9 @@ class BasePomDocumentTest {
                 doc.getDocumentElement().removeChildNodesByName(ElementNames.ARTIFACT_ID);
                 return doc;
             });
-            assertThatThrownBy(pom::coordinates).isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Cannot resolve coordinates, " + ElementNames.ARTIFACT_ID + " is missing");
+            assertThatThrownBy(pom::coordinates)
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("Cannot resolve coordinates, " + ElementNames.ARTIFACT_ID + " is missing");
         }
 
         @Test
@@ -112,18 +107,16 @@ class BasePomDocumentTest {
         }
 
         @ParameterizedTest
-        @ValueSource(strings = {
-            ElementNames.GROUP_ID,
-            ElementNames.VERSION
-        })
+        @ValueSource(strings = {ElementNames.GROUP_ID, ElementNames.VERSION})
         void parentCoordinatesAreMandatory(String elementName) {
             ResourcePomDocument pom = new ResourcePomDocument(resourceName, doc -> {
                 doc.getDocumentElement().removeChildNodesByName(elementName);
-                doc.getDocumentElement().firstElement(ElementNames.PARENT).ifPresent(e -> e.removeChildNodesByName(elementName));
+                doc.getDocumentElement()
+                        .firstElement(ElementNames.PARENT)
+                        .ifPresent(e -> e.removeChildNodesByName(elementName));
                 return doc;
             });
-            assertThatThrownBy(pom::coordinates)
-                .hasMessage(elementName + " is missing from parent coordinates");
+            assertThatThrownBy(pom::coordinates).hasMessage(elementName + " is missing from parent coordinates");
         }
     }
 
@@ -142,18 +135,15 @@ class BasePomDocumentTest {
         }
 
         @ParameterizedTest
-        @ValueSource(strings = {
-            ElementNames.GROUP_ID,
-            ElementNames.ARTIFACT_ID,
-            ElementNames.VERSION
-        })
+        @ValueSource(strings = {ElementNames.GROUP_ID, ElementNames.ARTIFACT_ID, ElementNames.VERSION})
         void parentCoordinatesAreMandatory(String elementName) {
             ResourcePomDocument pom = new ResourcePomDocument("/pom2.xml", doc -> {
-                doc.getDocumentElement().firstElement(ElementNames.PARENT).ifPresent(e -> e.removeChildNodesByName(elementName));
+                doc.getDocumentElement()
+                        .firstElement(ElementNames.PARENT)
+                        .ifPresent(e -> e.removeChildNodesByName(elementName));
                 return doc;
             });
-            assertThatThrownBy(pom::parentPom)
-                .hasMessage(elementName + " is missing from parent coordinates");
+            assertThatThrownBy(pom::parentPom).hasMessage(elementName + " is missing from parent coordinates");
         }
     }
 }

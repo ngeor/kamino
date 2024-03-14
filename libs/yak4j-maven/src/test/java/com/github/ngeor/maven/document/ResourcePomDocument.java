@@ -21,7 +21,8 @@ class ResourcePomDocument extends PomDocument {
 
     @Override
     protected DocumentWrapper doLoadDocument() {
-        return documentDecorator.apply(DocumentWrapper.parse(Objects.requireNonNull(getClass().getResourceAsStream(resourceName))));
+        return documentDecorator.apply(
+                DocumentWrapper.parse(Objects.requireNonNull(getClass().getResourceAsStream(resourceName))));
     }
 
     public String getResourceName() {
