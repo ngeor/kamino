@@ -103,8 +103,17 @@ public final class DomHelper {
                 return new MavenCoordinates(groupId, artifactId, version);
             }
         }
+        // artifactId is not inherited
         if (StringUtils.isBlank(artifactId)) {
             throw new IllegalArgumentException("Cannot resolve coordinates, artifactId is missing");
+        }
+        if (parent == null) {
+            if (StringUtils.isBlank(groupId)) {
+                throw new IllegalArgumentException("Cannot resolve coordinates, groupId is missing");
+            }
+            if (StringUtils.isBlank(version)) {
+                throw new IllegalArgumentException("Cannot resolve coordinates, version is missing");
+            }
         }
         Validate.isTrue(parent != null, "Cannot resolve coordinates, parent element is missing");
         MavenCoordinates parentCoordinates = DomHelper.getParentPom(parent).validateCoordinates();

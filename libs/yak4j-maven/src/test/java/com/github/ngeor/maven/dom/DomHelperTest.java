@@ -242,7 +242,7 @@ class DomHelperTest {
             </project>""";
 
             // act and assert
-            assertThatThrownBy(this::act).hasMessage("Cannot resolve coordinates, parent element is missing");
+            assertThatThrownBy(this::act).hasMessage("Cannot resolve coordinates, version is missing");
         }
     }
 }
