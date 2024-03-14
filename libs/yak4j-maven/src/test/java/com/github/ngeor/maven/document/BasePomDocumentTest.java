@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-abstract class BasePomDocumentTest<E extends PomDocument> {
+abstract class BasePomDocumentTest<E extends BasePomDocument> {
     @Test
     void coordinatesTwiceOnlyLoadsDocumentOnce() {
         AtomicInteger count = new AtomicInteger();

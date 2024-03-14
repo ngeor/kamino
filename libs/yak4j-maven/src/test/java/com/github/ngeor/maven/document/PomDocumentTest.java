@@ -11,14 +11,6 @@ import org.junit.jupiter.api.Test;
 
 class PomDocumentTest {
     @Test
-    void test1() {
-        PomDocument pomDocument = loadPomDocument("/pom1.xml");
-        MavenCoordinates coordinates = pomDocument.coordinates();
-        assertThat(coordinates).isEqualTo(new MavenCoordinates("com.acme", "foo", "1.0"));
-        assertThat(pomDocument.parentPom()).isEmpty();
-    }
-
-    @Test
     void test2() {
         PomDocument pomDocument = loadPomDocument("/pom2.xml");
         MavenCoordinates coordinates = pomDocument.coordinates();
@@ -28,14 +20,6 @@ class PomDocumentTest {
         PomDocument parent = pomDocument.parent(parentFinder).orElseThrow();
         assertThat(parent).isNotNull();
         assertThat(parent.coordinates()).isEqualTo(new MavenCoordinates("com.shared", "bar", "2.0"));
-    }
-
-    @Test
-    void test3() {
-        PomDocument pomDocument = loadPomDocument("/pom3.xml");
-        MavenCoordinates coordinates = pomDocument.coordinates();
-        assertThat(coordinates).isEqualTo(new MavenCoordinates("com.shared", "bar", "2.0"));
-        assertThat(pomDocument.parentPom()).isEmpty();
     }
 
     @Test
