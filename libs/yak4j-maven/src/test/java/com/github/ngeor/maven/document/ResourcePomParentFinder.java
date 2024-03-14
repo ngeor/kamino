@@ -1,22 +1,32 @@
 package com.github.ngeor.maven.document;
 
-import java.util.Optional;
+import com.github.ngeor.maven.dom.ParentPom;
+import java.util.function.UnaryOperator;
 
-class ResourcePomParentFinder implements ParentFinderNg {
+class ResourcePomParentFinder extends BaseParentFinderNg<String, ResourcePomDocument> {
+
+    ResourcePomParentFinder(UnaryOperator<ResourcePomDocument> decorator) {
+        super(decorator);
+    }
+
+    ResourcePomParentFinder() {
+        this(UnaryOperator.identity());
+    }
 
     @Override
-    public Optional<PomDocument> findParent(PomDocument pomDocument) {
-        if (pomDocument instanceof ResourcePomDocument r) {
-            String parentResourceName =
-                    switch (r.getResourceName()) {
-                        case "/pom2.xml" -> "/pom3.xml";
-                        case "/2level/child1.xml", "/2level/child2.xml" -> "/2level/parent.xml";
-                        case "/2level/parent.xml" -> "/2level/grandparent.xml";
-                        default -> null;
-                    };
-            return Optional.ofNullable(parentResourceName).map(ResourcePomDocument::new);
-        } else {
-            throw new UnsupportedOperationException();
-        }
+    protected String cacheKey(ResourcePomDocument child) {
+        return child.getResourceName();
+    }
+
+    @Override
+    protected ResourcePomDocument doFindParent(ResourcePomDocument child, ParentPom parentPom) {
+        String parentResourceName =
+                switch (child.getResourceName()) {
+                    case "/pom2.xml" -> "/pom3.xml";
+                    case "/2level/child1.xml", "/2level/child2.xml" -> "/2level/parent.xml";
+                    case "/2level/parent.xml" -> "/2level/grandparent.xml";
+                    default -> null;
+                };
+        return new ResourcePomDocument(parentResourceName);
     }
 }
