@@ -11,7 +11,7 @@ class FnLazy<E> extends AbstractLazy<E> implements Supplier<E> {
 
     @Override
     public E get() {
-        return get1();
+        return getProtected();
     }
 
     @Override

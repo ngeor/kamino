@@ -2,4 +2,7 @@
   <groupId>com.acme</groupId>
   <artifactId>grandparent</artifactId>
   <version>4.0</version>
+  <properties>
+    <color>blue</color>
+  </properties>
 </project>

@@ -5,7 +5,8 @@ import java.util.function.UnaryOperator;
 class ResourcePomParentFinderTest extends BaseParentFinderNgTest<String, ResourcePomDocument> {
 
     @Override
-    protected BaseParentFinderNg<String, ResourcePomDocument> getParentFinder(UnaryOperator<ResourcePomDocument> decorator) {
+    protected BaseParentFinderNg<String, ResourcePomDocument> getParentFinder(
+            UnaryOperator<ResourcePomDocument> decorator) {
         return new ResourcePomParentFinder(decorator);
     }
 

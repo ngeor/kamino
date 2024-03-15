@@ -12,7 +12,7 @@ class FnOptLazy<E> extends AbstractLazy<E> implements Supplier<Optional<E>> {
 
     @Override
     public Optional<E> get() {
-        return Optional.ofNullable(get1());
+        return Optional.ofNullable(getProtected());
     }
 
     @Override

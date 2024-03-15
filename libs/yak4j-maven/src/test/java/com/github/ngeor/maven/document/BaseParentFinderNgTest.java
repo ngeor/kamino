@@ -56,5 +56,4 @@ abstract class BaseParentFinderNgTest<K, V extends PomDocument> {
     }
 
     protected abstract V createDocument(String resourceName);
-
 }

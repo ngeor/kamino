@@ -1,38 +1,40 @@
 package com.github.ngeor.maven.ng;
 
-import com.github.ngeor.maven.dom.DomHelper;
-import com.github.ngeor.maven.dom.ParentPom;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.File;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Supplier;
 
-public class PomDocument {
-    private final PomDocumentFactory owner;
+public class PomDocument extends BaseDocument {
     private final File pomFile;
-    private final Supplier<DocumentWrapper> document;
-    private final Supplier<Optional<ParentPom>> parentPom;
+    private final FnLazy<EffectiveDocument> lazyEffectiveDocument;
 
     public PomDocument(PomDocumentFactory owner, File pomFile) {
-        this.owner = Objects.requireNonNull(owner);
+        super(owner);
         this.pomFile = Objects.requireNonNull(pomFile);
-        this.document = new FnLazy<>(() -> DocumentWrapper.parse(pomFile));
-        this.parentPom = new FnOptLazy<>(() -> DomHelper.getParentPom(loadDocument()));
+        this.lazyEffectiveDocument = new FnLazy<>(this::doCreateEffectiveDocument);
     }
 
-    public DocumentWrapper loadDocument() {
-        return document.get();
-    }
-
-    private Optional<ParentPom> parentPom() {
-        return parentPom.get();
+    @Override
+    protected DocumentWrapper doLoadDocument() {
+        return DocumentWrapper.parse(pomFile);
     }
 
     public Optional<PomDocument> parent() {
         return parentPom().map(p -> {
             String relativePath = Objects.requireNonNullElse(p.relativePath(), "../pom.xml");
-            return owner.create(pomFile.toPath().getParent().resolve(relativePath));
+            return getOwner().create(pomFile.toPath().getParent().resolve(relativePath));
         });
+    }
+
+    public EffectiveDocument toEffective() {
+        return lazyEffectiveDocument.get();
+    }
+
+    private EffectiveDocument doCreateEffectiveDocument() {
+        PomDocument parentPomDocument = parent().orElse(null);
+        return parentPomDocument == null
+                ? new EffectiveDocument.Root(this)
+                : new EffectiveDocument.Child(parentPomDocument.toEffective(), this);
     }
 }

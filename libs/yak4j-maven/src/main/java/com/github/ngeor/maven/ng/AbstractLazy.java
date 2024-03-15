@@ -4,7 +4,7 @@ abstract class AbstractLazy<E> {
     private E value;
     private boolean loaded;
 
-    protected E get1() {
+    protected E getProtected() {
         if (!loaded) {
             loaded = true;
             value = doGet();

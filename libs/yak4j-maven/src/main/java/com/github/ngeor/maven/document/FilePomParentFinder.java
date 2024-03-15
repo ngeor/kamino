@@ -22,7 +22,8 @@ public class FilePomParentFinder extends BaseParentFinderNg<CanonicalFile, FileP
         // try through relativePath (unless explicitly set to empty)
         String relativePath = Objects.requireNonNullElse(parentPom.relativePath(), "../pom.xml");
         if (!relativePath.isBlank()) {
-            File parentFile = pomDocument.getPomFile().toPath().resolve(relativePath).toFile();
+            File parentFile =
+                    pomDocument.getPomFile().toPath().resolve(relativePath).toFile();
             return new FilePomDocument(parentFile);
         }
         // try through local repository

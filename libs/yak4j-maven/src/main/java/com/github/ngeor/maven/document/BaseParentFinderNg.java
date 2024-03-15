@@ -17,9 +17,10 @@ public abstract class BaseParentFinderNg<K, V extends PomDocument> implements Pa
     // TODO two children of same parent should return the same instance
     @Override
     public Optional<V> findParent(V pomDocument) {
-        return Optional.ofNullable( cache.computeIfAbsent(
-            cacheKey(pomDocument), ignored -> pomDocument.parentPom().map(p -> parentDecorator.apply( doFindParent(pomDocument, p)) ).orElse(null)
-        ));
+        return Optional.ofNullable(cache.computeIfAbsent(cacheKey(pomDocument), ignored -> pomDocument
+                .parentPom()
+                .map(p -> parentDecorator.apply(doFindParent(pomDocument, p)))
+                .orElse(null)));
     }
 
     protected abstract K cacheKey(V child);
