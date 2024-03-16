@@ -9,7 +9,7 @@ public class PomDocument extends BaseDocument {
     private final File pomFile;
     private final FnLazy<EffectiveDocument> lazyEffectiveDocument;
 
-    public PomDocument(PomDocumentFactory owner, File pomFile) {
+    protected PomDocument(PomDocumentFactory owner, File pomFile) {
         super(owner);
         this.pomFile = Objects.requireNonNull(pomFile);
         this.lazyEffectiveDocument = new FnLazy<>(this::doCreateEffectiveDocument);
@@ -23,7 +23,13 @@ public class PomDocument extends BaseDocument {
     public Optional<PomDocument> parent() {
         return parentPom().map(p -> {
             String relativePath = Objects.requireNonNullElse(p.relativePath(), "../pom.xml");
-            return getOwner().create(pomFile.toPath().getParent().resolve(relativePath));
+            File parentPomFile =
+                    pomFile.toPath().getParent().resolve(relativePath).toFile();
+            if (parentPomFile.isDirectory()) {
+                parentPomFile = new File(parentPomFile, "pom.xml");
+            }
+            // TODO try local repository
+            return getOwner().create(parentPomFile);
         });
     }
 
