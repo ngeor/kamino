@@ -21,6 +21,11 @@ public class PomDocumentFactory {
         return create(pomFilePath.toFile());
     }
 
+    public PomDocument create(Path rootPath, String relativePath) {
+        String path = relativePath.endsWith("/") ? relativePath + "pom.xml" : relativePath;
+        return create(rootPath.resolve(path));
+    }
+
     public PomDocument create(File pomFilePath) {
         return cache.computeIfAbsent(new CanonicalFile(pomFilePath), k -> new PomDocument(this, k.file()));
     }

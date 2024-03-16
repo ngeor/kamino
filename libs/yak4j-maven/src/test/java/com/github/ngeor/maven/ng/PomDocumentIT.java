@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,35 +21,25 @@ public class PomDocumentIT {
     @TempDir
     private Path tempDir;
 
-    @Test
-    void test() throws IOException {
-        // copy resources to temp dir
-        copyResource("/2level/grandparent.xml", tempDir.resolve("pom.xml"));
-        Files.createDirectory(tempDir.resolve("parent"));
-        copyResource("/2level/parent.xml", tempDir.resolve("parent").resolve("pom.xml"));
-        Files.createDirectory(tempDir.resolve("parent").resolve("child1"));
-        copyResource(
-                "/2level/child1.xml",
-                tempDir.resolve("parent").resolve("child1").resolve("pom.xml"));
-        Files.createDirectory(tempDir.resolve("parent").resolve("child2"));
-        copyResource(
-                "/2level/child2.xml",
-                tempDir.resolve("parent").resolve("child2").resolve("pom.xml"));
+    private final PomDocumentFactory factory = new PomDocumentFactory();
 
-        // create factory
-        PomDocumentFactory factory = new PomDocumentFactory();
+    @Test
+    void test2Level() throws IOException {
+        // copy resources to temp dir
+        copyResource("/2level/grandparent.xml", "pom.xml");
+        copyResource("/2level/parent.xml", "parent/");
+        copyResource("/2level/child1.xml", "parent/child1/");
+        copyResource("/2level/child2.xml", "parent/child2/");
 
         // load child1
-        PomDocument child1 =
-                factory.create(tempDir.resolve("parent").resolve("child1").resolve("pom.xml"));
+        PomDocument child1 = factory.create(tempDir, "parent/child1/");
         assertThat(child1).isNotNull();
         // load again
-        assertThat(factory.create(tempDir.resolve("parent").resolve("child1").resolve("pom.xml")))
+        assertThat(factory.create(tempDir, "parent/child1/"))
                 .as("Should cache instances of PomDocument")
                 .isSameAs(child1);
         // load child2
-        PomDocument child2 =
-                factory.create(tempDir.resolve("parent").resolve("child2").resolve("pom.xml"));
+        PomDocument child2 = factory.create(tempDir, "parent/child2/");
         assertThat(child2).isNotNull().isNotSameAs(child1);
         // load document of child1 twice
         DocumentWrapper child1Doc = child1.loadDocument();
@@ -92,6 +83,36 @@ public class PomDocumentIT {
         assertThat(child2Effective2).isNotNull().isSameAs(child2Effective);
         child2Effective2.loadDocument();
         assertThat(merges).isEmpty();
+
+        // TODO more assertions
+    }
+
+    @Test
+    void testAggregator1() throws IOException {
+        // copy resources to temp dir
+        copyResource("/aggregator1/pom1.xml", "pom.xml");
+        copyResource("/aggregator1/child1.xml", "child1/");
+        copyResource("/aggregator1/child2.xml", "child2/");
+
+        // load aggregator
+        PomDocument aggregator = factory.create(tempDir, "./");
+        assertThat(aggregator.coordinates()).isEqualTo(new MavenCoordinates("com.acme", "aggregator", "1.1"));
+    }
+
+    private void copyResource(String resourceName, String destination) throws IOException {
+        Path parentPath;
+        Path filePath;
+        if (destination.endsWith("/") || destination.endsWith(File.separator)) {
+            parentPath = tempDir.resolve(destination);
+            filePath = parentPath.resolve("pom.xml");
+        } else {
+            filePath = tempDir.resolve(destination);
+            parentPath = filePath.getParent();
+        }
+        if (!parentPath.toFile().exists()) {
+            Files.createDirectory(parentPath);
+        }
+        copyResource(resourceName, filePath);
     }
 
     private void copyResource(String resourceName, Path file) {
