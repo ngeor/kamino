@@ -7,17 +7,12 @@ import java.util.Optional;
 
 public class PomDocument extends BaseDocument {
     private final File pomFile;
-    private final FnLazy<EffectiveDocument> lazyEffectiveDocument;
+    private final Lazy<EffectiveDocument> lazyEffectiveDocument;
 
     protected PomDocument(PomDocumentFactory owner, File pomFile) {
-        super(owner);
+        super(owner, () -> DocumentWrapper.parse(pomFile));
         this.pomFile = Objects.requireNonNull(pomFile);
-        this.lazyEffectiveDocument = new FnLazy<>(this::doCreateEffectiveDocument);
-    }
-
-    @Override
-    protected DocumentWrapper doLoadDocument() {
-        return DocumentWrapper.parse(pomFile);
+        this.lazyEffectiveDocument = new Lazy<>(this::doCreateEffectiveDocument);
     }
 
     public Optional<PomDocument> parent() {

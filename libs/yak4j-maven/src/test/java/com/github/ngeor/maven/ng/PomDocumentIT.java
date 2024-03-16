@@ -97,6 +97,9 @@ public class PomDocumentIT {
         // load aggregator
         PomDocument aggregator = factory.create(tempDir, "./");
         assertThat(aggregator.coordinates()).isEqualTo(new MavenCoordinates("com.acme", "aggregator", "1.1"));
+        assertThat(aggregator.modules()).containsExactly("child1", "child2");
+        assertThat(factory.moduleByCoordinates(new MavenCoordinates("com.acme", "aggregator", "1.1")))
+                .isSameAs(aggregator);
     }
 
     private void copyResource(String resourceName, String destination) throws IOException {

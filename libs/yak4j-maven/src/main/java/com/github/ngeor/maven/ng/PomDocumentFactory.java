@@ -16,6 +16,7 @@ public class PomDocumentFactory {
     private final Map<CanonicalFile, PomDocument> cache = new HashMap<>();
     private final List<BiConsumer<MavenCoordinates, MavenCoordinates>> mergeListeners = new ArrayList<>();
     private final Map<MavenCoordinates, Map<MavenCoordinates, DocumentWrapper>> merges = new HashMap<>();
+    private final Map<MavenCoordinates, PomDocument> loadedDocuments = new HashMap<>();
 
     public PomDocument create(Path pomFilePath) {
         return create(pomFilePath.toFile());
@@ -42,5 +43,15 @@ public class PomDocumentFactory {
                     mergeListeners.forEach(listener -> listener.accept(left.coordinates(), right.coordinates()));
                     return merged;
                 });
+    }
+
+    public PomDocument moduleByCoordinates(MavenCoordinates coordinates) {
+        return loadedDocuments.get(coordinates);
+    }
+
+    protected void documentLoaded(BaseDocument document) {
+        if (document instanceof PomDocument pomDocument) {
+            loadedDocuments.put(pomDocument.coordinates(), pomDocument);
+        }
     }
 }
