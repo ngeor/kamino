@@ -1,4 +1,4 @@
-package com.github.ngeor.maven.document.cache;
+package com.github.ngeor.maven.document;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -1,6 +1,5 @@
-package com.github.ngeor.maven.ng;
+package com.github.ngeor.maven.document;
 
-import com.github.ngeor.maven.document.property.StringPropertyResolver;
 import com.github.ngeor.maven.dom.DomHelper;
 import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.maven.dom.ParentPom;

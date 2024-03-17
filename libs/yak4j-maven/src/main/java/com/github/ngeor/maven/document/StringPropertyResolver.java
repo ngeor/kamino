@@ -1,4 +1,4 @@
-package com.github.ngeor.maven.document.property;
+package com.github.ngeor.maven.document;
 
 import java.util.HashMap;
 import java.util.HashSet;

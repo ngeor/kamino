@@ -1,4 +1,4 @@
-package com.github.ngeor.maven.ng;
+package com.github.ngeor.maven.document;
 
 import com.github.ngeor.maven.dom.DomHelper;
 import com.github.ngeor.maven.dom.MavenCoordinates;

@@ -1,7 +1,5 @@
-package com.github.ngeor.maven.ng;
+package com.github.ngeor.maven.document;
 
-import com.github.ngeor.maven.document.cache.CanonicalFile;
-import com.github.ngeor.maven.document.effective.PomMerger;
 import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.File;

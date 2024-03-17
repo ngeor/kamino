@@ -1,4 +1,4 @@
-package com.github.ngeor.maven.ng;
+package com.github.ngeor.maven.document;
 
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.IOException;

@@ -1,6 +1,6 @@
 package com.github.ngeor;
 
-import com.github.ngeor.maven.ng.PomDocumentFactory;
+import com.github.ngeor.maven.document.PomDocumentFactory;
 import com.github.ngeor.mr.Defaults;
 import java.io.File;
 import java.util.stream.Stream;

@@ -2,11 +2,11 @@ package com.github.ngeor;
 
 import com.github.ngeor.git.Git;
 import com.github.ngeor.git.Tag;
+import com.github.ngeor.maven.document.EffectiveDocument;
+import com.github.ngeor.maven.document.PomDocument;
+import com.github.ngeor.maven.document.PomDocumentFactory;
 import com.github.ngeor.maven.dom.DomHelper;
 import com.github.ngeor.maven.dom.MavenCoordinates;
-import com.github.ngeor.maven.ng.EffectiveDocument;
-import com.github.ngeor.maven.ng.PomDocument;
-import com.github.ngeor.maven.ng.PomDocumentFactory;
 import com.github.ngeor.maven.process.Maven;
 import com.github.ngeor.mr.Defaults;
 import com.github.ngeor.process.ProcessFailedException;

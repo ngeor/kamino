@@ -1,4 +1,4 @@
-package com.github.ngeor.maven.ng;
+package com.github.ngeor.maven.document;
 
 import java.util.Objects;
 import java.util.function.Consumer;
