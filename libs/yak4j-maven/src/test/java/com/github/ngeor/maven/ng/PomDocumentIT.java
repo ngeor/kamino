@@ -93,13 +93,17 @@ public class PomDocumentIT {
         copyResource("/aggregator1/pom1.xml", "pom.xml");
         copyResource("/aggregator1/child1.xml", "child1/");
         copyResource("/aggregator1/child2.xml", "child2/");
+        copyResource("/aggregator1/child3.xml", "child3/");
 
         // load aggregator
         PomDocument aggregator = factory.create(tempDir, "./");
         assertThat(aggregator.coordinates()).isEqualTo(new MavenCoordinates("com.acme", "aggregator", "1.1"));
-        assertThat(aggregator.modules()).containsExactly("child1", "child2");
+        assertThat(aggregator.modules()).containsExactly("child1", "child2", "child3");
         assertThat(factory.moduleByCoordinates(new MavenCoordinates("com.acme", "aggregator", "1.1")))
                 .isSameAs(aggregator);
+        assertThat(aggregator.internalDependenciesOfModule("child1")).containsExactlyInAnyOrder("child2", "child3");
+        assertThat(aggregator.internalDependenciesOfModule("child2")).containsExactlyInAnyOrder("child3");
+        assertThat(aggregator.internalDependenciesOfModule("child3")).isEmpty();
     }
 
     private void copyResource(String resourceName, String destination) throws IOException {
