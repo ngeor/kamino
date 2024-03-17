@@ -106,6 +106,26 @@ public class PomDocumentIT {
         assertThat(aggregator.internalDependenciesOfModule("child3")).isEmpty();
     }
 
+    @Test
+    void testAggregator2() throws IOException {
+        // copy resources to temp dir
+        copyResource("/aggregator2/pom1.xml", "pom.xml");
+        for (int i = 1; i <= 6; i++) {
+            copyResource("/aggregator2/child" + i + ".xml", "child" + i + "/");
+        }
+
+        // load aggregator
+        PomDocument aggregator = factory.create(tempDir, "./");
+        assertThat(aggregator.modules()).containsExactly("child1", "child2", "child3", "child4", "child5", "child6");
+        assertThat(aggregator.internalDependenciesOfModule("child1")).containsExactlyInAnyOrder("child4");
+        assertThat(aggregator.internalDependenciesOfModule("child2")).containsExactlyInAnyOrder("child4", "child5");
+        assertThat(aggregator.internalDependenciesOfModule("child3"))
+                .containsExactlyInAnyOrder("child4", "child5", "child6");
+        assertThat(aggregator.internalDependenciesOfModule("child4")).isEmpty();
+        assertThat(aggregator.internalDependenciesOfModule("child5")).isEmpty();
+        assertThat(aggregator.internalDependenciesOfModule("child6")).containsExactlyInAnyOrder("child5");
+    }
+
     private void copyResource(String resourceName, String destination) throws IOException {
         Path parentPath;
         Path filePath;

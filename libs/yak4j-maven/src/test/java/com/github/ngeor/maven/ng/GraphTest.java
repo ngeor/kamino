@@ -50,10 +50,6 @@ class GraphTest {
         graph.visit("ATH", result::add);
 
         // assert
-        assertThat(result).containsExactlyInAnyOrder(
-            "SKG",
-            "AMS",
-            "JFK"
-        );
+        assertThat(result).containsExactlyInAnyOrder("SKG", "AMS", "JFK");
     }
 }
