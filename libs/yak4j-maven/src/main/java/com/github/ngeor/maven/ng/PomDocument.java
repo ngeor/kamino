@@ -15,12 +15,10 @@ import org.apache.commons.lang3.Validate;
 
 public class PomDocument extends BaseDocument {
     private final File pomFile;
-    private final Lazy<EffectiveDocument> lazyEffectiveDocument;
 
     protected PomDocument(PomDocumentFactory owner, File pomFile) {
         super(owner, () -> DocumentWrapper.parse(pomFile));
         this.pomFile = Objects.requireNonNull(pomFile);
-        this.lazyEffectiveDocument = new Lazy<>(this::doCreateEffectiveDocument);
     }
 
     public Optional<PomDocument> parent() {
@@ -37,10 +35,6 @@ public class PomDocument extends BaseDocument {
     }
 
     public EffectiveDocument toEffective() {
-        return lazyEffectiveDocument.get();
-    }
-
-    private EffectiveDocument doCreateEffectiveDocument() {
         PomDocument parentPomDocument = parent().orElse(null);
         return parentPomDocument == null
                 ? new EffectiveDocument.Root(this)
@@ -48,28 +42,80 @@ public class PomDocument extends BaseDocument {
     }
 
     public Set<String> internalDependenciesOfModule(String moduleName) {
-        Set<String> modules = modules().collect(Collectors.toSet());
-        Validate.isTrue(!modules.isEmpty(), "Document is not an aggregator module");
-        Validate.isTrue(modules.contains(moduleName), "Module %s is unknown", moduleName);
-        Map<String, EffectiveDocument> map = modules.stream()
-                .collect(Collectors.toMap(Function.identity(), name -> getOwner()
-                        .create(pomFile.toPath().getParent().resolve(name).resolve("pom.xml"))
-                        .toEffective()));
-        Map<MavenCoordinates, String> coordinatesToModule = map.entrySet().stream()
-                .collect(Collectors.toMap(e -> e.getValue().coordinates(), Map.Entry::getKey));
+        Graph<String> graph = createDependencyGraph();
+        Set<String> result = new HashSet<>();
+        graph.visit(moduleName, result::add);
+        return result;
+    }
 
+    protected Graph<String> createDependencyGraph() {
+        ModuleMap moduleMap = new ModuleMap();
         Graph<String> graph = new Graph<>();
-        for (String from : modules) {
-            EffectiveDocument effectivePom = map.get(from);
+        for (String from : moduleMap.getModules()) {
+            EffectiveDocument effectivePom = moduleMap.get(from).toEffective();
             for (String to : DomHelper.getDependencies(effectivePom.loadDocument())
-                    .map(coordinatesToModule::get)
+                    .map(moduleMap::moduleByCoordinates)
                     .toList()) {
                 graph.put(from, to);
             }
         }
+        return graph;
+    }
 
+    public Set<String> ancestorsOfModule(String moduleName) {
+        Graph<String> graph = createAncestorsGraph();
         Set<String> result = new HashSet<>();
         graph.visit(moduleName, result::add);
         return result;
+    }
+
+    protected Graph<String> createAncestorsGraph() {
+        ModuleMap moduleMap = new ModuleMap();
+        Graph<String> graph = new Graph<>();
+        for (String from : moduleMap.getModules()) {
+            PomDocument pomDocument = moduleMap.get(from);
+            pomDocument
+                    .parent()
+                    .map(BaseDocument::coordinates)
+                    .map(moduleMap::moduleByCoordinates)
+                    .ifPresent(to -> graph.put(from, to));
+        }
+        return graph;
+    }
+
+    private class ModuleMap {
+        private final Map<String, PomDocument> map;
+        private final Map<MavenCoordinates, String> coordinatesToModule;
+
+        public ModuleMap() {
+            Set<String> modules = modules().collect(Collectors.toSet());
+            Validate.isTrue(!modules.isEmpty(), "Document is not an aggregator module");
+            this.map = modules.stream().collect(Collectors.toMap(Function.identity(), this::loadModule));
+            this.coordinatesToModule = mapCoordinatesToModule(map);
+        }
+
+        public Set<String> getModules() {
+            return map.keySet();
+        }
+
+        public PomDocument get(String moduleName) {
+            return map.get(moduleName);
+        }
+
+        public String moduleByCoordinates(MavenCoordinates mavenCoordinates) {
+            return coordinatesToModule.get(mavenCoordinates);
+        }
+
+        private PomDocument loadModule(String moduleName) {
+            Objects.requireNonNull(moduleName);
+            Validate.notBlank(moduleName);
+            return getOwner()
+                    .create(pomFile.toPath().getParent().resolve(moduleName).resolve("pom.xml"));
+        }
+
+        private static Map<MavenCoordinates, String> mapCoordinatesToModule(Map<String, ? extends BaseDocument> map) {
+            return map.entrySet().stream()
+                    .collect(Collectors.toMap(e -> e.getValue().coordinates(), Map.Entry::getKey));
+        }
     }
 }

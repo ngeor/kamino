@@ -117,6 +117,8 @@ public class PomDocumentIT {
         // load aggregator
         PomDocument aggregator = factory.create(tempDir, "./");
         assertThat(aggregator.modules()).containsExactly("child1", "child2", "child3", "child4", "child5", "child6");
+
+        // test internalDependenciesOfModule
         assertThat(aggregator.internalDependenciesOfModule("child1")).containsExactlyInAnyOrder("child4");
         assertThat(aggregator.internalDependenciesOfModule("child2")).containsExactlyInAnyOrder("child4", "child5");
         assertThat(aggregator.internalDependenciesOfModule("child3"))
@@ -124,6 +126,14 @@ public class PomDocumentIT {
         assertThat(aggregator.internalDependenciesOfModule("child4")).isEmpty();
         assertThat(aggregator.internalDependenciesOfModule("child5")).isEmpty();
         assertThat(aggregator.internalDependenciesOfModule("child6")).containsExactlyInAnyOrder("child5");
+
+        // test ancestorsOfModule
+        assertThat(aggregator.ancestorsOfModule("child1")).isEmpty();
+        assertThat(aggregator.ancestorsOfModule("child2")).containsExactlyInAnyOrder("child1");
+        assertThat(aggregator.ancestorsOfModule("child3")).containsExactlyInAnyOrder("child2", "child1");
+        assertThat(aggregator.ancestorsOfModule("child4")).isEmpty();
+        assertThat(aggregator.ancestorsOfModule("child5")).isEmpty();
+        assertThat(aggregator.ancestorsOfModule("child6")).isEmpty();
     }
 
     private void copyResource(String resourceName, String destination) throws IOException {

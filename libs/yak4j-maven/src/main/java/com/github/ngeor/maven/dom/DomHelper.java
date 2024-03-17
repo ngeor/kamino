@@ -17,6 +17,7 @@ import java.util.stream.Stream;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 
+@Deprecated
 public final class DomHelper {
     private DomHelper() {}
 

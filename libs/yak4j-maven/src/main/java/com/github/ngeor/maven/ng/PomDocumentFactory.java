@@ -28,7 +28,7 @@ public class PomDocumentFactory {
     }
 
     public PomDocument create(File pomFilePath) {
-        return cache.computeIfAbsent(new CanonicalFile(pomFilePath), k -> new PomDocument(this, k.file()));
+        return cache.computeIfAbsent(new CanonicalFile(pomFilePath), k -> new CachePomDocument(this, k.file()));
     }
 
     public void addMergeListener(BiConsumer<MavenCoordinates, MavenCoordinates> listener) {
