@@ -29,7 +29,18 @@ public class PomDocument extends BaseDocument {
             if (parentPomFile.isDirectory()) {
                 parentPomFile = new File(parentPomFile, "pom.xml");
             }
-            // TODO try local repository
+            if (!parentPomFile.exists()) {
+                // try local repository
+                parentPomFile = new File(System.getProperty("user.home"))
+                        .toPath()
+                        .resolve(".m2")
+                        .resolve("repository")
+                        .resolve(p.groupId().replace('.', '/'))
+                        .resolve(p.artifactId())
+                        .resolve(p.version())
+                        .resolve(p.artifactId() + "-" + p.version() + ".pom")
+                        .toFile();
+            }
             return getOwner().create(parentPomFile);
         });
     }
