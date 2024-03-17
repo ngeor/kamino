@@ -1,9 +1,11 @@
 package com.github.ngeor.maven.ng;
 
+import com.github.ngeor.maven.document.property.StringPropertyResolver;
 import com.github.ngeor.maven.dom.DomHelper;
 import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.maven.dom.ParentPom;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -46,5 +48,19 @@ public abstract class BaseDocument {
 
     public Stream<String> modules() {
         return DomHelper.getModules(loadDocument());
+    }
+
+    public DocumentWrapper resolveProperties() {
+        Map<String, String> unresolvedProperties = DomHelper.getProperties(loadDocument());
+        if (unresolvedProperties == null || unresolvedProperties.isEmpty()) {
+            return loadDocument();
+        }
+
+        // resolve them
+        Map<String, String> resolvedProperties = StringPropertyResolver.resolve(unresolvedProperties);
+        DocumentWrapper result = loadDocument().deepClone();
+        boolean hadChanges = result.getDocumentElement()
+                .transformTextNodes(text -> StringPropertyResolver.resolve(text, resolvedProperties::get));
+        return hadChanges ? result : loadDocument();
     }
 }

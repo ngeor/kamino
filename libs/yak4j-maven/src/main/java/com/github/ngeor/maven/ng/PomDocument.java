@@ -55,6 +55,7 @@ public class PomDocument extends BaseDocument {
             EffectiveDocument effectivePom = moduleMap.get(from).toEffective();
             for (String to : DomHelper.getDependencies(effectivePom.loadDocument())
                     .map(moduleMap::moduleByCoordinates)
+                    .filter(Objects::nonNull)
                     .toList()) {
                 graph.put(from, to);
             }
@@ -83,6 +84,13 @@ public class PomDocument extends BaseDocument {
         return graph;
     }
 
+    public PomDocument loadModule(String moduleName) {
+        Objects.requireNonNull(moduleName);
+        Validate.notBlank(moduleName);
+        return getOwner()
+                .create(pomFile.toPath().getParent().resolve(moduleName).resolve("pom.xml"));
+    }
+
     private class ModuleMap {
         private final Map<String, PomDocument> map;
         private final Map<MavenCoordinates, String> coordinatesToModule;
@@ -90,7 +98,7 @@ public class PomDocument extends BaseDocument {
         public ModuleMap() {
             Set<String> modules = modules().collect(Collectors.toSet());
             Validate.isTrue(!modules.isEmpty(), "Document is not an aggregator module");
-            this.map = modules.stream().collect(Collectors.toMap(Function.identity(), this::loadModule));
+            this.map = modules.stream().collect(Collectors.toMap(Function.identity(), PomDocument.this::loadModule));
             this.coordinatesToModule = mapCoordinatesToModule(map);
         }
 
@@ -104,13 +112,6 @@ public class PomDocument extends BaseDocument {
 
         public String moduleByCoordinates(MavenCoordinates mavenCoordinates) {
             return coordinatesToModule.get(mavenCoordinates);
-        }
-
-        private PomDocument loadModule(String moduleName) {
-            Objects.requireNonNull(moduleName);
-            Validate.notBlank(moduleName);
-            return getOwner()
-                    .create(pomFile.toPath().getParent().resolve(moduleName).resolve("pom.xml"));
         }
 
         private static Map<MavenCoordinates, String> mapCoordinatesToModule(Map<String, ? extends BaseDocument> map) {
