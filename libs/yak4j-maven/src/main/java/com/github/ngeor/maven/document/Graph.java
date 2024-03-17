@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 
-final class Graph<E> {
+public final class Graph<E> {
     private final Map<E, Set<E>> map = new HashMap<>();
 
     public void put(E from, E to) {

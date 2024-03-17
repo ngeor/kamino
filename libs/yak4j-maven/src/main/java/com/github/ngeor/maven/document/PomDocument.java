@@ -102,6 +102,13 @@ public class PomDocument extends BaseDocument {
                 .create(pomFile.toPath().getParent().resolve(moduleName).resolve("pom.xml"));
     }
 
+    public Optional<String> moduleByCoordinates(MavenCoordinates coordinates) {
+        Objects.requireNonNull(coordinates);
+        return modules()
+                .filter(m -> coordinates.equals(loadModule(m).coordinates()))
+                .findFirst();
+    }
+
     private class ModuleMap {
         private final Map<String, PomDocument> map;
         private final Map<MavenCoordinates, String> coordinatesToModule;
