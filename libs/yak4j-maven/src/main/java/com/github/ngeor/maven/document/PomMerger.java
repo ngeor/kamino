@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.Set;
 
 // Notable elements which are not inherited include: artifactId; name
-public final class PomMerger {
+final class PomMerger {
 
     public static DocumentWrapper mergeIntoLeft(DocumentWrapper left, DocumentWrapper right) {
         new DocumentMerge().mergeIntoLeft(left, right);

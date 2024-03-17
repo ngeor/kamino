@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.Objects;
 
-public record CanonicalFile(File file) {
+record CanonicalFile(File file) {
     public CanonicalFile(File file) {
         try {
             this.file = Objects.requireNonNull(file.getCanonicalFile());

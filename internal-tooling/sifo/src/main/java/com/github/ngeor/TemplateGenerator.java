@@ -34,7 +34,6 @@ public final class TemplateGenerator {
     private final SimpleStringTemplate releaseTemplate;
     private final SimpleStringTemplate rootPomTemplate;
     private final File rootDirectory;
-    private final PomDocumentFactory pomDocumentFactory = new PomDocumentFactory();
     private final PomDocument aggregator;
     private final LazyInitializer<List<String>> lazyTags;
 
@@ -56,6 +55,7 @@ public final class TemplateGenerator {
                         .map(Tag::name)
                         .toList())
                 .get();
+        PomDocumentFactory pomDocumentFactory = new PomDocumentFactory();
         this.aggregator = pomDocumentFactory.create(rootDirectory.toPath().resolve("pom.xml"));
     }
 

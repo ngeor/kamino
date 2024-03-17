@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.UnaryOperator;
 
-public final class StringPropertyResolver {
+final class StringPropertyResolver {
     private StringPropertyResolver() {}
 
     public static String resolve(String value, UnaryOperator<String> resolver) {

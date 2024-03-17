@@ -5,7 +5,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-class Lazy<E> implements Supplier<E> {
+final class Lazy<E> implements Supplier<E> {
     private E value;
     private boolean loaded;
 
