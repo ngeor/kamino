@@ -42,10 +42,19 @@ class BaseDocumentTest {
         assertThat(doc.parentPom()).isEmpty();
     }
 
-    @Test
-    void modules() {
-        BaseDocument doc = new ResourceDocument(factory, "/pom1.xml");
-        assertThat(doc.modules()).isEmpty();
+    @Nested
+    class Modules {
+        @Test
+        void empty() {
+            BaseDocument doc = new ResourceDocument(factory, "/pom1.xml");
+            assertThat(doc.modules()).isEmpty();
+        }
+
+        @Test
+        void notEmpty() {
+            BaseDocument doc = new ResourceDocument(factory, "/aggregator1/pom1.xml");
+            assertThat(doc.modules()).containsExactly("child1", "child2", "child3");
+        }
     }
 
     @Nested

@@ -79,7 +79,10 @@ public abstract class BaseDocument {
     }
 
     public Stream<String> modules() {
-        return DomHelper.getModules(loadDocument());
+        return loadDocument().getDocumentElement()
+            .findChildElements("modules")
+            .flatMap(e -> e.findChildElements("module"))
+            .flatMap(ElementWrapper::getTextContentTrimmedAsStream);
     }
 
     public DocumentWrapper resolveProperties() {

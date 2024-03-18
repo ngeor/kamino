@@ -45,13 +45,6 @@ public final class DomHelper {
                 .map(DomHelper::getCoordinates);
     }
 
-    public static Stream<String> getModules(DocumentWrapper document) {
-        return document.getDocumentElement()
-                .findChildElements("modules")
-                .flatMap(e -> e.findChildElements("module"))
-                .flatMap(ElementWrapper::getTextContentTrimmedAsStream);
-    }
-
     /**
      * Gets the value of the given property.
      * <p>
