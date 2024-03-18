@@ -5,10 +5,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.util.Objects;
+import java.util.function.UnaryOperator;
 
 public class ResourceDocument extends BaseDocument {
-    protected ResourceDocument(PomDocumentFactory owner, String resourceName) {
-        super(owner, () -> loadResourceDocument(resourceName));
+    public ResourceDocument(
+            PomDocumentFactory owner, String resourceName, UnaryOperator<DocumentWrapper> documentDecorator) {
+        super(owner, () -> documentDecorator.apply(loadResourceDocument(resourceName)));
+    }
+
+    public ResourceDocument(PomDocumentFactory owner, String resourceName) {
+        this(owner, resourceName, UnaryOperator.identity());
     }
 
     private static DocumentWrapper loadResourceDocument(String resourceName) {

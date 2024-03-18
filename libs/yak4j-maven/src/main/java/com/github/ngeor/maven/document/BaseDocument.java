@@ -1,14 +1,24 @@
 package com.github.ngeor.maven.document;
 
+import static com.github.ngeor.maven.dom.ElementNames.ARTIFACT_ID;
+import static com.github.ngeor.maven.dom.ElementNames.GROUP_ID;
+import static com.github.ngeor.maven.dom.ElementNames.PARENT;
+import static com.github.ngeor.maven.dom.ElementNames.VERSION;
+
 import com.github.ngeor.maven.dom.DomHelper;
 import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.maven.dom.ParentPom;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
+import com.github.ngeor.yak4jdom.ElementWrapper;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 
 public abstract class BaseDocument {
     private final PomDocumentFactory owner;
@@ -34,7 +44,30 @@ public abstract class BaseDocument {
     }
 
     public MavenCoordinates coordinates() {
-        return DomHelper.coordinates(loadDocument());
+        Iterator<ElementWrapper> it = loadDocument().getDocumentElement().getChildElementsAsIterator();
+        ElementFinder<String> groupId = ElementFinder.textFinder(GROUP_ID);
+        ElementFinder<String> artifactId = ElementFinder.textFinder(ARTIFACT_ID);
+        ElementFinder<String> version = ElementFinder.textFinder(VERSION);
+        ElementFinder<ElementWrapper> parent = ElementFinder.elementFinder(PARENT);
+        Predicate<ElementWrapper> finders = groupId.or(artifactId).or(version).or(parent);
+        while (it.hasNext() && (groupId.isEmpty() || artifactId.isEmpty() || version.isEmpty())) {
+            ElementWrapper next = it.next();
+            finders.test(next);
+        }
+        // artifactId is not inherited
+        Validate.isTrue(artifactId.isPresent(), "Cannot resolve coordinates, artifactId is missing");
+        if (parent.isEmpty()) {
+            Validate.isTrue(groupId.isPresent(), "Cannot resolve coordinates, groupId is missing");
+            Validate.isTrue(version.isPresent(), "Cannot resolve coordinates, version is missing");
+            return new MavenCoordinates(groupId.getValue(), artifactId.getValue(), version.getValue());
+        } else {
+            MavenCoordinates parentCoordinates =
+                    DomHelper.getParentPom(parent.getValue()).validateCoordinates();
+            return new MavenCoordinates(
+                    StringUtils.defaultIfBlank(groupId.getValue(), parentCoordinates.groupId()),
+                    artifactId.getValue(),
+                    StringUtils.defaultIfBlank(version.getValue(), parentCoordinates.version()));
+        }
     }
 
     protected Optional<ParentPom> parentPom() {

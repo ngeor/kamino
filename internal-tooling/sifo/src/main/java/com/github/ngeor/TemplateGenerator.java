@@ -93,7 +93,7 @@ public final class TemplateGenerator {
         System.out.printf("Regenerating templates for %s%n", module);
         EffectiveDocument input = aggregator.loadModule(module).toEffective();
         DocumentWrapper doc = input.resolveProperties();
-        MavenCoordinates coordinates = DomHelper.coordinates(doc);
+        MavenCoordinates coordinates = input.coordinates();
 
         final String javaVersion = DomHelper.getProperty(doc, "maven.compiler.source")
                 .map(String::trim)
