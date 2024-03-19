@@ -8,10 +8,8 @@ import static com.github.ngeor.maven.dom.ElementNames.VERSION;
 
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Deprecated
@@ -43,28 +41,5 @@ public final class DomHelper {
                 .findChildElements("dependencies")
                 .flatMap(dependencies -> dependencies.findChildElements("dependency"))
                 .map(DomHelper::getCoordinates);
-    }
-
-    /**
-     * Gets the value of the given property.
-     * <p>
-     * The result is not trimmed.
-     * @param document The Maven document.
-     * @param name The property name.
-     * @return The value of the given property.
-     */
-    public static Optional<String> getProperty(DocumentWrapper document, String name) {
-        return document.getDocumentElement()
-                .findChildElements("properties")
-                .flatMap(p -> p.findChildElements(name))
-                .map(ElementWrapper::getTextContent)
-                .findFirst();
-    }
-
-    public static Map<String, String> getProperties(DocumentWrapper document) {
-        return document.getDocumentElement()
-                .findChildElements("properties")
-                .flatMap(ElementWrapper::getChildElements)
-                .collect(Collectors.toMap(ElementWrapper::getNodeName, ElementWrapper::getTextContent));
     }
 }

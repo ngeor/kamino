@@ -5,7 +5,6 @@ import com.github.ngeor.git.Tag;
 import com.github.ngeor.maven.document.EffectiveDocument;
 import com.github.ngeor.maven.document.PomDocument;
 import com.github.ngeor.maven.document.PomDocumentFactory;
-import com.github.ngeor.maven.dom.DomHelper;
 import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.maven.process.Maven;
 import com.github.ngeor.mr.Defaults;
@@ -92,10 +91,8 @@ public final class TemplateGenerator {
     public void regenerateAllTemplates(String module) throws IOException, ProcessFailedException {
         System.out.printf("Regenerating templates for %s%n", module);
         EffectiveDocument input = aggregator.loadModule(module).toEffective();
-        DocumentWrapper doc = input.resolveProperties();
-        MavenCoordinates coordinates = input.coordinates();
 
-        final String javaVersion = DomHelper.getProperty(doc, "maven.compiler.source")
+        final String javaVersion = input.getProperty("maven.compiler.source")
                 .map(String::trim)
                 .map(v -> "1.8".equals(v) ? "8" : v)
                 .orElse(DEFAULT_JAVA_VERSION);
@@ -140,6 +137,7 @@ public final class TemplateGenerator {
 
         fixProjectUrls(module);
 
+        MavenCoordinates coordinates = input.coordinates();
         new ReadmeGenerator(rootDirectory, module, coordinates, workflowId, this::tags).fixProjectBadges();
     }
 

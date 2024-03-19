@@ -11,7 +11,6 @@ import com.github.ngeor.maven.dom.ParentPom;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -79,23 +78,23 @@ public abstract class BaseDocument {
     }
 
     public Stream<String> modules() {
-        return loadDocument().getDocumentElement()
-            .findChildElements("modules")
-            .flatMap(e -> e.findChildElements("module"))
-            .flatMap(ElementWrapper::getTextContentTrimmedAsStream);
+        return loadDocument()
+                .getDocumentElement()
+                .findChildElements("modules")
+                .flatMap(e -> e.findChildElements("module"))
+                .flatMap(ElementWrapper::getTextContentTrimmedAsStream);
     }
 
-    public DocumentWrapper resolveProperties() {
-        Map<String, String> unresolvedProperties = DomHelper.getProperties(loadDocument());
-        if (unresolvedProperties == null || unresolvedProperties.isEmpty()) {
-            return loadDocument();
-        }
+    public Optional<String> getProperty(String propertyName) {
+        return loadDocument()
+                .getDocumentElement()
+                .findChildElements("properties")
+                .flatMap(p -> p.findChildElements(propertyName))
+                .flatMap(ElementWrapper::getTextContentTrimmedAsStream)
+                .findFirst();
+    }
 
-        // resolve them
-        Map<String, String> resolvedProperties = StringPropertyResolver.resolve(unresolvedProperties);
-        DocumentWrapper result = loadDocument().deepClone();
-        boolean hadChanges = result.getDocumentElement()
-                .transformTextNodes(text -> StringPropertyResolver.resolve(text, resolvedProperties::get));
-        return hadChanges ? result : loadDocument();
+    public ResolvedPropertiesDocument toResolvedProperties() {
+        return new ResolvedPropertiesDocument(this);
     }
 }

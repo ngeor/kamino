@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 
 public abstract sealed class EffectiveDocument extends BaseDocument {
 
-    public EffectiveDocument(PomDocumentFactory owner, Supplier<DocumentWrapper> documentLoader) {
+    protected EffectiveDocument(PomDocumentFactory owner, Supplier<DocumentWrapper> documentLoader) {
         super(owner, documentLoader);
     }
 

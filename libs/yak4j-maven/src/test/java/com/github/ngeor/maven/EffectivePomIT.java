@@ -102,7 +102,8 @@ class EffectivePomIT {
         assertions.accept(maven.effectivePomViaMaven().getDocumentElement());
         // assert by not invoking Maven process
         PomDocumentFactory factory = new PomDocumentFactory();
-        DocumentWrapper document = factory.create(file).toEffective().resolveProperties();
+        DocumentWrapper document =
+                factory.create(file).toEffective().toResolvedProperties().loadDocument();
         assertions.accept(document.getDocumentElement());
     }
 }

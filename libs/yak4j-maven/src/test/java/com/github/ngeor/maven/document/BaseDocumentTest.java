@@ -125,4 +125,19 @@ class BaseDocumentTest {
             assertThatThrownBy(doc::coordinates).hasMessage(elementName + " is missing from parent coordinates");
         }
     }
+
+    @Nested
+    class GetProperty {
+        @Test
+        void missingProperty() {
+            BaseDocument doc = new ResourceDocument(factory, "/pom1.xml");
+            assertThat(doc.getProperty("color")).isEmpty();
+        }
+
+        @Test
+        void presentProperty() {
+            BaseDocument doc = new ResourceDocument(factory, "/2level/grandparent.xml");
+            assertThat(doc.getProperty("color")).contains("blue");
+        }
+    }
 }
