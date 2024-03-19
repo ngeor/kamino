@@ -97,4 +97,15 @@ public abstract class BaseDocument {
     public ResolvedPropertiesDocument toResolvedProperties() {
         return new ResolvedPropertiesDocument(this);
     }
+
+    public Stream<MavenCoordinates> dependencies() {
+        return loadDocument()
+                .getDocumentElement()
+                .findChildElements("dependencies")
+                .flatMap(dependencies -> dependencies.findChildElements("dependency"))
+                .map(dependency -> {
+                    String[] items = dependency.firstElementsText(GROUP_ID, ARTIFACT_ID, VERSION);
+                    return new MavenCoordinates(items[0], items[1], items[2]);
+                });
+    }
 }

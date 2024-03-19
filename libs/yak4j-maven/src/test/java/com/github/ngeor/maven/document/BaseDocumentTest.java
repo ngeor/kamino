@@ -140,4 +140,13 @@ class BaseDocumentTest {
             assertThat(doc.getProperty("color")).contains("blue");
         }
     }
+
+    @Nested
+    class Dependencies {
+        @Test
+        void dependency() {
+            BaseDocument doc = new ResourceDocument(factory, "/2level/parent.xml");
+            assertThat(doc.dependencies()).containsExactly(new MavenCoordinates("com.external", "library", "1.2.3"));
+        }
+    }
 }

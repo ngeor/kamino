@@ -1,6 +1,5 @@
 package com.github.ngeor.maven.document;
 
-import com.github.ngeor.maven.dom.DomHelper;
 import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import java.io.File;
@@ -64,7 +63,8 @@ public class PomDocument extends BaseDocument {
         Graph<String> graph = new Graph<>();
         for (String from : moduleMap.getModules()) {
             EffectiveDocument effectivePom = moduleMap.get(from).toEffective();
-            for (String to : DomHelper.getDependencies(effectivePom.loadDocument())
+            for (String to : effectivePom
+                    .dependencies()
                     .map(moduleMap::moduleByCoordinates)
                     .filter(Objects::nonNull)
                     .toList()) {
