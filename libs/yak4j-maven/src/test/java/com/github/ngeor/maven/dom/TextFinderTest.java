@@ -6,7 +6,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.Test;
 
 import java.util.Iterator;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -25,10 +24,10 @@ class TextFinderTest {
         TextFinder finder = new TextFinder(ElementNames.GROUP_ID);
 
         // act
-        Optional<String> value = finder.find(cit);
+        String value = finder.find(cit);
 
         // assert
-        assertThat(value).isNotNull().contains("com.acme");
+        assertThat(value).isEqualTo("com.acme");
         assertThat(cit.getHasNextCount()).isEqualTo(1);
         assertThat(cit.getNextCount()).isEqualTo(1);
     }
@@ -47,10 +46,10 @@ class TextFinderTest {
         TextFinder finder = new TextFinder(ElementNames.GROUP_ID);
 
         // act
-        Optional<String> value = finder.find(cit);
+        String value = finder.find(cit);
 
         // assert
-        assertThat(value).isNotNull().contains("com.acme2");
+        assertThat(value).isEqualTo("com.acme2");
         assertThat(cit.getHasNextCount()).isEqualTo(2);
         assertThat(cit.getNextCount()).isEqualTo(2);
     }
@@ -69,10 +68,10 @@ class TextFinderTest {
         TextFinder finder = new TextFinder(ElementNames.GROUP_ID);
 
         // act
-        Optional<String> value = finder.find(cit);
+        String value = finder.find(cit);
 
         // assert
-        assertThat(value).isNotNull().contains("com.acme1");
+        assertThat(value).isEqualTo("com.acme1");
         assertThat(cit.getHasNextCount()).isEqualTo(1);
         assertThat(cit.getNextCount()).isEqualTo(1);
     }
@@ -93,10 +92,10 @@ class TextFinderTest {
         TextFinder finder = new TextFinder(ElementNames.GROUP_ID);
 
         // act
-        Optional<String> value = finder.find(cit);
+        String value = finder.find(cit);
 
         // assert
-        assertThat(value).isNotNull().contains("com.acme1");
+        assertThat(value).isEqualTo("com.acme1");
         assertThat(cit.getHasNextCount()).isEqualTo(1);
         assertThat(cit.getNextCount()).isEqualTo(1);
     }
@@ -115,10 +114,10 @@ class TextFinderTest {
         TextFinder finder = new TextFinder(ElementNames.GROUP_ID);
 
         // act
-        Optional<String> value = finder.find(cit);
+        String value = finder.find(cit);
 
         // assert
-        assertThat(value).isNotNull().isEmpty();
+        assertThat(value).isNull();
         assertThat(cit.getHasNextCount()).isEqualTo(1);
         assertThat(cit.getNextCount()).isEqualTo(1);
     }
@@ -136,10 +135,10 @@ class TextFinderTest {
         TextFinder finder = new TextFinder(ElementNames.GROUP_ID);
 
         // act
-        Optional<String> value = finder.find(cit);
+        String value = finder.find(cit);
 
         // assert
-        assertThat(value).isNotNull().isEmpty();
+        assertThat(value).isNull();
         assertThat(cit.getHasNextCount()).isEqualTo(2);
         assertThat(cit.getNextCount()).isEqualTo(1);
     }
@@ -157,7 +156,7 @@ class TextFinderTest {
         CountingIterator<ElementWrapper> cit = new CountingIterator<>(it);
         TextFinder groupIdFinder = new TextFinder(ElementNames.GROUP_ID);
         TextFinder versionFinder = new TextFinder(ElementNames.VERSION);
-        CompositeTextFinder compositeFinder = new CompositeTextFinder(groupIdFinder, versionFinder);
+        CompositeFinder<ElementWrapper, String, String> compositeFinder = new CompositeFinder<>(groupIdFinder, versionFinder);
 
         // act
         Pair<String, String> value = compositeFinder.find(cit);

@@ -12,6 +12,11 @@ public class ElementFinder implements Finder<ElementWrapper, ElementWrapper> {
     }
 
     @Override
+    public boolean keepSearching() {
+        return value == null;
+    }
+
+    @Override
     public boolean isEmpty() {
         return value == null;
     }

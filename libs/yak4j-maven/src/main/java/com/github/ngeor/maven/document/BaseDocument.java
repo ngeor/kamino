@@ -6,6 +6,7 @@ import static com.github.ngeor.maven.dom.ElementNames.PARENT;
 import static com.github.ngeor.maven.dom.ElementNames.VERSION;
 
 import com.github.ngeor.maven.dom.DomHelper;
+import com.github.ngeor.maven.dom.Finders;
 import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.maven.dom.ParentPom;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
@@ -44,6 +45,10 @@ public abstract class BaseDocument {
 
     public MavenCoordinates coordinates() {
         Iterator<ElementWrapper> it = loadDocument().getDocumentElement().getChildElementsAsIterator();
+//        Finders.mavenCoordinates()
+//            .compose(
+//                Finders.el
+//            )
         ElementFinder<String> groupId = ElementFinder.textFinder(GROUP_ID);
         ElementFinder<String> artifactId = ElementFinder.textFinder(ARTIFACT_ID);
         ElementFinder<String> version = ElementFinder.textFinder(VERSION);

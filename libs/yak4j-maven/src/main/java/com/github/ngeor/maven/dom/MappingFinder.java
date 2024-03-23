@@ -12,6 +12,11 @@ public class MappingFinder<E, I, O> implements Finder<E, O> {
     }
 
     @Override
+    public boolean keepSearching() {
+        return decorated.keepSearching();
+    }
+
+    @Override
     public boolean isEmpty() {
         return decorated.isEmpty();
     }

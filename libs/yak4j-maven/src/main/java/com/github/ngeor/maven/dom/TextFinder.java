@@ -5,13 +5,18 @@ import org.apache.commons.lang3.Validate;
 
 import java.util.Optional;
 
-public class TextFinder implements Finder<ElementWrapper, Optional<String>> {
+public class TextFinder implements Finder<ElementWrapper, String> {
     private final String elementName;
     private boolean found;
     private String value;
 
     public TextFinder(String elementName) {
         this.elementName = Validate.notBlank(elementName);
+    }
+
+    @Override
+    public boolean keepSearching() {
+        return !found;
     }
 
     @Override
@@ -30,7 +35,7 @@ public class TextFinder implements Finder<ElementWrapper, Optional<String>> {
     }
 
     @Override
-    public Optional<String> toResult() {
-        return Optional.ofNullable(value);
+    public String toResult() {
+        return value;
     }
 }
