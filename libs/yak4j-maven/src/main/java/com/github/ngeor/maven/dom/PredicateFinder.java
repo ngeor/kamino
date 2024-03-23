@@ -13,23 +13,16 @@ public class PredicateFinder<T> implements Finder<T, T> {
     }
 
     @Override
-    public boolean keepSearching() {
-        return !found;
+    public boolean stopSearching() {
+        return found;
     }
 
     @Override
-    public boolean isEmpty() {
-        return !found;
-    }
-
-    @Override
-    public boolean accept(T element) {
-        if (predicate.test(element)) {
+    public void accept(T element) {
+        if (!found && predicate.test(element)) {
             found = true;
             value = element;
-            return true;
         }
-        return false;
     }
 
     @Override

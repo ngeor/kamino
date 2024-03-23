@@ -12,18 +12,14 @@ public class CompositeFinder<I, L, R> implements Finder<I, Pair<L, R>> {
     }
 
     @Override
-    public boolean keepSearching() {
-        return left.keepSearching() || right.keepSearching();
+    public boolean stopSearching() {
+        return left.stopSearching() && right.stopSearching();
     }
 
     @Override
-    public boolean isEmpty() {
-        return left.isEmpty() || right.isEmpty();
-    }
-
-    @Override
-    public boolean accept(I element) {
-        return left.acceptIfEmpty(element) || right.acceptIfEmpty(element);
+    public void accept(I element) {
+        left.accept(element);
+        right.accept(element);
     }
 
     @Override

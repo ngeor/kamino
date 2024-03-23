@@ -2,32 +2,28 @@ package com.github.ngeor.maven.dom;
 
 import java.util.function.Function;
 
-public class MappingFinder<E, I, O> implements Finder<E, O> {
-    private final Finder<E, I> decorated;
-    private final Function<I, O> mapper;
+public class MappingFinder<I, O, U> implements Finder<I, U> {
+    private final Finder<I, O> decorated;
+    private final Function<O, U> mapper;
 
-    public MappingFinder(Finder<E, I> decorated, Function<I, O> mapper) {
+    public MappingFinder(Finder<I, O> decorated, Function<O, U> mapper) {
         this.decorated = decorated;
         this.mapper = mapper;
     }
 
     @Override
-    public boolean keepSearching() {
-        return decorated.keepSearching();
+    public boolean stopSearching() {
+        return decorated.stopSearching();
     }
 
     @Override
-    public boolean isEmpty() {
-        return decorated.isEmpty();
+    public void accept(I element) {
+        decorated.accept(element);
     }
 
     @Override
-    public boolean accept(E element) {
-        return decorated.accept(element);
-    }
-
-    @Override
-    public O toResult() {
-        return mapper.apply(decorated.toResult());
+    public U toResult() {
+        O result = decorated.toResult();
+        return result == null ? null : mapper.apply(result);
     }
 }

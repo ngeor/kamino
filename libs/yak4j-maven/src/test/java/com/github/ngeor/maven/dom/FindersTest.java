@@ -9,7 +9,7 @@ import java.util.Iterator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class TextFinderTest {
+class FindersTest {
     @Test
     void testGroupIdIsFirstElement() {
         // arrange
@@ -21,7 +21,7 @@ class TextFinderTest {
         ElementWrapper documentElement = doc.getDocumentElement();
         Iterator<ElementWrapper> it = documentElement.getChildElementsAsIterator();
         CountingIterator<ElementWrapper> cit = new CountingIterator<>(it);
-        TextFinder finder = new TextFinder(ElementNames.GROUP_ID);
+        var finder = Finders.text(ElementNames.GROUP_ID);
 
         // act
         String value = finder.find(cit);
@@ -43,7 +43,7 @@ class TextFinderTest {
         ElementWrapper documentElement = doc.getDocumentElement();
         Iterator<ElementWrapper> it = documentElement.getChildElementsAsIterator();
         CountingIterator<ElementWrapper> cit = new CountingIterator<>(it);
-        TextFinder finder = new TextFinder(ElementNames.GROUP_ID);
+        var finder = Finders.text(ElementNames.GROUP_ID);
 
         // act
         String value = finder.find(cit);
@@ -65,7 +65,7 @@ class TextFinderTest {
         ElementWrapper documentElement = doc.getDocumentElement();
         Iterator<ElementWrapper> it = documentElement.getChildElementsAsIterator();
         CountingIterator<ElementWrapper> cit = new CountingIterator<>(it);
-        TextFinder finder = new TextFinder(ElementNames.GROUP_ID);
+        var finder = Finders.text(ElementNames.GROUP_ID);
 
         // act
         String value = finder.find(cit);
@@ -89,7 +89,7 @@ class TextFinderTest {
         ElementWrapper documentElement = doc.getDocumentElement();
         Iterator<ElementWrapper> it = documentElement.getChildElementsAsIterator();
         CountingIterator<ElementWrapper> cit = new CountingIterator<>(it);
-        TextFinder finder = new TextFinder(ElementNames.GROUP_ID);
+        var finder = Finders.text(ElementNames.GROUP_ID);
 
         // act
         String value = finder.find(cit);
@@ -111,7 +111,7 @@ class TextFinderTest {
         ElementWrapper documentElement = doc.getDocumentElement();
         Iterator<ElementWrapper> it = documentElement.getChildElementsAsIterator();
         CountingIterator<ElementWrapper> cit = new CountingIterator<>(it);
-        TextFinder finder = new TextFinder(ElementNames.GROUP_ID);
+        var finder = Finders.text(ElementNames.GROUP_ID);
 
         // act
         String value = finder.find(cit);
@@ -132,7 +132,7 @@ class TextFinderTest {
         ElementWrapper documentElement = doc.getDocumentElement();
         Iterator<ElementWrapper> it = documentElement.getChildElementsAsIterator();
         CountingIterator<ElementWrapper> cit = new CountingIterator<>(it);
-        TextFinder finder = new TextFinder(ElementNames.GROUP_ID);
+        var finder = Finders.text(ElementNames.GROUP_ID);
 
         // act
         String value = finder.find(cit);
@@ -154,9 +154,9 @@ class TextFinderTest {
         ElementWrapper documentElement = doc.getDocumentElement();
         Iterator<ElementWrapper> it = documentElement.getChildElementsAsIterator();
         CountingIterator<ElementWrapper> cit = new CountingIterator<>(it);
-        TextFinder groupIdFinder = new TextFinder(ElementNames.GROUP_ID);
-        TextFinder versionFinder = new TextFinder(ElementNames.VERSION);
-        CompositeFinder<ElementWrapper, String, String> compositeFinder = new CompositeFinder<>(groupIdFinder, versionFinder);
+        var compositeFinder = Finders.text(ElementNames.GROUP_ID).compose(
+            Finders.text(ElementNames.VERSION)
+        );
 
         // act
         Pair<String, String> value = compositeFinder.find(cit);

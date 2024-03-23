@@ -6,9 +6,14 @@ import org.apache.commons.lang3.tuple.Pair;
 public final class Finders {
     private Finders() {}
 
+    public static Finder<ElementWrapper, ElementWrapper> firstElement(String elementName) {
+        return new PredicateFinder<>(
+            e -> elementName.equals(e.getNodeName())
+        );
+    }
 
     public static Finder<ElementWrapper, String> text(String elementName) {
-        return new TextFinder(elementName);
+        return firstElement(elementName).map(e -> e.getTextContentTrimmed().orElse(null));
     }
 
     public static Finder<ElementWrapper, Pair<String, String>> groupIdArtifactId() {

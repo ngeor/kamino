@@ -5,7 +5,7 @@ import static com.github.ngeor.maven.dom.ElementNames.GROUP_ID;
 import static com.github.ngeor.maven.dom.ElementNames.PARENT;
 import static com.github.ngeor.maven.dom.ElementNames.VERSION;
 
-import com.github.ngeor.maven.dom.DomHelper;
+import com.github.ngeor.maven.dom.Finder;
 import com.github.ngeor.maven.dom.Finders;
 import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.maven.dom.ParentPom;
@@ -14,11 +14,11 @@ import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
+import org.apache.commons.lang3.tuple.Pair;
 
 public abstract class BaseDocument {
     private final PomDocumentFactory owner;
@@ -45,32 +45,24 @@ public abstract class BaseDocument {
 
     public MavenCoordinates coordinates() {
         Iterator<ElementWrapper> it = loadDocument().getDocumentElement().getChildElementsAsIterator();
-//        Finders.mavenCoordinates()
-//            .compose(
-//                Finders.el
-//            )
-        ElementFinder<String> groupId = ElementFinder.textFinder(GROUP_ID);
-        ElementFinder<String> artifactId = ElementFinder.textFinder(ARTIFACT_ID);
-        ElementFinder<String> version = ElementFinder.textFinder(VERSION);
-        ElementFinder<ElementWrapper> parent = ElementFinder.elementFinder(PARENT);
-        Predicate<ElementWrapper> finders = groupId.or(artifactId).or(version).or(parent);
-        while (it.hasNext() && (groupId.isEmpty() || artifactId.isEmpty() || version.isEmpty())) {
-            ElementWrapper next = it.next();
-            finders.test(next);
-        }
+        Finder<ElementWrapper, Pair<MavenCoordinates, ElementWrapper>> finder = Finders.mavenCoordinates()
+            .compose(mcFinder -> Finders.firstElement(PARENT).asOptional(() -> !mcFinder.toResult().hasMissingFields()));
+        Pair<MavenCoordinates, ElementWrapper> finderResult = finder.find(it);
+        MavenCoordinates coordinates = finderResult.getLeft();
+        ElementWrapper parent = finderResult.getRight();
+
         // artifactId is not inherited
-        Validate.isTrue(artifactId.isPresent(), "Cannot resolve coordinates, artifactId is missing");
-        if (parent.isEmpty()) {
-            Validate.isTrue(groupId.isPresent(), "Cannot resolve coordinates, groupId is missing");
-            Validate.isTrue(version.isPresent(), "Cannot resolve coordinates, version is missing");
-            return new MavenCoordinates(groupId.getValue(), artifactId.getValue(), version.getValue());
+        Validate.notBlank(coordinates.artifactId(), "Cannot resolve coordinates, artifactId is missing");
+        if (parent == null) {
+            Validate.notBlank(coordinates.groupId(), "Cannot resolve coordinates, groupId is missing");
+            Validate.notBlank(coordinates.version(), "Cannot resolve coordinates, version is missing");
+            return coordinates;
         } else {
-            MavenCoordinates parentCoordinates =
-                    DomHelper.getParentPom(parent.getValue()).validateCoordinates();
+            MavenCoordinates parentCoordinates = Finders.parentPom().find(parent.getChildElementsAsIterator()).validateCoordinates();
             return new MavenCoordinates(
-                    StringUtils.defaultIfBlank(groupId.getValue(), parentCoordinates.groupId()),
-                    artifactId.getValue(),
-                    StringUtils.defaultIfBlank(version.getValue(), parentCoordinates.version()));
+                    StringUtils.defaultIfBlank(coordinates.groupId(), parentCoordinates.groupId()),
+                    coordinates.artifactId(),
+                    StringUtils.defaultIfBlank(coordinates.version(), parentCoordinates.version()));
         }
     }
 
@@ -79,7 +71,10 @@ public abstract class BaseDocument {
     }
 
     private Optional<ParentPom> doLoadParentPom() {
-        return DomHelper.getParentPom(loadDocument());
+        Finder<ElementWrapper, ParentPom> finder = Finders.parentPom();
+        return loadDocument().getDocumentElement().firstElement(PARENT)
+            .map(ElementWrapper::getChildElementsAsIterator)
+            .map(finder::find);
     }
 
     public Stream<String> modules() {

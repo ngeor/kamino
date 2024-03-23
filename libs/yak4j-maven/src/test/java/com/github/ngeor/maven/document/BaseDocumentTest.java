@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.github.ngeor.maven.dom.ElementNames;
 import com.github.ngeor.maven.dom.MavenCoordinates;
+import com.github.ngeor.maven.dom.ParentPom;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -36,12 +37,6 @@ class BaseDocumentTest {
         assertThat(coordinates).isEqualTo(new MavenCoordinates("com.acme", "foo", "1.0"));
     }
 
-    @Test
-    void parentPom() {
-        BaseDocument doc = new ResourceDocument(factory, "/pom1.xml");
-        assertThat(doc.parentPom()).isEmpty();
-    }
-
     @Nested
     class Modules {
         @Test
@@ -67,7 +62,7 @@ class BaseDocumentTest {
                 return d;
             });
             assertThatThrownBy(doc::coordinates)
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(NullPointerException.class)
                     .hasMessage("Cannot resolve coordinates, " + elementName + " is missing");
         }
 
@@ -79,7 +74,7 @@ class BaseDocumentTest {
                 return d;
             });
             assertThatThrownBy(doc::coordinates)
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(NullPointerException.class)
                     .hasMessage("Cannot resolve coordinates, " + elementName + " is missing");
         }
 
@@ -99,7 +94,7 @@ class BaseDocumentTest {
                 return d;
             });
             assertThatThrownBy(doc::coordinates)
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(NullPointerException.class)
                     .hasMessage("Cannot resolve coordinates, " + ElementNames.ARTIFACT_ID + " is missing");
         }
 
@@ -147,6 +142,27 @@ class BaseDocumentTest {
         void dependency() {
             BaseDocument doc = new ResourceDocument(factory, "/2level/parent.xml");
             assertThat(doc.dependencies()).containsExactly(new MavenCoordinates("com.external", "library", "1.2.3"));
+        }
+    }
+
+    @Nested
+    class ParentPomTest {
+        @Test
+        void missing() {
+            BaseDocument doc = new ResourceDocument(factory, "/pom1.xml");
+            assertThat(doc.parentPom()).isEmpty();
+        }
+
+        @Test
+        void present() {
+            BaseDocument doc = new ResourceDocument(factory, "/pom2.xml");
+            assertThat(doc.parentPom()).contains(new ParentPom("com.shared", "bar", "2.0", null));
+        }
+
+        @Test
+        void withRelativePath() {
+            BaseDocument doc = new ResourceDocument(factory, "/aggregator2/child3.xml");
+            assertThat(doc.parentPom()).contains(new ParentPom("com.acme", "child2", "2.2", "../child2"));
         }
     }
 }
