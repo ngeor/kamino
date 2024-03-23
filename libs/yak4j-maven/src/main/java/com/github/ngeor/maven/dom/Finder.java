@@ -7,7 +7,9 @@ import org.apache.commons.lang3.tuple.Pair;
 
 public interface Finder<I, O> {
     boolean stopSearching();
-    void accept(I element);
+
+    boolean accept(I element);
+
     O toResult();
 
     default boolean hasResult() {

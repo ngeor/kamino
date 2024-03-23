@@ -1,19 +1,19 @@
 package com.github.ngeor.maven.dom;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
+import java.util.Iterator;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.Test;
-
-import java.util.Iterator;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class FindersTest {
     @Test
     void testGroupIdIsFirstElement() {
         // arrange
-        DocumentWrapper doc = DocumentWrapper.parseString("""
+        DocumentWrapper doc = DocumentWrapper.parseString(
+                """
             <project>
                 <groupId>com.acme</groupId>
                 <version>1.0</version>
@@ -35,7 +35,8 @@ class FindersTest {
     @Test
     void testGroupIdIsLastElement() {
         // arrange
-        DocumentWrapper doc = DocumentWrapper.parseString("""
+        DocumentWrapper doc = DocumentWrapper.parseString(
+                """
             <project>
                 <version>1.0</version>
                 <groupId>com.acme2</groupId>
@@ -57,7 +58,8 @@ class FindersTest {
     @Test
     void testFirstGroupIdWins() {
         // arrange
-        DocumentWrapper doc = DocumentWrapper.parseString("""
+        DocumentWrapper doc = DocumentWrapper.parseString(
+                """
             <project>
                 <groupId>com.acme1</groupId>
                 <groupId>com.acme2</groupId>
@@ -79,7 +81,8 @@ class FindersTest {
     @Test
     void testTrim() {
         // arrange
-        DocumentWrapper doc = DocumentWrapper.parseString("""
+        DocumentWrapper doc = DocumentWrapper.parseString(
+                """
             <project>
                 <groupId>
                     com.acme1
@@ -103,7 +106,8 @@ class FindersTest {
     @Test
     void testEmptyWins() {
         // arrange
-        DocumentWrapper doc = DocumentWrapper.parseString("""
+        DocumentWrapper doc = DocumentWrapper.parseString(
+                """
             <project>
                 <groupId> </groupId>
                 <groupId>com.acme2</groupId>
@@ -125,7 +129,8 @@ class FindersTest {
     @Test
     void testNotPresent() {
         // arrange
-        DocumentWrapper doc = DocumentWrapper.parseString("""
+        DocumentWrapper doc = DocumentWrapper.parseString(
+                """
             <project>
                 <version>1.0</version>
             </project>""");
@@ -146,7 +151,8 @@ class FindersTest {
     @Test
     void testCompositeFinder() {
         // arrange
-        DocumentWrapper doc = DocumentWrapper.parseString("""
+        DocumentWrapper doc = DocumentWrapper.parseString(
+                """
             <project>
                 <groupId>com.acme</groupId>
                 <version>1.0</version>
@@ -154,9 +160,7 @@ class FindersTest {
         ElementWrapper documentElement = doc.getDocumentElement();
         Iterator<ElementWrapper> it = documentElement.getChildElementsAsIterator();
         CountingIterator<ElementWrapper> cit = new CountingIterator<>(it);
-        var compositeFinder = Finders.text(ElementNames.GROUP_ID).compose(
-            Finders.text(ElementNames.VERSION)
-        );
+        var compositeFinder = Finders.text(ElementNames.GROUP_ID).compose(Finders.text(ElementNames.VERSION));
 
         // act
         Pair<String, String> value = compositeFinder.find(cit);

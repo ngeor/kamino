@@ -9,14 +9,14 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.Test;
 
 class OptionalFinderDecoratorTest {
-    private final Finder<ElementWrapper, Pair<String, String>> finder = Finders.text(
-        ElementNames.GROUP_ID
-    ).compose(groupIdFinder -> Finders.text(ElementNames.VERSION).asOptional(groupIdFinder::hasResult));
+    private final Finder<ElementWrapper, Pair<String, String>> finder = Finders.text(ElementNames.GROUP_ID)
+            .compose(groupIdFinder -> Finders.text(ElementNames.VERSION).asOptional(groupIdFinder::hasResult));
 
     @Test
     void testSkipAtFirstMatch() {
         // arrange
-        DocumentWrapper doc = DocumentWrapper.parseString("""
+        DocumentWrapper doc = DocumentWrapper.parseString(
+                """
             <project>
                 <groupId>com.acme</groupId>
                 <version>1.0</version>
@@ -41,7 +41,8 @@ class OptionalFinderDecoratorTest {
     @Test
     void testSkipAtFirstMatchReversed() {
         // arrange
-        DocumentWrapper doc = DocumentWrapper.parseString("""
+        DocumentWrapper doc = DocumentWrapper.parseString(
+                """
             <project>
                 <version>1.0</version>
                 <groupId>com.acme</groupId>
@@ -66,7 +67,8 @@ class OptionalFinderDecoratorTest {
     @Test
     void testKeepSearchingIfFirstMatchIsEmpty() {
         // arrange
-        DocumentWrapper doc = DocumentWrapper.parseString("""
+        DocumentWrapper doc = DocumentWrapper.parseString(
+                """
             <project>
                 <groupId />
                 <version>1.0</version>

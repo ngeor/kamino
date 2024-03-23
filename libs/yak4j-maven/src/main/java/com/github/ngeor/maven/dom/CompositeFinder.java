@@ -17,9 +17,8 @@ public class CompositeFinder<I, L, R> implements Finder<I, Pair<L, R>> {
     }
 
     @Override
-    public void accept(I element) {
-        left.accept(element);
-        right.accept(element);
+    public boolean accept(I element) {
+        return left.accept(element) || right.accept(element);
     }
 
     @Override

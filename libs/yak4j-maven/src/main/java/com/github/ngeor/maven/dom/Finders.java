@@ -7,9 +7,7 @@ public final class Finders {
     private Finders() {}
 
     public static Finder<ElementWrapper, ElementWrapper> firstElement(String elementName) {
-        return new PredicateFinder<>(
-            e -> elementName.equals(e.getNodeName())
-        );
+        return new PredicateFinder<>(e -> elementName.equals(e.getNodeName()));
     }
 
     public static Finder<ElementWrapper, String> text(String elementName) {
@@ -21,12 +19,15 @@ public final class Finders {
     }
 
     public static Finder<ElementWrapper, MavenCoordinates> mavenCoordinates() {
-        return groupIdArtifactId().compose(text(ElementNames.VERSION))
-            .map(x -> new MavenCoordinates(x.getLeft().getLeft(), x.getLeft().getRight(), x.getRight()));
+        return groupIdArtifactId()
+                .compose(text(ElementNames.VERSION))
+                .map(x ->
+                        new MavenCoordinates(x.getLeft().getLeft(), x.getLeft().getRight(), x.getRight()));
     }
 
     public static Finder<ElementWrapper, ParentPom> parentPom() {
-        return mavenCoordinates().compose(text(ElementNames.RELATIVE_PATH))
-            .map(x-> new ParentPom(x.getLeft(), x.getRight()));
+        return mavenCoordinates()
+                .compose(text(ElementNames.RELATIVE_PATH))
+                .map(x -> new ParentPom(x.getLeft(), x.getRight()));
     }
 }

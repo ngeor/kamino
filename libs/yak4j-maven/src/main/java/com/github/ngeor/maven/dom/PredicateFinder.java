@@ -18,11 +18,14 @@ public class PredicateFinder<T> implements Finder<T, T> {
     }
 
     @Override
-    public void accept(T element) {
+    public boolean accept(T element) {
         if (!found && predicate.test(element)) {
             found = true;
             value = element;
+            return true;
         }
+
+        return false;
     }
 
     @Override

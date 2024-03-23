@@ -46,7 +46,8 @@ public abstract class BaseDocument {
     public MavenCoordinates coordinates() {
         Iterator<ElementWrapper> it = loadDocument().getDocumentElement().getChildElementsAsIterator();
         Finder<ElementWrapper, Pair<MavenCoordinates, ElementWrapper>> finder = Finders.mavenCoordinates()
-            .compose(mcFinder -> Finders.firstElement(PARENT).asOptional(() -> !mcFinder.toResult().hasMissingFields()));
+                .compose(mcFinder -> Finders.firstElement(PARENT)
+                        .asOptional(() -> !mcFinder.toResult().hasMissingFields()));
         Pair<MavenCoordinates, ElementWrapper> finderResult = finder.find(it);
         MavenCoordinates coordinates = finderResult.getLeft();
         ElementWrapper parent = finderResult.getRight();
@@ -58,7 +59,9 @@ public abstract class BaseDocument {
             Validate.notBlank(coordinates.version(), "Cannot resolve coordinates, version is missing");
             return coordinates;
         } else {
-            MavenCoordinates parentCoordinates = Finders.parentPom().find(parent.getChildElementsAsIterator()).validateCoordinates();
+            MavenCoordinates parentCoordinates = Finders.parentPom()
+                    .find(parent.getChildElementsAsIterator())
+                    .validateCoordinates();
             return new MavenCoordinates(
                     StringUtils.defaultIfBlank(coordinates.groupId(), parentCoordinates.groupId()),
                     coordinates.artifactId(),
@@ -72,9 +75,11 @@ public abstract class BaseDocument {
 
     private Optional<ParentPom> doLoadParentPom() {
         Finder<ElementWrapper, ParentPom> finder = Finders.parentPom();
-        return loadDocument().getDocumentElement().firstElement(PARENT)
-            .map(ElementWrapper::getChildElementsAsIterator)
-            .map(finder::find);
+        return loadDocument()
+                .getDocumentElement()
+                .firstElement(PARENT)
+                .map(ElementWrapper::getChildElementsAsIterator)
+                .map(finder::find);
     }
 
     public Stream<String> modules() {

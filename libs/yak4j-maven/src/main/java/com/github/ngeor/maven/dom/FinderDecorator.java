@@ -15,8 +15,8 @@ public abstract class FinderDecorator<I, O> implements Finder<I, O> {
     }
 
     @Override
-    public void accept(I element) {
-        decorated.accept(element);
+    public boolean accept(I element) {
+        return decorated.accept(element);
     }
 
     @Override

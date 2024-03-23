@@ -17,8 +17,8 @@ public class MappingFinder<I, O, U> implements Finder<I, U> {
     }
 
     @Override
-    public void accept(I element) {
-        decorated.accept(element);
+    public boolean accept(I element) {
+        return decorated.accept(element);
     }
 
     @Override
