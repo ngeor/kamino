@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import org.apache.commons.lang3.Validate;
 
-class StringIntMap {
+@Deprecated class StringIntMap {
     private final String[] items;
     private final int[] orders;
     private int actualLength;

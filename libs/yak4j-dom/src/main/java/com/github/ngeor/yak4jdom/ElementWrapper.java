@@ -228,7 +228,7 @@ public class ElementWrapper {
         return new ElementWrapper((Element) parentNode).path() + "/" + getNodeName();
     }
 
-    public String[] firstElementsText(String... names) {
+    @Deprecated public String[] firstElementsText(String... names) {
         Objects.requireNonNull(names);
         Validate.isTrue(names.length >= 1, "At least one name is required");
         StringIntMap pending = new StringIntMap(names);
