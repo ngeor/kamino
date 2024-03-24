@@ -143,6 +143,12 @@ class BaseDocumentTest {
             BaseDocument doc = new ResourceDocument(factory, "/2level/parent.xml");
             assertThat(doc.dependencies()).containsExactly(new MavenCoordinates("com.external", "library", "1.2.3"));
         }
+
+        @Test
+        void noDependencies() {
+            BaseDocument doc = new ResourceDocument(factory, "/pom1.xml");
+            assertThat(doc.dependencies()).isEmpty();
+        }
     }
 
     @Nested
