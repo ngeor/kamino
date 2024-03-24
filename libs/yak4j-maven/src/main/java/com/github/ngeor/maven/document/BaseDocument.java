@@ -1,14 +1,9 @@
 package com.github.ngeor.maven.document;
 
-import static com.github.ngeor.maven.dom.ElementNames.ARTIFACT_ID;
-import static com.github.ngeor.maven.dom.ElementNames.GROUP_ID;
-import static com.github.ngeor.maven.dom.ElementNames.PARENT;
-import static com.github.ngeor.maven.dom.ElementNames.VERSION;
-
-import com.github.ngeor.maven.dom.Finder;
-import com.github.ngeor.maven.dom.Finders;
+import com.github.ngeor.maven.dom.ElementNames;
 import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.maven.dom.ParentPom;
+import com.github.ngeor.maven.find.States;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
 import com.github.ngeor.yak4jdom.ElementWrapper;
 import java.util.Iterator;
@@ -45,10 +40,24 @@ public abstract class BaseDocument {
 
     public MavenCoordinates coordinates() {
         Iterator<ElementWrapper> it = loadDocument().getDocumentElement().getChildElementsAsIterator();
-        Finder<ElementWrapper, Pair<MavenCoordinates, ElementWrapper>> finder = Finders.mavenCoordinates()
-                .compose(mcFinder -> Finders.firstElement(PARENT)
-                        .asOptional(() -> !mcFinder.toResult().hasMissingFields()));
-        Pair<MavenCoordinates, ElementWrapper> finderResult = finder.find(it);
+        var state = States.mavenCoordinates().compose(
+            States.element(ElementNames.PARENT),
+            Pair::of
+        );
+
+        while (it.hasNext()) {
+            if (state.isFound()) {
+                // all things are found
+                break;
+            }
+            if (!state.getValue().getLeft().hasMissingFields()) {
+                // all coordinates provided, parent element not needed
+                break;
+            }
+            state = state.visit(it.next());
+        }
+
+        Pair<MavenCoordinates, ElementWrapper> finderResult = state.getValue();
         MavenCoordinates coordinates = finderResult.getLeft();
         ElementWrapper parent = finderResult.getRight();
 
@@ -59,8 +68,8 @@ public abstract class BaseDocument {
             Validate.notBlank(coordinates.version(), "Cannot resolve coordinates, version is missing");
             return coordinates;
         } else {
-            MavenCoordinates parentCoordinates = Finders.parentPom()
-                    .find(parent.getChildElementsAsIterator())
+            MavenCoordinates parentCoordinates = States.parentPom()
+                    .consume(parent.getChildElementsAsIterator())
                     .validateCoordinates();
             return new MavenCoordinates(
                     StringUtils.defaultIfBlank(coordinates.groupId(), parentCoordinates.groupId()),
@@ -74,12 +83,11 @@ public abstract class BaseDocument {
     }
 
     private Optional<ParentPom> doLoadParentPom() {
-        Finder<ElementWrapper, ParentPom> finder = Finders.parentPom();
         return loadDocument()
                 .getDocumentElement()
-                .firstElement(PARENT)
+                .firstElement(ElementNames.PARENT)
                 .map(ElementWrapper::getChildElementsAsIterator)
-                .map(finder::find);
+                .map(States.parentPom()::consume);
     }
 
     public Stream<String> modules() {
@@ -108,9 +116,7 @@ public abstract class BaseDocument {
                 .getDocumentElement()
                 .findChildElements("dependencies")
                 .flatMap(dependencies -> dependencies.findChildElements("dependency"))
-                .map(dependency -> {
-                    String[] items = dependency.firstElementsText(GROUP_ID, ARTIFACT_ID, VERSION);
-                    return new MavenCoordinates(items[0], items[1], items[2]);
-                });
+                .map(ElementWrapper::getChildElementsAsIterator)
+                .map(States.mavenCoordinates()::consume);
     }
 }
