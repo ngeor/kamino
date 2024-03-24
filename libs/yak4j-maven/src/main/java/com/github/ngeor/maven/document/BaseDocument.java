@@ -40,10 +40,7 @@ public abstract class BaseDocument {
 
     public MavenCoordinates coordinates() {
         Iterator<ElementWrapper> it = loadDocument().getDocumentElement().getChildElementsAsIterator();
-        var state = States.mavenCoordinates().compose(
-            States.element(ElementNames.PARENT),
-            Pair::of
-        );
+        var state = States.mavenCoordinates().compose(States.element(ElementNames.PARENT), Pair::of);
 
         while (it.hasNext()) {
             if (state.isFound()) {
