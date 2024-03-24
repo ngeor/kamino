@@ -11,4 +11,8 @@ public record GroupIdArtifactId(String groupId, String artifactId) implements Ha
     public boolean hasMissingFields() {
         return StringUtils.isAnyBlank(groupId, artifactId);
     }
+
+    public boolean isEmpty() {
+        return groupId == null && artifactId == null;
+    }
 }

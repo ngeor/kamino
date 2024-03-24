@@ -1,0 +1,13 @@
+<project>
+  <groupId>com.acme</groupId>
+  <artifactId>aggregator</artifactId>
+  <version>1.2</version>
+  <modules>
+    <module>child1</module>
+    <module>child2</module>
+    <module>child3</module>
+    <module>child4</module>
+    <module>child5</module>
+    <module>child6</module>
+  </modules>
+</project>

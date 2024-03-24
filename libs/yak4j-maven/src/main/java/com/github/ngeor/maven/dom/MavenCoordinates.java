@@ -35,4 +35,8 @@ public record MavenCoordinates(GroupIdArtifactId groupIdArtifactId, String versi
     public String artifactId() {
         return groupIdArtifactId.artifactId();
     }
+
+    public boolean isEmpty() {
+        return groupIdArtifactId.isEmpty() && version == null;
+    }
 }

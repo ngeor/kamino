@@ -1,0 +1,18 @@
+<project>
+  <groupId>com.acme</groupId>
+  <artifactId>child3</artifactId>
+  <version>3.2</version>
+  <parent>
+    <groupId>com.acme</groupId>
+    <artifactId>child2</artifactId>
+    <version>2.2</version>
+    <relativePath>../child2</relativePath>
+  </parent>
+  <dependencies>
+    <dependency>
+      <groupId>com.acme</groupId>
+      <artifactId>child6</artifactId>
+      <version>6.2</version>
+    </dependency>
+  </dependencies>
+</project>

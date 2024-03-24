@@ -2,7 +2,6 @@ package com.github.ngeor.mr;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.github.ngeor.maven.dom.DomHelper;
 import com.github.ngeor.maven.dom.ElementNames;
 import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.yak4jdom.DocumentWrapper;
@@ -15,9 +14,17 @@ record DocumentAssertions(DocumentWrapper document) {
         this(DocumentWrapper.parse(path.toFile()));
     }
 
-    public DocumentAssertions hasCoordinates(MavenCoordinates expected) {
-        assertThat(DomHelper.coordinates(document)).isEqualTo(expected);
+    public DocumentAssertions hasElement(String elementName, String textContent) {
+        assertThat(document.getDocumentElement().firstElement(elementName))
+                .isNotEmpty()
+                .hasValueSatisfying(e -> assertThat(e.getTextContent()).isEqualTo(textContent));
         return this;
+    }
+
+    public DocumentAssertions hasCoordinates(MavenCoordinates expected) {
+        return hasElement(ElementNames.GROUP_ID, expected.groupId())
+                .hasElement(ElementNames.ARTIFACT_ID, expected.artifactId())
+                .hasElement(ElementNames.VERSION, expected.version());
     }
 
     public DocumentAssertions hasParentPom() {

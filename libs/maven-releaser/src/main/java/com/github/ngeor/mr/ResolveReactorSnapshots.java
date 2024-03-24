@@ -3,6 +3,8 @@ package com.github.ngeor.mr;
 import com.github.ngeor.changelog.TagPrefix;
 import com.github.ngeor.git.Git;
 import com.github.ngeor.git.Tag;
+import com.github.ngeor.maven.document.PomDocument;
+import com.github.ngeor.maven.document.PomDocumentFactory;
 import com.github.ngeor.maven.dom.CoordinatesVisitor;
 import com.github.ngeor.maven.dom.ElementNames;
 import com.github.ngeor.maven.dom.MavenCoordinates;
@@ -14,7 +16,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 
@@ -23,7 +24,7 @@ public class ResolveReactorSnapshots implements Consumer<DocumentWrapper> {
     private final Git git;
     private final MavenCoordinates moduleCoordinates;
     private Map<String, String> moduleVersions;
-    private Map<MavenCoordinates, String> modules;
+    private PomDocument aggregator;
 
     public ResolveReactorSnapshots(File monorepoRoot, Git git, MavenCoordinates moduleCoordinates) {
         this.monorepoRoot = Objects.requireNonNull(monorepoRoot);
@@ -33,7 +34,7 @@ public class ResolveReactorSnapshots implements Consumer<DocumentWrapper> {
 
     @Override
     public void accept(DocumentWrapper effectivePom) {
-        this.modules = null;
+        this.aggregator = new PomDocumentFactory().create(monorepoRoot.toPath().resolve("pom.xml"));
         this.moduleVersions = new HashMap<>();
         new CoordinatesVisitor(this::resolve).visit(effectivePom);
     }
@@ -47,20 +48,7 @@ public class ResolveReactorSnapshots implements Consumer<DocumentWrapper> {
             return;
         }
 
-        // find internal module's most recent tag
-        if (modules == null) {
-            modules = new MonorepoRoot(monorepoRoot)
-                    .rootPom()
-                    .parse()
-                    .moduleNames()
-                    .map(MonorepoRoot.ModulePomNotParsed::parse)
-                    .map(MonorepoRoot.ModulePomParsed::parseCoordinates)
-                    .collect(Collectors.toMap(
-                            MonorepoRoot.ModulePomParsedWithCoordinates::coordinates,
-                            MonorepoRoot.ModulePomParsedWithCoordinates::moduleName));
-        }
-
-        String module = modules.get(coordinates);
+        String module = aggregator.moduleByCoordinates(coordinates).orElse(null);
         if (module == null) {
             return;
         }

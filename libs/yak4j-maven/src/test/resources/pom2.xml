@@ -1,0 +1,10 @@
+<project>
+  <groupId>com.future</groupId>
+  <artifactId>ball</artifactId>
+  <version>1.0.1</version>
+  <parent>
+    <groupId>com.shared</groupId>
+    <artifactId>bar</artifactId>
+    <version>2.0</version>
+  </parent>
+</project>

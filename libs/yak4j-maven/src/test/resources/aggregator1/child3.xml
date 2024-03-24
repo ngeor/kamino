@@ -1,0 +1,5 @@
+<project>
+  <groupId>com.acme</groupId>
+  <artifactId>child3</artifactId>
+  <version>3.0</version>
+</project>

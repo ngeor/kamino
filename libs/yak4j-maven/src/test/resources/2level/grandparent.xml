@@ -1,0 +1,9 @@
+<project>
+  <groupId>com.acme</groupId>
+  <artifactId>grandparent</artifactId>
+  <version>4.0</version>
+  <properties>
+    <color>blue</color>
+    <phrase>Always ${color}</phrase>
+  </properties>
+</project>

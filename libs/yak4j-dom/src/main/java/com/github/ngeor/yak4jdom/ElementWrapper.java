@@ -228,30 +228,6 @@ public class ElementWrapper {
         return new ElementWrapper((Element) parentNode).path() + "/" + getNodeName();
     }
 
-    public String[] firstElementsText(String... names) {
-        Objects.requireNonNull(names);
-        Validate.isTrue(names.length >= 1, "At least one name is required");
-        StringIntMap pending = new StringIntMap(names);
-        String[] result = new String[names.length];
-        for (ElementWrapper e : getChildElementsAsIterable()) {
-            String nodeName = e.getNodeName();
-            if (nodeName != null) {
-                int i = pending.get(nodeName);
-                if (i >= 0) {
-                    String text = e.getTextContentTrimmed().orElse(null);
-                    if (text != null) {
-                        result[i] = text;
-                        pending.remove(nodeName);
-                        if (pending.isEmpty()) {
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-        return result;
-    }
-
     public boolean transformTextNodes(UnaryOperator<String> transformer) {
         boolean hadChanges = false;
         NodeList nodeList = element.getChildNodes();

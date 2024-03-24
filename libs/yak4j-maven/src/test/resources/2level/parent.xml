@@ -1,0 +1,17 @@
+<project>
+  <groupId>com.acme</groupId>
+  <artifactId>parent</artifactId>
+  <version>5.0</version>
+  <parent>
+    <groupId>com.acme</groupId>
+    <artifactId>grandparent</artifactId>
+    <version>4.0</version>
+  </parent>
+  <dependencies>
+    <dependency>
+      <groupId>com.external</groupId>
+      <artifactId>library</artifactId>
+      <version>1.2.3</version>
+    </dependency>
+  </dependencies>
+</project>
