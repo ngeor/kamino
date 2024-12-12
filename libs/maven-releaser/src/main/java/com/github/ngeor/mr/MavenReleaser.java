@@ -5,7 +5,7 @@ import com.github.ngeor.changelog.ImmutableOptions;
 import com.github.ngeor.changelog.TagPrefix;
 import com.github.ngeor.git.Git;
 import com.github.ngeor.git.PushOption;
-import com.github.ngeor.maven.dom.DomHelper;
+import com.github.ngeor.maven.document.BaseDocument;
 import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.maven.process.Maven;
 import com.github.ngeor.process.ProcessFailedException;
@@ -97,8 +97,11 @@ public final class MavenReleaser {
 
     private static MavenCoordinates calcModuleCoordinatesAndDoSanityChecks(File modulePomFile) {
         return EffectivePomLoader.INSTANCE
-                .andThen(FnUtil.toUnaryOperator(PomBasicValidator.INSTANCE))
-                .andThen(DomHelper::coordinates)
+                .andThen(effectiveDoc -> {
+                    PomBasicValidator.INSTANCE.accept(effectiveDoc.loadDocument());
+                    return effectiveDoc;
+                })
+                .andThen(BaseDocument::coordinates)
                 .apply(modulePomFile);
     }
 
@@ -111,7 +114,8 @@ public final class MavenReleaser {
     private static void replacePomWithEffectivePom(
             File modulePomFile, String xmlIndentation, Consumer<DocumentWrapper>... consumers) {
         // need to load the effective pom again because it has switched to the release version
-        DocumentWrapper effectivePom = EffectivePomLoader.INSTANCE.apply(modulePomFile);
+        DocumentWrapper effectivePom =
+                EffectivePomLoader.INSTANCE.apply(modulePomFile).loadDocument();
         for (Consumer<DocumentWrapper> consumer : consumers) {
             consumer.accept(effectivePom);
         }

@@ -1,22 +1,16 @@
 package com.github.ngeor.mr;
 
-import com.github.ngeor.maven.document.effective.EffectivePomFactory;
-import com.github.ngeor.maven.document.loader.FileDocumentLoader;
-import com.github.ngeor.maven.document.parent.CanLoadParentFactory;
-import com.github.ngeor.yak4jdom.DocumentWrapper;
+import com.github.ngeor.maven.document.EffectiveDocument;
+import com.github.ngeor.maven.document.PomDocumentFactory;
 import java.io.File;
 import java.util.function.Function;
 
 @SuppressWarnings("java:S6548") // "enum singleton pattern detected"
-public enum EffectivePomLoader implements Function<File, DocumentWrapper> {
+public enum EffectivePomLoader implements Function<File, EffectiveDocument> {
     INSTANCE;
 
     @Override
-    public DocumentWrapper apply(File modulePomFile) {
-        return FileDocumentLoader.asFactory()
-                .decorate(CanLoadParentFactory::new)
-                .decorate(EffectivePomFactory::new)
-                .createDocumentLoader(modulePomFile)
-                .effectivePom();
+    public EffectiveDocument apply(File modulePomFile) {
+        return new PomDocumentFactory().create(modulePomFile).toEffective();
     }
 }

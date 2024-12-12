@@ -2,8 +2,9 @@ package com.github.ngeor;
 
 import com.github.ngeor.git.Git;
 import com.github.ngeor.git.Tag;
-import com.github.ngeor.maven.document.property.CanResolveProperties;
-import com.github.ngeor.maven.dom.DomHelper;
+import com.github.ngeor.maven.document.EffectiveDocument;
+import com.github.ngeor.maven.document.PomDocument;
+import com.github.ngeor.maven.document.PomDocumentFactory;
 import com.github.ngeor.maven.dom.MavenCoordinates;
 import com.github.ngeor.maven.process.Maven;
 import com.github.ngeor.mr.Defaults;
@@ -32,7 +33,7 @@ public final class TemplateGenerator {
     private final SimpleStringTemplate releaseTemplate;
     private final SimpleStringTemplate rootPomTemplate;
     private final File rootDirectory;
-    private final ModuleRepository moduleRepository = new CachedModuleRepository();
+    private final PomDocument aggregator;
     private final LazyInitializer<List<String>> lazyTags;
 
     public TemplateGenerator(File rootDirectory) throws IOException {
@@ -53,7 +54,8 @@ public final class TemplateGenerator {
                         .map(Tag::name)
                         .toList())
                 .get();
-        moduleRepository.loadModules(rootDirectory.toPath().resolve("pom.xml"));
+        PomDocumentFactory pomDocumentFactory = new PomDocumentFactory();
+        this.aggregator = pomDocumentFactory.create(rootDirectory.toPath().resolve("pom.xml"));
     }
 
     private List<String> tags() {
@@ -65,7 +67,7 @@ public final class TemplateGenerator {
     }
 
     public void regenerateAllTemplates() throws IOException, ProcessFailedException {
-        for (String module : moduleRepository.moduleNames()) {
+        for (String module : aggregator.modules().toList()) {
             regenerateAllTemplates(module);
         }
         regenerateRootPom();
@@ -73,7 +75,7 @@ public final class TemplateGenerator {
 
     private void regenerateRootPom() throws IOException {
         StringBuilder builder = new StringBuilder();
-        moduleRepository.moduleNames().forEach(module -> {
+        aggregator.modules().forEach(module -> {
             if (!builder.isEmpty()) {
                 builder.append("\n").append("    ");
             }
@@ -88,19 +90,17 @@ public final class TemplateGenerator {
 
     public void regenerateAllTemplates(String module) throws IOException, ProcessFailedException {
         System.out.printf("Regenerating templates for %s%n", module);
-        CanResolveProperties input = moduleRepository.moduleDocumentLoader(module);
-        DocumentWrapper doc = input.resolveProperties();
-        MavenCoordinates coordinates = DomHelper.coordinates(doc);
+        EffectiveDocument input = aggregator.loadModule(module).toEffective();
 
-        final String javaVersion = DomHelper.getProperty(doc, "maven.compiler.source")
+        final String javaVersion = input.getProperty("maven.compiler.source")
                 .map(String::trim)
                 .map(v -> "1.8".equals(v) ? "8" : v)
                 .orElse(DEFAULT_JAVA_VERSION);
 
         // internal dependencies of module
-        SortedSet<String> internalDependencies = new TreeSet<>(moduleRepository.dependenciesOfRecursively(module));
-        // register also any internal snapshot parent poms as dependencies for this purpose
-        internalDependencies.addAll(moduleRepository.parentSnapshotsOfRecursively(module));
+        SortedSet<String> internalDependencies = new TreeSet<>(aggregator.internalDependenciesOfModule(module));
+        // register also any internal parent poms as dependencies for this purpose
+        internalDependencies.addAll(aggregator.ancestorsOfModule(module));
 
         String buildCommand;
         String extraPaths;
@@ -137,6 +137,7 @@ public final class TemplateGenerator {
 
         fixProjectUrls(module);
 
+        MavenCoordinates coordinates = input.coordinates();
         new ReadmeGenerator(rootDirectory, module, coordinates, workflowId, this::tags).fixProjectBadges();
     }
 
@@ -159,7 +160,7 @@ public final class TemplateGenerator {
 
     private void fixProjectUrls(String module) throws ProcessFailedException {
         boolean hadChanges = false;
-        DocumentWrapper document = moduleRepository.moduleDocumentLoader(module).loadDocument();
+        DocumentWrapper document = aggregator.loadModule(module).loadDocument();
         ElementWrapper documentElement = document.getDocumentElement();
         hadChanges |= ensureChildText(documentElement, "groupId", GROUP_ID);
         hadChanges |= ensureChildText(documentElement, "artifactId", projectDirectory(module));
