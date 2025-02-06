@@ -22,7 +22,6 @@
     <module>internal-tooling/sifo</module>
     <module>libs/argparse</module>
     <module>libs/changelog</module>
-    <module>libs/checkstyle-rules</module>
     <module>libs/cli-parent-pom</module>
     <module>libs/java</module>
     <module>libs/maven-releaser</module>
