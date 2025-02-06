@@ -31,7 +31,6 @@
     <module>libs/yak4j-markdown</module>
     <module>libs/yak4j-maven</module>
     <module>libs/yak4j-process</module>
-    <module>plugins/yak4j-json-yaml-converter-maven-plugin</module>
     <module>plugins/yak4j-swagger-maven-plugin</module>
     <module>plugins/yak4j-sync-archetype-maven-plugin</module>
     <module>poms/public-library</module>
