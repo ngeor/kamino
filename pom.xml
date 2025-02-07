@@ -11,7 +11,6 @@
     <module>cli/duke-basic</module>
     <module>cli/krt</module>
     <module>gui/jCalendar</module>
-    <module>gui/jDirDiff</module>
     <module>internal-tooling/arturito</module>
     <module>internal-tooling/changes</module>
     <module>internal-tooling/sifo</module>
