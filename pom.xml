@@ -11,7 +11,6 @@
     <module>cli/duke-basic</module>
     <module>cli/krt</module>
     <module>cli/xmltrans</module>
-    <module>cli/zfs-snapshot-trimmer</module>
     <module>gui/jCalendar</module>
     <module>gui/jDirDiff</module>
     <module>gui/jHangMan</module>
