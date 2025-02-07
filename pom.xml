@@ -13,7 +13,6 @@
     <module>gui/jCalendar</module>
     <module>gui/jDirDiff</module>
     <module>gui/jHangMan</module>
-    <module>gui/jSpiderGame</module>
     <module>internal-tooling/arturito</module>
     <module>internal-tooling/changes</module>
     <module>internal-tooling/sifo</module>
