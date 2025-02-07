@@ -12,7 +12,6 @@
     <module>cli/krt</module>
     <module>gui/jCalendar</module>
     <module>gui/jDirDiff</module>
-    <module>gui/jHangMan</module>
     <module>internal-tooling/arturito</module>
     <module>internal-tooling/changes</module>
     <module>internal-tooling/sifo</module>
