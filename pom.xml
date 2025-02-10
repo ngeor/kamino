@@ -24,6 +24,5 @@
     <module>libs/yak4j-maven</module>
     <module>libs/yak4j-process</module>
     <module>poms/public-library</module>
-    <module>web/BuzzStats</module>
   </modules>
 </project>
