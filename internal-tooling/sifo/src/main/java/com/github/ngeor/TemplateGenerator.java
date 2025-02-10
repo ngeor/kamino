@@ -123,7 +123,7 @@ public final class TemplateGenerator {
 
         if (Defaults.isEligibleForRelease(module)) {
             // needs to align with "arturito" release tooling
-            final String releaseWorkflowJavaVersion = "17";
+            final String releaseWorkflowJavaVersion = "21";
             Map<String, String> releaseVariables =
                     createTemplateVariables(module, releaseWorkflowJavaVersion, buildCommand, extraPaths);
             Files.writeString(
