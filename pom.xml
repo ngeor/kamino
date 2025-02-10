@@ -25,6 +25,5 @@
     <module>libs/yak4j-process</module>
     <module>poms/public-library</module>
     <module>web/BuzzStats</module>
-    <module>web/icqfriends</module>
   </modules>
 </project>
