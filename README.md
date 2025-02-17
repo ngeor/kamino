@@ -77,3 +77,4 @@ The following third party libraries are preferred:
     -DinteractiveMode=false \
     -DarchetypeCatalog=local
   ```
+
