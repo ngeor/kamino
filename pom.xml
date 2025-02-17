@@ -16,7 +16,6 @@
     <module>libs/argparse</module>
     <module>libs/changelog</module>
     <module>libs/cli-parent-pom</module>
-    <module>libs/java</module>
     <module>libs/maven-releaser</module>
     <module>libs/versions</module>
     <module>libs/yak4j-git</module>
