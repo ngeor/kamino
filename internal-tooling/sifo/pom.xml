@@ -20,6 +20,7 @@
     <url>https://github.com/ngeor/kamino/tree/master/internal-tooling/sifo</url>
   </scm>
   <properties>
+    <jacoco.unit-tests.limit.instruction-ratio>2%</jacoco.unit-tests.limit.instruction-ratio>
     <mainClass>com.github.ngeor.App</mainClass>
   </properties>
   <dependencies>

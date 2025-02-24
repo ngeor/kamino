@@ -17,6 +17,9 @@
     <tag>HEAD</tag>
     <url>https://github.com/ngeor/kamino/tree/master/libs/yak4j-git</url>
   </scm>
+  <properties>
+    <jacoco.unit-tests.limit.instruction-ratio>5%</jacoco.unit-tests.limit.instruction-ratio>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>com.github.ngeor</groupId>

@@ -9,7 +9,6 @@
   <modules>
     <module>archetypes/archetype-kamino-cli</module>
     <module>cli/duke-basic</module>
-    <module>cli/krt</module>
     <module>internal-tooling/arturito</module>
     <module>internal-tooling/changes</module>
     <module>internal-tooling/sifo</module>
